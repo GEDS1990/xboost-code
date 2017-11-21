@@ -25,7 +25,7 @@
     <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="/static/js/datatables/media/css/dataTables.bootstrap.min.css">
- 
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -278,11 +278,11 @@
             "columnDefs":[ //具体列的定义
                 {
                     "targets":[0],
-                    "visible":true
+                    "visible":false
                 },
                 {
                     "targets":[3],
-                    "orderable":false
+                    "orderable":true
                 },
                 {
                     "targets":[1,2,4,5],

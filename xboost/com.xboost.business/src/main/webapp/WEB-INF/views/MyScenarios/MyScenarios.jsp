@@ -85,7 +85,7 @@
 <script src="/static/js/Xboost/navMain.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	$(function  () {
-		$('#nav-MyScenarios').addClass("active");
+		$('.nav.xb_alt>li:first-child>div:nth-child(2)>div').addClass("active");
 	});
 </script>
 </body>

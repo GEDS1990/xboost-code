@@ -232,10 +232,10 @@ debugger;
             },
             "columns":[  //返回的JSON中的对象和列的对应关系
                 {"data":"id","name":"id"},
-////              {"data":"siteCode","name":"site_code"},
-//              {"data":"siteName","name":"site_name"},
-//              {"data":"siteType","name":"site_type"},
-//              {"data":"siteAddress","name":"site_address"},
+                {"data":"siteCode","name":"site_code"},
+                {"data":"siteName","name":"site_name"},
+                {"data":"siteType","name":"site_type"},
+                {"data":"siteAddress","name":"site_address"},
                 {"data":function(row){
                     return "<a href='javascript:;' class='editLink' data-id='"+row.id+"'>编辑</a> <a href='javascript:;' class='delLink' data-id='"+row.id+"'>删除</a>";
                 }}
