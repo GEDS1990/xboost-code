@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.DemandInfoMapper">
+
+    <cache/>
+
+    <insert id="add">
+        INSERT into t_demand_info(date,site_collect,site_delivery,product_type,duration_start,duration_end,weight,votes,
+		ageing,str1,str2,str3,create_time,update_time)
+        VALUES (#{date},#{siteCodeCollect},#{siteCodeDelivery},#{productType},#{durationStart},#{durationEnd},#{weight},#{votes},
+        #{ageing},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+    </insert>
+
+
+    <select id="findAll" resultType="com.xboost.pojo.DemandInfo">
+        SELECT * FROM t_demand_info
+    </select>
+
+    <select id="findByParam" parameterType="map" resultType="DemandInfo" resultMap="demandInfoMap">
+        SELECT * from t_demand_info
+        <where>
+            <if test="keyword != null and keyword != ''">
+                date LIKE #{keyword} or site_collect like #{keyword} or site_delivery like #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+    <select id="findByScenairoIdParam" parameterType="map" resultType="DemandInfo" resultMap="demandInfoMap">
+        SELECT * from t_demand_info d where d.scenairosId = #{scenairosId}
+    </select>
+
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(*) FROM t_demand_info
+    </select>
+
+    <select id="findCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_demand_info
+        <where>
+            <if test="keyword != null and keyword != ''">
+                date LIKE #{keyword} or site_collect like #{keyword} or site_delivery like #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultType="com.xboost.pojo.DemandInfo"  resultMap="demandInfoMap">
+        SELECT * FROM t_demand_info where id = #{id}
+    </select>
+
+    <update id="editDemandInfo">
+        UPDATE t_demand_info SET date = #{date},site_collect = #{siteCodeCollect},site_delivery=#{siteCodeDelivery},product_type=#{productType},
+		duration_start=#{durationStart},duration_end=#{durationEnd},weight=#{weight},votes=#{votes},ageing=#{ageing} where id = #{id}
+    </update>
+
+    <delete id="delById">
+        DELETE FROM t_demand_info WHERE id = #{id}
+    </delete>
+	
+
+    <resultMap id="demandInfoMap" type="DemandInfo">
+        <result property="id" column="id"/>
+        <result property="date" column="date"/>
+        <result property="siteCodeCollect" column="site_collect"/>
+        <result property="siteCodeDelivery" column="site_delivery"/>
+        <result property="productType" column="product_type"/>
+        <result property="durationStart" column="duration_start"/>
+        <result property="durationEnd" column="duration_end"/>
+        <result property="weight" column="weight"/>
+        <result property="votes" column="votes"/>
+        <result property="ageing" column="ageing"/>
+    </resultMap>
+
+
+</mapper>

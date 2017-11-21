@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.SiteDistMapper">
+
+    <cache/>
+
+    <insert id="save">
+        INSERT INTO `t_site_distance`(scenarios_id,site_collect,site_delivery,car_distance,duration_night_delivery,createtime)
+        VALUES (#{scenariosId}, #{siteCollect}, #{siteDelivery}, #{carDistance}, #{durationNightDelivery}, #{createTime});
+    </insert>
+    <select id="findAll" resultType="com.xboost.pojo.SiteDist">
+        SELECT * FROM t_site_distance
+    </select>
+
+    <select id="findAllSiteDist" parameterType="map" resultMap="siteDistMap">
+        select * from t_site_distance
+    </select>
+
+    <select id="findByParam" parameterType="map" resultType="SiteDist" resultMap="siteDistMap">
+        SELECT * from t_site_distance
+        <where>
+            <if test="keyword != null and keyword != ''">
+                site_collect LIKE #{keyword} or site_delivery like #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+    <select id="findSiteDistByScenariosId" parameterType="map" resultMap="siteDistMap">
+        select * from t_site_distance as s where s.scenariosId=#{scenairosId}
+    </select>
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(*) FROM t_site_distance
+    </select>
+
+    <select id="findCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_site_distance
+        <where>
+            <if test="keyword != null and keyword != ''">
+                site_collect LIKE #{keyword} or site_delivery like #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultType="com.xboost.pojo.SiteDist"  resultMap="siteDistMap">
+        SELECT * FROM t_site_distance where id = #{id}
+    </select>
+
+    <update id="editSiteDist">
+        UPDATE t_site_distance SET scenarios_id = #{scenariosId},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
+        car_distance=#{carDistance},duration_nightDelivery=#{durationNightDelivery},createtime=#{createTime} where id = #{id}
+    </update>
+
+    <delete id="delById">
+        DELETE FROM t_site_distance WHERE id = #{id}
+    </delete>
+
+    <resultMap id="siteDistMap" type="com.xboost.pojo.SiteDist">
+        <id property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="siteCollect" column="site_collect"/>
+        <result property="siteDelivery" column="site_delivery"/>
+        <result property="carDistance" column="car_distance"/>
+        <result property="durationNightDelivery" column="duration_night_delivery"/>
+    </resultMap>
+
+    <select id="findAll" resultType="com.xboost.pojo.SiteDist">
+        SELECT * FROM t_site_distance
+    </select>
+
+    <select id="findByParam" parameterType="map" resultType="SiteDist" resultMap="siteDistMap">
+        SELECT * from t_site_distance
+        <where>
+            <if test="keyword != null and keyword != ''">
+                site_collect LIKE #{keyword} or site_delivery like #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(*) FROM t_site_distance
+    </select>
+
+    <select id="findCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_site_distance
+        <where>
+            <if test="keyword != null and keyword != ''">
+                site_collect LIKE #{keyword} or site_delivery like #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultType="com.xboost.pojo.SiteDist"  resultMap="siteDistMap">
+        SELECT * FROM t_site_distance where id = #{id}
+    </select>
+
+    <update id="editSiteDist">
+        UPDATE t_site_distance SET scenarios_id = #{scenariosId},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
+        car_distance=#{carDistance},duration_night_delivery=#{durationNightDelivery},createtime=#{createTime} where id = #{id}
+    </update>
+
+    <delete id="delById">
+        DELETE FROM t_site_distance WHERE id = #{id}
+    </delete>
+
+
+    <resultMap id="siteDistMap" type="SiteDist">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenarios_id"/>
+        <result property="siteCollect" column="site_collect"/>
+        <result property="siteDelivery" column="site_delivery"/>
+        <result property="carDistance" column="car_distance"/>
+        <result property="durationNightDelivery" column="duration_night_delivery"/>
+
+    </resultMap>
+
+</mapper>

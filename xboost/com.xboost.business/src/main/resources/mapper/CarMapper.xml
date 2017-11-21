@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.CarMapper">
+
+    <cache/>
+
+    <select id="findCarByParam" parameterType="map" resultMap="carMap">
+        <!--select * from t_car_info as ci where ci.scenariosId=#{scenairosId}-->
+        select * from t_car_info as ci, time_window as t where ci.id=t.carId and ci.scenariosId=#{scenairosId}
+    </select>
+
+    <!--<select id="findByScenariosId" resultType="com.xboost.pojo.Dimensions">
+        SELECT dimensions FROM t_dimensions_info WHERE carId IN (SELECT id FROM t_car_info WHERE scenariosId = #{scenariosId})
+    </select>-->
+
+    <resultMap id="carMap" type="com.mckinsey.sf.data.Car">
+        <id property="id" column="id"/>
+        <result property="maxStop" column="max_stop"/>
+        <result property="dimensions" column="dimensions"/>
+        <result property="fixedRound" column="fixed_round"/>
+        <result property="fixedRoundFee" column="fixed_round_fee"/>
+        <result property="startLocation" column="start_location"/>
+        <result property="endLocation" column="end_location"/>
+        <result property="maxDistance" column="max_distance"/>
+        <result property="maxRunningTime" column="max_running_time"/>
+        <result property="costPerDistance" column="cost_per_distance"/>
+        <result property="costPerTime" column="cost_per_time"/>
+        <result property="fixedCost" column="fixed_cost"/>
+        <result property="velocity" column="velocity"/>
+        <result property="type" column="type"/>
+        <!--<result property="fixedRound" column="fixed_round"/>
+        <result property="fixedRoundFee" column="fixed_round_fee"/>-->
+        <!--<collection property="dimensions" ofType="Dimensions" column="scenairosId" select="findByScenariosId"/>-->
+        <association property="tw" javaType="com.mckinsey.sf.data.TimeWindow">
+            <result property="start" column="start"/>
+            <result property="end" column="end"/>
+        </association>
+    </resultMap>
+
+</mapper>

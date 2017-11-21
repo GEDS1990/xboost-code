@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.SiteInfoMapper">
+
+    <cache/>
+
+    <insert id="save">
+        INSERT into t_site_info(site_code,longitude,latitude,site_name,site_address,site_nightDelivery,site_area,site_type,car_num,
+        large_carModle,max_operate_num,str1,str2,str3,createtime,updatetime)
+        VALUES (#{siteCode},#{siteLongitude},#{siteLatitude},#{siteName},#{siteAddress},#{siteNightDelivery},#{siteArea},#{siteType},
+        #{carNum},#{largeCarModel},#{maxOperateNum},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+    </insert>
+
+
+    <select id="findAll" resultType="com.xboost.pojo.SiteInfo">
+        SELECT * FROM t_site_info
+    </select>
+
+    <select id="findByParam" parameterType="map" resultType="SiteInfo" resultMap="siteInfoMap">
+        SELECT * from t_site_info
+        <where>
+            <if test="keyword != null and keyword != ''">
+                site_name LIKE #{keyword} or site_code like #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+    <select id="findSiteInfoCount" resultType="long">
+        SELECT COUNT(*) FROM t_site_info
+    </select>
+
+    <select id="findSiteInfoCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_site_info
+        <where>
+            <if test="keyword != null and keyword != ''">
+                site_name LIKE #{keyword} or site_code like #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findSiteInfoById" resultType="com.xboost.pojo.SiteInfo"  resultMap="siteInfoMap">
+        SELECT * FROM t_site_info where id = #{id}
+    </select>
+
+    <update id="editSiteInfo">
+        UPDATE t_site_info SET site_code = #{siteCode},longitude = #{siteLongitude},latitude=#{siteLatitude},site_name=#{siteName},site_address=#{siteAddress},
+        site_nightDelivery=#{siteNightDelivery},site_area=#{siteArea},site_type=#{siteType},car_num=#{carNum} ,large_carModle=#{largeCarModel},
+        max_operate_num=#{maxOperateNum} where id = #{id}
+    </update>
+
+    <delete id="delById">
+        DELETE FROM t_site_info WHERE id = #{id}
+    </delete>
+
+
+    <resultMap id="siteInfoMap" type="SiteInfo">
+        <result property="id" column="id"/>
+        <result property="siteCode" column="site_code"/>
+        <result property="siteLongitude" column="longitude"/>
+        <result property="siteLatitude" column="latitude"/>
+        <result property="siteName" column="site_name"/>
+        <result property="siteAddress" column="site_address"/>
+        <result property="siteNightDelivery" column="site_nightDelivery"/>
+        <result property="siteArea" column="site_area"/>
+        <result property="siteType" column="site_type"/>
+        <result property="carNum" column="car_num"/>
+        <result property="largeCarModel" column="large_carModle"/>
+        <result property="maxOperateNum" column="max_operate_num"/>
+    </resultMap>
+
+
+</mapper>

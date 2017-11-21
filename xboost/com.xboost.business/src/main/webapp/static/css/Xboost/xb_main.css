@@ -1,0 +1,213 @@
+/*
+ *nav bg # 364760,
+ *nav-item bg #2a394f,
+ * nav-icon col #15a4fa,
+ * 
+ * 
+ * */
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	box-sizing: border-box;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6,.h1,.h2,.h3,.h4,.h5,.h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+ul,ol{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+a:hover,a:focus{
+	cursor: pointer;
+	text-decoration: none;
+}
+body{
+	font-family: "微软雅黑";
+	font-weight: 300;
+	color: #333333;
+	background-color: #d5dae6;
+}
+/*index bg*/
+.xb_index_bg{background-color: #eaedf1;}
+/*--xb导航样式--*/
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: #FFFFFF;
+    background-color: transparent;
+}
+.xb_nav{
+	background-color: #373d41;
+	position: fixed;
+	width: 100%;
+	top: 0;
+}
+.navbar-default .navbar-brand {
+    color: #FFFFFF;
+}
+.sidebar ul li {
+    border-bottom: 0;
+}
+.xb_side{
+	background-color: #364760;
+	height: 100%;
+	margin: 0;
+	width: 200px;
+     top: 0;  
+    bottom:0;  
+    position:fixed; 
+
+    /* 
+    overflow-y:scroll;  
+    overflow-x:hidden;  */
+}
+.nav_xb{
+	padding: 10px 0 10px 40px;
+	color: #FFFFFF;
+	background-color: #364760;
+	position: relative;
+	font-size: 12px;
+	line-height: 20px;
+}
+
+
+.sidebar ul li a.active{background-color: transparent;}
+.nav_xb+ul>li.active{background-color:#00c1de ;}
+.dropdown-menu.dropdown-user>li>a:hover{
+	cursor: pointer;
+}
+.fa.fa-user.fa-fw,.fa.fa-caret-down{color: #FFFFFF;}
+.fa.fa-user.fa-fw.alt{color: #333;}
+.fa{margin-right: 10px;font-size: 16px;}
+/****nav bottom***/
+.nav.navbar-top-linkS{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	z-index: 1000;
+	width: 100%;
+	height: 56px;
+	background-color: #2a394f;
+}
+.nav.navbar-top-linkS>li{
+	float: left;
+	width: 50%;
+	text-align: center;
+	color: #FFFFFF;
+}
+.nav.navbar-top-linkS>li.open>a{background-color:#2a394f;}
+.nav.navbar-top-linkS>li>a{color: #FFFFFF;background-color:#2a394f;font-size: 12px;}
+.nav.navbar-top-linkS>li>a:hover{
+	background-color: #15a4fa;
+}
+.dropdown-menu.dropdown-user{
+	top: -90px;
+}
+/*icon*/
+.glyphicon{
+	position: absolute;
+	top: 50%;
+	left: 5px;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+}
+.icon{
+	position: absolute;
+	left: 15px;
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	font-size: 16px;
+	display: block;
+	color: #FFFFFF;
+	
+	margin-right: 10px;
+}
+.icon.alt,.icon-item.alt{color: #15a4fa;}
+.nav_xban{
+	line-height: 38px;
+	background-color: #2a394f;
+	padding: 10px 0 10px 40px;
+	color: #FFFFFF;
+	background-color: #364760;
+	position: relative;
+	font-size: 12px;
+}
+.xb-nav_ul{
+	display: block;
+	text-align: left;
+	color: #FFFFFF;
+}
+.xb-nav_ul>li{
+	padding: 10px 0 10px 30px;
+	position: relative;
+}
+.xb-nav_ul>li>a{color: #FFFFFF;}
+.xb-nav_ul>li>a{
+	padding-left: 30px;
+	font-size: 12px;
+}
+.xb-nav_ul>li>a>span.icon-item{
+	left: 35px;
+}
+.xb-nav_ul>li:nth-child(2)>a>span{font-size: 18px;padding-left: 2px;}
+.icon-item{
+	position: absolute;
+	left: 15px;
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	font-size: 20px;
+	display: block;
+	color: #FFFFFF;
+	
+	margin-right: 10px;
+}
+.nav.xb_alt>li>div:nth-child(3)>div{
+	padding-left: 50px;
+}
+.icon.alt1{
+	left: 30px;
+}
+.nav_xb a{color: #FFFFFF;}
+.nav_xb:hover,.nav_xb.active{
+	cursor: pointer;
+	background-color:#2a394f ;
+}
+.xb-nav_ul>li:hover,.xb-nav_ul>li.active{
+	background-color:#2a394f;
+}
+.xb-nav_ul>li:hover>a:before,
+.xb-nav_ul>li.active>a:before,
+.xb-hover:hover>div.nav_xb:before,
+.xb-hover>div.nav_xb.active:before{
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 4px;
+	height: 40px;
+	background-color: #15a4fa;
+}
+/*--page_wra---*/
+.xb_page_content{
+	background-color: #d5dae6;
+	position: inherit;
+    border-left: 1px solid #e7e7e7;
+}
+
