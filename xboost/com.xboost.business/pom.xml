@@ -16,7 +16,8 @@
 
     <properties>
         <junit-version>4.11</junit-version>
-        <spring-version>3.2.12.RELEASE</spring-version>
+        <spring-version>4.3.8.RELEASE</spring-version>
+        <!--<spring-version>3.2.12.RELEASE</spring-version>-->
         <dbcp-version>1.4</dbcp-version>
         <lang3-version>3.4</lang3-version>
         <mysql-version>5.1.38</mysql-version>
@@ -235,6 +236,16 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>3.14</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>4.3.7.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>4.3.7.RELEASE</version>
         </dependency>
 
 
