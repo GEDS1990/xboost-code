@@ -263,7 +263,7 @@ $(function  () {
 	                {"data":"carDistance","name":"car_distance"},
 	                {"data":"durationNightDelivery","name":"duration_night_delivery"},
 	                {"data":function(row){
-	                    return "<a href='javascript:;' class='editLink' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink' data-id='"+row.id+"'>Del</a>";
+	                    return "<a href='javascript:;' class='editLink-dist' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dist' data-id='"+row.id+"'>Del</a>";
 	                }}
 	            ],
 	            "columnDefs":[ //具体列的定义
@@ -295,15 +295,15 @@ $(function  () {
         
 
         //添加新用户
-        $("#addNewUser").click(function(){
-            $("#newUserModal").modal('show');
+        $("#addNewUser-dist").click(function(){
+            $("#newUserModal-dist").modal('show');
         });
-        $("#saveBtn").click(function(){
-            $.post("/siteInfo/add",$("#newUserForm").serialize())
+        $("#saveBtn-dist").click(function(){
+            $.post("/siteDist/add",$("#newUserForm-dist").serialize())
                     .done(function(result){
                         if("success" == result) {
-                            $("#newUserForm")[0].reset();
-                            $("#newUserModal").modal("hide");
+                            $("#newUserForm-dist")[0].reset();
+                            $("#newUserModal-dist").modal("hide");
                             dt.ajax.reload();
                             window.location.reload(); 
                         }
@@ -314,10 +314,10 @@ $(function  () {
         });
 
         //删除用户
-        $(document).delegate(".delLink","click",function(){
+        $(document).delegate(".delLink-dist","click",function(){
             var id = $(this).attr("data-id");
             if(confirm("Are you sure you want to delete this data?")) {
-                $.post("/siteInfo/del",{"id":id}).done(function(result){
+                $.post("/siteDist/del",{"id":id}).done(function(result){
                     if("success" == result) {
                         dt.ajax.reload();
                         window.location.reload(); 
@@ -330,36 +330,29 @@ $(function  () {
         });
 
         //编辑用户
-        $(document).delegate(".editLink","click",function(){
-            $("#editUserForm")[0].reset();
+        $(document).delegate(".editLink-dist","click",function(){
+            $("#editUserForm-dist")[0].reset();
             var id = $(this).attr("data-id");
-            $.get("siteInfo/site.json",{"id":id}).done(function(result){
-                $("#siteId").val(result.id);
-                $("#siteCode").val(result.siteCode);
-                $("#siteLongitude").val(result.siteLongitude);
-                $("#siteLatitude").val(result.siteLatitude);
-                $("#siteName").val(result.siteName);
-                $("#siteAddress").val(result.siteAddress);
-                $("#siteArea").val(result.siteArea);
-                $("#siteType").val(result.siteType);
-                $("#siteNightDelivery").val(result.siteNightDelivery);
-                $("#carNum").val(result.carNum);
-                $("#largeCarModel").val(result.largeCarModel);
-                $("#maxOperateNum").val(result.maxOperateNum);
-                $("#editUserModal").modal("show");
+            $.get("siteDist/siteDistInfo.json",{"id":id}).done(function(result){
+                $("#siteId-dist").val(result.id);
+                $("#siteCollect").val(result.siteCollect);
+                $("#siteDelivery").val(result.siteDelivery);
+                $("#carDistance").val(result.carDistance);
+                $("#durationNightDelivery").val(result.durationNightDelivery);
+                $("#editUserModal-dist").modal("show");
 
             }).fail(function(){
 
             });
-			$("#editUserModal").modal("show");
+			$("#editUserModal-dist").modal("show");
             
         });
 
-        $("#editBtn").click(function(){
-        alert($("#editUserForm").serialize())
-            $.post("/siteInfo/edit",$("#editUserForm").serialize()).done(function(result){
+        $("#editBtn-dist").click(function(){
+        
+            $.post("/siteDist/edit",$("#editUserForm-dist").serialize()).done(function(result){
                 if(result == "success") {
-                    $("#editUserModal").modal("hide");
+                    $("#editUserModal-dist").modal("hide");
                     dt.ajax.reload();
                     window.location.reload(); 
                 }
@@ -369,24 +362,8 @@ $(function  () {
 
         });
 
-         $("#cond-file-upload").click(function(){
-             var form = new FormData(document.getElementById("cond-input-form"));
-                 $.ajax({
-                     url:"${pageContext.request.contextPath}/siteInfo/addByExcel",
-                     type:"post",
-                     data:form,
-                     processData:false,
-                     contentType:false,
-                     success:function(data){
-                         alert("Import information to complete!");
-                         window.location.reload(); 
-                     },
-                     error:function(e){
-                         alert("Mistake!!");
-                         window.clearInterval(timer);
-                     }
-                 });
-                 //此处为上传文件的进度条get();
+         $("#cond-file-upload-dist").click(function(){
+         	UploadFile("cond-input-form-dist","cond_file","/siteDist/addByExcel",'.bs-example-modal-input')
          });
 		}
 		
@@ -420,7 +397,7 @@ $(function  () {
 	                {"data":"votes","name":"votes"},
 	                {"data":"ageing","name":"ageing"},
 	                {"data":function(row){
-	                    return "<a href='javascript:;' class='editLink' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink' data-id='"+row.id+"'>Del</a>";
+	                    return "<a href='javascript:;' class='editLink-dem' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dem' data-id='"+row.id+"'>Del</a>";
 	                }}
 	            ],
 	            "columnDefs":[ //具体列的定义
@@ -452,15 +429,15 @@ $(function  () {
         
 
         //添加新用户
-        $("#addNewUser").click(function(){
-            $("#newUserModal").modal('show');
+        $("#addNewUser-dem").click(function(){
+            $("#newUserModal-dem").modal('show');
         });
-        $("#saveBtn").click(function(){
-            $.post("/siteInfo/add",$("#newUserForm").serialize())
+        $("#saveBtn-dem").click(function(){
+            $.post("/demandInfo/add",$("#newUserForm-dem").serialize())
                     .done(function(result){
                         if("success" == result) {
-                            $("#newUserForm")[0].reset();
-                            $("#newUserModal").modal("hide");
+                            $("#newUserForm-dem")[0].reset();
+                            $("#newUserModal-dem").modal("hide");
                             dt.ajax.reload();
                             window.location.reload(); 
                         }
@@ -471,10 +448,10 @@ $(function  () {
         });
 
         //删除用户
-        $(document).delegate(".delLink","click",function(){
+        $(document).delegate(".delLink-dem","click",function(){
             var id = $(this).attr("data-id");
             if(confirm("Are you sure you want to delete this data?")) {
-                $.post("/siteInfo/del",{"id":id}).done(function(result){
+                $.post("/demandInfo/del",{"id":id}).done(function(result){
                     if("success" == result) {
                         dt.ajax.reload();
                         window.location.reload(); 
@@ -487,36 +464,34 @@ $(function  () {
         });
 
         //编辑用户
-        $(document).delegate(".editLink","click",function(){
-            $("#editUserForm")[0].reset();
+        $(document).delegate(".editLink-dem","click",function(){
+            $("#editUserForm-dem")[0].reset();
             var id = $(this).attr("data-id");
-            $.get("siteInfo/site.json",{"id":id}).done(function(result){
-                $("#siteId").val(result.id);
-                $("#siteCode").val(result.siteCode);
-                $("#siteLongitude").val(result.siteLongitude);
-                $("#siteLatitude").val(result.siteLatitude);
-                $("#siteName").val(result.siteName);
-                $("#siteAddress").val(result.siteAddress);
-                $("#siteArea").val(result.siteArea);
-                $("#siteType").val(result.siteType);
-                $("#siteNightDelivery").val(result.siteNightDelivery);
-                $("#carNum").val(result.carNum);
-                $("#largeCarModel").val(result.largeCarModel);
-                $("#maxOperateNum").val(result.maxOperateNum);
+            $.get("demandInfo/demandInfoById.json",{"id":id}).done(function(result){
+                $("#siteId-dem").val(result.id);
+                $("#date").val(result.date);
+                $("#siteCodeCollect").val(result.siteCodeCollect);
+                $("#siteCodeDelivery").val(result.siteCodeDelivery);
+                $("#productType").val(result.productType);
+                $("#durationStart").val(result.durationStart);
+                $("#durationEnd").val(result.durationEnd);
+                $("#weight").val(result.weight);
+                $("#votes").val(result.votes);
+                $("#ageing").val(result.ageing);
                 $("#editUserModal").modal("show");
 
             }).fail(function(){
 
             });
-			$("#editUserModal").modal("show");
+			$("#editUserModal-dem").modal("show");
             
         });
 
-        $("#editBtn").click(function(){
-        alert($("#editUserForm").serialize())
-            $.post("/siteInfo/edit",$("#editUserForm").serialize()).done(function(result){
+        $("#editBtn-dem").click(function(){
+        
+            $.post("/demandInfo/edit",$("#editUserForm-dem").serialize()).done(function(result){
                 if(result == "success") {
-                    $("#editUserModal").modal("hide");
+                    $("#editUserModal-dem").modal("hide");
                     dt.ajax.reload();
                     window.location.reload(); 
                 }
@@ -526,24 +501,8 @@ $(function  () {
 
         });
 
-         $("#cond-file-upload").click(function(){
-             var form = new FormData(document.getElementById("cond-input-form"));
-                 $.ajax({
-                     url:"${pageContext.request.contextPath}/siteInfo/addByExcel",
-                     type:"post",
-                     data:form,
-                     processData:false,
-                     contentType:false,
-                     success:function(data){
-                         alert("Import information to complete!");
-                         window.location.reload(); 
-                     },
-                     error:function(e){
-                         alert("Mistake!!");
-                         window.clearInterval(timer);
-                     }
-                 });
-                 //此处为上传文件的进度条get();
+         $("#cond-file-upload-dem").click(function(){
+             UploadFile("cond-input-form-dem","cond_file","/demandInfo/addByExcel",'.bs-example-modal-input')
          });
 		}
 	})()
