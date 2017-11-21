@@ -67,7 +67,7 @@
 	    	<div>
 		        <!--demands-->
 	            <div class="table-responsive active">
-	            	<a href="javascript:;" id="addNewUser-dem" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus"></i>Add Info</a>
+	            	<a href="javascript:;" id="addNewUser" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus"></i>Add Info</a>
 		            <table id="Demands" class="table table-striped table-bordered table-hover">
 			            <thead>
 			            	<tr>
@@ -116,7 +116,7 @@
 	    </div>
 	    
         <!--content s-->
-        <form  method="post" id="cond-input-form-dem" enctype="multipart/form-data">
+        <form  method="post" id="cond-input-form" enctype="multipart/form-data">
         	<div class="model-input-content clearfix">
         		<div class="col-sm-4 text-right">Import "Demands"</div>
 	        	<div class="col-sm-4">
@@ -138,7 +138,7 @@
 
         <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" id="cond-file-upload-dem">Upload</button>
+	        <button type="button" class="btn btn-primary" id="cond-file-upload">Upload</button>
 	    </div>
     </div>
   </div>
@@ -177,7 +177,7 @@
 
 
 
-<div class="modal fade" id="newUserModal-dem">
+<div class="modal fade" id="newUserModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -185,73 +185,85 @@
                 <h4 class="modal-title">Adding dot information</h4>
             </div>
             <div class="modal-body">
-                <form id="newUserForm-dem" class="form-horizontal">
+                <form id="newUserForm" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">date</label>
+                        <label class="col-sm-2 control-label">siteCode</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="date" >
+                            <input type="text" class="form-control" name="siteCode" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteCodeCollect</label>
+                        <label class="col-sm-2 control-label">longitude</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteCodeCollect" >
+                            <input type="text" class="form-control" name="siteLongitude" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteCodeDelivery</label>
+                        <label class="col-sm-2 control-label">latitude</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteCodeDelivery" >
+                            <input type="text" class="form-control" name="siteLatitude" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">productType</label>
+                        <label class="col-sm-2 control-label">name</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="productType" >
+                            <input type="text" class="form-control" name="siteName" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">durationStart</label>
+                        <label class="col-sm-2 control-label">address</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="durationStart" >
+                            <input type="text" class="form-control" name="siteAddress" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">durationEnd</label>
+                        <label class="col-sm-2 control-label">area</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="durationEnd" >
+                            <input type="text" class="form-control" name="siteArea" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">weight</label>
+                        <label class="col-sm-2 control-label">type</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="weight" >
+                            <input type="text" class="form-control" name="siteType" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">votes</label>
+                        <label class="col-sm-2 control-label">distrib.center</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="votes" >
+                            <input type="text" class="form-control" name="siteNightDelivery" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">ageing</label>
+                        <label class="col-sm-2 control-label">truck quantity limit</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="ageing" >
+                            <input type="text" class="form-control" name="carNum" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">truck weight limit</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="largeCarModel" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">capacity</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="maxOperateNum" >
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn-dem" class="btn btn-primary">Save</button>
+                <button type="button" id="saveBtn" class="btn btn-primary">Save</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 
-<div class="modal fade" id="editUserModal-dem">
+<div class="modal fade" id="editUserModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -259,67 +271,79 @@
                 <h4 class="modal-title">Edit dot information</h4>
             </div>
             <div class="modal-body">
-                <form id="editUserForm-dem" class="form-horizontal">
-                    <input type="hidden" name="id" id="siteId-dem" value="">
+                <form id="editUserForm" class="form-horizontal">
+                    <input type="hidden" name="id" id="siteId" value="">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">date</label>
+                        <label class="col-sm-2 control-label">ID</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="date" id="date">
+                            <input type="text" class="form-control" name="siteCode" id="siteCode">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteCodeCollect</label>
+                        <label class="col-sm-2 control-label">longitude</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteCodeCollect" id="siteCodeCollect">
+                            <input type="text" class="form-control" name="siteLongitude" id="siteLongitude">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteCodeDelivery</label>
+                        <label class="col-sm-2 control-label">latitude</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteCodeDelivery" id="siteCodeDelivery">
+                            <input type="text" class="form-control" name="siteLatitude" id="siteLatitude">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">productType</label>
+                        <label class="col-sm-2 control-label">name</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="productType" id="productType">
+                            <input type="text" class="form-control" name="siteName" id="siteName">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">durationStart</label>
+                        <label class="col-sm-2 control-label">address</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="durationStart" id="durationStart">
+                            <input type="text" class="form-control" name="siteAddress" id="siteAddress">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">durationEnd</label>
+                        <label class="col-sm-2 control-label">area</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="durationEnd" id="durationEnd">
+                            <input type="text" class="form-control" name="siteArea" id="siteArea">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">weight</label>
+                        <label class="col-sm-2 control-label">type</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="weight" id="weight">
+                            <input type="text" class="form-control" name="siteType" id="siteType">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">votes</label>
+                        <label class="col-sm-2 control-label">distrib.center</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="votes" id="votes">
+                            <input type="text" class="form-control" name="siteNightDelivery" id="siteNightDelivery">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">ageing</label>
+                        <label class="col-sm-2 control-label">truck quantity limit</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="ageing" id="ageing">
+                            <input type="text" class="form-control" name="carNum" id="carNum">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">truck weight limit</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="largeCarModel" id="largeCarModel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">capacity</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="maxOperateNum" id="maxOperateNum">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="editBtn-dem" class="btn btn-primary">Save</button>
+                <button type="button" id="editBtn" class="btn btn-primary">Save</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

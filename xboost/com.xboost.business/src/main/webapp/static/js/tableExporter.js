@@ -22,7 +22,7 @@
         var $this = $(this);
         var cols = options.cols ? options.cols.split(',') : [];
         var result = '';
-        var data_type = { 'csv' : 'text/csv', 'txt' : 'text/plain', 'xls' : 'application/vnd.ms-excel', 'json' : 'application/json', };
+        var data_type = { 'csv' : 'text/csv', 'txt' : 'text/plain', 'xlsx' : 'application/vnd.ms-excel', 'json' : 'application/json', };
 
         if ( typeof options.onbefore != "function" || typeof options.onafter != "function" || !options.format || !options.head_delimiter || !options.column_delimiter || !options.filename ) 
         { console.error( 'One of the parameters is incorrect.' ); return false; }
@@ -125,7 +125,7 @@
 
             break;
 
-            case "xls":
+            case "xlsx":
                 var headers = getHeaders();
                 var items  = getItems();
                 template = '<table><thead>%thead%</thead><tbody>%tbody%</tbody></table>';

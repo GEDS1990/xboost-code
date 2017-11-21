@@ -8,7 +8,7 @@
                 <li>
                 	<div class="nav_xban"><span class="icon icon-3d"></span>Xboots System</div>
                 	<div class="xb-hover">
-                		<div class="nav_xb">
+                		<div class="nav_xb" id="nav-MyScenarios">
                 			<span class="icon-item alt icon-files"></span>
                 			<a href="/MyScenarios">My Scenarios</a>
                 		</div>
@@ -21,23 +21,23 @@
 	                    </div>
                     </div>
                     <ul class="xb-nav_ul">
-                    	<li><a href="/ScenariosName/Conditions"><span class="icon-item alt icon-document-add"></span>Conditions</a></li>
-                    	<li><a href="#"><span class="icon-item alt icon-play"></span>Simualt</a></li>
-                    	<li><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li>
+                    	<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Conditions</a></li>
+                    	<li id="nav-Simualt"><a href="#"><span class="icon-item alt icon-play"></span>Simualt</a></li>
+                    	<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li>
                     </ul>
                 </li>
                 <li class="xb-hover">
-                    <div class="nav_xb"><span class="icon alt icon-bar-chart"></span>Research</div>
+                    <div class="nav_xb" id="nav-Research"><span class="icon alt icon-bar-chart"></span>Research</div>
                 </li>
                 <li class="xb-hover">
-                    <div class="nav_xb"><span class="icon alt icon-sitemap"></span>All Scebario</div>
+                    <div class="nav_xb" id="nav-AllScebario"><span class="icon alt icon-sitemap"></span>All Scebario</div>
                 </li>
                 <li class="xb-hover">
-                    <div class="nav_xb"><span class="icon alt icon-users"></span>User Manage</div>
+                    <div class="nav_xb" id="UserManage"><span class="icon alt icon-users"></span>User Manage</div>
                 </li>
                 <shiro:hasRole name="管理员">
                 <li class="xb-hover">
-                    <div class="nav_xb"><span class="icon alt icon-desktop"></span>System</div>
+                    <div class="nav_xb" id="System"><span class="icon alt icon-desktop"></span>System</div>
                 </li>
                 </shiro:hasRole>
                 

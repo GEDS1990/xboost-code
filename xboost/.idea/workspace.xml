@@ -2,7 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="798f4a8c-02fa-42db-a628-1f4b37acdc88" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/resources/config.properties" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/resources/config.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/MyScenarios/MyScenarios.jsp" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/MyScenarios/MyScenarios.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/ScenariosName/Conditions.jsp" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/ScenariosName/Conditions.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/ScenariosName/Demands.jsp" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/ScenariosName/Demands.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/ScenariosName/Distance.jsp" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/ScenariosName/Distance.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/ScenariosName/ScenariosName.jsp" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/ScenariosName/ScenariosName.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/account/list.jsp" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/account/list.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/include/nav.jsp" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/include/nav.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/siteInfo/siteList.jsp" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/WEB-INF/views/siteInfo/siteList.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/static/css/Xboost/ScenariosName.css" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/static/css/Xboost/ScenariosName.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/static/css/Xboost/xb_main.css" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/static/css/Xboost/xb_main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/static/css/sb-admin-2.css" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/static/css/sb-admin-2.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/static/js/Xboost/ScenariosName.js" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/static/js/Xboost/ScenariosName.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/static/js/tableExporter.js" afterPath="$PROJECT_DIR$/com.xboost.business/src/main/webapp/static/js/tableExporter.js" />
     </list>
     <ignored path="$PROJECT_DIR$/com.xboost.mckalns/target/" />
     <ignored path="$PROJECT_DIR$/com.xboost.business/target/" />
@@ -446,7 +460,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -454,7 +467,7 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20607375" sideWeight="0.50476193" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5" sideWeight="0.50682855" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7071583" sideWeight="0.4952381" order="2" side_tool="false" content_ui="tabs" />
@@ -467,7 +480,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5" sideWeight="0.49761903" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5" sideWeight="0.49317148" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
