@@ -67,7 +67,7 @@
 	    	<div>
 	    		<!--Depots Info-->
 			    <div class="table-responsive active">
-			    	<a href="javascript:;" id="addNewUser" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus"></i>Add Info</a>
+			    	<a href="javascript:;" id="addNewUser-dist" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus"></i>Add Info</a>
 		            <table id="Depots_Distance" class="table table-striped table-bordered table-hover">
 			            <thead>
 			            	<tr>
@@ -107,7 +107,7 @@
 	    </div>
 	    
         <!--content s-->
-        <form  method="post" id="cond-input-form" enctype="multipart/form-data">
+        <form  method="post" id="cond-input-form-dist" enctype="multipart/form-data">
         	<div class="model-input-content clearfix">
         		<div class="col-sm-4 text-right">Import "Depots Distance"</div>
 	        	<div class="col-sm-4">
@@ -129,7 +129,7 @@
 
         <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" id="cond-file-upload">Upload</button>
+	        <button type="button" class="btn btn-primary" id="cond-file-upload-dist">Upload</button>
 	    </div>
     </div>
   </div>
@@ -168,7 +168,7 @@
 
 
 
-<div class="modal fade" id="newUserModal">
+<div class="modal fade" id="newUserModal-dist">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -176,7 +176,7 @@
                 <h4 class="modal-title">Adding dot information</h4>
             </div>
             <div class="modal-body">
-                <form id="newUserForm" class="form-horizontal">
+                <form id="newUserForm-dist" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">siteCollect</label>
                         <div class="col-sm-10">
@@ -205,14 +205,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn" class="btn btn-primary">Save</button>
+                <button type="button" id="saveBtn-dist" class="btn btn-primary">Save</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 
-<div class="modal fade" id="editUserModal">
+<div class="modal fade" id="editUserModal-dist">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -220,8 +220,8 @@
                 <h4 class="modal-title">Edit dot information</h4>
             </div>
             <div class="modal-body">
-                <form id="editUserForm" class="form-horizontal">
-                    <input type="hidden" name="id" id="siteId" value="">
+                <form id="editUserForm-dist" class="form-horizontal">
+                    <input type="hidden" name="id" id="siteId-dist" value="">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">siteCollect</label>
                         <div class="col-sm-10">
@@ -250,7 +250,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="editBtn" class="btn btn-primary">Save</button>
+                <button type="button" id="editBtn-dist" class="btn btn-primary">Save</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

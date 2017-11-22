@@ -1,9 +1,13 @@
 package com.xboost.websocket;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
+import com.xboost.pojo.User;
+import com.xboost.util.ShiroUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
@@ -25,8 +29,9 @@ public class SystemWebSocketHandler implements WebSocketHandler {
         log.debug("ConnectionEstablished");
         users.add(session);
 
-        session.sendMessage(new TextMessage("connect"));
-        session.sendMessage(new TextMessage("new_msg"));
+//        session.sendMessage(new TextMessage("connect"));
+//        session.sendMessage(new TextMessage("new_msg"));
+        session.sendMessage(new TextMessage("connected"));
 
     }
 
@@ -59,7 +64,36 @@ public class SystemWebSocketHandler implements WebSocketHandler {
     public boolean supportsPartialMessages() {
         return false;
     }
+    /**
+     * 给某个用户发送消息
+     *
+     * @param userName
+     * @param message
+     */
+    public void sendMessageToUser(String userName, TextMessage message) {
 
+        for (WebSocketSession user : users) {
+//            Principal principal = user.getPrincipal();
+//            user.webSocketSession.user.object.username;
+            try {
+                user.sendMessage(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            break;
+
+//            if (user.getAttributes().get("userName").equals(userName)) {
+//                try {
+//                    if (user.isOpen()) {
+//                        user.sendMessage(message);
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                break;
+//            }
+        }
+    }
     /**
      * 给所有在线用户发送消息
      *
