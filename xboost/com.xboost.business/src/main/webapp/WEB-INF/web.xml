@@ -15,6 +15,7 @@
       <param-name>forceEncoding</param-name>
       <param-value>true</param-value>
     </init-param>
+    <async-supported>true</async-supported>
   </filter>
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
@@ -26,6 +27,7 @@
   <filter>
     <filter-name>shiroFilter</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <async-supported>true</async-supported>
   </filter>
   <filter-mapping>
     <filter-name>shiroFilter</filter-name>
@@ -48,6 +50,7 @@
     <servlet-name>mvc</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
+    <async-supported>true</async-supported>
   </servlet>
   <servlet-mapping>
     <servlet-name>mvc</servlet-name>

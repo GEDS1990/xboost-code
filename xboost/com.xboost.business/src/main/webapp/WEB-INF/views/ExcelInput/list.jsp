@@ -33,9 +33,109 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <style type="text/css">
+        #connect-container {
+            float: left;
+            width: 400px
+        }
+
+        #connect-container div {
+            padding: 5px;
+        }
+
+        #console-container {
+            float: left;
+            margin-left: 15px;
+            width: 400px;
+        }
+
+        #console {
+            border: 1px solid #CCCCCC;
+            border-right-color: #999999;
+            border-bottom-color: #999999;
+            height: 170px;
+            overflow-y: scroll;
+            padding: 5px;
+            width: 100%;
+        }
+
+        #console p {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <script type="text/javascript">
+            var ws = null;
+            var url = null;
+            var transports = [];
+            $(function(){
+                if (window.location.protocol == 'http:') {
+                  url = 'ws://' + window.location.host + urlPath;
+                } else {
+                  url = 'wss://' + window.location.host + urlPath;
+                }
+                ws = new SockJS("http://127.0.0.1:80/webSocketServer/sockjs");
+                ws.onopen = function () {
+                    log('Info: connection opened.');
+                };
+                ws.onmessage = function (event) {
+                    log('Received: ' + event.data);
+                };
+                ws.onclose = function (event) {
+                    log('Info: connection closed.');
+                    log(event);
+                };
+            });
+            function setConnected(connected) {
+                document.getElementById('connect').disabled = connected;
+                document.getElementById('disconnect').disabled = !connected;
+                document.getElementById('echo').disabled = !connected;
+            }
+            function connect() {
+                ws = new SockJS("http://127.0.0.1:80/webSocketServer/sockjs");
+                ws.onopen = function () {
+                    setConnected(true);
+                    log('Info: connection opened.');
+                };
+
+                ws.onmessage = function (event) {
+                    log('Received: ' + event.data);
+                };
+                ws.onclose = function (event) {
+                    setConnected(false);
+                    log('Info: connection closed.');
+                    log(event);
+                };
+            }
+            function echo() {
+                ws = new SockJS("http://127.0.0.1:80/webSocketServer/sockjs");
+                if (ws != null) {
+                    var message = document.getElementById('message').value;
+                    log('Sent: ' + message);
+                    ws.send(message);
+                } else {
+                    alert('connection not established, please connect.');
+                }
+            }
+            function log(message) {
+                var console = document.getElementById('console');
+                var p = document.createElement('p');
+                p.style.wordWrap = 'break-word';
+                p.appendChild(document.createTextNode(message));
+                console.appendChild(p);
+                while (console.childNodes.length > 25) {
+                    console.removeChild(console.firstChild);
+                }
+                console.scrollTop = console.scrollHeight;
+            }
+        </script>
 </head>
 
 <body>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websockets
+    rely on Javascript being enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
 
 <div id="wrapper">
 
@@ -44,6 +144,20 @@
     <!-- Page Content -->
     <div id="page-wrapper">
         <div class="modal-body">
+        <div>
+            <div id="connect-container">
+                <div>
+                    <textarea id="message" style="width: 350px">Here is a message!</textarea>
+                </div>
+                <div>
+                    <button id="echo" onclick="echo();">Echo message</button>
+                </div>
+            </div>
+            <div id="console-container">
+                <div id="console"></div>
+            </div>
+        </div>
+
                         <form action="/sitedist/addByExcel" method="post" id="addSiteDistByExcel" enctype="multipart/form-data">
 
                             <div class="form-group" id="fileControls" style="">
@@ -152,6 +266,7 @@
             });
 
         $("#MrnBtn").click(function(){
+            connect();
             var json = {"senairoid":1}
             $.post("/cascade/newInput",json).done(function(result){
                 alert("success");
