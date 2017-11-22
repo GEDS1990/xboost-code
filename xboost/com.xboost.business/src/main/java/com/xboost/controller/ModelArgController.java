@@ -32,7 +32,7 @@ public class ModelArgController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
-        return "modelArg/list";
+        return "ScenariosName/Patameters";
     }
 
     /**

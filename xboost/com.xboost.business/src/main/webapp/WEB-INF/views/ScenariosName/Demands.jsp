@@ -59,7 +59,7 @@
 	        	<ul class="cond-top-ul clearfix">
 	        		<li><a href="/siteInfo">Depots Info</a></li>
 	        		<li><a href="/siteDist">Depots Distance</a></li>
-	        		<li><a href="#">Transportation</a></li>
+	        		<li><a href="/transport">Transportation</a></li>
 	        		<li class="active"><a  class="active" href="/demandInfo">Demands</a></li>
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
@@ -193,31 +193,31 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteCodeCollect</label>
+                        <label class="col-sm-2 control-label">pickup depot</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="siteCodeCollect" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteCodeDelivery</label>
+                        <label class="col-sm-2 control-label">delivery depot</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="siteCodeDelivery" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">productType</label>
+                        <label class="col-sm-2 control-label">product type</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="productType" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">durationStart</label>
+                        <label class="col-sm-2 control-label">startTime</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="durationStart" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">durationEnd</label>
+                        <label class="col-sm-2 control-label">endTime</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="durationEnd" >
                         </div>
@@ -229,13 +229,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">votes</label>
+                        <label class="col-sm-2 control-label">piece</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="votes" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">ageing</label>
+                        <label class="col-sm-2 control-label">effectiveness</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="ageing" >
                         </div>
@@ -268,31 +268,31 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteCodeCollect</label>
+                        <label class="col-sm-2 control-label">pickup depot</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="siteCodeCollect" id="siteCodeCollect">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteCodeDelivery</label>
+                        <label class="col-sm-2 control-label">delivery depot</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="siteCodeDelivery" id="siteCodeDelivery">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">productType</label>
+                        <label class="col-sm-2 control-label">product type</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="productType" id="productType">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">durationStart</label>
+                        <label class="col-sm-2 control-label">startTime</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="durationStart" id="durationStart">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">durationEnd</label>
+                        <label class="col-sm-2 control-label">startTime</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="durationEnd" id="durationEnd">
                         </div>
@@ -304,13 +304,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">votes</label>
+                        <label class="col-sm-2 control-label">piece</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="votes" id="votes">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">ageing</label>
+                        <label class="col-sm-2 control-label">effectiveness</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="ageing" id="ageing">
                         </div>

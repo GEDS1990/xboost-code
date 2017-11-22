@@ -59,7 +59,7 @@
 	        	<ul class="cond-top-ul clearfix">
 	        		<li><a href="/siteInfo">Depots Info</a></li>
 	        		<li class="active"><a  class="active" href="/siteDist">Depots Distance</a></li>
-	        		<li><a href="#">Transportation</a></li>
+	        		<li><a href="/transport">Transportation</a></li>
 	        		<li><a href="/demandInfo">Demands</a></li>
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
@@ -81,7 +81,6 @@
 			            </thead>
 			            <tbody id="cond-tbody">
 			            	<tr>
-				                <td></td>
 				                <td></td>
 				                <td></td>
 				                <td></td>
@@ -178,25 +177,25 @@
             <div class="modal-body">
                 <form id="newUserForm-dist" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteCollect</label>
+                        <label class="col-sm-2 control-label">pickup depot</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="siteCollect" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteDelivery</label>
+                        <label class="col-sm-2 control-label">delivery depot</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="siteDelivery" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">carDistance</label>
+                        <label class="col-sm-2 control-label">transportation distance(km)</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="carDistance" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">durationNightDelivery</label>
+                        <label class="col-sm-2 control-label">night transportation time(min)</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="durationNightDelivery" >
                         </div>
@@ -223,25 +222,25 @@
                 <form id="editUserForm-dist" class="form-horizontal">
                     <input type="hidden" name="id" id="siteId-dist" value="">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteCollect</label>
+                        <label class="col-sm-2 control-label">pickup depot</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="siteCollect" id="siteCollect">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteDelivery</label>
+                        <label class="col-sm-2 control-label">delivery depot</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="siteDelivery" id="siteDelivery">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">carDistance</label>
+                        <label class="col-sm-2 control-label">transportation distance(km)</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="carDistance" id="carDistance">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">durationNightDelivery</label>
+                        <label class="col-sm-2 control-label">transportation distance(km)</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="durationNightDelivery" id="durationNightDelivery">
                         </div>

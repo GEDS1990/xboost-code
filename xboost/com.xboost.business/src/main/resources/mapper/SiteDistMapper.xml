@@ -49,7 +49,7 @@
 
     <update id="editSiteDist">
         UPDATE t_site_distance SET scenarios_id = #{scenariosId},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
-        car_distance=#{carDistance},duration_nightDelivery=#{durationNightDelivery},createtime=#{createTime} where id = #{id}
+        car_distance=#{carDistance},duration_night_delivery=#{durationNightDelivery},createtime=#{createTime} where id = #{id}
     </update>
 
     <delete id="delById">

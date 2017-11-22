@@ -1,5 +1,5 @@
 $(function  () {
-	
+	var doc = document;
 	/*
 	//------------Conditions 页面tab切换
 	$('.cond-top-ul>li').click(function  () {
@@ -101,7 +101,7 @@ $(function  () {
 	 * 
 	 * */
 	(function  () {
-		var Depots_Info = $("#Depots_Info");
+		var Depots_Info = doc.getElementById("Depots_Info");
 		if (Depots_Info) {
 			var dt =$("#Depots_Info").DataTable({
 	            "processing": true, //loding效果
@@ -131,6 +131,10 @@ $(function  () {
 	                }}
 	            ],
 	            "columnDefs":[ //具体列的定义
+	            	{
+	                    "targets":[0],
+	                    "visible":false
+	                },
 	                {
 	                    "targets":[3],
 	                    "orderable":false
@@ -220,7 +224,6 @@ $(function  () {
 	        });
 	
 	        $("#editBtn").click(function(){
-	        alert($("#editUserForm").serialize())
 	            $.post("/siteInfo/edit",$("#editUserForm").serialize()).done(function(result){
 	                if(result == "success") {
 	                    $("#editUserModal").modal("hide");
@@ -244,7 +247,7 @@ $(function  () {
 	 * 
 	 * */
 	(function  () {
-		var Depots_Distance = $("#Depots_Distance");
+		var Depots_Distance = doc.getElementById("Depots_Distance");
 		if (Depots_Distance) {
 			var dt =$("#Depots_Distance").DataTable({
 	            "processing": true, //loding效果
@@ -373,7 +376,7 @@ $(function  () {
 	 * 
 	 * */
 	(function  () {
-		var Demands = $("#Demands");
+		var Demands = doc.getElementById("Demands");
 		if (Demands) {
 			var dt =$("#Demands").DataTable({
 	            "processing": true, //loding效果
@@ -505,6 +508,270 @@ $(function  () {
              UploadFile("cond-input-form-dem","cond_file","/demandInfo/addByExcel",'.bs-example-modal-input')
          });
 		}
+	})(),
+	/**
+	 * patameters.jsp = modelController
+	 * 
+	 */
+	(function  () {
+		var Patameters = document.getElementById("Patameters");
+		if (Patameters) {
+			var dt =$("#Patameters").DataTable({
+	            "processing": true, //loding效果
+	            "serverSide":true, //服务端处理
+	            "searchDelay": 1000,//搜索延迟
+	            "order":[[0,'desc']],//默认排序方式
+	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
+	            "ajax":{
+	                url:"/modelArg/modelArg.json", //获取数据的URL
+	                type:"get" //获取数据的方式
+	            },
+	            "columns":[  //返回的JSON中的对象和列的对应关系
+	                {"data":"id","name":"id"},
+	                {"data":"parameterName","name":"parameter_name"},
+	                {"data":"data","name":"data"},
+	                {"data":"note","name":"note"},
+	                {"data":function(row){
+	                    return "<a href='javascript:;' class='editLink-pata' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-pata' data-id='"+row.id+"'>Del</a>";
+	                }}
+	            ],
+	            "columnDefs":[ //具体列的定义
+	                {
+	                    "targets":[0],
+	                    "visible":false
+	                },
+	                {
+	                    "targets":[0,1,2,3,4],
+	                    "orderable":false
+	                }
+	            ],
+	            "language":{
+	                "lengthMenu":"Show _MENU_ Record",
+	                "search":"Search:",
+	                "info": "There are  _TOTAL_ records From _START_ To _END_",
+	                "processing":"Loading...",
+	                "zeroRecords":"No Data",
+	                "infoEmpty": "There are 0 records from 0 to 0",
+	                "infoFiltered":"(Read from _MAX_ record)",
+	                "paginate": {
+	                    "first":      "First",
+	                    "last":       "Last",
+	                    "next":       "Next",
+	                    "previous":   "Prev"
+	                }
+	            }
+	        });
+        
+
+        //添加新用户
+        $("#addNewUser-pata").click(function(){
+            $("#newUserModal-pata").modal('show');
+        });
+        $("#saveBtn-pata").click(function(){
+            $.post("/modelArg/add",$("#newUserForm-pata").serialize())
+                    .done(function(result){
+                        if("success" == result) {
+                            $("#newUserForm-pata")[0].reset();
+                            $("#newUserModal-pata").modal("hide");
+                            dt.ajax.reload();
+                            window.location.reload(); 
+                        }
+                    }).fail(function(){
+                        alert("Exception occurs when adding");
+                    });
+
+        });
+
+        //删除用户
+        $(document).delegate(".delLink-pata","click",function(){
+            var id = $(this).attr("data-id");
+            if(confirm("Are you sure you want to delete this data?")) {
+                $.post("/modelArg/del",{"id":id}).done(function(result){
+                    if("success" == result) {
+                        dt.ajax.reload();
+                        window.location.reload(); 
+                    }
+                }).fail(function(){
+                    alert("Delete exception");
+                });
+
+            }
+        });
+
+        //编辑用户
+        $(document).delegate(".editLink-pata","click",function(){
+            $("#editUserForm-pata")[0].reset();
+            var id = $(this).attr("data-id");
+            $.get("modelArg/modelArgById.json",{"id":id}).done(function(result){
+                $("#siteId-pata").val(result.id);
+                $("#parameterName").val(result.parameterName);
+                $("#data").val(result.data);
+                $("#note").val(result.note);
+                
+                $("#editUserModal-pata").modal("show");
+
+            }).fail(function(){
+
+            });
+			
+            
+        });
+
+        $("#editBtn-pata").click(function(){
+        
+            $.post("/modelArg/edit",$("#editUserForm-pata").serialize()).done(function(result){
+                if(result == "success") {
+                    $("#editUserModal-pata").modal("hide");
+                    dt.ajax.reload();
+                    window.location.reload(); 
+                }
+            }).fail(function(){
+                alert("Modify user exception");
+            });
+
+        });
+
+         $("#cond-file-upload-pata").click(function(){
+             UploadFile("cond-input-form-pata","cond_file","/modelArg/addByExcel",'.bs-example-modal-input')
+         });
+		}
+	})(),
+	/**
+	 * Tran.jsp = TransportationController
+	 * 
+	 */
+	(function  () {
+		var Transportation = document.getElementById("Transportation");
+		if (Transportation) {
+			var dt =$("#Transportation").DataTable({
+	            "processing": true, //loding效果
+	            "serverSide":true, //服务端处理
+	            "searchDelay": 1000,//搜索延迟
+	            "order":[[0,'desc']],//默认排序方式
+	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
+	            "ajax":{
+	                url:"/transport/transport.json", //获取数据的URL
+	                type:"get" //获取数据的方式
+	            },
+	            "columns":[  //返回的JSON中的对象和列的对应关系
+	                {"data":"id","name":"id"},
+	                {"data":"carSource","name":"car_source"},
+	                {"data":"carNum","name":"car_num"},
+	                {"data":"carType","name":"car_type"},
+	                {"data":"speed","name":"speed"},
+	                {"data":"maxDistance","name":"max_distance"},
+	                {"data":"maxLoad","name":"max_load"},
+	                {"data":"durationUnloadFull","name":"duration_unload_full"},
+	                {"data":"carCost1","name":"car_cost1"},
+	                {"data":"carCost2","name":"car_cost2"},
+	                {"data":"carCost3","name":"car_cost3"},
+	                {"data":"singleVoteCost1","name":"single_vote_cost1"},
+	                {"data":"singleVoteCost2","name":"single_vote_cost2"},
+	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
+	                {"data":function(row){
+	                    return "<a href='javascript:;' class='editLink-tran' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-tran' data-id='"+row.id+"'>Del</a>";
+	                }}
+	            ],
+	            "columnDefs":[ //具体列的定义
+	                {
+	                    "targets":[0],
+	                    "visible":false
+	                },
+	                {
+	                    "targets":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+	                    "orderable":false
+	                }
+	            ],
+	            "language":{
+	                "lengthMenu":"Show _MENU_ Record",
+	                "search":"Search:",
+	                "info": "There are  _TOTAL_ records From _START_ To _END_",
+	                "processing":"Loading...",
+	                "zeroRecords":"No Data",
+	                "infoEmpty": "There are 0 records from 0 to 0",
+	                "infoFiltered":"(Read from _MAX_ record)",
+	                "paginate": {
+	                    "first":      "First",
+	                    "last":       "Last",
+	                    "next":       "Next",
+	                    "previous":   "Prev"
+	                }
+	            }
+	        });
+        
+
+        //添加新用户
+        $("#addNewUser-tran").click(function(){
+            $("#newUserModal-tran").modal('show');
+        });
+        $("#saveBtn-tran").click(function(){
+            $.post("/transport/add",$("#newUserForm-tran").serialize())
+                    .done(function(result){
+                        if("success" == result) {
+                            $("#newUserForm-tran")[0].reset();
+                            $("#newUserModal-tran").modal("hide");
+                            dt.ajax.reload();
+                            window.location.reload(); 
+                        }
+                    }).fail(function(){
+                        alert("Exception occurs when adding");
+                    });
+
+        });
+
+        //删除用户
+        $(document).delegate(".delLink-tran","click",function(){
+            var id = $(this).attr("data-id");
+            if(confirm("Are you sure you want to delete this data?")) {
+                $.post("/transport/del",{"id":id}).done(function(result){
+                    if("success" == result) {
+                        dt.ajax.reload();
+                        window.location.reload(); 
+                    }
+                }).fail(function(){
+                    alert("Delete exception");
+                });
+
+            }
+        });
+
+        //编辑用户
+        $(document).delegate(".editLink-tran","click",function(){
+            $("#editUserForm-pata")[0].reset();
+            var id = $(this).attr("data-id");
+            $.get("transport/transpt.json",{"id":id}).done(function(result){
+                $("#siteId-pata").val(result.id);
+                $("#parameterName").val(result.parameterName);
+                $("#data").val(result.data);
+                $("#note").val(result.note);
+                
+                $("#editUserModal-pata").modal("show");
+
+            }).fail(function(){
+
+            });
+			
+            
+        });
+
+        $("#editBtn-pata").click(function(){
+        
+            $.post("/transport/edit",$("#editUserForm-pata").serialize()).done(function(result){
+                if(result == "success") {
+                    $("#editUserModal-pata").modal("hide");
+                    dt.ajax.reload();
+                    window.location.reload(); 
+                }
+            }).fail(function(){
+                alert("Modify user exception");
+            });
+
+        });
+
+         $("#cond-file-upload-pata").click(function(){
+             UploadFile("cond-input-form-pata","cond_file","/transport/addByExcel",'.bs-example-modal-input')
+         });
+		}
 	})()
 	
 	
@@ -613,4 +880,3 @@ $(function  () {
 
 
 });
-
