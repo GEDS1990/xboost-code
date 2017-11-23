@@ -202,3 +202,10 @@ table.table-bordered.dataTable td:last-child {
 #addNewUser{
 	font-size: 16px;
 }
+#MyScenarios_length{
+	display: none;
+}
+.modal-header{
+	background-color: #eef1f7;
+    border-radius: 10px;
+}

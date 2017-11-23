@@ -61,19 +61,22 @@
 		    	<div>
 		    		<!--Depots Info-->
 				    <div class="table-responsive active">
-			            <table id="Depots_Distance" class="table table-striped table-bordered table-hover">
+			            <table id="MyScenarios" class="table table-striped table-bordered table-hover">
 				            <thead>
 				            	<tr>
 				            		<th>ID</th>
-					                <th>pickup depot</th>
-					                <th>delivery depot</th>
-					                <th>transportation distance(km)</th>
-					                <th>night transportation time(min)</th>
+					                <th>Scenarios Name</th>
+					                <th>Category</th>
+					                <th>Description</th>
+					                <th>Last Opened</th>
+					                <th>Current Status</th>
 					                <th>operation</th>
 				            	</tr>
 				            </thead>
 				            <tbody id="cond-tbody">
 				            	<tr>
+					                <td></td>
+					                <td></td>
 					                <td></td>
 					                <td></td>
 					                <td></td>
@@ -102,7 +105,7 @@
         <!--content s-->
         <form  method="post" id="cond-input-form-dist" enctype="multipart/form-data">
         	<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Depots Distance"</div>
+        		<div class="col-sm-4 text-right">Import Failed</div>
 	        	<div class="col-sm-4">
 	        		<input type="file" name="file" class="cond_file"/>
 	        		<div class="cond-file-box clearfix">
@@ -140,32 +143,28 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Adding dot information</h4>
+                <h4 class="modal-title">Create Scenarios</h4>
             </div>
             <div class="modal-body">
                 <form id="newUserForm-dist" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">pickup depot</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-4 control-label">Scenarios Name*:</label>
+                        <div class="col-sm-7">
                             <input type="text" class="form-control" name="siteCollect" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">delivery depot</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteDelivery" >
+                        <label class="col-sm-4 control-label">Category*:</label>
+                        <div class="col-sm-7">
+                            <select type="text" class="form-control" name="siteDelivery" >
+                            	<option value=""></option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">transportation distance(km)</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="carDistance" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">night transportation time(min)</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="durationNightDelivery" >
+                        <label class="col-sm-4 control-label">Description</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" name="carDistance" ></textarea>
                         </div>
                     </div>
                 </form>
@@ -179,45 +178,19 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade" id="editUserModal-dist">
+<div class="modal fade" id="modal-del">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit dot information</h4>
+                <h4 class="modal-title">Delete Scenario</h4>
             </div>
             <div class="modal-body">
-                <form id="editUserForm-dist" class="form-horizontal">
-                    <input type="hidden" name="id" id="siteId-dist" value="">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">pickup depot</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteCollect" id="siteCollect">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">delivery depot</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteDelivery" id="siteDelivery">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">transportation distance(km)</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="carDistance" id="carDistance">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">transportation distance(km)</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="durationNightDelivery" id="durationNightDelivery">
-                        </div>
-                    </div>
-                </form>
+                <p>Are you sure want to delete this Scenario</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="editBtn-dist" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" id="modal-delBtn" class="btn btn-primary">Yes</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

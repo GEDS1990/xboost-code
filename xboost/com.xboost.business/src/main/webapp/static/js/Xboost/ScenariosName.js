@@ -15,7 +15,115 @@ $(function  () {
 	});	
 	*/
 	
-	
+	/*
+	 *MyScenarios.jsp == MyScenariosController
+	 * 
+	 * */
+	(function  () {
+		var MyScenarios = doc.getElementById("MyScenarios");
+		if (MyScenarios) {
+			var dt =$("#MyScenarios").DataTable({
+	            "processing": true, //loding效果
+	            "serverSide":true, //服务端处理
+	            "searchDelay": 1000,//搜索延迟
+	            "order":[[0,'desc']],//默认排序方式
+	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
+	            "ajax":{
+	                url:"/siteDist/siteDist.json", //获取数据的URL
+	                type:"get" //获取数据的方式
+	            },
+	            "columns":[  //返回的JSON中的对象和列的对应关系
+	                {"data":"id","name":"id"},
+	                {"data":"siteCollect","name":"site_collect"},
+	                {"data":"siteDelivery","name":"site_delivery"},
+	                {"data":"carDistance","name":"car_distance"},
+	                {"data":"carDistance","name":"car_distance"},
+	                {"data":"durationNightDelivery","name":"duration_night_delivery"},
+	                {"data":function(row){
+	                    return "<a href='javascript:;' class='openLink-dist' data-id='"+row.id+"'>Open</a> <a href='javascript:;' class='editLink-dist' data-id='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-dist' data-id='"+row.id+"'>Delete</a>";
+	                }}
+	            ],
+	            "columnDefs":[ //具体列的定义
+	            	{
+	                    "targets":[0],
+	                    "visible":false
+	                },
+	                {
+	                    "targets":[6],
+	                    "orderable":false
+	                },
+	                {
+	                    "targets":[1,2,3,4,5],
+	                    "orderable":true
+	                }
+	            ],
+	            "language":{
+	                "lengthMenu":"Show _MENU_ Record",
+	                "search":"Search:",
+	                "info": "There are  _TOTAL_ records From _START_ To _END_",
+	                "processing":"Loading...",
+	                "zeroRecords":"No Data",
+	                "infoEmpty": "There are 0 records from 0 to 0",
+	                "infoFiltered":"(Read from _MAX_ record)",
+	                "paginate": {
+	                    "first":      "First",
+	                    "last":       "Last",
+	                    "next":       "Next",
+	                    "previous":   "Prev"
+	                }
+	            }
+	        });
+        
+
+        //添加新用户
+        $("#addNewUser-dist").click(function(){
+            $("#newUserModal-dist").modal('show');
+        });
+        $("#saveBtn-dist").click(function(){
+            $.post("/siteDist/add",$("#newUserForm-dist").serialize())
+                    .done(function(result){
+                        if("success" == result) {
+                            $("#newUserForm-dist")[0].reset();
+                            $("#newUserModal-dist").modal("hide");
+                            dt.ajax.reload();
+                            window.location.reload(); 
+                        }
+                    }).fail(function(){
+                        alert("Exception occurs when adding");
+                    });
+
+        });
+
+        //删除用户
+        $(document).delegate(".delLink-dist","click",function(){
+            var id = $(this).attr("data-id");
+            $('#modal-del').modal("show")
+            $('#modal-delBtn').click(function  () {
+            	$.post("/siteDist/del",{"id":id}).done(function(result){
+                    if("success" == result) {
+                        dt.ajax.reload();
+                        window.location.reload(); 
+                    }
+                }).fail(function(){
+                    alert("Delete exception");
+                });
+            }) 
+                
+
+            
+        });
+
+        //导出文件
+        
+        //打开场景
+
+		//上传excel文件
+         $("#cond-file-upload-dist").click(function(){
+         	UploadFile("cond-input-form-dist","cond_file","/siteDist/addByExcel",'.bs-example-modal-input')
+         });
+		}
+		
+	})(),
 	/*
 	 * 选择上传文件
 	 */
