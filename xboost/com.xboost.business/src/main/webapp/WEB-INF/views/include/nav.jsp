@@ -22,7 +22,7 @@
                     </div>
                     <ul class="xb-nav_ul">
                     	<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Conditions</a></li>
-                    	<li id="nav-Simualt"><a href="/Simualt"><span class="icon-item alt icon-play"></span>Simualt</a></li>
+                    	<li id="nav-Simualt"><a href="/excelInput"><span class="icon-item alt icon-play"></span>Simualt</a></li>
                     	<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li>
                     </ul>
                 </li>
