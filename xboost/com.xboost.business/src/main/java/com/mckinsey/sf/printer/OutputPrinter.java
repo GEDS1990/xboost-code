@@ -51,8 +51,6 @@ public class OutputPrinter implements IConstants {
 
 	public static void printLine(String str){
 		System.out.println(str);
-//		SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
-//		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage(str));
 	}
 	
 	public static void printError(String str){
