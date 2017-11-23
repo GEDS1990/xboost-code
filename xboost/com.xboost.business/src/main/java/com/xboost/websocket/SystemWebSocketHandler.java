@@ -75,12 +75,25 @@ public class SystemWebSocketHandler implements WebSocketHandler {
         for (WebSocketSession user : users) {
 //            Principal principal = user.getPrincipal();
 //            user.webSocketSession.user.object.username;
-            try {
-                user.sendMessage(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-//            break;
+//            try {
+//                if (user.isOpen()) {
+//                    user.sendMessage(message);
+//                }else{
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        if (user.isOpen()) {
+                            user.sendMessage(message);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
 
 //            if (user.getAttributes().get("userName").equals(userName)) {
 //                try {

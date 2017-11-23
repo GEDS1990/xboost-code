@@ -47,12 +47,12 @@ import org.springframework.web.socket.TextMessage;
 * @version        
 */
 public class OutputPrinter implements IConstants {
-	
+
 
 	public static void printLine(String str){
 		System.out.println(str);
-		SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
-		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage(str));
+//		SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
+//		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage(str));
 	}
 	
 	public static void printError(String str){
@@ -63,16 +63,19 @@ public class OutputPrinter implements IConstants {
 		HashMap<String,Double> routeCost = new HashMap<String,Double>();
 		printLine("+---------------------------------------------------------------------------------------------------------------------------------------------------------------+");
 		printLine("| Solution                                                         ");
-		printLine("+---------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+		printLine("| Solution                                                         ");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("+-----------------------------+"));
 		printLine("| Cost:"+ s.cost());
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("| Cost:"+ s.cost()));
 		printLine("+---------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-		
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("+-----------------------------+"));
 		for (Map.Entry<String, Route> entry : s.getRoutes().entrySet()) {  
 			Route r = entry.getValue();
 			printRoute(r,routeCost,s);
 		}
 
 		printLine("+-----------------------------+");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("+-----------------------------+"));
 //		printLine("+-------------total cost : ----------------"+total);
 		
 	}
@@ -87,7 +90,18 @@ public class OutputPrinter implements IConstants {
 		printLine("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
 		printLine("|type\t\t|location\t|job ID\t\t\t|arr_time\t|end_timev\t| activity ID\t|\r\n");
 		printLine("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|Vechile Type\t|"+r.getC().getType()+"\t|Start Loc.\t|"+r.getC().getStartLocation()+"\t|\n"));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("40%...."));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|  Route     \t|"+r.getId()+"\t|Vehicle\t|"+r.getC().getId()+"\t|\n"));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("50%...."));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("| Total Dist.\t|"+rstat.getTotalDist()+"\t|Total Cost\t|"+rstat.getTotalCost()+"\t|\n"));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("55%...."));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+"));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("60%...."));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|type\t\t|location\t|job ID\t\t\t|arr_time\t|end_timev\t| activity ID\t|\r\n"));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("70%...."));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+"));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("80%...."));
 		if(r.getActs().size() != 0){
 			Activity start = r.getActs().get(0);
 			Activity end = r.getActs().get(r.getActs().size()-1);
@@ -172,10 +186,13 @@ public class OutputPrinter implements IConstants {
 		
 		if(type.equals(DELIVERY)){
 			printLine("|"+type+"\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n");
+			systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|"+type+"\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
 		}else if(type.equals(START) || type.equals(END)){
 			printLine("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t\t\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n");
+			systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t\t\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
 		}else{
 			printLine("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n");
+			systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
 		}
 		
 		return true;
@@ -271,27 +288,39 @@ public class OutputPrinter implements IConstants {
 		}
 
 		printLine( "|cost\t\t|"+ df.format(s.cost())+"\t\t|");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|cost\t\t|"+ df.format(s.cost())+"\t\t|"));
 		printLine( "|noJobs\t\t|"+ df.format(s.numTotalJobs())+"\t\t\t|");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|noJobs\t\t|"+ df.format(s.numTotalJobs())+"\t\t\t|"));
 		printLine( "|avgDis\t\t|"+ df.format(avgDis)+"\t\t|");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|avgDis\t\t|"+ df.format(avgDis)+"\t\t|"));
 		printLine( "|avgCost\t|"+ df.format(avgCost)+"\t\t\t|");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|avgCost\t|"+ df.format(avgCost)+"\t\t\t|"));
 		printLine( "|avgJobs\t|"+ df.format(avgJobs)+"\t\t\t|");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|avgJobs\t|"+ df.format(avgJobs)+"\t\t\t|"));
 		printLine( "|avgTime\t|"+ df.format(avgArrivalTime)+"\t\t|");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|avgTime\t|"+ df.format(avgArrivalTime)+"\t\t|"));
 		printLine( "|avgLoad\t|"+ df.format(avgLoad)+"\t\t\t|");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|avgLoad\t|"+ df.format(avgLoad)+"\t\t\t|"));
 		printLine( "|numRoutes\t|"+ s.getRoutes().size()+"\t\t\t|");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|numRoutes\t|"+ s.getRoutes().size()+"\t\t\t|"));
 		
 		for(Entry<String, Integer> keyValue : CascadeModelUtil.carsMap.entrySet()){
 			String key = keyValue.getKey();
 			int value = keyValue.getValue();
 			
 			printLine( "|"+key+"\t|"+ (CascadeModelUtil.carsMap.containsKey(key)?value:0)+"\t\t\t|");
-			
+			systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("|"+key+"\t|"+ (CascadeModelUtil.carsMap.containsKey(key)?value:0)+"\t\t\t|"));
+
+
 		}
 		
 		for(IConstraint c : s.getConstraints()){
 			printLine("Constraint\t|"+c.getName()+"\t|");
+			systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("Constraint\t|"+c.getName()+"\t|"));
 		}
 		
 		printLine("+---------------------------------------+");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("+---------------------------------------+"));
 		
 	}
 
@@ -299,9 +328,13 @@ public class OutputPrinter implements IConstants {
 		printLine("+-----------------------------+");
 		printLine("| Unassigned                  |");
 		printLine("+-----------------------------+");
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("+-----------------------------+"));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("| Unassigned                  |"));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("+-----------------------------+"));
 		for (Map.Entry<String, Job> entry : s.getUnassigned().entrySet()) {  
 			Job j = entry.getValue();
 			printLine("| "+j.getId()+"\t | "+j.getPickup().getLocation()+" - "+j.getDelivery().getLocation()+"\t |\n");
+			systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("| "+j.getId()+"\t | "+j.getPickup().getLocation()+" - "+j.getDelivery().getLocation()+"\t |\n"));
 		}
 	}
 
@@ -331,6 +364,11 @@ public class OutputPrinter implements IConstants {
 			printLine("route start time:"+route.getActs().get(1).getTw().getStart());
 			printLine("route trace:"+routeTracer.toString());
 			printLine("route max stops:"+maxStopsCur);
+			systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("+-----------------------------+"));
+			systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("route id:"+route.getId()));
+			systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("route start time:"+route.getActs().get(1).getTw().getStart()));
+			systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("route trace:"+routeTracer.toString()));
+			systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("route max stops:"+maxStopsCur));
 			
 			if(maxStopsCur < minStops){
 				minStops = maxStopsCur;
@@ -347,6 +385,9 @@ public class OutputPrinter implements IConstants {
 		printLine("total max stops:"+maxStops);
 		printLine("total min stops:"+minStops);
 		printLine("total mean stops:"+meanStops);
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("total max stops:"+maxStops));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("total min stops:"+minStops));
+		systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("total mean stops:"+meanStops));
 	}
 	
 	public static void writeStandardOutputToExcel(Solution s, RoutingTransportCosts transportCost) {

@@ -5,12 +5,8 @@
     <cache/>
 
     <insert id="add">
-        INSERT into t_model_arg(scenario_id,duration_collect,duration_load,duration_siteStart_sort,duration_relay,duration_transfer,duration_siteEnd_sort,
-        duration_unload,num_operater,duration_peak_start,duration_peak_end,duration_siteTransfer_start,duration_siteTransfer_end,
-        str1,str2,str3,createtime,updatetime)
-        VALUES (#{scenarioId},#{durationCollect},#{durationLoad},#{durationSiteStartSort},#{durationRelay},#{durationTransfer},#{durationSiteEndSort},
-        #{durationUnload},#{numOperater},#{durationPeakStart},#{durationPeakEnd},#{durationSiteTransferStart},#{durationSiteTransferEnd},
-        #{str1},#{str2},#{str3},#{createTime},#{updateTime})
+        INSERT into t_model_arg(scenario_id,parameter_name,data,note,str1,str2,str3,createtime,updatetime)
+        VALUES (#{scenarioId},#{parameterName},#{data},#{note},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
     <select id="findAll" resultType="com.xboost.pojo.ModelArg">
@@ -21,12 +17,19 @@
         SELECT * from t_model_arg
         <where>
             <if test="keyword != null and keyword != ''">
-                id = #{keyword} or scenario_id = #{keyword}
+                parameterName = #{keyword}
             </if>
         </where>
         order by ${orderColumn} ${orderType}
         limit ${start},${length}
     </select>
+
+
+
+
+
+
+
 
     <select id="findAllCount" resultType="long">
         SELECT COUNT(*) FROM t_model_arg
@@ -36,7 +39,7 @@
         SELECT count(*) FROM t_model_arg
         <where>
             <if test="keyword != null and keyword != ''">
-                id = #{keyword} or scenario_id = #{keyword}
+                parameterName = #{keyword}
             </if>
         </where>
     </select>
@@ -46,35 +49,19 @@
     </select>
 
     <update id="editModelArg">
-        UPDATE t_model_arg SET scenario_id = #{scenarioId},duration_collect = #{durationCollect},duration_load=#{durationLoad},
-        duration_siteStart_sort=#{durationSiteStartSort},duration_relay=#{durationRelay},duration_transfer=#{durationTransfer},
-        duration_siteEnd_sort=#{durationSiteEndSort},duration_unload=#{durationUnload},num_operater=#{numOperater},duration_peak_start=#{durationPeakStart},
-        duration_peak_end=#{durationPeakEnd},duration_siteTransfer_start=#{durationSiteTransferStart},duration_siteTransfer_end=#{durationSiteTransferEnd}
-        where id = #{id}
+        UPDATE t_model_arg SET scenario_id = #{scenarioId},parameter_name = #{parameterName},data = #{data},note=#{note} where id = #{id}
     </update>
 
     <delete id="delById">
         DELETE FROM t_model_arg WHERE id = #{id}
     </delete>
 
-
     <resultMap id="modelArgMap" type="ModelArg">
         <result property="id" column="id"/>
         <result property="scenarioId" column="scenario_id"/>
-        <result property="durationCollect" column="duration_collect"/>
-        <result property="durationLoad" column="duration_load"/>
-        <result property="durationSiteStartSort" column="duration_siteStart_sort"/>
-        <result property="durationRelay" column="duration_relay"/>
-        <result property="durationTransfer" column="duration_transfer"/>
-        <result property="durationSiteEndSort" column="duration_siteEnd_sort"/>
-        <result property="durationUnload" column="duration_unload"/>
-        <result property="numOperater" column="num_operater"/>
-        <result property="durationPeakStart" column="duration_peak_start"/>
-        <result property="durationPeakEnd" column="duration_peak_end"/>
-        <result property="durationSiteTransferStart" column="duration_siteTransfer_start"/>
-        <result property="durationSiteTransferEnd" column="duration_siteTransfer_end"/>
-
+        <result property="parameterName" column="parameter_name"/>
+        <result property="data" column="data"/>
+        <result property="note" column="note"/>
     </resultMap>
-
 
 </mapper>
