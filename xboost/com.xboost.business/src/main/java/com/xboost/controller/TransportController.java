@@ -1,12 +1,12 @@
 package com.xboost.controller;
 
 import com.google.common.collect.Maps;
-import com.xboost.pojo.ModelArg;
-import com.xboost.service.ModelArgService;
-import com.xboost.util.ExcelUtil;
+import com.xboost.pojo.Transportation;
+import com.xboost.service.TransportService;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -25,30 +24,41 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/modelArg")
-public class ModelArgController {
+@RequestMapping("/transport")
+public class TransportController {
     @Inject
-    private ModelArgService modelArgService;
+    private TransportService transportService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
-        return "ScenariosName/Patameters";
+        return "ScenariosName/Tran";
     }
 
+    private static Logger logger = LoggerFactory.getLogger(TransportService.class);
+
     /**
-     * 添加模型整体参数信息
+     * 添加运力信息
      * @return
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public String addModelArg(ModelArg modelArg) {
-        modelArgService.addModelArg(modelArg);
+    public String AddTransport(Transportation transport) {
+        transportService.saveTransport(transport);
         return "success";
     }
 
 
-    //查询所有模型整体参数信息
-    @RequestMapping(value = "/modelArg.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    //通过Excel添加运力信息
+    @RequestMapping(value = "/addByExcel",method = RequestMethod.POST)
+    @ResponseBody
+    public String AddTransportByExcel(Transportation transport,@RequestParam MultipartFile[] file) {
+        transportService.addTransportByExcel(transport,file);
+        return "/ScenariosName/Conditions";
+    }
+
+
+    //查询运力信息
+    @RequestMapping(value = "/transport.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String,Object> load(HttpServletRequest request) {
 
@@ -73,45 +83,46 @@ public class ModelArgController {
 
         Map<String,Object> result = Maps.newHashMap();
 
-        List<ModelArg> modelArgList = modelArgService.findByParam(param); //.findAll();
-        Integer count = modelArgService.findAllCount();
-        Integer filteredCount = modelArgService.findCountByParam(param);
+        List<Transportation> transportList = transportService.findByParam(param); //.findAllSiteInfo();
+        Integer count = transportService.findAllCount();
+        Integer filteredCount = transportService.findCountByParam(param);
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
-        result.put("data",modelArgList);
+        result.put("data",transportList);
         return result;
     }
 
     /**
-     * 根据ID获取模型整体参数信息
+     * 根据ID获取运力信息
      */
-    @RequestMapping(value = "/modelArgById.json",method = RequestMethod.GET)
+    @RequestMapping(value = "/transpt.json",method = RequestMethod.GET)
     @ResponseBody
-    public ModelArg getModelArg(Integer id) {
-        return modelArgService.findById(id);
+    public Transportation getTransport(Integer id) {
+        return transportService.findById(id);
     }
 
     /**
-     * 编辑模型整体参数信息
+     * 编辑运力信息
      * @return
      */
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
-    public String editModelArg(ModelArg modelArg) {
-        modelArgService.editModelArg(modelArg);
+    public String editTransport(Transportation transport) {
+        transportService.editTransport(transport);
+
         return "success";
     }
 
 
     /**
-     * 删除模型整体参数信息
+     * 删除用户
      */
     @RequestMapping(value = "/del",method = RequestMethod.POST)
     @ResponseBody
     public String delById(Integer id) {
-        modelArgService.delById(id);
+        transportService.delById(id);
         return "success";
     }
 

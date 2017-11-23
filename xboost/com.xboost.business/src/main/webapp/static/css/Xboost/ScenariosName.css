@@ -34,6 +34,7 @@
 	background-color: #eef1f7;
 	margin-top: 5px;
 	line-height: 51px;
+	height: 51px;
 }
 .cond-top-ul>li>a{
 	padding: 2px 12px;
@@ -87,7 +88,6 @@
 	border: 1px solid #ddd;
 }
 
-.table>tbody>tr>td:first-child{color: #687189;}
 .table>tbody>tr>td{
 	color: #19a371;
 	text-align: center;
