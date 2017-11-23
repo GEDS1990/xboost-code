@@ -1,5 +1,8 @@
 package com.mckinsey.sf.constants;
-/**   
+
+import com.xboost.websocket.SystemWebSocketHandler;
+
+/**
 *    
 * Author：Alivia Chen   
 * Email : alivia_chen@mckinsey.com
@@ -77,8 +80,9 @@ public interface IConstants {
 	
 	double PROCESSTING_TIME =0;
 	
-	double DISTANCE_COST = 0; 
+	double DISTANCE_COST = 0;
 
-	
+
+	static SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
 
 }

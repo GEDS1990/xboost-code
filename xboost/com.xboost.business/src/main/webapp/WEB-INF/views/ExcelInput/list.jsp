@@ -65,71 +65,6 @@
             margin: 0;
         }
     </style>
-    <script type="text/javascript">
-            var ws = null;
-            var url = null;
-            var transports = [];
-            $(function(){
-                if (window.location.protocol == 'http:') {
-                  url = 'ws://' + window.location.host + urlPath;
-                } else {
-                  url = 'wss://' + window.location.host + urlPath;
-                }
-                ws = new SockJS("http://127.0.0.1:80/webSocketServer/sockjs");
-                ws.onopen = function () {
-                    log('Info: connection opened.');
-                };
-                ws.onmessage = function (event) {
-                    log('Received: ' + event.data);
-                };
-                ws.onclose = function (event) {
-                    log('Info: connection closed.');
-                    log(event);
-                };
-            });
-            function setConnected(connected) {
-                document.getElementById('connect').disabled = connected;
-                document.getElementById('disconnect').disabled = !connected;
-                document.getElementById('echo').disabled = !connected;
-            }
-            function connect() {
-                ws = new SockJS("http://127.0.0.1:80/webSocketServer/sockjs");
-                ws.onopen = function () {
-                    setConnected(true);
-                    log('Info: connection opened.');
-                };
-
-                ws.onmessage = function (event) {
-                    log('Received: ' + event.data);
-                };
-                ws.onclose = function (event) {
-                    setConnected(false);
-                    log('Info: connection closed.');
-                    log(event);
-                };
-            }
-            function echo() {
-                ws = new SockJS("http://127.0.0.1:80/webSocketServer/sockjs");
-                if (ws != null) {
-                    var message = document.getElementById('message').value;
-                    log('Sent: ' + message);
-                    ws.send(message);
-                } else {
-                    alert('connection not established, please connect.');
-                }
-            }
-            function log(message) {
-                var console = document.getElementById('console');
-                var p = document.createElement('p');
-                p.style.wordWrap = 'break-word';
-                p.appendChild(document.createTextNode(message));
-                console.appendChild(p);
-                while (console.childNodes.length > 25) {
-                    console.removeChild(console.firstChild);
-                }
-                console.scrollTop = console.scrollHeight;
-            }
-        </script>
 </head>
 
 <body>
@@ -144,20 +79,6 @@
     <!-- Page Content -->
     <div id="page-wrapper">
         <div class="modal-body">
-        <div>
-            <div id="connect-container">
-                <div>
-                    <textarea id="message" style="width: 350px">Here is a message!</textarea>
-                </div>
-                <div>
-                    <button id="echo" onclick="echo();">Echo message</button>
-                </div>
-            </div>
-            <div id="console-container">
-                <div id="console"></div>
-            </div>
-        </div>
-
                         <form action="/sitedist/addByExcel" method="post" id="addSiteDistByExcel" enctype="multipart/form-data">
 
                             <div class="form-group" id="fileControls" style="">
@@ -171,6 +92,9 @@
                     </div>
                         <div class="modal-footer">
                             <button type="button" class=" btn btn-primary" id="MrnBtn">跑算法</button>
+                            <div id="console-container">
+                                <div id="console"></div>
+                            </div>
                         </div>
         <!-- /.container-fluid -->
     </div>
@@ -266,7 +190,20 @@
             });
 
         $("#MrnBtn").click(function(){
-            connect();
+            document.getElementById('console').innerHTML="";
+            ws = new SockJS("http://127.0.0.1:80/webSocketServer/sockjs");
+            ws.onopen = function () {
+                log('Info: connection opened.');
+            };
+
+            ws.onmessage = function (event) {
+                log(event.data);
+            };
+            ws.onclose = function (event) {
+                log('Info: connection closed.');
+                log(event);
+            };
+
             var json = {"senairoid":1}
             $.post("/cascade/newInput",json).done(function(result){
                 alert("success");
@@ -274,6 +211,14 @@
                 alert("fail");
             });
         });
+        function log(message) {
+            var console = document.getElementById('console');
+            var p = document.createElement('p');
+            p.style.wordWrap = 'break-word';
+            p.appendChild(document.createTextNode(message));
+            console.appendChild(p);
+            console.scrollTop = console.scrollHeight;
+        }
 
 
 

@@ -12,6 +12,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 
 import com.mckinsey.sf.constants.IConstants;
+import com.xboost.util.ShiroUtil;
+import org.springframework.web.socket.TextMessage;
 
 /**   
 *    
@@ -62,7 +64,6 @@ public class PalnsThread extends Thread implements IConstants  {
 			if(i % 10 == 0){
 				OutputPrinter.printLine("id: "+ workerid+ "\tbest: "+ ((Solution)palns.getBest()).cost()+"\t#"+ i/10);
 			}
-			
 			temperature *= palns.getConfig().getAlpha();
 		}
 		

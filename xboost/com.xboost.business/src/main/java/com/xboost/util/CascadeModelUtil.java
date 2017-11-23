@@ -23,6 +23,8 @@ import com.mckinsey.sf.utils.ExcelToJson;
 import com.xboost.pojo.Configuration;
 import com.xboost.service.DemandInfoService;
 import com.xboost.service.SiteDistService;
+import com.xboost.websocket.SystemWebSocketHandler;
+import org.springframework.web.socket.TextMessage;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,9 +62,16 @@ public class CascadeModelUtil implements IConstants {
         //initialize input and config from json file and constants
         Config conf = initConf(config,demandInfoService);
 
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("1%...."));
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("initConf...."));
+
         Input input = initInput(config , demandInfoService);
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("5%...."));
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("initInput...."));
         long startTime = System.currentTimeMillis();
         OutputPrinter.printLine("s	tart init ...");
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("8%...."));
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("s	tart init ..."));
         RoutingTransportCosts transportCost = new RoutingTransportCosts(siteDistService, conf.getTransportCost().getDistance(), conf.getTransportCost().getNearest(), conf.getTransportCost().getFixed_stop_time(), false,distMode);
         DefaultConstraints defaultCons = new DefaultConstraints(conf.getDistanceConstraint().getWeight(),conf.getTimeConstraint().getWeight(),1,transportCost);
         IConstraint[] cons = {defaultCons};
@@ -74,7 +83,11 @@ public class CascadeModelUtil implements IConstants {
         DefaultJobPacker jobPacker = new DefaultJobPacker(conf.getJobPacker().getInterval(),1);
 
         OutputPrinter.printLine("start packing....");
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("10%...."));
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("s	start packing ..."));
         OutputPrinter.printLine("before packing: "+ input.getInitSolution().getUnassignedJobs().length);
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("15%...."));
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("before packing: "+ input.getInitSolution().getUnassignedJobs().length));
         double volume = 0;
         //从数据库中读数据
         for(Job j : input.getInitSolution().getUnassignedJobs()){
@@ -84,8 +97,11 @@ public class CascadeModelUtil implements IConstants {
 
         SolutionJson initSolutionBeforePack = jobPacker.pack(input.getInitSolution());
         OutputPrinter.printLine("initSolution:"+initSolutionBeforePack.getRoutes().length+","+initSolutionBeforePack.getUnassignedJobs().length);
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("20%...."));
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("initSolution:"+initSolutionBeforePack.getRoutes().length+","+initSolutionBeforePack.getUnassignedJobs().length));
         OutputPrinter.printLine("build initSolution....");
-
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("25%...."));
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("build initSolution...."));
         GreedyInsertion constructive = new GreedyInsertion();
         constructive.setTransportCost(transportCost);
 
@@ -93,8 +109,11 @@ public class CascadeModelUtil implements IConstants {
                 cons,cm,costCalculator,noiser,constructive);
 
         OutputPrinter.printLine("initSolution:"+initSolutionAfterPack.getRoutes().size()+" "+initSolutionAfterPack.getUnassigned().size());
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("30%...."));
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("initSolution:"+initSolutionAfterPack.getRoutes().size()+" "+initSolutionAfterPack.getUnassigned().size()));
         for(Job j: initSolutionAfterPack.getUnassigned().values()){
             System.out.println(j.getId());
+            systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage(j.getId()));
         }
         List<IRemoval> rops = new ArrayList<IRemoval>();
         //add shawRemoval
@@ -119,6 +138,7 @@ public class CascadeModelUtil implements IConstants {
         }
         PALNS algo = new PALNS(initSolutionAfterPack, rops, iops, conf.getPconf());
         OutputPrinter.printLine("start running ...");
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("start running..."));
         Solution finalPackSolution = (Solution)algo.runAlgo();
 //		OutputPrinter.PrintSolution(finalPackSolution);
 //		OutputPrinter.PrintProblem(finalPackSolution);
@@ -139,20 +159,20 @@ public class CascadeModelUtil implements IConstants {
         }
 
         Solution finalSolution = Solution.newSolution(finalSolutionJson.getUnassignedJobs(),finalSolutionJson.getRoutes(),
-                cons,cm,costCalculator,noiser,constructive);
+        cons,cm,costCalculator,noiser,constructive);
         OutputPrinter.PrintSolution(finalSolution);
         OutputPrinter.PrintProblem(finalSolution);
         OutputPrinter.PrintUnassigned(finalSolution);
-
         //calculate max stops
         OutputPrinter.PrintRoutes(finalSolution);
-
-        OutputPrinter.printLine("finished.");
+        OutputPrinter.printLine("finished.");systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("99%...."));
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("finished."));
         long endTime = System.currentTimeMillis();
         OutputPrinter.printLine("total time used:"+(endTime-startTime)+"ms");
-
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("total time used:"+(endTime-startTime)+"ms"));
 //		OutputPrinter.writeSolutionToExcel(finalSolution);
         OutputPrinter.writeStandardOutputToExcel(finalSolution,transportCost);
+        systemWebSocketHandler.sendMessageToUser(ShiroUtil.getCurrentUserName(), new TextMessage("writeStandardOutputToExcel"));
     }
     private Config initConf(Configuration config,DemandInfoService demandInfoService) {
 
