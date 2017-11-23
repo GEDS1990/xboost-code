@@ -22,8 +22,10 @@
     <!-- Custom Fonts -->
     <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/static/js/morris/morris.css">
-    <link rel="stylesheet" href="../../static/css/Xboost/icon.css" />
-    <link rel="stylesheet" href="../../static/css/Xboost/xb_main.css" />
+    <link rel="stylesheet" href="/static/js/datatables/media/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/Xboost/icon.css" />
+    <link rel="stylesheet" href="/static/css/Xboost/xb_main.css" />
+    <link rel="stylesheet" href="/static/css/Xboost/ScenariosName.css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,37 +39,199 @@
 <body>
 
 <div id="wrapper">
-
     <%@ include file="../include/nav.jsp"%>
     <!-- Page Content -->
     <div class="xb_page_content">
+    	
+        <!--main-->
 	    <div id="page-wrapper">
-	        <div class="container-fluid">
-	            <div class="row">
-	                <div class="col-lg-12">
-	                    <div class="page-header">
-	                        <h4><i class="fa fa-home"></i> 我的首页</h4>
-	                    </div>
-	                    <div class="panel panel-default">
-	                        <div class="panel-heading">销售进展报告</div>
-	                        <div class="panel-body">
-	                            <div id="myfirstchart" style="height: 250px;"></div>
-	                        </div>
-	                    </div>
-	
-	<div class="active">ddddddddddddddd</div>
-	
-	                </div>
-	                <!-- /.col-lg-12 -->
-	            </div>
-	            <!-- /.row -->
+	    	<!--top-->
+	    	<div class="clearfix cond-wrap">
+	        	<div class="xb-fl">
+	        		<p>UserName′s Scenarios</p>
+	        	</div>
+	        	<div class="xb-fr">
+	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Conditions</button>
+	        		<button id="addNewUser-dist" ><span class="icon-file-text-o"></span>Create Scenarios</button>
+	        	</div>
 	        </div>
-	        <!-- /.container-fluid -->
+	        <div style="position: relative;">
+		        <div class="cond-top">
+		        </div>
+		    	<div>
+		    		<!--Depots Info-->
+				    <div class="table-responsive active">
+			            <table id="Depots_Distance" class="table table-striped table-bordered table-hover">
+				            <thead>
+				            	<tr>
+				            		<th>ID</th>
+					                <th>pickup depot</th>
+					                <th>delivery depot</th>
+					                <th>transportation distance(km)</th>
+					                <th>night transportation time(min)</th>
+					                <th>operation</th>
+				            	</tr>
+				            </thead>
+				            <tbody id="cond-tbody">
+				            	<tr>
+					                <td></td>
+					                <td></td>
+					                <td></td>
+					                <td></td>
+					                <td></td>
+				            	</tr>
+				            </tbody>
+			            </table>
+			        </div>
+		    	</div>
+		    </div>
 	    </div>
 	    <!-- /#page-wrapper -->
 	</div>
 </div>
 <!-- /#wrapper -->
+
+<!--Model input-->
+<div class="modal fade bs-example-modal-input" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	    </div>
+	    
+        <!--content s-->
+        <form  method="post" id="cond-input-form-dist" enctype="multipart/form-data">
+        	<div class="model-input-content clearfix">
+        		<div class="col-sm-4 text-right">Import "Depots Distance"</div>
+	        	<div class="col-sm-4">
+	        		<input type="file" name="file" class="cond_file"/>
+	        		<div class="cond-file-box clearfix">
+	        			<div class="cond-file-btn">Choose File</div>
+	        			<p>No file chosen</p>
+	        		</div>
+	        	</div>
+	        	<div class="col-sm-4">
+	        		<div>
+	        			<span class="icon-upload"></span>
+	        			Download Template
+	        		</div>
+	        	</div>
+        	</div>
+        </form>
+        <!--content e-->
+
+        <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" id="cond-file-upload-dist">Upload</button>
+	    </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="modal fade" id="newUserModal-dist">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Adding dot information</h4>
+            </div>
+            <div class="modal-body">
+                <form id="newUserForm-dist" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">pickup depot</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="siteCollect" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">delivery depot</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="siteDelivery" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">transportation distance(km)</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="carDistance" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">night transportation time(min)</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="durationNightDelivery" >
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="saveBtn-dist" class="btn btn-primary">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade" id="editUserModal-dist">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit dot information</h4>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm-dist" class="form-horizontal">
+                    <input type="hidden" name="id" id="siteId-dist" value="">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">pickup depot</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="siteCollect" id="siteCollect">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">delivery depot</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="siteDelivery" id="siteDelivery">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">transportation distance(km)</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="carDistance" id="carDistance">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">transportation distance(km)</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="durationNightDelivery" id="durationNightDelivery">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="editBtn-dist" class="btn btn-primary">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
 
 <!-- jQuery -->
 <script src="/static/js/jquery.min.js"></script>
@@ -82,10 +246,17 @@
 <script src="/static/js/sb-admin-2.js"></script>
 <script src="/static/js/morris/raphael-min.js"></script>
 <script src="/static/js/morris/morris.min.js"></script>
+<%-- DataTables JS--%>
+<script src="/static/js/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
+<script src="../../../static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/Xboost/navMain.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="/static/js/Xboost/ScenariosName.js" ></script>
 <script type="text/javascript">
 	$(function  () {
-		$('#nav-MyScenarios').addClass("active");
+		(function  () {
+			$('#nav-MyScenarios').addClass("active");
+		})()
 	});
 </script>
 </body>
