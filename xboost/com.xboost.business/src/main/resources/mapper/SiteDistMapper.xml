@@ -5,7 +5,7 @@
     <cache/>
 
     <insert id="save">
-        INSERT INTO `t_site_distance`(scenarios_id,site_collect,site_delivery,car_distance,duration_night_delivery,createtime)
+        INSERT INTO `t_site_distance`(scenariosId,site_collect,site_delivery,car_distance,duration_night_delivery,createtime)
         VALUES (#{scenariosId}, #{siteCollect}, #{siteDelivery}, #{carDistance}, #{durationNightDelivery}, #{createTime});
     </insert>
     <select id="findAll" resultType="com.xboost.pojo.SiteDist">
@@ -58,7 +58,7 @@
 
     <resultMap id="siteDistMap" type="SiteDist">
         <result property="id" column="id"/>
-        <result property="scenariosId" column="scenarios_id"/>
+        <result property="scenariosId" column="scenariosId"/>
         <result property="siteCollect" column="site_collect"/>
         <result property="siteDelivery" column="site_delivery"/>
         <result property="carDistance" column="car_distance"/>
