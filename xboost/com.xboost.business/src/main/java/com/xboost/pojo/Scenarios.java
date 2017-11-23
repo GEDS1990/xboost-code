@@ -3,10 +3,13 @@ package com.xboost.pojo;
 public class Scenarios {
     private Integer id;
     private Integer userId;
-    private String scenarios_name;
-    private String scenarios_desc;           //网点经度
-    private String scenarios_model;            //网点纬度
-    private String scenarios_out;            //网点纬度
+    private String scenariosName;             //场景名称
+    private String scenariosCategory;
+    private String scenariosDesc;           //场景描述
+    private String scenariosModel;            //场景所选模型
+    private String scenariosOut;            //场景所需输出结果
+    private String scenariosStatus;         //场景状态
+    private String lastOpenTime;           //最近一次打开时间
     private String str1;                   //预留字段
     private String str2;                    //预留字段
     private String str3;                  //预留字段
@@ -29,36 +32,60 @@ public class Scenarios {
         this.userId = userId;
     }
 
-    public String getScenarios_name() {
-        return scenarios_name;
+    public String getScenariosName() {
+        return scenariosName;
     }
 
-    public void setScenarios_name(String scenarios_name) {
-        this.scenarios_name = scenarios_name;
+    public void setScenariosName(String scenariosName) {
+        this.scenariosName = scenariosName;
     }
 
-    public String getScenarios_desc() {
-        return scenarios_desc;
+    public String getScenariosCategory() {
+        return scenariosCategory;
     }
 
-    public void setScenarios_desc(String scenarios_desc) {
-        this.scenarios_desc = scenarios_desc;
+    public void setScenariosCategory(String scenariosCategory) {
+        this.scenariosCategory = scenariosCategory;
     }
 
-    public String getScenarios_model() {
-        return scenarios_model;
+    public String getScenariosDesc() {
+        return scenariosDesc;
     }
 
-    public void setScenarios_model(String scenarios_model) {
-        this.scenarios_model = scenarios_model;
+    public void setScenariosDesc(String scenariosDesc) {
+        this.scenariosDesc = scenariosDesc;
     }
 
-    public String getScenarios_out() {
-        return scenarios_out;
+    public String getScenariosModel() {
+        return scenariosModel;
     }
 
-    public void setScenarios_out(String scenarios_out) {
-        this.scenarios_out = scenarios_out;
+    public void setScenariosModel(String scenariosModel) {
+        this.scenariosModel = scenariosModel;
+    }
+
+    public String getScenariosOut() {
+        return scenariosOut;
+    }
+
+    public void setScenariosOut(String scenariosOut) {
+        this.scenariosOut = scenariosOut;
+    }
+
+    public String getScenariosStatus() {
+        return scenariosStatus;
+    }
+
+    public void setScenariosStatus(String scenariosStatus) {
+        this.scenariosStatus = scenariosStatus;
+    }
+
+    public String getLastOpenTime() {
+        return lastOpenTime;
+    }
+
+    public void setLastOpenTime(String lastOpenTime) {
+        this.lastOpenTime = lastOpenTime;
     }
 
     public String getStr1() {

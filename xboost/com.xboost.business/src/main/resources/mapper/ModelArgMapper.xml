@@ -25,12 +25,6 @@
     </select>
 
 
-
-
-
-
-
-
     <select id="findAllCount" resultType="long">
         SELECT COUNT(*) FROM t_model_arg
     </select>
