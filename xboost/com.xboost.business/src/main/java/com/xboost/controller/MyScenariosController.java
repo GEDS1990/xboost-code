@@ -2,9 +2,13 @@ package com.xboost.controller;
 
 import com.google.common.collect.Maps;
 import com.xboost.pojo.Scenarios;
+import com.xboost.pojo.User;
 import com.xboost.service.ScenariosService;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -121,6 +125,21 @@ public class MyScenariosController {
     @ResponseBody
     public String delById(Integer id) {
         scenariosService.delById(id);
+        return "success";
+    }
+
+    /**
+     * 打开场景
+     * 将场景id设置到session中
+     */
+    @RequestMapping(value = "/open",method = RequestMethod.POST)
+    @ResponseBody
+    public String openScenariosById(Integer id) {
+        //获取认证主体
+        Subject subject = SecurityUtils.getSubject();
+        //将场景id放入到Session中
+        Session session = subject.getSession();
+        session.setAttribute("openScenariosId",id);
         return "success";
     }
 
