@@ -37,7 +37,7 @@
                 </li>
                 <shiro:hasRole name="管理员">
                 <li class="xb-hover">
-                    <div class="nav_xb" id="System"><a href="/account"><span class="icon alt icon-desktop"></span>System</a></div>
+                    <div class="nav_xb" id="System"><a href="/druid"><span class="icon alt icon-desktop"></span>System</a></div>
                 </li>
                 </shiro:hasRole>
                 
