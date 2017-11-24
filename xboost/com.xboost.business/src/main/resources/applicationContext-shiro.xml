@@ -20,7 +20,7 @@
             <value>
                 /static/** = anon
                 /wx/** = anon
-                /account/** = anon
+                /account/** = roles[管理员]
                 /** = authc
             </value>
         </property>
