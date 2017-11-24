@@ -33,11 +33,11 @@
                     <div class="nav_xb" id="nav-AllScebario"><span class="icon alt icon-sitemap"></span>All Scebario</div>
                 </li>
                 <li class="xb-hover">
-                    <div class="nav_xb" id="UserManage"><span class="icon alt icon-users"></span>User Manage</div>
+                    <div class="nav_xb" id="UserManage"><a href="/account"><span class="icon alt icon-users"></span>User Manage</a></div>
                 </li>
                 <shiro:hasRole name="管理员">
                 <li class="xb-hover">
-                    <div class="nav_xb" id="System"><span class="icon alt icon-desktop"></span>System</div>
+                    <div class="nav_xb" id="System"><a href="/account"><span class="icon alt icon-desktop"></span>System</a></div>
                 </li>
                 </shiro:hasRole>
                 
@@ -65,12 +65,12 @@
                 <li>
                      <a href="/demandInfo"><i class="fa fa-edit fa-fw"></i>需求信息</a>
                 </li>
+                <li>
+                    <a href="/account"><i class="fa fa-table fa-fw"></i> 管理员</a>
+                </li>
                 --%>
                 <li>
                     <a href="/excelInput"><i class="fa fa-dashboard fa-fw"></i> excelInput</a>
-                </li>
-                <li>
-                    <a href="/account"><i class="fa fa-table fa-fw"></i> 管理员</a>
                 </li>
 
                 <%--TBD--%>

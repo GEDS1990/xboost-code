@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>CRM-客户关系管理系统</title>
+    <title>Xboost-物流规划管理系统</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -25,6 +25,9 @@
     <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="/static/js/datatables/media/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/Xboost/icon.css" />
+    <link rel="stylesheet" href="/static/css/Xboost/xb_main.css" />
+    <link rel="stylesheet" href="/static/css/Xboost/ScenariosName.css" />
  
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

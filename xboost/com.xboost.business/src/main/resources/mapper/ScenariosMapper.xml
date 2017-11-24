@@ -56,7 +56,7 @@
     </delete>
 
 
-    <resultMap id="scanariosMap" type="Scenarios">
+    <resultMap id="scenariosMap" type="Scenarios">
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="scenariosName" column="scenarios_name"/>
