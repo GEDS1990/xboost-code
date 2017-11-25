@@ -13,14 +13,15 @@
 
 
     <select id="findAll" resultType="com.xboost.pojo.Scenarios">
-        SELECT * FROM t_scenarios_info
+        SELECT * FROM t_scenarios_info where user_id=#{userId}
     </select>
 
     <select id="findByParam" parameterType="map" resultType="Scenarios" resultMap="scenariosMap">
         SELECT * from t_scenarios_info
         <where>
+            user_id=#{userId}
             <if test="keyword != null and keyword != ''">
-                scenarios_name LIKE #{keyword} or scenarios_category like #{keyword} or scenarios_desc like #{keyword}
+                and scenarios_name LIKE #{keyword} or scenarios_category like #{keyword} or scenarios_desc like #{keyword}
             </if>
         </where>
         order by ${orderColumn} ${orderType}
@@ -28,14 +29,15 @@
     </select>
 
     <select id="findAllCount" resultType="long">
-        SELECT COUNT(*) FROM t_scenarios_info
+        SELECT COUNT(*) FROM t_scenarios_info where user_id=#{userId}
     </select>
 
     <select id="findCountByParam" resultType="long" parameterType="map">
         SELECT count(*) FROM t_scenarios_info
         <where>
+            user_id=#{userId}
             <if test="keyword != null and keyword != ''">
-                scenarios_name LIKE #{keyword} or scenarios_category like #{keyword} or scenarios_desc like #{keyword}
+                and scenarios_name LIKE #{keyword} or scenarios_category like #{keyword} or scenarios_desc like #{keyword}
             </if>
         </where>
     </select>
@@ -48,6 +50,10 @@
         UPDATE t_scenarios_info SET user_id = #{userId},scenarios_name = #{scenariosName},scenarios_category=#{scenariosCategory},
         scenarios_desc=#{scenariosDesc},scenarios_model=#{scenariosModel},scenarios_out=#{scenariosOut},
         scenarios_status=#{scenariosStatus},last_open_time=#{lastOpenTime} where id = #{id}
+    </update>
+
+    <update id="updateOpenTime">
+        UPDATE t_scenarios_info SET last_open_time=#{openTime} where id = #{openScenariosId}
     </update>
 
 
