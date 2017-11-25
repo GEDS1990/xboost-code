@@ -23,6 +23,7 @@ $(function  () {
 	 * 
 	 * */
 	(function  () {
+		
 		var MyScenarios = doc.getElementById("MyScenarios");
 		if (MyScenarios) {
 			var dt =$("#MyScenarios").DataTable({
