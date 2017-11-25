@@ -21,13 +21,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/cascade")
 public class CascadeController {
-    /**
-     * 跳转Simualte.jsp页面
-     */
-    @RequestMapping(method = RequestMethod.GET)
-    public String MyScenarios() {
-        return "ScenariosName/Simualte";
-    }
+
     @Inject
     CascadeService cascadeService;
 

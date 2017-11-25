@@ -19,7 +19,7 @@ public class SimualtController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
-        return "ScenariosName/SimualtValidate";
+        return "ScenariosName/Simualte";
     }
 
     /**

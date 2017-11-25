@@ -99,7 +99,7 @@ $(function  () {
 					add+='</div></div>';
         			add+='<ul class="xb-nav_ul" id="scen-class">';
         			add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Conditions</a></li>';
-        			add+='<li id="nav-Simualt"><a href="/Simualte"><span class="icon-item alt icon-play"></span>Simualt</a></li>';
+        			add+='<li id="nav-Simualt"><a href="/simulate"><span class="icon-item alt icon-play"></span>Simualt</a></li>';
         			add+='<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li></ul>';
         			$('#scen-info').append(add);
                     	

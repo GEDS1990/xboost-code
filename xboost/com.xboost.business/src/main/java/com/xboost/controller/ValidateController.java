@@ -36,7 +36,7 @@ public class ValidateController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
-        return "ScenariosName/Conditions";
+        return "ScenariosName/SimualtValidate";
     }
 
     private static Logger logger = LoggerFactory.getLogger(SiteInfoService.class);
