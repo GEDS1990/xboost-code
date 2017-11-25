@@ -1,6 +1,7 @@
 package com.xboost.mapper;
 
 import com.xboost.pojo.Scenarios;
+import org.apache.ibatis.annotations.Param;
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public interface MyScenariosMapper {
      * @param openScenariosId
      * @return
      */
-    public void updateOpenTime(String openScenariosId,String openTime);
+    void updateOpenTime(@Param("openScenariosId") String openScenariosId,@Param("openTime") String openTime);
 
 
 }
