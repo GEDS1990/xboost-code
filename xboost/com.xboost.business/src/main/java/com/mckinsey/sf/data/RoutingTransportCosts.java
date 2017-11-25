@@ -14,6 +14,7 @@ import java.util.Map;
 import com.xboost.pojo.SiteDist;
 import com.xboost.service.SiteDistService;
 import com.xboost.util.CascadeModelUtil;
+import com.xboost.util.ShiroUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mckinsey.sf.constants.IConstants;
@@ -69,7 +70,7 @@ public class RoutingTransportCosts implements ITransportCosts,IConstants,Seriali
 			//mod by geds
 			//根据场景ID查询SiteDist
 			Map map = new HashMap<String,Object>();
-			map.put("scenairosId",1);
+			map.put("scenairosId", ShiroUtil.getOpenScenariosId());
 			List<SiteDist> siteDistsList = siteDistService.findSiteDistByScenariosId(map);
 			for(int i=0;i<siteDistsList.size();i++){
 				double dist = siteDistsList.get(i).getCarDistance();
