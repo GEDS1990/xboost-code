@@ -239,6 +239,8 @@ table.table-bordered.dataTable td:last-child {
 	color: red;
 	line-height: 33px;
 	display: none;
+	float: left;
+	margin-left: 0.123rem;
 }
 .sim-box>.form-group.sim-ground{
 	padding: 15px;

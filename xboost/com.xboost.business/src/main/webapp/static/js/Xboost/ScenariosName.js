@@ -920,7 +920,7 @@ $(function  () {
 	})(),
 	
 	/**
-	 * SimualtValidate.jsp =-= ExcelInputController
+	 * SimualtValidate.jsp =-= ValidateController
 	 * 
 	 */
 	(function  () {
@@ -931,6 +931,9 @@ $(function  () {
 				return false;
 			}else{
 				$('#sim-error-check').hide();
+				$.post("/simualte/Validate").done(function  (result) {
+					console.log(result);
+				});
 			}
 		});
 	})()
