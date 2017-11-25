@@ -12,8 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.inject.Inject;
 
 @Controller
-@RequestMapping("/excelInput")
-public class ExcelInputController {
+@RequestMapping("/Simualte")
+public class SimualtController {
     @Inject
     private SiteDistService siteDistService;
 
