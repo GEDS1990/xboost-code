@@ -16,9 +16,9 @@ public interface SiteInfoMapper {
 
 
      // 查询所有网点  @return
-    List<SiteInfo> findAll();
+    List<SiteInfo> findAll(String scenariosId);
 
-    Long findSiteInfoCount();
+    Long findSiteInfoCount(String scenariosId);
 
     // 根据网点名称查询网点信息  @param siteName @return
     List<SiteInfo> findByParam(Map<String, Object> param);

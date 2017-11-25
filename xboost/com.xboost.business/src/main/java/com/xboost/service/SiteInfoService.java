@@ -105,16 +105,16 @@ public class SiteInfoService {
      * param
      * @return
      */
-    public List<SiteInfo> findAllSiteInfo() {
-        return siteInfoMapper.findAll();
+    public List<SiteInfo> findAllSiteInfo(String scenariosId) {
+        return siteInfoMapper.findAll(scenariosId);
     }
 
        /**
      * 获取网点的总数量
      * @return
      */
-    public Integer findSiteInfoCount() {
-        return siteInfoMapper.findSiteInfoCount().intValue();
+    public Integer findSiteInfoCount(String scenariosId) {
+        return siteInfoMapper.findSiteInfoCount(scenariosId).intValue();
     }
 
     /**
