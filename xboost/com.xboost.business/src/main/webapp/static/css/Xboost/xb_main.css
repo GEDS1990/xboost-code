@@ -67,7 +67,7 @@ body{
     overflow-x:hidden;  */
 }
 .nav_xb{
-	padding: 10px 0 10px 40px;
+	padding: 10px 0 10px 45px;
 	color: #FFFFFF;
 	background-color: #364760;
 	position: relative;
@@ -181,7 +181,7 @@ body{
 	padding-left: 50px;
 }
 .icon.alt1{
-	left: 30px;
+	left: 25px;
 }
 .nav_xb a{color: #FFFFFF;}
 .nav_xb:hover,.nav_xb.active{

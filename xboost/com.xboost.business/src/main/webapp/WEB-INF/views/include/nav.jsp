@@ -14,6 +14,7 @@
                 		</div>
                 	</div>
                 	
+                	<input type="hidden" id="scenName" value="${sessionScope.openScenariosName}" />
                     <!--<div class="xb-hover" id="scen-name">
                     	<div class="nav_xb" id="xb-nav-xb">
 	                    	<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>

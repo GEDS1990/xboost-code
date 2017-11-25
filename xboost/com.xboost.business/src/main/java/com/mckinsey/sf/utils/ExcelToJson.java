@@ -23,6 +23,7 @@ import com.xboost.pojo.Configuration;
 import com.xboost.pojo.DemandInfo;
 import com.xboost.service.ConfigurationService;
 import com.xboost.service.DemandInfoService;
+import com.xboost.util.ShiroUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -83,7 +84,7 @@ public class ExcelToJson implements IConstants{
 			//从数据库读取数据
 			Map<String, Object> param = new HashMap<String,Object>();
 			//根据场景ID查询所有
-			param.put("scenairosId",1);
+			param.put("scenairosId", ShiroUtil.getOpenScenariosId());
 
 			List<DemandInfo> demandInfoList = demandInfoService.findByScenairoIdParam(param);
 			int jobID = 0;

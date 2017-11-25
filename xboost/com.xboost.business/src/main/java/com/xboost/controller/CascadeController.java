@@ -4,6 +4,7 @@ import com.mckinsey.sf.data.Car;
 import com.xboost.pojo.Configuration;
 import com.xboost.service.*;
 import com.xboost.util.CascadeModelUtil;
+import com.xboost.util.ShiroUtil;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,7 @@ public class CascadeController {
         Configuration config = null;
         Car[] carlist = null;
         //传入场景id
-        param.put("scenairosId",1);
+        param.put("scenairosId", ShiroUtil.getOpenScenariosId());
         config =configurationService.findConfigByParam(param);
         //查询car_info内容并set到config
         carlist =carService.findCarByParam(param);
