@@ -46,10 +46,10 @@
 	            <div class="row">
 	                <div class="col-lg-12">
 	                    <div class="page-header">
-	                        <h4><i class="fa fa-home"></i> 我的首页</h4>
+	                        <h4><i class="fa fa-home"></i> 打开的场景</h4>
 	                    </div>
 	                    <div class="panel panel-default">
-	                        <div class="panel-heading">销售进展报告</div>
+	                        <div class="panel-heading">打开的场景</div>
 	                        <div class="panel-body">
 	                            <div id="myfirstchart" style="height: 250px;"></div>
 	                        </div>
