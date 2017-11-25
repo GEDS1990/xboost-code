@@ -11,10 +11,10 @@ import java.io.Serializable;
 public class SiteDist implements Serializable {
     private Integer id;
     private String scenariosId;
-    private String siteCollect;           //网点经度
-    private String siteDelivery;            //网点纬度
-    private Float carDistance;                 //网点名称
-    private Double durationNightDelivery;             //网点地址
+    private String siteCollect;           //收件网点
+    private String siteDelivery;            //派件网点
+    private Float carDistance;                 //车辆运行距离(公里)
+    private Double durationNightDelivery;             //夜配运行时长（分钟）
     private String str1;                   //预留字段
     private String str2;                    //预留字段
     private String str3;                  //预留字段

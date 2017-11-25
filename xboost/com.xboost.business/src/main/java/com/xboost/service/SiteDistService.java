@@ -93,8 +93,8 @@ public class SiteDistService {
      * param
      * @return
      */
-    public List<SiteDist> findAllSiteDist() {
-        return siteDistMapper.findAll();
+    public List<SiteDist> findAllSiteDist(String scenariosId) {
+        return siteDistMapper.findAll(scenariosId);
     }
 
     /**

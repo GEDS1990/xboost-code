@@ -15,7 +15,7 @@ public interface SiteDistMapper {
     void save(SiteDist siteDist);
 
     // 查询所有网点距离  @return
-    List<SiteDist> findAll();
+    List<SiteDist> findAll(String scenariosId);
 
     Long findAllCount(String scenariosId);
 
