@@ -33,8 +33,6 @@ public class MyScenariosController {
         return "MyScenarios/MyScenarios";
     }
 
-    @Inject
-    Scenarios scenario;
 
     @Inject
     private MyScenariosService myScenariosService;
