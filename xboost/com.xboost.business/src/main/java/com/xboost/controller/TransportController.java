@@ -3,6 +3,7 @@ package com.xboost.controller;
 import com.google.common.collect.Maps;
 import com.xboost.pojo.Transportation;
 import com.xboost.service.TransportService;
+import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -43,6 +44,7 @@ public class TransportController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public String AddTransport(Transportation transport) {
+        transport.setScenarioId(ShiroUtil.getOpenScenariosId().toString());
         transportService.saveTransport(transport);
         return "success";
     }
@@ -52,6 +54,7 @@ public class TransportController {
     @RequestMapping(value = "/addByExcel",method = RequestMethod.POST)
     @ResponseBody
     public String AddTransportByExcel(Transportation transport,@RequestParam MultipartFile[] file) {
+        transport.setScenarioId(ShiroUtil.getOpenScenariosId());
         transportService.addTransportByExcel(transport,file);
         return "/ScenariosName/Conditions";
     }
@@ -78,13 +81,14 @@ public class TransportController {
         }
         param.put("orderColumn",orderColumnName);
         param.put("orderType",orderType);
+        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
 
 
 
         Map<String,Object> result = Maps.newHashMap();
 
         List<Transportation> transportList = transportService.findByParam(param); //.findAllSiteInfo();
-        Integer count = transportService.findAllCount();
+        Integer count = transportService.findAllCount(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = transportService.findCountByParam(param);
 
         result.put("draw",draw);
@@ -110,6 +114,7 @@ public class TransportController {
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public String editTransport(Transportation transport) {
+        transport.setScenarioId(ShiroUtil.getOpenScenariosId());
         transportService.editTransport(transport);
 
         return "success";

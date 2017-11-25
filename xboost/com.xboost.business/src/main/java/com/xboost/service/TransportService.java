@@ -59,7 +59,6 @@ public class TransportService {
                             List<String> lineList = excelUtil.readExcel(fileTmp);
                             for(int i=0;i<lineList.size();i++){
                                 String[] row = lineList.get(i).split("#");
-                                transport.setScenarioId(1);
                                 transport.setCarType(row[0]);
                                 transport.setCarNum(Integer.parseInt(row[1]));
                                 transport.setCarSource(row[2]);
@@ -93,16 +92,16 @@ public class TransportService {
      * param
      * @return
      */
-    public List<Transportation> findAll() {
-        return transportMapper.findAll();
+    public List<Transportation> findAll(String scenariosId) {
+        return transportMapper.findAll(scenariosId);
     }
 
     /**
      * 获取运力信息的总数量
      * @return
      */
-    public Integer findAllCount() {
-        return transportMapper.findAllCount().intValue();
+    public Integer findAllCount(String scenariosId) {
+        return transportMapper.findAllCount(scenariosId).intValue();
     }
 
     /**

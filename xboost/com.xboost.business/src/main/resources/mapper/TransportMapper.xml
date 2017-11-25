@@ -15,14 +15,15 @@
 
 
     <select id="findAll" resultType="com.xboost.pojo.Transportation">
-        SELECT * FROM t_transportation
+        SELECT * FROM t_transportation where scenariosId = #{scenariosId}
     </select>
 
     <select id="findByParam" parameterType="map" resultType="Transportation" resultMap="transportMap">
         SELECT * from t_transportation
         <where>
+            scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                car_type LIKE #{keyword} or car_source like #{keyword}
+                and car_type LIKE #{keyword} or car_source like #{keyword}
             </if>
         </where>
         order by ${orderColumn} ${orderType}
@@ -30,14 +31,15 @@
     </select>
 
     <select id="findAllCount" resultType="long">
-        SELECT COUNT(*) FROM t_transportation
+        SELECT COUNT(*) FROM t_transportation where scenariosId = #{scenariosId}
     </select>
 
     <select id="findCountByParam" resultType="long" parameterType="map">
         SELECT count(*) FROM t_transportation
         <where>
+            scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                car_type LIKE #{keyword} or car_source like #{keyword}
+                where car_type LIKE #{keyword} or car_source like #{keyword}
             </if>
         </where>
     </select>
