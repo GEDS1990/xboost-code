@@ -144,13 +144,13 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Scenarios Name*:</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" name="siteCollect" >
+                            <input type="text" class="form-control" name="scenariosName" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Category*:</label>
                         <div class="col-sm-7">
-                            <select type="text" class="form-control" name="siteDelivery" >
+                            <select type="text" class="form-control" name="scenariosCategory" >
                             	<option value=""></option>
                             </select>
                         </div>
@@ -158,7 +158,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Description</label>
                         <div class="col-sm-7">
-                            <textarea type="text" class="form-control" name="carDistance" ></textarea>
+                            <textarea type="text" class="form-control" name="scenariosDesc" ></textarea>
                         </div>
                     </div>
                 </form>

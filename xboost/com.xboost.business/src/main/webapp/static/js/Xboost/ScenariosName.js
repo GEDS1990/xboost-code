@@ -113,6 +113,7 @@ $(function  () {
             $("#newUserModal-dist").modal('show');
         });
         $("#saveBtn-dist").click(function(){
+        debugger;
             $.post("/MyScenarios/add",$("#newUserForm-dist").serialize())
                     .done(function(result){
                         if("success" == result) {
