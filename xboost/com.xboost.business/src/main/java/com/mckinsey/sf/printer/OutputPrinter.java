@@ -40,6 +40,8 @@ import com.mckinsey.sf.data.solution.Solution;
 import com.mckinsey.sf.data.solution.StatInfo;
 import org.springframework.web.socket.TextMessage;
 
+import javax.inject.Inject;
+
 /**   
 *    
 * Author：Alivia Chen   
@@ -49,6 +51,8 @@ import org.springframework.web.socket.TextMessage;
 */
 public class OutputPrinter implements IConstants {
 
+	@Inject
+	static ArrInfoService arrInfoService;
 
 	public static void printLine(String str){
 		System.out.println(str);
@@ -277,7 +281,6 @@ public class OutputPrinter implements IConstants {
 		try {
 //			mapper.writeValue(new File("src/main/resources/solution/arrInfos.json"), arrInfos);
 //			转存到数据库
-			ArrInfoService arrInfoService = new ArrInfoService();
 			for(int i=0;i<arrInfos.size();i++){
 				arrInfoService.saveArrInfo(arrInfos.get(i));
 			}
