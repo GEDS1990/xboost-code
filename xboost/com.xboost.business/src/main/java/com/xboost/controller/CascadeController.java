@@ -43,7 +43,7 @@ public class CascadeController {
     @Inject
 	private SiteDistService siteDistService;
 
-    @RequestMapping(value="/newInput",method = RequestMethod.POST)
+    @RequestMapping(value="/runSilumate",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> docascade(Map input){
 //        cascadeService.saveNewfile(file);
