@@ -13,14 +13,15 @@
 
 
     <select id="findAll" resultType="com.xboost.pojo.DemandInfo">
-        SELECT * FROM t_demand_info
+        SELECT * FROM t_demand_info where scenariosId = #{scenariosId}
     </select>
 
     <select id="findByParam" parameterType="map" resultType="DemandInfo" resultMap="demandInfoMap">
         SELECT * from t_demand_info
         <where>
+            scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                date LIKE #{keyword} or site_collect like #{keyword} or site_delivery like #{keyword}
+                and date LIKE #{keyword} or site_collect like #{keyword} or site_delivery like #{keyword}
             </if>
         </where>
         order by ${orderColumn} ${orderType}
@@ -31,14 +32,15 @@
     </select>
 
     <select id="findAllCount" resultType="long">
-        SELECT COUNT(*) FROM t_demand_info
+        SELECT COUNT(*) FROM t_demand_info where scenariosId = #{scenariosId}
     </select>
 
     <select id="findCountByParam" resultType="long" parameterType="map">
         SELECT count(*) FROM t_demand_info
         <where>
+            scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                date LIKE #{keyword} or site_collect like #{keyword} or site_delivery like #{keyword}
+                and date LIKE #{keyword} or site_collect like #{keyword} or site_delivery like #{keyword}
             </if>
         </where>
     </select>

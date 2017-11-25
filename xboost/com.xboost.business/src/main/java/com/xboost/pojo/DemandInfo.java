@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class DemandInfo implements Serializable {
     private Integer id;
     private String date;      //日期
+    private String scenariosId;    //收件网点编码
     private String siteCodeCollect;    //收件网点编码
     private String siteCodeDelivery;            //派件网点编码
     private String productType;                 //产品类型
@@ -140,5 +141,13 @@ public class DemandInfo implements Serializable {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getScenariosId() {
+        return scenariosId;
+    }
+
+    public void setScenariosId(String scenariosId) {
+        this.scenariosId = scenariosId;
     }
 }

@@ -3,6 +3,9 @@ package com.xboost.service;
 import com.xboost.mapper.DemandInfoMapper;
 import com.xboost.pojo.DemandInfo;
 import com.xboost.util.ExcelUtil;
+import com.xboost.util.ShiroUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.security.auth.Subject;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +83,6 @@ public class DemandInfoService {
                             demandInfo.setAgeing(Integer.parseInt(row[8]));
                             demandInfo.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
-
                             //insert
                             demandInfoMapper.add(demandInfo);
                             logger.info("insert into db:"+demandInfo.getDate());
@@ -108,16 +111,16 @@ public class DemandInfoService {
      * param
      * @return
      */
-    public List<DemandInfo> findAll() {
-        return demandInfoMapper.findAll();
+    public List<DemandInfo> findAll(String scenariosId) {
+        return demandInfoMapper.findAll(scenariosId);
     }
 
     /**
      * 获取需求信息总数量
      * @return
      */
-    public Integer findAllCount() {
-        return demandInfoMapper.findAllCount().intValue();
+    public Integer findAllCount(String scenariosId) {
+        return demandInfoMapper.findAllCount(scenariosId).intValue();
     }
 
     /**
@@ -160,7 +163,7 @@ public class DemandInfoService {
 
     /**
      * 编辑需求信息 
-     * @param modelArg
+     * @param demandInfo
      */
     public void editDemandInfo(DemandInfo demandInfo) {
 
