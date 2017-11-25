@@ -86,7 +86,7 @@ $(function  () {
         	var $this = $(this);
         	var openScenariosId = $this.attr("data-scenariosid");
         	var scenName = $this.parent("td").parent("tr").find("td").eq(0).text();
-        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId}).done(function  (res) {
+        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId,"openScenariosName":scenName}).done(function  (res) {
         		if (res == "success") {
         			var add = "";
         			add+='<div class="xb-hover" id="scen-name"><div class="nav_xb" id="xb-nav-xb">';

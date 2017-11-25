@@ -14,7 +14,8 @@
                 		</div>
                 	</div>
                 	
-                    <!--<div class="xb-hover" id="scen-name">
+                	<input type="hidden" id="scenName" value="<shiro:principal property="openScenariosName"/>" />
+                    <div class="xb-hover" id="scen-name">
                     	<div class="nav_xb" id="xb-nav-xb">
 	                    	<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>
 	                    	<span class="icon alt1 alt icon-file-text-o"></span>
@@ -26,7 +27,7 @@
                     	<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Conditions</a></li>
                     	<li id="nav-Simualt"><a href="/excelInput"><span class="icon-item alt icon-play"></span>Simualt</a></li>
                     	<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li>
-                    </ul>-->
+                    </ul>
                     
                     
                 </li>

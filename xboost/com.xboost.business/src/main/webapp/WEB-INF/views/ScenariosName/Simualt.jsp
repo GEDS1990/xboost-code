@@ -63,10 +63,25 @@
 	    			<p>You must validate all settings before running the simulation</p>
 	    		</header>
 	    		<div class="sim-box">
-	    			<select>
-	    				<option>aba</option>
-	    				<option>aba</option>
-	    			</select>
+	    			<div class="form-group clearfix">
+	    				<p class="col-sm-2">Simulation Method :</p>
+	    				<select class="col-sm-2">
+	    					<option value="0">Please choose</option>
+		    				<option value="1">ABA</option>
+		    				<option value="2">CDC</option>
+		    			</select>
+	    			</div>
+	    			<div class="form-group  clearfix">
+	    				<p class="col-sm-2"><button>Validate Settings</button></p>
+	    				<p id="sim-error">Please choise a Simulation Method first</p>
+	    			</div>
+	    			
+	    			<div class="form-group sim-ground">
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    			</div>
 	    		</div>
 	    	</div>
 	    </div>
