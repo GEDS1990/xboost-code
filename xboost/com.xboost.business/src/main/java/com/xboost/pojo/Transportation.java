@@ -8,7 +8,8 @@ import java.io.Serializable;
 public class Transportation implements Serializable {
     private Integer id;
     private String scenarioId;         //场景id
-    private String carType;             //车型
+    private String carType;             //车辆代号
+    private String carWeightLimit;             //车型
     private Integer carNum;            //数量
     private String carSource;           //车辆来源
     private Float speed;             //时速
@@ -49,6 +50,14 @@ public class Transportation implements Serializable {
 
     public void setCarType(String carType) {
         this.carType = carType;
+    }
+
+    public String getCarWeightLimit() {
+        return carWeightLimit;
+    }
+
+    public void setCarWeightLimit(String carWeightLimit) {
+        this.carWeightLimit = carWeightLimit;
     }
 
     public Integer getCarNum() {

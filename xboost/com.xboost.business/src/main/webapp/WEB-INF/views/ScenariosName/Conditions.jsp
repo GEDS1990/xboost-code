@@ -508,7 +508,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">distrib.center</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteNightDelivery" >
+                            <input type="text" class="form-control" name="distribCenter" >
                         </div>
                     </div>
                     <div class="form-group">

@@ -264,7 +264,7 @@ $(function  () {
 	                {"data":"siteAddress","name":"site_address"},
 	                {"data":"siteArea","name":"site_area"},
 	                {"data":"siteType","name":"site_type"},
-	                {"data":"siteNightDelivery","name":"site_nightDelivery"},
+	                {"data":"distribCenter","name":"distrib_center"},
 	                {"data":"carNum","name":"car_num"},
 	                {"data":"largeCarModel","name":"large_carModle"},
 	                {"data":"maxOperateNum","name":"max_operate_num"},

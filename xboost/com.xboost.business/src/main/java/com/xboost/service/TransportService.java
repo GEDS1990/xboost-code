@@ -60,18 +60,19 @@ public class TransportService {
                             for(int i=0;i<lineList.size();i++){
                                 String[] row = lineList.get(i).split("#");
                                 transport.setCarType(row[0]);
-                                transport.setCarNum(Integer.parseInt(row[1]));
-                                transport.setCarSource(row[2]);
-                                transport.setSpeed(Float.parseFloat(row[3]));
-                                transport.setMaxLoad(Integer.parseInt(row[4]));
-                                transport.setDurationUnloadFull(Integer.parseInt(row[5]));
-                                transport.setMaxDistance(Float.parseFloat(row[6]));
-                                transport.setCarCost1(Float.parseFloat(row[7]));
-                                transport.setCarCost2(Float.parseFloat(row[8]));
-                                transport.setCarCost3(Float.parseFloat(row[9]));
-                                transport.setSingleVoteCost1(Float.parseFloat(row[10]));
-                                transport.setSingleVoteCost2(Float.parseFloat(row[11]));
-                                transport.setSingleVoteCost3(Float.parseFloat(row[12]));
+                                transport.setCarWeightLimit(row[1]);
+                                transport.setCarNum(Integer.parseInt(row[2]));
+                                transport.setCarSource(row[3]);
+                                transport.setSpeed(Float.parseFloat(row[4]));
+                                transport.setMaxLoad(Integer.parseInt(row[5]));
+                                transport.setDurationUnloadFull(Integer.parseInt(row[6]));
+                                transport.setMaxDistance(Float.parseFloat(row[7]));
+                                transport.setCarCost1(Float.parseFloat(row[8]));
+                                transport.setCarCost2(Float.parseFloat(row[9]));
+                                transport.setCarCost3(Float.parseFloat(row[10]));
+                                transport.setSingleVoteCost1(Float.parseFloat(row[11]));
+                                transport.setSingleVoteCost2(Float.parseFloat(row[12]));
+                                transport.setSingleVoteCost3(Float.parseFloat(row[13]));
                                 transport.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
                                 //insert
                                 transportMapper.save(transport);

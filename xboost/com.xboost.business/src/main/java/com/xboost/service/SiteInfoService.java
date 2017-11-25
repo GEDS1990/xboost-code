@@ -82,6 +82,7 @@ public class SiteInfoService {
                             siteInfo.setLargeCarModel(row[9]);
                             //单一批量操作处理量上限(以一个班次操作为单位)
                             siteInfo.setMaxOperateNum(row[10]);
+                            siteInfo.setDistribCenter(row[11]);
                             siteInfo.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
 

@@ -23,7 +23,7 @@ public class SiteInfo implements Serializable {
     private String carNum;                //停货车数(辆)
     private String largeCarModel;          //进出最大车型（T）
     private String maxOperateNum;        //单一批量操作处理量上限(票)
-    private String str1;                   //预留字段
+    private String distribCenter;                   //预留字段(指定集散点)
     private String str2;                    //预留字段
     private String str3;                  //预留字段
     private String createTime;
@@ -133,12 +133,12 @@ public class SiteInfo implements Serializable {
         this.maxOperateNum = maxOperateNum;
     }
 
-    public String getStr1() {
-        return str1;
+    public String getDistribCenter() {
+        return distribCenter;
     }
 
-    public void setStr1(String str1) {
-        this.str1 = str1;
+    public void setDistribCenter(String distribCenter) {
+        this.distribCenter = distribCenter;
     }
 
     public String getStr2() {
