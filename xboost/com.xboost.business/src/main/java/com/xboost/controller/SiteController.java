@@ -3,6 +3,7 @@ package com.xboost.controller;
 import com.google.common.collect.Maps;
 import com.xboost.pojo.SiteInfo;
 import com.xboost.service.SiteInfoService;
+import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import jxl.Cell;
 import jxl.Sheet;
@@ -49,6 +50,7 @@ public class SiteController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public String AddSiteInfo(SiteInfo siteInfo) {
+        siteInfo.setScenariosId(ShiroUtil.getOpenScenariosId());
         siteInfoService.saveSiteInfo(siteInfo);
         return "success";
     }
@@ -58,6 +60,7 @@ public class SiteController {
     @RequestMapping(value = "/addByExcel",method = RequestMethod.POST)
     @ResponseBody
     public String AddSiteInfoByExcel(SiteInfo siteInfo,@RequestParam MultipartFile[] file) {
+        siteInfo.setScenariosId(ShiroUtil.getOpenScenariosId());
         siteInfoService.addSiteInfoByExcel(siteInfo,file);
         return "/ScenariosName/Conditions";
     }
@@ -84,13 +87,14 @@ public class SiteController {
         }
         param.put("orderColumn",orderColumnName);
         param.put("orderType",orderType);
+        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
 
 
 
         Map<String,Object> result = Maps.newHashMap();
 
         List<SiteInfo> siteInfoList = siteInfoService.findByParam(param); //.findAllSiteInfo();
-        Integer count = siteInfoService.findSiteInfoCount();
+        Integer count = siteInfoService.findSiteInfoCount(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = siteInfoService.findSiteInfoCountByParam(param);
 
         result.put("draw",draw);
@@ -116,8 +120,8 @@ public class SiteController {
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public String editSiteInfo(SiteInfo siteInfo) {
+        siteInfo.setScenariosId(ShiroUtil.getOpenScenariosId());
         siteInfoService.editSiteInfo(siteInfo);
-
         return "success";
     }
 

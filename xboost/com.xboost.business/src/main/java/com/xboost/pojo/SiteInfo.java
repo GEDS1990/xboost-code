@@ -11,7 +11,8 @@ import java.sql.Timestamp;
  */
 public class SiteInfo implements Serializable {
     private Integer id;
-    private String siteCode;
+    private String scenariosId;       //场景Id
+    private String siteCode;              //网点编码
     private String siteLongitude;           //网点经度
     private String siteLatitude;            //网点纬度
     private String siteName;                 //网点名称
@@ -34,6 +35,14 @@ public class SiteInfo implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getScenariosId() {
+        return scenariosId;
+    }
+
+    public void setScenariosId(String scenariosId) {
+        this.scenariosId = scenariosId;
     }
 
     public String getSiteCode() {

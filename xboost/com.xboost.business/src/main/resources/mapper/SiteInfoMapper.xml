@@ -5,22 +5,23 @@
     <cache/>
 
     <insert id="save">
-        INSERT into t_site_info(site_code,longitude,latitude,site_name,site_address,site_nightDelivery,site_area,site_type,car_num,
+        INSERT into t_site_info(scenariosId,site_code,longitude,latitude,site_name,site_address,site_nightDelivery,site_area,site_type,car_num,
         large_carModle,max_operate_num,str1,str2,str3,createtime,updatetime)
-        VALUES (#{siteCode},#{siteLongitude},#{siteLatitude},#{siteName},#{siteAddress},#{siteNightDelivery},#{siteArea},#{siteType},
+        VALUES (#{scenariosId},#{siteCode},#{siteLongitude},#{siteLatitude},#{siteName},#{siteAddress},#{siteNightDelivery},#{siteArea},#{siteType},
         #{carNum},#{largeCarModel},#{maxOperateNum},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
 
     <select id="findAll" resultType="com.xboost.pojo.SiteInfo">
-        SELECT * FROM t_site_info
+        SELECT * FROM t_site_info where scenariosId = #{scenariosId}
     </select>
 
     <select id="findByParam" parameterType="map" resultType="SiteInfo" resultMap="siteInfoMap">
         SELECT * from t_site_info
         <where>
+            scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                site_name LIKE #{keyword} or site_code like #{keyword}
+                and site_name LIKE #{keyword} or site_code like #{keyword}
             </if>
         </where>
         order by ${orderColumn} ${orderType}
@@ -28,14 +29,15 @@
     </select>
 
     <select id="findSiteInfoCount" resultType="long">
-        SELECT COUNT(*) FROM t_site_info
+        SELECT COUNT(*) FROM t_site_info where scenariosId = #{scenariosId}
     </select>
 
     <select id="findSiteInfoCountByParam" resultType="long" parameterType="map">
         SELECT count(*) FROM t_site_info
         <where>
+            scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                site_name LIKE #{keyword} or site_code like #{keyword}
+                and site_name LIKE #{keyword} or site_code like #{keyword}
             </if>
         </where>
     </select>
@@ -45,7 +47,7 @@
     </select>
 
     <update id="editSiteInfo">
-        UPDATE t_site_info SET site_code = #{siteCode},longitude = #{siteLongitude},latitude=#{siteLatitude},site_name=#{siteName},site_address=#{siteAddress},
+        UPDATE t_site_info SET scenariosId = #{scenariosId},site_code = #{siteCode},longitude = #{siteLongitude},latitude=#{siteLatitude},site_name=#{siteName},site_address=#{siteAddress},
         site_nightDelivery=#{siteNightDelivery},site_area=#{siteArea},site_type=#{siteType},car_num=#{carNum} ,large_carModle=#{largeCarModel},
         max_operate_num=#{maxOperateNum} where id = #{id}
     </update>
@@ -57,6 +59,7 @@
 
     <resultMap id="siteInfoMap" type="SiteInfo">
         <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
         <result property="siteCode" column="site_code"/>
         <result property="siteLongitude" column="longitude"/>
         <result property="siteLatitude" column="latitude"/>
