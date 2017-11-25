@@ -64,27 +64,8 @@
 	    		</header>
 	    		<div class="sim-box">
 	    			
-	    			<div class="form-group sim-ground alt-sims">
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<p>123</p>
-	    				<div>----------------------------------------------</div>
-	    				<p>MM/dd/yyyy H:mm:ss,Validation is completed,please check the error information.</p>
-	    				<p>MM/dd/yyyy H:mm:ss,Validation is successful,and now you can run the simulation.</p>
+	    			<div class="form-group sim-ground alt-sims" id="sim-run-info">
+	    				
 	    			</div>
 	    			
 	    			<div class="form-group  clearfix">
@@ -134,8 +115,10 @@
 <script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
 <script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/flex.js"></script>
+<script src="/static/js/sockjs-0.3.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/Xboost/navMain.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" src="/static/js/Xboost/ScenariosName.js" ></script>
+<script src="/static/js/Xboost/ScenariosName.js" ></script>
+<script src="/static/js/Xboost/simualte.js"></script>
 <script type="text/javascript">
 	$(function  () {
 		(function  () {

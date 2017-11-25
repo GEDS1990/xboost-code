@@ -58,6 +58,38 @@ $(function  () {
 			var Request=new UrlSearch(); //实例化
 			if (Request.run == "yes") {
 				alert("开始执行算法");
+				//执行算法
+				document.getElementById('sim-run-info').innerHTML="";
+	            ws = new SockJS("http://127.0.0.1:8080/webSocketServer/sockjs");
+	            ws.onopen = function () {
+	                log('Info: connection opened.');
+	            };
+	
+	            ws.onmessage = function (event) {
+	                log(event.data);
+	            };
+	            ws.onclose = function (event) {
+	                log('Info: connection closed.');
+	                log(event);
+	            };
+	
+
+	            $.post("/cascade/runSilumate","json").done(function(result){
+	                alert("success");
+	            }).fail(function(){
+	                alert("fail");
+	            });
+		        function log(message) {
+		            var console = document.getElementById('sim-run-info');
+		            var p = document.createElement('p');
+		            p.style.wordWrap = 'break-word';
+		            p.appendChild(document.createTextNode(message));
+		            console.appendChild(p);
+		            console.scrollTop = console.scrollHeight;
+		        }
+				
+				
+				
 			}
 		}
 		

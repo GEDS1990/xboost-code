@@ -917,26 +917,10 @@ $(function  () {
              UploadFile("cond-input-form-pata","cond_file","/transport/addByExcel",'.bs-example-modal-input')
          });
 		}
-	})(),
-	
-	/**
-	 * SimualtValidate.jsp =-= ValidateController
-	 * 
-	 */
-	(function  () {
-		$("#sim-check").click(function  () {
-			var _val = $('#sim-model').val();
-			if (_val == 0) {
-				$('#sim-error-check').show();
-				return false;
-			}else{
-				$('#sim-error-check').hide();
-				$.post("/simualte/Validate").done(function  (result) {
-					console.log(result);
-				});
-			}
-		});
 	})()
+	
+	
+	
 	
 	
 	

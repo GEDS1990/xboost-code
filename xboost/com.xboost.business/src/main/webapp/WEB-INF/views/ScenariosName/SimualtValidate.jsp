@@ -104,11 +104,11 @@
 	    				</div>
 	    				<div class="clearfix sim-input">
 		    				<p>Time Limit (min)</p>
-		    				<input type="number" value="" />
+		    				<input type="number" id="sim-run-time" value="" />
 		    			</div>
 		    			<div class="clearfix sim-input">
 		    				<p>Loops Limit</p>
-		    				<input type="number" value="" />
+		    				<input type="number" id="sim-run-count" value="" />
 		    			</div>
 	    			</div>
 	    			
@@ -162,6 +162,7 @@
 <script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/Xboost/navMain.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/Xboost/ScenariosName.js" ></script>
+<script src="/static/js/Xboost/simualte.js"></script>
 <script type="text/javascript">
 	$(function  () {
 		(function  () {
