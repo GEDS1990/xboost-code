@@ -129,7 +129,7 @@ $(function  () {
 
         //删除用户
         $(document).delegate(".delLink-scen","click",function(){
-            var id = $(this).attr("data-id");
+            var id = $(this).attr("data-scenariosid");
             $('#modal-del').modal("show")
             $('#modal-delBtn').click(function  () {
             	$.post("/MyScenarios/del",{"id":id}).done(function(result){
