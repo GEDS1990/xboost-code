@@ -2,14 +2,10 @@ package com.xboost.controller;
 
 import com.google.common.collect.Maps;
 import com.xboost.pojo.Scenarios;
-import com.xboost.pojo.User;
-import com.xboost.service.ScenariosService;
+import com.xboost.service.MyScenariosService;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -36,8 +32,8 @@ public class MyScenariosController {
     }
 
     @Inject
-    private ScenariosService scenariosService;
-    private static Logger logger = LoggerFactory.getLogger(ScenariosService.class);
+    private MyScenariosService myScenariosService;
+    private static Logger logger = LoggerFactory.getLogger(MyScenariosService.class);
 
     /**
      * 添加场景信息
@@ -46,7 +42,7 @@ public class MyScenariosController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public String add(Scenarios scenario) {
-        scenariosService.save(scenario);
+        myScenariosService.save(scenario);
         return "success";
     }
 
@@ -55,7 +51,7 @@ public class MyScenariosController {
     @RequestMapping(value = "/addByExcel",method = RequestMethod.POST)
     @ResponseBody
     public String AddByExcel(Scenarios scenario,@RequestParam MultipartFile[] file) {
-        scenariosService.addByExcel(scenario,file);
+        myScenariosService.addByExcel(scenario,file);
         return "/ScenariosName/MyScenarios";
     }
 
@@ -86,9 +82,9 @@ public class MyScenariosController {
 
         Map<String,Object> result = Maps.newHashMap();
 
-        List<Scenarios> scenariosList = scenariosService.findByParam(param); //.findAllSiteInfo();
-        Integer count = scenariosService.findAllCount();
-        Integer filteredCount = scenariosService.findCountByParam(param);
+        List<Scenarios> scenariosList = myScenariosService.findByParam(param); //.findAllSiteInfo();
+        Integer count = myScenariosService.findAllCount();
+        Integer filteredCount = myScenariosService.findCountByParam(param);
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
@@ -103,7 +99,7 @@ public class MyScenariosController {
     @RequestMapping(value = "/scen.json",method = RequestMethod.GET)
     @ResponseBody
     public Scenarios getScenarios(Integer id) {
-        return scenariosService.findById(id);
+        return myScenariosService.findById(id);
     }
 
     /**
@@ -113,7 +109,7 @@ public class MyScenariosController {
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public String edit(Scenarios scenario) {
-        scenariosService.edit(scenario);
+        myScenariosService.edit(scenario);
 
         return "success";
     }
@@ -125,7 +121,7 @@ public class MyScenariosController {
     @RequestMapping(value = "/del",method = RequestMethod.POST)
     @ResponseBody
     public String delById(Integer id) {
-        scenariosService.delById(id);
+        myScenariosService.delById(id);
         return "success";
     }
 
