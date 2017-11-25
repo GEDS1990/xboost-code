@@ -46,7 +46,7 @@ public class CascadeController {
         Configuration config = null;
         Car[] carlist = null;
         //传入场景id
-        param.put("scenairosId", ShiroUtil.getOpenScenariosId());
+        param.put("scenariosId", ShiroUtil.getOpenScenariosId());
         config =configurationService.findConfigByParam(param);
         //查询car_info内容并set到config
         carlist =carService.findCarByParam(param);

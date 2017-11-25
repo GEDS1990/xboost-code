@@ -5,8 +5,8 @@
     <cache/>
 
     <select id="findCarByParam" parameterType="map" resultMap="carMap">
-        <!--select * from t_car_info as ci where ci.scenariosId=#{scenairosId}-->
-        select * from t_car_info as ci, time_window as t where ci.id=t.carId and ci.scenariosId=#{scenairosId}
+        <!--select * from t_car_info as ci where ci.scenariosId=#{scenariosId}-->
+        select * from t_car_info as ci, time_window as t where ci.id=t.carId and ci.scenariosId=#{scenariosId}
     </select>
 
     <!--<select id="findByScenariosId" resultType="com.xboost.pojo.Dimensions">
@@ -30,7 +30,7 @@
         <result property="type" column="type"/>
         <!--<result property="fixedRound" column="fixed_round"/>
         <result property="fixedRoundFee" column="fixed_round_fee"/>-->
-        <!--<collection property="dimensions" ofType="Dimensions" column="scenairosId" select="findByScenariosId"/>-->
+        <!--<collection property="dimensions" ofType="Dimensions" column="scenariosId" select="findByScenariosId"/>-->
         <association property="tw" javaType="com.mckinsey.sf.data.TimeWindow">
             <result property="start" column="start"/>
             <result property="end" column="end"/>

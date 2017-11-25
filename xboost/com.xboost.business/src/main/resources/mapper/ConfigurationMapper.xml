@@ -7,7 +7,7 @@
     <select id="findConfigByParam" parameterType="map" resultMap="configurationMap">
         select c.id c_id, c.scenariosId, c.optimize_iterations ,c.load_time ,c.dist_mode,c.car_cost_mode
         from t_configuration as c
-        where c.scenariosId=#{scenairosId}
+        where c.scenariosId=#{scenariosId}
     </select>
 
     <resultMap id="configurationMap" type="com.xboost.pojo.Configuration">
@@ -16,7 +16,7 @@
         <result property="loadTime" column="load_time"/>
         <result property="distMode" column="dist_mode"/>
         <result property="carCostMode" column="car_cost_mode"/>
-        <!--<collection property="carTemplates" ofType="Car" column="scenariosId" select="com.xboost.mapper.CarMapper.findByscenairosId"/>-->
+        <!--<collection property="carTemplates" ofType="Car" column="scenariosId" select="com.xboost.mapper.CarMapper.findByscenariosId"/>-->
        <!-- <collection property="carTemplates" column="scenariosId" ofType="com.xboost.pojo.Car">
             <id property="id" column="ci_id"/>
             <result property="maxStop" column="max_stop"/>

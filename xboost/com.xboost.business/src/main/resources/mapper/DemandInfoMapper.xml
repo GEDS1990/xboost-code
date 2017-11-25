@@ -28,7 +28,7 @@
         limit ${start},${length}
     </select>
     <select id="findByScenairoIdParam" parameterType="map" resultType="DemandInfo" resultMap="demandInfoMap">
-        SELECT * from t_demand_info d where d.scenairosId = #{scenairosId}
+        SELECT * from t_demand_info d where d.scenariosId = #{scenariosId}
     </select>
 
     <select id="findAllCount" resultType="long">

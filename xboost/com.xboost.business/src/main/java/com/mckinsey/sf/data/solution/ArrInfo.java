@@ -22,6 +22,8 @@ public class ArrInfo {
 	
 	@JsonProperty("location")
 	private String location;
+
+	private String scenariosId;
 	
 	public ArrInfo(){
 		super();
@@ -59,4 +61,11 @@ public class ArrInfo {
 		this.location = location;
 	}
 
+	public String getScenariosId() {
+		return scenariosId;
+	}
+
+	public void setScenariosId(String scenariosId) {
+		this.scenariosId = scenariosId;
+	}
 }

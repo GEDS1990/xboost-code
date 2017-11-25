@@ -29,7 +29,7 @@
     </select>
 
     <select id="findSiteDistByScenariosId" parameterType="map" resultMap="siteDistMap">
-        select * from t_site_distance as s where s.scenariosId=#{scenairosId}
+        select * from t_site_distance as s where s.scenariosId=#{scenariosId}
     </select>
     <select id="findAllCount" resultType="long">
         SELECT COUNT(*) FROM t_site_distance where scenariosId = #{scenariosId}

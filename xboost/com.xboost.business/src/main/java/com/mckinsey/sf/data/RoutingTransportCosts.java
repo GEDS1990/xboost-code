@@ -70,7 +70,7 @@ public class RoutingTransportCosts implements ITransportCosts,IConstants,Seriali
 			//mod by geds
 			//根据场景ID查询SiteDist
 			Map map = new HashMap<String,Object>();
-			map.put("scenairosId", ShiroUtil.getOpenScenariosId());
+			map.put("scenariosId", ShiroUtil.getOpenScenariosId());
 			List<SiteDist> siteDistsList = siteDistService.findSiteDistByScenariosId(map);
 			for(int i=0;i<siteDistsList.size();i++){
 				double dist = siteDistsList.get(i).getCarDistance();

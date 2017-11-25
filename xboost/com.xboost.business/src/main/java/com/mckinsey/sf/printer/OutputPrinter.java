@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.xboost.service.ArrInfoService;
 import com.xboost.util.CascadeModelUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.websocket.SystemWebSocketHandler;
@@ -274,7 +275,13 @@ public class OutputPrinter implements IConstants {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			mapper.writeValue(new File("src/main/resources/solution/arrInfos.json"), arrInfos);
+//			mapper.writeValue(new File("src/main/resources/solution/arrInfos.json"), arrInfos);
+//			转存到数据库
+			ArrInfoService arrInfoService = new ArrInfoService();
+			for(int i=0;i<arrInfos.size();i++){
+				arrInfoService.saveArrInfo(arrInfos.get(i));
+			}
+
 			mapper.writeValue(new File("src/main/resources/solution/jobInfos.json"), jobInfos);
 			mapper.writeValue(new File("src/main/resources/solution/stats.json"), stat);
 		} catch (JsonGenerationException e) {

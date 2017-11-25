@@ -84,7 +84,7 @@ public class ExcelToJson implements IConstants{
 			//从数据库读取数据
 			Map<String, Object> param = new HashMap<String,Object>();
 			//根据场景ID查询所有
-			param.put("scenairosId", ShiroUtil.getOpenScenariosId());
+			param.put("scenariosId", ShiroUtil.getOpenScenariosId());
 
 			List<DemandInfo> demandInfoList = demandInfoService.findByScenairoIdParam(param);
 			int jobID = 0;
