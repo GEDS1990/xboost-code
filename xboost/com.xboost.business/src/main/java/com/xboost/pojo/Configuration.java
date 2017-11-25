@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Configuration implements Serializable{
     private int id;
-    private int optimizeIterations;
-    private int scenariosId;
+    private int optimizeIterations;//优化迭代次数
+    private int scenariosId;//场景ID
 //    private String distanceFile;
 //    private String demandFile;
     private double loadTime;
