@@ -10,14 +10,15 @@
     </insert>
 
     <select id="findAll" resultType="com.xboost.pojo.ModelArg">
-        SELECT * FROM t_model_arg
+        SELECT * FROM t_model_arg where scenariosId = #{scenariosId}
     </select>
 
     <select id="findByParam" parameterType="map" resultType="ModelArg" resultMap="modelArgMap">
         SELECT * from t_model_arg
         <where>
+            scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                parameterName = #{keyword}
+                and parameterName = #{keyword}
             </if>
         </where>
         order by ${orderColumn} ${orderType}
@@ -26,14 +27,15 @@
 
 
     <select id="findAllCount" resultType="long">
-        SELECT COUNT(*) FROM t_model_arg
+        SELECT COUNT(*) FROM t_model_arg where scenariosId = #{scenariosId}
     </select>
 
     <select id="findCountByParam" resultType="long" parameterType="map">
         SELECT count(*) FROM t_model_arg
         <where>
+            scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                parameterName = #{keyword}
+                and parameterName = #{keyword}
             </if>
         </where>
     </select>

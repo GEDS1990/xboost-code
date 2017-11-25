@@ -19,7 +19,7 @@ public interface ModelArgMapper {
     List<ModelArg> findAll();
 
     //查询所有模型整体参数信息总数
-    Long findAllCount();
+    Long findAllCount(String scenariosId);
 
     /**
      * 根据用户的ID查询模型整体参数
