@@ -53,7 +53,7 @@
 	        </div>
 	        <div class="cond-top">
 	        	<ul class="cond-top-ul clearfix">
-	        		<li><a href="/excelInput">Validate</a></li>
+	        		<li><a href="/Simualte">Validate</a></li>
 	        		<li class="active"><a  class="active" href="/cascade">Simualte</a></li>
 	        	</ul>
 	        </div>
