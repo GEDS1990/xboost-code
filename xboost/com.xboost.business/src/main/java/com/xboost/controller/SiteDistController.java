@@ -52,6 +52,7 @@ public class SiteDistController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public String AddDistInfo(SiteDist siteDist) {
+        siteDist.setScenariosId(ShiroUtil.getOpenScenariosId());
         siteDistService.saveSiteDist(siteDist);
         return "success";
     }
@@ -63,6 +64,7 @@ public class SiteDistController {
     @RequestMapping(value = "/addByExcel",method = RequestMethod.POST)
     @ResponseBody
     public String AddSiteDist(SiteDist siteDist,@RequestParam MultipartFile[] file) {
+        siteDist.setScenariosId(ShiroUtil.getOpenScenariosId());
         siteDistService.saveSiteDist(siteDist,file);
         return "redirect:/siteDist";
     }
@@ -88,13 +90,12 @@ public class SiteDistController {
         }
         param.put("orderColumn",orderColumnName);
         param.put("orderType",orderType);
-
-
+        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
 
         Map<String,Object> result = Maps.newHashMap();
 
         List<SiteDist> siteDistList = siteDistService.findByParam(param); //.findAllSiteInfo();
-        Integer count = siteDistService.findAllCount();
+        Integer count = siteDistService.findAllCount(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = siteDistService.findCountByParam(param);
 
         result.put("draw",draw);
@@ -120,6 +121,7 @@ public class SiteDistController {
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public String editSiteDist(SiteDist siteDist) {
+        siteDist.setScenariosId(ShiroUtil.getOpenScenariosId());
         siteDistService.editSiteDist(siteDist);
         return "success";
     }

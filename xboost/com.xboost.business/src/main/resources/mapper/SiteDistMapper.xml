@@ -9,18 +9,19 @@
         VALUES (#{scenariosId}, #{siteCollect}, #{siteDelivery}, #{carDistance}, #{durationNightDelivery}, #{createTime});
     </insert>
     <select id="findAll" resultType="com.xboost.pojo.SiteDist">
-        SELECT * FROM t_site_distance
+        SELECT * FROM t_site_distance where scenariosId = #{scenariosId}
     </select>
 
     <select id="findAllSiteDist" parameterType="map" resultMap="siteDistMap">
-        select * from t_site_distance
+        select * from t_site_distance where scenariosId = #{scenariosId}
     </select>
 
     <select id="findByParam" parameterType="map" resultType="SiteDist" resultMap="siteDistMap">
         SELECT * from t_site_distance
         <where>
+            scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                site_collect LIKE #{keyword} or site_delivery like #{keyword}
+                and site_collect LIKE #{keyword} or site_delivery like #{keyword}
             </if>
         </where>
         order by ${orderColumn} ${orderType}
@@ -31,14 +32,15 @@
         select * from t_site_distance as s where s.scenariosId=#{scenairosId}
     </select>
     <select id="findAllCount" resultType="long">
-        SELECT COUNT(*) FROM t_site_distance
+        SELECT COUNT(*) FROM t_site_distance where scenariosId = #{scenariosId}
     </select>
 
     <select id="findCountByParam" resultType="long" parameterType="map">
         SELECT count(*) FROM t_site_distance
         <where>
+            scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                site_collect LIKE #{keyword} or site_delivery like #{keyword}
+                and site_collect LIKE #{keyword} or site_delivery like #{keyword}
             </if>
         </where>
     </select>
@@ -48,7 +50,7 @@
     </select>
 
     <update id="editSiteDist">
-        UPDATE t_site_distance SET scenarios_id = #{scenariosId},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
+        UPDATE t_site_distance SET scenariosId = #{scenariosId},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
         car_distance=#{carDistance},duration_night_delivery=#{durationNightDelivery},createtime=#{createTime} where id = #{id}
     </update>
 

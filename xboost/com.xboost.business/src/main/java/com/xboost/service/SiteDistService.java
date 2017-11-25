@@ -69,7 +69,6 @@ public class SiteDistService {
                             List<String> lineList = excelUtil.readExcel(fileTmp);
                             for(int i=0;i<lineList.size();i++){
                                 String[] row = lineList.get(i).split("#");
-                                siteDist.setScenariosId(1);
                                 siteDist.setSiteCollect(row[0]);
                                 siteDist.setSiteDelivery(row[1]);
                                 siteDist.setCarDistance(Float.parseFloat(row[2]));
@@ -102,8 +101,8 @@ public class SiteDistService {
      * 获取网点距离信息的总数量
      * @return
      */
-    public Integer findAllCount() {
-        return siteDistMapper.findAllCount().intValue();
+    public Integer findAllCount(String scenariosId) {
+        return siteDistMapper.findAllCount(scenariosId).intValue();
     }
 
     /**

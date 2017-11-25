@@ -1,6 +1,8 @@
 package com.xboost.pojo;
 
-public class Scenarios {
+import java.io.Serializable;
+
+public class Scenarios implements Serializable {
     private Integer id;
     private Integer userId;
     private String scenariosName;             //场景名称

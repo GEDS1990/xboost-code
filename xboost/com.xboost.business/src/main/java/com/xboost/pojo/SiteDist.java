@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class SiteDist implements Serializable {
     private Integer id;
-    private Integer scenariosId;
+    private String scenariosId;
     private String siteCollect;           //网点经度
     private String siteDelivery;            //网点纬度
     private Float carDistance;                 //网点名称
@@ -29,11 +29,11 @@ public class SiteDist implements Serializable {
         this.id = id;
     }
 
-    public Integer getScenariosId() {
+    public String getScenariosId() {
         return scenariosId;
     }
 
-    public void setScenariosId(Integer scenariosId) {
+    public void setScenariosId(String scenariosId) {
         this.scenariosId = scenariosId;
     }
 

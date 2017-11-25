@@ -17,7 +17,7 @@ public interface SiteDistMapper {
     // 查询所有网点距离  @return
     List<SiteDist> findAll();
 
-    Long findAllCount();
+    Long findAllCount(String scenariosId);
 
     // 根据网点名称查询网点距离信息  @param siteName @return
     List<SiteDist> findByParam(Map<String, Object> param);
