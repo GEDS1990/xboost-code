@@ -135,8 +135,8 @@ public class MyScenariosController {
      */
     @RequestMapping(value = "/open",method = RequestMethod.POST)
     @ResponseBody
-    public String openScenariosById(String id) {
-        String result = ShiroUtil.setOpenScenariosId(id);
+    public String openScenariosById(String openScenariosId) {
+        String result = ShiroUtil.setOpenScenariosId(openScenariosId);
         if(result.equals("success")){
             return "success";
         }else{
