@@ -233,8 +233,10 @@ table.table-bordered.dataTable td:last-child {
 	padding: 5px 15px;
 	border: 1px solid #CCCCCC;
 }
-#sim-error{
+.sim-error{
 	color: red;
+	line-height: 33px;
+	display: none;
 }
 .sim-box>.form-group.sim-ground{
 	padding: 15px;
@@ -256,4 +258,7 @@ table.table-bordered.dataTable td:last-child {
 .sim-input>p{
 	line-height: 33px;
 	text-align: right;
+}
+.sim-box>.form-group.sim-ground.alt-sims{
+	height: 500px;
 }

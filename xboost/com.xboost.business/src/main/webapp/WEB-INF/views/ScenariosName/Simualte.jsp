@@ -64,7 +64,7 @@
 	    		</header>
 	    		<div class="sim-box">
 	    			
-	    			<div class="form-group sim-ground">
+	    			<div class="form-group sim-ground alt-sims">
 	    				<p>123</p>
 	    				<p>123</p>
 	    				<p>123</p>
@@ -88,8 +88,7 @@
 	    			</div>
 	    			
 	    			<div class="form-group  clearfix">
-	    				<p class="col-sm-2"><button>Run Simulation</button></p>
-	    				<p id="sim-error">You must pass the validation before running the simulation.If you have modified Scenario settings,you must validate them again</p>
+	    				<p class="col-sm-2"><button id="sim-stop">Stop Simulation</button></p>
 	    			</div>
 	    		</div>
 	    	</div>

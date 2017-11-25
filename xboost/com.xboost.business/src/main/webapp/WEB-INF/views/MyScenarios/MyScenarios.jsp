@@ -151,7 +151,7 @@
                         <label class="col-sm-4 control-label">Category*:</label>
                         <div class="col-sm-7">
                             <select type="text" class="form-control" name="scenariosCategory" >
-                            	<option value=""></option>
+                            	<option value="0"></option>
                             	<option value="1">class1</option>
                             	<option value="2">class2</option>
                             </select>

@@ -65,15 +65,15 @@
 	    		<div class="sim-box">
 	    			<div class="form-group clearfix">
 	    				<p class="col-sm-2">Simulation Method :</p>
-	    				<select class="col-sm-2">
+	    				<select id="sim-model" class="col-sm-2">
 	    					<option value="0">Please choose</option>
 		    				<option value="1">ABA</option>
 		    				<option value="2">CDC</option>
 		    			</select>
 	    			</div>
 	    			<div class="form-group  clearfix">
-	    				<p class="col-sm-2"><button>Validate Settings</button></p>
-	    				<p id="sim-error">Please choise a Simulation Method first</p>
+	    				<p class="col-sm-2"><button id="sim-check">Validate Settings</button></p>
+	    				<p id="sim-error-check" class="sim-error">Please choise a Simulation Method first</p>
 	    			</div>
 	    			
 	    			<div class="form-group sim-ground">
@@ -113,8 +113,8 @@
 	    			</div>
 	    			
 	    			<div class="form-group  clearfix">
-	    				<p class="col-sm-2"><button>Run Simulation</button></p>
-	    				<p id="sim-error">You must pass the validation before running the simulation.If you have modified Scenario settings,you must validate them again</p>
+	    				<p class="col-sm-2"><button id="sim-run">Run Simulation</button></p>
+	    				<p id="sim-error-run" class="sim-error">You must pass the validation before running the simulation.If you have modified Scenario settings,you must validate them again</p>
 	    			</div>
 	    		</div>
 	    	</div>
