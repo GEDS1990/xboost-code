@@ -29,7 +29,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/simulate")
+@RequestMapping("/simualte")
 public class ValidateController {
     @Inject
     private SiteInfoService siteInfoService;
