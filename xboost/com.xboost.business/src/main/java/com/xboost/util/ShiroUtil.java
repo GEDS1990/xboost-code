@@ -94,4 +94,29 @@ public class ShiroUtil {
         session.setAttribute("openScenariosId",openScenariosId);
         return "success";
     }
+
+    /**
+     * 将当前登录对象的open的场景名称设置到session中
+     * @return
+     */
+    public static String setOpenScenariosName(String openScenariosName){
+        //获取认证主体
+        Subject subject = SecurityUtils.getSubject();
+        //将场景名称放入到Session中
+        Session session = subject.getSession();
+        session.setAttribute("openScenariosName",openScenariosName);
+        return "success";
+    }
+
+    /**
+     * 从session中获取当前登录对象的open的场景名称
+     * @return
+     */
+    public static String getOpenScenariosName(){
+
+        org.apache.shiro.subject.Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();                            ;
+        String scenariosName = session.getAttribute("openScenariosName").toString();
+        return scenariosName;
+    }
 }
