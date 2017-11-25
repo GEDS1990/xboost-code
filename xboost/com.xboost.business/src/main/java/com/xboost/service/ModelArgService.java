@@ -52,8 +52,8 @@ public class ModelArgService {
      * 获取模型整体参数信息总数量
      * @return
      */
-    public Integer findAllCount() {
-        return modelArgMapper.findAllCount().intValue();
+    public Integer findAllCount(String scenariosId) {
+        return modelArgMapper.findAllCount(scenariosId).intValue();
     }
 
     /**

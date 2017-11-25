@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.xboost.pojo.ModelArg;
 import com.xboost.service.ModelArgService;
 import com.xboost.util.ExcelUtil;
+import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -42,6 +43,7 @@ public class ModelArgController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public String addModelArg(ModelArg modelArg) {
+        modelArg.setScenarioId(ShiroUtil.getOpenScenariosId().toString());
         modelArgService.addModelArg(modelArg);
         return "success";
     }
@@ -68,13 +70,14 @@ public class ModelArgController {
         }
         param.put("orderColumn",orderColumnName);
         param.put("orderType",orderType);
+        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
 
 
 
         Map<String,Object> result = Maps.newHashMap();
 
         List<ModelArg> modelArgList = modelArgService.findByParam(param); //.findAll();
-        Integer count = modelArgService.findAllCount();
+        Integer count = modelArgService.findAllCount(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = modelArgService.findCountByParam(param);
 
         result.put("draw",draw);
@@ -100,6 +103,7 @@ public class ModelArgController {
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public String editModelArg(ModelArg modelArg) {
+        modelArg.setScenarioId(ShiroUtil.getOpenScenariosId());
         modelArgService.editModelArg(modelArg);
         return "success";
     }
