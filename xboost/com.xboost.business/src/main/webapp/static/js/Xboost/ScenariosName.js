@@ -109,16 +109,15 @@ $(function  () {
        
 
         //添加新用户
-        $("#addNewUser-dist").click(function(){
-            $("#newUserModal-dist").modal('show');
+        $("#addNewUser-scen").click(function(){
+            $("#newUserModal-scen").modal('show');
         });
-        $("#saveBtn-dist").click(function(){
-        debugger;
-            $.post("/MyScenarios/add",$("#newUserForm-dist").serialize())
+        $("#saveBtn-scen").click(function(){
+            $.post("/MyScenarios/add",$("#newUserForm-scen").serialize())
                     .done(function(result){
                         if("success" == result) {
-                            $("#newUserForm-dist")[0].reset();
-                            $("#newUserModal-dist").modal("hide");
+                            $("#newUserForm-scen")[0].reset();
+                            $("#newUserModal-scen").modal("hide");
                             dt.ajax.reload();
                             window.location.reload(); 
                         }
@@ -129,7 +128,7 @@ $(function  () {
         });
 
         //删除用户
-        $(document).delegate(".delLink-dist","click",function(){
+        $(document).delegate(".delLink-scen","click",function(){
             var id = $(this).attr("data-id");
             $('#modal-del').modal("show")
             $('#modal-delBtn').click(function  () {

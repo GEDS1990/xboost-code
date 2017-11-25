@@ -52,7 +52,7 @@
 	        	</div>
 	        	<div class="xb-fr">
 	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Conditions</button>
-	        		<button id="addNewUser-dist" ><span class="icon-file-text-o"></span>Create Scenarios</button>
+	        		<button id="addNewUser-scen" ><span class="icon-file-text-o"></span>Create Scenarios</button>
 	        	</div>
 	        </div>
 	        <div style="position: relative;">
@@ -132,7 +132,7 @@
 
 
 
-<div class="modal fade" id="newUserModal-dist">
+<div class="modal fade" id="newUserModal-scen">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -140,7 +140,7 @@
                 <h4 class="modal-title">Create Scenarios</h4>
             </div>
             <div class="modal-body">
-                <form id="newUserForm-dist" class="form-horizontal">
+                <form id="newUserForm-scen" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Scenarios Name*:</label>
                         <div class="col-sm-7">
@@ -152,6 +152,8 @@
                         <div class="col-sm-7">
                             <select type="text" class="form-control" name="scenariosCategory" >
                             	<option value=""></option>
+                            	<option value="1">class1</option>
+                            	<option value="2">class2</option>
                             </select>
                         </div>
                     </div>
@@ -165,7 +167,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn-dist" class="btn btn-primary">Save</button>
+                <button type="button" id="saveBtn-scen" class="btn btn-primary">Save</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
