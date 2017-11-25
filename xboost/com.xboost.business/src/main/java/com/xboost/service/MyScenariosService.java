@@ -3,6 +3,7 @@ package com.xboost.service;
 import com.xboost.mapper.MyScenariosMapper;
 import com.xboost.pojo.Scenarios;
 import com.xboost.util.ExcelUtil;
+import com.xboost.util.ShiroUtil;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class MyScenariosService {
      */
     public void save(Scenarios scenario) {
         scenario.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
-
+        scenario.setUserId(ShiroUtil.getCurrentUserId());
         myScenariosMapper.save(scenario);
 
     }
@@ -66,6 +67,7 @@ public class MyScenariosService {
                             scenario.setScenariosStatus(row[7]);
                             scenario.setLastOpenTime(row[8]);
                             scenario.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+                            scenario.setUserId(ShiroUtil.getCurrentUserId());
 
                             //insert
                             myScenariosMapper.save(scenario);
@@ -87,16 +89,16 @@ public class MyScenariosService {
      * param
      * @return
      */
-    public List<Scenarios> findAll() {
-        return myScenariosMapper.findAll();
+    public List<Scenarios> findAll(Integer userId) {
+        return myScenariosMapper.findAll(userId);
     }
 
        /**
      * 获取场景的总数量
      * @return
      */
-    public Integer findAllCount() {
-        return myScenariosMapper.findAllCount().intValue();
+    public Integer findAllCount(Integer userId) {
+        return myScenariosMapper.findAllCount(userId).intValue();
     }
 
     /**
@@ -145,5 +147,18 @@ public class MyScenariosService {
 
         myScenariosMapper.delById(id);
     }
+
+    /**
+     *
+     * @param openScenariosId
+     * @return
+     */
+    public void updateOpenTime(String openScenariosId) {
+        String s = DateTime.now().toString("yyyy-MM-dd HH:mm");
+        myScenariosMapper.updateOpenTime(openScenariosId,s);
+
+    }
+
+
 
 }

@@ -6,6 +6,7 @@ import com.xboost.service.MyScenariosService;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
+
 @Controller
 @RequestMapping("/MyScenarios")
 public class MyScenariosController {
@@ -30,6 +32,9 @@ public class MyScenariosController {
     public String MyScenarios() {
         return "MyScenarios/MyScenarios";
     }
+
+    @Inject
+    Scenarios scenario;
 
     @Inject
     private MyScenariosService myScenariosService;
@@ -77,13 +82,14 @@ public class MyScenariosController {
         }
         param.put("orderColumn",orderColumnName);
         param.put("orderType",orderType);
+        param.put("userId",ShiroUtil.getCurrentUserId());
 
 
 
         Map<String,Object> result = Maps.newHashMap();
 
         List<Scenarios> scenariosList = myScenariosService.findByParam(param); //.findAllSiteInfo();
-        Integer count = myScenariosService.findAllCount();
+        Integer count = myScenariosService.findAllCount(ShiroUtil.getCurrentUserId());
         Integer filteredCount = myScenariosService.findCountByParam(param);
 
         result.put("draw",draw);
@@ -134,6 +140,7 @@ public class MyScenariosController {
     public String openScenariosById(String openScenariosId) {
         String result = ShiroUtil.setOpenScenariosId(openScenariosId);
         if(result.equals("success")){
+            myScenariosService.updateOpenTime(openScenariosId);
             return "success";
         }else{
             return "fail";

@@ -1,6 +1,7 @@
 package com.xboost.mapper;
 
 import com.xboost.pojo.Scenarios;
+import org.joda.time.DateTime;
 
 import java.util.List;
 import java.util.Map;
@@ -15,9 +16,9 @@ public interface MyScenariosMapper {
 
 
      // 查询所有场景信息  @return
-    List<Scenarios> findAll();
+    List<Scenarios> findAll(Integer userId);
 
-    Long findAllCount();
+    Long findAllCount(Integer userId);
 
     // 根据参数查询场景信息  @param param @return
     List<Scenarios> findByParam(Map<String, Object> param);
@@ -37,6 +38,14 @@ public interface MyScenariosMapper {
 
     //根据id删除场景信息   * @param id
     void delById(Integer id);
+
+    /**
+     *
+     * @param openScenariosId
+     * @return
+     */
+    public void updateOpenTime(String openScenariosId,String openTime);
+
 
 }
 
