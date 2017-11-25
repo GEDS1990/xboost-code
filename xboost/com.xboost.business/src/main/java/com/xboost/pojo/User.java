@@ -8,6 +8,9 @@ public class User implements Serializable {
     public static final String USER_STATE_OK = "正常";
     public static final String USER_STATE_DISABLE = "禁用";
     public static final String SESSION_KEY = "curr_user";
+    public static final String SESSION_openScenariosName = "openScenariosName";
+    public static final String SESSION_openScenariosId = "openScenariosId";
+
 
     private Integer id;
     private String username;
@@ -90,4 +93,5 @@ public class User implements Serializable {
     public void setUserid(String userid) {
         this.userid = userid;
     }
+
 }

@@ -78,7 +78,7 @@ public class ShiroUtil {
 
         org.apache.shiro.subject.Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();                            ;
-        String scenariosId = session.getAttribute("openScenariosId").toString();
+        String scenariosId = session.getAttribute(User.SESSION_openScenariosId).toString();
         return scenariosId;
     }
 
@@ -91,7 +91,7 @@ public class ShiroUtil {
         Subject subject = SecurityUtils.getSubject();
         //将场景id放入到Session中
         Session session = subject.getSession();
-        session.setAttribute("openScenariosId",openScenariosId);
+        session.setAttribute(User.SESSION_openScenariosId,openScenariosId);
         return "success";
     }
 
@@ -104,7 +104,7 @@ public class ShiroUtil {
         Subject subject = SecurityUtils.getSubject();
         //将场景名称放入到Session中
         Session session = subject.getSession();
-        session.setAttribute("openScenariosName",openScenariosName);
+        session.setAttribute(User.SESSION_openScenariosName,openScenariosName);
         return "success";
     }
 
@@ -115,8 +115,8 @@ public class ShiroUtil {
     public static String getOpenScenariosName(){
 
         org.apache.shiro.subject.Subject subject = SecurityUtils.getSubject();
-        Session session = subject.getSession();                            ;
-        String scenariosName = session.getAttribute("openScenariosName").toString();
+        Session session = subject.getSession();
+        String scenariosName = session.getAttribute(User.SESSION_openScenariosName).toString();
         return scenariosName;
     }
 }
