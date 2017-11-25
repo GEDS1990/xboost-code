@@ -19,7 +19,7 @@ public class ExcelInputController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
-        return "ScenariosName/Simualt";
+        return "ScenariosName/SimualtValidate";
     }
 
     /**

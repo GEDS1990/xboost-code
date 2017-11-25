@@ -81,9 +81,40 @@
 	    				<p>123</p>
 	    				<p>123</p>
 	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<p>123</p>
+	    				<div>----------------------------------------------</div>
+	    				<p>MM/dd/yyyy H:mm:ss,Validation is completed,please check the error information.</p>
+	    				<p>MM/dd/yyyy H:mm:ss,Validation is successful,and now you can run the simulation.</p>
 	    			</div>
-	    			<div class="">
-	    				
+	    			<div class="sim-settings">
+	    				<div class="clearfix">
+	    					<p class="col-sm-3">Opetimaztion Finish Criteria :</p>
+	    				</div>
+	    				<div class="clearfix sim-input">
+		    				<p class="col-sm-2">Time Limit (min)</p>
+		    				<input class="col-sm-2" type="number" value="" />
+		    			</div>
+		    			<div class="clearfix sim-input">
+		    				<p class="col-sm-2">Loops Limit</p>
+		    				<input class="col-sm-2" type="number" value="" />
+		    			</div>
+	    			</div>
+	    			
+	    			<div class="form-group  clearfix">
+	    				<p class="col-sm-2"><button>Run Simulation</button></p>
+	    				<p id="sim-error">You must pass the validation before running the simulation.If you have modified Scenario settings,you must validate them again</p>
 	    			</div>
 	    		</div>
 	    	</div>
