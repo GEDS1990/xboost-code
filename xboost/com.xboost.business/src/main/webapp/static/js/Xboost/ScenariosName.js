@@ -15,6 +15,9 @@ $(function  () {
 	});	
 	*/
 	
+	
+	
+	
 	/*
 	 *MyScenarios.jsp == MyScenariosController
 	 * 
@@ -29,23 +32,26 @@ $(function  () {
 	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
-	                url:"/siteDist/siteDist.json", //获取数据的URL
+	                url:"MyScenarios/scenarios.json", //获取数据的URL
 	                type:"get" //获取数据的方式
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
-	                {"data":"siteCollect","name":"site_collect"},
-	                {"data":"siteDelivery","name":"site_delivery"},
-	                {"data":"carDistance","name":"car_distance"},
-	                {"data":"carDistance","name":"car_distance"},
-	                {"data":"durationNightDelivery","name":"duration_night_delivery"},
+	                {"data":"userId","name":"user_id"},
+	                {"data":"scenariosName","name":"scenarios_name"},
+	                {"data":"scenariosCategory","name":"scenarios_category"},
+	                {"data":"scenariosDesc","name":"scenarios_desc"},
+	                {"data":"scenariosModel","name":"scenarios_model"},
+	                {"data":"scenariosOut","name":"scenarios_out"},
+	                {"data":"lastOpenTime","name":"last_open_time"},
+	                {"data":"scenariosStatus","name":"scenarios_status"},
 	                {"data":function(row){
-	                    return "<a href='javascript:;' class='openLink-dist' data-id='"+row.id+"'>Open</a> <a href='javascript:;' class='editLink-dist' data-id='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-dist' data-id='"+row.id+"'>Delete</a>";
+	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"'>Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
 	                }}
 	            ],
 	            "columnDefs":[ //具体列的定义
 	            	{
-	                    "targets":[0],
+	                    "targets":[0,1,5,6],
 	                    "visible":false
 	                },
 	                {
@@ -74,13 +80,35 @@ $(function  () {
 	            }
 	        });
         
+        //点击open 打开场景
+        $('.openLink-scen').click(function  () {
+        	var $this = $(this);
+        	var openScenariosId = $this.attr("data-scenariosid");
+        	var scenName = $this.parent("td").parent("tr").find("td").eq(0).text();
+        	$.get("/MyScenarios/open",{"openScenariosId":openScenariosId}).done(function  (res) {
+        		if (res == "success") {
+        			var add = "";
+        			add+='<div class="xb-hover" id="scen-name"><div class="nav_xb" id="xb-nav-xb">';
+        			add+='<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>';
+        			add+='<span class="icon alt1 alt icon-file-text-o"></span>';
+        			add+='<a href="/ScenariosName">'+scenName+'</a>';
+        			add+='<a id="scen-name-close" class="glyphicon glyphicon-remove"></a></div></div>';
+        			add+='<ul class="xb-nav_ul" id="scen-class">';
+        			add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Conditions</a></li>';
+        			add+='<li id="nav-Simualt"><a href="/excelInput"><span class="icon-item alt icon-play"></span>Simualt</a></li>';
+        			add+='<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li></ul>';
+        			$('#scen-info').append(add);
+                    	
+        		}
+        	});
+        });
 
         //添加新用户
         $("#addNewUser-dist").click(function(){
             $("#newUserModal-dist").modal('show');
         });
         $("#saveBtn-dist").click(function(){
-            $.post("/siteDist/add",$("#newUserForm-dist").serialize())
+            $.post("/MyScenarios/add",$("#newUserForm-dist").serialize())
                     .done(function(result){
                         if("success" == result) {
                             $("#newUserForm-dist")[0].reset();
@@ -99,7 +127,7 @@ $(function  () {
             var id = $(this).attr("data-id");
             $('#modal-del').modal("show")
             $('#modal-delBtn').click(function  () {
-            	$.post("/siteDist/del",{"id":id}).done(function(result){
+            	$.post("/MyScenarios/del",{"id":id}).done(function(result){
                     if("success" == result) {
                         dt.ajax.reload();
                         window.location.reload(); 
@@ -119,11 +147,15 @@ $(function  () {
 
 		//上传excel文件
          $("#cond-file-upload-dist").click(function(){
-         	UploadFile("cond-input-form-dist","cond_file","/siteDist/addByExcel",'.bs-example-modal-input')
+         	UploadFile("cond-input-form-dist","cond_file","/MyScenarios/addByExcel",'.bs-example-modal-input')
          });
 		}
 		
 	})(),
+	
+	
+	
+	
 	/*
 	 * 选择上传文件
 	 */

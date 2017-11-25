@@ -65,24 +65,18 @@
 				            <thead>
 				            	<tr>
 				            		<th>ID</th>
+				            		<th>useID</th>
 					                <th>Scenarios Name</th>
 					                <th>Category</th>
 					                <th>Description</th>
+					                <th>mode</th>
+					                <th>out</th>
 					                <th>Last Opened</th>
 					                <th>Current Status</th>
 					                <th>operation</th>
 				            	</tr>
 				            </thead>
-				            <tbody id="cond-tbody">
-				            	<tr>
-					                <td></td>
-					                <td></td>
-					                <td></td>
-					                <td></td>
-					                <td></td>
-					                <td></td>
-					                <td></td>
-				            	</tr>
+				            <tbody id="scen-tbody">
 				            </tbody>
 			            </table>
 			        </div>
