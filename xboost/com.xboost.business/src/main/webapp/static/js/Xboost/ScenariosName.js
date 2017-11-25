@@ -56,7 +56,7 @@ $(function  () {
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[6],
+	                    "targets":[9],
 	                    "orderable":false
 	                },
 	                {
@@ -82,11 +82,11 @@ $(function  () {
 	        });
         
         //点击open 打开场景
-        $('.openLink-scen').click(function  () {
+        $("body").on("click",".openLink-scen",function  () {
         	var $this = $(this);
         	var openScenariosId = $this.attr("data-scenariosid");
         	var scenName = $this.parent("td").parent("tr").find("td").eq(0).text();
-        	$.get("/MyScenarios/open",{"openScenariosId":openScenariosId}).done(function  (res) {
+        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId}).done(function  (res) {
         		if (res == "success") {
         			var add = "";
         			add+='<div class="xb-hover" id="scen-name"><div class="nav_xb" id="xb-nav-xb">';
@@ -102,7 +102,8 @@ $(function  () {
                     	
         		}
         	});
-        });
+        })
+       
 
         //添加新用户
         $("#addNewUser-dist").click(function(){

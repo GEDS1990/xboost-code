@@ -13,6 +13,7 @@
                 			<a href="/MyScenarios">My Scenarios</a>
                 		</div>
                 	</div>
+                	
                     <!--<div class="xb-hover" id="scen-name">
                     	<div class="nav_xb" id="xb-nav-xb">
 	                    	<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>
@@ -26,6 +27,8 @@
                     	<li id="nav-Simualt"><a href="/excelInput"><span class="icon-item alt icon-play"></span>Simualt</a></li>
                     	<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li>
                     </ul>-->
+                    
+                    
                 </li>
                 <li class="xb-hover">
                     <div class="nav_xb" id="nav-Research"><span class="icon alt icon-bar-chart"></span>Research</div>

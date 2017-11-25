@@ -57,8 +57,17 @@
 	        		<li><a href="#">Simualte</a></li>
 	        	</ul>
 	        </div>
-	    	<div>
-	    		
+	        
+	    	<div class="sim-content">
+	    		<header>
+	    			<p>You must validate all settings before running the simulation</p>
+	    		</header>
+	    		<div class="sim-box">
+	    			<select>
+	    				<option>aba</option>
+	    				<option>aba</option>
+	    			</select>
+	    		</div>
 	    	</div>
 	    </div>
 	    <!-- /#page-wrapper -->
