@@ -63,16 +63,16 @@
 	    			<p>You must validate all settings before running the simulation</p>
 	    		</header>
 	    		<div class="sim-box">
-	    			<div class="form-group clearfix">
-	    				<p class="col-sm-2">Simulation Method :</p>
-	    				<select id="sim-model" class="col-sm-2">
+	    			<div class="form-group sim-wrap clearfix">
+	    				<p>Simulation Method :</p>
+	    				<select id="sim-model" >
 	    					<option value="0">Please choose</option>
 		    				<option value="1">ABA</option>
 		    				<option value="2">CDC</option>
 		    			</select>
 	    			</div>
-	    			<div class="form-group  clearfix">
-	    				<p class="col-sm-2"><button id="sim-check">Validate Settings</button></p>
+	    			<div class="form-group sim-wrap clearfix">
+	    				<p><button id="sim-check">Validate Settings</button></p>
 	    				<p id="sim-error-check" class="sim-error">Please choise a Simulation Method first</p>
 	    			</div>
 	    			
@@ -100,20 +100,20 @@
 	    			</div>
 	    			<div class="sim-settings">
 	    				<div class="clearfix">
-	    					<p class="col-sm-3">Opetimaztion Finish Criteria :</p>
+	    					<p>Opetimaztion Finish Criteria :</p>
 	    				</div>
 	    				<div class="clearfix sim-input">
-		    				<p class="col-sm-2">Time Limit (min)</p>
-		    				<input class="col-sm-2" type="number" value="" />
+		    				<p>Time Limit (min)</p>
+		    				<input type="number" value="" />
 		    			</div>
 		    			<div class="clearfix sim-input">
-		    				<p class="col-sm-2">Loops Limit</p>
-		    				<input class="col-sm-2" type="number" value="" />
+		    				<p>Loops Limit</p>
+		    				<input type="number" value="" />
 		    			</div>
 	    			</div>
 	    			
 	    			<div class="form-group  clearfix">
-	    				<p class="col-sm-2"><button id="sim-run">Run Simulation</button></p>
+	    				<p class="sim-run-btn"><button id="sim-run">Run Simulation</button></p>
 	    				<p id="sim-error-run" class="sim-error">You must pass the validation before running the simulation.If you have modified Scenario settings,you must validate them again</p>
 	    			</div>
 	    		</div>
@@ -158,7 +158,8 @@
 <%-- DataTables JS--%>
 <script src="/static/js/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
-<script src="../../../static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/flex.js"></script>
+<script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/Xboost/navMain.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/Xboost/ScenariosName.js" ></script>
 <script type="text/javascript">

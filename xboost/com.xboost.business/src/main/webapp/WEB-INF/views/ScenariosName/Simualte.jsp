@@ -88,7 +88,7 @@
 	    			</div>
 	    			
 	    			<div class="form-group  clearfix">
-	    				<p class="col-sm-2"><button id="sim-stop">Stop Simulation</button></p>
+	    				<p class="sim-run-btn"><button id="sim-stop">Stop Simulation</button></p>
 	    			</div>
 	    		</div>
 	    	</div>
@@ -132,7 +132,8 @@
 <%-- DataTables JS--%>
 <script src="/static/js/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
-<script src="../../../static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/flex.js"></script>
 <script src="/static/js/Xboost/navMain.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/Xboost/ScenariosName.js" ></script>
 <script type="text/javascript">

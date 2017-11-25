@@ -148,6 +148,7 @@
 
 <!-- jQuery -->
 <script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/flex.js"></script>
 <script src="/static/js/Xboost/nav.js"></script>
 <script>
     $(function () {
