@@ -16,14 +16,14 @@ public interface DemandInfoMapper {
 
 
      // 查询所有需求信息  @return
-    List<DemandInfo> findAll();
+    List<DemandInfo> findAll(String scenariosId);
 
     //查询所有需求信息总数
-    Long findAllCount();
+    Long findAllCount(String scenariosId);
 
     /**
      * 根据用户的ID查询需求信息
-     * @param 需求信息id
+     * @param
      * @return
      */
     DemandInfo findById(Integer id);

@@ -2,6 +2,7 @@ package com.xboost.util;
 
 import com.xboost.pojo.User;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
 public class ShiroUtil {
@@ -69,4 +70,28 @@ public class ShiroUtil {
         return getCurrentUser().getId();
     }
 
+    /**
+     * 从session中获取当前登录对象的open的场景ID
+     * @return
+     */
+    public static String getOpenScenariosId(){
+
+        org.apache.shiro.subject.Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();                            ;
+        String scenariosId = session.getAttribute("openScenariosId").toString();
+        return scenariosId;
+    }
+
+    /**
+     * 将当前登录对象的open的场景ID设置到session中
+     * @return
+     */
+    public static String setOpenScenariosId(String openScenariosId){
+        //获取认证主体
+        Subject subject = SecurityUtils.getSubject();
+        //将场景id放入到Session中
+        Session session = subject.getSession();
+        session.setAttribute("openScenariosId",openScenariosId);
+        return "success";
+    }
 }

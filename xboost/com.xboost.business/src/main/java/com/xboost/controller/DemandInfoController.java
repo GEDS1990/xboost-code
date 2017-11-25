@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.xboost.pojo.DemandInfo;
 import com.xboost.pojo.SiteInfo;
 import com.xboost.service.DemandInfoService;;
+import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,8 @@ public class DemandInfoController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public String addDemandInfo(DemandInfo demandInfo) {
+        //设置场景Id
+        demandInfo.setScenariosId(ShiroUtil.getOpenScenariosId());
         demandInfoService.addDemandInfo(demandInfo);
         return "success";
     }
@@ -48,6 +51,8 @@ public class DemandInfoController {
     @RequestMapping(value = "/addByExcel",method = RequestMethod.POST)
     @ResponseBody
     public String AddDemandInfoByExcel(DemandInfo demandInfo, @RequestParam MultipartFile[] file) {
+        //设置场景Id
+        demandInfo.setScenariosId(ShiroUtil.getOpenScenariosId());
         demandInfoService.addDemandInfoByExcel(demandInfo,file);
         return "redirect:/siteInfo";
     }
@@ -73,13 +78,13 @@ public class DemandInfoController {
         }
         param.put("orderColumn",orderColumnName);
         param.put("orderType",orderType);
-
-
+        //设置场景ID
+        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
 
         Map<String,Object> result = Maps.newHashMap();
 
         List<DemandInfo> demandInfoList = demandInfoService.findByParam(param); //.findAll();
-        Integer count = demandInfoService.findAllCount();
+        Integer count = demandInfoService.findAllCount(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = demandInfoService.findCountByParam(param);
 
         result.put("draw",draw);
@@ -105,6 +110,7 @@ public class DemandInfoController {
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public String editDemandInfo(DemandInfo demandInfo) {
+        demandInfo.setScenariosId(ShiroUtil.getOpenScenariosId());
         demandInfoService.editDemandInfo(demandInfo);
         return "success";
     }

@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.xboost.pojo.Scenarios;
 import com.xboost.pojo.User;
 import com.xboost.service.ScenariosService;
+import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -134,13 +135,13 @@ public class MyScenariosController {
      */
     @RequestMapping(value = "/open",method = RequestMethod.POST)
     @ResponseBody
-    public String openScenariosById(Integer id) {
-        //获取认证主体
-        Subject subject = SecurityUtils.getSubject();
-        //将场景id放入到Session中
-        Session session = subject.getSession();
-        session.setAttribute("openScenariosId",id);
-        return "success";
+    public String openScenariosById(String id) {
+        String result = ShiroUtil.setOpenScenariosId(id);
+        if(result.equals("success")){
+            return "success";
+        }else{
+            return "fail";
+        }
     }
 
 }
