@@ -44,8 +44,8 @@ public class ModelArgService {
      * param
      * @return
      */
-    public List<ModelArg> findAllModelArg() {
-        return modelArgMapper.findAll();
+    public List<ModelArg> findAllModelArg(String scenariosId) {
+        return modelArgMapper.findAll(scenariosId);
     }
 
     /**
