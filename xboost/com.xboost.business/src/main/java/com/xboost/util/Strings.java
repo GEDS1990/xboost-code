@@ -12,4 +12,12 @@ public class Strings {
         }
     }
 
+    public static Boolean isEmpty(String str) {
+
+        if (str == null || str == "" || str == " " || str.length()<=0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
