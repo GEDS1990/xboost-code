@@ -52,9 +52,9 @@
 	        	</div>
 	        </div>
 	        <div class="cond-top">
-	        	<ul class="cond-top-ul clearfix">
+	        	<ul class="cond-top-ul clearfix" id="sim-run-percent">
 	        		<li><a href="/simualte">Validate</a></li>
-	        		<li class="active"><a  class="active" href="/Simualte">Simualte</a></li>
+	        		<li class="active"><a  class="active" href="/Simualte">Simualte{{percent}}</a></li>
 	        	</ul>
 	        </div>
 	        
@@ -116,6 +116,7 @@
 <script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/flex.js"></script>
 <script src="/static/js/sockjs-0.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/vue.min.js"></script>
 <script src="/static/js/Xboost/navMain.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/Xboost/ScenariosName.js" ></script>
 <script src="/static/js/Xboost/simualte.js"></script>
