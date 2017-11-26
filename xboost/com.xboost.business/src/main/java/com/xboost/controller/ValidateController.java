@@ -72,52 +72,64 @@ public class ValidateController {
         String result="";
         int flag=0;
         //验证网点信息
-        result = result + "Validating Depots Info......";
+        result = "Validating Depots Info......";
+        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
         for(int i=0;i<siteInfoList.size();i++){
             SiteInfo siteInfo = siteInfoList.get(i);
-            if("".equals(siteInfo.getSiteCode())||" ".equals(siteInfo.getSiteCode())){
+            if(Strings.isEmpty(siteInfo.getSiteCode())){
                 flag = flag + 1;
-                result = result + siteInfo.getSiteCode()+"ID is wrong. Because it's null.\n";
+                result = siteInfo.getSiteCode()+"ID is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteInfo.getSiteLongitude())||" ".equals(siteInfo.getSiteLongitude())){
+            if(Strings.isEmpty(siteInfo.getSiteLongitude())){
                 flag = flag + 1;
-                result = result + siteInfo.getSiteCode()+"longitude is wrong. Because it's null.\n";
+                result = siteInfo.getSiteCode()+"longitude is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteInfo.getSiteLatitude())||" ".equals(siteInfo.getSiteLatitude())){
+            if(Strings.isEmpty(siteInfo.getSiteLatitude())){
                 flag = flag + 1;
-                result = result + siteInfo.getSiteCode()+"latitude is wrong. Because it's null.\n";
+                result = siteInfo.getSiteCode()+"latitude is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteInfo.getSiteName())||" ".equals(siteInfo.getSiteName())){
+            if(Strings.isEmpty(siteInfo.getSiteName())){
                 flag = flag + 1;
-                result = result + siteInfo.getSiteCode()+"name is wrong. Because it's null.\n";
+                result = siteInfo.getSiteCode()+"name is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteInfo.getSiteAddress())||" ".equals(siteInfo.getSiteAddress())){
+            if(Strings.isEmpty(siteInfo.getSiteAddress())){
                 flag = flag + 1;
-                result = result + siteInfo.getSiteCode()+"address is wrong. Because it's null.\n";
+                result = siteInfo.getSiteCode()+"address is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteInfo.getSiteArea())||" ".equals(siteInfo.getSiteArea())){
+            if(Strings.isEmpty(siteInfo.getSiteArea())){
                 flag = flag + 1;
-                result = result + siteInfo.getSiteCode()+"area is wrong. Because it's null.\n";
+                result = siteInfo.getSiteCode()+"area is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteInfo.getSiteType())||" ".equals(siteInfo.getSiteType())){
+            if(Strings.isEmpty(siteInfo.getSiteType())){
                 flag = flag + 1;
-                result = result + siteInfo.getSiteCode()+"type is wrong. Because it's null.\n";
+                result = siteInfo.getSiteCode()+"type is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteInfo.getDistribCenter())||" ".equals(siteInfo.getDistribCenter())){
+            if(Strings.isEmpty(siteInfo.getDistribCenter())){
                 flag = flag + 1;
-                result = result + siteInfo.getSiteCode()+"distrib.center is wrong. Because it's null.\n";
+                result = siteInfo.getSiteCode()+"distrib.center is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteInfo.getCarNum())||" ".equals(siteInfo.getCarNum())){
+            if(Strings.isEmpty(siteInfo.getCarNum())){
                 flag = flag + 1;
-                result = result + siteInfo.getSiteCode()+"vehicle quantity limit is wrong. Because it's null.\n";
+                result = siteInfo.getSiteCode()+"vehicle quantity limit is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteInfo.getLargeCarModel())||" ".equals(siteInfo.getLargeCarModel())){
+            if(Strings.isEmpty(siteInfo.getLargeCarModel())){
                 flag = flag + 1;
-                result = result + siteInfo.getSiteCode()+"vehicle weight limit  is wrong. Because it's null.\n";
+                result = siteInfo.getSiteCode()+"vehicle weight limit  is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteInfo.getMaxOperateNum())||" ".equals(siteInfo.getMaxOperateNum())){
+            if(Strings.isEmpty(siteInfo.getMaxOperateNum())){
                 flag = flag + 1;
-                result = result + siteInfo.getSiteCode()+"piece capacity is wrong. Because it's null.\n";
+                result = siteInfo.getSiteCode()+"piece capacity is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
 
         }
@@ -125,33 +137,33 @@ public class ValidateController {
         /**
          * 验证网点距离信息
          */
-        result = result + "Validating Depots Distance......";
+        result = "Validating Depots Distance......";
+        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
         for(int i=0;i<siteDistList.size();i++){
             SiteDist siteDist = siteDistList.get(i);
-            if("".equals(siteDist.getSiteCollect())||" ".equals(siteDist.getSiteCollect())){
+            if(Strings.isEmpty(siteDist.getSiteCollect())){
                 flag = flag + 1;
-                result = siteDist.getSiteCollect()+"pickup depot is wrong. Because it's null.\n";
+                result = siteDist.getSiteCollect()+"pickup depot is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteDist.getSiteDelivery())||" ".equals(siteDist.getSiteDelivery())){
+            if(Strings.isEmpty(siteDist.getSiteDelivery())){
                 flag = flag + 1;
-                result = siteDist.getSiteCollect()+"delivery depot is wrong. Because it's null.\n";
+                result = siteDist.getSiteCollect()+"delivery depot is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            try {
-                if (siteDist.getCarDistance() < 10) {
-                    flag = flag + 1;
-                    result = result + siteDist.getSiteCollect() + "transportation distance(km) is wrong. Because it's null.\n";
-                }
-            }catch (Exception e){
+            if (Strings.isEmpty(siteDist.getCarDistance().toString())) {
                 flag = flag + 1;
-                result = result + siteDist.getSiteCollect() + "transportation distance(km) is wrong. Because it's null exception.\n";
+                result = siteDist.getSiteCollect() + "transportation distance(km) is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteDist.getDurationNightDelivery())||" ".equals(siteDist.getDurationNightDelivery())){
+            if(Strings.isEmpty(siteDist.getDurationNightDelivery().toString())){
                 flag = flag + 1;
-                result = result + siteDist.getSiteCollect()+"night transportation time(min) is wrong. Because it's null.\n";
+                result = siteDist.getSiteCollect()+"night transportation time(min) is wrong. Because it's empty.\n";
             }
         }
+
+
+
 
         String success = "Validation is successful,and now you can run the simulation.";
         String fail = "Validation is completed,please check the error information.";
