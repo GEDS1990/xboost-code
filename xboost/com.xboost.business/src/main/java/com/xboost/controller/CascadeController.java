@@ -39,7 +39,7 @@ public class CascadeController {
 
     @RequestMapping(value="/runSilumate",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> docascade(Map input){
+    public Map<String,Object> docascade(String distMode,String loadTime,String loopLimit){
 //        cascadeService.saveNewfile(file);
         //查询Confiuration表数据
         Map<String, Object> param = new HashMap<String,Object>();
@@ -48,9 +48,9 @@ public class CascadeController {
         //传入场景id
         param.put("scenariosId", ShiroUtil.getOpenScenariosId());
 //        config =configurationService.findConfigByParam(param);
-        config.setDistMode(1);
-        config.setLoadTime(10);
-        config.setOptimizeIterations(500);
+        config.setDistMode(Integer.parseInt(distMode));
+        config.setLoadTime(Double.parseDouble(loadTime));
+        config.setOptimizeIterations(Integer.parseInt(loopLimit));
         //查询car_info内容并set到config
         carlist =carService.findCarByParam(param);
         for(int i=0;i<carlist.length;i++){
@@ -60,7 +60,7 @@ public class CascadeController {
 
         CascadeModelUtil cmu = new CascadeModelUtil();
         cmu.excute(config,demandInfoService,siteDistService);
-        LogFactory.getLog(AccountController.class).info("input:"+input);
+//        LogFactory.getLog(AccountController.class).info("input:"+input);
         return null;
     }
 }
