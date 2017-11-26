@@ -60,7 +60,7 @@ public class CascadeController {
 
         CascadeModelUtil cmu = new CascadeModelUtil();
         cmu.excute(config,demandInfoService,siteDistService);
-        LogFactory.getLog(AccountController.class).info("input:"+input);
+//        LogFactory.getLog(AccountController.class).info("input:"+input);
         return null;
     }
 }
