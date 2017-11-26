@@ -151,18 +151,52 @@ public class ValidateController {
                 result = siteDist.getSiteCollect()+"delivery depot is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if (Strings.isEmpty(siteDist.getCarDistance().toString())) {
+            if (Strings.isEmpty(siteDist.getCarDistance())) {
                 flag = flag + 1;
                 result = siteDist.getSiteCollect() + "transportation distance(km) is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Strings.isEmpty(siteDist.getDurationNightDelivery().toString())){
+            if(Strings.isEmpty(siteDist.getDurationNightDelivery())){
                 flag = flag + 1;
                 result = siteDist.getSiteCollect()+"night transportation time(min) is wrong. Because it's empty.\n";
             }
         }
 
-
+        /**
+         * 验证需求信息
+         */
+        result = "Validating Demands......";
+        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+        for(int i=0;i<demandInfoList.size();i++){
+            DemandInfo demandInfo = demandInfoList.get(i);
+            if(Strings.isEmpty(demandInfo.getDate())){
+                flag = flag + 1;
+                result = demandInfo.getDate()+"Date is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(Strings.isEmpty(demandInfo.getSiteCodeCollect())){
+                flag = flag + 1;
+                result = demandInfo.getDate()+"pickup depot is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if (Strings.isEmpty(demandInfo.getSiteCodeDelivery())) {
+                flag = flag + 1;
+                result = demandInfo.getDate() + "delivery depot is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(Strings.isEmpty(siteDist.getDurationNightDelivery())){
+                flag = flag + 1;
+                result = siteDist.getSiteCollect()+"night transportation time(min) is wrong. Because it's empty.\n";
+            }
+            if(Strings.isEmpty(siteDist.getDurationNightDelivery())){
+                flag = flag + 1;
+                result = siteDist.getSiteCollect()+"night transportation time(min) is wrong. Because it's empty.\n";
+            }
+            if(Strings.isEmpty(siteDist.getDurationNightDelivery())){
+                flag = flag + 1;
+                result = siteDist.getSiteCollect()+"night transportation time(min) is wrong. Because it's empty.\n";
+            }
+        }
 
 
         String success = "Validation is successful,and now you can run the simulation.";
