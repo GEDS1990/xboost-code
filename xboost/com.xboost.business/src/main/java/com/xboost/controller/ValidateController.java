@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.socket.TextMessage;
+import sun.rmi.runtime.Log;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +64,7 @@ public class ValidateController {
      */
     @RequestMapping(value = "/Validate",method = RequestMethod.POST)
     @ResponseBody
-    public String Validate() {
+    public void Validate() {
         List<SiteInfo> siteInfoList = siteInfoService.findAllSiteInfo(ShiroUtil.getOpenScenariosId());
         List<SiteDist> siteDistList = siteDistService.findAllSiteDist(ShiroUtil.getOpenScenariosId());
         List<DemandInfo> demandInfoList = demandInfoService.findAll(ShiroUtil.getOpenScenariosId());
@@ -71,6 +72,7 @@ public class ValidateController {
         List<ModelArg> modelArgList = modelArgService.findAllModelArg(ShiroUtil.getOpenScenariosId());
         String result="";
         int flag=0;
+        Logger logger = LoggerFactory.getLogger(ValidateController.class);
         //验证网点信息
         result = "Validating Depots Info......";
         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
@@ -78,57 +80,60 @@ public class ValidateController {
             SiteInfo siteInfo = siteInfoList.get(i);
             if(Strings.isEmpty(siteInfo.getSiteCode())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+"ID is wrong. Because it's empty.\n";
+                result = siteInfo.getSiteCode()+":ID is wrong. Because it's empty.\n";
+                logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteLongitude())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+"longitude is wrong. Because it's empty.\n";
+                result = siteInfo.getSiteCode()+":longitude is wrong. Because it's empty.\n";
+                logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteLatitude())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+"latitude is wrong. Because it's empty.\n";
+                result = siteInfo.getSiteCode()+":latitude is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteName())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+"name is wrong. Because it's empty.\n";
+                result = siteInfo.getSiteCode()+":name is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteAddress())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+"address is wrong. Because it's empty.\n";
+                result = siteInfo.getSiteCode()+":address is wrong. Because it's empty.\n";
+                logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteArea())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+"area is wrong. Because it's empty.\n";
+                result = siteInfo.getSiteCode()+":area is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteType())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+"type is wrong. Because it's empty.\n";
+                result = siteInfo.getSiteCode()+":type is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getDistribCenter())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+"distrib.center is wrong. Because it's empty.\n";
+                result = siteInfo.getSiteCode()+":distrib.center is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getCarNum())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+"vehicle quantity limit is wrong. Because it's empty.\n";
+                result = siteInfo.getSiteCode()+":vehicle quantity limit is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getLargeCarModel())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+"vehicle weight limit  is wrong. Because it's empty.\n";
+                result = siteInfo.getSiteCode()+":vehicle weight limit  is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getMaxOperateNum())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+"piece capacity is wrong. Because it's empty.\n";
+                result = siteInfo.getSiteCode()+":piece capacity is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
 
@@ -143,22 +148,22 @@ public class ValidateController {
             SiteDist siteDist = siteDistList.get(i);
             if(Strings.isEmpty(siteDist.getSiteCollect())){
                 flag = flag + 1;
-                result = siteDist.getSiteCollect()+"pickup depot is wrong. Because it's empty.\n";
+                result = siteDist.getSiteCollect()+":pickup depot is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteDist.getSiteDelivery())){
                 flag = flag + 1;
-                result = siteDist.getSiteCollect()+"delivery depot is wrong. Because it's empty.\n";
+                result = siteDist.getSiteCollect()+":delivery depot is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if (Strings.isEmpty(siteDist.getCarDistance())) {
                 flag = flag + 1;
-                result = siteDist.getSiteCollect() + "transportation distance(km) is wrong. Because it's empty.\n";
+                result = siteDist.getSiteCollect() + ":transportation distance(km) is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteDist.getDurationNightDelivery())){
                 flag = flag + 1;
-                result = siteDist.getSiteCollect()+"night transportation time(min) is wrong. Because it's empty.\n";
+                result = siteDist.getSiteCollect()+":night transportation time(min) is wrong. Because it's empty.\n";
             }
         }
 
@@ -171,42 +176,42 @@ public class ValidateController {
             DemandInfo demandInfo = demandInfoList.get(i);
             if(Strings.isEmpty(demandInfo.getDate())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+"Date is wrong. Because it's empty.\n";
+                result = demandInfo.getDate()+":Date is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getSiteCodeCollect())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+"pickup depot is wrong. Because it's empty.\n";
+                result = demandInfo.getDate()+":pickup depot is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if (Strings.isEmpty(demandInfo.getSiteCodeDelivery())) {
                 flag = flag + 1;
-                result = demandInfo.getDate() + "delivery depot is wrong. Because it's empty.\n";
+                result = demandInfo.getDate() + ":delivery depot is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getProductType())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+"product type is wrong. Because it's empty.\n";
+                result = demandInfo.getDate()+":product type is wrong. Because it's empty.\n";
             }
             if(Strings.isEmpty(demandInfo.getDurationStart())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+"time start is wrong. Because it's empty.\n";
+                result = demandInfo.getDate()+":time start is wrong. Because it's empty.\n";
             }
             if(Strings.isEmpty(demandInfo.getDurationEnd())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+"time end is wrong. Because it's empty.\n";
+                result = demandInfo.getDate()+":time end is wrong. Because it's empty.\n";
             }
             if(Strings.isEmpty(demandInfo.getWeight())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+"weight is wrong. Because it's empty.\n";
+                result = demandInfo.getDate()+":weight is wrong. Because it's empty.\n";
             }
             if(Strings.isEmpty(demandInfo.getVotes())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+"piece is wrong. Because it's empty.\n";
+                result = demandInfo.getDate()+":piece is wrong. Because it's empty.\n";
             }
             if(Strings.isEmpty(demandInfo.getAgeing())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+"effectiveness is wrong. Because it's empty.\n";
+                result = demandInfo.getDate()+":effectiveness is wrong. Because it's empty.\n";
             }
         }
 
@@ -219,12 +224,12 @@ public class ValidateController {
             ModelArg modelArg = modelArgList.get(i);
             if(Strings.isEmpty(modelArg.getParameterName())){
                 flag = flag + 1;
-                result = modelArg.getParameterName()+"parameter name is wrong. Because it's empty.\n";
+                result = modelArg.getParameterName()+":parameter name is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(modelArg.getData())){
                 flag = flag + 1;
-                result = modelArg.getParameterName()+"data is wrong. Because it's empty.\n";
+                result = modelArg.getParameterName()+":data is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
         }
@@ -235,10 +240,15 @@ public class ValidateController {
         String delimiter = "\n---------------------------------------------------------------------\n";
 
         if(flag == 0) {
-            return result + delimiter + DateTime.now().toString("yyyy-MM-dd HH:mm:ss，")+ success;
+
+            result = DateTime.now().toString("yyyy-MM-dd HH:mm:ss，")+ success;
+            systemWebSocketHandler.sendMessageToUser( new TextMessage(delimiter));
+            systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
         }
         else{
-            return result + delimiter + DateTime.now().toString("yyyy-MM-dd HH:mm:ss，") + fail;
+            result = DateTime.now().toString("yyyy-MM-dd HH:mm:ss，") + fail;
+            systemWebSocketHandler.sendMessageToUser( new TextMessage(delimiter));
+            systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
         }
 
     }

@@ -9,7 +9,7 @@
         VALUES (#{scenarioId},#{parameterName},#{data},#{note},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
-    <select id="findAll" resultType="com.xboost.pojo.ModelArg">
+    <select id="findAll" parameterType="map" resultType="ModelArg" resultMap="modelArgMap">
         SELECT * FROM t_model_arg where scenariosId = #{scenariosId}
     </select>
 

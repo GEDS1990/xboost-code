@@ -14,7 +14,7 @@
     </insert>
 
 
-    <select id="findAll" resultType="com.xboost.pojo.Transportation">
+    <select id="findAll" parameterType="map" resultType="Transportation" resultMap="transportMap">
         SELECT * FROM t_transportation where scenariosId = #{scenariosId}
     </select>
 

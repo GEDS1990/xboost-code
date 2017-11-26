@@ -12,7 +12,7 @@
     </insert>
 
 
-    <select id="findAll" resultType="com.xboost.pojo.DemandInfo">
+    <select id="findAll" parameterType="map" resultType="DemandInfo" resultMap="demandInfoMap">
         SELECT * FROM t_demand_info where scenariosId = #{scenariosId}
     </select>
 
