@@ -9,26 +9,60 @@ $(function  () {
 	 * 
 	 */
 	(function  () {
-		//点击校验
-		$("#sim-check").click(function  () {
-			var _val = $('#sim-model').val();
-			if (_val == 0) {
-				$('#sim-error-check').show();
-				return false;
-			}else{
-				$('#sim-error-check').hide();
-				$.post("/simualte/Validate").done(function  (result) {
-					console.log(result);
-				});
-			}
-		});
+		var simCheck = doc.getElementById("sim-check");
+		if (simCheck) {
+			//点击校验
+			$("#sim-check").click(function  () {
+				var _val = $('#sim-model').val();
+				if (_val == 0) {
+					$('#sim-error-check').show();
+					return false;
+				}else{
+					$('#sim-error-check').hide();
+					//执行验证
+					if(typeof(WebSocket) == "undefined") {
+	                alert("您的浏览器不支持WebSocket");
+	                return;
+		            }
+					document.getElementById('sim-check-info').innerHTML="";
+		            socket  = new SockJS("http://127.0.0.1:8080/webSocketServer/sockjs");
+		            socket .onopen = function () {
+		                logg('Info: connection opened.');
+		            };
 		
-		//点击运行run
-		$('#sim-run').click(function  () {
-			var runTime = $('#sim-run-time').val();
-			var runCount = $('#sim-run-count').val();
-			window.location.href = "/Simualte?run=yes";
-		});
+		            socket .onmessage = function (event) {
+		                logg(event.data);
+		            };
+		            socket .onclose = function (event) {
+		                logg('Info: connection closed.');
+		                logg(event);
+		            };
+					
+					$.post("/simualte/Validate").done(function  (result) {
+						alert("success");
+					}).fail(function  () {
+						alert("fail");
+					});
+					
+					function logg(messages) {
+			            var consoleBox = document.getElementById('sim-check-info');
+			            var p = document.createElement('p');
+			            p.style.wordWrap = 'break-word';
+			            p.appendChild(document.createTextNode(messages));
+			            consoleBox.appendChild(p);
+			            consoleBox.scrollTop = consoleBox.scrollHeight;
+			        }
+				}
+			});
+			
+			//点击运行run
+			$('#sim-run').click(function  () {
+				var runTime = $('#sim-run-time').val();
+				var runCount = $('#sim-run-count').val();
+				window.location.href = "/Simualte?run=yes";
+			});
+		}
+		
 	})(),
 	
 	
@@ -67,7 +101,7 @@ $(function  () {
 			if (Request.run == "yes") {
 				//alert("开始执行算法");
 				//执行算法
-				 if(typeof(WebSocket) == "undefined") {
+				if(typeof(WebSocket) == "undefined") {
 	                alert("您的浏览器不支持WebSocket");
 	                return;
 	            }
