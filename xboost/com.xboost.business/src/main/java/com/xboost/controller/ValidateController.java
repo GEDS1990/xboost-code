@@ -208,8 +208,25 @@ public class ValidateController {
                 flag = flag + 1;
                 result = demandInfo.getDate()+"effectiveness is wrong. Because it's empty.\n";
             }
+        }
 
-
+        /**
+         * 验证整体模型参数
+         */
+        result = "Validating Parameters......";
+        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+        for(int i=0;i<modelArgList.size();i++){
+            ModelArg modelArg = modelArgList.get(i);
+            if(Strings.isEmpty(modelArg.getParameterName())){
+                flag = flag + 1;
+                result = modelArg.getParameterName()+"parameter name is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(Strings.isEmpty(modelArg.getData())){
+                flag = flag + 1;
+                result = modelArg.getParameterName()+"data is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
         }
 
 
