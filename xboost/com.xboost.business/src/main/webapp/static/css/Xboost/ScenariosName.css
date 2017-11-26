@@ -216,7 +216,7 @@ table.table-bordered.dataTable td:last-child {
 .table>thead>tr>td, 
 .table>thead>tr>th {
 	padding-left: 0;
-	padding-right: 0;
+	padding-right:0;
 }
 /**************** simulate********************************/
 .sim-content{
