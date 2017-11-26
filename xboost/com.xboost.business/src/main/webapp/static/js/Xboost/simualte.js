@@ -59,7 +59,28 @@ $(function  () {
 			$('#sim-run').click(function  () {
 				var runTime = $('#sim-run-time').val();
 				var runCount = $('#sim-run-count').val();
-				window.location.href = "/Simualte?run=yes";
+				var runModel = $('#sim-model').val();
+				if (runModel == 0) {
+					$('#sim-error-check').show();
+					$('#sim-model').focus();
+					return false;
+				}
+				if (runTime == "") {
+					$('#timelimit').show();
+					$('#sim-run-time').focus();
+					return false;
+				}
+				if (runCount == "") {
+					$('#loopslimit').show();
+					$('#sim-run-count').focus();
+					return false;
+				}else{
+					$('#sim-error-check').hide();
+					$('#loopslimit').hide();
+					$('#timelimit').hide();
+					window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+runTime+"&loopLimit="+runCount;
+				}
+				
 			});
 		}
 		

@@ -86,10 +86,12 @@
 	    				<div class="clearfix sim-input">
 		    				<p>Time Limit (min)</p>
 		    				<input type="number" id="sim-run-time" value="" />
+		    				<p id="timelimit" class="sim-error">You must set the time limit</p>
 		    			</div>
 		    			<div class="clearfix sim-input">
 		    				<p>Loops Limit</p>
 		    				<input type="number" id="sim-run-count" value="" />
+		    				<p id="loopslimit" class="sim-error">You must set the loops limit</p>
 		    			</div>
 	    			</div>
 	    			

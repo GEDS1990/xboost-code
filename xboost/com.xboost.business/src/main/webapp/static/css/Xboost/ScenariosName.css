@@ -262,6 +262,7 @@ table.table-bordered.dataTable td:last-child {
 	margin: 10px 0;
 }
 .sim-input>input{
+	float: left;
 	background-color: #eef1f7;
 	border: 1px solid #CCCCCC;
 	padding: 5px 10px;
