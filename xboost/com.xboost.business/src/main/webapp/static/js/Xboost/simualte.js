@@ -144,7 +144,7 @@ $(function  () {
 	            };
 	
 
-	            $.post("/cascade/runSilumate",{"distMode":_distMode,"loadTime":_loadTime,"loopLimit":_loopLimit},"json").done(function(result){
+	            $.post("/cascade/runSilumate",{"distMode":_distMode,"loadTime":_loadTime,"loopLimit":_loopLimit}).done(function(result){
 	                console.log("success");
 	            }).fail(function(){
 	                console.log("fail");
