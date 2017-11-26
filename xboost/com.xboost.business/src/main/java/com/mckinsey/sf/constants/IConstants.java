@@ -34,11 +34,11 @@ public interface IConstants {
 	int PALNS_MAX_TIME = 50;
 	double PALNS_DECAY = 0.2;
 	int PALNS_CORES = 4;
-	int PALNS_SEGMENT = 100;
+	int PALNS_SEGMENT = 100;//目的地分拣耗时(min)
 	
 	int TIME_CONSTRAINT_WEIGHT = 1;
 	
-	double JOB_PACKER_INTERVAL = 15f;
+	double JOB_PACKER_INTERVAL = 15f;//上车装货时间(min)
 
 	double VOL_PERCENT = 2;
 	
