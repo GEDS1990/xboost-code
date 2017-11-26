@@ -1,7 +1,5 @@
 var doc = document;
 
-
-
 $(function  () {
 	
 	/**
@@ -40,12 +38,6 @@ $(function  () {
 		//获取地址栏中的数据函数
 		var simStop = doc.getElementById("sim-stop");
 		if (simStop) {
-			var example = new Vue({
-					el: '#sim-run-percent',
-					data: {
-						percent:""
-					}
-				});
 			function UrlSearch() {
 				var name,value; 
 				var str=location.href; //取得整个地址栏
@@ -65,12 +57,8 @@ $(function  () {
 			//实例化对象
 			var Request=new UrlSearch(); //实例化
 			if (Request.run == "yes") {
-				//alert("开始执行算法");
+				alert("开始执行算法");
 				//执行算法
-				 if(typeof(WebSocket) == "undefined") {
-	                alert("您的浏览器不支持WebSocket");
-	                return;
-	            }
 				document.getElementById('sim-run-info').innerHTML="";
 	            ws = new SockJS("http://127.0.0.1:8080/webSocketServer/sockjs");
 	            ws.onopen = function () {
@@ -91,35 +79,18 @@ $(function  () {
 	            }).fail(function(){
 	                alert("fail");
 	            });
-		        function log(messages) {
-		            var consoleBox = document.getElementById('sim-run-info');
+		        function log(message) {
+		            var console = document.getElementById('sim-run-info');
 		            var p = document.createElement('p');
 		            p.style.wordWrap = 'break-word';
-		            var _r = /\%/;
-		            if (_r.test(messages)) {
-		            	var i = messages.indexOf("%");
-		            	var num = messages.substr(0,i);
-		            	console.log(num)
-		            	if (num == '99') {
-		            		var res = messages.replace("99","100");
-		            		example.percent = '('+res+')';
-		            		$('#sim-percent').text('('+res+')');
-		            	}else{
-		            		example.percent = '('+messages+')';
-		            		$('#sim-percent').text('('+messages+')');
-		            	}
-		            }
-		            p.appendChild(document.createTextNode(messages));
-		            consoleBox.appendChild(p);
-		            consoleBox.scrollTop = consoleBox.scrollHeight;
+		            p.appendChild(document.createTextNode(message));
+		            console.appendChild(p);
+		            console.scrollTop = console.scrollHeight;
 		        }
+				
+				
+				
 			}
-			
-			//停止算法
-			$('#sim-stop').click(function  () {
-				ws.close();
-			});
-			
 		}
 		
 	})()
