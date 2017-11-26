@@ -59,7 +59,7 @@
 	        	<ul class="cond-top-ul clearfix">
 	        		<li><a href="/siteInfo">Depots Info</a></li>
 	        		<li><a href="/siteDist">Depots Distance</a></li>
-	        		<li class="active"><a  class="active" href="/transport">Transportation</a></li>
+	        		<li class="active"><a  class="active" href="/transport">Vehicles</a></li>
 	        		<li><a href="/demandInfo">Demands</a></li>
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
@@ -116,21 +116,45 @@
 						    	</tr>
 					    	</tr>-->
 					    	<tr>
-					    		<th>Id</th>
-					    		<th>truck<br/>weight limit</th>
-					    		<th>truck<br/>quantity</th>
-					    		<th>truck<br/>type</th>
-					    		<th>speed<br/>(km/h)</th>
-					    		<th>maximum<br/>distance (km)</th>
-					    		<th>maximum<br/>load</th>
-					    		<th>full load<br/>unload time (min)</th>
-					    		<th>flag-fall (0,a] km</th>
-					    		<th>(a,b] km</th>
-					    		<th>(b,c] km</th>
-					    		<th>flag-fall (0,a] km</th>
-					    		<th>(a,b] km</th>
-					    		<th>(b,c] km</th>
-					    		<th>operation</th>
+					    		<th rowspan="3">Id</th>
+					    		<th rowspan="3">vehicle type</th>
+					    		<th rowspan="3">vehicle weight limit</th>
+					    		<th rowspan="3">vehicle quantity</th>
+					    		<th rowspan="3">vehicle source</th>
+					    		<th rowspan="3">speed(km/h)</th>
+					    		<th rowspan="3">maximum distance (km)</th>
+					    		<th rowspan="3">maximum load(p)</th>
+					    		<th rowspan="3">full load unload time (min)</th>
+					    		<th colspan="18">vehicle cost (ride or km)</th>
+					    		<th rowspan="3">operation</th>
+					    		<tr>
+					    			<th  colspan="3">(0,a] km</th>
+						    		<th  colspan="3" >(a,b] km</th>
+						    		<th  colspan="3" >(b,c] km</th>
+						    		<th  colspan="3" >(c,d] km</th>
+						    		<th  colspan="3" >(d,e] km</th>
+						    		<th  colspan="3" >(e,f] km</th>
+						    		<tr>
+						    			<th>ride/km</th>
+						    			<th>0</th>
+						    			<th>a</th>
+						    			<th>ride/km</th>
+						    			<th>a</th>
+						    			<th>b</th>
+						    			<th>ride/km</th>
+						    			<th>b</th>
+						    			<th>c</th>
+						    			<th>ride/km</th>
+						    			<th>c</th>
+						    			<th>d</th>
+						    			<th>ride/km</th>
+						    			<th>d</th>
+						    			<th>e</th>
+						    			<th>ride/km</th>
+						    			<th>e</th>
+						    			<th>f</th>
+						    		</tr>
+					    		</tr>
 					    	</tr>
 					    </thead>
 					    <tbody>
@@ -178,7 +202,7 @@
 
         <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" id="cond-file-upload">Upload</button>
+	        <button type="button" class="btn btn-primary" id="cond-file-upload-tran">Upload</button>
 	    </div>
     </div>
   </div>
@@ -303,7 +327,7 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade" id="editUserModal">
+<div class="modal fade" id="editUserModal-tran">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -311,7 +335,7 @@
                 <h4 class="modal-title">Edit dot information</h4>
             </div>
             <div class="modal-body">
-                <form id="editUserForm" class="form-horizontal">
+                <form id="editUserForm-tran" class="form-horizontal">
                     <input type="hidden" name="id" id="siteId" value="">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">ID</label>
@@ -383,7 +407,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="editBtn" class="btn btn-primary">Save</button>
+                <button type="button" id="editBtn-tran" class="btn btn-primary">Save</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -392,7 +416,23 @@
 
 
 
-
+<div class="modal fade" id="modal-tran">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete Scenario</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure want to delete this Scenario</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" id="modal-trandelBtn" class="btn btn-primary">Yes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 

@@ -209,6 +209,15 @@ table.table-bordered.dataTable td:last-child {
 	background-color: #eef1f7;
     border-radius: 10px;
 }
+.table>tbody>tr>td, 
+.table>tbody>tr>th, 
+.table>tfoot>tr>td, 
+.table>tfoot>tr>th, 
+.table>thead>tr>td, 
+.table>thead>tr>th {
+	padding-left: 0;
+	padding-right: 0;
+}
 /**************** simulate********************************/
 .sim-content{
 	background-color: #fff;

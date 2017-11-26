@@ -329,8 +329,9 @@ $(function  () {
 	        //删除用户
 	        $(document).delegate(".delLink","click",function(){
 	            var id = $(this).attr("data-id");
-	            if(confirm("Are you sure you want to delete this data?")) {
-	                $.post("/siteInfo/del",{"id":id}).done(function(result){
+	            $('#modal-info').modal("show");
+	            $("#modal-infodelBtn").click(function  () {
+	            	$.post("/siteInfo/del",{"id":id}).done(function(result){
 	                    if("success" == result) {
 	                        dt.ajax.reload();
 	                        window.location.reload(); 
@@ -338,8 +339,8 @@ $(function  () {
 	                }).fail(function(){
 	                    alert("Delete exception");
 	                });
-	
-	            }
+	            }) 
+	            
 	        });
 	
 	        //编辑用户
@@ -464,8 +465,9 @@ $(function  () {
         //删除用户
         $(document).delegate(".delLink-dist","click",function(){
             var id = $(this).attr("data-id");
-            if(confirm("Are you sure you want to delete this data?")) {
-                $.post("/siteDist/del",{"id":id}).done(function(result){
+            $('#modal-dist').modal("show");
+            $('#modal-distdelBtn').click(function  () {
+            	$.post("/siteDist/del",{"id":id}).done(function(result){
                     if("success" == result) {
                         dt.ajax.reload();
                         window.location.reload(); 
@@ -473,8 +475,7 @@ $(function  () {
                 }).fail(function(){
                     alert("Delete exception");
                 });
-
-            }
+            });
         });
 
         //编辑用户
@@ -598,8 +599,9 @@ $(function  () {
         //删除用户
         $(document).delegate(".delLink-dem","click",function(){
             var id = $(this).attr("data-id");
-            if(confirm("Are you sure you want to delete this data?")) {
-                $.post("/demandInfo/del",{"id":id}).done(function(result){
+            $('#modal-dist').modal("show");
+            $('#modal-demdelBtn').click(function  () {
+            	$.post("/demandInfo/del",{"id":id}).done(function(result){
                     if("success" == result) {
                         dt.ajax.reload();
                         window.location.reload(); 
@@ -607,8 +609,8 @@ $(function  () {
                 }).fail(function(){
                     alert("Delete exception");
                 });
-
-            }
+            });
+            
         });
 
         //编辑用户
@@ -730,8 +732,9 @@ $(function  () {
         //删除用户
         $(document).delegate(".delLink-pata","click",function(){
             var id = $(this).attr("data-id");
-            if(confirm("Are you sure you want to delete this data?")) {
-                $.post("/modelArg/del",{"id":id}).done(function(result){
+            $('#modal-dist').modal("show");
+            $('#modal-patadelBtn').click(function  () {
+            	$.post("/modelArg/del",{"id":id}).done(function(result){
                     if("success" == result) {
                         dt.ajax.reload();
                         window.location.reload(); 
@@ -739,8 +742,8 @@ $(function  () {
                 }).fail(function(){
                     alert("Delete exception");
                 });
-
-            }
+            });
+                
         });
 
         //编辑用户
@@ -813,6 +816,19 @@ $(function  () {
 	                {"data":"singleVoteCost1","name":"single_vote_cost1"},
 	                {"data":"singleVoteCost2","name":"single_vote_cost2"},
 	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
+	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
+	                {"data":"carCost3","name":"car_cost3"},
+	                {"data":"singleVoteCost1","name":"single_vote_cost1"},
+	                {"data":"singleVoteCost2","name":"single_vote_cost2"},
+	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
+	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
+	                {"data":"carCost3","name":"car_cost3"},
+	                {"data":"singleVoteCost1","name":"single_vote_cost1"},
+	                {"data":"singleVoteCost2","name":"single_vote_cost2"},
+	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
+	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
+	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
+	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-tran' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-tran' data-id='"+row.id+"'>Del</a>";
 	                }}
@@ -823,7 +839,7 @@ $(function  () {
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+	                    "targets":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27],
 	                    "orderable":false
 	                }
 	            ],
@@ -867,8 +883,9 @@ $(function  () {
         //删除用户
         $(document).delegate(".delLink-tran","click",function(){
             var id = $(this).attr("data-id");
-            if(confirm("Are you sure you want to delete this data?")) {
-                $.post("/transport/del",{"id":id}).done(function(result){
+            $('#modal-tran').modal("show");
+            $('#modal-trandelBtn').click(function  () {
+            	$.post("/transport/del",{"id":id}).done(function(result){
                     if("success" == result) {
                         dt.ajax.reload();
                         window.location.reload(); 
@@ -876,13 +893,13 @@ $(function  () {
                 }).fail(function(){
                     alert("Delete exception");
                 });
-
-            }
+            });
+                
         });
 
         //编辑用户
         $(document).delegate(".editLink-tran","click",function(){
-            $("#editUserForm-pata")[0].reset();
+            $("#editUserForm-tran")[0].reset();
             var id = $(this).attr("data-id");
             $.get("transport/transpt.json",{"id":id}).done(function(result){
                 $("#siteId-pata").val(result.id);
@@ -890,7 +907,7 @@ $(function  () {
                 $("#data").val(result.data);
                 $("#note").val(result.note);
                 
-                $("#editUserModal-pata").modal("show");
+                $("#editUserModal-tran").modal("show");
 
             }).fail(function(){
 
@@ -899,11 +916,11 @@ $(function  () {
             
         });
 
-        $("#editBtn-pata").click(function(){
+        $("#editBtn-tran").click(function(){
         
-            $.post("/transport/edit",$("#editUserForm-pata").serialize()).done(function(result){
+            $.post("/transport/edit",$("#editUserForm-tran").serialize()).done(function(result){
                 if(result == "success") {
-                    $("#editUserModal-pata").modal("hide");
+                    $("#editUserModal-tran").modal("hide");
                     dt.ajax.reload();
                     window.location.reload(); 
                 }
@@ -913,8 +930,8 @@ $(function  () {
 
         });
 
-         $("#cond-file-upload-pata").click(function(){
-             UploadFile("cond-input-form-pata","cond_file","/transport/addByExcel",'.bs-example-modal-input')
+         $("#cond-file-upload-tran").click(function(){
+             UploadFile("cond-input-form-tran","cond_file","/transport/addByExcel",'.bs-example-modal-input')
          });
 		}
 	})()

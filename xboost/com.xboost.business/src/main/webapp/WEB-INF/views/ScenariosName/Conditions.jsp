@@ -59,7 +59,7 @@
 	        	<ul class="cond-top-ul clearfix">
 	        		<li class="active"><a class="active" href="/siteInfo">Depots Info</a></li>
 	        		<li><a href="/siteDist">Depots Distance</a></li>
-	        		<li><a href="/transport">Transportation</a></li>
+	        		<li><a href="/transport">Vehicles</a></li>
 	        		<li><a href="/demandInfo">Demands</a></li>
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
@@ -627,7 +627,23 @@
 </div><!-- /.modal -->
 
 
-
+<div class="modal fade" id="modal-info">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete Scenario</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure want to delete this Scenario</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" id="modal-infodelBtn" class="btn btn-primary">Yes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 
