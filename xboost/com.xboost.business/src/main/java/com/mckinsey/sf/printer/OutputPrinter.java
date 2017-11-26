@@ -281,9 +281,9 @@ public class OutputPrinter implements IConstants {
 		try {
 //			mapper.writeValue(new File("src/main/resources/solution/arrInfos.json"), arrInfos);
 //			转存到数据库
-			for(int i=0;i<arrInfos.size();i++){
-				arrInfoService.saveArrInfo(arrInfos.get(i));
-			}
+//			for(int i=0;i<arrInfos.size();i++){
+//				arrInfoService.saveArrInfo(arrInfos.get(i));
+//			}
 
 			mapper.writeValue(new File("src/main/resources/solution/jobInfos.json"), jobInfos);
 			mapper.writeValue(new File("src/main/resources/solution/stats.json"), stat);
