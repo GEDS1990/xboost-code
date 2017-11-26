@@ -13,6 +13,7 @@ import com.xboost.service.TransportService;
 import com.xboost.service.ModelArgService;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
+import com.xboost.websocket.SystemWebSocketHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.socket.TextMessage;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -54,6 +56,7 @@ public class ValidateController {
 
     private static Logger logger = LoggerFactory.getLogger(SiteInfoService.class);
 
+    private static SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
     /**
      * 校验场景输入数据
      * @return
@@ -69,9 +72,9 @@ public class ValidateController {
         String result="";
         int flag=0;
         //验证网点信息
+        result = result + "Validating Depots Info......";
         for(int i=0;i<siteInfoList.size();i++){
             SiteInfo siteInfo = siteInfoList.get(i);
-            result = result + "Validating Depots Info......";
             if("".equals(siteInfo.getSiteCode())||" ".equals(siteInfo.getSiteCode())){
                 flag = flag + 1;
                 result = result + siteInfo.getSiteCode()+"ID is wrong. Because it's null.\n";
@@ -122,20 +125,27 @@ public class ValidateController {
         /**
          * 验证网点距离信息
          */
+        result = result + "Validating Depots Distance......";
         for(int i=0;i<siteDistList.size();i++){
             SiteDist siteDist = siteDistList.get(i);
-            result = result + "Validating Depots Distance......";
             if("".equals(siteDist.getSiteCollect())||" ".equals(siteDist.getSiteCollect())){
                 flag = flag + 1;
-                result = result + siteDist.getSiteCollect()+"pickup depot is wrong. Because it's null.\n";
+                result = siteDist.getSiteCollect()+"pickup depot is wrong. Because it's null.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if("".equals(siteDist.getSiteDelivery())||" ".equals(siteDist.getSiteDelivery())){
                 flag = flag + 1;
-                result = result + siteDist.getSiteCollect()+"delivery depot is wrong. Because it's null.\n";
+                result = siteDist.getSiteCollect()+"delivery depot is wrong. Because it's null.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if("".equals(siteDist.getCarDistance())||" ".equals(siteDist.getCarDistance())){
+            try {
+                if (siteDist.getCarDistance() < 10) {
+                    flag = flag + 1;
+                    result = result + siteDist.getSiteCollect() + "transportation distance(km) is wrong. Because it's null.\n";
+                }
+            }catch (Exception e){
                 flag = flag + 1;
-                result = result + siteDist.getSiteCollect()+"transportation distance(km) is wrong. Because it's null.\n";
+                result = result + siteDist.getSiteCollect() + "transportation distance(km) is wrong. Because it's null exception.\n";
             }
             if("".equals(siteDist.getDurationNightDelivery())||" ".equals(siteDist.getDurationNightDelivery())){
                 flag = flag + 1;
@@ -145,12 +155,13 @@ public class ValidateController {
 
         String success = "Validation is successful,and now you can run the simulation.";
         String fail = "Validation is completed,please check the error information.";
+        String delimiter = "\n---------------------------------------------------------------------\n";
 
         if(flag == 0) {
-            return result + DateTime.now().toString("yyyy-MM-dd HH:mm:ss")+ success;
+            return result + delimiter + DateTime.now().toString("yyyy-MM-dd HH:mm:ss，")+ success;
         }
         else{
-            return result +DateTime.now().toString("yyyy-MM-dd HH:mm:ss") + fail;
+            return result + delimiter + DateTime.now().toString("yyyy-MM-dd HH:mm:ss，") + fail;
         }
 
     }

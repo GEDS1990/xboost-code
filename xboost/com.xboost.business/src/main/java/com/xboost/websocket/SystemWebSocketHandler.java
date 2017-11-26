@@ -67,16 +67,15 @@ public class SystemWebSocketHandler implements WebSocketHandler {
     /**
      * 给某个用户发送消息
      *
-     * @param userName
      * @param message
      */
-    public void sendMessageToUser(String userName, TextMessage message) {
+    public void sendMessageToUser(TextMessage message) {
 
         for (WebSocketSession user : users) {
 //            Principal principal = user.getPrincipal();
 //            user.webSocketSession.user.object.username;
             try {
-                if (user.isOpen()) {
+                if (user.isOpen()&&user.getPrincipal().getName().equals(ShiroUtil.getCurrentUserName())) {
                     user.sendMessage(message);
                 }else{
                 }
