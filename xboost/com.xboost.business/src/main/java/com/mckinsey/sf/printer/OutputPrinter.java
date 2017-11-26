@@ -14,8 +14,6 @@ import java.util.Map.Entry;
 
 import com.xboost.service.ArrInfoService;
 import com.xboost.util.CascadeModelUtil;
-import com.xboost.util.ShiroUtil;
-import com.xboost.websocket.SystemWebSocketHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -56,7 +54,7 @@ public class OutputPrinter implements IConstants {
 
 	public static void printLine(String str){
 		System.out.println(str);
-		systemWebSocketHandler.sendMessageToUser(new TextMessage(str));
+//		systemWebSocketHandler.sendMessageToUser(new TextMessage(str));
 	}
 	
 	public static void printError(String str){

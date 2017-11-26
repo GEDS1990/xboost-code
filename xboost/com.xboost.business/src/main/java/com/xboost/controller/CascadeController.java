@@ -43,11 +43,14 @@ public class CascadeController {
 //        cascadeService.saveNewfile(file);
         //查询Confiuration表数据
         Map<String, Object> param = new HashMap<String,Object>();
-        Configuration config = null;
+        Configuration config = new Configuration();
         Car[] carlist = null;
         //传入场景id
         param.put("scenariosId", ShiroUtil.getOpenScenariosId());
-        config =configurationService.findConfigByParam(param);
+//        config =configurationService.findConfigByParam(param);
+        config.setDistMode(1);
+        config.setLoadTime(10);
+        config.setOptimizeIterations(500);
         //查询car_info内容并set到config
         carlist =carService.findCarByParam(param);
         for(int i=0;i<carlist.length;i++){

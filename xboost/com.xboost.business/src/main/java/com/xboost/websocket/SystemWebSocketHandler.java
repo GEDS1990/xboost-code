@@ -1,12 +1,8 @@
 package com.xboost.websocket;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
-
-import com.xboost.pojo.User;
 import com.xboost.util.ShiroUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +11,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
-
 public class SystemWebSocketHandler implements WebSocketHandler {
 
     private Logger log = LoggerFactory.getLogger(SystemWebSocketHandler.class);
@@ -70,18 +65,17 @@ public class SystemWebSocketHandler implements WebSocketHandler {
      * @param message
      */
     public void sendMessageToUser(TextMessage message) {
-
         for (WebSocketSession user : users) {
-//            Principal principal = user.getPrincipal();
-//            user.webSocketSession.user.object.username;
-            try {
-                if (user.isOpen()&&user.getPrincipal().getName().equals(ShiroUtil.getCurrentUserName())) {
-                    user.sendMessage(message);
-                }else{
+//            if (user.getAttributes().get("WEBSOCKET_USERID").equals(ShiroUtil.getCurrentUserId())) {
+                try {
+                    if (user.isOpen()) {
+                        user.sendMessage(message);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//                break;
+//            }
         }
     }
     /**

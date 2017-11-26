@@ -83,6 +83,5 @@ public interface IConstants {
 	double DISTANCE_COST = 0;
 
 
-	static SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
-
+	SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
 }
