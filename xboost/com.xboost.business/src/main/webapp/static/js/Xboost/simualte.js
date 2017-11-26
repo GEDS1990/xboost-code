@@ -39,9 +39,9 @@ $(function  () {
 		            };
 					
 					$.post("/simualte/Validate").done(function  (result) {
-						alert("success");
+						console.log("success");
 					}).fail(function  () {
-						alert("fail");
+						console.log("fail");
 					});
 					
 					function logg(messages) {
@@ -119,6 +119,9 @@ $(function  () {
 			};
 			//实例化对象
 			var Request=new UrlSearch(); //实例化
+			var _distMode = Request.distMode;
+			var _loadTime = Request.loadTime;
+			var _loopLimit = Request.loopLimit;
 			if (Request.run == "yes") {
 				//alert("开始执行算法");
 				//执行算法
@@ -141,10 +144,10 @@ $(function  () {
 	            };
 	
 
-	            $.post("/cascade/runSilumate","json").done(function(result){
-	                alert("success");
+	            $.post("/cascade/runSilumate",{"distMode":_distMode,"loadTime":_loadTime,"loopLimit":_loopLimit},"json").done(function(result){
+	                console.log("success");
 	            }).fail(function(){
-	                alert("fail");
+	                console.log("fail");
 	            });
 		        function log(messages) {
 		            var consoleBox = document.getElementById('sim-run-info');
