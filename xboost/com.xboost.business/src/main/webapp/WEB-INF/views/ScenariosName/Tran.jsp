@@ -71,94 +71,48 @@
 		        	<a href="javascript:;" id="addNewUser-tran" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus"></i>Add Info</a>
 					<table id="Transportation" class="table table-striped table-bordered table-hover">
 					    <thead>
-					    	<!--<tr>
-					    		<td rowspan="3">truck<br/>weight limit</td>
-					    		<td rowspan="3">truck<br/>quantity</td>
-					    		<td rowspan="3">truck<br/>type</td>
-					    		<td rowspan="3">speed<br/>(km/h)</td>
-					    		<td rowspan="3">maximum<br/>distance (km)</td>
-					    		<td rowspan="3">maximum<br/>load</td>
-					    		<td rowspan="3">full load<br/>unload time (min)</td>
-					    	</tr>
 					    	<tr>
-					    		<td colspan="6">truck cost (ride or km)</td>
-					    		<td colspan="6">single piece cost</td>
-					    	</tr>
-					    	<tr>
-					    		<td colspan="2">flag-fall (0,a] km</td>
-					    		<td colspan="2">(a,b] km</td>
-					    		<td colspan="2">(b,c] km</td>
-					    		<td colspan="2">flag-fall (0,a] km</td>
-					    		<td colspan="2">(a,b] km</td>
-					    		<td colspan="2">(b,c] km</td>
-					    	</tr>-->
-					    	<!--<tr>
-					    		<th rowspan="3">Id</th>
-					    		<th rowspan="3">truck<br/>weight limit</th>
-					    		<th rowspan="3">truck<br/>quantity</th>
-					    		<th rowspan="3">truck<br/>type</th>
-					    		<th rowspan="3">speed<br/>(km/h)</th>
-					    		<th rowspan="3">maximum<br/>distance (km)</th>
-					    		<th rowspan="3">maximum<br/>load</th>
-					    		<th rowspan="3">full load<br/>unload time (min)</th>
-					    		<th colspan="3">truck cost (ride or km)</th>
-					    		<th colspan="3">single piece cost</th>
-					    		<th rowspan="3">operation</th>
-						    	<tr>
-						    		<th rowspan="2">flag-fall (0,a] km</th>
-						    		<th rowspan="2">(a,b] km</th>
-						    		<th rowspan="2">(b,c] km</th>
-						    	</tr>
-						    	<tr>
-						    		<th rowspan="2">flag-fall (0,a] km</th>
-						    		<th rowspan="2">(a,b] km</th>
-						    		<th rowspan="2">(b,c] km</th>
-						    	</tr>
-					    	</tr>-->
-					    	<tr>
-					    		<th rowspan="3">Id</th>
-					    		<th rowspan="3">vehicle type</th>
-					    		<th rowspan="3">vehicle weight limit</th>
-					    		<th rowspan="3">vehicle quantity</th>
-					    		<th rowspan="3">vehicle source</th>
-					    		<th rowspan="3">speed(km/h)</th>
-					    		<th rowspan="3">maximum distance (km)</th>
-					    		<th rowspan="3">maximum load(p)</th>
-					    		<th rowspan="3">full load unload time (min)</th>
-					    		<th colspan="18">vehicle cost (ride or km)</th>
-					    		<th rowspan="3">operation</th>
-					    		<tr>
-					    			<th  colspan="3">(0,a] km</th>
-						    		<th  colspan="3" >(a,b] km</th>
-						    		<th  colspan="3" >(b,c] km</th>
-						    		<th  colspan="3" >(c,d] km</th>
-						    		<th  colspan="3" >(d,e] km</th>
-						    		<th  colspan="3" >(e,f] km</th>
-						    		<tr>
-						    			<th>ride/km</th>
-						    			<th>0</th>
-						    			<th>a</th>
-						    			<th>ride/km</th>
-						    			<th>a</th>
-						    			<th>b</th>
-						    			<th>ride/km</th>
-						    			<th>b</th>
-						    			<th>c</th>
-						    			<th>ride/km</th>
-						    			<th>c</th>
-						    			<th>d</th>
-						    			<th>ride/km</th>
-						    			<th>d</th>
-						    			<th>e</th>
-						    			<th>ride/km</th>
-						    			<th>e</th>
-						    			<th>f</th>
-						    		</tr>
-					    		</tr>
+					    		<th rowspan="1">Id</th>
+					    		<th rowspan="1">type</th>
+					    		<th rowspan="1">vehicle source</th>
+					    		<th rowspan="1">maximum load(p)</th>
+					    		<th rowspan="1">full load unload time (min)</th>
+					    		<th rowspan="1">maxStop</th>
+					    		<th rowspan="1">dimensions</th>
+					    		<th rowspan="1">fixedRound</th>
+					    		<th rowspan="1">fixedRoundFee</th>
+					    		<th rowspan="1">startLocation</th>
+					    		<th rowspan="1">endLocation</th>
+					    		<th rowspan="1">maxDistance</th>
+					    		<th rowspan="1">maxRunningTime</th>
+					    		<th rowspan="1">costPerDistance</th>
+					    		<th rowspan="1">costPerTime</th>
+					    		<th rowspan="1">fixedCost</th>
+					    		<th rowspan="1">velocity</th>
+					    		<th rowspan="1">operation</th>
 					    	</tr>
 					    </thead>
 					    <tbody>
-					    	
+					    	<tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
 					    </tbody>
 					</table>
 				</div>

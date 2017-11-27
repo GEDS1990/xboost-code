@@ -76,6 +76,9 @@ public class HomeController {
         } catch (AuthenticationException ex) {
             redirectAttributes.addFlashAttribute("message",new Message(Message.ERROR,"账号或密码错误"));
             return "redirect:/";
+        }catch (java.lang.IllegalArgumentException ex) {
+            redirectAttributes.addFlashAttribute("message",new Message(Message.ERROR,"服务错误"));
+            return "redirect:/";
         }
     }
 

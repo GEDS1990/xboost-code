@@ -1,7 +1,6 @@
 package com.xboost.mapper;
 
 import com.mckinsey.sf.data.Car;
-import com.xboost.pojo.Transportation;
 
 import java.util.List;
 import java.util.Map;

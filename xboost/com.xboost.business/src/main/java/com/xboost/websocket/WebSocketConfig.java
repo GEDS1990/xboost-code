@@ -23,6 +23,12 @@ public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocke
         sockJsServiceRegistration.setSessionCookieNeeded(true);
         sockJsServiceRegistration.setStreamBytesLimit(10240000);
         sockJsServiceRegistration.setWebSocketEnabled(true);
+
+        SockJsServiceRegistration sockJsServiceRegistration2 = registry.addHandler(systemWebSocketHandler(), "/webSocketServer/validate").setAllowedOrigins("*").withSockJS();
+        sockJsServiceRegistration2.setHttpMessageCacheSize(1024000000);
+        sockJsServiceRegistration2.setSessionCookieNeeded(true);
+        sockJsServiceRegistration2.setStreamBytesLimit(10240000);
+        sockJsServiceRegistration2.setWebSocketEnabled(true);
 //        registry.addHandler(systemWebSocketHandler(),"/webSocketServer").addInterceptors(new WebSocketHandshakeInterceptor());
 //        registry.addHandler(systemWebSocketHandler(), "/sockjs/webSocketServer").addInterceptors(new WebSocketHandshakeInterceptor()).withSockJS();
 //        registry.addHandler(systemWebSocketHandler(), "/webSocketServer/sockjs").withSockJS();

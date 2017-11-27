@@ -48,14 +48,20 @@ public class Car implements Serializable{
 	private int maxStop;
 	@JsonProperty("velocity")
 	private double velocity;
-	
 	@JsonProperty("fixed_round")
 //	private double[] fixedRound;
 	private double fixedRound;
-	
+
+
 	@JsonProperty("fixed_round_fee")
 //	private double[] fixedRoundFee;
 	private double fixedRoundFee;
+
+	private  String carSource;
+
+	private  String maxLoad;
+
+	private  String durationUnloadFull;
 
 	private String createTime;
 
@@ -215,5 +221,29 @@ public class Car implements Serializable{
 
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getCarSource() {
+		return carSource;
+	}
+
+	public void setCarSource(String carSource) {
+		this.carSource = carSource;
+	}
+
+	public String getMaxLoad() {
+		return maxLoad;
+	}
+
+	public void setMaxLoad(String maxLoad) {
+		this.maxLoad = maxLoad;
+	}
+
+	public String getDurationUnloadFull() {
+		return durationUnloadFull;
+	}
+
+	public void setDurationUnloadFull(String durationUnloadFull) {
+		this.durationUnloadFull = durationUnloadFull;
 	}
 }

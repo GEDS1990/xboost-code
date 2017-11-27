@@ -798,37 +798,27 @@ $(function  () {
 	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
-	                url:"/transport/transport.json", //获取数据的URL
+	                url:"/car/transport.json", //获取数据的URL
 	                type:"get" //获取数据的方式
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
+	                {"data":"type","name":"type"},
 	                {"data":"carSource","name":"car_source"},
-	                {"data":"carNum","name":"car_num"},
-	                {"data":"carType","name":"car_type"},
-	                {"data":"speed","name":"speed"},
-	                {"data":"maxDistance","name":"max_distance"},
 	                {"data":"maxLoad","name":"max_load"},
 	                {"data":"durationUnloadFull","name":"duration_unload_full"},
-	                {"data":"carCost1","name":"car_cost1"},
-	                {"data":"carCost2","name":"car_cost2"},
-	                {"data":"carCost3","name":"car_cost3"},
-	                {"data":"singleVoteCost1","name":"single_vote_cost1"},
-	                {"data":"singleVoteCost2","name":"single_vote_cost2"},
-	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
-	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
-	                {"data":"carCost3","name":"car_cost3"},
-	                {"data":"singleVoteCost1","name":"single_vote_cost1"},
-	                {"data":"singleVoteCost2","name":"single_vote_cost2"},
-	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
-	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
-	                {"data":"carCost3","name":"car_cost3"},
-	                {"data":"singleVoteCost1","name":"single_vote_cost1"},
-	                {"data":"singleVoteCost2","name":"single_vote_cost2"},
-	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
-	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
-	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
-	                {"data":"singleVoteCost3","name":"single_vote_cost3"},
+	                {"data":"maxStop","name":"max_stop"},
+	                {"data":"dimensions","name":"dimensions"},
+	                {"data":"fixed_round","name":"fixed_round"},
+	                {"data":"fixed_round_fee","name":"fixed_round_fee"},
+	                {"data":"start_location","name":"start_location"},
+	                {"data":"end_location","name":"end_location"},
+	                {"data":"max_distance","name":"max_distance"},
+	                {"data":"max_running_time","name":"max_running_time"},
+	                {"data":"cost_per_distance","name":"cost_per_distance"},
+	                {"data":"cost_per_time","name":"cost_per_time"},
+	                {"data":"fixed_cost","name":"fixed_cost"},
+	                {"data":"velocity","name":"velocity"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-tran' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-tran' data-id='"+row.id+"'>Del</a>";
 	                }}
@@ -839,7 +829,7 @@ $(function  () {
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27],
+	                    "targets":[0,1,2],
 	                    "orderable":false
 	                }
 	            ],

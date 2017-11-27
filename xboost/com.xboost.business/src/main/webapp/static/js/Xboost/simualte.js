@@ -25,7 +25,7 @@ $(function  () {
 	                return;
 		            }
 					document.getElementById('sim-check-info').innerHTML="";
-		            socket  = new SockJS("http://127.0.0.1:8080/webSocketServer/sockjs");
+		            socket  = new SockJS("http://127.0.0.1:8080/webSocketServer/validate");
 		            socket .onopen = function () {
 		                logg('Info: connection opened.');
 		            };

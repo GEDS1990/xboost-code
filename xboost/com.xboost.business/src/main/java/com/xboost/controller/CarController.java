@@ -53,7 +53,7 @@ public class CarController {
     //通过Excel添加运力信息
     @RequestMapping(value = "/addByExcel",method = RequestMethod.POST)
     @ResponseBody
-    public String AddTransportByExcel(Car transport,@RequestParam MultipartFile[] file) {
+    public String AddCarByExcel(Car transport,@RequestParam MultipartFile[] file) {
         transport.setScenarioId(ShiroUtil.getOpenScenariosId());
         transportService.addCarByExcel(transport,file);
         return "/ScenariosName/Conditions";

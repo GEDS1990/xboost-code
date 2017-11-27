@@ -61,20 +61,25 @@ public class CarService {
                         List<String> lineList = excelUtil.readExcel(fileTmp);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-//                            transport.setCarType(row[0]);
-//                            transport.setCarWeightLimit(row[1]);
-//                            transport.setCarNum(Integer.parseInt(row[2]));
-//                            transport.setCarSource(row[3]);
-//                            transport.setSpeed(Float.parseFloat(row[4]));
-//                            transport.setMaxLoad(Integer.parseInt(row[5]));
-//                            transport.setDurationUnloadFull(Integer.parseInt(row[6]));
+                            transport.setScenarioId(row[0]);
+                            transport.setCarSource(row[0]);
+                            transport.setType(row[0]);
+                            transport.setVelocity(Double.parseDouble(row[0]));
+                            transport.setDimensions(row[0]);
+                            transport.setCostPerDistance(Double.parseDouble(row[0]));
+                            transport.setCostPerTime(Double.parseDouble(row[0]));
+                            transport.setDurationUnloadFull(row[0]);
+                            transport.setFixedCost(Double.parseDouble(row[0]));
+                            transport.setFixedRound(Double.parseDouble(row[0]));
+                            transport.setFixedRoundFee(Double.parseDouble(row[0]));
+                            transport.setMaxLoad(row[0]);
+                            transport.setMaxRunningTime(Double.parseDouble(row[0]));
+                            transport.setMaxStop(Integer.parseInt(row[0]));
+//                            transport.setSkills(row[0]);
+                            transport.setStartLocation(row[0]);
+                            transport.setEndLocation(row[0]);
+//                            transport.setTw(row[0]);
                             transport.setMaxDistance(Float.parseFloat(row[7]));
-//                            transport.setCarCost1(Float.parseFloat(row[8]));
-//                            transport.setCarCost2(Float.parseFloat(row[9]));
-//                            transport.setCarCost3(Float.parseFloat(row[10]));
-//                            transport.setSingleVoteCost1(Float.parseFloat(row[11]));
-//                            transport.setSingleVoteCost2(Float.parseFloat(row[12]));
-//                            transport.setSingleVoteCost3(Float.parseFloat(row[13]));
                             transport.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
                             //insert
                             transportMapper.save(transport);

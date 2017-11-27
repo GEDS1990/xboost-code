@@ -3,8 +3,67 @@
 <mapper namespace="com.xboost.mapper.CarMapper">
 
     <cache/>
+    <insert id="save">
+        INSERT into t_car_info(scenarioId,type,dimensions,skills,twId,start_location,end_location,max_distance,
+        max_running_time,cost_per_distance,cost_per_time,fixed_cost,max_stop,velocity,fixed_round,fixed_round_fee,
+        car_source,max_load,duration_unload_full
+        str1,str2,str3,createtime,updatetime)
+        VALUES (#{scenarioId},#{type},#{dimensions},#{skills},#{twId},#{startLocation},#{endLocation},#{maxDistance},
+        #{maxRunningTime},#{costPerDistance},#{costPerTime},#{fixedCost},#{maxStop},#{velocity},#{fixedRound},#{fixedRoundFee},
+        #{carSource},#{maxLoad},#{durationUnloadFull},
+        #{str1},#{str2},#{str3},#{createTime},#{updateTime})
+    </insert>
 
-    <select id="findCarByParam" parameterType="map" resultMap="carMap">
+
+    <select id="findAll" parameterType="map" resultMap="transportMap">
+        SELECT * FROM t_car_info where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findByParam" parameterType="map" resultMap="transportMap">
+        SELECT * from t_car_info
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and type LIKE #{keyword} or car_source like #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(*) FROM t_car_info where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_car_info
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                where type LIKE #{keyword} or car_source like #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultMap="transportMap">
+        SELECT * FROM t_car_info where id = #{id}
+    </select>
+
+    <update id="editTransport">
+        UPDATE t_car_info SET scenarioId = #{scenarioId},type = #{type},
+        dimensions = #{dimensions},skills = #{skills},twId = #{twId},start_location = #{startLocation},
+        end_location = #{endLocation},max_distance = #{maxDistance},max_running_time = #{maxRunningTime},
+        cost_per_distance = #{costPerDistance},cost_per_time = #{costPerTime},fixed_cost = #{fixedCost},max_stop = #{maxStop},
+        velocity = #{velocity},fixed_round = #{fixedRound},fixed_round_fee = #{fixedRoundFee},
+        car_source = #{carSource},max_load = #{maxLoad},durationUnloadFull = #{durationUnloadFull}
+        where id = #{id}
+    </update>
+
+
+    <delete id="delById">
+        DELETE FROM t_car_info WHERE id = #{id}
+    </delete>
+    <select id="findCarByParam" parameterType="map" resultMap="transportMap">
         <!--select * from t_car_info as ci where ci.scenariosId=#{scenariosId}-->
         select * from t_car_info as ci, time_window as t where ci.id=t.carId and ci.scenariosId=#{scenariosId}
     </select>
@@ -13,7 +72,7 @@
         SELECT dimensions FROM t_dimensions_info WHERE carId IN (SELECT id FROM t_car_info WHERE scenariosId = #{scenariosId})
     </select>-->
 
-    <resultMap id="carMap" type="com.mckinsey.sf.data.Car">
+    <resultMap id="transportMap" type="com.mckinsey.sf.data.Car">
         <id property="id" column="id"/>
         <result property="maxStop" column="max_stop"/>
         <result property="dimensions" column="dimensions"/>
@@ -27,10 +86,10 @@
         <result property="costPerTime" column="cost_per_time"/>
         <result property="fixedCost" column="fixed_cost"/>
         <result property="velocity" column="velocity"/>
+        <result property="carSource" column="car_source"/>
+        <result property="maxLoad" column="max_load"/>
+        <result property="durationUnloadFull" column="duration_unload_full"/>
         <result property="type" column="type"/>
-        <!--<result property="fixedRound" column="fixed_round"/>
-        <result property="fixedRoundFee" column="fixed_round_fee"/>-->
-        <!--<collection property="dimensions" ofType="Dimensions" column="scenariosId" select="findByScenariosId"/>-->
         <association property="tw" javaType="com.mckinsey.sf.data.TimeWindow">
             <result property="start" column="start"/>
             <result property="end" column="end"/>
