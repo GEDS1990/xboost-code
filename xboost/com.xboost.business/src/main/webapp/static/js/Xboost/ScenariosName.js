@@ -856,7 +856,7 @@ $(function  () {
             $("#newUserModal-tran").modal('show');
         });
         $("#saveBtn-tran").click(function(){
-        	/*var tw_start = $('#time_window_start').val();
+        	var tw_start = $('#time_window_start').val();
         	var tw_end = $('#time_window_end').val();
         	var twData = tw_start+"."+tw_end;
         	$('#tw').val(twData);
@@ -980,33 +980,7 @@ $(function  () {
 	
 	
 	
-/*
-	
-	//导出表格数据   Depots_Info,Depots_Distance,Transportation,Demands,Patameters
-	$('.export-btn').click(function  () {
-		var $this = $(this);
-		$("#Depots_Info").tableExport({
-		    // 导出文件的名称
-		    filename: name+'_%DD%-%MM%-%YY%',
-		    // 导出文件的格式：csv, xls, txt, sql
-		    format: 'xlsx'
-		});
-//		var _id ="#"+$this.attr("data-xls");
-//		console.log(_id)
-//		var _name = $this.attr("data-xls");
-//		Export_xls (_id,_name)
-	});
-	
-	function Export_xls (id,name) {
-		$(id).tableExport({
-		    // 导出文件的名称
-		    filename: name+'_%DD%-%MM%-%YY%',
-		    // 导出文件的格式：csv, xls, txt, sql
-		    format: 'xls'
-		});
-	}
 
-*/
 
 
 

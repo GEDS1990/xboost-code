@@ -290,8 +290,10 @@
 	        	</div>
 	        	<div class="col-sm-4">
 	        		<div>
-	        			<span class="icon-upload"></span>
-	        			Download Template
+	        			<a>
+	        				<span class="icon-upload"></span>
+	        				Download Template
+	        			</a>
 	        		</div>
 	        	</div>
         	</div>
