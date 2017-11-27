@@ -261,13 +261,13 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">time_window_start</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="time_window_start" >
+                            <input type="text" class="form-control" id="time_window_start" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">time_window_end</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="time_window_end" >
+                            <input type="text" class="form-control" id="time_window_end" >
                         </div>
                     </div>
                     <div class="form-group">

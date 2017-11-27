@@ -151,7 +151,12 @@ $(function  () {
 	            });
 	            //停止算法
 				$('#sim-stop').click(function  () {
-					ws.close();
+					$('#modal-sim').modal("show");
+					$('#modal-simdelBtn').click(function  () {
+						ws.close();
+						$('#modal-sim').modal("hide");
+					});
+					
 				});
 		        function log(messages) {
 		            var consoleBox = document.getElementById('sim-run-info');
