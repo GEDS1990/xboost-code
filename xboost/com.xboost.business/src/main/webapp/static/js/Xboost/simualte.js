@@ -149,6 +149,10 @@ $(function  () {
 	            }).fail(function(){
 	                console.log("fail");
 	            });
+	            //停止算法
+				$('#sim-stop').click(function  () {
+					ws.close();
+				});
 		        function log(messages) {
 		            var consoleBox = document.getElementById('sim-run-info');
 		            var p = document.createElement('p');
@@ -157,7 +161,6 @@ $(function  () {
 		            if (_r.test(messages)) {
 		            	var i = messages.indexOf("%");
 		            	var num = messages.substr(0,i);
-		            	console.log(num)
 		            	if (num == '99') {
 		            		var res = messages.replace("99","100");
 		            		example.percent = '('+res+')';
@@ -173,10 +176,6 @@ $(function  () {
 		        }
 			}
 			
-			//停止算法
-			$('#sim-stop').click(function  () {
-				ws.close();
-			});
 			
 		}
 		
