@@ -1,5 +1,7 @@
 package com.xboost.service;
 
+import com.mckinsey.sf.data.Car;
+import com.xboost.mapper.CarMapper;
 import com.xboost.mapper.DemandInfoMapper;
 import com.xboost.pojo.DemandInfo;
 import com.xboost.util.ExcelUtil;
@@ -33,6 +35,8 @@ public class DemandInfoService {
     @Inject
     private DemandInfoMapper demandInfoMapper;
 
+    @Inject
+    CarMapper carMapper;
     /**
      * 新增需求信息 
      * @param demandInfo
@@ -44,6 +48,10 @@ public class DemandInfoService {
 
     }
 
+
+    public Car[] findCarByParam(Map<String, Object> param) {
+        return carMapper.findCarByParam(param);
+    }
 
     //通过Excel新增网点信息
     public void addDemandInfoByExcel(DemandInfo demandInfo, MultipartFile[] file) {

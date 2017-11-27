@@ -21,6 +21,7 @@ public interface TransportMapper {
 
     // 根据参数查询运力信息  @param param @return
     List<Transportation> findByParam(Map<String, Object> param);
+
     Long findCountByParam(Map<String, Object> param);
 
     /**
