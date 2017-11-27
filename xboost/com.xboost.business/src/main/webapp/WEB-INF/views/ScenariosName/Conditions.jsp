@@ -290,7 +290,7 @@
 	        	</div>
 	        	<div class="col-sm-4">
 	        		<div>
-	        			<a>
+	        			<a href="http://127.0.0.1:8080/static/excelTemplate/deport.xlsx">
 	        				<span class="icon-upload"></span>
 	        				Download Template
 	        			</a>

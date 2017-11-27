@@ -113,13 +113,13 @@
 	        <div class="modal-content">
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	                <h4 class="modal-title">用户修改密码</h4>
+	                <h4 class="modal-title">User modify password</h4>
 	            </div>
 	            <div class="modal-body">
 	                <form action="" id="editPwdForm">
 	                    <input type="hidden" value="<shiro:principal property="id"/>" name="id" id="id">
 	                    <div class="form-group">
-	                        <label>用户姓名</label>
+	                        <label>UserName</label>
 	                        <input type="text" readonly="true" class="form-control" value="<shiro:principal property="username"/>" name="username" id="username">
 	                    </div>
 	                    <%--<div class="form-group">
@@ -127,18 +127,18 @@
 	                        <input type="text" class="form-control" value="" name="pwd" id="pwd">
 	                    </div>--%>
 	                    <div class="form-group">
-	                        <label>新密码</label>
+	                        <label>New password</label>
 	                        <input type="text" class="form-control" value="" name="pwd1" id="pwd1">
 	                    </div>
 	                    <div class="form-group">
-	                        <label>再次输入新密码</label>
+	                        <label>Reenter the new password again</label>
 	                        <input type="text" class="form-control" value="" name="pwd2" id="pwd2">
 	                    </div>
 	                </form>
 	            </div>
 	            <div class="modal-footer">
-	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-	                <button type="button" id="updatePwdBtn" class="btn btn-primary">保存</button>
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <button type="button" id="updatePwdBtn" class="btn btn-primary">Save</button>
 	            </div>
 	        </div><!-- /.modal-content -->
 	    </div><!-- /.modal-dialog -->

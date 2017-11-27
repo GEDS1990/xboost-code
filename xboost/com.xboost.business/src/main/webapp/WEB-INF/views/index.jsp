@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Xboost-系统登录</title>
+    <title>Xboost System Login</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
@@ -22,7 +22,7 @@
     <!-- Custom Fonts -->
     <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/static/js/metisMenu/metisMenu.min.css">
-    <link rel="stylesheet" href="../../static/css/xb_main.css" />
+    <link rel="stylesheet" href="/static/css/Xboost/xb_main.css" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -39,7 +39,7 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-coffee"></i>Xboost System login</h3>
+                    <h3 class="panel-title"><i class="fa fa-coffee"></i>Xboost System Login</h3>
                 </div>
                 <div class="panel-body">
                     <c:if test="${not empty message}">
@@ -143,7 +143,12 @@
 
 <script>
     $(function(){
-
+    	$('.alert.alert-success').text("You've quit safely");
+		(function  () {
+			setTimeout(function  () {
+				$('.alert.alert-success').fadeOut("slow");
+			},1000)
+		})(),
         $("#loginBtn").click(function(){
             if(!$("#tel").val()) {
                 $("#tel").focus();
