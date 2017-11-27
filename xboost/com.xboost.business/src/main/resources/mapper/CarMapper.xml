@@ -4,14 +4,12 @@
 
     <cache/>
     <insert id="save">
-        INSERT into t_car_info(scenariosId,type,dimensions,skills,twId,start_location,end_location,max_distance,
+        INSERT into t_car_info(scenariosId,type,dimensions,skills,start_location,end_location,max_distance,
         max_running_time,cost_per_distance,cost_per_time,fixed_cost,max_stop,velocity,fixed_round,fixed_round_fee,
-        car_source,max_load,duration_unload_full
-        str1,str2,str3,createtime,updatetime)
-        VALUES (#{scenariosId},#{type},#{dimensions},#{skills},#{twId},#{startLocation},#{endLocation},#{maxDistance},
+        car_source,max_load,duration_unload_full,createtime,updatetime)
+        VALUES (#{scenariosId},#{type},#{dimensions},#{skills},#{startLocation},#{endLocation},#{maxDistance},
         #{maxRunningTime},#{costPerDistance},#{costPerTime},#{fixedCost},#{maxStop},#{velocity},#{fixedRound},#{fixedRoundFee},
-        #{carSource},#{maxLoad},#{durationUnloadFull},
-        #{str1},#{str2},#{str3},#{createTime},#{updateTime})
+        #{carSource},#{maxLoad},#{durationUnloadFull},#{createTime},#{updateTime})
     </insert>
 
     <insert id="saveTimeWindow">
