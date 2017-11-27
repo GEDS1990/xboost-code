@@ -258,6 +258,7 @@
                             <input type="text" class="form-control" name="end_location" >
                         </div>
                     </div>
+<!--
                     <div class="form-group">
                         <label class="col-sm-3 control-label">time_window</label>
                         <div class="col-sm-4">
@@ -268,6 +269,7 @@
                             <input type="hidden" name="tw" id="tw" value="" />
                         </div>
                     </div>
+                    -->
                     <div class="form-group">
                         <label class="col-sm-3 control-label">skills</label>
                         <div class="col-sm-9">
