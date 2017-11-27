@@ -856,9 +856,9 @@ $(function  () {
             $("#newUserModal-tran").modal('show');
         });
         $("#saveBtn-tran").click(function(){
-        	var tw_start = $('#time_window_start').val();
+        	/*var tw_start = $('#time_window_start').val();
         	var tw_end = $('#time_window_end').val();
-        	var twData = tw_start+"|"+tw_end;
+        	var twData = tw_start+"."+tw_end;
         	$('#tw').val(twData);
         	console.log($("#newUserForm-tran").serialize())
             $.post("/car/add",$("#newUserForm-tran").serialize())

@@ -130,14 +130,6 @@ public class CarController {
         transportService.delById(id);
         return "success";
     }
-    /**
-     * save time window
-     */
-    @RequestMapping(value = "/timeSave",method = RequestMethod.POST)
-    @ResponseBody
-    public String saveTimeWindow(String start,String end) {
 
-        return "success";
-    }
 
 }
