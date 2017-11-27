@@ -829,7 +829,7 @@ $(function  () {
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[0,1,2],
+	                    "targets":[0,17],
 	                    "orderable":false
 	                }
 	            ],
@@ -856,7 +856,7 @@ $(function  () {
             $("#newUserModal-tran").modal('show');
         });
         $("#saveBtn-tran").click(function(){
-            $.post("/transport/add",$("#newUserForm-tran").serialize())
+            $.post("/car/add",$("#newUserForm-tran").serialize())
                     .done(function(result){
                         if("success" == result) {
                             $("#newUserForm-tran")[0].reset();
