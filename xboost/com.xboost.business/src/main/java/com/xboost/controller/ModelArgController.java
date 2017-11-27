@@ -43,7 +43,7 @@ public class ModelArgController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public String addModelArg(ModelArg modelArg) {
-        modelArg.setScenarioId(ShiroUtil.getOpenScenariosId().toString());
+        modelArg.setScenariosId(ShiroUtil.getOpenScenariosId().toString());
         modelArgService.addModelArg(modelArg);
         return "success";
     }
@@ -103,7 +103,7 @@ public class ModelArgController {
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public String editModelArg(ModelArg modelArg) {
-        modelArg.setScenarioId(ShiroUtil.getOpenScenariosId());
+        modelArg.setScenariosId(ShiroUtil.getOpenScenariosId());
         modelArgService.editModelArg(modelArg);
         return "success";
     }

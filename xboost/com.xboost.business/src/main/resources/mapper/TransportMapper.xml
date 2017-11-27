@@ -8,7 +8,7 @@
         INSERT into t_transportation(scenario_id,car_type,car_weight_limit,car_num,car_source,speed,max_load,duration_unload_full,
         max_distance,car_cost1,car_cost2,car_cost3,single_vote_cost1,single_vote_cost2,single_vote_cost3,
         str1,str2,str3,createtime,updatetime)
-        VALUES (#{scenarioId},#{carType},#{carWeightLimit},#{carNum},#{carSource},#{speed},#{maxLoad},#{durationUnloadFull},
+        VALUES (#{scenariosId},#{carType},#{carWeightLimit},#{carNum},#{carSource},#{speed},#{maxLoad},#{durationUnloadFull},
         #{maxDistance},#{carCost1},#{carCost2},#{carCost3},#{singleVoteCost1},#{singleVoteCost2},#{singleVoteCost3},
         #{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
@@ -49,7 +49,7 @@
     </select>
 
     <update id="editTransport">
-        UPDATE t_transportation SET scenario_id = #{scenarioId},car_type = #{carType},car_weight_limit=#{carWeightLimit},
+        UPDATE t_transportation SET scenario_id = #{scenariosId},car_type = #{carType},car_weight_limit=#{carWeightLimit},
         car_num=#{carNum},car_source=#{carSource},speed=#{speed},max_load=#{maxLoad},duration_unload_full=#{durationUnloadFull},
         max_distance=#{maxDistance},car_cost1=#{carCost1},car_cost2=#{carCost2},car_cost3=#{carCost3},
         single_vote_cost1=#{singleVoteCost1},single_vote_cost2=#{singleVoteCost2},single_vote_cost3=#{singleVoteCost3}
@@ -64,7 +64,7 @@
 
     <resultMap id="transportMap" type="Transportation">
         <result property="id" column="id"/>
-        <result property="scenarioId" column="scenario_id"/>
+        <result property="scenariosId" column="scenario_id"/>
         <result property="carType" column="car_type"/>
         <result property="carWeightLimit" column="car_weight_limit"/>
         <result property="carNum" column="car_num"/>

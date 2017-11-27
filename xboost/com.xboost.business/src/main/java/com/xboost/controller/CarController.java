@@ -44,7 +44,7 @@ public class CarController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public String AddCar(Car car) {
-        car.setScenarioId(ShiroUtil.getOpenScenariosId().toString());
+        car.setScenariosId(ShiroUtil.getOpenScenariosId().toString());
         transportService.saveCar(car);
         return "success";
     }
@@ -54,7 +54,7 @@ public class CarController {
     @RequestMapping(value = "/addByExcel",method = RequestMethod.POST)
     @ResponseBody
     public String AddCarByExcel(Car transport,@RequestParam MultipartFile[] file) {
-        transport.setScenarioId(ShiroUtil.getOpenScenariosId());
+        transport.setScenariosId(ShiroUtil.getOpenScenariosId());
         transportService.addCarByExcel(transport,file);
         return "/ScenariosName/Conditions";
     }
@@ -114,7 +114,7 @@ public class CarController {
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public String editTransport(Car transport) {
-        transport.setScenarioId(ShiroUtil.getOpenScenariosId());
+        transport.setScenariosId(ShiroUtil.getOpenScenariosId());
         transportService.editTransport(transport);
 
         return "success";

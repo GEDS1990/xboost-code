@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class ModelArg implements Serializable {
     private Integer id;
-    private String scenarioId;            //场景id
+    private String scenariosId;            //场景id
     private String parameterName;      //各环节时间参数
     private Integer data;           //数据
     private String note;            //备注
@@ -27,12 +27,12 @@ public class ModelArg implements Serializable {
         this.id = id;
     }
 
-    public String getScenarioId() {
-        return scenarioId;
+    public String getScenariosId() {
+        return scenariosId;
     }
 
-    public void setScenarioId(String scenarioId) {
-        this.scenarioId = scenarioId;
+    public void setScenariosId(String scenariosId) {
+        this.scenariosId = scenariosId;
     }
 
     public String getParameterName() {

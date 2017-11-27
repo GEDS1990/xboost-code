@@ -61,7 +61,7 @@ public class CarService {
                         List<String> lineList = excelUtil.readExcel(fileTmp);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-                            transport.setScenarioId(row[0]);
+                            transport.setScenariosId(row[0]);
                             transport.setCarSource(row[0]);
                             transport.setType(row[0]);
                             transport.setVelocity(Double.parseDouble(row[0]));

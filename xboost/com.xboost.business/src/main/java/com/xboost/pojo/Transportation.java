@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class Transportation implements Serializable {
     private Integer id;
-    private String scenarioId;         //场景id
+    private String scenariosId;         //场景id
     private String carType;             //车辆代号
     private String carWeightLimit;             //车型
     private Integer carNum;            //数量
@@ -36,12 +36,12 @@ public class Transportation implements Serializable {
         this.id = id;
     }
 
-    public String getScenarioId() {
-        return scenarioId;
+    public String getScenariosId() {
+        return scenariosId;
     }
 
-    public void setScenarioId(String scenarioId) {
-        this.scenarioId = scenarioId;
+    public void setScenariosId(String scenariosId) {
+        this.scenariosId = scenariosId;
     }
 
     public String getCarType() {
