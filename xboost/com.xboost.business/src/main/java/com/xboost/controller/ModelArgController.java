@@ -2,6 +2,7 @@ package com.xboost.controller;
 
 import com.google.common.collect.Maps;
 import com.xboost.pojo.ModelArg;
+import com.xboost.pojo.SiteInfo;
 import com.xboost.service.ModelArgService;
 import com.xboost.util.ExcelUtil;
 import com.xboost.util.ShiroUtil;
@@ -46,6 +47,15 @@ public class ModelArgController {
         modelArg.setScenariosId(ShiroUtil.getOpenScenariosId().toString());
         modelArgService.addModelArg(modelArg);
         return "success";
+    }
+
+    //通过Excel添加网点信息
+    @RequestMapping(value = "/addByExcel",method = RequestMethod.POST)
+    @ResponseBody
+    public String AddByExcel(ModelArg modelArg, @RequestParam MultipartFile[] file) {
+        modelArg.setScenariosId(ShiroUtil.getOpenScenariosId());
+        modelArgService.addByExcel(modelArg,file);
+        return "/ScenariosName/Parameters";
     }
 
 

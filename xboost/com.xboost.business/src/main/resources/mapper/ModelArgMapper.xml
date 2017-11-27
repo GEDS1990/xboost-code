@@ -5,7 +5,7 @@
     <cache/>
 
     <insert id="add">
-        INSERT into t_model_arg(scenarios_id,parameter_name,data,note,str1,str2,str3,createtime,updatetime)
+        INSERT into t_model_arg(scenariosId ,parameter_name,data,note,str1,str2,str3,createtime,updatetime)
         VALUES (#{scenariosId},#{parameterName},#{data},#{note},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
@@ -45,7 +45,7 @@
     </select>
 
     <update id="editModelArg">
-        UPDATE t_model_arg SET scenarios_id = #{scenariosId},parameter_name = #{parameterName},data = #{data},note=#{note} where id = #{id}
+        UPDATE t_model_arg SET scenariosId = #{scenariosId},parameter_name = #{parameterName},data = #{data},note=#{note} where id = #{id}
     </update>
 
     <delete id="delById">
@@ -54,7 +54,7 @@
 
     <resultMap id="modelArgMap" type="ModelArg">
         <result property="id" column="id"/>
-        <result property="scenariosId" column="scenarios_id"/>
+        <result property="scenariosId" column="scenariosId"/>
         <result property="parameterName" column="parameter_name"/>
         <result property="data" column="data"/>
         <result property="note" column="note"/>

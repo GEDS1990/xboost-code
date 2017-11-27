@@ -5,10 +5,10 @@
     <cache/>
 
     <insert id="add">
-        INSERT into t_demand_info(date,site_collect,site_delivery,product_type,duration_start,duration_end,weight,votes,
-		ageing,str1,str2,str3,createtime,updatetime)
-        VALUES (#{date},#{siteCodeCollect},#{siteCodeDelivery},#{productType},#{durationStart},#{durationEnd},#{weight},#{votes},
-        #{ageing},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+        INSERT into t_demand_info(scenariosId,date,site_collect,site_delivery,product_type,duration_start,duration_end,
+        weight,votes,ageing,str1,str2,str3,createtime,updatetime)
+        VALUES (#{scenariosId},#{date},#{siteCodeCollect},#{siteCodeDelivery},#{productType},#{durationStart},#{durationEnd},
+        #{weight},#{votes},#{ageing},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
 

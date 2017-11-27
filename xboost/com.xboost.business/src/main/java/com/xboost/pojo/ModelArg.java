@@ -11,7 +11,7 @@ public class ModelArg implements Serializable {
     private Integer id;
     private String scenariosId;            //场景id
     private String parameterName;      //各环节时间参数
-    private Integer data;           //数据
+    private String data;           //数据
     private String note;            //备注
     private String str1;                   //预留字段
     private String str2;                    //预留字段
@@ -43,11 +43,11 @@ public class ModelArg implements Serializable {
         this.parameterName = parameterName;
     }
 
-    public Integer getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Integer data) {
+    public void setData(String data) {
         this.data = data;
     }
 
