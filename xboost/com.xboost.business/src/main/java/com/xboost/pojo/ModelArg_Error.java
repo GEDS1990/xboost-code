@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class ModelArg_Error implements Serializable {
     private Integer id;
-    private Integer scenarioId;            //场景id
+    private Integer scenariosId;            //场景id
     private Integer durationCollect;      //收件串连耗时(分钟)
     private Integer durationLoad;           //上车装货时间(分钟)
     private Integer durationSiteStartSort;            //始发地分拣耗时(分钟)
@@ -34,12 +34,12 @@ public class ModelArg_Error implements Serializable {
         this.id = id;
     }
 
-    public Integer getScenarioId() {
-        return scenarioId;
+    public Integer getScenariosId() {
+        return scenariosId;
     }
 
-    public void setScenarioId(Integer scenarioId) {
-        this.scenarioId = scenarioId;
+    public void setScenariosId(Integer scenariosId) {
+        this.scenariosId = scenariosId;
     }
 
     public Integer getDurationCollect() {

@@ -11,7 +11,7 @@ import java.util.Map;
 public interface CarMapper {
 
     //  添加运力信息  @param transport
-    void save(Car transport);
+    void save(Car car);
 
     Car[] findCarByParam(Map<String, Object> param);
 

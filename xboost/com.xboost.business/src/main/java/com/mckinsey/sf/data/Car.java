@@ -23,7 +23,7 @@ public class Car implements Serializable{
 	private String id;
 	@JsonProperty("type")
 	private String type;
-	private String scenarioId;
+	private String scenariosId;
 	@JsonProperty("dimensions")
 //	private double[] dimensions;
 	private String dimensions;
@@ -43,7 +43,7 @@ public class Car implements Serializable{
 	private double costPerDistance;
 	@JsonProperty("cost_per_time")
 	private double costPerTime;
-	@JsonProperty("fixed_cost")
+		@JsonProperty("fixed_cost")
 	private double fixedCost;
 	private int maxStop;
 	@JsonProperty("velocity")
@@ -79,12 +79,12 @@ public class Car implements Serializable{
 		this.id = id;
 	}
 
-	public String getScenarioId() {
-		return scenarioId;
+	public String getScenariosId() {
+		return scenariosId;
 	}
 
-	public void setScenarioId(String scenarioId) {
-		this.scenarioId = scenarioId;
+	public void setScenariosId(String scenariosId) {
+		this.scenariosId = scenariosId;
 	}
 
 	public String getType() {
