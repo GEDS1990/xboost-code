@@ -2,6 +2,7 @@ package com.xboost.service;
 
 import com.xboost.mapper.ModelArgMapper;
 import com.xboost.pojo.ModelArg;
+import com.xboost.pojo.SiteInfo;
 import com.xboost.util.ExcelUtil;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -35,6 +36,44 @@ public class ModelArgService {
         modelArg.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
         modelArgMapper.add(modelArg);
+
+    }
+
+    //通过Excel新增网点信息
+    public void addByExcel(ModelArg modelArg, MultipartFile[] file) {
+        //判断文件集合是否有文件
+        if(file != null && file.length > 0) {
+            for(MultipartFile multipartFile : file) {
+                if(!multipartFile.isEmpty()) {
+                    //解析文件并存储到数据库
+                    File fileTmp = null;
+                    long tempTime = System.currentTimeMillis();
+                    try {
+                        fileTmp=new File("src/main/resources/upload/temp/"+tempTime+ ".xlsx");
+                        if (!fileTmp.exists()) fileTmp.mkdirs();
+                        multipartFile.transferTo(fileTmp);
+//                      File fileTemp = (File) multipartFile;
+                        ExcelUtil excelUtil = new ExcelUtil();
+                        List<String> lineList = excelUtil.readExcel(fileTmp);
+                        for(int i=0;i<lineList.size();i++){
+                            String[] row = lineList.get(i).split("#");
+                            modelArg.setParameterName(row[0]);
+                            modelArg.setData(row[1]);
+                            modelArg.setNote(row[2]);
+                            modelArg.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+
+
+                            //insert
+                            modelArgMapper.add(modelArg);
+                            logger.info("insert into db:"+modelArg.getParameterName()+":"+modelArg.getData());
+                        }
+                        logger.info("insert into db complete");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
 
     }
 
