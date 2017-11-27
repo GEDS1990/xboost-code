@@ -191,7 +191,7 @@
 
         $("#MrnBtn").click(function(){
             document.getElementById('console').innerHTML="";
-            ws = new SockJS("http://127.0.0.1:8080/webSocketServer/sockjs");
+            ws = new SockJS("http://182.254.216.232:8080/webSocketServer/sockjs");
             ws.onopen = function () {
                 log('Info: connection opened.');
             };

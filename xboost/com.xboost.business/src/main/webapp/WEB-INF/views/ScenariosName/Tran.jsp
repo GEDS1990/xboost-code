@@ -145,7 +145,7 @@
 	        	</div>
 	        	<div class="col-sm-4">
 	        		<div>
-	        			<a href="http://127.0.0.1:8080/static/excelTemplate/car.xlsx">
+	        			<a href="http://182.254.216.232:8080/static/excelTemplate/car.xlsx">
 		        			<span class="icon-upload"></span>
 		        			Download Template
 	        			</a>
