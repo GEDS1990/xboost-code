@@ -132,7 +132,7 @@
 	    </div>
 	    
         <!--content s-->
-        <form  method="post" id="cond-input-form" enctype="multipart/form-data">
+        <form  method="post" id="cond-input-form-tran" enctype="multipart/form-data">
 
         	<div class="model-input-content clearfix">
         		<div class="col-sm-4 text-right">Import "Transportation"</div>
