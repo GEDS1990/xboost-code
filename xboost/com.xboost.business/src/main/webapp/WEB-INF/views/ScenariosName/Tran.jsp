@@ -217,6 +217,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-3 control-label">dimensions</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="dimensions" >
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-3 control-label">maxLoad</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="maxLoad" >
@@ -258,7 +264,7 @@
                             <input type="text" class="form-control" name="endLocation" >
                         </div>
                     </div>
-<!--
+                <!--
                     <div class="form-group">
                         <label class="col-sm-3 control-label">time_window</label>
                         <div class="col-sm-4">
