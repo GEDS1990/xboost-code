@@ -1,6 +1,7 @@
 package com.xboost.mapper;
 
 import com.mckinsey.sf.data.Car;
+import com.xboost.pojo.TimeWindow;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,9 @@ public interface CarMapper {
 
     //  添加运力信息  @param transport
     void save(Car car);
+
+    //  添加TimeWindow  @param tw
+    void saveTimeWindow(TimeWindow tw);
 
     Car[] findCarByParam(Map<String, Object> param);
 

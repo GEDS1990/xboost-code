@@ -14,6 +14,11 @@
         #{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
+    <insert id="saveTimeWindow">
+        INSERT into time_window(carId,start,end,str1,str2,str3,createtime,updatetime)
+        VALUES (#{carId},#{start},#{end},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+    </insert>
+
 
     <select id="findAll" parameterType="map" resultMap="transportMap">
         SELECT * FROM t_car_info where scenariosId = #{scenariosId}

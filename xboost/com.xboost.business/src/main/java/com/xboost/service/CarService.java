@@ -3,6 +3,7 @@ package com.xboost.service;
 import com.mckinsey.sf.data.Car;
 import com.xboost.mapper.CarMapper;
 import com.xboost.mapper.TransportMapper;
+import com.xboost.pojo.TimeWindow;
 import com.xboost.pojo.Transportation;
 import com.xboost.util.ExcelUtil;
 import com.xboost.util.QiniuUtil;
@@ -41,6 +42,15 @@ public class CarService {
 
         transportMapper.save(transport);
 
+    }
+
+    /**
+     * 保存TimeWindow
+     * @param tw
+     */
+    public void saveTimeWindow(TimeWindow tw) {
+     //   tw.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+        transportMapper.saveTimeWindow(tw);
     }
 
     //通过Excel新增运力信息
