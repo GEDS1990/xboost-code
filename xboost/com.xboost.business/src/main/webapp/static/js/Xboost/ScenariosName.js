@@ -859,8 +859,8 @@ $(function  () {
         	var tw_start = $('#time_window_start').val();
         	var tw_end = $('#time_window_end').val();
         	var twData = tw_start+"|"+tw_end;
-        	console.log(twData)
-            $.post("/car/add",{$("#newUserForm-tran").serialize(),"tw":twData})
+        	$('#tw').val(twData);
+            $.post("/car/add",$("#newUserForm-tran").serialize())
                     .done(function(result){
                         if("success" == result) {
                             $("#newUserForm-tran")[0].reset();

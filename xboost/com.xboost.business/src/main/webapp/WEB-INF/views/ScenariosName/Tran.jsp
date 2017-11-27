@@ -259,15 +259,19 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">time_window_start</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="time_window_start" >
+                        <label class="col-sm-3 control-label">time_window</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="time_window_start" placeholder="start">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="time_window_end" placeholder="end">
+                            <input type="hidden" name="tw" id="tw" value="" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">time_window_end</label>
+                        <label class="col-sm-3 control-label">skills</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="time_window_end" >
+                            <input type="text" class="form-control" id="skills" >
                         </div>
                     </div>
                     <div class="form-group">
