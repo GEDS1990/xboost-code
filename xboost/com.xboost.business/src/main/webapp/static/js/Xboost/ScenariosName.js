@@ -860,6 +860,7 @@ $(function  () {
         	var tw_end = $('#time_window_end').val();
         	var twData = tw_start+"|"+tw_end;
         	$('#tw').val(twData);
+        	console.log($("#newUserForm-tran").serialize())
             $.post("/car/add",$("#newUserForm-tran").serialize())
                     .done(function(result){
                         if("success" == result) {
