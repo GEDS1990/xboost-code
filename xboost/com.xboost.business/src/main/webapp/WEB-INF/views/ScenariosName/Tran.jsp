@@ -239,25 +239,25 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">fixed_round</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="fixed_round" >
+                            <input type="text" class="form-control" name="fixedRound" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">fixed_round_fee</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="fixed_round_fee" >
+                            <input type="text" class="form-control" name="fixedRoundFee" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">start_location</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="start_location" >
+                            <input type="text" class="form-control" name="startLocation" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">end_location</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="end_location" >
+                            <input type="text" class="form-control" name="endLocation" >
                         </div>
                     </div>
 <!--
@@ -281,31 +281,31 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">max_distance</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="max_distance" >
+                            <input type="text" class="form-control" name="maxDistance" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">max_running_time</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="max_running_time" >
+                            <input type="text" class="form-control" name="maxRunningTime" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">cost_per_distance</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="cost_per_distance" >
+                            <input type="text" class="form-control" name="costPerDistance" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">cost_per_time</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="cost_per_time" >
+                            <input type="text" class="form-control" name="costPerTime" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">fixed_cost</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="fixed_cost" >
+                            <input type="text" class="form-control" name="fixedCost" >
                         </div>
                     </div>
                     <div class="form-group">
