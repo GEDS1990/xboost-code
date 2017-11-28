@@ -61,6 +61,10 @@ public class CarController {
     @ResponseBody
     public String AddCarByExcel(Car transport,@RequestParam MultipartFile[] file) {
         transport.setScenariosId(ShiroUtil.getOpenScenariosId());
+        com.mckinsey.sf.data.TimeWindow tw = new com.mckinsey.sf.data.TimeWindow();
+        tw.setStart(0);
+        tw.setEnd(1440);
+        transport.setTw(tw);
         transportService.addCarByExcel(transport,file);
         return "/ScenariosName/Conditions";
     }

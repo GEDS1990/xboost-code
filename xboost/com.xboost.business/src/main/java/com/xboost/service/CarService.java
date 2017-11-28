@@ -91,6 +91,8 @@ public class CarService {
                             transport.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
                             //insert
                             transportMapper.save(transport);
+                            transport.getTw().setCarId(Integer.parseInt(transport.getId()));//save时间窗口
+                            transportMapper.saveTimeWindow(transport.getTw());
 //                            logger.info("insert into db:"+transport.getCarType());
                         }
                         logger.info("insert into db complete");
