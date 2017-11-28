@@ -22,7 +22,7 @@
             scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
                 and site_name LIKE #{keyword} or site_code like #{keyword}
-            </if>
+        </if>
         </where>
         order by ${orderColumn} ${orderType}
         limit ${start},${length}

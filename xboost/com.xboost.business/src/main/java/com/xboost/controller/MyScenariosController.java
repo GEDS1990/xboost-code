@@ -159,5 +159,16 @@ public class MyScenariosController {
         return "success";
     }
 
+    /**
+     * 查询场景信息类别
+     * @return
+     */
+    @RequestMapping(value = "/category.json",method = RequestMethod.GET)
+    @ResponseBody
+    public List<ScenariosCategory> findCategory(Integer userId) {
+        return myScenariosService.findCategory(userId);
+    }
+
+
 }
 

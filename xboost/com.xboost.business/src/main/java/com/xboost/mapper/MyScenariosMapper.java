@@ -53,6 +53,9 @@ public interface MyScenariosMapper {
     //  添加场景类别 @param category
     void addCategory(ScenariosCategory category);
 
+    // 根据用户id查询场景类别  @return
+    List<ScenariosCategory> findCategory(Integer userId);
+
 
 }
 

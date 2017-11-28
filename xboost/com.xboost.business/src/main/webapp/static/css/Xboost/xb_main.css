@@ -17,7 +17,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6,.h1,.h2,.h
 body{
 	font-size: 0.0843rem!important;
 }
-ul,ol{
+ul,ol,li{
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -35,8 +35,9 @@ body{
 /*index bg*/
 .xb_index_bg{
 	background-color: #eaedf1;
-	background-image: url(../../images/banner.jpg);
-	background-size: 100%;
+	background-image: url(/static/images/banner.jpg);
+	background-size: cover;
+	background: no-repeat;
 }
 .btn.btn-success,.btn-success:active:focus{
 	background-color: #5ab0ee;
@@ -117,70 +118,52 @@ body{
 .dropdown-menu.dropdown-user{
 	top: -90px;
 }
+#side-menu a{display: block;}
+
+
+
+
 /*icon*/
-.glyphicon{
-	position: absolute;
-	top: 50%;
-	left: 5px;
-	transform: translateY(-50%);
-	-webkit-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
+#xb_nav_span{
+	padding-right: 10px;
 }
 .icon{
-	position: absolute;
-	left: 15px;
-	top: 50%;
-	transform: translateY(-50%);
-	-webkit-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
+	display: inline-block;
+	vertical-align: middle;
 	font-size: 16px;
-	display: block;
 	color: #FFFFFF;
-	
 	margin-right: 10px;
 }
 .icon.alt,.icon-item.alt{color: #15a4fa;}
 .nav_xban{
 	line-height: 38px;
 	background-color: #2a394f;
-	padding: 10px 0 10px 40px;
+	padding: 10px 0 10px 10px;
 	color: #FFFFFF;
 	background-color: #364760;
 	position: relative;
-	font-size: 12px;
+	font-size: 16px;
 }
 .xb-nav_ul{
 	display: block;
 	text-align: left;
 	color: #FFFFFF;
 }
-.xb-nav_ul>li{
+.xb-nav_ul>li>a{
 	padding: 10px 0 10px 30px;
-	position: relative;
 }
 .xb-nav_ul>li>a{color: #FFFFFF;}
 .xb-nav_ul>li>a{
-	padding-left: 30px;
+	padding-left: 55px;
 	font-size: 12px;
 }
 .xb-nav_ul>li>a>span.icon-item{
 	left: 35px;
 }
 .icon-item{
-	position: absolute;
-	left: 15px;
-	top: 50%;
-	transform: translateY(-50%);
-	-webkit-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
+	vertical-align: middle;
 	font-size: 20px;
-	display: block;
+	display: inline-block;
 	color: #FFFFFF;
 	
 	margin-right: 10px;
@@ -199,19 +182,6 @@ body{
 .xb-nav_ul>li:hover,.xb-nav_ul>li.active{
 	background-color:#2a394f;
 }
-.xb-nav_ul>li:hover>a:before,
-.xb-nav_ul>li.active>a:before,
-.xb-hover:hover>div.nav_xb:before,
-.xb-hover>div.nav_xb.active:before{
-	content: "";
-	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 4px;
-	height: 40px;
-	background-color: #15a4fa;
-}
 #scen-name-close{
 	position: absolute;
 	top: 50%;
@@ -223,6 +193,50 @@ body{
 	-ms-transform: translateY(-50%);
 	-o-transform: translateY(-50%);
 }
+.xb-hover a{
+	color:#fff ;
+}
+.xb-hover a:hover,
+.xb-hover a.active{
+	color:#fff ;
+	background-color:#2a394f; 
+}
+.xb-nav_ul>li:nth-child(2) span{
+	font-size: 18px;
+	margin-left: 3px;
+}
+.nav>li>a:focus, .nav>li>a:hover,
+.nav>li>a.active{
+	background-color: #2a394f; 
+}
+
+.xb-hover:hover,.xb-hover.active{
+	background-color: #2a394f; 
+}
+.xb-hover:hover a:before,
+.xb-nav_ul>li:hover>a:before,
+.xb-nav_ul>li.active>a:before,
+.xb-hover.active>a:before{
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 4px;
+	height: 40px;
+	background-color: #15a4fa;
+}
+.xb-nav_ul>li{
+	position: relative;
+}
+
+
+
+
+
+
+
+
 /*--page_wra---*/
 .xb_page_content{
 	background-color: #d5dae6;

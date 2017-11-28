@@ -83,7 +83,7 @@
 <script src="/static/js/Xboost/navMain.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	$(function  () {
-		$('#xb-nav-xb').addClass("active");
+		$('#scen-name').addClass("active");
 	});
 </script>
 </body>
