@@ -40,7 +40,7 @@
         </where>
     </select>
 
-    <select id="findModelArgById" resultType="com.xboost.pojo.ModelArg"  resultMap="modelArgMap">
+    <select id="findById" resultType="com.xboost.pojo.ModelArg"  resultMap="modelArgMap">
         SELECT * FROM t_model_arg where id = #{id}
     </select>
 

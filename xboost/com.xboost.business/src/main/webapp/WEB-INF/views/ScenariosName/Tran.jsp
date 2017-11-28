@@ -145,7 +145,7 @@
 	        	</div>
 	        	<div class="col-sm-4">
 	        		<div>
-	        			<a href="http://182.254.216.232:8080/static/excelTemplate/car.xlsx">
+	        			<a href="http://"+document.location.host+"/static/excelTemplate/car.xlsx">
 		        			<span class="icon-upload"></span>
 		        			Download Template
 	        			</a>
@@ -164,7 +164,7 @@
   </div>
 </div>
 
-<!--Model export-->
+<!--Mo export-->
 <div class="modal fade bs-example-modal-export" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">

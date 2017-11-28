@@ -66,6 +66,11 @@
     <delete id="delById">
         DELETE FROM t_car_info WHERE id = #{id}
     </delete>
+
+    <delete id="delTimeWindow">
+        DELETE FROM time_window WHERE carId = #{id}
+    </delete>
+
     <select id="findCarByParam" parameterType="map" resultMap="transportMap">
         <!--select * from t_car_info as ci where ci.scenariosId=#{scenariosId}-->
         select * from t_car_info as ci, time_window as t where ci.id=t.carId and ci.scenariosId=#{scenariosId}
