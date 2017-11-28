@@ -1,10 +1,8 @@
 package com.xboost.service;
 
 import com.mckinsey.sf.data.Car;
+import com.mckinsey.sf.data.TimeWindow;
 import com.xboost.mapper.CarMapper;
-import com.xboost.mapper.TransportMapper;
-import com.xboost.pojo.TimeWindow;
-import com.xboost.pojo.Transportation;
 import com.xboost.util.ExcelUtil;
 import com.xboost.util.QiniuUtil;
 import org.joda.time.DateTime;
@@ -41,7 +39,8 @@ public class CarService {
         transport.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
         transportMapper.save(transport);
-
+        transport.getTw().setCarId(Integer.parseInt(transport.getId()));//save时间窗口
+        transportMapper.saveTimeWindow(transport.getTw());
     }
 
     /**
@@ -49,7 +48,7 @@ public class CarService {
      * @param tw
      */
     public void saveTimeWindow(TimeWindow tw) {
-     //   tw.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+//        tw.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
         transportMapper.saveTimeWindow(tw);
     }
 

@@ -45,6 +45,12 @@ public class CarController {
     @ResponseBody
     public String AddCar(Car car) {
         car.setScenariosId(ShiroUtil.getOpenScenariosId().toString());
+//        timeWindow.setStart(0);
+//        timeWindow.setEnd(1440);
+        com.mckinsey.sf.data.TimeWindow tw = new com.mckinsey.sf.data.TimeWindow();
+        tw.setStart(0);
+        tw.setEnd(1440);
+        car.setTw(tw);
         transportService.saveCar(car);
         return "success";
     }
