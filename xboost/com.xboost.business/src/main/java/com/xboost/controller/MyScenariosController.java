@@ -2,6 +2,7 @@ package com.xboost.controller;
 
 import com.google.common.collect.Maps;
 import com.xboost.pojo.Scenarios;
+import com.xboost.pojo.ScenariosCategory;
 import com.xboost.service.MyScenariosService;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
@@ -145,6 +146,17 @@ public class MyScenariosController {
         }else{
             return "fail";
         }
+    }
+
+    /**
+     * 添加场景信息类别
+     * @return
+     */
+    @RequestMapping(value = "/addCategory",method = RequestMethod.POST)
+    @ResponseBody
+    public String addCategory(ScenariosCategory category) {
+        myScenariosService.addCategory(category);
+        return "success";
     }
 
 }

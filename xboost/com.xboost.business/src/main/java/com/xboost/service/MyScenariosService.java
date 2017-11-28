@@ -2,6 +2,7 @@ package com.xboost.service;
 
 import com.xboost.mapper.MyScenariosMapper;
 import com.xboost.pojo.Scenarios;
+import com.xboost.pojo.ScenariosCategory;
 import com.xboost.util.ExcelUtil;
 import com.xboost.util.ShiroUtil;
 import org.joda.time.DateTime;
@@ -159,6 +160,16 @@ public class MyScenariosService {
 
     }
 
+    /**
+     * 保存新场景类别
+     * @param category
+     */
+    public void addCategory(ScenariosCategory category) {
+        category.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+        category.setUserId(ShiroUtil.getCurrentUserId());
+        myScenariosMapper.addCategory(category);
+
+    }
 
 
 }

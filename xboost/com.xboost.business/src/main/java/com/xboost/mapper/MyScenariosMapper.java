@@ -1,6 +1,7 @@
 package com.xboost.mapper;
 
 import com.xboost.pojo.Scenarios;
+import com.xboost.pojo.ScenariosCategory;
 import org.apache.ibatis.annotations.Param;
 import org.joda.time.DateTime;
 
@@ -46,6 +47,11 @@ public interface MyScenariosMapper {
      * @return
      */
     void updateOpenTime(@Param("openScenariosId") String openScenariosId,@Param("openTime") String openTime);
+
+
+
+    //  添加场景类别 @param category
+    void addCategory(ScenariosCategory category);
 
 
 }
