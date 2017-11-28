@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ScenariosCategory implements Serializable {
     private Integer id;
     private Integer userId;
-    private String scenariosCategory;
+    private String categoryName;
     private String str1;                   //预留字段
     private String str2;                    //预留字段
     private String createTime;
@@ -27,12 +27,12 @@ public class ScenariosCategory implements Serializable {
         this.userId = userId;
     }
 
-    public String getScenariosCategory() {
-        return scenariosCategory;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setScenariosCategory(String scenariosCategory) {
-        this.scenariosCategory = scenariosCategory;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getStr1() {

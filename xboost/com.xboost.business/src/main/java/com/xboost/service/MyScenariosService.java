@@ -171,5 +171,15 @@ public class MyScenariosService {
 
     }
 
+    /**
+     * // 根据用户id查询场景类别  @return
+     * param userId
+     * @return
+     */
+    public List<ScenariosCategory> findCategory(Integer userId) {
+        return myScenariosMapper.findCategory(userId);
+    }
+
+
 
 }
