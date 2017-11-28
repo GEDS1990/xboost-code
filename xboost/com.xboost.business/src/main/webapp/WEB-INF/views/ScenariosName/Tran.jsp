@@ -328,51 +328,51 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">type</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="type" >
+                            <input type="text" class="form-control" name="type" id="type">
                         </div>
                         <label class="col-sm-2 control-label">carSource</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carSource" >
+                            <input type="text" class="form-control" name="carSource" id="carSource">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">dimensions</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="dimensions" >
+                            <input type="text" class="form-control" name="dimensions" id="dimensions">
                         </div>
                         <label class="col-sm-2 control-label">maxLoad</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxLoad" >
+                            <input type="text" class="form-control" name="maxLoad" id="maxLoad">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">durationUnloadFull</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationUnloadFull" >
+                            <input type="text" class="form-control" name="durationUnloadFull" id="durationUnloadFull">
                         </div>
                         <label class="col-sm-2 control-label">maxStop</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxStop" >
+                            <input type="text" class="form-control" name="maxStop" id="maxStop">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">fixed_round</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedRound" >
+                            <input type="text" class="form-control" name="fixedRound" id="fixedRound">
                         </div>
                         <label class="col-sm-2 control-label">fixed_round_fee</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedRoundFee" >
+                            <input type="text" class="form-control" name="fixedRoundFee" id="fixedRoundFee">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">start_location</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="startLocation" >
+                            <input type="text" class="form-control" name="startLocation" id="startLocation">
                         </div>
                         <label class="col-sm-2 control-label">end_location</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="endLocation" >
+                            <input type="text" class="form-control" name="endLocation" id="endLocation">
                         </div>
                     </div>
                 <!--
@@ -396,31 +396,31 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">max_distance</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxDistance" >
+                            <input type="text" class="form-control" name="maxDistance" id="maxDistance">
                         </div>
                         <label class="col-sm-2 control-label">max_running_time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxRunningTime" >
+                            <input type="text" class="form-control" name="maxRunningTime" id="maxRunningTime">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">cost_per_distance</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="costPerDistance" >
+                            <input type="text" class="form-control" name="costPerDistance" id="costPerDistance">
                         </div>
                         <label class="col-sm-2 control-label">cost_per_time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="costPerTime" >
+                            <input type="text" class="form-control" name="costPerTime" id="costPerTime">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">fixed_cost</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedCost" >
+                            <input type="text" class="form-control" name="fixedCost" id="fixedCost">
                         </div>
                         <label class="col-sm-2 control-label">velocity</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="velocity" >
+                            <input type="text" class="form-control" name="velocity" id="velocity">
                         </div>
                     </div>
                 </form>

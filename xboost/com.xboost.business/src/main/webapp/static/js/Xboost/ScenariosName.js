@@ -895,10 +895,22 @@ $(function  () {
             $("#editUserForm-tran")[0].reset();
             var id = $(this).attr("data-id");
             $.get("/car/transpt.json",{"id":id}).done(function(result){
-                $("#siteId-pata").val(result.id);
-                $("#parameterName").val(result.parameterName);
-                $("#data").val(result.data);
-                $("#note").val(result.note);
+                $("#siteId-tran").val(result.id);
+                $("#carSource").val(result.carSource);
+                $("#dimensions").val(result.dimensions);
+                $("#maxLoad").val(result.maxLoad);
+                $("#durationUnloadFull").val(result.durationUnloadFull);
+                $("#maxStop").val(result.maxStop);
+                $("#fixedRound").val(result.fixedRound);
+                $("#fixedRoundFee").val(result.fixedRoundFee);
+                $("#startLocation").val(result.startLocation);
+                $("#endLocation").val(result.endLocation);
+                $("#maxDistance").val(result.maxDistance);
+                $("#maxRunningTime").val(result.maxRunningTime);
+                $("#costPerDistance").val(result.costPerDistance);
+                $("#costPerTime").val(result.costPerTime);
+                $("#fixedCost").val(result.fixedCost);
+                $("#velocity").val(result.velocity);
                 
                 $("#editUserModal-tran").modal("show");
 
