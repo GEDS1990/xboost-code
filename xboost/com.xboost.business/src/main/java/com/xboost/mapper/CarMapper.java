@@ -41,8 +41,11 @@ public interface CarMapper {
     void editTransport(Car transport);
 
 
-    //根据网点编码删除运力信息   * @param id
+    //删除运力信息   * @param id
     void delById(Integer id);
+    //根据运力信息id删除TimeWindow   * @param id
+    void delTimeWindow(Integer id);
+
 
 }
 

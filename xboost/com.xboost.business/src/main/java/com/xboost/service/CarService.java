@@ -167,6 +167,7 @@ public class CarService {
     public void delById(Integer id) {
 
         transportMapper.delById(id);
+        transportMapper.delTimeWindow(id);
     }
 
     public Car[] findCarByParam(Map<String, Object> param) {
