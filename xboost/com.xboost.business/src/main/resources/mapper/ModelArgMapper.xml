@@ -18,7 +18,7 @@
         <where>
             scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                and parameterName = #{keyword}
+                and parameter_name LIKE #{keyword}
             </if>
         </where>
         order by ${orderColumn} ${orderType}
@@ -35,7 +35,7 @@
         <where>
             scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                and parameterName = #{keyword}
+                and parameter_name LIKE #{keyword}
             </if>
         </where>
     </select>
