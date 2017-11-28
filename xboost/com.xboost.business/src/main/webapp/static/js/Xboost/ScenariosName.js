@@ -924,7 +924,7 @@ $(function  () {
         });
 
          $("#cond-file-upload-tran").click(function(){
-             UploadFile("cond-input-form-tran","cond_file","/transport/addByExcel",'.bs-example-modal-input')
+             UploadFile("cond-input-form-tran","cond_file","/car/addByExcel",'.bs-example-modal-input')
          });
 		}
 	})()

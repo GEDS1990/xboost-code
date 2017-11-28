@@ -132,7 +132,7 @@
 	    </div>
 	    
         <!--content s-->
-        <form  method="post" id="cond-input-form" enctype="multipart/form-data">
+        <form  method="post" id="cond-input-form-tran" enctype="multipart/form-data">
 
         	<div class="model-input-content clearfix">
         		<div class="col-sm-4 text-right">Import "Transportation"</div>
@@ -145,7 +145,7 @@
 	        	</div>
 	        	<div class="col-sm-4">
 	        		<div>
-	        			<a href="http://127.0.0.1:8080/static/excelTemplate/car.xlsx">
+	        			<a href="http://182.254.216.232:8080/static/excelTemplate/car.xlsx">
 		        			<span class="icon-upload"></span>
 		        			Download Template
 	        			</a>
@@ -219,6 +219,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-3 control-label">dimensions</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="dimensions" >
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-3 control-label">maxLoad</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="maxLoad" >
@@ -260,7 +266,7 @@
                             <input type="text" class="form-control" name="endLocation" >
                         </div>
                     </div>
-<!--
+                <!--
                     <div class="form-group">
                         <label class="col-sm-3 control-label">time_window</label>
                         <div class="col-sm-4">

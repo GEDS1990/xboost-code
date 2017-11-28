@@ -24,6 +24,8 @@ public class TimeWindow implements Serializable{
 
 	@JsonProperty("end")
 	private double end;
+
+	private int carId;
 	
 	public TimeWindow(){
 		
@@ -55,4 +57,11 @@ public class TimeWindow implements Serializable{
 		return start + "-" + end;
 	}
 
+	public int getCarId() {
+		return carId;
+	}
+
+	public void setCarId(int carId) {
+		this.carId = carId;
+	}
 }

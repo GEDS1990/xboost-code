@@ -25,7 +25,7 @@ $(function  () {
 	                return;
 		            }
 					document.getElementById('sim-check-info').innerHTML="";
-		            socket  = new SockJS("http://127.0.0.1:8080/webSocketServer/validate");
+		            socket  = new SockJS("http://182.254.216.232:8080/webSocketServer/validate");
 		            socket .onopen = function () {
 		                logg('Info: connection opened.');
 		            };
@@ -130,7 +130,7 @@ $(function  () {
 	                return;
 	            }
 				document.getElementById('sim-run-info').innerHTML="";
-	            ws = new SockJS("http://127.0.0.1:8080/webSocketServer/sockjs");
+	            ws = new SockJS("http://182.254.216.232:8080/webSocketServer/sockjs");
 	            ws.onopen = function () {
 	                log('Info: connection opened.');
 	            };

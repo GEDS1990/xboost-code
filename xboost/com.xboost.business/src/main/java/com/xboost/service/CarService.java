@@ -1,10 +1,8 @@
 package com.xboost.service;
 
 import com.mckinsey.sf.data.Car;
+import com.mckinsey.sf.data.TimeWindow;
 import com.xboost.mapper.CarMapper;
-import com.xboost.mapper.TransportMapper;
-import com.xboost.pojo.TimeWindow;
-import com.xboost.pojo.Transportation;
 import com.xboost.util.ExcelUtil;
 import com.xboost.util.QiniuUtil;
 import org.joda.time.DateTime;
@@ -41,7 +39,8 @@ public class CarService {
         transport.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
         transportMapper.save(transport);
-
+        transport.getTw().setCarId(Integer.parseInt(transport.getId()));//save时间窗口
+        transportMapper.saveTimeWindow(transport.getTw());
     }
 
     /**
@@ -49,7 +48,7 @@ public class CarService {
      * @param tw
      */
     public void saveTimeWindow(TimeWindow tw) {
-     //   tw.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+//        tw.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
         transportMapper.saveTimeWindow(tw);
     }
 
@@ -63,7 +62,7 @@ public class CarService {
                     File fileTmp = null;
                     long tempTime = System.currentTimeMillis();
                     try {
-                        fileTmp=new File("src/main/resources/upload/temp/"+tempTime+ ".xlsx");
+                        fileTmp=new File(System.getProperty("user.dir")+"/temp/"+tempTime+ ".xlsx");
                         if (!fileTmp.exists()) fileTmp.mkdirs();
                         multipartFile.transferTo(fileTmp);
 //                        File fileTemp = (File) multipartFile;
@@ -71,28 +70,29 @@ public class CarService {
                         List<String> lineList = excelUtil.readExcel(fileTmp);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-                            transport.setScenariosId(row[0]);
-                            transport.setCarSource(row[0]);
+                            transport.setCarSource(row[1]);
                             transport.setType(row[0]);
-                            transport.setVelocity(Double.parseDouble(row[0]));
-                            transport.setDimensions(row[0]);
-                            transport.setCostPerDistance(Double.parseDouble(row[0]));
-                            transport.setCostPerTime(Double.parseDouble(row[0]));
-                            transport.setDurationUnloadFull(row[0]);
-                            transport.setFixedCost(Double.parseDouble(row[0]));
-                            transport.setFixedRound(Double.parseDouble(row[0]));
-                            transport.setFixedRoundFee(Double.parseDouble(row[0]));
-                            transport.setMaxLoad(row[0]);
-                            transport.setMaxRunningTime(Double.parseDouble(row[0]));
-                            transport.setMaxStop(Integer.parseInt(row[0]));
+                            transport.setVelocity(Double.parseDouble(row[2]));
+                            transport.setDimensions(row[3]);
+                            transport.setCostPerDistance(Double.parseDouble(row[5]));
+                            transport.setCostPerTime(Double.parseDouble(row[6]));
+                            transport.setDurationUnloadFull(row[7]);
+                            transport.setFixedCost(Double.parseDouble(row[8]));
+                            transport.setFixedRound(Double.parseDouble(row[9]));
+                            transport.setFixedRoundFee(Double.parseDouble(row[10]));
+                            transport.setMaxLoad(row[11]);
+                            transport.setMaxRunningTime(Double.parseDouble(row[12]));
+                            transport.setMaxStop(Integer.parseInt(row[13]));
 //                            transport.setSkills(row[0]);
-                            transport.setStartLocation(row[0]);
-                            transport.setEndLocation(row[0]);
+                            transport.setStartLocation(row[14]);
+                            transport.setEndLocation(row[15]);
 //                            transport.setTw(row[0]);
-                            transport.setMaxDistance(Float.parseFloat(row[7]));
+                            transport.setMaxDistance(Float.parseFloat(row[16]));
                             transport.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
                             //insert
                             transportMapper.save(transport);
+                            transport.getTw().setCarId(Integer.parseInt(transport.getId()));//save时间窗口
+                            transportMapper.saveTimeWindow(transport.getTw());
 //                            logger.info("insert into db:"+transport.getCarType());
                         }
                         logger.info("insert into db complete");

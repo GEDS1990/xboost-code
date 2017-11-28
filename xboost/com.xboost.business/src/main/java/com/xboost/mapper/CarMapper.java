@@ -1,7 +1,7 @@
 package com.xboost.mapper;
 
 import com.mckinsey.sf.data.Car;
-import com.xboost.pojo.TimeWindow;
+import com.mckinsey.sf.data.TimeWindow;
 
 import java.util.List;
 import java.util.Map;
