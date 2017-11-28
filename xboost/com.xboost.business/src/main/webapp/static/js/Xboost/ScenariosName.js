@@ -91,18 +91,16 @@ $(function  () {
         			$('#scen-name').remove();
         			$('#scen-class').remove();
         			var add = "";
-        			add+='<div class="xb-hover" id="scen-name"><div class="nav_xb" id="xb-nav-xb">';
-        			add+='<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>';
-        			add+='<span class="icon alt1 alt icon-file-text-o"></span>';
-        			add+='<a href="/ScenariosName">'+scenName+'</a>';
-        			//add+='<a id="scen-name-close" class="glyphicon glyphicon-remove"></a>';
-					add+='</div></div>';
-        			add+='<ul class="xb-nav_ul" id="scen-class">';
-        			add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Conditions</a></li>';
-        			add+='<li id="nav-Simualt"><a href="/simualte"><span class="icon-item alt icon-play"></span>Simualt</a></li>';
-        			add+='<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li></ul>';
-        			$('#scen-info').append(add);
-                    	
+					add+='<li class="xb-hover" id="scen-name">';
+					add+='<a href="/ScenariosName" class="nav_xb" id="xb-nav-xb">';
+					add+='<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>';
+					add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a></li>';
+					add+='<li><ul class="xb-nav_ul" id="scen-class">';
+					add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Conditions</a></li>';
+					add+='<li id="nav-Simualt"><a href="/simualte"><span class="icon-item alt icon-play"></span>Simualt</a></li>';
+					add+='<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li></ul></li>';
+					$('#after-content').after(add);
+					window.location.href = "/ScenariosName";
         		}
         	});
         })
@@ -356,7 +354,7 @@ $(function  () {
 	                $("#siteAddress").val(result.siteAddress);
 	                $("#siteArea").val(result.siteArea);
 	                $("#siteType").val(result.siteType);
-	                $("#siteNightDelivery").val(result.siteNightDelivery);
+	                $("#distribCenter").val(result.distribCenter);
 	                $("#carNum").val(result.carNum);
 	                $("#largeCarModel").val(result.largeCarModel);
 	                $("#maxOperateNum").val(result.maxOperateNum);

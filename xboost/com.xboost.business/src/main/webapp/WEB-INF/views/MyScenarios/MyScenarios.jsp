@@ -225,7 +225,7 @@
 <script type="text/javascript">
 	$(function  () {
 		(function  () {
-			$('#nav-MyScenarios').addClass("active");
+			$('#after-content').addClass("active");
 		})()
 	});
 </script>

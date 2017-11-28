@@ -466,26 +466,22 @@
             <div class="modal-body">
                 <form id="newUserForm" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">siteCode</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-2 control-label">ID</label>
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCode" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">longitude</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteLongitude" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">latitude</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteLatitude" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">name</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteName" >
                         </div>
                     </div>
@@ -497,37 +493,31 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">area</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteArea" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">type</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteType" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">distrib.center</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="distribCenter" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">truck quantity limit</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="carNum" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">truck weight limit</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="largeCarModel" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">capacity</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="maxOperateNum" >
                         </div>
                     </div>
@@ -554,67 +544,57 @@
                     <input type="hidden" name="id" id="siteId" value="">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">ID</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCode" id="siteCode">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">longitude</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteLongitude" id="siteLongitude">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">latitude</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteLatitude" id="siteLatitude">
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="siteLatitude" id="siteLatitude" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteName" id="siteName">
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="siteName" id="siteName" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">address</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteAddress" id="siteAddress">
+                            <input type="text" class="form-control" name="siteAddress" id="siteAddress" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">area</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteArea" id="siteArea">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">type</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteType" id="siteType">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">distrib.center</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteNightDelivery" id="siteNightDelivery">
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="distribCenter" id="distribCenter">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">truck quantity limit</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="carNum" id="carNum">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">truck weight limit</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="largeCarModel" id="largeCarModel">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">capacity</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="maxOperateNum" id="maxOperateNum">
                         </div>
                     </div>

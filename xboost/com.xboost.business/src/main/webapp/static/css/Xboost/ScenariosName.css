@@ -126,6 +126,14 @@ table.dataTable thead>tr>td.sorting{
 .btn.btn-success{
 	background-color: #5ab0ee;
 }
+.form-horizontal label{
+	text-align: left;
+	padding-left:0 ;
+	padding-right: 0;
+}
+.modal-dialog{
+	width: 800px;
+}
 /**********Conditions model*********/
 .model-input-content{
 	padding: 25px 0;

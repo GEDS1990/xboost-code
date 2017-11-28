@@ -3,51 +3,35 @@
 <!-- Navigation -->
     <!-- /.navbar-top-links 顶部导航栏结束-->
     <div class="navbar-default sidebar xb_side" role="navigation">
+    	<input type="hidden" id="scenName" value="${sessionScope.openScenariosName}" />
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav xb_alt" id="side-menu">
                 <li id="scen-info">
                 	<div class="nav_xban"><span class="icon icon-3d"></span>Xboots System</div>
-                	<div class="xb-hover">
-                		<div class="nav_xb" id="nav-MyScenarios">
-                			<span class="icon-item alt icon-files"></span>
-                			<a href="/MyScenarios">My Scenarios</a>
-                		</div>
-                	</div>
-                	
-                	<input type="hidden" id="scenName" value="${sessionScope.openScenariosName}" />
-                    <!--<div class="xb-hover" id="scen-name">
-                    	<div class="nav_xb" id="xb-nav-xb">
-	                    	<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>
-	                    	<span class="icon alt1 alt icon-file-text-o"></span>
-	                    	<a href="/ScenariosName">ScenariosName1</a>
-	                    	<a id="scen-name-close" class="glyphicon glyphicon-remove"></a>
-	                    </div>
-                    </div>
-                    <ul class="xb-nav_ul" id="scen-class">
-                    	<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Conditions</a></li>
-                    	<li id="nav-Simualt"><a href="/excelInput"><span class="icon-item alt icon-play"></span>Simualt</a></li>
-                    	<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li>
-                    </ul>-->
-                    
-                    
                 </li>
-                <li class="xb-hover">
-                    <div class="nav_xb" id="nav-Research"><span class="icon alt icon-bar-chart"></span>Research</div>
+            	<li class="xb-hover" id="after-content">
+            		<a href="/MyScenarios" id="nav-MyScenarios">
+            			<span class="icon-item alt icon-files"></span>My Scenarios
+                	</a>
+            	</li>
+                <li class="xb-hover" id="nav-Research">
+                    <a class="nav_xb" ><span class="icon alt icon-bar-chart"></span>Research</a>
                 </li>
-                <li class="xb-hover">
-                    <div class="nav_xb" id="nav-AllScebario"><span class="icon alt icon-sitemap"></span>All Scebario</div>
+                <li class="xb-hover" id="nav-AllScebario">
+                    <a class="nav_xb" ><span class="icon alt icon-sitemap"></span>All Scebario</a>
                 </li>
-                <li class="xb-hover">
-                    <div class="nav_xb" id="UserManage"><a href="/account"><span class="icon alt icon-users"></span>User Manage</a></div>
+                <li class="xb-hover" id="UserManage">
+                    <a href="/account" class="nav_xb" ><span class="icon alt icon-users"></span>User Manage</a>
                 </li>
                 <shiro:hasRole name="管理员">
-                <li class="xb-hover">
-                    <div class="nav_xb" id="System"><a href="/druid"><span class="icon alt icon-desktop"></span>System</a></div>
+                <li class="xb-hover" id="System">
+                    <a href="/druid" class="nav_xb" ><span class="icon alt icon-desktop"></span>System</a>
                 </li>
                 </shiro:hasRole>
                 
 			    
-                <%--TBD
+                <%--TBD                    	<!--<a id="scen-name-close" class="glyphicon glyphicon-remove"></a>-->
+
                 <li>
                     <a href="/home"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
                 </li>
