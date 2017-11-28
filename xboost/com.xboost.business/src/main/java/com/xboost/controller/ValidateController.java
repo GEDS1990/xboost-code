@@ -164,6 +164,7 @@ public class ValidateController {
             if(Strings.isEmpty(siteDist.getDurationNightDelivery())){
                 flag = flag + 1;
                 result = siteDist.getSiteCollect()+":night transportation time(min) is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
         }
 
@@ -192,26 +193,32 @@ public class ValidateController {
             if(Strings.isEmpty(demandInfo.getProductType())){
                 flag = flag + 1;
                 result = demandInfo.getDate()+":product type is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getDurationStart())){
                 flag = flag + 1;
                 result = demandInfo.getDate()+":time start is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getDurationEnd())){
                 flag = flag + 1;
                 result = demandInfo.getDate()+":time end is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getWeight())){
                 flag = flag + 1;
                 result = demandInfo.getDate()+":weight is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getVotes())){
                 flag = flag + 1;
                 result = demandInfo.getDate()+":piece is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getAgeing())){
                 flag = flag + 1;
                 result = demandInfo.getDate()+":effectiveness is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
         }
 
