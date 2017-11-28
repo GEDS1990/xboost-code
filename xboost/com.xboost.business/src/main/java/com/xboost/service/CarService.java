@@ -62,7 +62,7 @@ public class CarService {
                     File fileTmp = null;
                     long tempTime = System.currentTimeMillis();
                     try {
-                        fileTmp=new File("src/main/resources/upload/temp/"+tempTime+ ".xlsx");
+                        fileTmp=new File(System.getProperty("user.dir")+"/temp/"+tempTime+ ".xlsx");
                         if (!fileTmp.exists()) fileTmp.mkdirs();
                         multipartFile.transferTo(fileTmp);
 //                        File fileTemp = (File) multipartFile;
