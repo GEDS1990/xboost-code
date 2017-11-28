@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Xboost-物流规划管理系统</title>
+    <title>Xboost System Login</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
@@ -187,13 +187,11 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">data</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="data" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">notes</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="note" >
                         </div>
                     </div>
@@ -226,13 +224,11 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">data</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="data" id="data">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">notes</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="note" id="note">
                         </div>
                     </div>

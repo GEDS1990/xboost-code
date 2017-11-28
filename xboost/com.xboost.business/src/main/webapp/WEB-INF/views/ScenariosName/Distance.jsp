@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Xboost-物流规划管理系统</title>
+    <title>Xboost System Login</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
@@ -180,25 +180,21 @@
                 <form id="newUserForm-dist" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">pickup depot</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCollect" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">delivery depot</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteDelivery" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">transportation distance(km)</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="carDistance" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">night transportation time(min)</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationNightDelivery" >
                         </div>
                     </div>
@@ -225,25 +221,21 @@
                     <input type="hidden" name="id" id="siteId-dist" value="">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">pickup depot</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCollect" id="siteCollect">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">delivery depot</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteDelivery" id="siteDelivery">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">transportation distance(km)</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="carDistance" id="carDistance">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">transportation distance(km)</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationNightDelivery" id="durationNightDelivery">
                         </div>
                     </div>

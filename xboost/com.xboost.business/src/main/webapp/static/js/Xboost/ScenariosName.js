@@ -597,7 +597,7 @@ $(function  () {
         //删除用户
         $(document).delegate(".delLink-dem","click",function(){
             var id = $(this).attr("data-id");
-            $('#modal-dist').modal("show");
+            $('#modal-dem').modal("show");
             $('#modal-demdelBtn').click(function  () {
             	$.post("/demandInfo/del",{"id":id}).done(function(result){
                     if("success" == result) {
@@ -730,7 +730,7 @@ $(function  () {
         //删除用户
         $(document).delegate(".delLink-pata","click",function(){
             var id = $(this).attr("data-id");
-            $('#modal-dist').modal("show");
+            $('#modal-pata').modal("show");
             $('#modal-patadelBtn').click(function  () {
             	$.post("/modelArg/del",{"id":id}).done(function(result){
                     if("success" == result) {
@@ -878,7 +878,7 @@ $(function  () {
             var id = $(this).attr("data-id");
             $('#modal-tran').modal("show");
             $('#modal-trandelBtn').click(function  () {
-            	$.post("/transport/del",{"id":id}).done(function(result){
+            	$.post("/car/del",{"id":id}).done(function(result){
                     if("success" == result) {
                         dt.ajax.reload();
                         window.location.reload(); 
@@ -894,7 +894,7 @@ $(function  () {
         $(document).delegate(".editLink-tran","click",function(){
             $("#editUserForm-tran")[0].reset();
             var id = $(this).attr("data-id");
-            $.get("transport/transpt.json",{"id":id}).done(function(result){
+            $.get("/car/transpt.json",{"id":id}).done(function(result){
                 $("#siteId-pata").val(result.id);
                 $("#parameterName").val(result.parameterName);
                 $("#data").val(result.data);
@@ -911,7 +911,7 @@ $(function  () {
 
         $("#editBtn-tran").click(function(){
         
-            $.post("/transport/edit",$("#editUserForm-tran").serialize()).done(function(result){
+            $.post("/car/edit",$("#editUserForm-tran").serialize()).done(function(result){
                 if(result == "success") {
                     $("#editUserModal-tran").modal("hide");
                     dt.ajax.reload();
