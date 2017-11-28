@@ -191,49 +191,41 @@
                 <form id="newUserForm-dem" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">date</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="date" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">pickup depot</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCodeCollect" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">delivery depot</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCodeDelivery" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">product type</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="productType" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">startTime</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationStart" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">endTime</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationEnd" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">weight</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="weight" >
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">piece</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="votes" >
                         </div>
                     </div>
@@ -266,49 +258,41 @@
                     <input type="hidden" name="id" id="siteId-dem" value="">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">date</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="date" id="date">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">pickup depot</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCodeCollect" id="siteCodeCollect">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">delivery depot</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCodeDelivery" id="siteCodeDelivery">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">product type</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="productType" id="productType">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">startTime</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationStart" id="durationStart">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">startTime</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-2 control-label">endTime</label>
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationEnd" id="durationEnd">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">weight</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="weight" id="weight">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-2 control-label">piece</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="votes" id="votes">
                         </div>
                     </div>
