@@ -176,7 +176,8 @@ public class MyScenariosService {
      * param userId
      * @return
      */
-    public List<ScenariosCategory> findCategory(Integer userId) {
+    public List<ScenariosCategory> findCategory() {
+        int userId = ShiroUtil.getCurrentUserId();
         return myScenariosMapper.findCategory(userId);
     }
 
