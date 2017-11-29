@@ -5,11 +5,13 @@ import com.xboost.pojo.Configuration;
 import com.xboost.service.*;
 import com.xboost.util.CascadeModelUtil;
 import com.xboost.util.ShiroUtil;
+import com.xboost.websocket.SystemWebSocketHandler;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.socket.TextMessage;
 
 import javax.inject.Inject;
 import java.util.HashMap;
@@ -59,7 +61,13 @@ public class CascadeController {
 
 
         CascadeModelUtil cmu = new CascadeModelUtil();
-        cmu.excute(config,demandInfoService,siteDistService);
+        try{
+            cmu.excute(config,demandInfoService,siteDistService);
+        }catch (NullPointerException e){
+            SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
+            TextMessage message = new TextMessage("NullPointerException");
+            systemWebSocketHandler.sendMessageToUser(message);
+        }
 //        LogFactory.getLog(AccountController.class).info("input:"+input);
         return null;
     }

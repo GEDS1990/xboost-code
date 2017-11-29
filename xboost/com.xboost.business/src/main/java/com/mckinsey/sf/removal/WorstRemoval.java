@@ -15,6 +15,9 @@ import com.mckinsey.sf.data.RoutingTransportCosts;
 import com.mckinsey.sf.data.constraint.IConstraint;
 import com.mckinsey.sf.data.solution.ISolution;
 import com.mckinsey.sf.data.solution.Solution;
+import com.xboost.websocket.SystemWebSocketHandler;
+import org.apache.log4j.Logger;
+import org.springframework.web.socket.TextMessage;
 
 /**   
 *    
@@ -84,18 +87,28 @@ public class WorstRemoval implements IRemoval {
 			double y = new Random().nextDouble();
 			int index = (int)Math.pow(y, this.p) * ctxs.size();
 			
-			RemovalCtx ctx = ctxs.get(index);
-			if(ctx.getDelta() >= 0){
-				continue;
+			try{
+				RemovalCtx ctx = ctxs.get(index);
+				if(ctx.getDelta() >= 0){
+					continue;
+				}
+				s.applyRemoval(ctx);
+				afterRemoval(ctx,constraints);
+				HashMap<String,Boolean> map = new HashMap<String,Boolean>();
+				map.put(ctx.getR().getId(), true);
+				updateStates(s,map);
+				cache.del(ctx.getR());
+			}catch (IndexOutOfBoundsException e){
+				//add by geds
+				Logger logger = Logger.getLogger(WorstRemoval.class);
+				logger.info("IndexOutOfBoundsException at WorstRemoval...");
+				SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
+				TextMessage textMessage = new TextMessage("fail due to IndexOutOfBoundsException at WorstRemoval...");
+				systemWebSocketHandler.sendMessageToUser(textMessage);
+				break;
 			}
-			
-			
-			s.applyRemoval(ctx);
-			afterRemoval(ctx,constraints);
-			HashMap<String,Boolean> map = new HashMap<String,Boolean>();
-			map.put(ctx.getR().getId(), true);
-			updateStates(s,map);
-			cache.del(ctx.getR());
+
+
 		}
 		
 		return s;

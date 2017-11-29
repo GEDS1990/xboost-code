@@ -88,7 +88,7 @@ public class PalnsThread extends Thread implements IConstants  {
 		}
 	}
 
-	private synchronized IntPair runImpl(double temperature, int id) {
+	private synchronized IntPair runImpl(double temperature, int id){
 		double[] initWs = new double[palns.getWeights().length];
 		for(int i = 0 ; i< palns.getWeights().length; i++){
 			initWs[i] = palns.getWeights()[i];

@@ -23,7 +23,6 @@ import com.mckinsey.sf.utils.ExcelToJson;
 import com.xboost.pojo.Configuration;
 import com.xboost.service.DemandInfoService;
 import com.xboost.service.SiteDistService;
-import com.xboost.websocket.SystemWebSocketHandler;
 import org.springframework.web.socket.TextMessage;
 
 import java.io.File;
