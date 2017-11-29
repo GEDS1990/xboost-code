@@ -1,22 +1,5 @@
 $(function  () {
 	var doc = document;
-	/*
-	//------------Conditions 页面tab切换
-	$('.cond-top-ul>li').click(function  () {
-		var $this = $(this);
-		var i = $this.index();
-		var _nextLi = $this.siblings("li");
-		var _nextA = _nextLi.find("a");
-		_nextLi.removeClass("active");//去除相邻的li的active
-		_nextA.removeClass("active");//去除相邻的a的active
-		$this.addClass("active");
-		$this.find('a').addClass("active");
-		$('.table-responsive').eq(i).addClass("active").siblings().removeClass("active");
-	});	
-	*/
-	
-	
-	
 	
 	/*
 	 *MyScenarios.jsp == MyScenariosController
@@ -26,7 +9,7 @@ $(function  () {
 		
 		var MyScenarios = doc.getElementById("MyScenarios");
 		if (MyScenarios) {
-			
+			//加载列表
 			var dt =$("#MyScenarios").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
@@ -81,6 +64,7 @@ $(function  () {
 	                }
 	            }
 	        });
+	    
         
         //点击open 打开场景
         $("body").on("click",".openLink-scen",function  () {
@@ -306,7 +290,8 @@ $(function  () {
 	            }
 	        });
         
-
+			
+			
 	        //添加新用户
 	        $("#addNewUser").click(function(){
 	            $("#newUserModal").modal('show');

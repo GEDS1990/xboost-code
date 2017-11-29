@@ -230,12 +230,6 @@ body{
 }
 
 
-
-
-
-
-
-
 /*--page_wra---*/
 .xb_page_content{
 	background-color: #d5dae6;
@@ -243,3 +237,41 @@ body{
     border-left: 1px solid #e7e7e7;
 }
 
+/***************user***********************/
+#addNewUser-user{
+	padding: 5px 8px;
+	font-size: 16px;
+}
+/************MyScenarios***************/
+.modal-dialog.creat{
+	width: 600px;
+}
+#Category-class{
+	padding: 5px;
+	border: 1px solid #CCCCCC;
+	display: none;
+}
+#Category-class>li{
+	padding: 2px 0 ;
+}
+#Category-class>li:hover{
+	cursor: pointer;
+	background-color: #eef1f7;
+}
+#Category-class>li:first-child>div:first-child{
+	padding: 0;
+}
+#Category-class>li:first-child>div>input{
+	width: 100%;
+	display: block;
+	padding: 0 10px;
+	margin-top: 2px;
+}
+#Category-class>li:first-child>div>a{
+	display: block;
+	width: 100%;
+	padding: 2px 10px;
+	text-align: center;
+	background-color: #eef1f7;
+	border: 1px solid #C0C0C0;
+}

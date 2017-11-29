@@ -133,7 +133,7 @@
 
 
 <div class="modal fade" id="newUserModal-scen">
-    <div class="modal-dialog">
+    <div class="modal-dialog creat">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -151,8 +151,16 @@
                         <label class="col-sm-4 control-label">Category*:</label>
                         <div class="col-sm-7">
                             <select type="text" class="form-control" name="scenariosCategory" id="scenariosCategory">
-                            	<option><input type="text" id="classAdd" /></option>
+                            	
                             </select>
+                            <ul id="Category-class">
+                        		<li class="clearfix" id="class-li">
+                        			<div class="col-sm-9">
+                        				<input type="text" id="classAdd" />
+                        			</div>
+                        			<div class="col-sm-3"><a id="classbtn" >Add</a></div>
+                        		</li>
+                        	</ul>
                         </div>
                     </div>
                     <div class="form-group">
@@ -218,7 +226,7 @@
 <script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
 <script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/flex.js"></script>
-<script src="/static/js/Xboost/navMain.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/Xboost/xbMain.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/Xboost/ScenariosName.js" ></script>
 <script type="text/javascript">
 	$(function  () {

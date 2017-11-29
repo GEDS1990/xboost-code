@@ -90,7 +90,7 @@
 
 					    	</tr>
 					    </thead>
-			            <tbody id="cond-tbody">
+			            <tbody id="info-tbody">
 			            	<tr>
 				                <td></td>
 				                <td></td>

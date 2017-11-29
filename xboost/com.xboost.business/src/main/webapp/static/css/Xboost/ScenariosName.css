@@ -141,6 +141,9 @@ table.dataTable thead>tr>td.sorting{
 #Patameters_filter{
 	display: none;
 }
+#Depots_Info>thead>tr:first-child>th:nth-child(5){
+	width: 200px!important;
+}
 /**********Conditions model*********/
 .model-input-content{
 	padding: 25px 0;

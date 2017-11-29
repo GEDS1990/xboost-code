@@ -3,7 +3,7 @@
 <!-- Navigation -->
     <!-- /.navbar-top-links 顶部导航栏结束-->
     <div class="navbar-default sidebar xb_side" role="navigation">
-    	<input type="hidden" id="scenName" value="${sessionScope.openScenariosName}" />
+    	<input type="hidden" id="scenName" value="${sessionScope.openScenariosName}" data-id="${sessionScope.openScenariosId}" />
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav xb_alt" id="side-menu">
                 <li id="scen-info">
