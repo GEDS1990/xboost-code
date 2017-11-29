@@ -48,7 +48,7 @@
 	    	<!--top-->
 	    	<div class="clearfix cond-wrap">
 	        	<div class="xb-fl">
-	        		<p>ScenariosName1(Conditions)</p>
+	        		<p>${sessionScope.openScenariosName}(Settings)</p>
 	        	</div>
 	        	<div class="xb-fr">
 	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Input Conditions</button>
@@ -74,20 +74,20 @@
 					    	<tr>
 					    		<th>Id</th>
 					    		<th>type</th>
-					    		<th>vehicle source</th>
-					    		<th>maximum load(p)</th>
-					    		<th>full load unload time (min)</th>
-					    		<th>maxStop</th>
+					    		<th>vehicle<br />source</th>
+					    		<th>maximum<br />load(p)</th>
+					    		<th>full load<br />unload<br />time (min)</th>
+					    		<th>max<br />Stop</th>
 					    		<th>dimensions</th>
-					    		<th>fixedRound</th>
-					    		<th>fixedRoundFee</th>
-					    		<th>startLocation</th>
-					    		<th>endLocation</th>
-					    		<th>maxDistance</th>
-					    		<th>maxRunningTime</th>
-					    		<th>costPerDistance</th>
-					    		<th>costPerTime</th>
-					    		<th>fixedCost</th>
+					    		<th>fixed<br />Round</th>
+					    		<th>fixed<br />RoundFee</th>
+					    		<th>start<br />Location</th>
+					    		<th>end<br />Location</th>
+					    		<th>max<br />Distance</th>
+					    		<th>max<br />RunningTime</th>
+					    		<th>cost<br />PerDistance</th>
+					    		<th>cost<br />PerTime</th>
+					    		<th>fixed<br />Cost</th>
 					    		<th>velocity</th>
 					    		<th>operation</th>
 					    	</tr>
@@ -145,7 +145,7 @@
 	        	</div>
 	        	<div class="col-sm-4">
 	        		<div>
-	        			<a href="http://"+document.location.host+"/static/excelTemplate/car.xlsx">
+	        			<a class="down-href" href="#">
 		        			<span class="icon-upload"></span>
 		        			Download Template
 	        			</a>
@@ -441,10 +441,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Delete Scenario</h4>
+                <h4 class="modal-title">Delete Data</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure want to delete this Scenario</p>
+                <p>Are you sure want to delete this line of data?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>

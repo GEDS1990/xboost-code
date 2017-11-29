@@ -37,7 +37,6 @@ body{
 	background-color: #eaedf1;
 	background-image: url(/static/images/banner.jpg);
 	background-size: cover;
-	background: no-repeat;
 }
 .btn.btn-success,.btn-success:active:focus{
 	background-color: #5ab0ee;

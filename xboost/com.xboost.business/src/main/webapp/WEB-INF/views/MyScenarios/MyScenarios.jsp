@@ -144,16 +144,14 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Scenarios Name*:</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" name="scenariosName" >
+                            <input type="text" class="form-control" name="scenariosName"  >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Category*:</label>
                         <div class="col-sm-7">
-                            <select type="text" class="form-control" name="scenariosCategory" >
-                            	<option value="0"></option>
-                            	<option value="1">class1</option>
-                            	<option value="2">class2</option>
+                            <select type="text" class="form-control" name="scenariosCategory" id="scenariosCategory">
+                            	<option><input type="text" id="classAdd" /></option>
                             </select>
                         </div>
                     </div>
@@ -182,7 +180,7 @@
                 <h4 class="modal-title">Delete Scenario</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure want to delete this Scenario</p>
+                <p>Are you sure want to delete this Scenario?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>

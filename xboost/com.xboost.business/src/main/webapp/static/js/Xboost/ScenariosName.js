@@ -26,6 +26,7 @@ $(function  () {
 		
 		var MyScenarios = doc.getElementById("MyScenarios");
 		if (MyScenarios) {
+			
 			var dt =$("#MyScenarios").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
@@ -96,7 +97,7 @@ $(function  () {
 					add+='<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>';
 					add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a></li>';
 					add+='<li><ul class="xb-nav_ul" id="scen-class">';
-					add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Conditions</a></li>';
+					add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Settings</a></li>';
 					add+='<li id="nav-Simualt"><a href="/simualte"><span class="icon-item alt icon-play"></span>Simualt</a></li>';
 					add+='<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li></ul></li>';
 					$('#after-content').after(add);
@@ -106,7 +107,7 @@ $(function  () {
         })
        
 
-        //添加新用户
+        //创建场景
         $("#addNewUser-scen").click(function(){
             $("#newUserModal-scen").modal('show');
         });
@@ -146,7 +147,6 @@ $(function  () {
 
         //导出文件
         
-        //打开场景
 
 		//上传excel文件
          $("#cond-file-upload-dist").click(function(){
@@ -246,6 +246,8 @@ $(function  () {
 	(function  () {
 		var Depots_Info = doc.getElementById("Depots_Info");
 		if (Depots_Info) {
+			var href = "http://"+doc.location.host+"/static/excelTemplate/deport.xlsx"
+			$('.down-href').attr("href",href)
 			var dt =$("#Depots_Info").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
@@ -393,6 +395,8 @@ $(function  () {
 	(function  () {
 		var Depots_Distance = doc.getElementById("Depots_Distance");
 		if (Depots_Distance) {
+			var href = "http://"+doc.location.host+"/static/excelTemplate/distances.xlsx";
+			$('.down-href').attr("href",href);
 			var dt =$("#Depots_Distance").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
@@ -522,6 +526,8 @@ $(function  () {
 	(function  () {
 		var Demands = doc.getElementById("Demands");
 		if (Demands) {
+			var href = "http://"+doc.location.host+"/static/excelTemplate/demands.xlsx";
+			$('.down-href').attr("href",href);
 			var dt =$("#Demands").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
@@ -661,6 +667,8 @@ $(function  () {
 	(function  () {
 		var Patameters = document.getElementById("Patameters");
 		if (Patameters) {
+			var href = "http://"+doc.location.host+"/static/excelTemplate/marg.xlsx";
+			$('.down-href').attr("href",href);
 			var dt =$("#Patameters").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
@@ -789,6 +797,8 @@ $(function  () {
 	(function  () {
 		var Transportation = document.getElementById("Transportation");
 		if (Transportation) {
+			var href = "http://"+doc.location.host+"/static/excelTemplate/car.xlsx";
+			$('.down-href').attr("href",href);
 			var dt =$("#Transportation").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理

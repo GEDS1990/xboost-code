@@ -48,7 +48,7 @@
 	    	<!--top-->
 	    	<div class="clearfix cond-wrap">
 	        	<div class="xb-fl">
-	        		<p>ScenariosName1(Conditions)</p>
+	        		<p>${sessionScope.openScenariosName}(Settings)</p>
 	        	</div>
 	        	<div class="xb-fr">
 	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Input Conditions</button>
@@ -128,7 +128,7 @@
 	        	</div>
 	        	<div class="col-sm-4">
 	        		<div>
-	        			<a href="http://"+document.location.host+"/static/excelTemplate/demands.xlsx">
+	        			<a class="down-href" href="#">
 	        				<span class="icon-upload"></span>
 	        				Download Template
 	        			</a>
@@ -318,10 +318,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Delete Scenario</h4>
+                <h4 class="modal-title">Delete Data</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure want to delete this Scenario</p>
+                <p>Are you sure want to delete this line of data?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>

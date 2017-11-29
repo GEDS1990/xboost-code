@@ -29,40 +29,6 @@
                 </li>
                 </shiro:hasRole>
                 
-			    
-                <%--TBD                    	<!--<a id="scen-name-close" class="glyphicon glyphicon-remove"></a>-->
-
-                <li>
-                    <a href="/home"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
-                </li>
-                <li>
-                    <a href="/customer"><i class="fa fa-users fa-fw"></i> 客户</a>
-                    <!-- /.nav-second-level -->
-                </li>
-                <li>
-                    <a href="/progress"><i class="fa fa-table fa-fw"></i> 跟进</a>
-                </li>
-                <li>
-                    <a href="/task"><i class="fa fa-edit fa-fw"></i> 待办</a>
-                </li>
-                <li>
-                     <a href="/siteInfo"><i class="fa fa-edit fa-fw"></i>网点信息</a>
-                </li>
-                <li>
-                    <a href="/modelArg"><i class="fa fa-edit fa-fw"></i> 整体模型参数</a>
-                </li>
-                <li>
-                     <a href="/demandInfo"><i class="fa fa-edit fa-fw"></i>需求信息</a>
-                </li>
-                <li>
-                    <a href="/account"><i class="fa fa-table fa-fw"></i> 管理员</a>
-                </li>
-                --%>
-                <!--<li>
-                    <a href="/excelInput"><i class="fa fa-dashboard fa-fw"></i> excelInput</a>
-                </li>-->
-
-                <%--TBD--%>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
