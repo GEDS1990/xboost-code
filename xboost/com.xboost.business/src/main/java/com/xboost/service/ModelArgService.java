@@ -150,7 +150,7 @@ public class ModelArgService {
 
 //    public void exportExcel{
 //        String title = Message.getString("manifestIExportTitle");
-//        String[] rowsName = new String[]{"Parameters","货物运输批次号","提运单号","状态","录入人","录入时间"};
+//        String[] rowsName = new String[]{"parameter name","data","notes"};
 //        List<Object[]>  dataList = new ArrayList<Object[]>();
 //        Object[] objs = null;
 //        for (int i = 0; i < manifestIMainList.size(); i++) {

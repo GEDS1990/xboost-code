@@ -165,9 +165,15 @@ public class MyScenariosController {
      */
     @RequestMapping(value = "/category.json",method = RequestMethod.GET)
     @ResponseBody
-    public List<ScenariosCategory> findCategory() {
-        return myScenariosService.findCategory();
+    public Map<String,Object> findCategory(HttpServletRequest request) {
+        Map<String,Object> result = Maps.newHashMap();
+
+
+        List<ScenariosCategory> categoryList = myScenariosService.findCategory(); //.findAllSiteInfo();
+        result.put("data",categoryList);
+        return result;
     }
+
 
 
 }
