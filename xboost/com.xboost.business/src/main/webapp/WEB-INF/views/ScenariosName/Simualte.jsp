@@ -134,7 +134,6 @@
 <script src="/static/js/flex.js"></script>
 <script src="/static/js/sockjs-0.3.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/vue.min.js"></script>
-<script src="/static/js/Xboost/navMain.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/Xboost/ScenariosName.js" ></script>
 <script src="/static/js/Xboost/simualte.js"></script>
 <script type="text/javascript">

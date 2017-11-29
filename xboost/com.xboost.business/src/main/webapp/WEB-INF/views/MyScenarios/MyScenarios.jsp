@@ -154,12 +154,12 @@
                             	
                             </select>
                             <ul id="Category-class">
-                        		<li class="clearfix" id="class-li">
+                        		<div class="clearfix" id="class-li">
                         			<div class="col-sm-9">
                         				<input type="text" id="classAdd" />
                         			</div>
                         			<div class="col-sm-3"><a id="classbtn" >Add</a></div>
-                        		</li>
+                        		</div>
                         	</ul>
                         </div>
                     </div>

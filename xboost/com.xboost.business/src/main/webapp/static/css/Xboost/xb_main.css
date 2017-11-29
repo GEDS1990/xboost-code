@@ -258,16 +258,16 @@ body{
 	cursor: pointer;
 	background-color: #eef1f7;
 }
-#Category-class>li:first-child>div:first-child{
+#class-li>div:first-child{
 	padding: 0;
 }
-#Category-class>li:first-child>div>input{
+#class-li>div>input{
 	width: 100%;
 	display: block;
 	padding: 0 10px;
 	margin-top: 2px;
 }
-#Category-class>li:first-child>div>a{
+#class-li>div>a{
 	display: block;
 	width: 100%;
 	padding: 2px 10px;

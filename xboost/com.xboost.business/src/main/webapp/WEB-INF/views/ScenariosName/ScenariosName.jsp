@@ -80,7 +80,6 @@
 <script src="/static/js/morris/raphael-min.js"></script>
 <script src="/static/js/morris/morris.min.js"></script>
 <script src="/static/js/flex.js"></script>
-<script src="/static/js/Xboost/navMain.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	$(function  () {
 		$('#scen-name').addClass("active");
