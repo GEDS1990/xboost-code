@@ -486,64 +486,6 @@ public class OutputPrinter implements IConstants {
 						}
 					}
 					
-					//adjust route
-//					Map<Double,Map<String,Map<String,List<Activity>>>> mapList = new TreeMap<Double,Map<String,Map<String,List<Activity>>>>(new Comparator<Double>(){
-//						public int compare(Double o1, Double o2) {
-//			                // 升序排列
-//			                return o1.compareTo(o2);
-//			            }
-//			        });
-//					
-//					List<Activity> newActs = new ArrayList<Activity>();
-//					String prev = "";
-//					for(Activity act:r.getActs()){
-//						Map<String,Map<String,List<Activity>>> maps = new HashMap<String,Map<String,List<Activity>>>();
-//						if(mapList.containsKey(act.getTw().getStart())){
-//							maps = mapList.get(act.getTw().getStart());
-//						}else{
-//							mapList.put(act.getTw().getStart(), maps);
-//						}
-//						
-//						Map<String,List<Activity>> m = new HashMap<String,List<Activity>>();
-//						
-//						if(maps.containsKey(act.getLocation())){
-//							m = maps.get(act.getLocation());
-//						}else{
-//							maps.put(act.getLocation(), m);
-//						}
-//						
-//						if(m.containsKey(act.getType())){
-//							m.get(act.getType()).add(act);
-//						}else{
-//							List<Activity> acts = new ArrayList<Activity>();
-//							acts.add(act);
-//							m.put(act.getType(), acts);
-//						}
-//					}
-					
-//					for(Entry<Double,Map<String,Map<String,List<Activity>>>> en: mapList.entrySet()){
-////						String loc = en.getKey();
-//						Map<String,Map<String,List<Activity>>> actslist1 = en.getValue();
-//						
-//						for(Entry<String,Map<String,List<Activity>>> enen: actslist1.entrySet()){
-//							Map<String,List<Activity>> actslist = enen.getValue();
-//							
-//							if(actslist.containsKey("DELIVER")){
-//								for(Activity a: actslist.get("DELIVER")){
-//									newActs.add(a);
-//								}
-//							}
-//							
-//							if(actslist.containsKey("PICKUP")){
-//								for(Activity a: actslist.get("PICKUP")){
-//									newActs.add(a);
-//								}
-//							}
-//						}
-//						
-//					}
-					
-					
 					int sequence = 0;
 					for(int index = 0;index <newActs.size()-1;index++){
 						
@@ -555,7 +497,6 @@ public class OutputPrinter implements IConstants {
 						if(index ==0 ){
 							continue;
 						}
-						
 						
 						String type = cur.getType();
 //						String loc = "";

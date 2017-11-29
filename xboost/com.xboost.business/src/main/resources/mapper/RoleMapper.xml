@@ -3,6 +3,6 @@
 <mapper namespace="com.xboost.mapper.RoleMapper">
     <cache/>
     <select id="findByUserId" resultType="com.xboost.pojo.Role">
-        SELECT * FROM t_role WHERE id IN (SELECT roleid FROM role_user WHERE userid = #{userId})
+        SELECT * FROM t_role WHERE id IN (SELECT roleid FROM t_role_user WHERE userid = #{userId})
     </select>
 </mapper>

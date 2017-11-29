@@ -9,6 +9,9 @@ import com.mckinsey.sf.data.constraint.ConstraintsResult;
 import com.mckinsey.sf.data.constraint.IConstraint;
 import com.mckinsey.sf.data.solution.ISolution;
 import com.mckinsey.sf.data.solution.Solution;
+import com.xboost.websocket.SystemWebSocketHandler;
+import org.apache.log4j.Logger;
+import org.springframework.web.socket.TextMessage;
 
 /**   
 *    
@@ -47,8 +50,19 @@ public interface IRemoval {
 	default int randomK(int max, int n, double p) {
 		int k = (int) Math.ceil(p * n * 1.0);
 		//TODO
-		k = new Random().nextInt(k) + 1;
-		
+		try{
+			k = new Random().nextInt(k) + 1;
+		}catch(IllegalArgumentException e){
+			//add by geds
+			Logger logger = Logger.getLogger(IRemoval.class);
+			logger.info("IllegalArgumentException at randomK k=" + k + "and max=" + max);
+			SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
+			TextMessage textMessage = new TextMessage("IllegalArgumentException at randomK k=" + k + "and max=" + max);
+			systemWebSocketHandler.sendMessageToUser(textMessage);
+			k = 1;
+			Thread.interrupted();
+		}
+
 		if (k > max) {
 			k = max;
 		}

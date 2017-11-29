@@ -72,7 +72,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
                         user.sendMessage(message);
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
 //                break;
 //            }
@@ -90,7 +90,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
                     user.sendMessage(message);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
     }
