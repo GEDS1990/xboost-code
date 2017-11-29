@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -141,5 +143,31 @@ public class ModelArgService {
 
         modelArgMapper.delById(id);
     }
+
+    /**
+     * 整体模型参数导出
+     */
+
+//    public void exportExcel{
+//        String title = Message.getString("manifestIExportTitle");
+//        String[] rowsName = new String[]{"Parameters","货物运输批次号","提运单号","状态","录入人","录入时间"};
+//        List<Object[]>  dataList = new ArrayList<Object[]>();
+//        Object[] objs = null;
+//        for (int i = 0; i < manifestIMainList.size(); i++) {
+//            ManifestIMain man = manifestIMainList.get(i);
+//            objs = new Object[rowsName.length];
+//            objs[0] = i;
+//            objs[1] = man.getTranNo();
+//            objs[2] = man.getBillNo();
+//            objs[3] = man.getStatusFlagCnName();
+//            objs[4] = man.getLoginName();
+//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            String date = df.format(man.getModiDate());
+//            objs[5] = date;
+//            dataList.add(objs);
+//        }
+//        ExportExcel ex = new ExportExcel(title, rowsName, dataList);
+//        ex.export();
+//    }
 
 }

@@ -165,8 +165,8 @@ public class MyScenariosController {
      */
     @RequestMapping(value = "/category.json",method = RequestMethod.GET)
     @ResponseBody
-    public List<ScenariosCategory> findCategory(Integer userId) {
-        return myScenariosService.findCategory(userId);
+    public List<ScenariosCategory> findCategory() {
+        return myScenariosService.findCategory();
     }
 
 
