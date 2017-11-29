@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.xboost.service.ArrInfoService;
+import com.xboost.service.SolutionService;
 import com.xboost.util.CascadeModelUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -36,6 +37,8 @@ import com.mckinsey.sf.data.solution.ArrInfo;
 import com.mckinsey.sf.data.solution.JobInfo;
 import com.mckinsey.sf.data.solution.Solution;
 import com.mckinsey.sf.data.solution.StatInfo;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 
 import javax.inject.Inject;
@@ -47,11 +50,14 @@ import javax.inject.Inject;
 * Date  ：Apr 27, 2017
 * @version        
 */
+@Service
 public class OutputPrinter implements IConstants {
 
+//	@Inject
+//	static ArrInfoService arrInfoService;
 	@Inject
-	static ArrInfoService arrInfoService;
-
+	static SolutionService solutionService;
+//	SolutionService solutionService = ApplicationContext.class.getAnnotatedSuperclass()t
 	public static void printLine(String str){
 		System.out.println(str);
 //		systemWebSocketHandler.sendMessageToUser(new TextMessage(str));
@@ -398,8 +404,10 @@ public class OutputPrinter implements IConstants {
 	}
 	
 	public static void writeStandardOutputToExcel(Solution s, RoutingTransportCosts transportCost) {
+//		SolutionService solutionService = new SolutionService();
+		com.xboost.pojo.Route routePojo = new com.xboost.pojo.Route();
 		String fileName = "src/main/resources/标准串点输出.xls";
-		
+
 		Workbook wb = null;
 		OutputStream out = null;
 		try {
@@ -409,12 +417,12 @@ public class OutputPrinter implements IConstants {
 			int count = 0;
 			int count2 = 0;
 			int routeCount = 1;
-			
+
 			Row row = sheet.createRow(count++);
 			row.createCell(0).setCellValue("total cost:");
 			row.createCell(1).setCellValue(s.cost());
-			
-			
+
+
 			Row rr3 = sheet.createRow(count++);
 			rr3.createCell(0).setCellValue("车辆编号");
 			rr3.createCell(1).setCellValue("车型");
@@ -431,9 +439,9 @@ public class OutputPrinter implements IConstants {
 			rr3.createCell(12).setCellValue("下一个停靠网点代码");
 			rr3.createCell(13).setCellValue("到下一个停靠点运行里程");
 			rr3.createCell(14).setCellValue("车上货物");
-			
+
 			//sheet2
-			
+
 			Row rr4 = sheet2.createRow(count2++);
 			rr4.createCell(0).setCellValue("寄件网点");
 			rr4.createCell(1).setCellValue("派件网点");
@@ -442,16 +450,16 @@ public class OutputPrinter implements IConstants {
 			rr4.createCell(4).setCellValue("到车时间");
 			rr4.createCell(5).setCellValue("票数");
 
-			
+
 			//write route
 //			double totalLoadRate = 0;
-			for (Map.Entry<String, Route> entry : s.getRoutes().entrySet()) {  
+			for (Map.Entry<String, Route> entry : s.getRoutes().entrySet()) {
 				Route r = entry.getValue();
 				ConstraintState cstat = s.getConstraintState(DEFAULT_CONSTRAINTS);
 				RouteState rstat = cstat.getRouteState(r);
-				
+
 				HashSet<String> currentLoc = new HashSet<String>();
-				
+
 				String prevLoc = "";
 				if(r.getActs().size() != 0){
 					Activity start = r.getActs().get(0);
@@ -461,17 +469,17 @@ public class OutputPrinter implements IConstants {
 					List<Activity> temp = new ArrayList<Activity>();
 					String prevLocation = "";
 					String prevType = "";
-					
+
 					for(Activity act : r.getActs()){
 						if(!act.getLocation().equalsIgnoreCase(prevLocation)){
-							
+
 							if(temp.size()!=0){
 								for(Activity e: temp){
 									newActs.add(e);
 								}
 								temp.clear();
 							}
-							
+
 							newActs.add(act);
 							prevLocation = act.getLocation();
 							prevType = act.getType();
@@ -485,7 +493,6 @@ public class OutputPrinter implements IConstants {
 							}
 						}
 					}
-					
 					int sequence = 0;
 					for(int index = 0;index <newActs.size()-1;index++){
 						
@@ -519,17 +526,24 @@ public class OutputPrinter implements IConstants {
 						
 						DecimalFormat df = new DecimalFormat("###0.00"); 
 						
-						Row rr = sheet.createRow(count++);
+//						Row rr = sheet.createRow(count++);
 						String carType = r.getC().getType();
 						
-						rr.createCell(0).setCellValue(routeCount);
-						rr.createCell(1).setCellValue(carType);
-						rr.createCell(2).setCellValue(newActs.get(1).getLocation()+"-"+newActs.get(newActs.size()-2).getLocation());
-						rr.createCell(4).setCellValue(cur.getLocation());
+//						rr.createCell(0).setCellValue(routeCount);
+						routePojo.setRouteCount(String.valueOf(routeCount));
+//						rr.createCell(1).setCellValue(carType);
+						routePojo.setCarType(carType);
+//						rr.createCell(2).setCellValue(newActs.get(1).getLocation()+"-"+newActs.get(newActs.size()-2).getLocation());
+						routePojo.setLocation(newActs.get(1).getLocation()+"-"+newActs.get(newActs.size()-2).getLocation());
+//						rr.createCell(4).setCellValue(cur.getLocation());
+						routePojo.setCurLoc(cur.getLocation());
+
 						if(cur.getLocation().equalsIgnoreCase(prevLoc)){
-							rr.createCell(3).setCellValue(sequence);
+//							rr.createCell(3).setCellValue(sequence);
+							routePojo.setSequence(String.valueOf(sequence));
 						}else{
-							rr.createCell(3).setCellValue(++sequence);
+//							rr.createCell(3).setCellValue(++sequence);
+							routePojo.setSequence(String.valueOf(++sequence));
 						}
 						prevLoc = cur.getLocation();
 						
@@ -537,11 +551,14 @@ public class OutputPrinter implements IConstants {
 //						if(index == 1){
 //						rr.createCell(9).setCellValue(arrTime);
 //						}else{
-						rr.createCell(8).setCellValue(Math.max(arrTime, CascadeModelUtil.totalJobs.get(jobId).getPickup().getTw().getStart()));
-						rr.createCell(9).setCellValue(endTime);
+//						rr.createCell(8).setCellValue(Math.max(arrTime, CascadeModelUtil.totalJobs.get(jobId).getPickup().getTw().getStart()));
+						routePojo.setArrTime(String.valueOf(Math.max(arrTime, CascadeModelUtil.totalJobs.get(jobId).getPickup().getTw().getStart())));
+//						rr.createCell(9).setCellValue(endTime);
+						routePojo.setEndTime(String.valueOf(endTime));
 //						}
 						if("PICKUP".equals(type)){
-							rr.createCell(5).setCellValue(type);
+//							rr.createCell(5).setCellValue(type);
+							routePojo.setType(type);
 							StringBuilder sbLoc = new StringBuilder();
 							StringBuilder sbVol = new StringBuilder();
 							int j = index;
@@ -578,8 +595,10 @@ public class OutputPrinter implements IConstants {
 								}
 							}
 							index += count1-1;
-							rr.createCell(6).setCellValue(sbLoc.toString().substring(0,sbLoc.toString().length()-1));
-							rr.createCell(7).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
+//							rr.createCell(6).setCellValue(sbLoc.toString().substring(0,sbLoc.toString().length()-1));
+							routePojo.setSbLoc(sbLoc.toString().substring(0,sbLoc.toString().length()-1));
+//							rr.createCell(7).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
+							routePojo.setSbVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
 //							rr.createCell(6).setCellValue(Main.totalJobs.get(cur.getJobId()).getDelivery().getLocation());
 //							rr.createCell(7).setCellValue(Main.totalJobs.get(cur.getJobId()).getDimensions()[0]);
 							
@@ -587,7 +606,8 @@ public class OutputPrinter implements IConstants {
 						
 						
 						if("DELIVER".equals(type)){
-							rr.createCell(5).setCellValue(type);
+//							rr.createCell(5).setCellValue(type);
+							routePojo.setType(type);
 							StringBuilder sbLoc = new StringBuilder();
 							StringBuilder sbVol = new StringBuilder();
 							int j = index;
@@ -605,13 +625,15 @@ public class OutputPrinter implements IConstants {
 								}
 							}
 							index += count1-1;
-							rr.createCell(10).setCellValue(cur.getLocation());
+//							rr.createCell(10).setCellValue(cur.getLocation());
+							routePojo.setUnloadLoc(cur.getLocation());
 							try{
 								currentLoc.remove(cur.getLocation());
 							}catch (Exception e){
 								//TODO
 							}
-							rr.createCell(11).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
+//							rr.createCell(11).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
+							routePojo.setSbVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
 //							rr.createCell(10).setCellValue(Main.totalJobs.get(cur.getJobId()).getDelivery().getLocation());
 //							rr.createCell(11).setCellValue(Main.totalJobs.get(cur.getJobId()).getDimensions()[0]);
 						}
@@ -620,20 +642,23 @@ public class OutputPrinter implements IConstants {
 							index = newActs.size() -2;
 						}
 						Activity nextCur = newActs.get(index+1);
-						rr.createCell(12).setCellValue(nextCur.getLocation());
-						rr.createCell(13).setCellValue(df.format(transportCost.calcDistance(cur.getLocation(), nextCur.getLocation())));
-						
+//						rr.createCell(12).setCellValue(nextCur.getLocation());
+						routePojo.setNextCurLoc(nextCur.getLocation());
+//						rr.createCell(13).setCellValue(df.format(transportCost.calcDistance(cur.getLocation(), nextCur.getLocation())));
+						routePojo.setCalcDis(df.format(transportCost.calcDistance(cur.getLocation(), nextCur.getLocation())));
 						StringBuilder str14 = new StringBuilder();
 						for(String ss:currentLoc){
 							str14.append(ss+"/");
 						}
 						if(str14.toString().length() == 0){
-							rr.createCell(14).setCellValue("");
+//							rr.createCell(14).setCellValue("");
+							routePojo.setCarGoods("");
 						}else{
-							rr.createCell(14).setCellValue(str14.toString().substring(0, str14.toString().length()-1));
+//							rr.createCell(14).setCellValue(str14.toString().substring(0, str14.toString().length()-1));
+							routePojo.setCarGoods(str14.toString().substring(0, str14.toString().length()-1));
 						}
-						
-					
+
+					solutionService.addRoute(routePojo);//将route插入数据库
 						
 					}
 				}
