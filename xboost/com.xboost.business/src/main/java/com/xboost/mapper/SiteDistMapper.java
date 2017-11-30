@@ -14,7 +14,7 @@ public interface SiteDistMapper {
     //  添加网点距离信息  @param siteInfo
     void save(SiteDist siteDist);
 
-    // 查询所有网点距离  @return
+    // 查询所有网点距离 ,导出excel
     List<SiteDist> findAll(String scenariosId);
 
     Long findAllCount(String scenariosId);
@@ -40,5 +40,6 @@ public interface SiteDistMapper {
 
     //根据网点编码删除网点距离信息   * @param siteCode
     void delById(Integer id);
+
 
 }

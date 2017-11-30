@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -128,7 +131,7 @@ public class SiteDistController {
 
 
     /**
-     * 删除用户
+     * 删除网点距离
      */
     @RequestMapping(value = "/del",method = RequestMethod.POST)
     @ResponseBody
@@ -137,5 +140,24 @@ public class SiteDistController {
         return "success";
     }
 
-
+    @RequestMapping(value = "/exportExcel",method = RequestMethod.POST)
+    @ResponseBody
+    public String exportExcel(HttpServletResponse response)
+    {
+         response.setContentType("application/binary;charset=ISO8859_1");
+         try
+         {
+                 ServletOutputStream outputStream = response.getOutputStream();
+                 String fileName = new String(("Site_distance").getBytes(), "ISO8859_1");
+                 response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
+                 String scenariosId = ShiroUtil.getOpenScenariosId();
+                 String[] titles = { "pickup depot", "delivery depot", "transportation distance(km)","night transportation time(min)" };
+                 siteDistService.exportExcel(scenariosId, titles, outputStream);
+             }
+         catch (IOException e)
+         {
+                 e.printStackTrace();
+             }
+         return null;
+    }
 }
