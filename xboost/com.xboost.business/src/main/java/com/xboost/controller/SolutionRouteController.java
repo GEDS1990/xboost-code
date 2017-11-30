@@ -45,7 +45,7 @@ public class SolutionRouteController {
 
 
     //查询所有模型整体参数信息
-    @RequestMapping(value = "/modelArg.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/route.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String,Object> load(HttpServletRequest request) {
 
