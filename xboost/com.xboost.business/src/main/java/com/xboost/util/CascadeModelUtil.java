@@ -170,8 +170,9 @@ public class CascadeModelUtil implements IConstants {
         OutputPrinter.printLine("total time used:"+(endTime-startTime)+"ms");
         systemWebSocketHandler.sendMessageToUser( new TextMessage("total time used:"+(endTime-startTime)+"ms"));
 //		OutputPrinter.writeSolutionToExcel(finalSolution);
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("write Standard Output To Databases"));
         OutputPrinter.writeStandardOutputToExcel(finalSolution,transportCost);
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("writeStandardOutputToExcel"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("finished write Output To Databases"));
     }
     private Config initConf(Configuration config,DemandInfoService demandInfoService) {
 

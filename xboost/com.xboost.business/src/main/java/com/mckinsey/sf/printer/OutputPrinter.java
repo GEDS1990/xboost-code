@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import com.xboost.service.ArrInfoService;
 import com.xboost.service.SolutionService;
 import com.xboost.util.CascadeModelUtil;
+import com.xboost.util.SpringBeanFactoryUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -50,14 +51,13 @@ import javax.inject.Inject;
 * Date  ：Apr 27, 2017
 * @version        
 */
-@Service
 public class OutputPrinter implements IConstants {
 
 //	@Inject
 //	static ArrInfoService arrInfoService;
-	@Inject
-	static SolutionService solutionService;
-//	SolutionService solutionService = ApplicationContext.class.getAnnotatedSuperclass()t
+//	@Inject
+//	static SolutionService solutionService;
+	static SolutionService solutionService = (SolutionService)SpringBeanFactoryUtil.getBean("solutionService");
 	public static void printLine(String str){
 		System.out.println(str);
 //		systemWebSocketHandler.sendMessageToUser(new TextMessage(str));
