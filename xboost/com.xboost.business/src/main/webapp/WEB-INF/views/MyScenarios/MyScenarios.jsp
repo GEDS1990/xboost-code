@@ -48,7 +48,7 @@
 	    	<!--top-->
 	    	<div class="clearfix cond-wrap">
 	        	<div class="xb-fl">
-	        		<p>UserName′s Scenarios</p>
+	        		<p><shiro:principal property="username"/>′s Scenarios</p>
 	        	</div>
 	        	<div class="xb-fr">
 	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Conditions</button>
