@@ -158,7 +158,7 @@ public class SiteDistService {
     /**
      * 导出excel
      */
-    public void exportExcel(String scenariosId, String[] titles, ServletOutputStream outputStream)
+    public void exportExcel(String scenariosId,String[] titles, ServletOutputStream outputStream)
     {
         List<SiteDist> list = siteDistMapper.findAll(scenariosId);
          // 创建一个workbook 对应一个excel应用文件

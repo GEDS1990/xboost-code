@@ -144,15 +144,16 @@ public class SiteDistController {
     @ResponseBody
     public String exportExcel(HttpServletResponse response)
     {
-         response.setContentType("application/binary;charset=ISO8859_1");
+         response.setContentType("application/vnd.ms-excel;charset=utf-8");
          try
          {
-                 ServletOutputStream outputStream = response.getOutputStream();
-                 String fileName = new String(("Site_distance").getBytes(), "ISO8859_1");
-                 response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
-                 String scenariosId = ShiroUtil.getOpenScenariosId();
-                 String[] titles = { "pickup depot", "delivery depot", "transportation distance(km)","night transportation time(min)" };
-                 siteDistService.exportExcel(scenariosId, titles, outputStream);
+             ServletOutputStream outputStream = response.getOutputStream();
+             String fileName = new String(("distance").getBytes(), "utf-8");
+             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
+      //       response.setHeader("Content-disposition", "attachment; filename=distance.xlsx");
+             String scenariosId = ShiroUtil.getOpenScenariosId();
+             String[] titles = { "pickup depot", "delivery depot", "transportation distance(km)","night transportation time(min)" };
+             siteDistService.exportExcel(scenariosId,titles, outputStream);
              }
          catch (IOException e)
          {
