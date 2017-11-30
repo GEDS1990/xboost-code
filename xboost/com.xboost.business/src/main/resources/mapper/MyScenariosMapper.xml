@@ -16,7 +16,7 @@
         VALUES (#{userId},#{categoryName},#{str1},#{str2},#{createTime},#{updateTime})
     </insert>
 
-    <select id="findCategory" resultType="com.xboost.pojo.ScenariosCategory">
+    <select id="findCategory" parameterType="map" resultType="com.xboost.pojo.ScenariosCategory" resultMap="categoryMap">
         SELECT * FROM t_scenarios_category where user_id=#{userId}
     </select>
 
@@ -81,6 +81,13 @@
         <result property="scenariosStatus" column="scenarios_status"/>
         <result property="lastOpenTime" column="last_open_time"/>
     </resultMap>
+
+    <resultMap id="categoryMap" type="ScenariosCategory">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="categoryName" column="category_name"/>
+    </resultMap>
+
 
 
 </mapper>

@@ -1,9 +1,12 @@
 package com.xboost.service;
 
+import com.sun.xml.internal.ws.wsdl.writer.document.Message;
 import com.xboost.mapper.ModelArgMapper;
 import com.xboost.pojo.ModelArg;
 import com.xboost.pojo.SiteInfo;
 import com.xboost.util.ExcelUtil;
+import com.xboost.util.ExportUtil;
+import com.xboost.util.ShiroUtil;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -148,26 +151,31 @@ public class ModelArgService {
      * 整体模型参数导出
      */
 
-//    public void exportExcel{
-//        String title = Message.getString("manifestIExportTitle");
-//        String[] rowsName = new String[]{"Parameters","货物运输批次号","提运单号","状态","录入人","录入时间"};
-//        List<Object[]>  dataList = new ArrayList<Object[]>();
-//        Object[] objs = null;
-//        for (int i = 0; i < manifestIMainList.size(); i++) {
-//            ManifestIMain man = manifestIMainList.get(i);
-//            objs = new Object[rowsName.length];
-//            objs[0] = i;
-//            objs[1] = man.getTranNo();
-//            objs[2] = man.getBillNo();
-//            objs[3] = man.getStatusFlagCnName();
-//            objs[4] = man.getLoginName();
-//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            String date = df.format(man.getModiDate());
-//            objs[5] = date;
-//            dataList.add(objs);
-//        }
-//        ExportExcel ex = new ExportExcel(title, rowsName, dataList);
-//        ex.export();
-//    }
+    public void exportExcel(){
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        List<ModelArg> modelArgList = modelArgMapper.findAll(scenariosId);
+      //  String title = Message.getString("manifestIExportTitle");
+        String title="Parameters";
+        String[] rowsName = new String[]{"parameter name","data","notes"};
+        List<Object[]>  dataList = new ArrayList<Object[]>();
+        Object[] objs = null;
+        for (int i = 0; i < modelArgList.size(); i++) {
+            ModelArg modelArg = modelArgList.get(i);
+            objs = new Object[rowsName.length];
+            objs[0] = i;
+            objs[1] = modelArg.getParameterName();
+            objs[2] = modelArg.getData();
+            objs[3] = modelArg.getNote();
+            dataList.add(objs);
+        }
+        ExportUtil ex = new ExportUtil(title, rowsName, dataList);
+        try{
+            ex.export();
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
 }
