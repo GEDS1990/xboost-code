@@ -41,15 +41,15 @@ $(function  () {
 	            ],
 	            "columnDefs":[ //具体列的定义
 	            	{
-	                    "targets":[0,1,5,6],
+	                    "targets":[0],
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[9],
+	                    "targets":[2],
 	                    "orderable":false
 	                },
 	                {
-	                    "targets":[1,2,3,4,5],
+	                    "targets":[3,4],
 	                    "orderable":true
 	                }
 	            ],
@@ -71,5 +71,5 @@ $(function  () {
 	        });
 		}
 		
-	})
+	})()
 });

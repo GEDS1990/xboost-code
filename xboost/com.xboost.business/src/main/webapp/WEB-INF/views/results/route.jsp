@@ -111,140 +111,6 @@
 			            </tbody>
 		            </table>
 		        </div>
-		        
-		        
-		        <!--<div class="table-responsive">
-		            <table id="Depots_Distance" class="table table-striped table-bordered table-hover">
-			            <thead>
-			            	<tr>
-				                <th>pickup depot</th>
-				                <th>delivery depot</th>
-				                <th>transportation distance(km)</th>
-				                <th>night transportation time(min)</th>
-			            	</tr>
-			            </thead>
-			            <tbody id="cond-tbody">
-			            	<tr>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-			            	</tr>
-			            </tbody>
-		            </table>
-		        </div>
-		        
-		        
-		        <div class="table-responsive">
-					<table id="Transportation" class="table table-striped table-bordered table-hover">
-					    <thead>
-					    	<tr>
-					    		<td rowspan="3">truck<br/>weight limit</td>
-					    		<td rowspan="3">truck<br/>quantity</td>
-					    		<td rowspan="3">truck<br/>type</td>
-					    		<td rowspan="3">speed<br/>(km/h)</td>
-					    		<td rowspan="3">maximum<br/>distance (km)</td>
-					    		<td rowspan="3">maximum<br/>load</td>
-					    		<td rowspan="3">full load<br/>unload time (min)</td>
-					    	</tr>
-					    	<tr>
-					    		<td colspan="6">truck cost (ride or km)</td>
-					    		<td colspan="6">single piece cost</td>
-					    	</tr>
-					    	<tr>
-					    		<td colspan="2">flag-fall (0,a] km</td>
-					    		<td colspan="2">(a,b] km</td>
-					    		<td colspan="2">(b,c] km</td>
-					    		<td colspan="2">flag-fall (0,a] km</td>
-					    		<td colspan="2">(a,b] km</td>
-					    		<td colspan="2">(b,c] km</td>
-					    	</tr>
-					    </thead>
-					    <tbody>
-					    	<tr>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    	</tr>
-					    	<tr>
-					    		<td colspan="2"></td>
-					    		<td colspan="2"></td>
-					    		<td colspan="2"></td>
-					    		<td colspan="2"></td>
-					    		<td colspan="2"></td>
-					    		<td colspan="2"></td>
-					    	</tr>
-					    	<tr>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    	</tr>
-					    </tbody>
-					</table>
-				</div>
-				
-		        
-	            <div class="table-responsive">
-		            <table id="Demands" class="table table-striped table-bordered table-hover">
-			            <thead>
-			            	<tr>
-				                <th>date</th>
-				                <th>pickup depot</th>
-				                <th>delivery depot</th>
-				                <th>product type</th>
-				                <th>time</th>
-				                <th>weight</th>
-				                <th>piece</th>
-				                <th>effectiveness</th>
-			            	</tr>
-			            </thead>
-			            <tbody>
-			            	<tr>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-			            	</tr>
-			            </tbody>
-		            </table>
-		        </div>
-		        
-		        
-		        <div class="table-responsive">
-		            <table id="Patameters" class="table table-striped table-bordered table-hover">
-			            <thead>
-			            	<tr>
-				                <th>parameter name</th>
-				                <th>data</th>
-				                <th>notes</th>
-			            	</tr>
-			            </thead>
-			            <tbody>
-			            	<tr>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-			            	</tr>
-			            </tbody>
-		            </table>
-		        </div>-->
 	    	</div>
 	    </div>
 	    <!-- /#page-wrapper -->
@@ -452,12 +318,6 @@
   </div>
 </div>
 
-
-
-
-
-
-
 <div class="modal fade" id="newUserModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -628,13 +488,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-
-
-
-
-
 
 <!-- jQuery -->
 <script src="/static/js/jquery.min.js"></script>
