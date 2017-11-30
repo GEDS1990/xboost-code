@@ -51,8 +51,8 @@
 	        		<p>${sessionScope.openScenariosName}(Settings)</p>
 	        	</div>
 	        	<div class="xb-fr">
-	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Input Conditions</button>
-	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Expot Conditions</button>
+	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Settings</button>
+	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Export Settings</button>
 	        	</div>
 	        </div>
 	        <div class="cond-top">
@@ -71,12 +71,15 @@
 		            <table id="Depots_Distance" class="table table-striped table-bordered table-hover">
 			            <thead>
 			            	<tr>
-			            		<th>ID</th>
-				                <th>pickup depot</th>
-				                <th>delivery depot</th>
-				                <th>transportation distance(km)</th>
-				                <th>night transportation time(min)</th>
-				                <th>operation</th>
+			            		<th rowspan="2">ID</th>
+				                <th rowspan="2">start depot</th>
+				                <th rowspan="2">end depot</th>
+				                <th colspan="2">be used to calculating the transportation time</th>
+				                <th rowspan="2">operation</th>
+				                <tr>
+				                	<th>transportation distance(km)</th>
+				                	<th>transportation time(min) (higher priority)</th>
+				                </tr>
 			            	</tr>
 			            </thead>
 			            <tbody id="cond-tbody">
@@ -97,71 +100,6 @@
 </div>
 <!-- /#wrapper -->
 
-<!--Model input-->
-<div class="modal fade bs-example-modal-input" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-		<div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	    </div>
-	    
-        <!--content s-->
-        <form  method="post" id="cond-input-form-dist" enctype="multipart/form-data">
-        	<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Depots Distance"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<a class="down-href" href="#">
-	        				<span class="icon-upload"></span>
-	        				Download Template
-	        			</a>
-	        		</div>
-	        	</div>
-        	</div>
-        </form>
-        <!--content e-->
-
-        <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" id="cond-file-upload-dist">Upload</button>
-	    </div>
-    </div>
-  </div>
-</div>
-
-<!--Model export-->
-<div class="modal fade bs-example-modal-export" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-		<div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	    </div>
-	    
-        <!--content s-->
-    	<div class="model-input-content clearfix">
-    		<div class="col-sm-6 text-right">Export "Depots Distance"</div>
-        	<div class="col-sm-4">
-        		<div class="export-btn"  data-xls="Depots_Distance">
-        			<span class="icon-upload"></span>
-        			Export 
-        		</div>
-        	</div>
-    	</div>
-        <!--content e-->
-        
-        <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	    </div>
-    </div>
-  </div>
-</div>
 
 
 

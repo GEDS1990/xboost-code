@@ -1,6 +1,24 @@
 $(function  () {
 	var doc = document;
 	
+	
+	/*
+	 *ScenariosName.jsp
+	 * 
+	 */
+	
+	(function  () {
+		var scenId = $('#scenName').attr("data-id");
+		if (scenId) {
+			$.get("/MyScenarios/scen.json",{"id":scenId}).done(function  (res) {
+				$('#scen-cate').text(res.scenariosCategory);
+				$('#scen-desc').text(res.scenariosDesc);
+			}).fail(function  () {
+				console.log('fail');
+			});
+		}
+	}());
+	
 	/*
 	 *MyScenarios.jsp == MyScenariosController
 	 * 
@@ -82,7 +100,7 @@ $(function  () {
 					add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a></li>';
 					add+='<li><ul class="xb-nav_ul" id="scen-class">';
 					add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Settings</a></li>';
-					add+='<li id="nav-Simualt"><a href="/simualte"><span class="icon-item alt icon-play"></span>Simualt</a></li>';
+					add+='<li id="nav-Simualt"><a href="/simualte"><span class="icon-item alt icon-play"></span>Simulate</a></li>';
 					add+='<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li></ul></li>';
 					$('#after-content').after(add);
 					window.location.href = "/ScenariosName";
@@ -230,8 +248,6 @@ $(function  () {
 	(function  () {
 		var Depots_Info = doc.getElementById("Depots_Info");
 		if (Depots_Info) {
-			var href = "http://"+doc.location.host+"/static/excelTemplate/deport.xlsx"
-			$('.down-href').attr("href",href)
 			var dt =$("#Depots_Info").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
@@ -252,6 +268,9 @@ $(function  () {
 	                {"data":"siteArea","name":"site_area"},
 	                {"data":"siteType","name":"site_type"},
 	                {"data":"distribCenter","name":"distrib_center"},
+	                {"data":function  (row) {
+	                	return "<span>"+(row.siteNightDelivery==1?'support':'not support')+"</span>"
+	                },"name":"site_night_delivery"},
 	                {"data":"carNum","name":"car_num"},
 	                {"data":"largeCarModel","name":"large_carModle"},
 	                {"data":"maxOperateNum","name":"max_operate_num"},
@@ -342,6 +361,7 @@ $(function  () {
 	                $("#siteArea").val(result.siteArea);
 	                $("#siteType").val(result.siteType);
 	                $("#distribCenter").val(result.distribCenter);
+	                $("#siteNightDelivery").val(result.siteNightDelivery);
 	                $("#carNum").val(result.carNum);
 	                $("#largeCarModel").val(result.largeCarModel);
 	                $("#maxOperateNum").val(result.maxOperateNum);

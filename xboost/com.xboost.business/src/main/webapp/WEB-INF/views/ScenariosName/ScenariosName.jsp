@@ -22,8 +22,10 @@
     <!-- Custom Fonts -->
     <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/static/js/morris/morris.css">
-    <link rel="stylesheet" href="../../static/css/Xboost/icon.css" />
-    <link rel="stylesheet" href="../../static/css/Xboost/xb_main.css" />
+    <link rel="stylesheet" href="/static/js/datatables/media/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/Xboost/icon.css" />
+    <link rel="stylesheet" href="/static/css/Xboost/xb_main.css" />
+    <link rel="stylesheet" href="/static/css/Xboost/ScenariosName.css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,34 +39,108 @@
 <body>
 
 <div id="wrapper">
-
     <%@ include file="../include/nav.jsp"%>
     <!-- Page Content -->
     <div class="xb_page_content">
+    	
+        <!--main-->
 	    <div id="page-wrapper">
-	        <div class="container-fluid">
-	            <div class="row">
-	                <div class="col-lg-12">
-	                    <div class="page-header">
-	                        <h4><i class="fa fa-home"></i> 打开的场景</h4>
-	                    </div>
-	                    <div class="panel panel-default">
-	                        <div class="panel-heading">打开的场景</div>
-	                        <div class="panel-body">
-	                            <div id="myfirstchart" style="height: 250px;"></div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <!-- /.col-lg-12 -->
-	            </div>
-	            <!-- /.row -->
+	    	<!--top-->
+	    	<div class="cond-wrap">
+	    		<div class="clearfix ">
+		        	<div class="xb-fl">
+		        		<p>${sessionScope.openScenariosName}(Overview)</p>
+		        	</div>
+		        	<div class="xb-fr">
+		        		<button id="" ><span class="glyphicon glyphicon-leaf"></span>Edit Basic Info</button>
+		        	</div>
+	        	</div>
+	        	<p id="scen-cate"></p>
+	        	<p id="scen-desc"></p>
 	        </div>
-	        <!-- /.container-fluid -->
+	        
+	        
+	    	<div class="sim-content scen">
+	    		<header class="clearfix">
+	    			<p>Settings Overview</p>
+	    			<a>See details</a>
+	    		</header>
+	    		<div class="sim-box">
+	    			<ul id="scen-ul" class="clearfix">
+	    				<li>
+	    					<p>Depot Quantity:</p>
+	    					<p>--</p>
+	    				</li>
+	    				<li>
+	    					<p>Vehicle Quantity:</p>
+	    					<p>--</p>
+	    				</li>
+	    				<li>
+	    					<p>Demand Quantity:</p>
+	    					<p>--</p>
+	    				</li>
+	    				<li>
+	    					<p>The Farthest Distance(km):</p>
+	    					<p>--</p>
+	    				</li>
+	    			</ul>
+	    		</div>
+	    	</div>
+	    	<div class="sim-content scen">
+	    		<header class="clearfix">
+	    			<p>Simulation & Results Overview</p>
+	    			<a>See details</a>
+	    		</header>
+	    		<div class="scen-box">
+	    			<div class="scen-itembox1"></div>
+	    			<div class="scen-itembox2"></div>
+	    		</div>
+	    	</div>
+	    	
+	    	
+	    	
+	    	
+	    	
 	    </div>
 	    <!-- /#page-wrapper -->
 	</div>
 </div>
 <!-- /#wrapper -->
+
+
+<div class="modal fade" id="modal-sim">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Stop Simulation</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure want to stop simulation</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" id="modal-simdelBtn" class="btn btn-primary">Yes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- jQuery -->
 <script src="/static/js/jquery.min.js"></script>
@@ -79,10 +155,20 @@
 <script src="/static/js/sb-admin-2.js"></script>
 <script src="/static/js/morris/raphael-min.js"></script>
 <script src="/static/js/morris/morris.min.js"></script>
+<%-- DataTables JS--%>
+<script src="/static/js/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
+<script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/flex.js"></script>
+<script src="/static/js/sockjs-0.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/vue.min.js"></script>
+<script src="/static/js/Xboost/ScenariosName.js" ></script>
+<script src="/static/js/Xboost/simualte.js"></script>
 <script type="text/javascript">
 	$(function  () {
-		$('#scen-name').addClass("active");
+		(function  () {
+			$('#scen-name').addClass("active");
+		})()
 	});
 </script>
 </body>

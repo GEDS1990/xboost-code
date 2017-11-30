@@ -5,6 +5,34 @@
 	-moz-transform: translateX(-50%);
 	-o-transform: translateX(-50%);
  * */
+/********scenariosname*********/
+.sim-content.scen{
+	margin-top: 20px;
+}
+.sim-content.scen>header>p{
+	float: left;
+}
+.sim-content.scen>header>a{
+	float: right;
+}
+#scen-cate,#scen-desc{
+	font-size: 14px;
+	padding: 2px 0;
+}
+#scen-ul>li{
+	float: left;
+	width: 25%;
+	color: #687189;
+	font-weight: 700;
+}
+#scen-ul>li>p:nth-child(2){
+	font-size: 30px;
+	padding-top: 10px;
+	padding-left: 50px;
+}
+.scen-box{
+	padding: 10px;
+}
 /*******************************Conditions************/
 .cond-wrap{
 	margin: 0;
@@ -168,6 +196,7 @@ table.dataTable thead>tr>td.sorting{
 	padding: 6px 8px;
 	border-radius: 5px;
 	line-height: 20px;
+	text-align: center;
 }
 .model-input-content>div:nth-child(2){
 	position: relative;

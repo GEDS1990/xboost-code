@@ -51,8 +51,8 @@
 	        		<p>${sessionScope.openScenariosName}(Settings)</p>
 	        	</div>
 	        	<div class="xb-fr">
-	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Input Conditions</button>
-	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Expot Conditions</button>
+	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Settings</button>
+	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Export Settings</button>
 	        	</div>
 	        </div>
 	        <div class="cond-top">
@@ -96,73 +96,6 @@
 </div>
 <!-- /#wrapper -->
 
-<!--Model input-->
-<div class="modal fade bs-example-modal-input" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-		<div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	    </div>
-	    
-        <!--content s-->
-        <form  method="post" id="cond-input-form-pata" enctype="multipart/form-data">
-
-        	<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Parameters"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<a class="down-href" href="#">
-	        				<span class="icon-upload"></span>
-	        				Download Template
-	        			</a>
-	        		</div>
-	        	</div>
-        	</div>
-  
-        </form>
-        <!--content e-->
-
-        <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" id="cond-file-upload-pata">Upload</button>
-	    </div>
-    </div>
-  </div>
-</div>
-
-<!--Model export-->
-<div class="modal fade bs-example-modal-export" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-		<div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	    </div>
-	    
-        <!--content s-->
-    	<div class="model-input-content clearfix">
-    		<div class="col-sm-6 text-right">Export "Patameters"</div>
-        	<div class="col-sm-4">
-        		<div class="export-btn" data-xls="Patameters">
-        			<span class="icon-upload"></span>
-        			Export 
-        		</div>
-        	</div>
-    	</div>
-        <!--content e-->
-        
-        <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	    </div>
-    </div>
-  </div>
-</div>
 
 
 

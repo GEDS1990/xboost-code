@@ -51,8 +51,8 @@
 	        		<p>${sessionScope.openScenariosName}(Settings)</p>
 	        	</div>
 	        	<div class="xb-fr">
-	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Input Conditions</button>
-	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Expot Conditions</button>
+	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Settings</button>
+	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Export Settings</button>
 	        	</div>
 	        </div>
 	        <div class="cond-top">
@@ -71,21 +71,22 @@
 		            <table id="Depots_Info" class="table table-striped table-bordered table-hover">
 					    <thead>
 					    	<tr>
-					    		<th rowspan="2">#</th>
-					    		<th rowspan="2">ID</th>
+					    		<th rowspan="2">id</th>
+					    		<th rowspan="2">depot ID</th>
 					    		<th rowspan="2">longitude</th>
 					    		<th rowspan="2">latitude</th>
-					    		<th rowspan="2">name</th>
-					    		<th rowspan="2">address</th>
-					    		<th rowspan="2">area</th>
-					    		<th rowspan="2">type</th>
-					    		<th rowspan="2">distrib.center</th>
-					    		<th colspan="2">10 mins</th>
-					    		<th rowspan="2">capacity</th>
+					    		<th rowspan="2">depot<br />name</th>
+					    		<th rowspan="2">depot<br />address</th>
+					    		<th rowspan="2">depot<br />area</th>
+					    		<th rowspan="2">depot<br />type</th>
+					    		<th rowspan="2">to distrib.<br />center</th>
+					    		<th rowspan="2">night<br />distrib</th>
+					    		<th colspan="3">one period of time 10 mins</th>
                                 <th rowspan="2">operation</th>
                                 <tr>
-                                    <th>truck quantity limit</th>
-                                    <th>truck weight limit</th>
+                                    <th>vehicle<br />quantity limit</th>
+                                    <th>vehicle<br />weight limit</th>
+                                    <th>piece<br />capacity(p)</th>
                                 </tr>
 
 					    	</tr>
@@ -111,138 +112,7 @@
 		        </div>
 		        
 		        
-		        <!--<div class="table-responsive">
-		            <table id="Depots_Distance" class="table table-striped table-bordered table-hover">
-			            <thead>
-			            	<tr>
-				                <th>pickup depot</th>
-				                <th>delivery depot</th>
-				                <th>transportation distance(km)</th>
-				                <th>night transportation time(min)</th>
-			            	</tr>
-			            </thead>
-			            <tbody id="cond-tbody">
-			            	<tr>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-			            	</tr>
-			            </tbody>
-		            </table>
-		        </div>
 		        
-		        
-		        <div class="table-responsive">
-					<table id="Transportation" class="table table-striped table-bordered table-hover">
-					    <thead>
-					    	<tr>
-					    		<td rowspan="3">truck<br/>weight limit</td>
-					    		<td rowspan="3">truck<br/>quantity</td>
-					    		<td rowspan="3">truck<br/>type</td>
-					    		<td rowspan="3">speed<br/>(km/h)</td>
-					    		<td rowspan="3">maximum<br/>distance (km)</td>
-					    		<td rowspan="3">maximum<br/>load</td>
-					    		<td rowspan="3">full load<br/>unload time (min)</td>
-					    	</tr>
-					    	<tr>
-					    		<td colspan="6">truck cost (ride or km)</td>
-					    		<td colspan="6">single piece cost</td>
-					    	</tr>
-					    	<tr>
-					    		<td colspan="2">flag-fall (0,a] km</td>
-					    		<td colspan="2">(a,b] km</td>
-					    		<td colspan="2">(b,c] km</td>
-					    		<td colspan="2">flag-fall (0,a] km</td>
-					    		<td colspan="2">(a,b] km</td>
-					    		<td colspan="2">(b,c] km</td>
-					    	</tr>
-					    </thead>
-					    <tbody>
-					    	<tr>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    		<td rowspan="3"></td>
-					    	</tr>
-					    	<tr>
-					    		<td colspan="2"></td>
-					    		<td colspan="2"></td>
-					    		<td colspan="2"></td>
-					    		<td colspan="2"></td>
-					    		<td colspan="2"></td>
-					    		<td colspan="2"></td>
-					    	</tr>
-					    	<tr>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    	</tr>
-					    </tbody>
-					</table>
-				</div>
-				
-		        
-	            <div class="table-responsive">
-		            <table id="Demands" class="table table-striped table-bordered table-hover">
-			            <thead>
-			            	<tr>
-				                <th>date</th>
-				                <th>pickup depot</th>
-				                <th>delivery depot</th>
-				                <th>product type</th>
-				                <th>time</th>
-				                <th>weight</th>
-				                <th>piece</th>
-				                <th>effectiveness</th>
-			            	</tr>
-			            </thead>
-			            <tbody>
-			            	<tr>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-			            	</tr>
-			            </tbody>
-		            </table>
-		        </div>
-		        
-		        
-		        <div class="table-responsive">
-		            <table id="Patameters" class="table table-striped table-bordered table-hover">
-			            <thead>
-			            	<tr>
-				                <th>parameter name</th>
-				                <th>data</th>
-				                <th>notes</th>
-			            	</tr>
-			            </thead>
-			            <tbody>
-			            	<tr>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-			            	</tr>
-			            </tbody>
-		            </table>
-		        </div>-->
 	    	</div>
 	    </div>
 	    <!-- /#page-wrapper -->
@@ -250,212 +120,8 @@
 </div>
 <!-- /#wrapper -->
 
-<!--Model input-->
-<div class="modal fade bs-example-modal-input" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-		<div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	    </div>
-	    
-        <!--content s-->
-        <form  method="post" id="cond-input-form" enctype="multipart/form-data">
-  <!--
-            <div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import All Data From Single File</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="fileAll" class="cond_file" />
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
 
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<span class="icon-upload"></span>
-	        			Download Template
-	        		</div>
-	        	</div>
-        	</div>
-  -->
-        	<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Depots Info"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<a class="down-href" href="#">
-	        				<span class="icon-upload"></span>
-	        				Download Template
-	        			</a>
-	        		</div>
-	        	</div>
-        	</div>
-
-
-
-  
-        	<!--<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Depots Distance"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<span class="icon-upload"></span>
-	        			Download Template
-	        		</div>
-	        	</div>
-        	</div>
-
-        	<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Transportation"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<span class="icon-upload"></span>
-	        			Download Template
-	        		</div>
-	        	</div>
-        	</div>
-        	<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Demands"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<span class="icon-upload"></span>
-	        			Download Template
-	        		</div>
-	        	</div>
-        	</div>
-        	<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Parameters"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<span class="icon-upload"></span>
-	        			Download Template
-	        		</div>
-	        	</div>
-        	</div>-->
-  
-        </form>
-        <!--content e-->
-
-        <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" id="cond-file-upload">Upload</button>
-	    </div>
-    </div>
-  </div>
-</div>
-
-<!--Model export-->
-<div class="modal fade bs-example-modal-export" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-		<div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	    </div>
-	    
-        <!--content s-->
-        <!--<div class="model-input-content clearfix">
-    		<div class="col-sm-6 text-right">Export All Data to Single File</div>
-        	<div class="col-sm-4">
-        		<div class="export-btn"  data-xls="ALL_Data">
-        			<span class="icon-upload"></span>
-        			Export All Data
-        		</div>
-        	</div>
-    	</div>-->
-    	<div class="model-input-content clearfix">
-    		<div class="col-sm-6 text-right">Export "Depots Info"</div>
-        	<div class="col-sm-4">
-        		<div class="export-btn"  data-xls="Depots_Info">
-        			<span class="icon-upload"></span>
-        			Export
-        		</div>
-        	</div>
-    	</div>
-    	<!--<div class="model-input-content clearfix">
-    		<div class="col-sm-6 text-right">Export "Depots Distance"</div>
-        	<div class="col-sm-4">
-        		<div class="export-btn"  data-xls="Depots_Distance">
-        			<span class="icon-upload"></span>
-        			Export 
-        		</div>
-        	</div>
-    	</div>
-    	<div class="model-input-content clearfix">
-    		<div class="col-sm-6 text-right">Export "Transportation"</div>
-        	<div class="col-sm-4">
-        		<div class="export-btn" data-xls="Transportation">
-        			<span class="icon-upload"></span>
-        			Export 
-        		</div>
-        	</div>
-    	</div>
-    	<div class="model-input-content clearfix">
-    		<div class="col-sm-6 text-right">Export "Demands"</div>
-        	<div class="col-sm-4" data-xls="Demands">
-        		<div class="export-btn">
-        			<span class="icon-upload"></span>
-        			Export 
-        		</div>
-        	</div>
-    	</div>
-    	<div class="model-input-content clearfix">
-    		<div class="col-sm-6 text-right">Export "Patameters"</div>
-        	<div class="col-sm-4">
-        		<div class="export-btn" data-xls="Patameters">
-        			<span class="icon-upload"></span>
-        			Export 
-        		</div>
-        	</div>
-    	</div>-->
-        <!--content e-->
-        
-        <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	    </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
+<!--Add info-->
 <div class="modal fade" id="newUserModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -466,7 +132,7 @@
             <div class="modal-body">
                 <form id="newUserForm" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">ID</label>
+                        <label class="col-sm-2 control-label">depot ID</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCode" >
                         </div>
@@ -480,43 +146,54 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteLatitude" >
                         </div>
-                        <label class="col-sm-2 control-label">name</label>
+                        <label class="col-sm-2 control-label">depot name</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteName" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">address</label>
+                        <label class="col-sm-2 control-label">depot address</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="siteAddress" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">area</label>
+                        <label class="col-sm-2 control-label">depot area</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteArea" >
                         </div>
-                        <label class="col-sm-2 control-label">type</label>
+                        <label class="col-sm-2 control-label">depot type</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteType" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">distrib.center</label>
+                        <label class="col-sm-2 control-label">to distrib.center</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="distribCenter" >
                         </div>
-                        <label class="col-sm-2 control-label">truck quantity limit</label>
+                        <label class="col-sm-2 control-label">night distrib</label>
+                        <div class="col-sm-4">
+                            <select type="text" class="form-control" name="siteNightDelivery">
+                            	<option value="0">not support</option>
+                            	<option value="1">support</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                    	<label class="col-sm-2 control-label">vehicle quantity limit</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="carNum" >
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">truck weight limit</label>
+                        <label class="col-sm-2 control-label">vehicle weight limit</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="largeCarModel" >
                         </div>
-                        <label class="col-sm-2 control-label">capacity</label>
+                        
+                    </div>
+                    <div class="form-group">
+                    	<label class="col-sm-2 control-label">piece capacity(p)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="maxOperateNum" >
                         </div>
@@ -532,6 +209,7 @@
 </div><!-- /.modal -->
 
 
+<!--Edit info-->
 <div class="modal fade" id="editUserModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -543,7 +221,7 @@
                 <form id="editUserForm" class="form-horizontal">
                     <input type="hidden" name="id" id="siteId" value="">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">ID</label>
+                        <label class="col-sm-2 control-label">depot ID</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCode" id="siteCode">
                         </div>
@@ -557,43 +235,53 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteLatitude" id="siteLatitude" >
                         </div>
-                        <label class="col-sm-2 control-label">name</label>
+                        <label class="col-sm-2 control-label">depot name</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteName" id="siteName" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">address</label>
+                        <label class="col-sm-2 control-label">depot address</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="siteAddress" id="siteAddress" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">area</label>
+                        <label class="col-sm-2 control-label">depot area</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteArea" id="siteArea">
                         </div>
-                        <label class="col-sm-2 control-label">type</label>
+                        <label class="col-sm-2 control-label">depot type</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteType" id="siteType">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">distrib.center</label>
+                        <label class="col-sm-2 control-label">to distrib.center</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="distribCenter" id="distribCenter">
                         </div>
-                        <label class="col-sm-2 control-label">truck quantity limit</label>
+                        <label class="col-sm-2 control-label">night distrib</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carNum" id="carNum">
+                            <select type="text" class="form-control" name="siteNightDelivery" id="siteNightDelivery">
+                            	<option value="0">not support</option>
+                            	<option value="1">support</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">truck weight limit</label>
+                    	<label class="col-sm-2 control-label">vehicle quantity limit</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="carNum" id="carNum" id="carNum">
+                        </div>
+                        <label class="col-sm-2 control-label">vehicle weight limit</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="largeCarModel" id="largeCarModel">
                         </div>
-                        <label class="col-sm-2 control-label">capacity</label>
+                        
+                    </div>
+                    <div class="form-group">
+                    	<label class="col-sm-2 control-label">piece capacity(p)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="maxOperateNum" id="maxOperateNum">
                         </div>
@@ -609,6 +297,7 @@
 </div><!-- /.modal -->
 
 
+<!--Del info-->
 <div class="modal fade" id="modal-info">
     <div class="modal-dialog">
         <div class="modal-content">

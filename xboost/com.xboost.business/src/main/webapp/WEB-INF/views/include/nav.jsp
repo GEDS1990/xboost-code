@@ -93,6 +93,214 @@
 	        </div><!-- /.modal-content -->
 	    </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+	
+	
+	<!-- 公共部分  上传 导出 下载模板 -->
+	<!--Model input-->
+<div class="modal fade bs-example-modal-input" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	    </div>
+	    
+        <!--content s-->
+        <form  method="post" id="cond-input-form" enctype="multipart/form-data">
+              <div class="model-input-content clearfix">
+        		<div class="col-sm-4 text-right">Import All Settings from A Single File:</div>
+	        	<div class="col-sm-4">
+	        		<input type="file" name="fileAll" class="cond_file" />
+	        		<div class="cond-file-box clearfix">
+	        			<div class="cond-file-btn">Choose File</div>
+	        			<p>No file chosen</p>
+	        		</div>
+	        	</div>
+
+	        	<div class="col-sm-4">
+	        		<div>
+	        			<a id="template-all" href="javascript:void(0);">
+		        			<span class="icon-upload"></span>
+		        			Download Template
+	        			</a>
+	        		</div>
+	        	</div>
+        	</div>
+  
+        	<div class="model-input-content clearfix">
+        		<div class="col-sm-4 text-right">Import "Depots Info" Settings:</div>
+	        	<div class="col-sm-4">
+	        		<input type="file" name="file" class="cond_file"/>
+	        		<div class="cond-file-box clearfix">
+	        			<div class="cond-file-btn">Choose File</div>
+	        			<p>No file chosen</p>
+	        		</div>
+	        	</div>
+	        	<div class="col-sm-4">
+	        		<div>
+	        			<a id="template-info" href="javascript:void(0);" >
+	        				<span class="icon-upload"></span>
+	        				Download Template
+	        			</a>
+	        		</div>
+	        	</div>
+        	</div>
+        	<div class="model-input-content clearfix">
+        		<div class="col-sm-4 text-right">Import "Depots Distance" Settings:</div>
+	        	<div class="col-sm-4">
+	        		<input type="file" name="file" class="cond_file"/>
+	        		<div class="cond-file-box clearfix">
+	        			<div class="cond-file-btn">Choose File</div>
+	        			<p>No file chosen</p>
+	        		</div>
+	        	</div>
+	        	<div class="col-sm-4">
+	        		<div>
+	        			<a id="template-dist" href="javascript:void(0);">
+		        			<span class="icon-upload"></span>
+		        			Download Template
+	        			</a>
+	        		</div>
+	        	</div>
+        	</div>
+
+        	<div class="model-input-content clearfix">
+        		<div class="col-sm-4 text-right">Import "Vehicles" Settings:</div>
+	        	<div class="col-sm-4">
+	        		<input type="file" name="file" class="cond_file"/>
+	        		<div class="cond-file-box clearfix">
+	        			<div class="cond-file-btn">Choose File</div>
+	        			<p>No file chosen</p>
+	        		</div>
+	        	</div>
+	        	<div class="col-sm-4">
+	        		<div>
+	        			<a id="template-veh" href="javascript:void(0);">
+		        			<span class="icon-upload"></span>
+		        			Download Template
+	        			</a>
+	        		</div>
+	        	</div>
+        	</div>
+        	<div class="model-input-content clearfix">
+        		<div class="col-sm-4 text-right">Import "Demands" Settings:</div>
+	        	<div class="col-sm-4">
+	        		<input type="file" name="file" class="cond_file"/>
+	        		<div class="cond-file-box clearfix">
+	        			<div class="cond-file-btn">Choose File</div>
+	        			<p>No file chosen</p>
+	        		</div>
+	        	</div>
+	        	<div class="col-sm-4">
+	        		<div>
+	        			<a id="template-dem" href="javascript:void(0);">
+		        			<span class="icon-upload"></span>
+		        			Download Template
+	        			</a>
+	        		</div>
+	        	</div>
+        	</div>
+        	<div class="model-input-content clearfix">
+        		<div class="col-sm-4 text-right">Import "Parameters" Settings:</div>
+	        	<div class="col-sm-4">
+	        		<input type="file" name="file" class="cond_file"/>
+	        		<div class="cond-file-box clearfix">
+	        			<div class="cond-file-btn">Choose File</div>
+	        			<p>No file chosen</p>
+	        		</div>
+	        	</div>
+	        	<div class="col-sm-4">
+	        		<div>
+	        			<a id="template-pata" href="javascript:void(0);">
+		        			<span class="icon-upload"></span>
+		        			Download Template
+	        			</a>
+	        		</div>
+	        	</div>
+        	</div>
+  
+        </form>
+        <!--content e-->
+
+        <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" id="cond-file-upload">Upload</button>
+	    </div>
+    </div>
+  </div>
+</div>
+
+<!--Model export-->
+<div class="modal fade bs-example-modal-export" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	    </div>
+	    
+        <!--content s-->
+        <div class="model-input-content clearfix">
+    		<div class="col-sm-6 text-right">Export All Settings to A Single File:</div>
+        	<div class="col-sm-4">
+        		<div class="export-btn"  data-xls="ALL_Data">
+        			<span class="icon-upload"></span>
+        			Export 
+        		</div>
+        	</div>
+    	</div>
+    	<div class="model-input-content clearfix">
+    		<div class="col-sm-6 text-right">Export "Depots Info" Settings:</div>
+        	<div class="col-sm-4">
+        		<div class="export-btn"  data-xls="Depots_Info">
+        			<span class="icon-upload"></span>
+        			Export
+        		</div>
+        	</div>
+    	</div>
+    	<div class="model-input-content clearfix">
+    		<div class="col-sm-6 text-right">Export "Depots Distance" Settings:</div>
+        	<div class="col-sm-4">
+        		<div class="export-btn"  data-xls="Depots_Distance">
+        			<span class="icon-upload"></span>
+        			Export 
+        		</div>
+        	</div>
+    	</div>
+    	<div class="model-input-content clearfix">
+    		<div class="col-sm-6 text-right">Export "Vehicles" Settings:</div>
+        	<div class="col-sm-4">
+        		<div class="export-btn" data-xls="Transportation">
+        			<span class="icon-upload"></span>
+        			Export 
+        		</div>
+        	</div>
+    	</div>
+    	<div class="model-input-content clearfix">
+    		<div class="col-sm-6 text-right">Export "Demands" Settings:</div>
+        	<div class="col-sm-4" data-xls="Demands">
+        		<div class="export-btn">
+        			<span class="icon-upload"></span>
+        			Export 
+        		</div>
+        	</div>
+    	</div>
+    	<div class="model-input-content clearfix">
+    		<div class="col-sm-6 text-right">Export "Patameters" Settings:</div>
+        	<div class="col-sm-4">
+        		<div class="export-btn" data-xls="Patameters">
+        			<span class="icon-upload"></span>
+        			Export 
+        		</div>
+        	</div>
+    	</div>
+        <!--content e-->
+        
+        <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	    </div>
+    </div>
+  </div>
+</div>
+
 
 
 
