@@ -9,16 +9,16 @@ import java.util.Map;
 /**
  * Created by Administrator on 2017/11/5 0005.
  */
-public interface SolutionRouteMapper {
+public interface SolutionActivityMapper {
 
-    //  添加Route信息  @param route
-    void addRoute(Route route);
+    //  添加Activity信息  @param route
+    void addActivity(Activity activity);
 
     //scenariosId 删除   * @param scenariosId
     void delByScenariosId(Integer scenariosId);
 
     // 查询所有模型整体参数信息  @return
-    List<Route> findAll(String scenariosId);
+    List<Activity> findAll(String scenariosId);
 
     //查询所有模型整体参数信息总数
     Long findAllCount(String scenariosId);
@@ -28,15 +28,13 @@ public interface SolutionRouteMapper {
      * @param id 模型整体参数id
      * @return
      */
-    Route findById(Integer id);
+    Activity findById(Integer id);
 
     // 根据查询条件获取模型整体参数  @param param @return
-    List<Route> findByParam(Map<String, Object> param);
+    List<Activity> findByParam(Map<String, Object> param);
 
     //根据查询条件获取模型整体参数信息的数量
     Long findCountByParam(Map<String, Object> param);
-
-
 
 }
 
