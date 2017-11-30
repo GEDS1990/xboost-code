@@ -251,10 +251,10 @@ body{
 	border: 1px solid #CCCCCC;
 	display: none;
 }
-#Category-class>li{
+#Category-box>li{
 	padding: 2px 0 ;
 }
-#Category-class>li:hover{
+#Category-box>li:hover{
 	cursor: pointer;
 	background-color: #eef1f7;
 }
