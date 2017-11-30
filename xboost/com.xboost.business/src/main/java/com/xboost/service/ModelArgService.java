@@ -146,35 +146,5 @@ public class ModelArgService {
         modelArgMapper.delById(id);
     }
 
-    /**
-     * 整体模型参数导出
-     */
-
-    public void exportExcel(){
-        String scenariosId = ShiroUtil.getOpenScenariosId();
-        List<ModelArg> modelArgList = modelArgMapper.findAll(scenariosId);
-      //  String title = Message.getString("manifestIExportTitle");
-        String title="Parameters";
-        String[] rowsName = new String[]{"parameter name","data","notes"};
-        List<Object[]>  dataList = new ArrayList<Object[]>();
-        Object[] objs = null;
-        for (int i = 0; i < modelArgList.size(); i++) {
-            ModelArg modelArg = modelArgList.get(i);
-            objs = new Object[rowsName.length];
-            objs[0] = i;
-            objs[1] = modelArg.getParameterName();
-            objs[2] = modelArg.getData();
-            objs[3] = modelArg.getNote();
-            dataList.add(objs);
-        }
-        ExportUtil ex = new ExportUtil(title, rowsName, dataList);
-        try{
-            ex.export();
-
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
 
 }
