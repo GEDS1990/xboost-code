@@ -39,8 +39,10 @@ $(function  () {
 		            };
 					
 					$.post("/simualte/Validate").done(function  (result) {
+					    ws.onclose();
 						console.log("success");
 					}).fail(function  () {
+					    ws.onclose();
 						console.log("fail");
 					});
 					
@@ -145,8 +147,10 @@ $(function  () {
 	
 
 	            $.post("/cascade/runSilumate",{"distMode":_distMode,"loadTime":_loadTime,"loopLimit":_loopLimit}).done(function(result){
+	                ws.onclose();
 	                console.log("success");
 	            }).fail(function(){
+	                ws.onclose();
 	                console.log("fail");
 	            });
 	            //停止算法
