@@ -5,8 +5,10 @@ import com.xboost.mapper.SiteDistMapper;
 import com.xboost.pojo.SiteDist;
 import com.xboost.pojo.SiteInfo;
 import com.xboost.util.ExcelUtil;
+import com.xboost.util.ExportUtil;
 import com.xboost.util.QiniuUtil;
 import com.xboost.util.ShiroUtil;
+import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -151,4 +154,76 @@ public class SiteDistService {
 
         siteDistMapper.delById(id);
     }
+
+    /**
+     * 导出excel
+     */
+    public void exportExcel(String scenariosId, String[] titles, ServletOutputStream outputStream)
+    {
+        List<SiteDist> list = siteDistMapper.findAll(scenariosId);
+         // 创建一个workbook 对应一个excel应用文件
+         XSSFWorkbook workBook = new XSSFWorkbook();
+         // 在workbook中添加一个sheet,对应Excel文件中的sheet
+         XSSFSheet sheet = workBook.createSheet("DepotsDistance");
+         ExportUtil exportUtil = new ExportUtil(workBook, sheet);
+         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
+         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
+         // 构建表头
+         XSSFRow headRow = sheet.createRow(0);
+         XSSFCell cell = null;
+         for (int i = 0; i < titles.length; i++)
+             {
+                 cell = headRow.createCell(i);
+                 cell.setCellStyle(headStyle);
+                 cell.setCellValue(titles[i]);
+             }
+         // 构建表体数据
+         if (list != null && list.size() > 0)
+         {
+             for (int j = 0; j < list.size(); j++)
+             {
+                 XSSFRow bodyRow = sheet.createRow(j + 1);
+                 SiteDist siteDist = list.get(j);
+
+                 cell = bodyRow.createCell(0);
+                 cell.setCellStyle(bodyStyle);
+                 cell.setCellValue(siteDist.getSiteCollect());
+
+                 cell = bodyRow.createCell(1);
+                 cell.setCellStyle(bodyStyle);
+                 cell.setCellValue(siteDist.getSiteDelivery());
+
+                 cell = bodyRow.createCell(2);
+                 cell.setCellStyle(bodyStyle);
+                 cell.setCellValue(siteDist.getCarDistance());
+
+                 cell = bodyRow.createCell(3);
+                 cell.setCellStyle(bodyStyle);
+                 cell.setCellValue(siteDist.getDurationNightDelivery());
+             }
+         }
+         try
+         {
+             workBook.write(outputStream);
+             outputStream.flush();
+             outputStream.close();
+         }
+         catch (IOException e)
+         {
+             e.printStackTrace();
+         }
+         finally
+         {
+             try
+             {
+                 outputStream.close();
+             }
+             catch (IOException e)
+             {
+                 e.printStackTrace();
+             }
+         }
+    }
+
+
 }
