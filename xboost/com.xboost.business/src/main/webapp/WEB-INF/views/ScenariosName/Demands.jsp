@@ -127,47 +127,49 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">date</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="date" >
+                            <input type="text" class="form-control" name="date" />
                         </div>
-                        <label class="col-sm-2 control-label">pickup depot</label>
+                        <label class="col-sm-2 control-label">start depot</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCodeCollect" >
+                            <input type="text" class="form-control" name="siteCodeCollect" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">delivery depot</label>
+                    	<label class="col-sm-2 control-label">start time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCodeDelivery" >
+                            <input type="text" class="form-control" name="durationStart" />
+                        </div>
+                        <label class="col-sm-2 control-label">end depot</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="siteCodeDelivery" />
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">effective end time</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="durationEnd" />
+                        </div>
+                        <label class="col-sm-2 control-label">piece(p)</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="votes" />
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">weight(kg)</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="weight" />
                         </div>
                         <label class="col-sm-2 control-label">product type</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="productType" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">startTime</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationStart" >
-                        </div>
-                        <label class="col-sm-2 control-label">endTime</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationEnd" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">weight</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="weight" >
-                        </div>
-                        <label class="col-sm-2 control-label">piece</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="votes" >
+                            <input type="text" class="form-control" name="productType" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">effectiveness</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="ageing" >
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="ageing" />
                         </div>
                     </div>
                 </form>
@@ -194,47 +196,49 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">date</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="date" id="date">
+                            <input type="text" class="form-control" name="date" >
                         </div>
-                        <label class="col-sm-2 control-label">pickup depot</label>
+                        <label class="col-sm-2 control-label">start depot</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCodeCollect" id="siteCodeCollect">
+                            <input type="text" class="form-control" name="siteCodeCollect" id="siteCodeCollect" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">delivery depot</label>
+                    	<label class="col-sm-2 control-label">start time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCodeDelivery" id="siteCodeDelivery">
+                            <input type="text" class="form-control" name="durationStart" id="durationStart" />
+                        </div>
+                        <label class="col-sm-2 control-label">end depot</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="siteCodeDelivery" id="siteCodeDelivery"/>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">effective end time</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="durationEnd" id="durationEnd"/>
+                        </div>
+                        <label class="col-sm-2 control-label">piece(p)</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="votes" id="votes"/>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">weight(kg)</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="weight" id="weight"/>
                         </div>
                         <label class="col-sm-2 control-label">product type</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="productType" id="productType">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">startTime</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationStart" id="durationStart">
-                        </div>
-                        <label class="col-sm-2 control-label">endTime</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationEnd" id="durationEnd">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">weight</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="weight" id="weight">
-                        </div>
-                        <label class="col-sm-2 control-label">piece</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="votes" id="votes">
+                            <input type="text" class="form-control" name="productType" id="productType"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">effectiveness</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="ageing" id="ageing">
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="ageing" id="ageing"/>
                         </div>
                     </div>
                 </form>

@@ -284,11 +284,7 @@ $(function  () {
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[3],
-	                    "orderable":false
-	                },
-	                {
-	                    "targets":[0,1,2,3,4,5,6,7,8,9,10,11,12],
+	                    "targets":[0,13],
 	                    "orderable":false
 	                }
 	            ],
@@ -428,7 +424,7 @@ $(function  () {
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[0,1,2,3,4,5],
+	                    "targets":[0,5],
 	                    "orderable":false
 	                }
 	            ],
@@ -547,9 +543,8 @@ $(function  () {
 	                {"data":"id","name":"id"},
 	                {"data":"date","name":"date"},
 	                {"data":"siteCodeCollect","name":"site_code_collect"},
-	                {"data":"siteCodeDelivery","name":"site_code_delivery"},
-	                
 	                {"data":"durationStart","name":"duration_start"},
+	                {"data":"siteCodeDelivery","name":"site_code_delivery"},
 	                {"data":"durationEnd","name":"duration_end"},
 	                {"data":"weight","name":"weight"},
 	                {"data":"votes","name":"votes"},
@@ -565,7 +560,7 @@ $(function  () {
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[0,1,2,3,4,5,6,7,8,9,10],
+	                    "targets":[0,10],
 	                    "orderable":false
 	                }
 	            ],

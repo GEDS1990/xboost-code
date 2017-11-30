@@ -1,5 +1,6 @@
 package com.xboost.service;
 
+import com.xboost.mapper.SolutionActivityMapper;
 import com.xboost.mapper.SolutionRouteMapper;
 import com.xboost.pojo.Activity;
 import com.xboost.pojo.Route;
@@ -19,20 +20,20 @@ import java.util.Map;
 
 @Named
 @Transactional
-public class SolutionRouteService {
-    private static Logger logger = LoggerFactory.getLogger(SolutionRouteService.class);
+public class SolutionActivityService {
+    private static Logger logger = LoggerFactory.getLogger(SolutionActivityService.class);
 
     @Inject
-    private SolutionRouteMapper solutionRouteMapper;
+    private SolutionActivityMapper solutionActivityMapper;
 
     /**
-     * 新增route信息
-     * @param route
+     * 新增activity信息
+     * @param activity
      */
-    public void addRoute(Route route) {
-        route.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+    public void addActivity(Activity activity) {
+        activity.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
-        solutionRouteMapper.addRoute(route);
+        solutionActivityMapper.addActivity(activity);
 
     }
 
@@ -41,8 +42,8 @@ public class SolutionRouteService {
      * param
      * @return
      */
-    public List<Route> findAllRoute(String scenariosId) {
-        return solutionRouteMapper.findAll(scenariosId);
+    public List<Activity> findAllActivity(String scenariosId) {
+        return solutionActivityMapper.findAll(scenariosId);
     }
 
     /**
@@ -50,7 +51,7 @@ public class SolutionRouteService {
      * @return
      */
     public Integer findAllCount(String scenariosId) {
-        return solutionRouteMapper.findAllCount(scenariosId).intValue();
+        return solutionActivityMapper.findAllCount(scenariosId).intValue();
     }
 
     /**
@@ -58,8 +59,8 @@ public class SolutionRouteService {
      * param param
      * @return
      */
-    public List<Route> findByParam(Map<String, Object> param) {
-        return solutionRouteMapper.findByParam(param);
+    public List<Activity> findByParam(Map<String, Object> param) {
+        return solutionActivityMapper.findByParam(param);
     }
 
     /**
@@ -68,7 +69,7 @@ public class SolutionRouteService {
      * @return
      */
     public Integer findCountByParam(Map<String, Object> param) {
-        return solutionRouteMapper.findCountByParam(param).intValue();
+        return solutionActivityMapper.findCountByParam(param).intValue();
     }
 
 
@@ -77,8 +78,8 @@ public class SolutionRouteService {
      * @param id 用户ID
      * @return
      */
-    public Route findById(Integer id) {
-        return solutionRouteMapper.findById(id);
+    public Activity findById(Integer id) {
+        return solutionActivityMapper.findById(id);
     }
 
 
@@ -88,6 +89,6 @@ public class SolutionRouteService {
      */
     public void delByScenariosId(Integer scenariosId) {
 
-        solutionRouteMapper.delByScenariosId(scenariosId);
+        solutionActivityMapper.delByScenariosId(scenariosId);
     }
 }

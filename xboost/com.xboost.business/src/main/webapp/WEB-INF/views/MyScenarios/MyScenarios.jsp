@@ -150,17 +150,14 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Category*:</label>
                         <div class="col-sm-7">
-                            <select type="text" class="form-control" name="scenariosCategory" id="scenariosCategory">
-                            	
-                            </select>
-                            <ul id="Category-class">
-                        		<div class="clearfix" id="class-li">
+                            <select  class="form-control" name="scenariosCategory" id="scenariosCategory">
+                            	<!--<div class="clearfix" id="class-li">
                         			<div class="col-sm-9">
                         				<input type="text" id="classAdd" />
                         			</div>
                         			<div class="col-sm-3"><a id="classbtn" >Add</a></div>
-                        		</div>
-                        	</ul>
+                        		</div>-->
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
