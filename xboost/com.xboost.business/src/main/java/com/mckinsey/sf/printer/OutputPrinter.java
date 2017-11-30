@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.xboost.service.SolutionActivityService;
 import com.xboost.service.SolutionRouteService;
 import com.xboost.util.CascadeModelUtil;
+import com.xboost.util.ShiroUtil;
 import com.xboost.util.SpringBeanFactoryUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -53,6 +55,7 @@ public class OutputPrinter implements IConstants {
 //	@Inject
 //	static SolutionRouteService solutionRouteService;
 	static SolutionRouteService solutionRouteService = (SolutionRouteService)SpringBeanFactoryUtil.getBean("solutionRouteService");
+	static SolutionActivityService solutionActivityService = (SolutionActivityService)SpringBeanFactoryUtil.getBean("solutionActivityService");
 	public static void printLine(String str){
 		System.out.println(str);
 //		systemWebSocketHandler.sendMessageToUser(new TextMessage(str));
@@ -401,49 +404,50 @@ public class OutputPrinter implements IConstants {
 	public static void writeStandardOutputToExcel(Solution s, RoutingTransportCosts transportCost) {
 //		SolutionRouteService solutionRouteService = new SolutionRouteService();
 		com.xboost.pojo.Route routePojo = new com.xboost.pojo.Route();
-		String fileName = "src/main/resources/标准串点输出.xls";
+		com.xboost.pojo.Activity activityPojo = new com.xboost.pojo.Activity();
+//		String fileName = "src/main/resources/标准串点输出.xls";
 
-		Workbook wb = null;
-		OutputStream out = null;
+//		Workbook wb = null;
+//		OutputStream out = null;
 		try {
-			wb = new HSSFWorkbook();
-			Sheet sheet = wb.createSheet("车辆");
-			Sheet sheet2 = wb.createSheet("货物");
+//			wb = new HSSFWorkbook();
+//			Sheet sheet = wb.createSheet("车辆");
+//			Sheet sheet2 = wb.createSheet("货物");
 			int count = 0;
 			int count2 = 0;
 			int routeCount = 1;
 
-			Row row = sheet.createRow(count++);
-			row.createCell(0).setCellValue("total cost:");
-			row.createCell(1).setCellValue(s.cost());
+//			Row row = sheet.createRow(count++);
+//			row.createCell(0).setCellValue("total cost:");
+//			row.createCell(1).setCellValue(s.cost());
 
 
-			Row rr3 = sheet.createRow(count++);
-			rr3.createCell(0).setCellValue("车辆编号");
-			rr3.createCell(1).setCellValue("车型");
-			rr3.createCell(2).setCellValue("出车网点-收车网点");
-			rr3.createCell(3).setCellValue("停靠点顺序");
-			rr3.createCell(4).setCellValue("当前网点");
-			rr3.createCell(5).setCellValue("操作");
-			rr3.createCell(6).setCellValue("装货目的地代码");
-			rr3.createCell(7).setCellValue("装货票数");
-			rr3.createCell(8).setCellValue("到达本网点时间");
-			rr3.createCell(9).setCellValue("离开本网点时间");
-			rr3.createCell(10).setCellValue("卸货目的地代码");
-			rr3.createCell(11).setCellValue("卸货票数");
-			rr3.createCell(12).setCellValue("下一个停靠网点代码");
-			rr3.createCell(13).setCellValue("到下一个停靠点运行里程");
-			rr3.createCell(14).setCellValue("车上货物");
+//			Row rr3 = sheet.createRow(count++);
+//			rr3.createCell(0).setCellValue("车辆编号");
+//			rr3.createCell(1).setCellValue("车型");
+//			rr3.createCell(2).setCellValue("出车网点-收车网点");
+//			rr3.createCell(3).setCellValue("停靠点顺序");
+//			rr3.createCell(4).setCellValue("当前网点");
+//			rr3.createCell(5).setCellValue("操作");
+//			rr3.createCell(6).setCellValue("装货目的地代码");
+//			rr3.createCell(7).setCellValue("装货票数");
+//			rr3.createCell(8).setCellValue("到达本网点时间");
+//			rr3.createCell(9).setCellValue("离开本网点时间");
+//			rr3.createCell(10).setCellValue("卸货目的地代码");
+//			rr3.createCell(11).setCellValue("卸货票数");
+//			rr3.createCell(12).setCellValue("下一个停靠网点代码");
+//			rr3.createCell(13).setCellValue("到下一个停靠点运行里程");
+//			rr3.createCell(14).setCellValue("车上货物");
 
 			//sheet2
 
-			Row rr4 = sheet2.createRow(count2++);
-			rr4.createCell(0).setCellValue("寄件网点");
-			rr4.createCell(1).setCellValue("派件网点");
-			rr4.createCell(2).setCellValue("车辆编号");
-			rr4.createCell(3).setCellValue("发车时间");
-			rr4.createCell(4).setCellValue("到车时间");
-			rr4.createCell(5).setCellValue("票数");
+//			Row rr4 = sheet2.createRow(count2++);
+//			rr4.createCell(0).setCellValue("寄件网点");
+//			rr4.createCell(1).setCellValue("派件网点");
+//			rr4.createCell(2).setCellValue("车辆编号");
+//			rr4.createCell(3).setCellValue("发车时间");
+//			rr4.createCell(4).setCellValue("到车时间");
+//			rr4.createCell(5).setCellValue("票数");
 
 
 			//write route
@@ -568,23 +572,36 @@ public class OutputPrinter implements IConstants {
 										currentLoc.add(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation());
 										
 										//TODO: update sheet2
-										Row rrr4 = sheet2.createRow(count2++);
-										rrr4.createCell(0).setCellValue(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getPickup().getLocation());
-										rrr4.createCell(1).setCellValue(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation());
-										rrr4.createCell(2).setCellValue(routeCount);
+//										Row rrr4 = sheet2.createRow(count2++);
+//										rrr4.createCell(0).setCellValue(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getPickup().getLocation());
+										activityPojo.setPickupLoc(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getPickup().getLocation());
+//										rrr4.createCell(1).setCellValue(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation());
+										activityPojo.setDeliveryLoc(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation());
+//										rrr4.createCell(2).setCellValue(routeCount);
+										activityPojo.setRouteCount(String.valueOf(routeCount));
 										//TODO
-										rrr4.createCell(3).setCellValue(endTime);
+//										rrr4.createCell(3).setCellValue(endTime);
+										activityPojo.setEndTime(String.valueOf(endTime));
 										for(Activity act : newActs){
 											if("DELIVER".equalsIgnoreCase(act.getType()) && 
 													act.getJobId().equalsIgnoreCase(curJ.getJobId())){
-												rrr4.createCell(4).setCellValue(rstat.getActStat(act.getId()).getArrTime());
+//												rrr4.createCell(4).setCellValue(rstat.getActStat(act.getId()).getArrTime());
+												activityPojo.setArrTime(String.valueOf(rstat.getActStat(act.getId()).getArrTime()));
 											}
 											
 										}
 										
-										rrr4.createCell(5).setCellValue(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]);
+//										rrr4.createCell(5).setCellValue(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]);
+										activityPojo.setVol(String.valueOf(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]));
 									}
 									//update sheet2 end
+									activityPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
+									systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据...."));
+									solutionActivityService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
+									systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据成功"));
+									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据...."));
+									solutionActivityService.addActivity(activityPojo);
+									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据成功"));
 								}else{
 									break;
 								}
@@ -652,25 +669,29 @@ public class OutputPrinter implements IConstants {
 //							rr.createCell(14).setCellValue(str14.toString().substring(0, str14.toString().length()-1));
 							routePojo.setCarGoods(str14.toString().substring(0, str14.toString().length()-1));
 						}
-
-					solutionRouteService.addRoute(routePojo);//将route插入数据库
-						
+						routePojo.setScenariosId(String.valueOf(ShiroUtil.getCurrentUserId()));
+						systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据...."));
+						solutionRouteService.delByScenariosId(ShiroUtil.getCurrentUserId());//删除该场景的旧数据
+						systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据成功"));
+						systemWebSocketHandler.sendMessageToUser(new TextMessage("插入新数据"));
+						solutionRouteService.addRoute(routePojo);//将route插入数据库
+						systemWebSocketHandler.sendMessageToUser(new TextMessage("插入数据成功"));
 					}
 				}
 				routeCount ++ ;
 			}
 			
 			
-			out = new FileOutputStream(fileName);
-			wb.write(out);
+//			out = new FileOutputStream(fileName);
+//			wb.write(out);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				out.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
 		}
 		
 	}
