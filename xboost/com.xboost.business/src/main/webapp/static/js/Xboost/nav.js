@@ -60,7 +60,7 @@ $(document).ready(function  () {
 			}
 			//导出输入数据excel 事件
 			$(".export-btn").click(function  () {
-				var dataXls = $(".export-btn").attr("data-xls");
+				var dataXls = $(this).attr("data-xls");
 				var Url = {
 					"urlDist":"/siteDist/exportExcel"
 				}

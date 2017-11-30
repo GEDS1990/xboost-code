@@ -548,11 +548,12 @@ $(function  () {
 	                {"data":"date","name":"date"},
 	                {"data":"siteCodeCollect","name":"site_code_collect"},
 	                {"data":"siteCodeDelivery","name":"site_code_delivery"},
-	                {"data":"productType","name":"product_type"},
+	                
 	                {"data":"durationStart","name":"duration_start"},
 	                {"data":"durationEnd","name":"duration_end"},
 	                {"data":"weight","name":"weight"},
 	                {"data":"votes","name":"votes"},
+	                {"data":"productType","name":"product_type"},
 	                {"data":"ageing","name":"ageing"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-dem' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dem' data-id='"+row.id+"'>Del</a>";

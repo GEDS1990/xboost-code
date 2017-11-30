@@ -73,19 +73,20 @@
 			            	<tr>
 			            		<th>ID</th>
 				                <th>date</th>
-				                <th>pickup depot</th>
-				                <th>delivery depot</th>
+				                <th>start depot</th>
+				                <th>start time</th>
+				                <th>end depot</th>
+				                <th>effective end time</th>
+				                <th>piece(p)</th>
+				                <th>weight(kg)</th>
 				                <th>product type</th>
-				                <th>startTime</th>
-				                <th>endTime</th>
-				                <th>weight</th>
-				                <th>piece</th>
 				                <th>effectiveness</th>
 				                <th>operation</th>
 			            	</tr>
 			            </thead>
 			            <tbody>
 			            	<tr>
+				                <td></td>
 				                <td></td>
 				                <td></td>
 				                <td></td>
