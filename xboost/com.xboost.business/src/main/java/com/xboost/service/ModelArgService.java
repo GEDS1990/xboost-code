@@ -1,6 +1,5 @@
 package com.xboost.service;
 
-import com.sun.xml.internal.ws.wsdl.writer.document.Message;
 import com.xboost.mapper.ModelArgMapper;
 import com.xboost.pojo.ModelArg;
 import com.xboost.pojo.SiteInfo;
