@@ -117,11 +117,11 @@
             <div class="modal-body">
                 <form id="newUserForm-dist" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">pickup depot</label>
+                        <label class="col-sm-2 control-label">start depot</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCollect" >
                         </div>
-                        <label class="col-sm-2 control-label">delivery depot</label>
+                        <label class="col-sm-2 control-label">end depot</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteDelivery" >
                         </div>
@@ -131,7 +131,7 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="carDistance" >
                         </div>
-                        <label class="col-sm-2 control-label">night transportation time(min)</label>
+                        <label class="col-sm-2 control-label">transportation time(min) (higher priority)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationNightDelivery" >
                         </div>
@@ -158,11 +158,11 @@
                 <form id="editUserForm-dist" class="form-horizontal">
                     <input type="hidden" name="id" id="siteId-dist" value="">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">pickup depot</label>
+                        <label class="col-sm-2 control-label">start depot</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCollect" id="siteCollect">
                         </div>
-                        <label class="col-sm-2 control-label">delivery depot</label>
+                        <label class="col-sm-2 control-label">end depot</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteDelivery" id="siteDelivery">
                         </div>
@@ -172,7 +172,7 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="carDistance" id="carDistance">
                         </div>
-                        <label class="col-sm-2 control-label">transportation distance(km)</label>
+                        <label class="col-sm-2 control-label">transportation time(min) (higher priority)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationNightDelivery" id="durationNightDelivery">
                         </div>

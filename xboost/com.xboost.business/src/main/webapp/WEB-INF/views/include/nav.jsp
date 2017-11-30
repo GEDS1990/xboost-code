@@ -259,7 +259,7 @@
     	<div class="model-input-content clearfix">
     		<div class="col-sm-6 text-right">Export "Depots Distance" Settings:</div>
         	<div class="col-sm-4">
-        		<div class="export-btn"  data-xls="Depots_Distance">
+        		<div class="export-btn"  data-xls="dist">
         			<span class="icon-upload"></span>
         			Export 
         		</div>
