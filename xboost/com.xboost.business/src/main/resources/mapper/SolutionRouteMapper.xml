@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.SolutionRouteMapper">
+
+    <cache/>
+    <insert id="addRoute">
+        INSERT into t_solution_route(scenariosId ,route_count,car_type,location,sequence,cur_loc,
+        type,sb_loc,sb_vol,arr_time,end_time,unload_loc,unload_vol,next_cur_loc,calc_dis,
+        car_goods,createtime,updatetime)
+        VALUES (#{scenariosId},#{routeCount},#{carType},#{location},#{sequence},#{curLoc},
+        #{type},#{sbLoc},#{sbVol},#{arrTime},#{endTime},#{unloadLoc},#{unloadVol},#{nextCurLoc},#{calcDis},
+        #{carGoods},#{createTime},#{updateTime})
+    </insert>
+
+    <select id="findAll" parameterType="map" resultType="Route" resultMap="modelRoute">
+        SELECT * FROM t_solution_route where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findByParam" parameterType="map" resultType="Route" resultMap="modelRoute">
+        SELECT * from t_solution_route
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and sbLoc LIKE #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(*) FROM t_solution_route where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_solution_route
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and sbLoc LIKE #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultType="com.xboost.pojo.Route"  resultMap="modelRoute">
+        SELECT * FROM t_solution_route where id = #{id}
+    </select>
+
+    <resultMap id="modelRoute" type="Route">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="routeCount" column="route_count"/>
+        <result property="carType" column="car_type"/>
+        <result property="location" column="location"/>
+        <result property="sequence" column="sequence"/>
+        <result property="curLoc" column="cur_loc"/>
+        <result property="type" column="type"/>
+        <result property="sbLoc" column="sb_loc"/>
+        <result property="sbVol" column="sb_vol"/>
+        <result property="arrTime" column="arr_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="unloadLoc" column="unload_loc"/>
+        <result property="unloadVol" column="unload_vol"/>
+        <result property="nextCurLoc" column="next_cur_loc"/>
+        <result property="calcDis" column="calc_dis"/>
+        <result property="carGoods" column="car_goods"/>
+    </resultMap>
+
+</mapper>

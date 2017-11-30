@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.xboost.service.ArrInfoService;
-import com.xboost.service.SolutionService;
+import com.xboost.service.SolutionRouteService;
 import com.xboost.util.CascadeModelUtil;
 import com.xboost.util.SpringBeanFactoryUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -38,11 +37,7 @@ import com.mckinsey.sf.data.solution.ArrInfo;
 import com.mckinsey.sf.data.solution.JobInfo;
 import com.mckinsey.sf.data.solution.Solution;
 import com.mckinsey.sf.data.solution.StatInfo;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
-
-import javax.inject.Inject;
 
 /**   
 *    
@@ -56,8 +51,8 @@ public class OutputPrinter implements IConstants {
 //	@Inject
 //	static ArrInfoService arrInfoService;
 //	@Inject
-//	static SolutionService solutionService;
-	static SolutionService solutionService = (SolutionService)SpringBeanFactoryUtil.getBean("solutionService");
+//	static SolutionRouteService solutionRouteService;
+	static SolutionRouteService solutionRouteService = (SolutionRouteService)SpringBeanFactoryUtil.getBean("solutionRouteService");
 	public static void printLine(String str){
 		System.out.println(str);
 //		systemWebSocketHandler.sendMessageToUser(new TextMessage(str));
@@ -404,7 +399,7 @@ public class OutputPrinter implements IConstants {
 	}
 	
 	public static void writeStandardOutputToExcel(Solution s, RoutingTransportCosts transportCost) {
-//		SolutionService solutionService = new SolutionService();
+//		SolutionRouteService solutionRouteService = new SolutionRouteService();
 		com.xboost.pojo.Route routePojo = new com.xboost.pojo.Route();
 		String fileName = "src/main/resources/标准串点输出.xls";
 
@@ -658,7 +653,7 @@ public class OutputPrinter implements IConstants {
 							routePojo.setCarGoods(str14.toString().substring(0, str14.toString().length()-1));
 						}
 
-					solutionService.addRoute(routePojo);//将route插入数据库
+					solutionRouteService.addRoute(routePojo);//将route插入数据库
 						
 					}
 				}
