@@ -114,8 +114,9 @@ $(function  () {
             $("#newUserModal-scen").modal('show');
         });
         $("#saveBtn-scen").click(function(){
-            $.post("/MyScenarios/add",$("#newUserForm-scen").serialize())
-                    .done(function(result){
+        	var _val = $("input[name='scenariosName']").val();
+        	if (_val) {
+        		$.post("/MyScenarios/add",$("#newUserForm-scen").serialize()).done(function(result){
                         if("success" == result) {
                             $("#newUserForm-scen")[0].reset();
                             $("#newUserModal-scen").modal("hide");
@@ -123,9 +124,13 @@ $(function  () {
                             window.location.reload(); 
                         }
                     }).fail(function(){
-                        alert("Exception occurs when adding");
+                        //alert("Exception occurs when adding");
                     });
 
+        	}else{
+        		$("input[name='scenariosName']").focus();
+        	}
+            
         });
 
         //删除用户
@@ -139,7 +144,7 @@ $(function  () {
                         window.location.reload(); 
                     }
                 }).fail(function(){
-                    alert("Delete exception");
+                    //alert("Delete exception");
                 });
             }) 
                 
@@ -157,7 +162,6 @@ $(function  () {
 		}
 		
 	})(),
-	
 	
 	
 	
@@ -179,7 +183,7 @@ $(function  () {
 	 * url 请求地址，
 	 * modId ,模态框id
 	 * */
-	function UploadFile (formID,inpClass,url,modId) {
+	function UploadFile (formID,inpClass,urls,modId) {
 		var doc = document;
 		var form = [];//创建对象储存文件信息
 		var inp_class = doc.getElementById(formID).getElementsByClassName(inpClass);
@@ -194,22 +198,37 @@ $(function  () {
 		}
 		var form = new FormData(document.getElementById(formID));
          $.ajax({
-             url:url,
+             url:urls,
              type:"post",
              data:form,
              processData:false,
              contentType:false,
              success:function(data){
-                 alert("Import information to complete!");
+                 //alert("Import information to complete!");
                  $(modId).modal("hide");
                  window.location.reload(); 
              },
              error:function(e){
-                 alert("Mistake!!");
+                 //alert("Mistake!!");
                  window.clearInterval(timer);
              }
          });
          //此处为上传文件的进度条get();
+	}
+	
+	/*
+	 *检测form 表单的input 是否为空
+	 */
+	function FormInput (id,fun) {
+		var _input = doc.getElementById(id).getElementsByTagName("input"),
+		len = _input.length;
+		for (var i=0;i<len;i++) {
+			if (_input[i].value == "") {
+				_input[i].focus();
+				return false;
+			}
+		}
+		fun();
 	}
 	
 	
@@ -314,7 +333,8 @@ $(function  () {
 	            $("#newUserModal").modal('show');
 	        });
 	        $("#saveBtn").click(function(){
-	            $.post("/siteInfo/add",$("#newUserForm").serialize())
+	        	FormInput("newUserForm",function  () {
+	        		$.post("/siteInfo/add",$("#newUserForm").serialize())
 	                    .done(function(result){
 	                        if("success" == result) {
 	                            $("#newUserForm")[0].reset();
@@ -325,6 +345,8 @@ $(function  () {
 	                    }).fail(function(){
 	                        alert("Exception occurs when adding");
 	                    });
+	        	});
+	            
 	
 	        });
 	
@@ -373,21 +395,24 @@ $(function  () {
 	        });
 	
 	        $("#editBtn").click(function(){
-	            $.post("/siteInfo/edit",$("#editUserForm").serialize()).done(function(result){
-	                if(result == "success") {
-	                    $("#editUserModal").modal("hide");
-	                    dt.ajax.reload();
-	                    window.location.reload(); 
-	                }
-	            }).fail(function(){
-	                alert("Modify user exception");
-	            });
+	        	FormInput("editUserForm",function  () {
+	        		$.post("/siteInfo/edit",$("#editUserForm").serialize()).done(function(result){
+		                if(result == "success") {
+		                    $("#editUserModal").modal("hide");
+		                    dt.ajax.reload();
+		                    window.location.reload(); 
+		                }
+		            }).fail(function(){
+		                //alert("Modify user exception");
+		            });
+	        	})
+	            
 	
 	        });
 	        
-	        //提交表单上传
-	        $('#cond-file-upload').click(function  () {
-				UploadFile("cond-input-form","cond_file","/siteInfo/addByExcel",'.bs-example-modal-input')
+	        //导入excel 表格
+	        $('#cond-file-upload-info').click(function  () {
+				UploadFile("cond-input-form-info","cond_file","/siteInfo/addByExcel",'.bs-example-modal-input')
 			});
 		}
 	})(),
@@ -453,7 +478,8 @@ $(function  () {
             $("#newUserModal-dist").modal('show');
         });
         $("#saveBtn-dist").click(function(){
-            $.post("/siteDist/add",$("#newUserForm-dist").serialize())
+        	FormInput("newUserForm-dist",function  () {
+        		$.post("/siteDist/add",$("#newUserForm-dist").serialize())
                     .done(function(result){
                         if("success" == result) {
                             $("#newUserForm-dist")[0].reset();
@@ -462,8 +488,10 @@ $(function  () {
                             window.location.reload(); 
                         }
                     }).fail(function(){
-                        alert("Exception occurs when adding");
+                        //alert("Exception occurs when adding");
                     });
+        	});
+            
 
         });
 
@@ -503,22 +531,41 @@ $(function  () {
         });
 
         $("#editBtn-dist").click(function(){
-        
-            $.post("/siteDist/edit",$("#editUserForm-dist").serialize()).done(function(result){
-                if(result == "success") {
-                    $("#editUserModal-dist").modal("hide");
-                    dt.ajax.reload();
-                    window.location.reload(); 
-                }
-            }).fail(function(){
-                alert("Modify user exception");
-            });
+        	
+        	FormInput("editUserForm-dist",function  () {
+        		
+        		$.post("/siteDist/edit",$("#editUserForm-dist").serialize()).done(function(result){
+	                if(result == "success") {
+	                    $("#editUserModal-dist").modal("hide");
+	                    dt.ajax.reload();
+	                    window.location.reload(); 
+	                }
+	        	}).fail(function(){
+	                console.log("fail");
+	            });
+        	})
+            
 
         });
-
+		
+		//导入excel 表格
          $("#cond-file-upload-dist").click(function(){
          	UploadFile("cond-input-form-dist","cond_file","/siteDist/addByExcel",'.bs-example-modal-input')
-         });
+         });	
+         
+        //导出excel表格 
+        $('.export-btn').click(function  () {
+        	var _xls = $(this).attr('data-xls');
+        	if (_xls) {
+        		$.post('/siteDist/exportExcel').done(function  (res) {
+        			console.log(res);
+        		}).fail(function  () {
+        			console.log("fail");
+        		});
+        	}
+        }); 
+         
+         
 		}
 		
 	})(),

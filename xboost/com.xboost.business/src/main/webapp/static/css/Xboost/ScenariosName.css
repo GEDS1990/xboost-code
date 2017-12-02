@@ -193,10 +193,14 @@ table.dataTable thead>tr>td.sorting{
 	color: #8c97b2;
 	border: 1px solid #ccd4e3;
 	background-color: #eef1f7;
-	padding: 6px 8px;
+	
 	border-radius: 5px;
 	line-height: 20px;
 	text-align: center;
+}
+.model-input-content>div:last-child>div>a{
+	display: block;
+	padding: 6px 8px;
 }
 .model-input-content>div:nth-child(2){
 	position: relative;

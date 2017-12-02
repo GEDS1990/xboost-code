@@ -129,81 +129,82 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Adding dot information</h4>
             </div>
-            <div class="modal-body">
-                <form id="newUserForm" class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">depot ID</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCode" >
-                        </div>
-                        <label class="col-sm-2 control-label">longitude</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteLongitude" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">latitude</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteLatitude" >
-                        </div>
-                        <label class="col-sm-2 control-label">depot name</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteName" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">depot address</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteAddress" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">depot area</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteArea" >
-                        </div>
-                        <label class="col-sm-2 control-label">depot type</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteType" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">to distrib.center</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="distribCenter" >
-                        </div>
-                        <label class="col-sm-2 control-label">night distrib</label>
-                        <div class="col-sm-4">
-                            <select type="text" class="form-control" name="siteNightDelivery">
-                            	<option value="0">not support</option>
-                            	<option value="1">support</option>
-                            </select>
-                        </div>
-                        
-                    </div>
-                    <div class="form-group">
-                    	<label class="col-sm-2 control-label">vehicle quantity limit</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carNum" >
-                        </div>
-                        <label class="col-sm-2 control-label">vehicle weight limit</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="largeCarModel" >
-                        </div>
-                        
-                    </div>
-                    <div class="form-group">
-                    	<label class="col-sm-2 control-label">piece capacity(p)</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxOperateNum" >
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn" class="btn btn-primary">Save</button>
-            </div>
+            <form id="newUserForm" class="form-horizontal">
+	            <div class="modal-body">
+	                <div class="form-group">
+	                    <label class="col-sm-2 control-label">depot ID</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteCode" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                    <label class="col-sm-2 control-label">longitude</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteLongitude" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-2 control-label">latitude</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteLatitude" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                    <label class="col-sm-2 control-label">depot name</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteName" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-2 control-label">depot address</label>
+	                    <div class="col-sm-10">
+	                        <input type="text" class="form-control" name="siteAddress" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-2 control-label">depot area</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteArea" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                    <label class="col-sm-2 control-label">depot type</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-2 control-label">to distrib.center</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="distribCenter" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                    <label class="col-sm-2 control-label">night distrib</label>
+	                    <div class="col-sm-4">
+	                        <select type="text" class="form-control" name="siteNightDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                        	<option value="0">not support</option>
+	                        	<option value="1">support</option>
+	                        </select>
+	                    </div>
+	                    
+	                </div>
+	                <div class="form-group">
+	                	<label class="col-sm-2 control-label">vehicle quantity limit</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="carNum" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
+	                    </div>
+	                    <label class="col-sm-2 control-label">vehicle weight limit</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="largeCarModel" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
+	                    </div>
+	                    
+	                </div>
+	                <div class="form-group">
+	                	<label class="col-sm-2 control-label">piece capacity(p)</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="maxOperateNum" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
+	                    </div>
+	                </div>
+	                
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <input type="submit" id="saveBtn" class="btn btn-primary" value="Save" />
+	            </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -217,81 +218,82 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Edit dot information</h4>
             </div>
-            <div class="modal-body">
-                <form id="editUserForm" class="form-horizontal">
-                    <input type="hidden" name="id" id="siteId" value="">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">depot ID</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCode" id="siteCode">
-                        </div>
-                        <label class="col-sm-2 control-label">longitude</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteLongitude" id="siteLongitude">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">latitude</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteLatitude" id="siteLatitude" >
-                        </div>
-                        <label class="col-sm-2 control-label">depot name</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteName" id="siteName" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">depot address</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteAddress" id="siteAddress" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">depot area</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteArea" id="siteArea">
-                        </div>
-                        <label class="col-sm-2 control-label">depot type</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteType" id="siteType">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">to distrib.center</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="distribCenter" id="distribCenter">
-                        </div>
-                        <label class="col-sm-2 control-label">night distrib</label>
-                        <div class="col-sm-4">
-                            <select type="text" class="form-control" name="siteNightDelivery" id="siteNightDelivery">
-                            	<option value="0">not support</option>
-                            	<option value="1">support</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                    	<label class="col-sm-2 control-label">vehicle quantity limit</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carNum" id="carNum" id="carNum">
-                        </div>
-                        <label class="col-sm-2 control-label">vehicle weight limit</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="largeCarModel" id="largeCarModel">
-                        </div>
-                        
-                    </div>
-                    <div class="form-group">
-                    	<label class="col-sm-2 control-label">piece capacity(p)</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxOperateNum" id="maxOperateNum">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="editBtn" class="btn btn-primary">Save</button>
-            </div>
+            <form id="editUserForm" class="form-horizontal">
+	            <div class="modal-body">
+	                <input type="hidden" name="id" id="siteId" value="" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                <div class="form-group">
+	                    <label class="col-sm-2 control-label">depot ID</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteCode" id="siteCode" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                    <label class="col-sm-2 control-label">longitude</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteLongitude" id="siteLongitude" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-2 control-label">latitude</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteLatitude" id="siteLatitude" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                    <label class="col-sm-2 control-label">depot name</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteName" id="siteName" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-2 control-label">depot address</label>
+	                    <div class="col-sm-10">
+	                        <input type="text" class="form-control" name="siteAddress" id="siteAddress" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-2 control-label">depot area</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteArea" id="siteArea" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                    <label class="col-sm-2 control-label">depot type</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="siteType" id="siteType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-2 control-label">to distrib.center</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="distribCenter" id="distribCenter" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                    <label class="col-sm-2 control-label">night distrib</label>
+	                    <div class="col-sm-4">
+	                        <select type="text" class="form-control" name="siteNightDelivery" id="siteNightDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                        	<option value="0">not support</option>
+	                        	<option value="1">support</option>
+	                        </select>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                	<label class="col-sm-2 control-label">vehicle quantity limit</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="carNum" id="carNum" id="carNum" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                    <label class="col-sm-2 control-label">vehicle weight limit</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="largeCarModel" id="largeCarModel" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                    
+	                </div>
+	                <div class="form-group">
+	                	<label class="col-sm-2 control-label">piece capacity(p)</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="maxOperateNum" id="maxOperateNum" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                    </div>
+	                </div>
+	                
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <input type="submit" id="editBtn" class="btn btn-primary" value="Save" />
+	            </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

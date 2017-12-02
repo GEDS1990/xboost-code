@@ -246,37 +246,54 @@ body{
 .modal-dialog.creat{
 	width: 600px;
 }
-#Category-class{
-	padding: 5px;
-	border: 1px solid #CCCCCC;
+.form-control.Category{
+	position: relative;
+}
+#category-out:hover{
+	cursor: pointer;
+}
+#Category-box{
+	position: absolute;
+	top: 102%;
+	left: 0;
+	width: 100%;
+	border: 1px solid #ccc;
+	z-index: 100;
+	background-color: #fff;
+	padding: 6px 12px;
 	display: none;
 }
-#Category-box>li{
-	padding: 2px 0 ;
+.classwrap>input{
+	float: left;
+	width: 80%;
 }
-#Category-box>li:hover{
-	cursor: pointer;
-	background-color: #eef1f7;
-}
-#class-li>div:first-child{
-	padding: 0;
-}
-#class-li>div>input{
-	width: 100%;
+.classwrap>a{
+	float: left;
+	width: 18%;
 	display: block;
-	padding: 0 10px;
-	margin-top: 2px;
-}
-#class-li>div>a{
-	display: block;
-	width: 100%;
-	padding: 2px 10px;
 	text-align: center;
-	background-color: #eef1f7;
-	border: 1px solid #C0C0C0;
+	padding: 3px 10px;
+	margin-left: 5px;
+	background-color:rgb(77, 144, 254);
+	color: #fff;
 }
-#scenariosCategory>option:first-child{
-	margin-top: 20px;
+.iconcate.glyphicon{
+	position: absolute;
+	top: 50%;
+	right: 12px;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+}
+#cateClass>li:hover{
+	cursor: pointer;
+	background-color:rgb(77, 144, 254);
+	color: #fff;
+}
+#cateClass>li:first-child{
+	margin-top: 5px;
 }
 /********Modal*****/
 #cond-input-form .col-sm-4.text-right{

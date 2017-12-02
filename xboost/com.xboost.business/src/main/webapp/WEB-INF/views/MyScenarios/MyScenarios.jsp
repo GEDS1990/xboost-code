@@ -139,39 +139,43 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Create Scenarios</h4>
             </div>
-            <div class="modal-body">
-                <form id="newUserForm-scen" class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Scenarios Name*:</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" name="scenariosName"  >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Category*:</label>
-                        <div class="col-sm-7">
-                            <select  class="form-control" name="scenariosCategory" id="scenariosCategory">
-                            	<!--<div class="clearfix" id="class-li">
-                        			<div class="col-sm-9">
-                        				<input type="text" id="classAdd" />
-                        			</div>
-                        			<div class="col-sm-3"><a id="classbtn" >Add</a></div>
-                        		</div>-->
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Description</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" class="form-control" name="scenariosDesc" ></textarea>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn-scen" class="btn btn-primary">Save</button>
-            </div>
+            <form id="newUserForm-scen" class="form-horizontal">
+	            <div class="modal-body">
+	                <div class="form-group">
+	                    <label class="col-sm-4 control-label">Scenarios Name*:</label>
+	                    <div class="col-sm-7">
+	                        <input type="text" class="form-control" name="scenariosName"  required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');" >
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-4 control-label">Category*:</label>
+	                    <div class="col-sm-7">
+	                    	<input type="hidden" name="scenariosCategory"  />
+	                        <div  class="form-control Category" id="category-out">
+	                        	<span class="iconcate glyphicon glyphicon-triangle-bottom"></span>
+	                        	<p id="class-first"></p>
+	                        	<div id="Category-box">
+	                    			<div class="clearfix classwrap" >
+	                    				<input type="text" id="classAdd" />
+	                        			<a href="javascript:void(0);" id="classbtn" >Add</a>
+	                        		</div>
+	                        		<ul id="cateClass"></ul>
+	                        	</div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-4 control-label">Description</label>
+	                    <div class="col-sm-7">
+	                        <textarea type="text" class="form-control" name="scenariosDesc" ></textarea>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <input type="submit" id="saveBtn-scen" class="btn btn-primary" value="Save">
+	            </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

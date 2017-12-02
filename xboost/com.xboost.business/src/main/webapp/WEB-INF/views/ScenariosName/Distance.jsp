@@ -114,34 +114,35 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Adding dot information</h4>
             </div>
-            <div class="modal-body">
-                <form id="newUserForm-dist" class="form-horizontal">
+            <form id="newUserForm-dist" class="form-horizontal">
+            	<div class="modal-body">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">start depot</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCollect" >
+                            <input type="text" class="form-control" name="siteCollect" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">end depot</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteDelivery" >
+                            <input type="text" class="form-control" name="siteDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">transportation distance(km)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carDistance" >
+                            <input type="text" class="form-control" name="carDistance" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">transportation time(min) (higher priority)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationNightDelivery" >
+                            <input type="text" class="form-control" name="durationNightDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn-dist" class="btn btn-primary">Save</button>
-            </div>
+                
+            	</div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <input type="submit" id="saveBtn-dist" class="btn btn-primary" value="Save" />
+	            </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -154,35 +155,35 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Edit dot information</h4>
             </div>
-            <div class="modal-body">
-                <form id="editUserForm-dist" class="form-horizontal">
+            <form id="editUserForm-dist" class="form-horizontal">
+            	<div class="modal-body">
                     <input type="hidden" name="id" id="siteId-dist" value="">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">start depot</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCollect" id="siteCollect">
+                            <input type="text" class="form-control" name="siteCollect" id="siteCollect" /required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
                         </div>
                         <label class="col-sm-2 control-label">end depot</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteDelivery" id="siteDelivery">
+                            <input type="text" class="form-control" name="siteDelivery" id="siteDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">transportation distance(km)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carDistance" id="carDistance">
+                            <input type="text" class="form-control" name="carDistance" id="carDistance" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">transportation time(min) (higher priority)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationNightDelivery" id="durationNightDelivery">
+                            <input type="text" class="form-control" name="durationNightDelivery" id="durationNightDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="editBtn-dist" class="btn btn-primary">Save</button>
-            </div>
+            	</div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <input type="submit" id="editBtn-dist" class="btn btn-primary" value="Save" />
+	            </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
