@@ -262,7 +262,11 @@ table.table-bordered.dataTable td:last-child,
 table.table-bordered.dataTable td:last-child {
     border-right-width: 1px;
 }
-#addNewUser{
+#addNewUser-info,
+#addNewUser-dist,
+#addNewUser-dem,
+#addNewUser-pata,
+#addNewUser-tran{
 	font-size: 16px;
 }
 #MyScenarios_length{

@@ -137,51 +137,51 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">type</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="type" >
+                            <input type="text" class="form-control" name="type" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">carSource</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carSource" >
+                            <input type="text" class="form-control" name="carSource" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">dimensions</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="dimensions" >
+                            <input type="text" class="form-control" name="dimensions" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">maxLoad</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxLoad" >
+                            <input type="text" class="form-control" name="maxLoad" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">durationUnloadFull</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationUnloadFull" >
+                            <input type="text" class="form-control" name="durationUnloadFull" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">maxStop</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxStop" >
+                            <input type="text" class="form-control" name="maxStop" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">fixed_round</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedRound" >
+                            <input type="text" class="form-control" name="fixedRound" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">fixed_round_fee</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedRoundFee" >
+                            <input type="text" class="form-control" name="fixedRoundFee" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">start_location</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="startLocation" >
+                            <input type="text" class="form-control" name="startLocation" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">end_location</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="endLocation" >
+                            <input type="text" class="form-control" name="endLocation" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                 <!--
@@ -205,31 +205,31 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">max_distance</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxDistance" >
+                            <input type="text" class="form-control" name="maxDistance" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">max_running_time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxRunningTime" >
+                            <input type="text" class="form-control" name="maxRunningTime" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">cost_per_distance</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="costPerDistance" >
+                            <input type="text" class="form-control" name="costPerDistance" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">cost_per_time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="costPerTime" >
+                            <input type="text" class="form-control" name="costPerTime" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">fixed_cost</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedCost" >
+                            <input type="text" class="form-control" name="fixedCost" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">velocity</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="velocity" >
+                            <input type="text" class="form-control" name="velocity" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                 </form>
@@ -256,51 +256,51 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">type</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="type" id="type">
+                            <input type="text" class="form-control" name="type" id="type" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">carSource</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carSource" id="carSource">
+                            <input type="text" class="form-control" name="carSource" id="carSource" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">dimensions</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="dimensions" id="dimensions">
+                            <input type="text" class="form-control" name="dimensions" id="dimensions" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">maxLoad</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxLoad" id="maxLoad">
+                            <input type="text" class="form-control" name="maxLoad" id="maxLoad" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">durationUnloadFull</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationUnloadFull" id="durationUnloadFull">
+                            <input type="text" class="form-control" name="durationUnloadFull" id="durationUnloadFull" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">maxStop</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxStop" id="maxStop">
+                            <input type="text" class="form-control" name="maxStop" id="maxStop" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">fixed_round</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedRound" id="fixedRound">
+                            <input type="text" class="form-control" name="fixedRound" id="fixedRound" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">fixed_round_fee</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedRoundFee" id="fixedRoundFee">
+                            <input type="text" class="form-control" name="fixedRoundFee" id="fixedRoundFee" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">start_location</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="startLocation" id="startLocation">
+                            <input type="text" class="form-control" name="startLocation" id="startLocation" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">end_location</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="endLocation" id="endLocation">
+                            <input type="text" class="form-control" name="endLocation" id="endLocation" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                 <!--
@@ -324,31 +324,31 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">max_distance</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxDistance" id="maxDistance">
+                            <input type="text" class="form-control" name="maxDistance" id="maxDistance" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">max_running_time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxRunningTime" id="maxRunningTime">
+                            <input type="text" class="form-control" name="maxRunningTime" id="maxRunningTime" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">cost_per_distance</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="costPerDistance" id="costPerDistance">
+                            <input type="text" class="form-control" name="costPerDistance" id="costPerDistance" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">cost_per_time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="costPerTime" id="costPerTime">
+                            <input type="text" class="form-control" name="costPerTime" id="costPerTime" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">fixed_cost</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedCost" id="fixedCost">
+                            <input type="text" class="form-control" name="fixedCost" id="fixedCost" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">velocity</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="velocity" id="velocity">
+                            <input type="text" class="form-control" name="velocity" id="velocity" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                 </form>

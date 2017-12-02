@@ -329,7 +329,7 @@ $(function  () {
 			
 			
 	        //添加新用户
-	        $("#addNewUser").click(function(){
+	        $("#addNewUser-info").click(function(){
 	            $("#newUserModal").modal('show');
 	        });
 	        $("#saveBtn").click(function(){
@@ -636,7 +636,8 @@ $(function  () {
             $("#newUserModal-dem").modal('show');
         });
         $("#saveBtn-dem").click(function(){
-            $.post("/demandInfo/add",$("#newUserForm-dem").serialize())
+        	FormInput("newUserForm-dem",function  () {
+        		$.post("/demandInfo/add",$("#newUserForm-dem").serialize())
                     .done(function(result){
                         if("success" == result) {
                             $("#newUserForm-dem")[0].reset();
@@ -645,8 +646,10 @@ $(function  () {
                             window.location.reload(); 
                         }
                     }).fail(function(){
-                        alert("Exception occurs when adding");
+                        console.log("fail");
                     });
+        	});
+            
 
         });
 
@@ -692,20 +695,22 @@ $(function  () {
         });
 
         $("#editBtn-dem").click(function(){
-        
-            $.post("/demandInfo/edit",$("#editUserForm-dem").serialize()).done(function(result){
-                if(result == "success") {
-                    $("#editUserModal-dem").modal("hide");
-                    dt.ajax.reload();
-                    window.location.reload(); 
-                }
-            }).fail(function(){
-                alert("Modify user exception");
-            });
+        	FormInput("editUserForm-dem",function  () {
+        		$.post("/demandInfo/edit",$("#editUserForm-dem").serialize()).done(function(result){
+	                if(result == "success") {
+	                    $("#editUserModal-dem").modal("hide");
+	                    dt.ajax.reload();
+	                    window.location.reload(); 
+	                }
+	            }).fail(function(){
+	                console.log("fail");
+	            });
+        	})
+            
 
         });
 
-         $("#cond-file-upload-dem").click(function(){
+        $("#cond-file-upload-dem").click(function(){
              UploadFile("cond-input-form-dem","cond_file","/demandInfo/addByExcel",'.bs-example-modal-input')
          });
 		}

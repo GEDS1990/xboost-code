@@ -122,62 +122,63 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Adding dot information</h4>
             </div>
-            <div class="modal-body">
-                <form id="newUserForm-dem" class="form-horizontal">
+            <form id="newUserForm-dem" class="form-horizontal">
+            	<div class="modal-body">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">date</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="date" />
+                            <input type="text" class="form-control" name="date" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">start depot</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCodeCollect" />
+                            <input type="text" class="form-control" name="siteCodeCollect" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                     	<label class="col-sm-2 control-label">start time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationStart" />
+                            <input type="text" class="form-control" name="durationStart" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">end depot</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCodeDelivery" />
+                            <input type="text" class="form-control" name="siteCodeDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">effective end time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationEnd" />
+                            <input type="text" class="form-control" name="durationEnd" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">piece(p)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="votes" />
+                            <input type="text" class="form-control" name="votes" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">weight(kg)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="weight" />
+                            <input type="text" class="form-control" name="weight" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">product type</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="productType" />
+                            <input type="text" class="form-control" name="productType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">effectiveness</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="ageing" />
+                            <input type="text" class="form-control" name="ageing" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn-dem" class="btn btn-primary">Save</button>
-            </div>
+                
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <input type="submit" id="saveBtn-dem" class="btn btn-primary" value="Save" />
+	            </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -190,63 +191,64 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Edit dot information</h4>
             </div>
-            <div class="modal-body">
-                <form id="editUserForm-dem" class="form-horizontal">
+            <form id="editUserForm-dem" class="form-horizontal">
+            	<div class="modal-body">
                     <input type="hidden" name="id" id="siteId-dem" value="">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">date</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="date" id="date">
+                            <input type="text" class="form-control" name="date" id="date" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">start depot</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCodeCollect" id="siteCodeCollect" />
+                            <input type="text" class="form-control" name="siteCodeCollect" id="siteCodeCollect" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                     	<label class="col-sm-2 control-label">start time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationStart" id="durationStart" />
+                            <input type="text" class="form-control" name="durationStart" id="durationStart" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">end depot</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCodeDelivery" id="siteCodeDelivery"/>
+                            <input type="text" class="form-control" name="siteCodeDelivery" id="siteCodeDelivery"required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">effective end time</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationEnd" id="durationEnd"/>
+                            <input type="text" class="form-control" name="durationEnd" id="durationEnd" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">piece(p)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="votes" id="votes"/>
+                            <input type="text" class="form-control" name="votes" id="votes" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">weight(kg)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="weight" id="weight"/>
+                            <input type="text" class="form-control" name="weight" id="weight" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">product type</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="productType" id="productType"/>
+                            <input type="text" class="form-control" name="productType" id="productType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">effectiveness</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="ageing" id="ageing"/>
+                            <input type="text" class="form-control" name="ageing" id="ageing" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="editBtn-dem" class="btn btn-primary">Save</button>
-            </div>
+                
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <input type="submit" id="editBtn-dem" class="btn btn-primary" value="Save" />
+	            </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -280,7 +282,7 @@
 	    </div>
 	    
         <!--content s-->
-        <form  method="post" id="cond-input-form-dist" enctype="multipart/form-data">
+        <form  method="post" id="cond-input-form-dem" enctype="multipart/form-data">
         	<div class="model-input-content clearfix">
         		<div class="col-sm-4 text-right">Import "Demands" Settings:</div>
 	        	<div class="col-sm-4">
@@ -305,7 +307,7 @@
 
         <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" id="cond-file-upload-dist">Upload</button>
+	        <button type="button" class="btn btn-primary" id="cond-file-upload-dem">Upload</button>
 	    </div>
     </div>
   </div>
