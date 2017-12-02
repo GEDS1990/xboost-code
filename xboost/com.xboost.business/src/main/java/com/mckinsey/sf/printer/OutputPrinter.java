@@ -407,6 +407,11 @@ public class OutputPrinter implements IConstants {
 		com.xboost.pojo.Activity activityPojo = new com.xboost.pojo.Activity();
 //		String fileName = "src/main/resources/标准串点输出.xls";
 
+		systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据...."));
+		solutionRouteService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));//删除该场景的旧数据
+		solutionActivityService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
+		systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据成功"));
+
 //		Workbook wb = null;
 //		OutputStream out = null;
 		try {
@@ -596,9 +601,6 @@ public class OutputPrinter implements IConstants {
 									}
 									//update sheet2 end
 									activityPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
-									systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据...."));
-									solutionActivityService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
-									systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据成功"));
 									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据...."));
 									solutionActivityService.addActivity(activityPojo);
 									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据成功"));
@@ -669,13 +671,10 @@ public class OutputPrinter implements IConstants {
 //							rr.createCell(14).setCellValue(str14.toString().substring(0, str14.toString().length()-1));
 							routePojo.setCarGoods(str14.toString().substring(0, str14.toString().length()-1));
 						}
-						routePojo.setScenariosId(String.valueOf(ShiroUtil.getCurrentUserId()));
-						systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据...."));
-						solutionRouteService.delByScenariosId(ShiroUtil.getCurrentUserId());//删除该场景的旧数据
-						systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据成功"));
-						systemWebSocketHandler.sendMessageToUser(new TextMessage("插入新数据"));
+						routePojo.setScenariosId(String.valueOf(Integer.parseInt(ShiroUtil.getOpenScenariosId())));
+						systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据"));
 						solutionRouteService.addRoute(routePojo);//将route插入数据库
-						systemWebSocketHandler.sendMessageToUser(new TextMessage("插入数据成功"));
+						systemWebSocketHandler.sendMessageToUser(new TextMessage("增加数据成功"));
 					}
 				}
 				routeCount ++ ;

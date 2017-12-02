@@ -248,6 +248,8 @@ $(function  () {
 	(function  () {
 		var Depots_Info = doc.getElementById("Depots_Info");
 		if (Depots_Info) {
+			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Depots Info.xlsx";
+			$('.down-href').attr("href",href);
 			var dt =$("#Depots_Info").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
@@ -396,7 +398,7 @@ $(function  () {
 	(function  () {
 		var Depots_Distance = doc.getElementById("Depots_Distance");
 		if (Depots_Distance) {
-			var href = "http://"+doc.location.host+"/static/excelTemplate/distances.xlsx";
+			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Depots Distance.xlsx";
 			$('.down-href').attr("href",href);
 			var dt =$("#Depots_Distance").DataTable({
 	            "processing": true, //loding效果
@@ -527,7 +529,7 @@ $(function  () {
 	(function  () {
 		var Demands = doc.getElementById("Demands");
 		if (Demands) {
-			var href = "http://"+doc.location.host+"/static/excelTemplate/demands.xlsx";
+			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Demands.xlsx";
 			$('.down-href').attr("href",href);
 			var dt =$("#Demands").DataTable({
 	            "processing": true, //loding效果
@@ -546,8 +548,8 @@ $(function  () {
 	                {"data":"durationStart","name":"duration_start"},
 	                {"data":"siteCodeDelivery","name":"site_code_delivery"},
 	                {"data":"durationEnd","name":"duration_end"},
-	                {"data":"weight","name":"weight"},
 	                {"data":"votes","name":"votes"},
+	                {"data":"weight","name":"weight"},
 	                {"data":"productType","name":"product_type"},
 	                {"data":"ageing","name":"ageing"},
 	                {"data":function(row){
@@ -668,7 +670,7 @@ $(function  () {
 	(function  () {
 		var Patameters = document.getElementById("Patameters");
 		if (Patameters) {
-			var href = "http://"+doc.location.host+"/static/excelTemplate/marg.xlsx";
+			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Parameters.xlsx";
 			$('.down-href').attr("href",href);
 			var dt =$("#Patameters").DataTable({
 	            "processing": true, //loding效果
@@ -798,7 +800,7 @@ $(function  () {
 	(function  () {
 		var Transportation = document.getElementById("Transportation");
 		if (Transportation) {
-			var href = "http://"+doc.location.host+"/static/excelTemplate/car.xlsx";
+			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Vehicles.xlsx";
 			$('.down-href').attr("href",href);
 			var dt =$("#Transportation").DataTable({
 	            "processing": true, //loding效果
