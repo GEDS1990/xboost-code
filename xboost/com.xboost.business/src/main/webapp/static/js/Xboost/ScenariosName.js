@@ -27,6 +27,8 @@ $(function  () {
 		
 		var MyScenarios = doc.getElementById("MyScenarios");
 		if (MyScenarios) {
+			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Scenario.xlsx";
+			$('.down-href').attr("href",href);
 			//加载列表
 			var dt =$("#MyScenarios").DataTable({
 	            "processing": true, //loding效果

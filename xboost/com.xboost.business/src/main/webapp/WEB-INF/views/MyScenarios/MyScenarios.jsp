@@ -109,8 +109,10 @@
 	        	</div>
 	        	<div class="col-sm-4">
 	        		<div>
+	        			<a class="down-href" href="javascript:void(0);" >
 	        			<span class="icon-upload"></span>
 	        			Download Template
+	        			</a>
 	        		</div>
 	        	</div>
         	</div>

@@ -19,7 +19,7 @@ function CategoryList () {
 					add+='<li data-value='+result[i].id+'>'+result[i].categoryName+'</li>';
 					$('#cateClass').prepend(add);
 				}
-				$('input[name="scenariosCategory"]').val(result[len-1].id);
+				$('input[name="scenariosCategory"]').val(result[len-1].categoryName);
 				$('#class-first').text(result[len-1].categoryName);
 			}
 		}
@@ -41,7 +41,7 @@ function CategoryList () {
 		$('body').on("click","#cateClass>li",function  () {
 			var _val = $(this).attr("data-value");
 			var _text = $(this).text();
-			$('input[name="scenariosCategory"]').val(_val);
+			$('input[name="scenariosCategory"]').val(_text);
 			$('#class-first').text(_text);
 			$('#Category-box').hide();
 		});
