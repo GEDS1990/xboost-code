@@ -149,11 +149,13 @@ public class SiteDistController {
          {
              ServletOutputStream outputStream = response.getOutputStream();
              String fileName = new String(("distance").getBytes(), "utf-8");
+             response.setCharacterEncoding("utf-8");
              response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
       //       response.setHeader("Content-disposition", "attachment; filename=distance.xlsx");
              String scenariosId = ShiroUtil.getOpenScenariosId();
-             String[] titles = { "pickup depot", "delivery depot", "transportation distance(km)","night transportation time(min)" };
+             String[] titles = { "pickup depot","delivery depot","transportation distance(km)","night transportation time(min)" };
              siteDistService.exportExcel(scenariosId,titles, outputStream);
+             System.out.println("outputStream:"+outputStream);
              }
          catch (IOException e)
          {

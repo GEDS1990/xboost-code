@@ -164,6 +164,7 @@ public class SiteDistService {
          // 创建一个workbook 对应一个excel应用文件
          XSSFWorkbook workBook = new XSSFWorkbook();
          // 在workbook中添加一个sheet,对应Excel文件中的sheet
+
          XSSFSheet sheet = workBook.createSheet("DepotsDistance");
          ExportUtil exportUtil = new ExportUtil(workBook, sheet);
          XSSFCellStyle headStyle = exportUtil.getHeadStyle();
@@ -176,6 +177,7 @@ public class SiteDistService {
                  cell = headRow.createCell(i);
                  cell.setCellStyle(headStyle);
                  cell.setCellValue(titles[i]);
+                 System.out.println(titles[i]);
              }
          // 构建表体数据
          if (list != null && list.size() > 0)
@@ -186,24 +188,27 @@ public class SiteDistService {
                  SiteDist siteDist = list.get(j);
 
                  cell = bodyRow.createCell(0);
-                 cell.setCellStyle(bodyStyle);
                  cell.setCellValue(siteDist.getSiteCollect());
+                 cell.setCellStyle(bodyStyle);
+
 
                  cell = bodyRow.createCell(1);
-                 cell.setCellStyle(bodyStyle);
                  cell.setCellValue(siteDist.getSiteDelivery());
+                 cell.setCellStyle(bodyStyle);
 
                  cell = bodyRow.createCell(2);
-                 cell.setCellStyle(bodyStyle);
                  cell.setCellValue(siteDist.getCarDistance());
+                 cell.setCellStyle(bodyStyle);
 
                  cell = bodyRow.createCell(3);
-                 cell.setCellStyle(bodyStyle);
                  cell.setCellValue(siteDist.getDurationNightDelivery());
+                 cell.setCellStyle(bodyStyle);
+
              }
          }
          try
          {
+           //  FileOutputStream fout = new FileOutputStream("E:/distance.xlsx");
              workBook.write(outputStream);
              outputStream.flush();
              outputStream.close();
