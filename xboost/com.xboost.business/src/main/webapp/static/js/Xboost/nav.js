@@ -26,56 +26,6 @@ $(document).ready(function  () {
 	
 	*/
 	
-	/**
-	 *下载输入块模板  
-	 *导出输入块数据为excel 
-	 * 
-	 */
-	
-	(function  () {
-		var cond_input_form = doc.getElementById("cond-input-form");
-		if (cond_input_form) {
-			//下载输入块模板
-			var all = "http://"+document.location.host+"/static/excelTemplate/Template - All Settings.xlsx";
-			var info = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Depots Info.xlsx";
-			var dist = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Depots Distance.xlsx";
-			var dem = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Demands.xlsx";
-			var veh = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Vehicles.xlsx";
-			var pata = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Parameters.xlsx";
-			$('#template-all').attr("href",all);
-			$('#template-info').attr("href",info);
-			$('#template-dist').attr("href",dist);
-			$('#template-dem').attr("href",dem);
-			$('#template-veh').attr("href",veh);
-			$('#template-pata').attr("href",pata);
-			
-			//导出输入数据excel 函数
-			function Exportexcel (Url) {
-				$.post(Url).done(function  (res) {
-					console.log(res);
-					window.location.href = "http://"+document.location.host+"/static/excelTemplate/"+res;
-				}).fail(function(){
-					console.log("fail");
-				});
-			}
-			//导出输入数据excel 事件
-			$(".export-btn").click(function  () {
-				var dataXls = $(this).attr("data-xls");
-				var Url = {
-					"urlDist":"/siteDist/exportExcel"
-				}
-				switch (dataXls){
-					case "dist":
-						Exportexcel(Url.urlDist);
-						break;
-				}
-			});
-			
-			
-			
-		}
-	})()
-	
 	
 	
 	

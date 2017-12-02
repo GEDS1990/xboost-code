@@ -12,6 +12,7 @@ function CategoryList () {
 			if (res.data) {
 				$('#Category-class').show();
 				$('#scenariosCategory').empty();
+				$('#Category-box>li').off("click");
 				var result = res.data,
 				len = result.length;
 				for (var i=0;i<len;i++) {

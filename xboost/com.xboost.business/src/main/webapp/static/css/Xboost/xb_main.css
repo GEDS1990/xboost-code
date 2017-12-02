@@ -275,7 +275,9 @@ body{
 	background-color: #eef1f7;
 	border: 1px solid #C0C0C0;
 }
-
+#scenariosCategory>option:first-child{
+	margin-top: 20px;
+}
 /********Modal*****/
 #cond-input-form .col-sm-4.text-right{
 	padding: 0;
