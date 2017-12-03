@@ -52,7 +52,7 @@
 		        		<p>${sessionScope.openScenariosName}(Overview)</p>
 		        	</div>
 		        	<div class="xb-fr">
-		        		<button id="" ><span class="glyphicon glyphicon-leaf"></span>Edit Basic Info</button>
+		        		<button id="edit-create-info" ><span class="glyphicon glyphicon-leaf"></span>Edit Basic Info</button>
 		        	</div>
 	        	</div>
 	        	<p id="scen-cate"></p>
@@ -91,15 +91,27 @@
 	    			<p>Simulation & Results Overview</p>
 	    			<a>See details</a>
 	    		</header>
-	    		<div class="scen-box">
-	    			<div class="scen-itembox1"></div>
-	    			<div class="scen-itembox2"></div>
+	    		<div class="scen-box clearfix">
+	    			<div class="scen-itembox1">
+	    				<p>11</p>
+	    			</div>
+	    			<div class="scen-itembox2">
+	    				<h1>No Data</h1>
+	    				<ul class="scen-result">
+	    					<li>Simulation Method:<span>--</span></li>
+	    					<li>Simulation Progress:<span>--</span></li>
+	    					<li>Simulation Finished:<span>--</span></li>
+	    				</ul>
+	    				<ul class="scen-cost">
+	    					<li>Staff Quantity:<span>--</span></li>
+	    					<li>Staff Cost:<span>--</span></li>
+	    					<li>Vehicle Quantity:<span>--</span></li>
+	    					<li>Vehicle Cost:<span>--</span></li>
+	    					<li>Total Cost:<span>--</span></li>
+	    				</ul>
+	    			</div>
 	    		</div>
 	    	</div>
-	    	
-	    	
-	    	
-	    	
 	    	
 	    </div>
 	    <!-- /#page-wrapper -->
@@ -108,25 +120,56 @@
 <!-- /#wrapper -->
 
 
-<div class="modal fade" id="modal-sim">
-    <div class="modal-dialog">
+
+<!--Edit info create-->
+
+<div class="modal fade" id="newUserModal-scen">
+    <div class="modal-dialog creat">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Stop Simulation</h4>
+                <h4 class="modal-title">Create Scenarios</h4>
             </div>
-            <div class="modal-body">
-                <p>Are you sure want to stop simulation</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="button" id="modal-simdelBtn" class="btn btn-primary">Yes</button>
-            </div>
+            <form id="newUserForm-scen" class="form-horizontal">
+	            <div class="modal-body">
+	                <div class="form-group">
+	                    <label class="col-sm-4 control-label">Scenarios Name*:</label>
+	                    <div class="col-sm-7">
+	                        <input type="text" class="form-control" name="scenariosName" id="scenariosName"  required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');" >
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-4 control-label">Category*:</label>
+	                    <div class="col-sm-7">
+	                    	<input type="hidden" name="scenariosCategory"  id="scenariosCategory"/>
+	                        <div  class="form-control Category" id="category-out">
+	                        	<span class="iconcate glyphicon glyphicon-triangle-bottom"></span>
+	                        	<p id="class-first"></p>
+	                        	<div id="Category-box">
+	                    			<div class="clearfix classwrap" >
+	                    				<input type="text" id="classAdd" />
+	                        			<a href="javascript:void(0);" id="classbtn" >Add</a>
+	                        		</div>
+	                        		<ul id="cateClass"></ul>
+	                        	</div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label class="col-sm-4 control-label">Description</label>
+	                    <div class="col-sm-7">
+	                        <textarea type="text" class="form-control" name="scenariosDesc" ></textarea>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <input type="submit" id="saveBtn-scen" class="btn btn-primary" value="Save">
+	            </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
 
 
 
@@ -163,7 +206,7 @@
 <script src="/static/js/sockjs-0.3.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/vue.min.js"></script>
 <script src="/static/js/Xboost/ScenariosName.js" ></script>
-<script src="/static/js/Xboost/simualte.js"></script>
+<script src="/static/js/Xboost/xbMain.js"></script>
 <script type="text/javascript">
 	$(function  () {
 		(function  () {

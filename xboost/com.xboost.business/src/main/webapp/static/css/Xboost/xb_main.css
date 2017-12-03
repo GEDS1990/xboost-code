@@ -228,8 +228,24 @@ body{
 .xb-nav_ul>li{
 	position: relative;
 }
-
-
+.icon.alt2{
+	position: absolute;
+	display: block;
+	top: 50%;
+	right: 0;
+	padding: 10px 15px;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	z-index: 100;
+	font-size: 14px;
+	margin-right: 0;
+}
+.icon.alt2:hover{
+	cursor: pointer;
+}
 /*--page_wra---*/
 .xb_page_content{
 	background-color: #d5dae6;
@@ -298,4 +314,9 @@ body{
 /********Modal*****/
 #cond-input-form .col-sm-4.text-right{
 	padding: 0;
+}
+
+/********Input*********/
+.form-control.active:focus{
+    border-color: red;
 }
