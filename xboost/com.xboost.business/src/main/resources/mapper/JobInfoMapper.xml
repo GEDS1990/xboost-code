@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.JobInfoMapper">
+
+    <cache/>
+    <insert id="saveJobInfo">
+        INSERT into t_solution_job(scenariosId,job_id,job_from,job_to,duration,createtime)
+        VALUES (#{scenariosId},#{jobId},#{from},#{to},#{duration},#{createTime})
+    </insert>
+
+
+</mapper>

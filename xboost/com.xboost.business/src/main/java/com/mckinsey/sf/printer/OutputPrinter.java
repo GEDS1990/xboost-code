@@ -12,9 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.xboost.service.ArrInfoService;
-import com.xboost.service.SolutionActivityService;
-import com.xboost.service.SolutionRouteService;
+import com.xboost.service.*;
 import com.xboost.util.CascadeModelUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.SpringBeanFactoryUtil;
@@ -59,6 +57,8 @@ public class OutputPrinter implements IConstants {
 	static SolutionRouteService solutionRouteService = (SolutionRouteService)SpringBeanFactoryUtil.getBean("solutionRouteService");
 	static SolutionActivityService solutionActivityService = (SolutionActivityService)SpringBeanFactoryUtil.getBean("solutionActivityService");
 	static ArrInfoService arrInfoService = (ArrInfoService)SpringBeanFactoryUtil.getBean("arrInfoService");
+	static JobInfoService jobInfoService = (JobInfoService)SpringBeanFactoryUtil.getBean("jobInfoService");
+	static StatInfoService statInfoService = (StatInfoService)SpringBeanFactoryUtil.getBean("statInfoService");
 
 	public static void printLine(String str){
 		System.out.println(str);
@@ -247,7 +247,10 @@ public class OutputPrinter implements IConstants {
 					arrInfo.setEndTime(astat.getEndTime());
 					arrInfo.setLocation(cur.getLocation());
 					arrInfo.setRouteId(r.getId());
-					arrInfos.add(arrInfo);
+//					arrInfos.add(arrInfo);
+					arrInfo.setScenariosId(ShiroUtil.getOpenScenariosId());
+					arrInfo.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+					arrInfoService.saveArrInfo(arrInfo);
 					prevLoc = cur.getLocation();
 				}
 				
@@ -263,7 +266,10 @@ public class OutputPrinter implements IConstants {
 				ji.setFrom(j.getPickup().getLocation());
 				ji.setTo(j.getDelivery().getLocation());
 				ji.setDuration(duration);
-				jobInfos.add(ji);
+//				jobInfos.add(ji);
+				ji.setScenariosId(ShiroUtil.getOpenScenariosId());
+				ji.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+				jobInfoService.saveJobInfo(ji);
 			}
 
 			if(CascadeModelUtil.carsMap.containsKey(r.getC().getType())){
@@ -285,24 +291,32 @@ public class OutputPrinter implements IConstants {
 				CascadeModelUtil.carsMap);
 		
 		ObjectMapper mapper = new ObjectMapper();
-		try {
+//		try {
 //			mapper.writeValue(new File("src/main/resources/solution/arrInfos.json"), arrInfos);
+//			mapper.writeValue(new File("src/main/resources/solution/jobInfos.json"), jobInfos);
+//			mapper.writeValue(new File("src/main/resources/solution/stats.json"), stat);
 //			转存到数据库
-			for(int i=0;i<arrInfos.size();i++){
-				arrInfos.get(i).setScenariosId(ShiroUtil.getOpenScenariosId());
-				arrInfos.get(i).setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
-				arrInfoService.saveArrInfo(arrInfos.get(i));
-			}
+//			for(int i=0;i<arrInfos.size();i++){
+//				arrInfos.get(i).setScenariosId(ShiroUtil.getOpenScenariosId());
+//				arrInfos.get(i).setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+//				arrInfoService.saveArrInfo(arrInfos.get(i));
+//			}
+//			for(int i=0;i<jobInfos.size();i++){
+//				jobInfos.get(i).setScenariosId(ShiroUtil.getOpenScenariosId());
+//				jobInfos.get(i).setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+//				jobInfoService.saveJobInfo(jobInfos.get(i));
+//			}
+			stat.setScenariosId(ShiroUtil.getOpenScenariosId());
+			stat.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+			statInfoService.saveStatInfo(stat);
 
-			mapper.writeValue(new File("src/main/resources/solution/jobInfos.json"), jobInfos);
-			mapper.writeValue(new File("src/main/resources/solution/stats.json"), stat);
-		} catch (JsonGenerationException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		} catch (JsonGenerationException e) {
+//			e.printStackTrace();
+//		} catch (JsonMappingException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 		printLine( "|cost\t\t|"+ df.format(s.cost())+"\t\t|");
 		systemWebSocketHandler.sendMessageToUser( new TextMessage("|cost\t\t|"+ df.format(s.cost())+"\t\t|"));
@@ -685,7 +699,7 @@ public class OutputPrinter implements IConstants {
 				}
 				routeCount ++ ;
 			}
-			systemWebSocketHandler.sendMessageToUser(new TextMessage("增加"+routeCount+"条数据成功"));
+			systemWebSocketHandler.sendMessageToUser(new TextMessage("增加数据成功"));
 
 			
 //			out = new FileOutputStream(fileName);

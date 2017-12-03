@@ -1,5 +1,6 @@
 package com.mckinsey.sf.data.solution;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 * Date  ：May 8, 2017
 * @version        
 */
-public class StatInfo {
+public class StatInfo implements Serializable{
 	
 	@JsonProperty("cost")
 	private double cost;
@@ -48,7 +49,11 @@ public class StatInfo {
 	
 	@JsonProperty("dada")
 	private int dada;
-	
+
+	private String scenariosId;
+
+	private String createTime;
+
 	public StatInfo(double cost, int noJobs, double avgDis, double avgCost, double avgJobs, double avgTime,
 			double avgLoad, int numroutes, HashMap<String, Integer> carsMap) {
 		super();
@@ -151,5 +156,20 @@ public class StatInfo {
 	public void setNum3wheels(int num3wheels) {
 		this.num3wheels = num3wheels;
 	}
-	
+
+	public String getScenariosId() {
+		return scenariosId;
+	}
+
+	public void setScenariosId(String scenariosId) {
+		this.scenariosId = scenariosId;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
 }

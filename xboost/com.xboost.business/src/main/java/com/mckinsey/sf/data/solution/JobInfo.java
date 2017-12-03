@@ -2,6 +2,8 @@ package com.mckinsey.sf.data.solution;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
 /**   
 *    
 * Author：Alivia Chen   
@@ -9,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 * Date  ：May 8, 2017
 * @version        
 */
-public class JobInfo {
+public class JobInfo implements Serializable{
 	
 	@JsonProperty("job_id")
 	private String jobId;
@@ -22,6 +24,10 @@ public class JobInfo {
 	
 	@JsonProperty("duration")
 	private double duration;
+
+	private String scenariosId;
+
+	private String createTime;
 	
 	public JobInfo(){
 		super();
@@ -58,7 +64,20 @@ public class JobInfo {
 	public void setDuration(double duration) {
 		this.duration = duration;
 	}
-	
-	
 
+	public String getScenariosId() {
+		return scenariosId;
+	}
+
+	public void setScenariosId(String scenariosId) {
+		this.scenariosId = scenariosId;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
 }

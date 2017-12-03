@@ -4,7 +4,7 @@
 
     <cache/>
     <insert id="saveArrInfo">
-        INSERT into t_solution_arr_info(scenariosId,route_id,arr_time,end_time,location,createtime)
+        INSERT into t_solution_arr(scenariosId,route_id,arr_time,end_time,location,createtime)
         VALUES (#{scenariosId},#{routeId},#{arrTime},#{endTime},#{location},#{createTime})
     </insert>
 

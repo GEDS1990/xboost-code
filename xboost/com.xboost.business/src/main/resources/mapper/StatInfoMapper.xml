@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.StatInfoMapper">
+
+    <cache/>
+    <insert id="saveStatInfo">
+        INSERT into t_solution_stat(scenariosId,cost,no_jobs,avg_dis,avg_cost,
+        avg_jobs,avg_time,avg_load,num_routes,num_4wheels,num_2wheels,num_3wheels,dada,createtime)
+        VALUES (#{scenariosId},#{cost},#{noJobs},#{avgDis},#{avgCost},
+        #{avgJobs},#{avgTime},#{avgLoad},#{numroutes},#{num4wheels},#{num2wheels},#{num3wheels},#{dada},#{createTime})
+    </insert>
+</mapper>
