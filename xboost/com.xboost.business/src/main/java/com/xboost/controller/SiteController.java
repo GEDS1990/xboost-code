@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,6 +135,32 @@ public class SiteController {
     public String delById(Integer id) {
         siteInfoService.delById(id);
         return "success";
+    }
+
+    @RequestMapping(value = "/exportExcel",method = RequestMethod.POST,produces = {"application/vnd.ms-excel;charset=UTF-8"})
+    @ResponseBody
+    public String exportExcel(HttpServletResponse response)
+    {
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        try
+        {
+            //   ServletOutputStream outputStream = response.getOutputStream();
+            String fileName = new String(("Depot_Info").getBytes(), "utf-8");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
+            //       response.setHeader("Content-disposition", "attachment; filename=distance.xlsx");
+            String scenariosId = ShiroUtil.getOpenScenariosId();
+            String[] titles = { "depot ID","longitude","latitude","depot name","depot address","depot area",
+                    "depot type","to distrib.center","night distrib","vehicle quantity limit",
+                    "vehicle weight limit","piece capacity (p)"};
+            siteInfoService.exportExcel(scenariosId,titles);
+            //       System.out.println("outputStream:"+outputStream);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
