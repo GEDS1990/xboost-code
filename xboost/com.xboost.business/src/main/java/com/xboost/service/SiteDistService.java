@@ -21,6 +21,7 @@ import javax.servlet.ServletOutputStream;
 import java.io.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by Administrator on 2017/11/12 0012.
@@ -205,7 +206,11 @@ public class SiteDistService {
          }
          try
          {
-             FileOutputStream fout = new FileOutputStream("E:/Depots_distance.xlsx");
+            // String path = request.getServletPath(excelDownload);
+            // String path = getServletContext().getRealPath("/");
+             String path = this.getClass().getClassLoader().getResource("").getPath();
+             String fileName = new String(("DepotsDistance_"+DateTime.now().toString("yyyyMMddHHmm")+new Random().nextInt()).getBytes(), "utf-8");
+             FileOutputStream fout = new FileOutputStream(path + fileName +".xlsx");
              workBook.write(fout);
              fout.flush();
              fout.close();
