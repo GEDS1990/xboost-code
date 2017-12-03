@@ -290,7 +290,7 @@ public class OutputPrinter implements IConstants {
 //			转存到数据库
 			for(int i=0;i<arrInfos.size();i++){
 				arrInfos.get(i).setScenariosId(ShiroUtil.getOpenScenariosId());
-				arrInfos.get(i).setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm:ss，"));
+				arrInfos.get(i).setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 				arrInfoService.saveArrInfo(arrInfos.get(i));
 			}
 
@@ -463,6 +463,8 @@ public class OutputPrinter implements IConstants {
 
 			//write route
 //			double totalLoadRate = 0;
+
+			systemWebSocketHandler.sendMessageToUser(new TextMessage("新增数据...."));
 			for (Map.Entry<String, Route> entry : s.getRoutes().entrySet()) {
 				Route r = entry.getValue();
 				ConstraintState cstat = s.getConstraintState(DEFAULT_CONSTRAINTS);
@@ -678,14 +680,13 @@ public class OutputPrinter implements IConstants {
 							routePojo.setCarGoods(str14.toString().substring(0, str14.toString().length()-1));
 						}
 						routePojo.setScenariosId(String.valueOf(Integer.parseInt(ShiroUtil.getOpenScenariosId())));
-						systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据"));
 						solutionRouteService.addRoute(routePojo);//将route插入数据库
-						systemWebSocketHandler.sendMessageToUser(new TextMessage("增加数据成功"));
 					}
 				}
 				routeCount ++ ;
 			}
-			
+			systemWebSocketHandler.sendMessageToUser(new TextMessage("增加"+routeCount+"条数据成功"));
+
 			
 //			out = new FileOutputStream(fileName);
 //			wb.write(out);
