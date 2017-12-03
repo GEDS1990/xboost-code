@@ -1084,10 +1084,158 @@ $(function  () {
 	         });
 		}
 		
-	})()
+	})(),
 	
 	
-	
+	    /**
+    	 * account.jsp
+    	 *
+    	 */
+    	(function  () {
+        var dt = $("#userTable").DataTable({
+            "processing": true, //loding效果
+            "serverSide":true, //服务端处理
+            "searchDelay": 1000,//搜索延迟
+            "order":[[0,'desc']],//默认排序方式
+            "lengthMenu":[5,10,25,50,100],//每页显示数据条数菜单
+            "ajax":{
+                url:"/account/users.json", //获取数据的URL
+                type:"get" //获取数据的方式
+            },
+            "columns":[  //返回的JSON中的对象和列的对应关系
+                {"data":"id","name":"id"},
+                {"data":"username"},
+                {"data":"tel"},
+                {"data":function(row){
+                    if(row.state == "禁用") {
+                        return "<span class='label label-danger'>"+row.state+"</span>";
+                    } else {
+                        return row.state;
+                    };
+                }},
+                {"data":function(row){
+                    var roleName = "";
+                    for(var i = 0;i < row.roleList.length;i++) {
+                        var role = row.roleList[i];
+                        roleName = roleName + role.rolename + "&nbsp&nbsp";
+                    }
+                    return roleName;
+                }},
+                {"data":function(row){
+                    return "<a href='javascript:;' class='editLink' data-id='"+row.id+"'>编辑</a> <a href='javascript:;' class='delLink' data-id='"+row.id+"'>删除</a>";
+                }}
+            ],
+            "columnDefs":[ //具体列的定义
+                {
+                    "targets":[0],
+                    "visible":true
+                },
+                {
+                    "targets":[3],
+                    "orderable":false
+                },
+                {
+                    "targets":[1,2,4,5],
+                    "orderable":false
+                }
+            ],
+            "language":{
+	                "lengthMenu":"Show _MENU_ Record",
+	                "search":"Search:",
+	                "info": "There are  _TOTAL_ records From _START_ To _END_",
+	                "processing":"Loading...",
+	                "zeroRecords":"No Data",
+	                "infoEmpty": "There are 0 records from 0 to 0",
+	                "infoFiltered":"(Read from _MAX_ record)",
+	                "paginate": {
+	                    "first":      "First",
+	                    "last":       "Last",
+	                    "next":       "Next",
+	                    "previous":   "Prev"
+	                }
+	            }
+        });
+
+        //添加新用户
+        $("#addNewUser-user").click(function(){
+            $("#newUserModal-user").modal('show');
+        });
+        $("#saveBtn").click(function(){
+            $.post("/account/new",$("#newUserForm-user").serialize())
+                    .done(function(result){
+                        if("success" == result) {
+                            $("#newUserForm-user")[0].reset();
+                            $("#newUserModal-user").modal("hide");
+                            dt.ajax.reload();
+                        }
+                    }).fail(function(){
+                        alert("添加时出现异常");
+                    });
+
+        });
+
+        //删除用户
+        $(document).delegate(".delLink","click",function(){
+            var id = $(this).attr("data-id");
+            if(confirm("确定要删除该数据吗?")) {
+                $.post("/account/del",{"id":id}).done(function(result){
+                    if("success" == result) {
+                        dt.ajax.reload();
+                    }
+                }).fail(function(){
+                    alert("删除出现异常");
+                });
+
+            }
+        });
+
+        //编辑用户
+        $(document).delegate(".editLink","click",function(){
+            $("#editUserForm-user")[0].reset();
+            var id = $(this).attr("data-id");
+            $.get("/account/user.json",{"id":id}).done(function(result){
+                $("#id").val(result.id);
+                $("#username").val(result.username);
+                $("#tel").val(result.tel);
+
+                $(".role").each(function(){
+                    var roleList = result.roleList;
+                    for(var i = 0;i < roleList.length;i++) {
+                        var role = roleList[i];
+                        if($(this).val() == role.id) {
+                            $(this)[0].checked = true;
+                        }
+                    }
+                });
+
+                if(result.state == "正常") {
+                    $("#ok")[0].checked = true;
+                } else {
+                    $("#disable")[0].checked = true;
+                }
+
+
+
+            }).fail(function(){
+
+            });
+
+            $("#editUserModal-user").modal("show");
+        });
+
+        $("#editBtn").click(function(){
+
+            $.post("/account/edit",$("#editUserForm-user").serialize()).done(function(result){
+                if(result == "success") {
+                    $("#editUserModal-user").modal("hide");
+                    dt.ajax.reload();
+                }
+            }).fail(function(){
+                alert("修改用户异常");
+            });
+
+        });
+    })()
 	
 	
 	

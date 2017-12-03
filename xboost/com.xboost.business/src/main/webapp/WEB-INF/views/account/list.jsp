@@ -93,7 +93,7 @@
 
 
 
-<div class="modal fade" id="newUserModal-dist">
+<div class="modal fade" id="newUserModal-user">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -101,7 +101,7 @@
                 <h4 class="modal-title">Adding dot information</h4>
             </div>
             <div class="modal-body">
-                <form id="newUserForm-dist" class="form-horizontal">
+                <form id="newUserForm-user" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">pickup depot</label>
                         <div class="col-sm-4">
@@ -133,7 +133,7 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade" id="editUserModal-dist">
+<div class="modal fade" id="editUserModal-user">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -141,7 +141,7 @@
                 <h4 class="modal-title">Edit dot information</h4>
             </div>
             <div class="modal-body">
-                <form id="editUserForm-dist" class="form-horizontal">
+                <form id="editUserForm-user" class="form-horizontal">
                     <input type="hidden" name="id" id="siteId-dist" value="">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">pickup depot</label>
