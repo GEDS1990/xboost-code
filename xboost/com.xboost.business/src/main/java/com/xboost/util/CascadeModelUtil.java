@@ -68,9 +68,9 @@ public class CascadeModelUtil implements IConstants {
         systemWebSocketHandler.sendMessageToUser( new TextMessage("5%...."));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("initInput...."));
         long startTime = System.currentTimeMillis();
-        OutputPrinter.printLine("s	tart init ...");
+        OutputPrinter.printLine("start init ...");
         systemWebSocketHandler.sendMessageToUser( new TextMessage("8%...."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("s	tart init ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("start init ..."));
         RoutingTransportCosts transportCost = new RoutingTransportCosts(siteDistService, conf.getTransportCost().getDistance(), conf.getTransportCost().getNearest(), conf.getTransportCost().getFixed_stop_time(), false,distMode);
         DefaultConstraints defaultCons = new DefaultConstraints(conf.getDistanceConstraint().getWeight(),conf.getTimeConstraint().getWeight(),1,transportCost);
         IConstraint[] cons = {defaultCons};
