@@ -67,6 +67,55 @@ function CategoryList () {
 	}
 }());
 
+/*
+ *ScenariosName.jsp
+ * 
+ */
+
+(function  () {
+	
+	var editBtn = doc.getElementById("edit-create-info");
+	if (editBtn) {
+		var scenId = $('#scenName').attr("data-id");
+		$.get("/MyScenarios/scen.json",{"id":scenId}).done(function  (res) {
+			$('#scen-cate').text(res.scenariosCategory);
+			$('#scen-desc').text(res.scenariosDesc);
+			$('#scenariosName').val(res.scenariosName);
+			$('#class-first').text(res.scenariosName);
+			$('#scenariosCategory').val(res.scenariosCategory);
+			$('textarea[name="scenariosDesc"]').val(res.scenariosDesc);
+		}).fail(function  () {
+			console.log('fail');
+		});
+		
+		//创建场景
+        $("#edit-create-info").click(function(){
+            $("#newUserModal-scen").modal('show');
+        });
+        $("#saveBtn-scen").click(function(){
+        	var _val = $("input[name='scenariosName']").val(),
+        	pattern = new RegExp("[`~!@#$^&*=|{}':;',\\[\\]<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"),
+			xss = pattern.test(_val);
+        	if (_val && !xss) {
+        		$.post("/MyScenarios/add",$("#newUserForm-scen").serialize()).done(function(result){
+                        if("success" == result) {
+                            $("#newUserForm-scen")[0].reset();
+                            $("#newUserModal-scen").modal("hide");
+                            dt.ajax.reload();
+                            window.location.reload(); 
+                        }
+                    }).fail(function(){
+                        //alert("Exception occurs when adding");
+                    });
+
+        	}else{
+        		$("input[name='scenariosName']").focus();
+        	}
+            
+        });
+	}
+}());
+
 
 
 

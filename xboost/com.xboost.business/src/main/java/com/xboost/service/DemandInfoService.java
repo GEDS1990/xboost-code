@@ -4,8 +4,11 @@ import com.mckinsey.sf.data.Car;
 import com.xboost.mapper.CarMapper;
 import com.xboost.mapper.DemandInfoMapper;
 import com.xboost.pojo.DemandInfo;
+import com.xboost.pojo.SiteDist;
 import com.xboost.util.ExcelUtil;
+import com.xboost.util.ExportUtil;
 import com.xboost.util.ShiroUtil;
+import org.apache.poi.xssf.usermodel.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.joda.time.DateTime;
@@ -19,6 +22,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.auth.Subject;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -186,5 +191,100 @@ public class DemandInfoService {
 
         demandInfoMapper.delById(id);
     }
+
+    /**
+     * 导出excel
+     */
+    public void exportExcel(String scenariosId,String[] titles)
+    {
+        List<DemandInfo> list = demandInfoMapper.findAll(scenariosId);
+        // 创建一个workbook 对应一个excel应用文件
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        // 在workbook中添加一个sheet,对应Excel文件中的sheet
+
+        XSSFSheet sheet = workBook.createSheet("Demands");
+        ExportUtil exportUtil = new ExportUtil(workBook, sheet);
+        XSSFCellStyle headStyle = exportUtil.getHeadStyle();
+        XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
+        // 构建表头
+        XSSFRow headRow = sheet.createRow(0);
+        XSSFCell cell = null;
+        for (int i = 0; i < titles.length; i++)
+        {
+            cell = headRow.createCell(i);
+            cell.setCellValue(titles[i]);
+            cell.setCellStyle(headStyle);
+            System.out.println(titles[i]);
+        }
+        // 构建表体数据
+        if (list != null && list.size() > 0)
+        {
+            try{
+
+                for (int j = 0; j < list.size(); j++)
+                {
+                    XSSFRow bodyRow = sheet.createRow(j + 1);
+                    DemandInfo demandInfo = list.get(j);
+
+                    cell = bodyRow.createCell(0);
+                    cell.setCellValue(demandInfo.getDate());
+                    cell.setCellStyle(bodyStyle);
+
+
+                    cell = bodyRow.createCell(1);
+                    cell.setCellValue(demandInfo.getSiteCodeCollect());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(2);
+                    cell.setCellValue(demandInfo.getDurationStart());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(3);
+                    cell.setCellValue(demandInfo.getSiteCodeDelivery());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(4);
+                    cell.setCellValue(demandInfo.getDurationEnd());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(5);
+                    cell.setCellValue(demandInfo.getVotes());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(6);
+                    cell.setCellValue(demandInfo.getWeight());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(7);
+                    cell.setCellValue(demandInfo.getProductType());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(8);
+                    cell.setCellValue(demandInfo.getAgeing());
+                    cell.setCellStyle(bodyStyle);
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        try
+        {
+            FileOutputStream fout = new FileOutputStream("E:/Demands.xlsx");
+            workBook.write(fout);
+            fout.flush();
+            fout.close();
+//             workBook.write(outputStream);
+//             outputStream.flush();
+//             outputStream.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }

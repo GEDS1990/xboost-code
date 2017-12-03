@@ -33,6 +33,36 @@
 .scen-box{
 	padding: 10px;
 }
+.scen-itembox1{
+	float: left;
+	width: 70%;
+}
+.scen-itembox2{
+	float: left;
+	width: 30%;
+	padding: 15px;
+}
+.scen-itembox2>h1{
+	font-size: 20px;
+	font-weight: 700;
+	color: #687189;
+}
+.scen-result{
+	padding: 10px 0;
+	border-bottom: 1px solid #e2e5ee;
+}
+.scen-result>li{
+	padding: 5px 0;
+	color: #687189;
+}
+.scen-cost>li{
+	padding: 10px 0;
+	color: #687189;
+	font-weight: 700;
+}
+.scen-cost>li:last-child{
+	margin-top: 15px;
+}
 /*******************************Conditions************/
 .cond-wrap{
 	margin: 0;

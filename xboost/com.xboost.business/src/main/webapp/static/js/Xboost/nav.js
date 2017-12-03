@@ -7,6 +7,7 @@ $(document).ready(function  () {
 		add+='<li class="xb-hover" id="scen-name">';
 		add+='<a href="/ScenariosName" class="nav_xb" id="xb-nav-xb">';
 		add+='<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>';
+		//add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a><span id="scen-name-close" class="icon alt2 glyphicon glyphicon-remove"></span></li>';
 		add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a></li>';
 		add+='<li><ul class="xb-nav_ul" id="scen-class">';
 		add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Settings</a></li>';
@@ -18,13 +19,14 @@ $(document).ready(function  () {
 	/*
 	//点击X删除结构
 	$('body').on("click","#scen-name-close",function  () {
-		$(this).parents("#scen-name").next("#scen-class").remove();
-		$(this).parents("#scen-name").remove();
+		$('#scen-name-close').off("click");
+		$(this).parent("#scen-name").remove().next("li").remove();
+		//$(this).parent("#scen-name");
 		window.location.href = "/MyScenarios";
 		return false;
 	});
-	
 	*/
+	
 	
 	
 	

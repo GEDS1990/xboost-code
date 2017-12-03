@@ -2,168 +2,7 @@ $(function  () {
 	var doc = document;
 	
 	
-	/*
-	 *ScenariosName.jsp
-	 * 
-	 */
 	
-	(function  () {
-		var scenId = $('#scenName').attr("data-id");
-		if (scenId) {
-			$.get("/MyScenarios/scen.json",{"id":scenId}).done(function  (res) {
-				$('#scen-cate').text(res.scenariosCategory);
-				$('#scen-desc').text(res.scenariosDesc);
-			}).fail(function  () {
-				console.log('fail');
-			});
-		}
-	}());
-	
-	/*
-	 *MyScenarios.jsp == MyScenariosController
-	 * 
-	 * */
-	(function  () {
-		
-		var MyScenarios = doc.getElementById("MyScenarios");
-		if (MyScenarios) {
-			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Scenario.xlsx";
-			$('.down-href').attr("href",href);
-			//加载列表
-			var dt =$("#MyScenarios").DataTable({
-	            "processing": true, //loding效果
-	            "serverSide":true, //服务端处理
-	            "searchDelay": 1000,//搜索延迟
-	            "order":[[0,'desc']],//默认排序方式
-	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
-	            "ajax":{
-	                url:"MyScenarios/scenarios.json", //获取数据的URL
-	                type:"get" //获取数据的方式
-	            },
-	            "columns":[  //返回的JSON中的对象和列的对应关系
-	                {"data":"id","name":"id"},
-	                {"data":"userId","name":"user_id"},
-	                {"data":"scenariosName","name":"scenarios_name"},
-	                {"data":"scenariosCategory","name":"scenarios_category"},
-	                {"data":"scenariosDesc","name":"scenarios_desc"},
-	                {"data":"scenariosModel","name":"scenarios_model"},
-	                {"data":"scenariosOut","name":"scenarios_out"},
-	                {"data":"lastOpenTime","name":"last_open_time"},
-	                {"data":"scenariosStatus","name":"scenarios_status"},
-	                {"data":function(row){
-	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"'>Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
-	                }}
-	            ],
-	            "columnDefs":[ //具体列的定义
-	            	{
-	                    "targets":[0,1,5,6],
-	                    "visible":false
-	                },
-	                {
-	                    "targets":[9],
-	                    "orderable":false
-	                },
-	                {
-	                    "targets":[1,2,3,4,5],
-	                    "orderable":true
-	                }
-	            ],
-	            "language":{
-	                "lengthMenu":"Show _MENU_ Record",
-	                "search":"Search:",
-	                "info": "There are  _TOTAL_ records From _START_ To _END_",
-	                "processing":"Loading...",
-	                "zeroRecords":"No Data",
-	                "infoEmpty": "There are 0 records from 0 to 0",
-	                "infoFiltered":"(Read from _MAX_ record)",
-	                "paginate": {
-	                    "first":      "First",
-	                    "last":       "Last",
-	                    "next":       "Next",
-	                    "previous":   "Prev"
-	                }
-	            }
-	        });
-	    
-        
-        //点击open 打开场景
-        $("body").on("click",".openLink-scen",function  () {
-        	var $this = $(this);
-        	var openScenariosId = $this.attr("data-scenariosid");
-        	var scenName = $this.parent("td").parent("tr").find("td").eq(0).text();
-        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId,"openScenariosName":scenName}).done(function  (res) {
-        		if (res == "success") {
-        			$('#scen-name').remove();
-        			$('#scen-class').remove();
-        			var add = "";
-					add+='<li class="xb-hover" id="scen-name">';
-					add+='<a href="/ScenariosName" class="nav_xb" id="xb-nav-xb">';
-					add+='<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>';
-					add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a></li>';
-					add+='<li><ul class="xb-nav_ul" id="scen-class">';
-					add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Settings</a></li>';
-					add+='<li id="nav-Simualt"><a href="/simualte"><span class="icon-item alt icon-play"></span>Simulate</a></li>';
-					add+='<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li></ul></li>';
-					$('#after-content').after(add);
-					window.location.href = "/ScenariosName";
-        		}
-        	});
-        })
-       
-
-        //创建场景
-        $("#addNewUser-scen").click(function(){
-            $("#newUserModal-scen").modal('show');
-        });
-        $("#saveBtn-scen").click(function(){
-        	var _val = $("input[name='scenariosName']").val();
-        	if (_val) {
-        		$.post("/MyScenarios/add",$("#newUserForm-scen").serialize()).done(function(result){
-                        if("success" == result) {
-                            $("#newUserForm-scen")[0].reset();
-                            $("#newUserModal-scen").modal("hide");
-                            dt.ajax.reload();
-                            window.location.reload(); 
-                        }
-                    }).fail(function(){
-                        //alert("Exception occurs when adding");
-                    });
-
-        	}else{
-        		$("input[name='scenariosName']").focus();
-        	}
-            
-        });
-
-        //删除用户
-        $(document).delegate(".delLink-scen","click",function(){
-            var id = $(this).attr("data-scenariosid");
-            $('#modal-del').modal("show")
-            $('#modal-delBtn').click(function  () {
-            	$.post("/MyScenarios/del",{"id":id}).done(function(result){
-                    if("success" == result) {
-                        dt.ajax.reload();
-                        window.location.reload(); 
-                    }
-                }).fail(function(){
-                    //alert("Delete exception");
-                });
-            }) 
-                
-
-            
-        });
-
-        //导出文件
-        
-
-		//上传excel文件
-         $("#cond-file-upload-dist").click(function(){
-         	UploadFile("cond-input-form-dist","cond_file","/MyScenarios/addByExcel",'.bs-example-modal-input')
-         });
-		}
-		
-	})(),
 	
 	
 	
@@ -175,7 +14,9 @@ $(function  () {
 		var _nextP = $(this).next();
 		_file.trigger("click");
 		_file.change(function  () {
-			_nextP.text(_file.val())
+			var _index = _file.val().lastIndexOf("\\")+1;
+	    	var _key = _file.val().slice(_index);
+			_nextP.text(_key);
 		});
 	});
 	/*
@@ -223,11 +64,17 @@ $(function  () {
 	 */
 	function FormInput (id,fun) {
 		var _input = doc.getElementById(id).getElementsByTagName("input"),
+		pattern = new RegExp("[`~!@#$^&*=|{}':;',\\[\\]<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"),
 		len = _input.length;
 		for (var i=0;i<len;i++) {
-			if (_input[i].value == "") {
+			var xss = pattern.test(_input[i].value);
+			console.log(xss)
+			if (_input[i].value == "" || xss == true) {
 				_input[i].focus();
+				_input[i].classList.add("active");
 				return false;
+			}else{
+				_input[i].classList.remove("active");
 			}
 		}
 		fun();
@@ -327,7 +174,16 @@ $(function  () {
 	                }
 	            }
 	        });
-        
+        	
+        	//阻止表单提交
+			var formadd = doc.getElementById('newUserForm'),
+			formedit = doc.getElementById('editUserForm');
+			formadd.addEventListener("submit",function  (event) {
+				event.preventDefault();
+			});
+			formedit.addEventListener("submit",function  (event) {
+				event.preventDefault();
+			});
 			
 			
 	        //添加新用户
@@ -416,6 +272,19 @@ $(function  () {
 	        $('#cond-file-upload-info').click(function  () {
 				UploadFile("cond-input-form-info","cond_file","/siteInfo/addByExcel",'.bs-example-modal-input')
 			});
+
+			 //导出excel表格
+            $('.export-btn').click(function  () {
+                var _xls = $(this).attr('data-xls');
+                if (_xls) {
+                    $.post('/siteInfo/exportExcel').done(function  (res) {
+                        console.log(res);
+                    }).fail(function  () {
+                        console.log("fail");
+                    });
+                }
+            });
+
 		}
 	})(),
 	/*
@@ -474,11 +343,20 @@ $(function  () {
 	            }
 	        });
         
-
+		//阻止表单提交
+		var formadd = doc.getElementById('newUserForm-dist'),
+		formedit = doc.getElementById('editUserForm-dist');
+		formadd.addEventListener("submit",function  (event) {
+			event.preventDefault();
+		});
+		formedit.addEventListener("submit",function  (event) {
+			event.preventDefault();
+		});
         //添加新用户
         $("#addNewUser-dist").click(function(){
             $("#newUserModal-dist").modal('show');
         });
+        
         $("#saveBtn-dist").click(function(){
         	FormInput("newUserForm-dist",function  () {
         		$.post("/siteDist/add",$("#newUserForm-dist").serialize())
@@ -490,7 +368,7 @@ $(function  () {
                             window.location.reload(); 
                         }
                     }).fail(function(){
-                        //alert("Exception occurs when adding");
+                        console.log("fail");
                     });
         	});
             
@@ -555,7 +433,7 @@ $(function  () {
          	UploadFile("cond-input-form-dist","cond_file","/siteDist/addByExcel",'.bs-example-modal-input')
          });	
          
-        //导出excel表格 
+        //导出excel表格
         $('.export-btn').click(function  () {
         	var _xls = $(this).attr('data-xls');
         	if (_xls) {
@@ -631,89 +509,114 @@ $(function  () {
 	                }
 	            }
 	        });
+	        
+	        //阻止表单提交
+			var formadd = doc.getElementById('newUserForm-dem'),
+			formedit = doc.getElementById('editUserForm-dem');
+			formadd.addEventListener("submit",function  (event) {
+				event.preventDefault();
+			});
+			formedit.addEventListener("submit",function  (event) {
+				event.preventDefault();
+			});
+	        
         
 
-        //添加新用户
-        $("#addNewUser-dem").click(function(){
-            $("#newUserModal-dem").modal('show');
-        });
-        $("#saveBtn-dem").click(function(){
-        	FormInput("newUserForm-dem",function  () {
-        		$.post("/demandInfo/add",$("#newUserForm-dem").serialize())
-                    .done(function(result){
-                        if("success" == result) {
-                            $("#newUserForm-dem")[0].reset();
-                            $("#newUserModal-dem").modal("hide");
-                            dt.ajax.reload();
-                            window.location.reload(); 
-                        }
-                    }).fail(function(){
-                        console.log("fail");
-                    });
-        	});
-            
-
-        });
-
-        //删除用户
-        $(document).delegate(".delLink-dem","click",function(){
-            var id = $(this).attr("data-id");
-            $('#modal-dem').modal("show");
-            $('#modal-demdelBtn').click(function  () {
-            	$.post("/demandInfo/del",{"id":id}).done(function(result){
-                    if("success" == result) {
-                        dt.ajax.reload();
-                        window.location.reload(); 
-                    }
-                }).fail(function(){
-                    alert("Delete exception");
-                });
-            });
-            
-        });
-
-        //编辑用户
-        $(document).delegate(".editLink-dem","click",function(){
-            $("#editUserForm-dem")[0].reset();
-            var id = $(this).attr("data-id");
-            $.get("demandInfo/demandInfoById.json",{"id":id}).done(function(result){
-                $("#siteId-dem").val(result.id);
-                $("#date").val(result.date);
-                $("#siteCodeCollect").val(result.siteCodeCollect);
-                $("#siteCodeDelivery").val(result.siteCodeDelivery);
-                $("#productType").val(result.productType);
-                $("#durationStart").val(result.durationStart);
-                $("#durationEnd").val(result.durationEnd);
-                $("#weight").val(result.weight);
-                $("#votes").val(result.votes);
-                $("#ageing").val(result.ageing);
-                $("#editUserModal").modal("show");
-
-            }).fail(function(){
-
-            });
-			$("#editUserModal-dem").modal("show");
-            
-        });
-
-        $("#editBtn-dem").click(function(){
-        	FormInput("editUserForm-dem",function  () {
-        		$.post("/demandInfo/edit",$("#editUserForm-dem").serialize()).done(function(result){
-	                if(result == "success") {
-	                    $("#editUserModal-dem").modal("hide");
-	                    dt.ajax.reload();
-	                    window.location.reload(); 
-	                }
-	            }).fail(function(){
-	                console.log("fail");
+	        //添加新用户
+	        $("#addNewUser-dem").click(function(){
+	            $("#newUserModal-dem").modal('show');
+	        });
+	        $("#saveBtn-dem").click(function(){
+	        	FormInput("newUserForm-dem",function  () {
+	        		$.post("/demandInfo/add",$("#newUserForm-dem").serialize())
+	                    .done(function(result){
+	                        if("success" == result) {
+	                            $("#newUserForm-dem")[0].reset();
+	                            $("#newUserModal-dem").modal("hide");
+	                            dt.ajax.reload();
+	                            window.location.reload(); 
+	                        }
+	                    }).fail(function(){
+	                        console.log("fail");
+	                    });
+	        	});
+	            
+	
+	        });
+	
+	        //删除用户
+	        $(document).delegate(".delLink-dem","click",function(){
+	            var id = $(this).attr("data-id");
+	            $('#modal-dem').modal("show");
+	            $('#modal-demdelBtn').click(function  () {
+	            	$.post("/demandInfo/del",{"id":id}).done(function(result){
+	                    if("success" == result) {
+	                        dt.ajax.reload();
+	                        window.location.reload(); 
+	                    }
+	                }).fail(function(){
+	                    alert("Delete exception");
+	                });
 	            });
-        	})
-            
+	            
+	        });
+	
+	        //编辑用户
+	        $(document).delegate(".editLink-dem","click",function(){
+	            $("#editUserForm-dem")[0].reset();
+	            var id = $(this).attr("data-id");
+	            $.get("demandInfo/demandInfoById.json",{"id":id}).done(function(result){
+	                $("#siteId-dem").val(result.id);
+	                $("#date").val(result.date);
+	                $("#siteCodeCollect").val(result.siteCodeCollect);
+	                $("#siteCodeDelivery").val(result.siteCodeDelivery);
+	                $("#productType").val(result.productType);
+	                $("#durationStart").val(result.durationStart);
+	                $("#durationEnd").val(result.durationEnd);
+	                $("#weight").val(result.weight);
+	                $("#votes").val(result.votes);
+	                $("#ageing").val(result.ageing);
+	                $("#editUserModal").modal("show");
+	
+	            }).fail(function(){
+	
+	            });
+				$("#editUserModal-dem").modal("show");
+	            
+	        });
+	
+	        $("#editBtn-dem").click(function(){
+	        	FormInput("editUserForm-dem",function  () {
+	        		$.post("/demandInfo/edit",$("#editUserForm-dem").serialize()).done(function(result){
+		                if(result == "success") {
+		                    $("#editUserModal-dem").modal("hide");
+		                    dt.ajax.reload();
+		                    window.location.reload(); 
+		                }
+		            }).fail(function(){
+		                console.log("fail");
+		            });
+	        	})
+	            
+	
+	        });
+	
+	        $("#cond-file-upload-dem").click(function(){
+	             UploadFile("cond-input-form-dem","cond_file","/demandInfo/addByExcel",'.bs-example-modal-input')
+	         });
 
-        });
 
-        $("#cond-file-upload-dem").click(function(){
-             UploadFile("cond-input-form-dem","cond_file","/demandInfo/addByExcel",'.bs-example-modal-input')
+         //导出excel表格
+         $('.export-btn').click(function  () {
+         debugger;
+             var _xls = $(this).attr('data-xls');
+             if (_xls) {
+                 $.post('/demandInfo/exportExcel').done(function  (res) {
+                     console.log(res);
+                 }).fail(function  () {
+                     console.log("fail");
+                 });
+             }
          });
 		}
 	})(),
@@ -771,80 +674,89 @@ $(function  () {
 	                }
 	            }
 	        });
-        
+	     
+        	//阻止表单提交
+			var formadd = doc.getElementById('newUserForm-pata'),
+			formedit = doc.getElementById('editUserForm-pata');
+			formadd.addEventListener("submit",function  (event) {
+				event.preventDefault();
+			});
+			formedit.addEventListener("submit",function  (event) {
+				event.preventDefault();
+			});
 
-        //添加新用户
-        $("#addNewUser-pata").click(function(){
-            $("#newUserModal-pata").modal('show');
-        });
-        $("#saveBtn-pata").click(function(){
-            $.post("/modelArg/add",$("#newUserForm-pata").serialize())
-                    .done(function(result){
-                        if("success" == result) {
-                            $("#newUserForm-pata")[0].reset();
-                            $("#newUserModal-pata").modal("hide");
-                            dt.ajax.reload();
-                            window.location.reload(); 
-                        }
-                    }).fail(function(){
-                        alert("Exception occurs when adding");
-                    });
-
-        });
-
-        //删除用户
-        $(document).delegate(".delLink-pata","click",function(){
-            var id = $(this).attr("data-id");
-            $('#modal-pata').modal("show");
-            $('#modal-patadelBtn').click(function  () {
-            	$.post("/modelArg/del",{"id":id}).done(function(result){
-                    if("success" == result) {
-                        dt.ajax.reload();
-                        window.location.reload(); 
-                    }
-                }).fail(function(){
-                    alert("Delete exception");
-                });
-            });
-                
-        });
-
-        //编辑用户
-        $(document).delegate(".editLink-pata","click",function(){
-            $("#editUserForm-pata")[0].reset();
-            var id = $(this).attr("data-id");
-            $.get("modelArg/modelArgById.json",{"id":id}).done(function(result){
-                $("#siteId-pata").val(result.id);
-                $("#parameterName").val(result.parameterName);
-                $("#data").val(result.data);
-                $("#note").val(result.note);
-                
-                $("#editUserModal-pata").modal("show");
-
-            }).fail(function(){
-
-            });
-			
-            
-        });
-
-        $("#editBtn-pata").click(function(){
-        
-            $.post("/modelArg/edit",$("#editUserForm-pata").serialize()).done(function(result){
-                if(result == "success") {
-                    $("#editUserModal-pata").modal("hide");
-                    dt.ajax.reload();
-                    window.location.reload(); 
-                }
-            }).fail(function(){
-                alert("Modify user exception");
-            });
-
-        });
-
-         $("#cond-file-upload-pata").click(function(){
-             UploadFile("cond-input-form-pata","cond_file","/modelArg/addByExcel",'.bs-example-modal-input')
-         });
+	        //添加新用户
+	        $("#addNewUser-pata").click(function(){
+	            $("#newUserModal-pata").modal('show');
+	        });
+	        $("#saveBtn-pata").click(function(){
+	            $.post("/modelArg/add",$("#newUserForm-pata").serialize())
+	                    .done(function(result){
+	                        if("success" == result) {
+	                            $("#newUserForm-pata")[0].reset();
+	                            $("#newUserModal-pata").modal("hide");
+	                            dt.ajax.reload();
+	                            window.location.reload(); 
+	                        }
+	                    }).fail(function(){
+	                        alert("Exception occurs when adding");
+	                    });
+	
+	        });
+	
+	        //删除用户
+	        $(document).delegate(".delLink-pata","click",function(){
+	            var id = $(this).attr("data-id");
+	            $('#modal-pata').modal("show");
+	            $('#modal-patadelBtn').click(function  () {
+	            	$.post("/modelArg/del",{"id":id}).done(function(result){
+	                    if("success" == result) {
+	                        dt.ajax.reload();
+	                        window.location.reload(); 
+	                    }
+	                }).fail(function(){
+	                    alert("Delete exception");
+	                });
+	            });
+	                
+	        });
+	
+	        //编辑用户
+	        $(document).delegate(".editLink-pata","click",function(){
+	            $("#editUserForm-pata")[0].reset();
+	            var id = $(this).attr("data-id");
+	            $.get("modelArg/modelArgById.json",{"id":id}).done(function(result){
+	                $("#siteId-pata").val(result.id);
+	                $("#parameterName").val(result.parameterName);
+	                $("#data").val(result.data);
+	                $("#note").val(result.note);
+	                
+	                $("#editUserModal-pata").modal("show");
+	
+	            }).fail(function(){
+	
+	            });
+				
+	            
+	        });
+	
+	        $("#editBtn-pata").click(function(){
+	        
+	            $.post("/modelArg/edit",$("#editUserForm-pata").serialize()).done(function(result){
+	                if(result == "success") {
+	                    $("#editUserModal-pata").modal("hide");
+	                    dt.ajax.reload();
+	                    window.location.reload(); 
+	                }
+	            }).fail(function(){
+	                alert("Modify user exception");
+	            });
+	
+	        });
+	
+	         $("#cond-file-upload-pata").click(function(){
+	             UploadFile("cond-input-form-pata","cond_file","/modelArg/addByExcel",'.bs-example-modal-input')
+	         });
 		}
 	})(),
 	/**
@@ -915,97 +827,263 @@ $(function  () {
 	            }
 	        });
         
+        	//阻止表单提交
+			var formadd = doc.getElementById('newUserForm-tran'),
+			formedit = doc.getElementById('editUserForm-tran');
+			formadd.addEventListener("submit",function  (event) {
+				event.preventDefault();
+			});
+			formedit.addEventListener("submit",function  (event) {
+				event.preventDefault();
+			});
 
-        //添加新用户
-        $("#addNewUser-tran").click(function(){
-            $("#newUserModal-tran").modal('show');
-        });
-        $("#saveBtn-tran").click(function(){
-        	var tw_start = $('#time_window_start').val();
-        	var tw_end = $('#time_window_end').val();
-        	var twData = tw_start+"."+tw_end;
-        	$('#tw').val(twData);
-        	console.log($("#newUserForm-tran").serialize())
-            $.post("/car/add",$("#newUserForm-tran").serialize())
-                    .done(function(result){
-                        if("success" == result) {
-                            $("#newUserForm-tran")[0].reset();
-                            $("#newUserModal-tran").modal("hide");
-                            dt.ajax.reload();
-                            window.location.reload(); 
-                        }
-                    }).fail(function(){
-                        alert("Exception occurs when adding");
-                    });
-
-        });
-
-        //删除用户
-        $(document).delegate(".delLink-tran","click",function(){
-            var id = $(this).attr("data-id");
-            $('#modal-tran').modal("show");
-            $('#modal-trandelBtn').click(function  () {
-            	$.post("/car/del",{"id":id}).done(function(result){
-                    if("success" == result) {
-                        dt.ajax.reload();
-                        window.location.reload(); 
-                    }
-                }).fail(function(){
-                    alert("Delete exception");
-                });
-            });
-                
-        });
-
-        //编辑用户
-        $(document).delegate(".editLink-tran","click",function(){
-            $("#editUserForm-tran")[0].reset();
-            var id = $(this).attr("data-id");
-            $.get("/car/transpt.json",{"id":id}).done(function(result){
-                $("#siteId-tran").val(result.id);
-                $("#carSource").val(result.carSource);
-                $("#dimensions").val(result.dimensions);
-                $("#maxLoad").val(result.maxLoad);
-                $("#durationUnloadFull").val(result.durationUnloadFull);
-                $("#maxStop").val(result.maxStop);
-                $("#fixedRound").val(result.fixedRound);
-                $("#fixedRoundFee").val(result.fixedRoundFee);
-                $("#startLocation").val(result.startLocation);
-                $("#endLocation").val(result.endLocation);
-                $("#maxDistance").val(result.maxDistance);
-                $("#maxRunningTime").val(result.maxRunningTime);
-                $("#costPerDistance").val(result.costPerDistance);
-                $("#costPerTime").val(result.costPerTime);
-                $("#fixedCost").val(result.fixedCost);
-                $("#velocity").val(result.velocity);
-                
-                $("#editUserModal-tran").modal("show");
-
-            }).fail(function(){
-
-            });
-			
-            
-        });
-
-        $("#editBtn-tran").click(function(){
-        
-            $.post("/car/edit",$("#editUserForm-tran").serialize()).done(function(result){
-                if(result == "success") {
-                    $("#editUserModal-tran").modal("hide");
-                    dt.ajax.reload();
-                    window.location.reload(); 
-                }
-            }).fail(function(){
-                alert("Modify user exception");
-            });
-
-        });
-
-         $("#cond-file-upload-tran").click(function(){
-             UploadFile("cond-input-form-tran","cond_file","/car/addByExcel",'.bs-example-modal-input')
-         });
+	        //添加新用户
+	        $("#addNewUser-tran").click(function(){
+	            $("#newUserModal-tran").modal('show');
+	        });
+	        $("#saveBtn-tran").click(function(){
+	        	var tw_start = $('#time_window_start').val();
+	        	var tw_end = $('#time_window_end').val();
+	        	var twData = tw_start+"."+tw_end;
+	        	$('#tw').val(twData);
+	        	console.log($("#newUserForm-tran").serialize())
+	            $.post("/car/add",$("#newUserForm-tran").serialize())
+	                    .done(function(result){
+	                        if("success" == result) {
+	                            $("#newUserForm-tran")[0].reset();
+	                            $("#newUserModal-tran").modal("hide");
+	                            dt.ajax.reload();
+	                            window.location.reload(); 
+	                        }
+	                    }).fail(function(){
+	                        alert("Exception occurs when adding");
+	                    });
+	
+	        });
+	
+	        //删除用户
+	        $(document).delegate(".delLink-tran","click",function(){
+	            var id = $(this).attr("data-id");
+	            $('#modal-tran').modal("show");
+	            $('#modal-trandelBtn').click(function  () {
+	            	$.post("/car/del",{"id":id}).done(function(result){
+	                    if("success" == result) {
+	                        dt.ajax.reload();
+	                        window.location.reload(); 
+	                    }
+	                }).fail(function(){
+	                    alert("Delete exception");
+	                });
+	            });
+	                
+	        });
+	
+	        //编辑用户
+	        $(document).delegate(".editLink-tran","click",function(){
+	            $("#editUserForm-tran")[0].reset();
+	            var id = $(this).attr("data-id");
+	            $.get("/car/transpt.json",{"id":id}).done(function(result){
+	                $("#siteId-tran").val(result.id);
+	                $("#carSource").val(result.carSource);
+	                $("#dimensions").val(result.dimensions);
+	                $("#maxLoad").val(result.maxLoad);
+	                $("#durationUnloadFull").val(result.durationUnloadFull);
+	                $("#maxStop").val(result.maxStop);
+	                $("#fixedRound").val(result.fixedRound);
+	                $("#fixedRoundFee").val(result.fixedRoundFee);
+	                $("#startLocation").val(result.startLocation);
+	                $("#endLocation").val(result.endLocation);
+	                $("#maxDistance").val(result.maxDistance);
+	                $("#maxRunningTime").val(result.maxRunningTime);
+	                $("#costPerDistance").val(result.costPerDistance);
+	                $("#costPerTime").val(result.costPerTime);
+	                $("#fixedCost").val(result.fixedCost);
+	                $("#velocity").val(result.velocity);
+	                
+	                $("#editUserModal-tran").modal("show");
+	
+	            }).fail(function(){
+	
+	            });
+				
+	            
+	        });
+	
+	        $("#editBtn-tran").click(function(){
+	        
+	            $.post("/car/edit",$("#editUserForm-tran").serialize()).done(function(result){
+	                if(result == "success") {
+	                    $("#editUserModal-tran").modal("hide");
+	                    dt.ajax.reload();
+	                    window.location.reload(); 
+	                }
+	            }).fail(function(){
+	                alert("Modify user exception");
+	            });
+	
+	        });
+	
+	         $("#cond-file-upload-tran").click(function(){
+	             UploadFile("cond-input-form-tran","cond_file","/car/addByExcel",'.bs-example-modal-input')
+	         });
 		}
+	})(),
+	
+	
+	
+	/*
+	 *MyScenarios.jsp == MyScenariosController
+	 * 
+	 * */
+	(function  () {
+		
+		var MyScenarios = doc.getElementById("MyScenarios");
+		if (MyScenarios) {
+			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Scenario.xlsx";
+			$('.down-href').attr("href",href);
+			//加载列表
+			var dt =$("#MyScenarios").DataTable({
+	            "processing": true, //loding效果
+	            "serverSide":true, //服务端处理
+	            "searchDelay": 1000,//搜索延迟
+	            "order":[[0,'desc']],//默认排序方式
+	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
+	            "ajax":{
+	                url:"MyScenarios/scenarios.json", //获取数据的URL
+	                type:"get" //获取数据的方式
+	            },
+	            "columns":[  //返回的JSON中的对象和列的对应关系
+	                {"data":"id","name":"id"},
+	                {"data":"userId","name":"user_id"},
+	                {"data":"scenariosName","name":"scenarios_name"},
+	                {"data":"scenariosCategory","name":"scenarios_category"},
+	                {"data":"scenariosDesc","name":"scenarios_desc"},
+	                {"data":"scenariosModel","name":"scenarios_model"},
+	                {"data":"scenariosOut","name":"scenarios_out"},
+	                {"data":"lastOpenTime","name":"last_open_time"},
+	                {"data":"scenariosStatus","name":"scenarios_status"},
+	                {"data":function(row){
+	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"'>Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
+	                }}
+	            ],
+	            "columnDefs":[ //具体列的定义
+	            	{
+	                    "targets":[0,1,5,6],
+	                    "visible":false
+	                },
+	                {
+	                    "targets":[9],
+	                    "orderable":false
+	                },
+	                {
+	                    "targets":[1,2,3,4,5],
+	                    "orderable":true
+	                }
+	            ],
+	            "language":{
+	                "lengthMenu":"Show _MENU_ Record",
+	                "search":"Search:",
+	                "info": "There are  _TOTAL_ records From _START_ To _END_",
+	                "processing":"Loading...",
+	                "zeroRecords":"No Data",
+	                "infoEmpty": "There are 0 records from 0 to 0",
+	                "infoFiltered":"(Read from _MAX_ record)",
+	                "paginate": {
+	                    "first":      "First",
+	                    "last":       "Last",
+	                    "next":       "Next",
+	                    "previous":   "Prev"
+	                }
+	            }
+	        });
+	        
+	        //阻止表单提交
+			var formCreate = doc.getElementById('newUserForm-scen');
+			formCreate.addEventListener("submit",function  (event) {
+				event.preventDefault();
+			});
+	    
+        
+	        //点击open 打开场景
+	        $("body").on("click",".openLink-scen",function  () {
+	        	var $this = $(this);
+	        	var openScenariosId = $this.attr("data-scenariosid");
+	        	var scenName = $this.parent("td").parent("tr").find("td").eq(0).text();
+	        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId,"openScenariosName":scenName}).done(function  (res) {
+	        		if (res == "success") {
+	        			$('#scen-name').remove();
+	        			$('#scen-class').remove();
+	        			var add = "";
+						add+='<li class="xb-hover" id="scen-name">';
+						add+='<a href="/ScenariosName" class="nav_xb" id="xb-nav-xb">';
+						add+='<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>';
+						//add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a><span id="scen-name-close" class="icon alt2 glyphicon glyphicon-remove"></span></li>';
+						add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a></li>';
+						add+='<li><ul class="xb-nav_ul" id="scen-class">';
+						add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Settings</a></li>';
+						add+='<li id="nav-Simualt"><a href="/simualte"><span class="icon-item alt icon-play"></span>Simulate</a></li>';
+						add+='<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li></ul></li>';
+						$('#after-content').after(add);
+						window.location.href = "/ScenariosName";
+	        		}
+	        	});
+	        })
+	       
+	
+	        //创建场景
+	        $("#addNewUser-scen").click(function(){
+	            $("#newUserModal-scen").modal('show');
+	        });
+	        $("#saveBtn-scen").click(function(){
+	        	var _val = $("input[name='scenariosName']").val(),
+	        	pattern = new RegExp("[`~!@#$^&*=|{}':;',\\[\\]<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"),
+				xss = pattern.test(_val);
+	        	if (_val && !xss) {
+	        		$.post("/MyScenarios/add",$("#newUserForm-scen").serialize()).done(function(result){
+	                        if("success" == result) {
+	                            $("#newUserForm-scen")[0].reset();
+	                            $("#newUserModal-scen").modal("hide");
+	                            dt.ajax.reload();
+	                            window.location.reload(); 
+	                        }
+	                    }).fail(function(){
+	                        //alert("Exception occurs when adding");
+	                    });
+	
+	        	}else{
+	        		$("input[name='scenariosName']").focus();
+	        	}
+	            
+	        });
+	
+	        //删除用户
+	        $(document).delegate(".delLink-scen","click",function(){
+	            var id = $(this).attr("data-scenariosid");
+	            $('#modal-del').modal("show")
+	            $('#modal-delBtn').click(function  () {
+	            	$.post("/MyScenarios/del",{"id":id}).done(function(result){
+	                    if("success" == result) {
+	                        dt.ajax.reload();
+	                        window.location.reload(); 
+	                    }
+	                }).fail(function(){
+	                    //alert("Delete exception");
+	                });
+	            }) 
+	                
+	
+	            
+	        });
+	
+	        //导出文件
+	        
+	
+			//上传excel文件
+	         $("#cond-file-upload-dist").click(function(){
+	         	UploadFile("cond-input-form-dist","cond_file","/MyScenarios/addByExcel",'.bs-example-modal-input')
+	         });
+		}
+		
 	})()
 	
 	

@@ -18,10 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
@@ -158,7 +155,7 @@ public class SiteDistService {
     /**
      * 导出excel
      */
-    public void exportExcel(String scenariosId,String[] titles, ServletOutputStream outputStream)
+    public void exportExcel(String scenariosId,String[] titles)
     {
         List<SiteDist> list = siteDistMapper.findAll(scenariosId);
          // 创建一个workbook 对应一个excel应用文件
@@ -175,8 +172,8 @@ public class SiteDistService {
          for (int i = 0; i < titles.length; i++)
              {
                  cell = headRow.createCell(i);
-                 cell.setCellStyle(headStyle);
                  cell.setCellValue(titles[i]);
+                 cell.setCellStyle(headStyle);
                  System.out.println(titles[i]);
              }
          // 构建表体数据
@@ -208,26 +205,19 @@ public class SiteDistService {
          }
          try
          {
-           //  FileOutputStream fout = new FileOutputStream("E:/distance.xlsx");
-             workBook.write(outputStream);
-             outputStream.flush();
-             outputStream.close();
+             FileOutputStream fout = new FileOutputStream("E:/Depots_distance.xlsx");
+             workBook.write(fout);
+             fout.flush();
+             fout.close();
+//             workBook.write(outputStream);
+//             outputStream.flush();
+//             outputStream.close();
          }
          catch (IOException e)
          {
              e.printStackTrace();
          }
-         finally
-         {
-             try
-             {
-                 outputStream.close();
-             }
-             catch (IOException e)
-             {
-                 e.printStackTrace();
-             }
-         }
+
     }
 
 

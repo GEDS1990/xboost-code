@@ -325,7 +325,7 @@
     	<div class="model-input-content clearfix">
     		<div class="col-sm-6 text-right">Export "Demands" Settings:</div>
         	<div class="col-sm-4" data-xls="Demands">
-        		<div class="export-btn">
+        		<div class="export-btn" data-xls="demands">
         			<span class="icon-upload"></span>
         			Export 
         		</div>

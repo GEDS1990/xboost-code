@@ -140,22 +140,22 @@ public class SiteDistController {
         return "success";
     }
 
-    @RequestMapping(value = "/exportExcel",method = RequestMethod.POST)
+    @RequestMapping(value = "/exportExcel",method = RequestMethod.POST,produces = {"application/vnd.ms-excel;charset=UTF-8"})
     @ResponseBody
     public String exportExcel(HttpServletResponse response)
     {
          response.setContentType("application/vnd.ms-excel;charset=utf-8");
          try
          {
-             ServletOutputStream outputStream = response.getOutputStream();
-             String fileName = new String(("distance").getBytes(), "utf-8");
+          //   ServletOutputStream outputStream = response.getOutputStream();
+             String fileName = new String(("Depots_distance").getBytes(), "utf-8");
              response.setCharacterEncoding("utf-8");
              response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
       //       response.setHeader("Content-disposition", "attachment; filename=distance.xlsx");
              String scenariosId = ShiroUtil.getOpenScenariosId();
              String[] titles = { "pickup depot","delivery depot","transportation distance(km)","night transportation time(min)" };
-             siteDistService.exportExcel(scenariosId,titles, outputStream);
-             System.out.println("outputStream:"+outputStream);
+             siteDistService.exportExcel(scenariosId,titles);
+      //       System.out.println("outputStream:"+outputStream);
              }
          catch (IOException e)
          {

@@ -6,7 +6,6 @@ $(function  () {
 	 * 
 	 * */
 	(function  () {
-		debugger;
 		var SolutionRoute = doc.getElementById("SolutionRoute");
 		if (SolutionRoute) {
 			//加载列表
