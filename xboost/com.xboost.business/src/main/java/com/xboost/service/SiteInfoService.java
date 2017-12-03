@@ -3,8 +3,11 @@ package com.xboost.service;
 import com.xboost.exception.ForbiddenException;
 import com.xboost.exception.NotFoundException;
 import com.xboost.mapper.SiteInfoMapper;
+import com.xboost.pojo.SiteDist;
 import com.xboost.pojo.SiteInfo;
 
+import com.xboost.util.ExportUtil;
+import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import com.xboost.util.ExcelUtil;
@@ -164,5 +169,105 @@ public class SiteInfoService {
 
         siteInfoMapper.delById(id);
     }
+
+    /**
+     * 导出excel
+     */
+    public void exportExcel(String scenariosId,String[] titles)
+    {
+        List<SiteInfo> list = siteInfoMapper.findAll(scenariosId);
+        // 创建一个workbook 对应一个excel应用文件
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        // 在workbook中添加一个sheet,对应Excel文件中的sheet
+
+        XSSFSheet sheet = workBook.createSheet("DepotsInfo");
+        ExportUtil exportUtil = new ExportUtil(workBook, sheet);
+        XSSFCellStyle headStyle = exportUtil.getHeadStyle();
+        XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
+        // 构建表头
+        XSSFRow headRow = sheet.createRow(0);
+        XSSFCell cell = null;
+        for (int i = 0; i < titles.length; i++)
+        {
+            cell = headRow.createCell(i);
+            cell.setCellValue(titles[i]);
+            cell.setCellStyle(headStyle);
+            System.out.println(titles[i]);
+        }
+        // 构建表体数据
+        if (list != null && list.size() > 0)
+        {
+            for (int j = 0; j < list.size(); j++)
+            {
+                XSSFRow bodyRow = sheet.createRow(j + 1);
+                SiteInfo siteInfo = list.get(j);
+
+                cell = bodyRow.createCell(0);
+                cell.setCellValue(siteInfo.getSiteCode());
+                cell.setCellStyle(bodyStyle);
+
+
+                cell = bodyRow.createCell(1);
+                cell.setCellValue(siteInfo.getSiteLongitude());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(2);
+                cell.setCellValue(siteInfo.getSiteLatitude());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(3);
+                cell.setCellValue(siteInfo.getSiteName());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(4);
+                cell.setCellValue(siteInfo.getSiteAddress());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(5);
+                cell.setCellValue(siteInfo.getSiteArea());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(6);
+                cell.setCellValue(siteInfo.getSiteType());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(7);
+                cell.setCellValue(siteInfo.getDistribCenter());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(8);
+                cell.setCellValue(siteInfo.getSiteNightDelivery());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(9);
+                cell.setCellValue(siteInfo.getCarNum());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(10);
+                cell.setCellValue(siteInfo.getLargeCarModel());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(11);
+                cell.setCellValue(siteInfo.getMaxOperateNum());
+                cell.setCellStyle(bodyStyle);
+            }
+        }
+        try
+        {
+            FileOutputStream fout = new FileOutputStream("E:/Depots_info.xlsx");
+            workBook.write(fout);
+            fout.flush();
+            fout.close();
+//             workBook.write(outputStream);
+//             outputStream.flush();
+//             outputStream.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }

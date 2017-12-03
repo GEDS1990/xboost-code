@@ -2,6 +2,8 @@ package com.mckinsey.sf.data.solution;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
 /**   
 *    
 * Author：Alivia Chen   
@@ -9,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 * Date  ：May 8, 2017
 * @version        
 */
-public class ArrInfo {
+public class ArrInfo implements Serializable{
 	
 	@JsonProperty("route_id")
 	private String routeId;
@@ -24,6 +26,8 @@ public class ArrInfo {
 	private String location;
 
 	private String scenariosId;
+
+	private String createTime;
 	
 	public ArrInfo(){
 		super();
@@ -67,5 +71,13 @@ public class ArrInfo {
 
 	public void setScenariosId(String scenariosId) {
 		this.scenariosId = scenariosId;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
 	}
 }

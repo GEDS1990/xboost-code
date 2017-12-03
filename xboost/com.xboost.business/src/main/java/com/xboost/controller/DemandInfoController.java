@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -124,6 +126,31 @@ public class DemandInfoController {
     public String delById(Integer id) {
         demandInfoService.delById(id);
         return "success";
+    }
+
+    @RequestMapping(value = "/exportExcel",method = RequestMethod.POST,produces = {"application/vnd.ms-excel;charset=UTF-8"})
+    @ResponseBody
+    public String exportExcel(HttpServletResponse response)
+    {
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        try
+        {
+            //   ServletOutputStream outputStream = response.getOutputStream();
+            String fileName = new String(("Demands").getBytes(), "utf-8");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
+            //       response.setHeader("Content-disposition", "attachment; filename=distance.xlsx");
+            String scenariosId = ShiroUtil.getOpenScenariosId();
+            String[] titles = { "date","start depot","start time","end depot","effective end time","piece (p)",
+                    "weight (kg)","product type","effectiveness"};
+            demandInfoService.exportExcel(scenariosId,titles);
+            //       System.out.println("outputStream:"+outputStream);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

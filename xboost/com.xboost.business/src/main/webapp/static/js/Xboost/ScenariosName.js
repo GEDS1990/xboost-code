@@ -272,6 +272,19 @@ $(function  () {
 	        $('#cond-file-upload-info').click(function  () {
 				UploadFile("cond-input-form-info","cond_file","/siteInfo/addByExcel",'.bs-example-modal-input')
 			});
+
+			 //导出excel表格
+            $('.export-btn').click(function  () {
+                var _xls = $(this).attr('data-xls');
+                if (_xls) {
+                    $.post('/siteInfo/exportExcel').done(function  (res) {
+                        console.log(res);
+                    }).fail(function  () {
+                        console.log("fail");
+                    });
+                }
+            });
+
 		}
 	})(),
 	/*
@@ -420,7 +433,7 @@ $(function  () {
          	UploadFile("cond-input-form-dist","cond_file","/siteDist/addByExcel",'.bs-example-modal-input')
          });	
          
-        //导出excel表格 
+        //导出excel表格
         $('.export-btn').click(function  () {
         	var _xls = $(this).attr('data-xls');
         	if (_xls) {
@@ -591,6 +604,20 @@ $(function  () {
 	        $("#cond-file-upload-dem").click(function(){
 	             UploadFile("cond-input-form-dem","cond_file","/demandInfo/addByExcel",'.bs-example-modal-input')
 	         });
+
+
+         //导出excel表格
+         $('.export-btn').click(function  () {
+         debugger;
+             var _xls = $(this).attr('data-xls');
+             if (_xls) {
+                 $.post('/demandInfo/exportExcel').done(function  (res) {
+                     console.log(res);
+                 }).fail(function  () {
+                     console.log("fail");
+                 });
+             }
+         });
 		}
 	})(),
 	/**
