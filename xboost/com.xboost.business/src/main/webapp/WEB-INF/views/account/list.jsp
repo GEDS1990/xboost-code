@@ -61,9 +61,9 @@
 			            	<tr>
 			            		<th>ID</th>
 				                <th>Username</th>
-				                <th>Permission</th>
-				                <th>Last Login</th>
+				                <th>Telephone</th>
 				                <th>Current status</th>
+				                <th>Permission</th>
 				                <th>operation</th>
 			            	</tr>
 			            </thead>
@@ -142,25 +142,44 @@
             </div>
             <div class="modal-body">
                 <form id="editUserForm-user" class="form-horizontal">
-                    <input type="hidden" name="id" id="siteId-dist" value="">
+                    <input type="hidden" name="id" id="id">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">pickup depot</label>
+                        <label class="col-sm-2 control-label">Username</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCollect" id="siteCollect">
+                            <input type="text" class="form-control" name="username" >
                         </div>
-                        <label class="col-sm-2 control-label">delivery depot</label>
+                        <label class="col-sm-2 control-label">Telephone</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteDelivery" id="siteDelivery">
+                            <input type="text" class="form-control" name="tel" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">transportation distance(km)</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carDistance" id="carDistance">
+                        <label class="col-sm-2 control-label">角色</label>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="role" value="1" class="role"> 管理员
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="role" value="2" class="role"> 经理
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="role" value="3" class="role"> 普通员工
+                                </label>
+                            </div>
                         </div>
-                        <label class="col-sm-2 control-label">transportation distance(km)</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationNightDelivery" id="durationNightDelivery">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">状态</label>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label class="radio-inline">
+                                    <input type="radio" name="state" value="正常" id="ok"> 正常
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="state" value="禁用" id="disable"> 禁用
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </form>
