@@ -48,34 +48,78 @@
 	    	<!--top-->
 	    	<div class="clearfix cond-wrap">
 	        	<div class="xb-fl">
-	        		<p>${sessionScope.openScenariosName}(Solution)</p>
+	        		<p>${sessionScope.openScenariosName}(Results)</p>
 	        	</div>
 	        	<div class="xb-fr">
-	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Expot Conditions</button>
+	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Expot Results</button>
 	        	</div>
 	        </div>
 	        <div class="cond-top">
 	        	<ul class="cond-top-ul clearfix">
+	        		<li class="active"><a class="active" href="/route">Depots</a></li>
+	        		<li><a href="#">Route</a></li>
+	        		<li><a href="#">Vehicles</a></li>
+	        		<li><a href="#">Costs</a></li>
+	        		<li><a href="#">Efficiency</a></li>
+	        		<li><a href="#">Distribution</a></li>
+	        	</ul>
+	        	<!--<ul class="cond-top-ul clearfix">
 	        		<li class="active"><a class="active" href="/route">Solution Route</a></li>
 	        		<li><a href="#">Solution Activity</a></li>
 	        		<li><a href="#">Solution Stats</a></li>
 	        		<li><a href="#">Solution Arrinfos</a></li>
 	        		<li><a href="#">Solution Jobinfos</a></li>
-	        	</ul>
+	        	</ul>-->
 	        </div>
-	    	<div>
+	        
+	        
+	        
+	    	<div id="route-wrap">
+	    		<header class="clearfix result-header">
+	    			<div class="xb-fl">
+	    				<select>
+	    					<option>111</option>
+	    				</select>
+	    			</div>
+	    			<div class="xb-fr">
+	    				<button><span class="icon-upload"></span>Export this Sheet</button>
+	    			</div>
+	    		</header>
+	    		<div class="scen-box clearfix">
+	    			<div class="scen-itembox1">
+	    				<p>11</p>
+	    			</div>
+	    			<div class="scen-itembox2">
+	    				<h1>No Data</h1>
+	    				<ul class="scen-result">
+	    					<li>E:120.2111111</li>
+	    					<li>地址</li>
+	    				</ul>
+	    				<ul class="scen-cost">
+	    					<li>depot type:<span>--</span></li>
+	    					<li>to distrib.center:<span>--</span></li>
+	    					<li>deport area:<span>--</span></li>
+	    					<li>vehicle quantity limit:<span>--</span>(per 10mins)</li>
+	    					<li>vehicle weight limit:<span>--</span>(per 10mins)</li>
+	    					<li>piece capacity:<span>--</span>(per 10mins)</li>
+	    				</ul>
+	    			</div>
+	    		</div>
+	    	
+	    	
+	    	
 	    		<!--Solution Route-->
-			    <div class="table-responsive active">
+			    <div class="table-responsive active result-style">
 		            <table id="SolutionRoute" class="table table-striped table-bordered table-hover">
 					    <thead>
 					    	<tr>
-					    		<th rowspan="1">#</th>
-					    		<th rowspan="1">ID</th>
-					    		<th rowspan="1">route count</th>
-					    		<th rowspan="1">car type</th>
-					    		<th rowspan="1">location</th>
-					    		<th rowspan="1">sequence</th>
-					    		<th rowspan="1">cur loc</th>
+					    		<th rowspan="1">id</th>
+					    		<th rowspan="1">Depot ID</th>
+					    		<th rowspan="1">Incoming Vehicle</th>
+					    		<th rowspan="1">Arriva Time</th>
+					    		<th rowspan="1">Operation</th>
+					    		<th rowspan="1">Departure Time</th>
+					    		<!--<th rowspan="1">cur loc</th>
 					    		<th rowspan="1">type</th>
 					    		<th rowspan="1">sb_loc</th>
 					    		<th rowspan="1">sb_vol</th>
@@ -85,10 +129,10 @@
 					    		<th rowspan="1">unload_vol</th>
 					    		<th rowspan="1">next_cur_loc</th>
 					    		<th rowspan="1">calc_dis</th>
-					    		<th rowspan="1">car_goods</th>
+					    		<th rowspan="1">car_goods</th>-->
 					    	</tr>
 					    </thead>
-			            <tbody id="info-tbody">
+			            <tbody id="depot-tbody">
 			            	<tr>
 				                <td></td>
 				                <td></td>
@@ -96,6 +140,7 @@
 				                <td></td>
 				                <td></td>
 				                <td></td>
+				                <!--<td></td>
 				                <td></td>
 				                <td></td>
 				                <td></td>
@@ -105,8 +150,7 @@
 				                <td></td>
 				                <td></td>
 				                <td></td>
-				                <td></td>
-				                <td></td>
+				                <td></td>-->
 			            	</tr>
 			            </tbody>
 		            </table>
@@ -118,133 +162,7 @@
 </div>
 <!-- /#wrapper -->
 
-<!--Model input-->
-<div class="modal fade bs-example-modal-input" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-		<div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	    </div>
-	    
-        <!--content s-->
-        <form  method="post" id="cond-input-form" enctype="multipart/form-data">
-  <!--
-            <div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import All Data From Single File</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="fileAll" class="cond_file" />
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
 
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<span class="icon-upload"></span>
-	        			Download Template
-	        		</div>
-	        	</div>
-        	</div>
-  -->
-        	<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Depots Info"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<a class="down-href" href="#">
-	        				<span class="icon-upload"></span>
-	        				Download Template
-	        			</a>
-	        		</div>
-	        	</div>
-        	</div>
-
-
-
-  
-        	<!--<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Depots Distance"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<span class="icon-upload"></span>
-	        			Download Template
-	        		</div>
-	        	</div>
-        	</div>
-
-        	<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Transportation"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<span class="icon-upload"></span>
-	        			Download Template
-	        		</div>
-	        	</div>
-        	</div>
-        	<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Demands"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<span class="icon-upload"></span>
-	        			Download Template
-	        		</div>
-	        	</div>
-        	</div>
-        	<div class="model-input-content clearfix">
-        		<div class="col-sm-4 text-right">Import "Parameters"</div>
-	        	<div class="col-sm-4">
-	        		<input type="file" name="file" class="cond_file"/>
-	        		<div class="cond-file-box clearfix">
-	        			<div class="cond-file-btn">Choose File</div>
-	        			<p>No file chosen</p>
-	        		</div>
-	        	</div>
-	        	<div class="col-sm-4">
-	        		<div>
-	        			<span class="icon-upload"></span>
-	        			Download Template
-	        		</div>
-	        	</div>
-        	</div>-->
-  
-        </form>
-        <!--content e-->
-
-        <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" id="cond-file-upload">Upload</button>
-	    </div>
-    </div>
-  </div>
-</div>
 
 <!--Model export-->
 <div class="modal fade bs-example-modal-export" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">

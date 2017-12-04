@@ -107,7 +107,7 @@
 	    					<li>Staff Cost:<span>--</span></li>
 	    					<li>Vehicle Quantity:<span>--</span></li>
 	    					<li>Vehicle Cost:<span>--</span></li>
-	    					<li>Total Cost:<span>--</span></li>
+	    					<li class="totalcost">Total Cost:<span>--</span></li>
 	    				</ul>
 	    			</div>
 	    		</div>

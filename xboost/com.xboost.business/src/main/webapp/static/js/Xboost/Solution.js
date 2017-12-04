@@ -8,6 +8,7 @@ $(function  () {
 	(function  () {
 		var SolutionRoute = doc.getElementById("SolutionRoute");
 		if (SolutionRoute) {
+			
 			//加载列表
 			var dt =$("#SolutionRoute").DataTable({
 	            "processing": true, //loding效果
@@ -21,22 +22,12 @@ $(function  () {
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
-	                {"data":"scenariosId","name":"scenariosId"},
-	                {"data":"routeCount","name":"route_count"},
-	                {"data":"carType","name":"car_type"},
-	                {"data":"location","name":"location"},
-	                {"data":"sequence","name":"sequence"},
 	                {"data":"curLoc","name":"cur_loc"},
-	                {"data":"type","name":"type"},
-	                {"data":"sbLoc","name":"sb_loc"},
-	                {"data":"sbVol","name":"sb_vol"},
+	                {"data":"carType","name":"car_type"},
 	                {"data":"arrTime","name":"arr_time"},
-	                {"data":"endTime","name":"end_time"},
 	                {"data":"unloadLoc","name":"unload_loc"},
-	                {"data":"unloadVol","name":"unload_vol"},
-	                {"data":"nextCurLoc","name":"next_cur_loc"},
-	                {"data":"calcDis","name":"calc_dis"},
-	                {"data":"carGoods","name":"car_goods"}
+	                {"data":"endTime","name":"end_time"}
+	                
 	            ],
 	            "columnDefs":[ //具体列的定义
 	            	{
@@ -44,12 +35,8 @@ $(function  () {
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[2],
+	                    "targets":[1,2,3,4,5],
 	                    "orderable":false
-	                },
-	                {
-	                    "targets":[3,4],
-	                    "orderable":true
 	                }
 	            ],
 	            "language":{
