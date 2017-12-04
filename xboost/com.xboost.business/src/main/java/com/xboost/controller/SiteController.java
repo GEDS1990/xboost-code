@@ -149,7 +149,6 @@ public class SiteController {
             String fileName = new String(("Depot_Info").getBytes(), "utf-8");
             response.setCharacterEncoding("utf-8");
             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
-                   response.setHeader("Content-disposition", "attachment; filename=distance.xlsx");
             String scenariosId = ShiroUtil.getOpenScenariosId();
             String[] titles = { "depot ID","longitude","latitude","depot name","depot address","depot area",
                     "depot type","to distrib.center","night distrib","vehicle quantity limit",
