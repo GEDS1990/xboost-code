@@ -124,6 +124,14 @@ public class SiteDistService {
         return siteDistMapper.findCountByParam(param).intValue();
     }
 
+    /**
+     * 查询网点最大距离
+     * @param scenariosId
+     * @return
+     */
+    public Float findFarthestDist(String scenariosId) {
+        return siteDistMapper.findFarthestDist(scenariosId);
+    }
 
     /**
      * 根据用户的ID查询网点信息

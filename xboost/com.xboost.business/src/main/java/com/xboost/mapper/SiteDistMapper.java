@@ -19,6 +19,9 @@ public interface SiteDistMapper {
 
     Long findAllCount(String scenariosId);
 
+    //查询最大网点距离
+    Float findFarthestDist(String scenariosId);
+
     // 根据网点名称查询网点距离信息  @param siteName @return
     List<SiteDist> findByParam(Map<String, Object> param);
 

@@ -31,6 +31,7 @@
     <select id="findSiteDistByScenariosId" parameterType="map" resultMap="siteDistMap">
         select * from t_site_distance as s where s.scenariosId=#{scenariosId}
     </select>
+
     <select id="findAllCount" resultType="long">
         SELECT COUNT(*) FROM t_site_distance where scenariosId = #{scenariosId}
     </select>
@@ -43,6 +44,10 @@
                 and site_collect LIKE #{keyword} or site_delivery like #{keyword}
             </if>
         </where>
+    </select>
+
+    <select id="findFarthestDist" resultMap="float">
+        select max(carDistance) from t_site_distance as s where s.scenariosId=#{scenariosId}
     </select>
 
     <select id="findById" resultType="com.xboost.pojo.SiteDist"  resultMap="siteDistMap">
