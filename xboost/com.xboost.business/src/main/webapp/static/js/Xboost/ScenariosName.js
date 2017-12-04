@@ -275,13 +275,17 @@ $(function  () {
 
 			 //导出excel表格
             $('.export-btn').click(function  () {
+            debugger;
                 var _xls = $(this).attr('data-xls');
                 if (_xls) {
-                    $.post('/siteInfo/exportExcel').done(function  (res) {
-                        console.log(res);
-                    }).fail(function  () {
-                        console.log("fail");
-                    });
+                    window.location.href='/siteInfo/exportExcel';
+
+//                    $.post('/siteInfo/exportExcel').done(function  (res) {
+//                    debugger;
+//                        console.log(res);
+//                    }).fail(function  () {
+//                        console.log("fail");
+//                    });
                 }
             });
 

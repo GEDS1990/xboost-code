@@ -5,8 +5,8 @@
 <mapper namespace="com.xboost.mapper.UserMapper">
     <cache/>
     <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO t_user(username,password,tel,state,createtime,weixinid)
-        VALUES (#{username},#{password},#{tel},#{state},#{createtime},#{weixinid})
+        INSERT INTO t_user(username,password,tel,state,createtime)
+        VALUES (#{username},#{password},#{tel},#{state},#{createtime})
     </insert>
     <insert id="saveUserAndRole">
         INSERT INTO t_role_user(userid,roleid) VALUES
