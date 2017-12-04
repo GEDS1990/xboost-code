@@ -98,35 +98,51 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Adding dot information</h4>
+                <h4 class="modal-title">添加用户</h4>
             </div>
             <div class="modal-body">
-                <form id="newUserForm-user" class="form-horizontal">
+                <form id="newUserForm" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">pickup depot</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCollect" >
-                        </div>
-                        <label class="col-sm-2 control-label">delivery depot</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteDelivery" >
+                        <label class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="username">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">transportation distance(km)</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carDistance" >
+                        <label class="col-sm-2 control-label">联系电话</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="tel">
                         </div>
-                        <label class="col-sm-2 control-label">night transportation time(min)</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationNightDelivery" >
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="password" value="123123">
+                            <span class="help-block">默认密码为：123123</span>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">角色</label>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="role" value="1"> 管理员
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="role" value="2"> 经理
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="role" value="3"> 普通员工
+                                </label>
+                            </div>
+                        </div>
+
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn-dist" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="saveBtn" class="btn btn-primary">保存</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -277,11 +277,7 @@ $(function  () {
             $('.export-btn').click(function  () {
                 var _xls = $(this).attr('data-xls');
                 if (_xls) {
-                    $.post('/siteInfo/exportExcel').done(function  (res) {
-                        console.log(res);
-                    }).fail(function  () {
-                        console.log("fail");
-                    });
+                    window.location.href='/siteInfo/exportExcel';
                 }
             });
 
@@ -437,11 +433,7 @@ $(function  () {
         $('.export-btn').click(function  () {
         	var _xls = $(this).attr('data-xls');
         	if (_xls) {
-        		$.post('/siteDist/exportExcel').done(function  (res) {
-        			console.log(res);
-        		}).fail(function  () {
-        			console.log("fail");
-        		});
+        	window.location.href='/siteDist/exportExcel';
         	}
         }); 
          
@@ -608,14 +600,9 @@ $(function  () {
 
          //导出excel表格
          $('.export-btn').click(function  () {
-         debugger;
              var _xls = $(this).attr('data-xls');
              if (_xls) {
-                 $.post('/demandInfo/exportExcel').done(function  (res) {
-                     console.log(res);
-                 }).fail(function  () {
-                     console.log("fail");
-                 });
+             window.location.href='/demandInfo/exportExcel';
              }
          });
 		}
@@ -753,10 +740,19 @@ $(function  () {
 	            });
 	
 	        });
-	
+	        //导入excel表格
 	         $("#cond-file-upload-pata").click(function(){
 	             UploadFile("cond-input-form-pata","cond_file","/modelArg/addByExcel",'.bs-example-modal-input')
 	         });
+
+	         //导出excel表格
+             $('.export-btn').click(function  () {
+                var _xls = $(this).attr('data-xls');
+                if (_xls) {
+                window.location.href='/modelArg/exportExcel';
+                }
+             });
+
 		}
 	})(),
 	/**
@@ -922,10 +918,18 @@ $(function  () {
 	            });
 	
 	        });
-	
+	        //导入excel表格
 	         $("#cond-file-upload-tran").click(function(){
 	             UploadFile("cond-input-form-tran","cond_file","/car/addByExcel",'.bs-example-modal-input')
 	         });
+
+	         //导出excel表格
+             $('.export-btn').click(function  () {
+                var _xls = $(this).attr('data-xls');
+                if (_xls) {
+                window.location.href='/car/exportExcel';
+                }
+             });
 		}
 	})(),
 	
