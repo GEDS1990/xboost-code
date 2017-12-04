@@ -70,10 +70,11 @@ public class CarService {
                         List<String> lineList = excelUtil.readExcel(fileTmp);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-                            transport.setCarSource(row[1]);
                             transport.setType(row[0]);
-                            transport.setVelocity(Double.parseDouble(row[2]));
-                            transport.setDimensions(row[3]);
+                            transport.setDimensions(row[1]);
+                            transport.setCarSource(row[2]);
+                            transport.setVelocity(Double.parseDouble(row[3]));
+                            transport.setMaxDistance(Float.parseFloat(row[4]));
                             transport.setCostPerDistance(Double.parseDouble(row[5]));
                             transport.setCostPerTime(Double.parseDouble(row[6]));
                             transport.setDurationUnloadFull(row[7]);
@@ -87,7 +88,7 @@ public class CarService {
                             transport.setStartLocation(row[14]);
                             transport.setEndLocation(row[15]);
 //                            transport.setTw(row[0]);
-                            transport.setMaxDistance(Float.parseFloat(row[16]));
+
                             transport.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
                             //insert
                             transportMapper.save(transport);

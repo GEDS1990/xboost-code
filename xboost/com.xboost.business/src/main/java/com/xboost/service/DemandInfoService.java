@@ -80,18 +80,18 @@ public class DemandInfoService {
                             demandInfo.setDate(row[0]);
                             //收件网点编码
                             demandInfo.setSiteCodeCollect(row[1]);
-                            //派件网点编码
-                            demandInfo.setSiteCodeDelivery(row[2]);
-                            //产品类型
-                            demandInfo.setProductType(row[3]);
                             //时段（开始）
-                            demandInfo.setDurationStart(row[4]);
+                            demandInfo.setDurationStart(row[2]);
+                            //派件网点编码
+                            demandInfo.setSiteCodeDelivery(row[3]);
                             //时段(结束）
-                            demandInfo.setDurationEnd(row[5]);
+                            demandInfo.setDurationEnd(row[4]);
+                            //票数（票）
+                            demandInfo.setVotes(Integer.parseInt(row[5]));
                             //重量（公斤）
                             demandInfo.setWeight(Float.parseFloat(row[6]));
-                            //票数（票）
-                            demandInfo.setVotes(Integer.parseInt(row[7]));
+                            //产品类型
+                            demandInfo.setProductType(row[7]);
                             //时效要求(小时)
                             demandInfo.setAgeing(Integer.parseInt(row[8]));
                             demandInfo.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
