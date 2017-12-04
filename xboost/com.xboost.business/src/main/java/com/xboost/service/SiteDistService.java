@@ -156,7 +156,7 @@ public class SiteDistService {
     /**
      * 导出excel
      */
-    public void exportExcel(String scenariosId,String[] titles)
+    public void exportExcel(String scenariosId,String[] titles,ServletOutputStream outputStream)
     {
         List<SiteDist> list = siteDistMapper.findAll(scenariosId);
          // 创建一个workbook 对应一个excel应用文件
@@ -208,15 +208,15 @@ public class SiteDistService {
          {
             // String path = request.getServletPath(excelDownload);
             // String path = getServletContext().getRealPath("/");
-             String path = this.getClass().getClassLoader().getResource("").getPath();
-             String fileName = new String(("DepotsDistance_"+DateTime.now().toString("yyyyMMddHHmm")+new Random().nextInt()).getBytes(), "utf-8");
-             FileOutputStream fout = new FileOutputStream(path + fileName +".xlsx");
-             workBook.write(fout);
-             fout.flush();
-             fout.close();
-//             workBook.write(outputStream);
-//             outputStream.flush();
-//             outputStream.close();
+//             String path = this.getClass().getClassLoader().getResource("").getPath();
+//             String fileName = new String(("DepotsDistance_"+DateTime.now().toString("yyyyMMddHHmm")+new Random().nextInt()).getBytes(), "utf-8");
+//             FileOutputStream fout = new FileOutputStream(path + fileName +".xlsx");
+//             workBook.write(fout);
+//             fout.flush();
+//             fout.close();
+             workBook.write(outputStream);
+             outputStream.flush();
+             outputStream.close();
          }
          catch (IOException e)
          {

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.auth.Subject;
+import javax.servlet.ServletOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -195,7 +196,7 @@ public class DemandInfoService {
     /**
      * 导出excel
      */
-    public void exportExcel(String scenariosId,String[] titles)
+    public void exportExcel(String scenariosId,String[] titles,ServletOutputStream outputStream )
     {
         List<DemandInfo> list = demandInfoMapper.findAll(scenariosId);
         // 创建一个workbook 对应一个excel应用文件
@@ -271,13 +272,13 @@ public class DemandInfoService {
         }
         try
         {
-            FileOutputStream fout = new FileOutputStream("E:/Demands.xlsx");
-            workBook.write(fout);
-            fout.flush();
-            fout.close();
-//             workBook.write(outputStream);
-//             outputStream.flush();
-//             outputStream.close();
+//            FileOutputStream fout = new FileOutputStream("E:/Demands.xlsx");
+//            workBook.write(fout);
+//            fout.flush();
+//            fout.close();
+             workBook.write(outputStream);
+             outputStream.flush();
+             outputStream.close();
         }
         catch (IOException e)
         {

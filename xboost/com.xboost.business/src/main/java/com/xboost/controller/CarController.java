@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -141,5 +144,32 @@ public class CarController {
         return "success";
     }
 
+
+    @RequestMapping(value = "/exportExcel",method = RequestMethod.GET,produces = {"application/vnd.ms-excel;charset=UTF-8"})
+    @ResponseBody
+    public String exportExcel(HttpServletResponse response)
+    {
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        try
+        {
+            ServletOutputStream outputStream = response.getOutputStream();
+            String fileName = new String(("Demands").getBytes(), "utf-8");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
+            //       response.setHeader("Content-disposition", "attachment; filename=distance.xlsx");
+            String scenariosId = ShiroUtil.getOpenScenariosId();
+            String[] titles = { "type","dimensions","skills","start_location","end_location",
+                    "max_distance","max_running_time","cost_per_distance","cost_per_time",
+                    "fixed_cost","max_stop","velocity","fixed_round","fixed_round_fee","car_source"
+                    ,"max_load","duration_unload_full"};
+            transportService.exportExcel(scenariosId,titles,outputStream);
+            //       System.out.println("outputStream:"+outputStream);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

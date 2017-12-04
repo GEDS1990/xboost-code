@@ -3,8 +3,11 @@ package com.xboost.service;
 import com.mckinsey.sf.data.Car;
 import com.mckinsey.sf.data.TimeWindow;
 import com.xboost.mapper.CarMapper;
+import com.xboost.pojo.DemandInfo;
 import com.xboost.util.ExcelUtil;
+import com.xboost.util.ExportUtil;
 import com.xboost.util.QiniuUtil;
+import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -174,4 +179,128 @@ public class CarService {
     public Car[] findCarByParam(Map<String, Object> param) {
         return transportMapper.findCarByParam(param);
     }
+
+
+    /**
+     * 导出excel
+     */
+    public void exportExcel(String scenariosId,String[] titles,ServletOutputStream outputStream )
+    {
+        List<Car> list = transportMapper.findAll(scenariosId);
+        // 创建一个workbook 对应一个excel应用文件
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        // 在workbook中添加一个sheet,对应Excel文件中的sheet
+
+        XSSFSheet sheet = workBook.createSheet("Demands");
+        ExportUtil exportUtil = new ExportUtil(workBook, sheet);
+        XSSFCellStyle headStyle = exportUtil.getHeadStyle();
+        XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
+        // 构建表头
+        XSSFRow headRow = sheet.createRow(0);
+        XSSFCell cell = null;
+        for (int i = 0; i < titles.length; i++)
+        {
+            cell = headRow.createCell(i);
+            cell.setCellValue(titles[i]);
+            cell.setCellStyle(headStyle);
+            System.out.println(titles[i]);
+        }
+        // 构建表体数据
+        if (list != null && list.size() > 0)
+        {
+            try{
+
+                for (int j = 0; j < list.size(); j++)
+                {
+                    XSSFRow bodyRow = sheet.createRow(j + 1);
+                    Car car = list.get(j);
+
+                    cell = bodyRow.createCell(0);
+                    cell.setCellValue(car.getType());
+                    cell.setCellStyle(bodyStyle);
+
+
+                    cell = bodyRow.createCell(1);
+                    cell.setCellValue(car.getDimensions());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(2);
+                    cell.setCellValue(car.getSkills().toString());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(3);
+                    cell.setCellValue(car.getStartLocation());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(4);
+                    cell.setCellValue(car.getEndLocation());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(5);
+                    cell.setCellValue(car.getMaxDistance());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(6);
+                    cell.setCellValue(car.getMaxRunningTime());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(7);
+                    cell.setCellValue(car.getCostPerDistance());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(8);
+                    cell.setCellValue(car.getFixedCost());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(9);
+                    cell.setCellValue(car.getMaxStop());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(10);
+                    cell.setCellValue(car.getVelocity());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(11);
+                    cell.setCellValue(car.getFixedRound());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(12);
+                    cell.setCellValue(car.getFixedRoundFee());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(13);
+                    cell.setCellValue(car.getCarSource());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(14);
+                    cell.setCellValue(car.getMaxLoad());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(15);
+                    cell.setCellValue(car.getDurationUnloadFull());
+                    cell.setCellStyle(bodyStyle);
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        try
+        {
+//            FileOutputStream fout = new FileOutputStream("E:/Demands.xlsx");
+//            workBook.write(fout);
+//            fout.flush();
+//            fout.close();
+            workBook.write(outputStream);
+            outputStream.flush();
+            outputStream.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
 }
