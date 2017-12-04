@@ -1122,7 +1122,7 @@ $(function  () {
                     return roleName;
                 }},
                 {"data":function(row){
-                    return "<a href='javascript:;' class='editLink' data-id='"+row.id+"'>编辑</a> <a href='javascript:;' class='delLink' data-id='"+row.id+"'>删除</a>";
+                    return "<a href='javascript:;' class='editLink' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink' data-id='"+row.id+"'>Delete</a>";
                 }}
             ],
             "columnDefs":[ //具体列的定义
@@ -1194,8 +1194,9 @@ $(function  () {
             $("#editUserForm-user")[0].reset();
             var id = $(this).attr("data-id");
             $.get("/account/user.json",{"id":id}).done(function(result){
+            	debugger;
                 $("#id").val(result.id);
-                $("#username").val(result.username);
+                $("#userName").val(result.username);
                 $("#tel").val(result.tel);
 
                 $(".role").each(function(){

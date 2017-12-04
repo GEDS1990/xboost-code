@@ -146,16 +146,16 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Username</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="username" >
+                            <input type="text" class="form-control" id="userName" name="username" >
                         </div>
                         <label class="col-sm-2 control-label">Telephone</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="tel" >
+                            <input type="text" class="form-control"  id="tel" name="tel" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">角色</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-8">
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="role" value="1" class="role"> 管理员
