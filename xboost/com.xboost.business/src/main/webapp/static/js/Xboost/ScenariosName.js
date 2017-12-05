@@ -1122,7 +1122,7 @@ $(function  () {
     	                {"data":"lastOpenTime","name":"last_open_time"},
     	                {"data":"scenariosStatus","name":"scenarios_status"},
     	                {"data":function(row){
-    	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"'>Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
+    	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"'>Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>SendTo</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
     	                }}
     	            ],
     	            "columnDefs":[ //具体列的定义
@@ -1421,7 +1421,7 @@ $(function  () {
         }).fail(function(){
             alert("修改用户异常");
         });
-	
+
 	
 	
 	
