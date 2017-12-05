@@ -26,6 +26,10 @@ import java.util.Map;
 @Controller
 @RequestMapping("/MyScenarios")
 public class MyScenariosController {
+    @Inject
+    private MyScenariosService myScenariosService;
+    private static Logger logger = LoggerFactory.getLogger(MyScenariosService.class);
+
     /**
      * 跳转MyScenarios页面
      */
@@ -34,10 +38,14 @@ public class MyScenariosController {
         return "MyScenarios/MyScenarios";
     }
 
+    /**
+     * 跳转MyScenarios页面
+     */
+    @RequestMapping(value = "/AllScenarios",method = RequestMethod.GET)
+    public String AllScenarios() {
+        return "MyScenarios/AllScenarios";
+    }
 
-    @Inject
-    private MyScenariosService myScenariosService;
-    private static Logger logger = LoggerFactory.getLogger(MyScenariosService.class);
 
     /**
      * 添加场景信息
@@ -97,7 +105,40 @@ public class MyScenariosController {
         result.put("data",scenariosList);
         return result;
     }
+    //查询场景信息
+    @RequestMapping(value = "/allscenarios.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String,Object> loadAll(HttpServletRequest request) {
 
+        String draw = request.getParameter("draw");
+        Integer start = Integer.valueOf(request.getParameter("start"));
+        Integer length = Integer.valueOf(request.getParameter("length"));
+        String searchValue = request.getParameter("search[value]");
+        String orderColumnIndex = request.getParameter("order[0][column]");
+        String orderType = request.getParameter("order[0][dir]");
+        String orderColumnName = request.getParameter("columns["+orderColumnIndex+"][name]");
+
+        Map<String,Object> param = Maps.newHashMap();
+        param.put("start",start);
+        param.put("length",length);
+        if(StringUtils.isNotEmpty(searchValue)) {
+            param.put("keyword", "%" + Strings.toUTF8(searchValue) + "%");
+        }
+        param.put("orderColumn",orderColumnName);
+        param.put("orderType",orderType);
+
+        Map<String,Object> result = Maps.newHashMap();
+
+        List<Scenarios> scenariosList = myScenariosService.findByParam(param); //.findAllSiteInfo();
+        Integer count = myScenariosService.findAllCount(ShiroUtil.getCurrentUserId());
+        Integer filteredCount = myScenariosService.findCountByParam(param);
+
+        result.put("draw",draw);
+        result.put("recordsTotal",count); //总记录数
+        result.put("recordsFiltered",filteredCount); //过滤出来的数量
+        result.put("data",scenariosList);
+        return result;
+    }
     /**
      * 根据ID获取场景信息
      */

@@ -1089,6 +1089,161 @@ $(function  () {
 		}
 		
 	})(),
+
+	/*
+    	 *AllScenarios.jsp == MyScenariosController
+    	 *
+    	 * */
+    	(function  () {
+
+    		var MyScenarios = doc.getElementById("AllScenarios");
+    		if (MyScenarios) {
+//    			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Scenario.xlsx";
+//    			$('.down-href').attr("href",href);
+    			//加载列表
+    			var dt =$("#AllScenarios").DataTable({
+    	            "processing": true, //loding效果
+    	            "serverSide":true, //服务端处理
+    	            "searchDelay": 1000,//搜索延迟
+    	            "order":[[0,'desc']],//默认排序方式
+    	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
+    	            "ajax":{
+    	                url:"MyScenarios/allscenarios.json", //获取数据的URL
+    	                type:"get" //获取数据的方式
+    	            },
+    	            "columns":[  //返回的JSON中的对象和列的对应关系
+    	                {"data":"id","name":"id"},
+    	                {"data":"userId","name":"user_id"},
+    	                {"data":"scenariosName","name":"scenarios_name"},
+    	                {"data":"scenariosCategory","name":"scenarios_category"},
+    	                {"data":"scenariosDesc","name":"scenarios_desc"},
+    	                {"data":"scenariosModel","name":"scenarios_model"},
+    	                {"data":"scenariosOut","name":"scenarios_out"},
+    	                {"data":"lastOpenTime","name":"last_open_time"},
+    	                {"data":"scenariosStatus","name":"scenarios_status"},
+    	                {"data":function(row){
+    	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"'>Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
+    	                }}
+    	            ],
+    	            "columnDefs":[ //具体列的定义
+    	            	{
+    	                    "targets":[0,1,5,6],
+    	                    "visible":false
+    	                },
+    	                {
+    	                    "targets":[9],
+    	                    "orderable":false
+    	                },
+    	                {
+    	                    "targets":[1,2,3,4,5],
+    	                    "orderable":true
+    	                }
+    	            ],
+    	            "language":{
+    	                "lengthMenu":"Show _MENU_ Record",
+    	                "search":"Search:",
+    	                "info": "There are  _TOTAL_ records From _START_ To _END_",
+    	                "processing":"Loading...",
+    	                "zeroRecords":"No Data",
+    	                "infoEmpty": "There are 0 records from 0 to 0",
+    	                "infoFiltered":"(Read from _MAX_ record)",
+    	                "paginate": {
+    	                    "first":      "First",
+    	                    "last":       "Last",
+    	                    "next":       "Next",
+    	                    "previous":   "Prev"
+    	                }
+    	            }
+    	        });
+
+    	        //阻止表单提交
+    			var formCreate = doc.getElementById('newUserForm-scen');
+    			formCreate.addEventListener("submit",function  (event) {
+    				event.preventDefault();
+    			});
+
+
+    	        //点击open 打开场景
+    	        $("body").on("click",".openLink-scen",function  () {
+    	        	var $this = $(this);
+    	        	var openScenariosId = $this.attr("data-scenariosid");
+    	        	var scenName = $this.parent("td").parent("tr").find("td").eq(0).text();
+    	        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId,"openScenariosName":scenName}).done(function  (res) {
+    	        		if (res == "success") {
+    	        			$('#scen-name').remove();
+    	        			$('#scen-class').remove();
+    	        			var add = "";
+    						add+='<li class="xb-hover" id="scen-name">';
+    						add+='<a href="/ScenariosName" class="nav_xb" id="xb-nav-xb">';
+    						add+='<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>';
+    						//add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a><span id="scen-name-close" class="icon alt2 glyphicon glyphicon-remove"></span></li>';
+    						add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a></li>';
+    						add+='<li><ul class="xb-nav_ul" id="scen-class">';
+    						add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Settings</a></li>';
+    						add+='<li id="nav-Simualt"><a href="/simualte"><span class="icon-item alt icon-play"></span>Simulate</a></li>';
+    						add+='<li id="nav-Results"><a href="#"><span class="icon-item alt icon-document-checked"></span>Results</a></li></ul></li>';
+    						$('#after-content').after(add);
+    						window.location.href = "/ScenariosName";
+    	        		}
+    	        	});
+    	        })
+
+
+    	        //创建场景
+    	        $("#addNewUser-scen").click(function(){
+    	            $("#newUserModal-scen").modal('show');
+    	        });
+    	        $("#saveBtn-scen").click(function(){
+    	        	var _val = $("input[name='scenariosName']").val(),
+    	        	pattern = new RegExp("[`~!@#$^&*=|{}':;',\\[\\]<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"),
+    				xss = pattern.test(_val);
+    	        	if (_val && !xss) {
+    	        		$.post("/MyScenarios/add",$("#newUserForm-scen").serialize()).done(function(result){
+    	                        if("success" == result) {
+    	                            $("#newUserForm-scen")[0].reset();
+    	                            $("#newUserModal-scen").modal("hide");
+    	                            dt.ajax.reload();
+    	                            window.location.reload();
+    	                        }
+    	                    }).fail(function(){
+    	                        //alert("Exception occurs when adding");
+    	                    });
+
+    	        	}else{
+    	        		$("input[name='scenariosName']").focus();
+    	        	}
+
+    	        });
+
+    	        //删除用户
+    	        $(document).delegate(".delLink-scen","click",function(){
+    	            var id = $(this).attr("data-scenariosid");
+    	            $('#modal-del').modal("show")
+    	            $('#modal-delBtn').click(function  () {
+    	            	$.post("/MyScenarios/del",{"id":id}).done(function(result){
+    	                    if("success" == result) {
+    	                        dt.ajax.reload();
+    	                        window.location.reload();
+    	                    }
+    	                }).fail(function(){
+    	                    //alert("Delete exception");
+    	                });
+    	            })
+
+
+
+    	        });
+
+    	        //导出文件
+
+
+    			//上传excel文件
+    	         $("#cond-file-upload-dist").click(function(){
+    	         	UploadFile("cond-input-form-dist","cond_file","/MyScenarios/addByExcel",'.bs-example-modal-input')
+    	         });
+    		}
+
+    	})(),
 	
 	
 	    /**

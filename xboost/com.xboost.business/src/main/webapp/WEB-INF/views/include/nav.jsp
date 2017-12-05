@@ -17,8 +17,8 @@
                 <li class="xb-hover" id="nav-Research">
                     <a class="nav_xb" ><span class="icon alt icon-bar-chart"></span>Research</a>
                 </li>
-                <li class="xb-hover" id="nav-AllScebario">
-                    <a class="nav_xb" ><span class="icon alt icon-sitemap"></span>All Scebario</a>
+                <li class="xb-hover" id="nav-AllScenarios">
+                    <a href="/MyScenarios/AllScenarios" class="nav_xb" ><span class="icon alt icon-sitemap"></span>All Scenarios</a>
                 </li>
                 <li class="xb-hover" id="UserManage">
                     <a href="/account" class="nav_xb" ><span class="icon alt icon-users"></span>User Manage</a>
