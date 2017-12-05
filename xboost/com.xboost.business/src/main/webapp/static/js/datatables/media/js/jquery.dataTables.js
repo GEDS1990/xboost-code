@@ -2885,7 +2885,7 @@
 			.val( previousSearch.sSearch )
 			.attr( 'placeholder', language.sSearchPlaceholder )
 			.bind(
-				'keyup.DT search.DT input.DT paste.DT cut.DT',
+				'keypress.DT search.DT input.DT paste.DT cut.DT',
 				searchDelay ?
 					_fnThrottle( searchFn, searchDelay ) :
 					searchFn
@@ -2893,6 +2893,7 @@
 			.bind( 'keypress.DT', function(e) {
 				/* Prevent form submission */
 				if ( e.keyCode == 13 ) {
+					console.log(22)
 					return false;
 				}
 			} )
@@ -4411,7 +4412,6 @@
 	
 			if ( last && now < last + frequency ) {
 				clearTimeout( timer );
-	
 				timer = setTimeout( function () {
 					last = undefined;
 					fn.apply( that, args );

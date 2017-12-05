@@ -25,7 +25,7 @@
         <where>
             scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                and location LIKE #{keyword}
+                and  cur_loc LIKE #{keyword}
             </if>
         </where>
         order by ${orderColumn} ${orderType}

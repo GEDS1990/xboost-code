@@ -80,7 +80,7 @@
 	float: right;
 }
 .xb-fr>button{
-	font-size: 12px;
+	font-size: 14px;
 	color: #8c97b2;
 	border: 1px solid #ccd4e3;
 	background-color: #eef1f7;
@@ -392,3 +392,41 @@ table.table-bordered.dataTable td:last-child {
 .sim-run-btn>button{
 	width: auto;
 }
+
+/************result***********************************/
+/***route***/
+#route-wrap{
+	background-color: #fff;
+}
+.table-responsive.active.result-style{
+	padding: 10px;
+}
+.result-header{
+    background-color: #eef1f7;
+    padding: 15px 20px;
+    color: #8c97b2;
+}
+#SolutionRoute_wrapper>div:first-child{
+	display: none;
+}
+.route-select{
+	padding: 4px 8px;
+	padding-left: 22px;
+	font-size: 14px;
+}
+.select-depot{
+	position: relative;
+}
+.select-depot>span{
+	position: absolute;
+	top: 50%;
+	left: 5px;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+}
+
+
+

@@ -323,14 +323,4 @@ body{
 
 
 /****************result****************/
-#route-wrap{
-	background-color: #fff;
-}
-.table-responsive.active.result-style{
-	padding: 10px;
-}
-.result-header{
-    background-color: #eef1f7;
-    padding: 15px 20px;
-    color: #8c97b2;
-}
+

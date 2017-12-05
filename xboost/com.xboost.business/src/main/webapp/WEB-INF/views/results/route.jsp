@@ -77,9 +77,12 @@
 	    	<div id="route-wrap">
 	    		<header class="clearfix result-header">
 	    			<div class="xb-fl">
-	    				<select>
-	    					<option>111</option>
-	    				</select>
+		    			<div class="select-depot">
+		    				<span class="glyphicon glyphicon-align-left"></span>
+		    				<select id="route-depot" class="route-select">
+		    					<option value="0">All Depots</option>
+		    				</select>
+		    			</div>
 	    			</div>
 	    			<div class="xb-fr">
 	    				<button><span class="icon-upload"></span>Export this Sheet</button>

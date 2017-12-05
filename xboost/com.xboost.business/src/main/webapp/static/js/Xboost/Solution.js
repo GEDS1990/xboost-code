@@ -14,6 +14,7 @@ $(function  () {
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
+	            "destroy": true,
 	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
@@ -22,7 +23,14 @@ $(function  () {
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
-	                {"data":"curLoc","name":"cur_loc"},
+	                {"data":function  (res) {
+	                	
+	                	
+	                	var add='<option value='+res.curLoc+'>'+res.curLoc+'</option>';
+	                	$('#route-depot').append(add);
+	                	console.log(res.curLoc)
+	                	return res.curLoc;
+	                },"name":"cur_loc"},
 	                {"data":"carType","name":"car_type"},
 	                {"data":"arrTime","name":"arr_time"},
 	                {"data":"unloadLoc","name":"unload_loc"},
@@ -55,6 +63,9 @@ $(function  () {
 	                }
 	            }
 	        });
+	        
+	        
+	        
 		}
 		
 	})()

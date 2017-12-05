@@ -64,6 +64,7 @@
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
 	        </div>
+	        <input type="text" id="a" value="" /><button id="b">点击</button>
 	    	<div>
 	    		<!--Depots Info-->
 			    <div class="table-responsive active">
@@ -408,7 +409,7 @@
 <script src="/static/js/morris/raphael-min.js"></script>
 <script src="/static/js/morris/morris.min.js"></script>
 <%-- DataTables JS--%>
-<script src="/static/js/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="/static/js/datatables/media/js/jquery.dataTables.js"></script>
 <script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
 <script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/flex.js"></script>
@@ -418,6 +419,15 @@
 		(function  () {
 			$('#nav-Conditions').addClass("active");
 		})()
+	});
+</script>
+<script>
+	$(function  () {
+		var table = $('#Depots_Info').DataTable();
+		$(document).on("click","#b",function  () {
+			var val = $('#a').val();
+			table.search(val).draw(false);
+		});
 	});
 </script>
 </body>
