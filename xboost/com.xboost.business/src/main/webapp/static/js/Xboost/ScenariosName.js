@@ -1096,8 +1096,8 @@ $(function  () {
     	 * */
     	(function  () {
 
-    		var MyScenarios = doc.getElementById("AllScenarios");
-    		if (MyScenarios) {
+    		var AllScenarios = doc.getElementById("AllScenarios");
+    		if (AllScenarios) {
 //    			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Scenario.xlsx";
 //    			$('.down-href').attr("href",href);
     			//加载列表
