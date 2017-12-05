@@ -1395,7 +1395,32 @@ $(function  () {
             });
 
         });
-    })()
+    })(),
+
+     $click(function(){
+        $.post("/ScenariosName/edit",$("#editUserForm-user").serialize()).done(function(result){
+        "ajax":{
+                url:"/account/settingsOverview.json", //获取数据的URL
+                type:"get" //获取数据的方式
+            },
+        "columns":[  //返回的JSON中的对象和列的对应关系
+        {"data":"id","name":"id"},
+        {"data":"userId","name":"user_id"},
+        {"data":"scenariosName","name":"scenarios_name"},
+        {"data":"scenariosCategory","name":"scenarios_category"},
+        {"data":"scenariosDesc","name":"scenarios_desc"},
+        {"data":"scenariosModel","name":"scenarios_model"},
+        {"data":"scenariosOut","name":"scenarios_out"},
+        {"data":"lastOpenTime","name":"last_open_time"},
+        {"data":"scenariosStatus","name":"scenarios_status"},
+        }
+            if(result == "success") {
+                $("#editUserModal-user").modal("hide");
+                dt.ajax.reload();
+            }
+        }).fail(function(){
+            alert("修改用户异常");
+        });
 	
 	
 	
