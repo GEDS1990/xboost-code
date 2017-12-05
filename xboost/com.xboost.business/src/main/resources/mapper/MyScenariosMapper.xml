@@ -27,7 +27,10 @@
     <select id="findByParam" parameterType="map" resultType="Scenarios" resultMap="scenariosMap">
         SELECT * from t_scenarios_info
         <where>
-            user_id=#{userId}
+            1 = 1
+            <if test="userId != null and userId != ''">
+                and user_id=#{userId}
+            </if>
             <if test="keyword != null and keyword != ''">
                 and scenarios_name LIKE #{keyword} or scenarios_category like #{keyword} or scenarios_desc like #{keyword}
             </if>

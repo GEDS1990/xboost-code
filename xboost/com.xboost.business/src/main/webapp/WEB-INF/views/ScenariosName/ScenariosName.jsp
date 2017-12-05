@@ -69,19 +69,19 @@
 	    			<ul id="scen-ul" class="clearfix">
 	    				<li>
 	    					<p>Depot Quantity:</p>
-	    					<p>--</p>
+	    					<p id="depot-quantity">--</p>
 	    				</li>
 	    				<li>
 	    					<p>Vehicle Quantity:</p>
-	    					<p>--</p>
+	    					<p id="vehicle-quantity">--</p>
 	    				</li>
 	    				<li>
 	    					<p>Demand Quantity:</p>
-	    					<p>--</p>
+	    					<p id="demand-quantity">--</p>
 	    				</li>
 	    				<li>
 	    					<p>The Farthest Distance(km):</p>
-	    					<p>--</p>
+	    					<p id="farthest-distance">--</p>
 	    				</li>
 	    			</ul>
 	    		</div>

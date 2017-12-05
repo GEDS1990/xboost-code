@@ -1096,8 +1096,8 @@ $(function  () {
     	 * */
     	(function  () {
 
-    		var MyScenarios = doc.getElementById("AllScenarios");
-    		if (MyScenarios) {
+    		var AllScenarios = doc.getElementById("AllScenarios");
+    		if (AllScenarios) {
 //    			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Scenario.xlsx";
 //    			$('.down-href').attr("href",href);
     			//加载列表
@@ -1122,7 +1122,7 @@ $(function  () {
     	                {"data":"lastOpenTime","name":"last_open_time"},
     	                {"data":"scenariosStatus","name":"scenarios_status"},
     	                {"data":function(row){
-    	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"'>Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
+    	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"'>Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>SendTo</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
     	                }}
     	            ],
     	            "columnDefs":[ //具体列的定义
@@ -1395,8 +1395,33 @@ $(function  () {
             });
 
         });
-    })()
-	
+    })(),
+
+     $click(function(){
+        $.post("/ScenariosName/edit",$("#editUserForm-user").serialize()).done(function(result){
+        "ajax":{
+                url:"/account/settingsOverview.json", //获取数据的URL
+                type:"get" //获取数据的方式
+            },
+        "columns":[  //返回的JSON中的对象和列的对应关系
+        {"data":"id","name":"id"},
+        {"data":"userId","name":"user_id"},
+        {"data":"scenariosName","name":"scenarios_name"},
+        {"data":"scenariosCategory","name":"scenarios_category"},
+        {"data":"scenariosDesc","name":"scenarios_desc"},
+        {"data":"scenariosModel","name":"scenarios_model"},
+        {"data":"scenariosOut","name":"scenarios_out"},
+        {"data":"lastOpenTime","name":"last_open_time"},
+        {"data":"scenariosStatus","name":"scenarios_status"},
+        }
+            if(result == "success") {
+                $("#editUserModal-user").modal("hide");
+                dt.ajax.reload();
+            }
+        }).fail(function(){
+            alert("修改用户异常");
+        });
+
 	
 	
 	

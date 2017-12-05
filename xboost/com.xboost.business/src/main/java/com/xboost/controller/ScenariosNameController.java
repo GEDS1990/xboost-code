@@ -45,7 +45,7 @@ public class ScenariosNameController {
     /*
     * 跳转Conditions.jsp页面
     * */
-    @RequestMapping(value = "/settingsOverview",method = RequestMethod.GET)
+    @RequestMapping(value = "/settingsOverview.json",method = RequestMethod.GET)
     public Map<String,Object> settingsOverview() {
 
         Integer siteCounter1 = siteInfoService.findSiteInfoCount(ShiroUtil.getOpenScenariosId());
