@@ -4,7 +4,7 @@
 
     <cache/>
 
-    <insert id="save">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT into t_scenarios_info(user_id,scenarios_name,scenarios_category,scenarios_desc,scenarios_model,scenarios_out,
         scenarios_status,last_open_time,str1,str2,str3,createtime,updatetime)
         VALUES (#{userId},#{scenariosName},#{scenariosCategory},#{scenariosDesc},#{scenariosModel},#{scenariosOut},
