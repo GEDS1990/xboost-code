@@ -38,7 +38,6 @@ public class MyScenariosService {
         scenario.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
         scenario.setUserId(ShiroUtil.getCurrentUserId());
         myScenariosMapper.save(scenario);
-        myScenariosMapper.saveScenariosIduserId(scenario.getId(),ShiroUtil.getCurrentUserId());
 
     }
 
@@ -148,20 +147,6 @@ public class MyScenariosService {
     public void delById(Integer id) {
 
         myScenariosMapper.delById(id);
-    }
-    /**
-     * send场景信息to user
-     * @param scenariosId
-     * @param userId
-     */
-    public void sendToUserByScenariosId(String scenariosId,int userId) {
-        int userIdTemp = myScenariosMapper.findById(Integer.parseInt(scenariosId)).getUserId();
-//        scenario.getUserId();
-        if( null != String.valueOf(userIdTemp) && "" != String.valueOf(userIdTemp)){
-//            userIdTemp = userIdTemp + "," + userId;
-//            scenario.setUserId(userIdTemp);
-        }
-        myScenariosMapper.sendToUserByScenariosId(scenariosId,userIdTemp);
     }
 
     /**

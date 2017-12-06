@@ -56,8 +56,8 @@
 	        </div>
 	        <div class="cond-top">
 	        	<ul class="cond-top-ul clearfix">
-	        		<li class="active"><a class="active" href="/route">Depots</a></li>
-	        		<li><a href="#">Route</a></li>
+	        		<li><a href="/activity">Depots</a></li>
+	        		<li class="active"><a class="active" href="/route">Route</a></li>
 	        		<li><a href="#">Vehicles</a></li>
 	        		<li><a href="#">Costs</a></li>
 	        		<li><a href="#">Efficiency</a></li>
@@ -79,8 +79,8 @@
 	    			<div class="xb-fl">
 		    			<div class="select-depot">
 		    				<span class="glyphicon glyphicon-align-left"></span>
-		    				<select id="route-depot" class="route-select">
-		    					<option value="0">All Depots</option>
+		    				<select id="route-route" class="route-select">
+		    					
 		    				</select>
 		    			</div>
 	    			</div>
@@ -117,25 +117,18 @@
 					    <thead>
 					    	<tr>
 					    		<th rowspan="1">id</th>
-					    		<th rowspan="1">Depot ID</th>
-					    		<th rowspan="1">Incoming Vehicle</th>
+					    		<th rowspan="1">Route ID</th>
+					    		<th rowspan="1">Deport Order</th>
+					    		<th rowspan="1">Deport ID</th>
+					    		<th rowspan="1">Deport Name</th>
+					    		<th rowspan="1">Deport Address</th>
 					    		<th rowspan="1">Arriva Time</th>
 					    		<th rowspan="1">Operation</th>
 					    		<th rowspan="1">Departure Time</th>
-					    		<!--<th rowspan="1">cur loc</th>
-					    		<th rowspan="1">type</th>
-					    		<th rowspan="1">sb_loc</th>
-					    		<th rowspan="1">sb_vol</th>
-					    		<th rowspan="1">arr_time</th>
-					    		<th rowspan="1">end_time</th>
-					    		<th rowspan="1">unload_loc</th>
-					    		<th rowspan="1">unload_vol</th>
-					    		<th rowspan="1">next_cur_loc</th>
-					    		<th rowspan="1">calc_dis</th>
-					    		<th rowspan="1">car_goods</th>-->
+					    		<th rowspan="1">Next Deport & Distance</th>
 					    	</tr>
 					    </thead>
-			            <tbody id="depot-tbody">
+			            <tbody id="route-tbody">
 			            	<tr>
 				                <td></td>
 				                <td></td>
@@ -143,17 +136,10 @@
 				                <td></td>
 				                <td></td>
 				                <td></td>
-				                <!--<td></td>
 				                <td></td>
 				                <td></td>
 				                <td></td>
 				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>-->
 			            	</tr>
 			            </tbody>
 		            </table>
@@ -315,81 +301,7 @@
 </div><!-- /.modal -->
 
 
-<div class="modal fade" id="editUserModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit dot information</h4>
-            </div>
-            <div class="modal-body">
-                <form id="editUserForm" class="form-horizontal">
-                    <input type="hidden" name="id" id="siteId" value="">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">ID</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCode" id="siteCode">
-                        </div>
-                        <label class="col-sm-2 control-label">longitude</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteLongitude" id="siteLongitude">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">latitude</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteLatitude" id="siteLatitude" >
-                        </div>
-                        <label class="col-sm-2 control-label">name</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteName" id="siteName" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">address</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteAddress" id="siteAddress" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">area</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteArea" id="siteArea">
-                        </div>
-                        <label class="col-sm-2 control-label">type</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteType" id="siteType">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">distrib.center</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="distribCenter" id="distribCenter">
-                        </div>
-                        <label class="col-sm-2 control-label">truck quantity limit</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carNum" id="carNum">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">truck weight limit</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="largeCarModel" id="largeCarModel">
-                        </div>
-                        <label class="col-sm-2 control-label">capacity</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxOperateNum" id="maxOperateNum">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="editBtn" class="btn btn-primary">Save</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 
 
 <div class="modal fade" id="modal-info">
@@ -424,7 +336,7 @@
 <script src="/static/js/morris/raphael-min.js"></script>
 <script src="/static/js/morris/morris.min.js"></script>
 <%-- DataTables JS--%>
-<script src="/static/js/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="/static/js/datatables/media/js/jquery.dataTables.js"></script>
 <script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
 <script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/flex.js"></script>

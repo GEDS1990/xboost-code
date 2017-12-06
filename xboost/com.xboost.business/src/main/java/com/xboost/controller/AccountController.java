@@ -115,14 +115,6 @@ public class AccountController {
     public User getUserInfo(Integer id) {
         return userService.findUserWithRoleById(id);
     }
-    /**
-     * 获取所有用户信息
-     */
-    @RequestMapping(value = "/alluser.json",method = RequestMethod.GET)
-    @ResponseBody
-    public List<User> getAllUserInfo() {
-        return userService.findAllUser();
-    }
 
     /**
      * 编辑用户
