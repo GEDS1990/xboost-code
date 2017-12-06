@@ -33,6 +33,7 @@ public interface MyScenariosMapper {
      */
     Scenarios findById(Integer id);
 
+    void saveScenariosIduserId(@Param("scenariosId") Integer scenariosId,@Param("userId")Integer userId);
 
     // 根据id编辑场景信息  @param scenario
     void edit(Scenarios scenario);
