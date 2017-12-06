@@ -1122,7 +1122,7 @@ $(function  () {
     	                {"data":"lastOpenTime","name":"last_open_time"},
     	                {"data":"scenariosStatus","name":"scenarios_status"},
     	                {"data":function(row){
-    	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"'>Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>SendTo</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
+    	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"'>Open</a> <a href='javascript:;' class='sendToLink' data-scenariosId='"+row.id+"'>SendTo</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
     	                }}
     	            ],
     	            "columnDefs":[ //具体列的定义
@@ -1161,6 +1161,28 @@ $(function  () {
     			formCreate.addEventListener("submit",function  (event) {
     				event.preventDefault();
     			});
+
+    			//sendTo modal
+    			$("body").on("click",".sendToLink",function  () {
+    	        	var $this = $(this);
+    	        	var scenariosId = $this.attr("data-scenariosId");
+    	        	$("#scenariosId").val(scenariosId);
+                    $("#sendToModal").modal('show');
+                });
+                //sendTo controller
+    			$("body").on("click","#sendToBtn",function  () {
+                    debugger;
+                    var userId = $("#userId").val();
+                    var scenariosId = $("#scenariosId").val();
+                    $.post("/MyScenarios/sendto",{"scenariosId":scenariosId,"userId":userId}).done(function(result){
+                    debugger;
+                    window.location.href = "/MyScenarios/AllScenarios";
+                    }).fail(function(e){
+debugger;
+                    });
+debugger;
+                    $("#sendToModal").modal('hide');
+                });
 
 
     	        //点击open 打开场景
@@ -1353,7 +1375,6 @@ $(function  () {
             $("#editUserForm-user")[0].reset();
             var id = $(this).attr("data-id");
             $.get("/account/user.json",{"id":id}).done(function(result){
-            	debugger;
                 $("#id").val(result.id);
                 $("#userName").val(result.username);
                 $("#tel").val(result.tel);

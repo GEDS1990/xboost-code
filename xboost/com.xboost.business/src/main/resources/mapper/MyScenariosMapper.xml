@@ -11,17 +11,21 @@
         #{scenariosStatus},#{lastOpenTime},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
+    <insert id="saveScenariosIduserId">
+        insert into t_scenarios_user(scenariosId,userId) values(#{scenariosId},#{userId})
+    </insert>
+
     <insert id="addCategory">
         INSERT into t_scenarios_category(user_id,category_name,str1,str2,create_time,update_time)
         VALUES (#{userId},#{categoryName},#{str1},#{str2},#{createTime},#{updateTime})
     </insert>
 
     <select id="findCategory" parameterType="map" resultType="com.xboost.pojo.ScenariosCategory" resultMap="categoryMap">
-        SELECT * FROM t_scenarios_category where user_id=#{userId}
+        SELECT * FROM t_scenarios_category where id in (select scenariosId from t_scenarios_user where userId=#{userId})
     </select>
 
     <select id="findAll" resultType="com.xboost.pojo.Scenarios">
-        SELECT * FROM t_scenarios_info where user_id=#{userId}
+        SELECT * FROM t_scenarios_info where id in (select scenariosId from t_scenarios_user where userId=#{userId})
     </select>
 
     <select id="findByParam" parameterType="map" resultType="Scenarios" resultMap="scenariosMap">
@@ -29,7 +33,7 @@
         <where>
             1 = 1
             <if test="userId != null and userId != ''">
-                and user_id=#{userId}
+                and id in (select scenariosId from t_scenarios_user where userId=#{userId})
             </if>
             <if test="keyword != null and keyword != ''">
                 and scenarios_name LIKE #{keyword} or scenarios_category like #{keyword} or scenarios_desc like #{keyword}
@@ -40,13 +44,13 @@
     </select>
 
     <select id="findAllCount" resultType="long">
-        SELECT COUNT(*) FROM t_scenarios_info where user_id=#{userId}
+        SELECT COUNT(*) FROM t_scenarios_info where id in (select scenariosId from t_scenarios_user where userId=#{userId})
     </select>
 
     <select id="findCountByParam" resultType="long" parameterType="map">
         SELECT count(*) FROM t_scenarios_info
         <where>
-            user_id=#{userId}
+            id in (select scenariosId from t_scenarios_user where userId=#{userId})
             <if test="keyword != null and keyword != ''">
                 and scenarios_name LIKE #{keyword} or scenarios_category like #{keyword} or scenarios_desc like #{keyword}
             </if>
@@ -71,6 +75,10 @@
     <delete id="delById">
         DELETE FROM t_scenarios_info WHERE id = #{id}
     </delete>
+
+    <update id="sendToUserByScenariosId">
+        insert into  t_scenarios_user (userId,scenariosId) values(#{userIdTemp},#{scenariosId})
+    </update>
 
 
     <resultMap id="scenariosMap" type="Scenarios">

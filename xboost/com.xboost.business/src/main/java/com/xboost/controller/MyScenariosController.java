@@ -7,14 +7,10 @@ import com.xboost.service.MyScenariosService;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
@@ -171,6 +167,15 @@ public class MyScenariosController {
         return "success";
     }
 
+    /**
+     * send场景信息to user
+     */
+    @RequestMapping(value = "/sendto",method = RequestMethod.POST)
+    @ResponseBody
+    public String sendToUserByScenariosId(String scenariosId, int userId) {
+        myScenariosService.sendToUserByScenariosId(scenariosId,userId);
+        return "success";
+    }
     /**
      * 打开场景
      * 将场景id设置到session中

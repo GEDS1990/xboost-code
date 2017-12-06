@@ -66,7 +66,52 @@ function CategoryList () {
 		});
 	}
 }());
-
+/*allscenarios.jsp*/
+(function(){
+    var user_out = doc.getElementById("user-out");
+    if (user_out) {
+        userList();
+        //点击显示分类下拉 下拉框
+        $('#user-out').click(function  () {
+            $(this).css({"border-color":"rgb(77, 144, 254)"})
+            $('#user-box').toggle();
+        });
+        //点 选项 进行选择
+        $('body').on("click","#userClass>li",function  () {
+        debugger;
+            var _val = $(this).attr("data-value");
+            var _text = $(this).text();
+            $("#userId").val(_val);
+            $('#class-user').text(_text);
+            $('#user-box').hide();
+        });
+        //阻止冒泡
+        $('.clearfix.classwrap').click(function  () {
+            return false;
+        });
+    }
+    //初始化 user 列表函数
+    function userList () {
+        $.get("/account/alluser.json").done(function  (res) {
+            if (res) {
+                //console.log(res);
+                if (res) {
+                    var result = res,
+                    len = result.length;
+                    $('#userClass').empty();
+                    $('#userClass>li').off("click");
+                    for (var i=0;i<len;i++) {
+                        var add="";
+                        add+='<li data-value='+result[i].id+'>'+result[i].username+'</li>';
+                        $('#userClass').prepend(add);
+                    }
+                }
+            }
+        }).fail(function  () {
+            console.log("fail");
+        })
+    }
+}());
 /*
  *ScenariosName.jsp
  * 

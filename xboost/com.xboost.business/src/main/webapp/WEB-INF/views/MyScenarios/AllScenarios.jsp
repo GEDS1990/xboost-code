@@ -179,6 +179,39 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="sendToModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit dot information</h4>
+            </div>
+            <form id="sendToForm" class="form-horizontal">
+            	<div class="modal-body">
+                    <input type="hidden" name="scenariosId" id="scenariosId" value="">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">User*:</label>
+                        <div class="col-sm-7">
+                            <input type="hidden" name="userId"  id="userId"/>
+                            <div  class="form-control user" id="user-out">
+	                        	<span class="iconcate glyphicon glyphicon-triangle-bottom"></span>
+	                        	<p id="class-user"></p>
+                                <div id="user-box">
+                                    <ul id="userClass"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                <input type="submit" id="sendToBtn" class="btn btn-primary" value="sendTo" />
+	            </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <div class="modal fade" id="modal-del">
     <div class="modal-dialog">
