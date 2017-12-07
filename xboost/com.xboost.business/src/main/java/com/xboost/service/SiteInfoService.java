@@ -125,7 +125,7 @@ public class SiteInfoService {
     }
 
     /**
-     * 根据网点名称查询网点信息
+     * 根据网点查询网点信息
      * param siteName
      * @return
      */
@@ -149,6 +149,15 @@ public class SiteInfoService {
      */
     public String findSiteCode(String scenariosId) {
         return siteInfoMapper.findSiteCode(scenariosId);
+    }
+
+    /**
+     * 根据场景id和网点编码查询网点信息
+     * @param scenariosId
+     * @return
+     */
+    public SiteInfo findSiteInfoBySiteCode(String scenariosId,String siteCode) {
+        return siteInfoMapper.findSiteInfoBySiteCode(scenariosId,siteCode);
     }
 
 
