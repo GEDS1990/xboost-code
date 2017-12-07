@@ -25,6 +25,13 @@ public interface SiteInfoMapper {
     Long findSiteInfoCountByParam(Map<String, Object> param);
 
     /**
+     * 根据场景id查询网点编码
+     * @param scenariosId
+     * @return
+     */
+    String findSiteCode(String scenariosId);
+
+    /**
      * 根据用户的ID查询网点信息
      * @param id 用户ID
      * @return

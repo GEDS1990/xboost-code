@@ -16,12 +16,16 @@
         SELECT * FROM t_site_info where scenariosId = #{scenariosId}
     </select>
 
+    <select id="findSiteCode" resultType="String">
+        SELECT distinct(site_code) FROM t_site_info where scenariosId = #{scenariosId}
+    </select>
+
     <select id="findByParam" parameterType="map" resultType="SiteInfo" resultMap="siteInfoMap">
         SELECT * from t_site_info
         <where>
             scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                and site_name LIKE #{keyword} or site_code like #{keyword}
+                and site_code like #{keyword}
         </if>
         </where>
         order by ${orderColumn} ${orderType}
