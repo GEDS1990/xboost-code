@@ -67,8 +67,9 @@
 	    				<p>Simulation Method :</p>
 	    				<select id="sim-model" >
 	    					<option value="0">Please choose</option>
-		    				<option value="1">ABA</option>
-		    				<option value="2">CDC</option>
+		    				<option value="1">Serial model</option>
+		    				<option value="2">Relay model</option>
+		    				<option value="2">Mixed model</option>
 		    			</select>
 	    			</div>
 	    			<div class="form-group sim-wrap clearfix">

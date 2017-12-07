@@ -2,6 +2,7 @@ package com.xboost.mapper;
 
 import com.xboost.pojo.Activity;
 import com.xboost.pojo.Route;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public interface SolutionActivityMapper {
     List<Activity> findAll(String scenariosId);
 
     //查询所有模型整体参数信息总数
-    Long findAllCount(String scenariosId);
+    Long findAllCount(@Param("scenariosId") String scenariosId,@Param("userId") String userId);
 
     /**
      * 根据用户的ID查询模型整体参数

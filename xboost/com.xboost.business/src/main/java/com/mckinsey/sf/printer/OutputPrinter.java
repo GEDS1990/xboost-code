@@ -1,9 +1,5 @@
 package com.mckinsey.sf.printer;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,13 +13,6 @@ import com.xboost.util.CascadeModelUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.SpringBeanFactoryUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mckinsey.sf.constants.IConstants;
 import com.mckinsey.sf.data.ActState;
@@ -249,6 +238,7 @@ public class OutputPrinter implements IConstants {
 					arrInfo.setRouteId(r.getId());
 //					arrInfos.add(arrInfo);
 					arrInfo.setScenariosId(ShiroUtil.getOpenScenariosId());
+					arrInfo.setUserId(String.valueOf(ShiroUtil.getCurrentUserId()));
 					arrInfo.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 					arrInfoService.saveArrInfo(arrInfo);
 					prevLoc = cur.getLocation();
@@ -268,6 +258,7 @@ public class OutputPrinter implements IConstants {
 				ji.setDuration(duration);
 //				jobInfos.add(ji);
 				ji.setScenariosId(ShiroUtil.getOpenScenariosId());
+				ji.setUserId(String.valueOf(ShiroUtil.getCurrentUserId()));
 				ji.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 				jobInfoService.saveJobInfo(ji);
 			}
@@ -307,6 +298,7 @@ public class OutputPrinter implements IConstants {
 //				jobInfoService.saveJobInfo(jobInfos.get(i));
 //			}
 			stat.setScenariosId(ShiroUtil.getOpenScenariosId());
+			stat.setUserId(String.valueOf(ShiroUtil.getCurrentUserId()));
 			stat.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 			statInfoService.saveStatInfo(stat);
 
@@ -623,6 +615,7 @@ public class OutputPrinter implements IConstants {
 									}
 									//update sheet2 end
 									activityPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
+									activityPojo.setUserId(String.valueOf(ShiroUtil.getCurrentUserId()));
 									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据...."));
 									solutionActivityService.addActivity(activityPojo);
 									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据成功"));
@@ -693,7 +686,8 @@ public class OutputPrinter implements IConstants {
 //							rr.createCell(14).setCellValue(str14.toString().substring(0, str14.toString().length()-1));
 							routePojo.setCarGoods(str14.toString().substring(0, str14.toString().length()-1));
 						}
-						routePojo.setScenariosId(String.valueOf(Integer.parseInt(ShiroUtil.getOpenScenariosId())));
+						routePojo.setScenariosId(ShiroUtil.getOpenScenariosId());
+						routePojo.setUserId(String.valueOf(ShiroUtil.getCurrentUserId()));
 						solutionRouteService.addRoute(routePojo);//将route插入数据库
 					}
 				}

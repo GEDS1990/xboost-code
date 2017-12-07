@@ -52,6 +52,9 @@ public class StatInfo implements Serializable{
 
 	private String scenariosId;
 
+	private String userId;
+
+
 	private String createTime;
 
 	public StatInfo(double cost, int noJobs, double avgDis, double avgCost, double avgJobs, double avgTime,
@@ -159,6 +162,14 @@ public class StatInfo implements Serializable{
 
 	public String getScenariosId() {
 		return scenariosId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public void setScenariosId(String scenariosId) {

@@ -33,14 +33,21 @@ public interface MyScenariosMapper {
      */
     Scenarios findById(Integer id);
 
-    void saveScenariosIduserId(@Param("scenariosId") Integer scenariosId,@Param("userId")Integer userId);
+    void saveScenariosIduserId(Integer scenariosId,Integer userId);
 
     // 根据id编辑场景信息  @param scenario
     void edit(Scenarios scenario);
 
 
     //根据id删除场景信息   * @param id
-    void delById(Integer id);
+    void delById(@Param("id") Integer id,@Param("userId") String userId);
+
+    /**
+     *send场景信息to user
+     * @param scenariosId
+     * @param userIdTemp
+     */
+    void sendToUserByScenariosId(@Param("scenariosId") String scenariosId,@Param("userIdTemp")int userIdTemp);
 
     /**
      *

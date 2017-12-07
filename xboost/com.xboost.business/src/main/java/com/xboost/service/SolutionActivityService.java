@@ -50,8 +50,8 @@ public class SolutionActivityService {
      * 获取模型整体参数信息总数量
      * @return
      */
-    public Integer findAllCount(String scenariosId) {
-        return solutionActivityMapper.findAllCount(scenariosId).intValue();
+    public Integer findAllCount(String scenariosId,String userId) {
+        return solutionActivityMapper.findAllCount(scenariosId,userId).intValue();
     }
 
     /**
