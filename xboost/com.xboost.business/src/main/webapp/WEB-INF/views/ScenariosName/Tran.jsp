@@ -256,7 +256,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">type</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="type" id="type" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <input type="text" class="form-control" name="type" id="carType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">carSource</label>
                         <div class="col-sm-4">

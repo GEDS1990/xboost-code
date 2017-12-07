@@ -28,9 +28,6 @@ public class CascadeController {
     CascadeService cascadeService;
 
     @Inject
-    ConfigurationService configurationService;
-
-    @Inject
     CarService carService;
 
     @Inject
@@ -49,7 +46,6 @@ public class CascadeController {
         Car[] carlist = null;
         //传入场景id
         param.put("scenariosId", ShiroUtil.getOpenScenariosId());
-//        config =configurationService.findConfigByParam(param);
         config.setDistMode(Integer.parseInt(distMode));
         config.setLoadTime(Double.parseDouble(loadTime));
         config.setOptimizeIterations(Integer.parseInt(loopLimit));

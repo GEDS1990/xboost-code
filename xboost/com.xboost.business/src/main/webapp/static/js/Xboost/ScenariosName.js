@@ -881,19 +881,20 @@ $(function  () {
 	            $.get("/car/transpt.json",{"id":id}).done(function(result){
 	                $("#siteId-tran").val(result.id);
 	                $("#carSource").val(result.carSource);
+	                $("#carType").val(result.type);
 	                $("#dimensions").val(result.dimensions);
 	                $("#maxLoad").val(result.maxLoad);
 	                $("#durationUnloadFull").val(result.durationUnloadFull);
 	                $("#maxStop").val(result.maxStop);
-	                $("#fixedRound").val(result.fixedRound);
-	                $("#fixedRoundFee").val(result.fixedRoundFee);
-	                $("#startLocation").val(result.startLocation);
-	                $("#endLocation").val(result.endLocation);
-	                $("#maxDistance").val(result.maxDistance);
-	                $("#maxRunningTime").val(result.maxRunningTime);
-	                $("#costPerDistance").val(result.costPerDistance);
-	                $("#costPerTime").val(result.costPerTime);
-	                $("#fixedCost").val(result.fixedCost);
+	                $("#fixedRound").val(result.fixed_round);
+	                $("#fixedRoundFee").val(result.fixed_round_fee);
+	                $("#startLocation").val(result.start_location);
+	                $("#endLocation").val(result.end_location);
+	                $("#maxDistance").val(result.max_distance);
+	                $("#maxRunningTime").val(result.max_running_time);
+	                $("#costPerDistance").val(result.cost_per_distance);
+	                $("#costPerTime").val(result.cost_per_time);
+	                $("#fixedCost").val(result.fixed_cost);
 	                $("#velocity").val(result.velocity);
 	                
 	                $("#editUserModal-tran").modal("show");
