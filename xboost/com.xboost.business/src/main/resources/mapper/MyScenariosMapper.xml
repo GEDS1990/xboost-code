@@ -5,9 +5,9 @@
     <cache/>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        INSERT into t_scenarios_info(user_id,scenarios_name,scenarios_category,scenarios_desc,scenarios_model,scenarios_out,
+        INSERT into t_scenarios_info(scenarios_name,scenarios_category,scenarios_desc,scenarios_model,scenarios_out,
         scenarios_status,last_open_time,str1,str2,str3,createtime,updatetime)
-        VALUES (#{userId},#{scenariosName},#{scenariosCategory},#{scenariosDesc},#{scenariosModel},#{scenariosOut},
+        VALUES (#{scenariosName},#{scenariosCategory},#{scenariosDesc},#{scenariosModel},#{scenariosOut},
         #{scenariosStatus},#{lastOpenTime},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
@@ -62,7 +62,7 @@
     </select>
 
     <update id="edit">
-        UPDATE t_scenarios_info SET user_id = #{userId},scenarios_name = #{scenariosName},scenarios_category=#{scenariosCategory},
+        UPDATE t_scenarios_info SET scenarios_name = #{scenariosName},scenarios_category=#{scenariosCategory},
         scenarios_desc=#{scenariosDesc},scenarios_model=#{scenariosModel},scenarios_out=#{scenariosOut},
         scenarios_status=#{scenariosStatus},last_open_time=#{lastOpenTime} where id = #{id}
     </update>
@@ -73,7 +73,7 @@
 
 
     <delete id="delById">
-        DELETE FROM t_scenarios_info WHERE id = #{id}
+        DELETE FROM t_scenarios_user WHERE scenariosId = #{id} and userId = #{userId}
     </delete>
 
     <update id="sendToUserByScenariosId">

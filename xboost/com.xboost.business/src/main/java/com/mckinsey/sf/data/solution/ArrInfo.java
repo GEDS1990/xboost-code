@@ -27,6 +27,8 @@ public class ArrInfo implements Serializable{
 
 	private String scenariosId;
 
+	private String userId;
+
 	private String createTime;
 	
 	public ArrInfo(){
@@ -67,6 +69,14 @@ public class ArrInfo implements Serializable{
 
 	public String getScenariosId() {
 		return scenariosId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public void setScenariosId(String scenariosId) {

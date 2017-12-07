@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Activity implements Serializable {
     private Integer id;
     private String scenariosId;            //场景id
+    private String userId;            //场景id
     private String pickupLoc;      //寄件网点
     private String deliveryLoc;      //派件网点
     private String routeCount;      //车辆编号
@@ -34,6 +35,14 @@ public class Activity implements Serializable {
 
     public void setScenariosId(String scenariosId) {
         this.scenariosId = scenariosId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getPickupLoc() {

@@ -147,7 +147,7 @@ public class MyScenariosService {
      */
     public void delById(Integer id) {
 
-        myScenariosMapper.delById(id);
+        myScenariosMapper.delById(id,String.valueOf(ShiroUtil.getCurrentUserId()));
     }
     /**
      * send场景信息to user
@@ -156,11 +156,6 @@ public class MyScenariosService {
      */
     public void sendToUserByScenariosId(String scenariosId,int userId) {
         int userIdTemp = userId;
-//        scenario.getUserId();
-        if( null != String.valueOf(userIdTemp) && "" != String.valueOf(userIdTemp)){
-//            userIdTemp = userIdTemp + "," + userId;
-//            scenario.setUserId(userIdTemp);
-        }
         myScenariosMapper.sendToUserByScenariosId(scenariosId,userIdTemp);
     }
 

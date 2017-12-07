@@ -4,10 +4,10 @@
 
     <cache/>
     <insert id="addRoute">
-        INSERT into t_solution_route(scenariosId ,route_count,car_type,location,sequence,cur_loc,
+        INSERT into t_solution_route(scenariosId ,userId,route_count,car_type,location,sequence,cur_loc,
         type,sb_loc,sb_vol,arr_time,end_time,unload_loc,unload_vol,next_cur_loc,calc_dis,
         car_goods,createtime)
-        VALUES (#{scenariosId},#{routeCount},#{carType},#{location},#{sequence},#{curLoc},
+        VALUES (#{scenariosId},#{userId},#{routeCount},#{carType},#{location},#{sequence},#{curLoc},
         #{type},#{sbLoc},#{sbVol},#{arrTime},#{endTime},#{unloadLoc},#{unloadVol},#{nextCurLoc},#{calcDis},
         #{carGoods},#{createTime})
     </insert>

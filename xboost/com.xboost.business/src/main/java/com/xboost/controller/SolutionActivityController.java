@@ -66,13 +66,14 @@ public class SolutionActivityController {
         param.put("orderColumn",orderColumnName);
         param.put("orderType",orderType);
         param.put("scenariosId",ShiroUtil.getOpenScenariosId());
+        param.put("userId",ShiroUtil.getCurrentUserId());
 
 
 
         Map<String,Object> result = Maps.newHashMap();
 
         List<Activity> modelArgList = solutionActivityService.findByParam(param); //.findAll();
-        Integer count = solutionActivityService.findAllCount(ShiroUtil.getOpenScenariosId());
+        Integer count = solutionActivityService.findAllCount(ShiroUtil.getOpenScenariosId(),String.valueOf(ShiroUtil.getCurrentUserId()));
         Integer filteredCount = solutionActivityService.findCountByParam(param);
 
         result.put("draw",draw);

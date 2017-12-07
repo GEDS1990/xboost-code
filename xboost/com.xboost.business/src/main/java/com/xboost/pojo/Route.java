@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Route implements Serializable {
     private Integer id;
     private String scenariosId;            //场景id
+    private String userId;            //
     private String routeCount;      //车辆编号
     private String carType;           //车型
     private String location;            //出车网点-收车网点
@@ -43,6 +44,14 @@ public class Route implements Serializable {
 
     public void setScenariosId(String scenariosId) {
         this.scenariosId = scenariosId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getRouteCount() {

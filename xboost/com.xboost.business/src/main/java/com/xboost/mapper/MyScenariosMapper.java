@@ -40,7 +40,7 @@ public interface MyScenariosMapper {
 
 
     //根据id删除场景信息   * @param id
-    void delById(Integer id);
+    void delById(@Param("id") Integer id,@Param("userId") String userId);
 
     /**
      *send场景信息to user
