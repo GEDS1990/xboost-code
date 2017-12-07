@@ -32,6 +32,13 @@ public interface SiteInfoMapper {
     String findSiteCode(String scenariosId);
 
     /**
+     * 根据场景id和网点编码查询网点信息
+     * @param scenariosId
+     * @return
+     */
+    SiteInfo findSiteInfoBySiteCode(String scenariosId,String siteCode);
+
+    /**
      * 根据用户的ID查询网点信息
      * @param id 用户ID
      * @return
