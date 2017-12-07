@@ -79,7 +79,7 @@ public class SolutionDepotsController {
     @RequestMapping(value = "/baseInfo.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public SiteInfo loadBaseSiteInfo(String siteCode) {
-       return siteInfoService.findSiteInfoBySiteCodefindSiteInfoBySiteCode(ShiroUtil.getOpenScenariosId(),siteCode);
+       return siteInfoService.findSiteInfoBySiteCode(ShiroUtil.getOpenScenariosId(),siteCode);
 
     }
 
