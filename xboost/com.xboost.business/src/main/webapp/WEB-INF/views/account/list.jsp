@@ -101,7 +101,7 @@
                 <h4 class="modal-title">添加用户</h4>
             </div>
             <div class="modal-body">
-                <form id="newUserForm" class="form-horizontal">
+                <form id="newUserForm-user" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">姓名</label>
                         <div class="col-sm-10">

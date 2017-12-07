@@ -1345,6 +1345,7 @@ debugger;
             $.post("/account/new",$("#newUserForm-user").serialize())
                     .done(function(result){
                         if("success" == result) {
+                        debugger;
                             $("#newUserForm-user")[0].reset();
                             $("#newUserModal-user").modal("hide");
                             dt.ajax.reload();
