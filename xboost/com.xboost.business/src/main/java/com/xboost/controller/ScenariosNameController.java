@@ -1,15 +1,14 @@
 package com.xboost.controller;
 
 import com.google.common.collect.Maps;
+import com.xboost.pojo.Scenarios;
 import com.xboost.pojo.SiteDist;
-import com.xboost.service.DemandInfoService;
-import com.xboost.service.SiteDistService;
-import com.xboost.service.SiteInfoService;
-import com.xboost.service.TransportService;
+import com.xboost.service.*;
 import com.xboost.util.ShiroUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -17,6 +16,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/ScenariosName")
 public class ScenariosNameController {
+    @Inject
+    private MyScenariosService myScenariosService;
     @Inject
     SiteInfoService siteInfoService;
     @Inject
@@ -46,7 +47,8 @@ public class ScenariosNameController {
     * 跳转Conditions.jsp页面
     * */
     @RequestMapping(value = "/settingsOverview.json",method = RequestMethod.GET)
-    public Map<String,Object> settingsOverview() {
+    @ResponseBody
+    public Map<String,Object> settingsOverview(Integer id) {
 
         Integer siteCounter1 = siteInfoService.findSiteInfoCount(ShiroUtil.getOpenScenariosId());
         Integer tranCounter1 = transportService.findAllCount(ShiroUtil.getOpenScenariosId());

@@ -21,6 +21,7 @@ import com.mckinsey.sf.printer.OutputPrinter;
 import com.mckinsey.sf.removal.*;
 import com.mckinsey.sf.utils.ExcelToJson;
 import com.xboost.pojo.Configuration;
+import com.xboost.service.ConfigurationService;
 import com.xboost.service.DemandInfoService;
 import com.xboost.service.SiteDistService;
 import org.springframework.web.socket.TextMessage;
@@ -177,9 +178,15 @@ public class CascadeModelUtil implements IConstants {
     private Config initConf(Configuration config,DemandInfoService demandInfoService) {
 
         distMode = config.getDistMode();
+        //todo by geds
+        //设置目的地分拣耗时PALNS_SEGMENT
+//        modelArgService.findConfigByParam()
+
         Score[] scores = new Score[]{Score.REJECTED,Score.ACCEPTED,Score.BETTER_THAN_CURRENT,Score.NEWBEST};
         palnsConf = new PalnsConfig(PALNS_CORES, config.getOptimizeIterations(),PALNS_MAX_TIME, PALNS_W,PALNS_DECAY, PALNS_ALPHA, scores,
                 PALNS_SEGMENT);
+
+
 //        transportCost = new TransportCost("src/main/resources/distance/"+config.getDistanceFile(),TRANSPORT_COST_NEAREST,config.getLoadTime());
         //读取文件改为读取数据库（替换BufferedReader）
         transportCost = new TransportCost("",TRANSPORT_COST_NEAREST,config.getLoadTime());
