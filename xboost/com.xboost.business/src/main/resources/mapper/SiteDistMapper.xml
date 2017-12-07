@@ -47,7 +47,7 @@
     </select>
 
     <select id="findFarthestDist" resultType="float">
-        select max(carDistance) from t_site_distance where scenariosId=#{scenariosId}
+        select max(car_distance) from t_site_distance where scenariosId=#{scenariosId}
     </select>
 
     <select id="findById" resultType="com.xboost.pojo.SiteDist"  resultMap="siteDistMap">
@@ -56,7 +56,7 @@
 
     <update id="editSiteDist">
         UPDATE t_site_distance SET scenariosId = #{scenariosId},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
-        car_distance=#{carDistance},duration_night_delivery=#{durationNightDelivery},createtime=#{createTime} where id = #{id}
+        car_distance=#{car_distance},duration_night_delivery=#{durationNightDelivery},createtime=#{createTime} where id = #{id}
     </update>
 
     <delete id="delById">
