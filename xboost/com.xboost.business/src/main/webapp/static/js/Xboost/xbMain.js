@@ -122,6 +122,7 @@ function CategoryList () {
 	var editBtn = doc.getElementById("edit-create-info");
 	if (editBtn) {
 		var scenId = $('#scenName').attr("data-id");
+		//获取场景信息
 		$.get("/MyScenarios/scen.json",{"id":scenId}).done(function  (res) {
 			$('#scen-cate').text(res.scenariosCategory);
 			$('#scen-desc').text(res.scenariosDesc);
@@ -132,6 +133,16 @@ function CategoryList () {
 		}).fail(function  () {
 			console.log('fail');
 		});
+		//获取overview
+		$.get("/ScenariosName/settingsOverview.json",{"id":scenId}).done(function  (res) {
+            $('#depot-quantity').text(res.siteCounter);
+            $('#vehicle-quantity').text(res.tranCounter);
+            $('#demand-quantity').text(res.demandsCounter);
+            $('#farthest-distance').text(res.farthestDist);
+        }).fail(function  (e) {
+        debugger;
+            console.log('fail');
+        });
 		
 		//创建场景
         $("#edit-create-info").click(function(){

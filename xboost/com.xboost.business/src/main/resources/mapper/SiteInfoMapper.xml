@@ -20,6 +20,11 @@
         SELECT distinct(site_code) FROM t_site_info where scenariosId = #{scenariosId}
     </select>
 
+
+    <select id="findSiteInfoBySiteCode" resultType="com.xboost.pojo.SiteInfo"  resultMap="siteInfoMap">
+        SELECT * FROM t_site_info delByIdwhere scenariosId = #{scenariosId} and site_code = #{siteCode}
+    </select>
+
     <select id="findByParam" parameterType="map" resultType="SiteInfo" resultMap="siteInfoMap">
         SELECT * from t_site_info
         <where>
