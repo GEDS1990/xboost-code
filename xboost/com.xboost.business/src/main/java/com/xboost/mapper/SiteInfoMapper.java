@@ -2,6 +2,7 @@ package com.xboost.mapper;
 
 import com.xboost.pojo.SiteInfo;
 import com.xboost.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ public interface SiteInfoMapper {
      * @param scenariosId
      * @return
      */
-    SiteInfo findSiteInfoBySiteCode(String scenariosId,String siteCode);
+    SiteInfo findSiteInfoBySiteCode(@Param("scenariosId") String scenariosId, @Param("siteCode")String siteCode);
 
     /**
      * 根据用户的ID查询网点信息

@@ -80,7 +80,25 @@ $(function  () {
 				if (val == 0) {
 					table.search("").draw(false);
 				}else{
+				debugger;
 					table.search(val).draw(false);
+					$.get("/depots/baseInfo.json",{"siteCode":val}).done(function  (res) {
+					debugger;
+                        $('#depot').text("Depot "+res.siteCode);
+                        $('#east').text(res.siteLatitude);
+                        $('#north').text(res.siteLongitude);
+                        $('#name').text(res.siteName);
+                        $('#address').text(res.siteAddress);
+                        $('#type').text(res.siteType);
+                        $('#distrib-center').text(res.distribCenter);
+                        $('#area').text(res.siteArea);
+                        $('#vehicle-quantity-limit').text(res.carNum);
+                        $('#vehicle-weight-limit').text(res.largeCarModel);
+                        $('#piece-capacity').text(res.maxOperateNum);
+                    }).fail(function  (e) {
+                      debugger;
+                      console.log('fail');
+                  });
 				}
 				
 			});

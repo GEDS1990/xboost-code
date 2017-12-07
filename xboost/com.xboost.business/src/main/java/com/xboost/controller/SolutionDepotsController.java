@@ -79,8 +79,10 @@ public class SolutionDepotsController {
     @RequestMapping(value = "/baseInfo.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public SiteInfo loadBaseSiteInfo(String siteCode) {
-       return siteInfoService.findSiteInfoBySiteCode(ShiroUtil.getOpenScenariosId(),siteCode);
-
+       String scenariosId = ShiroUtil.getOpenScenariosId();
+       SiteInfo siteInfo = siteInfoService.findSiteInfoBySiteCode(scenariosId,siteCode);
+       System.out.println("success");
+       return siteInfo;
     }
 
     //查询网点编码

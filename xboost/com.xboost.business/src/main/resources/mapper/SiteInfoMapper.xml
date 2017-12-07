@@ -21,8 +21,8 @@
     </select>
 
 
-    <select id="findSiteInfoBySiteCode" resultType="com.xboost.pojo.SiteInfo"  resultMap="siteInfoMap">
-        SELECT * FROM t_site_info delByIdwhere scenariosId = #{scenariosId} and site_code = #{siteCode}
+    <select id="findSiteInfoBySiteCode" parameterType="map" resultType="SiteInfo"  resultMap="siteInfoMap">
+        SELECT * FROM t_site_info where scenariosId = #{scenariosId} and site_code = #{siteCode}
     </select>
 
     <select id="findByParam" parameterType="map" resultType="SiteInfo" resultMap="siteInfoMap">
