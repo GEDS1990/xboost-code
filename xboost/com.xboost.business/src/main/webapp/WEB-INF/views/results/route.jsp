@@ -93,18 +93,24 @@
 	    				<p>11</p>
 	    			</div>
 	    			<div class="scen-itembox2">
-	    				<h1>No Data</h1>
-	    				<ul class="scen-result">
-	    					<li>E:120.2111111</li>
-	    					<li>地址</li>
-	    				</ul>
+	    				<h1 id="route-name">No Data</h1>
 	    				<ul class="scen-cost">
-	    					<li>depot type:<span>--</span></li>
-	    					<li>to distrib.center:<span>--</span></li>
-	    					<li>deport area:<span>--</span></li>
-	    					<li>vehicle quantity limit:<span>--</span>(per 10mins)</li>
-	    					<li>vehicle weight limit:<span>--</span>(per 10mins)</li>
-	    					<li>piece capacity:<span>--</span>(per 10mins)</li>
+	    					<li>total distance:<span>--</span></li>
+	    					<li>vehicle load requirement:<span>--</span></li>
+	    					<li>vehicle piece capacity requirement:<span>--</span></li>
+	    					<li>speed requirement:<span>--</span></li>
+	    					<li class="route-choose">Choose vehicle:<span>--</span></li>
+	    					<li>
+	    						<form>
+		    						<label >
+		    							<input type="radio" name="type" id="us-vehicle"  value="0"/> Using Vehicle
+		    						</label>
+		    						<label style="margin-left: 10px;">
+		    							<input type="radio" name="type" id="idle-vehicle" value="1"/> Idle Vehicle
+		    						</label>
+	    						</form>
+	    					</li>
+	    					<li><select style="width: 50%;"></select></li>
 	    				</ul>
 	    			</div>
 	    		</div>
@@ -345,7 +351,11 @@
 	$(function  () {
 		(function  () {
 			$('#nav-Results').addClass("active");
+			
+			
 		})()
+		
+		
 	});
 </script>
 </body>

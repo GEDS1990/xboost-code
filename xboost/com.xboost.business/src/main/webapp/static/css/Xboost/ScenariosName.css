@@ -32,6 +32,7 @@
 }
 .scen-box{
 	padding: 10px;
+	height: 2.35rem;
 }
 .scen-itembox1{
 	float: left;
@@ -62,6 +63,15 @@
 }
 .totalcost{
 	margin-top: 15px;
+}
+input[type=radio]{
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: 0;
+	margin-bottom: 2px;
+}
+.route-choose{
+	margin-top: 40px;
 }
 /*******************************Conditions************/
 .cond-wrap{
@@ -406,7 +416,8 @@ table.table-bordered.dataTable td:last-child {
     padding: 15px 20px;
     color: #8c97b2;
 }
-#SolutionRoute_wrapper>div:first-child{
+#SolutionRoute_wrapper>div:first-child,
+#SolutionDeport_wrapper>div:first-child{
 	display: none;
 }
 .route-select{

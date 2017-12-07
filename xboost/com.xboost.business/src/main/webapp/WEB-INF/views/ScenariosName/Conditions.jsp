@@ -64,7 +64,6 @@
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
 	        </div>
-	        <input type="text" id="a" value="" /><button id="b">点击</button>
 	    	<div>
 	    		<!--Depots Info-->
 			    <div class="table-responsive active">
