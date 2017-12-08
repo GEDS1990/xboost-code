@@ -56,9 +56,9 @@
 	        </div>
 	        <div class="cond-top">
 	        	<ul class="cond-top-ul clearfix">
-	        		<li class="active"><a class="active" href="/activity">Depots</a></li>
+	        		<li class="active"><a class="active" href="/depots">Depots</a></li>
 	        		<li><a href="/route">Route</a></li>
-	        		<li><a href="#">Vehicles</a></li>
+	        		<li><a href="/activity">Vehicles</a></li>
 	        		<li><a href="#">Costs</a></li>
 	        		<li><a href="#">Efficiency</a></li>
 	        		<li><a href="#">Distribution</a></li>
