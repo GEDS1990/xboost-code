@@ -46,7 +46,7 @@
         <where>
             scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                and site_name LIKE #{keyword} or site_code like #{keyword}
+                and  site_code like #{keyword}
             </if>
         </where>
     </select>

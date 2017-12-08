@@ -438,6 +438,8 @@ table.table-bordered.dataTable td:last-child {
 	-ms-transform: translateY(-50%);
 	-o-transform: translateY(-50%);
 }
-
+.scen-cost>li>span{
+	font-weight: 300;
+}
 
 

@@ -95,17 +95,17 @@
 	    			<div class="scen-itembox2">
 	    				<h1><span id="depot">No Data</span></h1>
 	    				<ul class="scen-result">
-	    					<li>E:<span id ="east"></span>&nbsp;&nbsp;N:<span id ="north"></span></li>
-	    					<li id = "name"></li>
-	    					<li id = "address"></li>
+	    					<li>E:<span id ="east">--</span>&nbsp;&nbsp;N:<span id ="north">--</span></li>
+	    					<li id = "name">--</li>
+	    					<li id = "address">--</li>
 	    				</ul>
 	    				<ul class="scen-cost">
 	    					<li>depot type:<span id ="type">--</span></li>
 	    					<li>to distrib.center:<span id="distrib-center">--</span></li>
 	    					<li>deport area:<span id="area">--</span></li>
-	    					<li>vehicle quantity limit:<span id="vehicle-quantity-limit">--</span>(per 10mins)</li>
-	    					<li>vehicle weight limit:<span id="vehicle-weight-limit">--</span>(per 10mins)</li>
-	    					<li>piece capacity:<span id="piece-capacity">--</span>(per 10mins)</li>
+	    					<li>vehicle quantity limit:<span id="vehicle-quantity-limit">--</span><span>(per 10mins)</span></li>
+	    					<li>vehicle weight limit:<span id="vehicle-weight-limit">--</span><span>(per 10mins)</span></li>
+	    					<li>piece capacity:<span id="piece-capacity">--</span><span>(per 10mins)</span></li>
 	    				</ul>
 	    			</div>
 	    		</div>
