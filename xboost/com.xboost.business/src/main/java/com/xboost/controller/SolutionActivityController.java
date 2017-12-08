@@ -28,7 +28,7 @@ public class SolutionActivityController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
-        return "results/deport";
+        return "results/vehicles";
     }
 
     /**

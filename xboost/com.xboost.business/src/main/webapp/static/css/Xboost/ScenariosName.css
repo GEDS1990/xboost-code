@@ -417,7 +417,8 @@ table.table-bordered.dataTable td:last-child {
     color: #8c97b2;
 }
 #SolutionRoute_wrapper>div:first-child,
-#SolutionDeport_wrapper>div:first-child{
+#SolutionDeport_wrapper>div:first-child,
+#SolutionVehicles_wrapper>div:first-child{
 	display: none;
 }
 .route-select{

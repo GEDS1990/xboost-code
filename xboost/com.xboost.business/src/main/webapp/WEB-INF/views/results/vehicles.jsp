@@ -57,8 +57,8 @@
 	        <div class="cond-top">
 	        	<ul class="cond-top-ul clearfix">
 	        		<li><a href="/depots">Depots</a></li>
-	        		<li class="active"><a class="active" href="/route">Route</a></li>
-	        		<li><a href="/activity">Vehicles</a></li>
+	        		<li><a href="/route">Route</a></li>
+	        		<li class="active"><a  class="active" href="/activity">Vehicles</a></li>
 	        		<li><a href="#">Costs</a></li>
 	        		<li><a href="#">Efficiency</a></li>
 	        		<li><a href="#">Distribution</a></li>
@@ -95,22 +95,12 @@
 	    			<div class="scen-itembox2">
 	    				<h1 id="route-name">No Data</h1>
 	    				<ul class="scen-cost">
-	    					<li>total distance:<span>--</span></li>
-	    					<li>vehicle load requirement:<span>--</span></li>
-	    					<li>vehicle piece capacity requirement:<span>--</span></li>
-	    					<li>speed requirement:<span>--</span></li>
-	    					<li class="route-choose">Choose vehicle:<span>--</span></li>
-	    					<li>
-	    						<form>
-		    						<label >
-		    							<input type="radio" name="type" id="us-vehicle"  value="0"/> Using Vehicle
-		    						</label>
-		    						<label style="margin-left: 10px;">
-		    							<input type="radio" name="type" id="idle-vehicle" value="1"/> Idle Vehicle
-		    						</label>
-	    						</form>
-	    					</li>
-	    					<li><select style="width: 50%;"></select></li>
+	    					<li>vehicle type:<span>--</span></li>
+	    					<li>vehicle source:<span>--</span></li>
+	    					<li>vehicle weight limit:<span>--</span></li>
+	    					<li>vehicle piece capacity:<span>--</span></li>
+	    					<li>unloading time:<span>--</span></li>
+	    					<li>speed:<span>--</span></li>
 	    				</ul>
 	    			</div>
 	    		</div>
@@ -119,11 +109,11 @@
 	    	
 	    		<!--Solution Route-->
 			    <div class="table-responsive active result-style">
-		            <table id="SolutionRoute" class="table table-striped table-bordered table-hover">
+		            <table id="SolutionVehicles" class="table table-striped table-bordered table-hover">
 					    <thead>
 					    	<tr>
 					    		<th rowspan="1">id</th>
-					    		<th rowspan="1">Route ID</th>
+					    		<th rowspan="1">Vehicle ID</th>
 					    		<th rowspan="1">Deport Order</th>
 					    		<th rowspan="1">Deport ID</th>
 					    		<th rowspan="1">Deport Name</th>
