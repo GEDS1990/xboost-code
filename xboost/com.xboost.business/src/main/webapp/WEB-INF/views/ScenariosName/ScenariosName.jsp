@@ -55,7 +55,7 @@
 		        		<button id="edit-create-info" ><span class="glyphicon glyphicon-leaf"></span>Edit Basic Info</button>
 		        	</div>
 	        	</div>
-	        	<p id="scen-cate"></p>
+	        	<p>Category: <span id="scen-cate"></span></p>
 	        	<p id="scen-desc"></p>
 	        </div>
 	        

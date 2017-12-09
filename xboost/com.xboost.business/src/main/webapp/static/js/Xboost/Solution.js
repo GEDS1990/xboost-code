@@ -18,7 +18,7 @@ $(function  () {
 	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
-	                url:"/route/route.json", //获取数据的URL
+	                url:"/depots/operateInfo.json", //获取数据的URL
 	                type:"get" //获取数据的方式
 	                
 	            },
@@ -163,7 +163,7 @@ $(function  () {
 		if (SolutionRoute) {
 			//加载列表
 			var dt =$("#SolutionRoute").DataTable({
-	            "processing": true, //loding效果
+	            "processing": true, //loading效果
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
 	            "destroy": true,
@@ -242,7 +242,7 @@ $(function  () {
 	            		$('#route-route').empty();
 	            		$('#route-route').off("click");
 	            		for (var i=0;i<len;i++) {
-	            			arr.push(result[i].routeCount);
+	            			arr.push(result[i].id);
 	            		}
 	            		var Arr = unique(arr),
 	            		A_len = Arr.length;
@@ -275,6 +275,37 @@ $(function  () {
 				}else{
 					table.search(val).draw(false);
 				}
+//				$.get("/depots/baseInfo.json",{"siteCode":val}).done(function  (res) {
+//                    console.log(res)
+//                    if (res) {
+//                        $('#depot').text("Depot "+res.siteCode);
+//                        $('#east').text(res.siteLatitude);
+//                        $('#north').text(res.siteLongitude);
+//                        $('#name').text(res.siteName);
+//                        $('#address').text(res.siteAddress);
+//                        $('#type').text(res.siteType);
+//                        $('#distrib-center').text(res.distribCenter);
+//                        $('#area').text(res.siteArea);
+//                        $('#vehicle-quantity-limit').text(res.carNum);
+//                        $('#vehicle-weight-limit').text(res.largeCarModel);
+//                        $('#piece-capacity').text(res.maxOperateNum);
+//                    }else{
+//                        $('#depot').text("No Data");
+//                        $('#east').text("--");
+//                        $('#north').text("--");
+//                        $('#name').text("--");
+//                        $('#address').text("--");
+//                        $('#type').text("--");
+//                        $('#distrib-center').text("--");
+//                        $('#area').text("--");
+//                        $('#vehicle-quantity-limit').text("--");
+//                        $('#vehicle-weight-limit').text("--");
+//                        $('#piece-capacity').text("--");
+//                    }
+//
+//                }).fail(function  (e) {
+//                  console.log('fail');
+//              });
 				
 			});
 	        
