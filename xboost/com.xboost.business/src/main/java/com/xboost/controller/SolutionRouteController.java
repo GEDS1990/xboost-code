@@ -69,21 +69,26 @@ public class SolutionRouteController {
 
         Map<String,Object> result = Maps.newHashMap();
 
-        List<Route> routeList = solutionRouteService.findByParam(param,S); //.findAll();
+        Map<String,Object> routeList = solutionRouteService.findByRoute(param); //.findAll();
         Integer count = solutionRouteService.findAllCount(ShiroUtil.getOpenScenariosId());
-        Integer filteredCount = solutionRouteService.findCountByParam(param);
+        Integer filteredCount = solutionRouteService.findCountByRoute(param);
 
-        List<>
-
-        for(int i=0;i<routeList.size();i++){
-            Route route = routeList.get(i);
-            if(route.getCurLoc())
-        }
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",routeList);
+        return result;
+    }
+
+
+    //查询路线id
+    @RequestMapping(value = "/routeId.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String,Object> loadRouteId(HttpServletRequest request) {
+        Map<String,Object> result = Maps.newHashMap();
+        Integer routeIdList = solutionRouteService.findRouteId(ShiroUtil.getOpenScenariosId());
+        result.put("data",routeIdList);
         return result;
     }
 

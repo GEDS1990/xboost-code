@@ -31,17 +31,20 @@ public interface SolutionRouteMapper {
      */
     Route findById(Integer id);
 
-    // 根据查询条件获取模型整体参数  @param param @return
-    List<Route> findByParam(@Param("param") Map<String, Object> param,@Param("scenariosId") String scenariosId);
+    // 根据查询条件获路线信息  @param param @return
+    List<Route> findByParam(Map<String, Object> param);
 
-    //根据查询条件获取模型整体参数信息的数量
-    Long findCountByParam(@Param("param") Map<String, Object> param,@Param("scenariosId") String scenariosId);
+    //根据查询条件获取路线数量
+    Long findCountByParam(Map<String, Object> param);
 
-    // 根据查询条件获取模型整体参数  @param param @return
-    List<Route> findByParam(@Param("param") Map<String, Object> param,@Param("scenariosId") String scenariosId);
+    //根据场景id查询routeId
+    Integer findRouteId(String scenariosId);
 
-    //根据查询条件获取模型整体参数信息的数量
-    Long findCountByParam(@Param("param") Map<String, Object> param,@Param("scenariosId") String scenariosId);
+    // 根据路线id获取路线信息,根据curLoc和siteCode关联查询t_solution_route,t_site_info   @param param @return
+    Map<String,Object> findByRoute(Map<String, Object> param);
+
+    // 根据路线id获取路线信息,根据curLoc和siteCode关联查询t_solution_route,t_site_info
+    Long findCountByRoute(Map<String, Object> param);
 
 }
 
