@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Xboost System Login</title>
+    <title>Xboost System</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
@@ -59,7 +59,7 @@
 	        	<ul class="cond-top-ul clearfix">
 	        		<li><a href="/siteInfo">Depots Info</a></li>
 	        		<li><a href="/siteDist">Depots Distance</a></li>
-	        		<li class="active"><a  class="active" href="/car">Vehicles</a></li>
+	        		<li class="active"><a  class="active" href="/transport">Vehicles</a></li>
 	        		<li><a href="/demandInfo">Demands</a></li>
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
@@ -71,48 +71,59 @@
 		        	<a href="javascript:;" id="addNewUser-tran" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus"></i>Add Info</a>
 					<table id="Transportation" class="table table-striped table-bordered table-hover">
 					    <thead>
+					    <!--
+                        <tr>
+                            <th>ID</th>
+                            <th>type</th>
+                            <th>vehicle<br />source</th>
+                            <th>full load<br />unload<br />time (min)</th>
+                            <th>max<br />Stop</th>
+                            <th>maximum<br />load(p)</th>
+                            <th>fixed<br />Round</th>计算
+                            <th>fixed<br />RoundFee</th>计算
+                            <th>start<br />Location</th>
+                            <th>end<br />Location</th>
+                            <th>max<br />Distance</th>
+                            <th>max<br />RunningTime</th>
+                            <th>cost<br />PerDistance</th>计算
+                            <th>cost<br />PerTime</th>计算
+                            <th>fixed<br />Cost</th>计算
+                            <th>velocity</th>
+                            <th>operation</th>
+                        </tr>
+                        -->
 					    	<tr>
-					    		<th>Id</th>
-					    		<th>type</th>
-					    		<th>vehicle<br />source</th>
-					    		<th>maximum<br />load(p)</th>
-					    		<th>full load<br />unload<br />time (min)</th>
-					    		<th>max<br />Stop</th>
-					    		<th>dimensions</th>
-					    		<th>fixed<br />Round</th>
-					    		<th>fixed<br />RoundFee</th>
-					    		<th>start<br />Location</th>
-					    		<th>end<br />Location</th>
-					    		<th>max<br />Distance</th>
-					    		<th>max<br />RunningTime</th>
-					    		<th>cost<br />PerDistance</th>
-					    		<th>cost<br />PerTime</th>
-					    		<th>fixed<br />Cost</th>
-					    		<th>velocity</th>
-					    		<th>operation</th>
-					    	</tr>
+                                <th rowspan="3">Id</th>
+                                <th rowspan="3">vehicle type</th>
+                                <th rowspan="3">vehicle source</th>
+                                <th rowspan="3">full load unload time (min)</th>
+					    		<th rowspan="3">max<br />Stop</th>
+                                <th rowspan="3">maximum load(p)</th>
+					    		<th rowspan="3">start<br />Location</th>
+					    		<th rowspan="3">end<br />Location</th>
+                                <th rowspan="3">maximum distance (km)</th>
+					    		<th rowspan="3">max<br />RunningTime</th>
+                                <th rowspan="3">speed(km/h)</th>
+                                <th rowspan="3">operation</th>
+                                <tr>
+                                    <th>(0,a] km</th>
+                                    <th>(a,b] km</th>
+                                    <th>(b,c] km</th>
+                                    <th>(c,d] km</th>
+                                    <th>(d,e] km</th>
+                                    <th>(e,f] km</th>
+                                    <tr>
+                                        <th>ride/km</th>
+                                        <th>ride/km</th>
+                                        <th>ride/km</th>
+                                        <th>ride/km</th>
+                                        <th>ride/km</th>
+                                        <th>ride/km</th>
+                                    </tr>
+                                </tr>
+                            </tr>
 					    </thead>
 					    <tbody>
-					    	<tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
 					    </tbody>
 					</table>
 				</div>
@@ -256,7 +267,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">type</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="type" id="carType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <input type="text" class="form-control" name="type" id="cartype" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">carSource</label>
                         <div class="col-sm-4">

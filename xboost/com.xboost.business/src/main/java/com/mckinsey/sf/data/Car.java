@@ -63,6 +63,19 @@ public class Car implements Serializable{
 
 	private  String durationUnloadFull;
 
+	private String a;            //分段距离0-a
+	private String costa;            //0-a费用
+	private String b;            //分段距离b
+	private String costb;            //b费用
+	private String c;            //分段距离c
+	private String costc;            //c费用
+	private String d;            //分段距离d
+	private String costd;            //d费用
+	private String e;            //分段距离e
+	private String coste;            //e费用
+	private String f;            //分段距离f
+	private String costf;            //f费用
+
 	private String createTime;
 
 	private String updateTime;
@@ -237,6 +250,102 @@ public class Car implements Serializable{
 
 	public void setMaxLoad(String maxLoad) {
 		this.maxLoad = maxLoad;
+	}
+
+	public String getA() {
+		return a;
+	}
+
+	public void setA(String a) {
+		this.a = a;
+	}
+
+	public String getCosta() {
+		return costa;
+	}
+
+	public void setCosta(String costa) {
+		this.costa = costa;
+	}
+
+	public String getB() {
+		return b;
+	}
+
+	public void setB(String b) {
+		this.b = b;
+	}
+
+	public String getCostb() {
+		return costb;
+	}
+
+	public void setCostb(String costb) {
+		this.costb = costb;
+	}
+
+	public String getC() {
+		return c;
+	}
+
+	public void setC(String c) {
+		this.c = c;
+	}
+
+	public String getCostc() {
+		return costc;
+	}
+
+	public void setCostc(String costc) {
+		this.costc = costc;
+	}
+
+	public String getD() {
+		return d;
+	}
+
+	public void setD(String d) {
+		this.d = d;
+	}
+
+	public String getCostd() {
+		return costd;
+	}
+
+	public void setCostd(String costd) {
+		this.costd = costd;
+	}
+
+	public String getE() {
+		return e;
+	}
+
+	public void setE(String e) {
+		this.e = e;
+	}
+
+	public String getCoste() {
+		return coste;
+	}
+
+	public void setCoste(String coste) {
+		this.coste = coste;
+	}
+
+	public String getF() {
+		return f;
+	}
+
+	public void setF(String f) {
+		this.f = f;
+	}
+
+	public String getCostf() {
+		return costf;
+	}
+
+	public void setCostf(String costf) {
+		this.costf = costf;
 	}
 
 	public String getDurationUnloadFull() {
