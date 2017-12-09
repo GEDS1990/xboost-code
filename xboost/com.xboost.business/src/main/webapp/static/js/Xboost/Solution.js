@@ -177,7 +177,7 @@ $(function  () {
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
 	                {"data":function  (res) {
-	                	return "Route "+add0(res.routeCount);
+	                	return "Route "+add0(res.id);
 	                },"name":"route_count"},
 	                {"data":"sequence","name":"sequence"},
 	                {"data":"curLoc","name":"cur_loc"},
@@ -241,6 +241,7 @@ $(function  () {
 	            		len = result.length;
 	            		$('#route-route').empty();
 	            		$('#route-route').off("click");
+	            		$('#route-route').append('<option value="0">All Route</option>');
 	            		for (var i=0;i<len;i++) {
 	            			arr.push(result[i].id);
 	            		}
@@ -252,7 +253,7 @@ $(function  () {
 	            		}
 	            		var _val = $('#route-route').find("option").eq(0).val(),
 	            		_text = $('#route-route').find("option").eq(0).text();
-	            		$('#route-name').text(_text);
+	//            		$('#route-name').text(_text);
 	            		var table = $('#SolutionRoute').DataTable();
 	            		table.search(_val).draw(false);
 	            	}
@@ -263,7 +264,7 @@ $(function  () {
 			        // 输出当前页的数据到浏览器控制台
 			        var data = api.rows( {page:'current'} ).data();
 			        //console.log(data);
-			        $('#route-name').text("Route 00"+data[0].routeCount);
+//			        $('#route-name').text("Route 00"+data[0].routeCount);
 	            }
 	        });
 	        //点击选项 来查询
@@ -274,38 +275,26 @@ $(function  () {
 					table.search("").draw(false);
 				}else{
 					table.search(val).draw(false);
+                    $.get("/route/route.json",{"siteCode":val}).done(function  (res) {
+                        console.log(res)
+                        if (res) {
+                            $('#route-name').text("Route "+res.id);
+                            $('#total-distance').text(res.sbVol);
+                            $('#vehicle-load-requirement').text(res.car_type);
+                            $('#vehicle-piece-capacity').text(res.calcDis);
+                            $('#speed-requirement').text(res.calcDis);
+                        }else{
+                            $('#route-name').text("No Data");
+                            $('#total-distance').text("--");
+                            $('#vehicle-load-requirement').text("--");
+                            $('#vehicle-piece-capacity').text("--");
+                            $('#speed-requirement').text("--");
+                        }
+
+                    }).fail(function  (e) {
+                      console.log('fail');
+                  });
 				}
-//				$.get("/depots/baseInfo.json",{"siteCode":val}).done(function  (res) {
-//                    console.log(res)
-//                    if (res) {
-//                        $('#depot').text("Depot "+res.siteCode);
-//                        $('#east').text(res.siteLatitude);
-//                        $('#north').text(res.siteLongitude);
-//                        $('#name').text(res.siteName);
-//                        $('#address').text(res.siteAddress);
-//                        $('#type').text(res.siteType);
-//                        $('#distrib-center').text(res.distribCenter);
-//                        $('#area').text(res.siteArea);
-//                        $('#vehicle-quantity-limit').text(res.carNum);
-//                        $('#vehicle-weight-limit').text(res.largeCarModel);
-//                        $('#piece-capacity').text(res.maxOperateNum);
-//                    }else{
-//                        $('#depot').text("No Data");
-//                        $('#east').text("--");
-//                        $('#north').text("--");
-//                        $('#name').text("--");
-//                        $('#address').text("--");
-//                        $('#type').text("--");
-//                        $('#distrib-center').text("--");
-//                        $('#area').text("--");
-//                        $('#vehicle-quantity-limit').text("--");
-//                        $('#vehicle-weight-limit').text("--");
-//                        $('#piece-capacity').text("--");
-//                    }
-//
-//                }).fail(function  (e) {
-//                  console.log('fail');
-//              });
 
 			});
 		}
