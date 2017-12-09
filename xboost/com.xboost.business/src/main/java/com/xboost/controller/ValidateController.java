@@ -1,16 +1,12 @@
 package com.xboost.controller;
 
 import com.google.common.collect.Maps;
+import com.mckinsey.sf.data.Car;
 import com.xboost.pojo.ModelArg;
 import com.xboost.pojo.SiteDist;
 import com.xboost.pojo.SiteInfo;
-import com.xboost.pojo.Transportation;
 import com.xboost.pojo.DemandInfo;
-import com.xboost.service.SiteInfoService;
-import com.xboost.service.SiteDistService;
-import com.xboost.service.DemandInfoService;
-import com.xboost.service.TransportService;
-import com.xboost.service.ModelArgService;
+import com.xboost.service.*;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import com.xboost.websocket.SystemWebSocketHandler;
@@ -46,7 +42,7 @@ public class ValidateController {
     @Inject
     private DemandInfoService demandInfoService;
     @Inject
-    private TransportService transportService;
+    private CarService transportService;
     @Inject
     private ModelArgService modelArgService;
 
@@ -68,7 +64,7 @@ public class ValidateController {
         List<SiteInfo> siteInfoList = siteInfoService.findAllSiteInfo(ShiroUtil.getOpenScenariosId());
         List<SiteDist> siteDistList = siteDistService.findAllSiteDist(ShiroUtil.getOpenScenariosId());
         List<DemandInfo> demandInfoList = demandInfoService.findAll(ShiroUtil.getOpenScenariosId());
-        List<Transportation> transportationList = transportService.findAll(ShiroUtil.getOpenScenariosId());
+        List<Car> transportationList = transportService.findAll(ShiroUtil.getOpenScenariosId());
         List<ModelArg> modelArgList = modelArgService.findAllModelArg(ShiroUtil.getOpenScenariosId());
         String result="";
         int flag=0;
