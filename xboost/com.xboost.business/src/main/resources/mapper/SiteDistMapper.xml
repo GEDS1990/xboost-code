@@ -5,8 +5,8 @@
     <cache/>
 
     <insert id="save">
-        INSERT INTO `t_site_distance`(scenariosId,site_collect,site_delivery,car_distance,duration_night_delivery,createtime)
-        VALUES (#{scenariosId}, #{siteCollect}, #{siteDelivery}, #{carDistance}, #{durationNightDelivery}, #{createTime});
+        INSERT INTO `t_site_distance`(scenariosId,car_type,site_collect,site_delivery,car_distance,duration_night_delivery,createtime)
+        VALUES (#{scenariosId},#{carType}, #{siteCollect}, #{siteDelivery}, #{carDistance}, #{durationNightDelivery}, #{createTime});
     </insert>
     <select id="findAll" parameterType="map" resultType="SiteDist" resultMap="siteDistMap">
         SELECT * FROM t_site_distance where scenariosId = #{scenariosId}
@@ -55,7 +55,7 @@
     </select>
 
     <update id="editSiteDist">
-        UPDATE t_site_distance SET scenariosId = #{scenariosId},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
+        UPDATE t_site_distance SET scenariosId = #{scenariosId},carType = #{car_type},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
         car_distance=#{car_distance},duration_night_delivery=#{durationNightDelivery},createtime=#{createTime} where id = #{id}
     </update>
 
@@ -66,6 +66,7 @@
     <resultMap id="siteDistMap" type="SiteDist">
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
+        <result property="carType" column="car_type"/>
         <result property="siteCollect" column="site_collect"/>
         <result property="siteDelivery" column="site_delivery"/>
         <result property="carDistance" column="car_distance"/>

@@ -72,6 +72,7 @@
 			            <thead>
 			            	<tr>
 			            		<th rowspan="2">ID</th>
+				                <th rowspan="2">car type</th>
 				                <th rowspan="2">start depot</th>
 				                <th rowspan="2">end depot</th>
 				                <th colspan="2">be used to calculating the transportation time</th>
@@ -84,6 +85,7 @@
 			            </thead>
 			            <tbody id="cond-tbody">
 			            	<tr>
+				                <td></td>
 				                <td></td>
 				                <td></td>
 				                <td></td>

@@ -304,6 +304,7 @@ $(function  () {
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
+	                {"data":"carType","name":"car_type"},
 	                {"data":"siteCollect","name":"site_collect"},
 	                {"data":"siteDelivery","name":"site_delivery"},
 	                {"data":"carDistance","name":"car_distance"},
