@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class SiteDist implements Serializable {
     private Integer id;
     private String scenariosId;
+    private String carType;         // 车型
     private String siteCollect;           //收件网点
     private String siteDelivery;            //派件网点
     private Float carDistance;                 //车辆运行距离(公里)
@@ -35,6 +36,14 @@ public class SiteDist implements Serializable {
 
     public void setScenariosId(String scenariosId) {
         this.scenariosId = scenariosId;
+    }
+
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
     }
 
     public String getSiteCollect() {

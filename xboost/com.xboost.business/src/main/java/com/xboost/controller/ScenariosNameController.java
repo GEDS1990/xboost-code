@@ -1,8 +1,6 @@
 package com.xboost.controller;
 
 import com.google.common.collect.Maps;
-import com.xboost.pojo.Scenarios;
-import com.xboost.pojo.SiteDist;
 import com.xboost.service.*;
 import com.xboost.util.ShiroUtil;
 import org.springframework.stereotype.Controller;
@@ -23,7 +21,7 @@ public class ScenariosNameController {
     @Inject
     SiteDistService siteDistService;
     @Inject
-    TransportService transportService;
+    CarService transportService;
     @Inject
     DemandInfoService demandInfoService;
 
