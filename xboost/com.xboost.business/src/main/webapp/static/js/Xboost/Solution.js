@@ -306,12 +306,8 @@ $(function  () {
 //                }).fail(function  (e) {
 //                  console.log('fail');
 //              });
-				
+
 			});
-	        
-	        
-	        
-	        
 		}
 		
 	}());
@@ -319,7 +315,7 @@ $(function  () {
 
 
 /**
-	 *route.jsp == SolutionRouteController
+	 *route.jsp == SolutionVehiclesController
 	 *
 	 */
 	(function  () {

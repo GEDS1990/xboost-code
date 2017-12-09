@@ -64,7 +64,7 @@
                 and  r.id = #{keyword}
             </if>
         </where>
-        order by ${orderColumn} ${orderType}
+        <!--order by ${orderColumn} ${orderType}-->
         limit ${start},${length}
     </select>
 

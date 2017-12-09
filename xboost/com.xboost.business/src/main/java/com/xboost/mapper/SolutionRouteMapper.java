@@ -41,7 +41,7 @@ public interface SolutionRouteMapper {
     Integer findRouteId(String scenariosId);
 
     // 根据路线id获取路线信息,根据curLoc和siteCode关联查询t_solution_route,t_site_info   @param param @return
-    Map<String,Object> findByRoute(Map<String, Object> param);
+    List<Map<String,Object>> findByRoute(Map<String, Object> param);
 
     // 根据路线id获取路线信息,根据curLoc和siteCode关联查询t_solution_route,t_site_info
     Long findCountByRoute(Map<String, Object> param);

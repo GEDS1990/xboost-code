@@ -82,7 +82,7 @@ public class SolutionRouteService {
      * param param
      * @return
      */
-    public Map<String, Object> findByRoute(Map<String, Object> param) {
+    public List<Map<String, Object>> findByRoute(Map<String, Object> param) {
         return solutionRouteMapper.findByRoute(param);
     }
 
