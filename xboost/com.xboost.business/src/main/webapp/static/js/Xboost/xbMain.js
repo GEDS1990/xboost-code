@@ -171,6 +171,19 @@ function CategoryList () {
         });
 	}
 }());
+/**
+ * Research.jsp = ResearchController
+ * 
+ */
+(function  () {
+	var reserach_echarts = doc.getElementById('reserach-echarts');
+	if (reserach_echarts) {
+		
+	}
+}());
+
+
+
 
 
 
