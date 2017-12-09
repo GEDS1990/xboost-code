@@ -37,7 +37,7 @@ public class SolutionRouteService {
     }
 
     /**
-     * 查询所有模型整体参数信息
+     * 根据场景id查询所有路线信息
      * param
      * @return
      */
@@ -46,15 +46,15 @@ public class SolutionRouteService {
     }
 
     /**
-     * 获取模型整体参数信息总数量
+     * 获取路线总数量
      * @return
      */
     public Integer findAllCount(String scenariosId) {
         return solutionRouteMapper.findAllCount(scenariosId).intValue();
     }
 
-    /**
-     * 根据查询条件获取模型整体参数信息
+       /**
+     * 根据查询条件获取路线信息
      * param param
      * @return
      */
@@ -62,13 +62,37 @@ public class SolutionRouteService {
         return solutionRouteMapper.findByParam(param);
     }
 
+
     /**
-     * 根据查询条件获取模型整体参数信息的数量
+     * 根据查询条件获取模型整体参数信息的路线数量
      * @param param
      * @return
      */
     public Integer findCountByParam(Map<String, Object> param) {
         return solutionRouteMapper.findCountByParam(param).intValue();
+    }
+
+    //根据场景id查询routeId
+    public Integer findRouteId(String scenariosId) {
+        return solutionRouteMapper.findRouteId(scenariosId);
+    }
+
+    /**
+     * 根据路线id获取线路信息
+     * param param
+     * @return
+     */
+    public List<Map<String, Object>> findByRoute(Map<String, Object> param) {
+        return solutionRouteMapper.findByRoute(param);
+    }
+
+    /**
+     * 根据路线id获取线路数量
+     * @param param
+     * @return
+     */
+    public Integer findCountByRoute(Map<String, Object> param) {
+        return solutionRouteMapper.findCountByRoute(param).intValue();
     }
 
 

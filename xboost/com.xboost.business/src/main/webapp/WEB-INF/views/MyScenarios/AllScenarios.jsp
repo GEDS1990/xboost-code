@@ -264,7 +264,7 @@
 <script type="text/javascript">
 	$(function  () {
 		(function  () {
-			$('#after-content').addClass("active");
+			$('#nav-AllScenarios').addClass("active");
 		})()
 	});
 </script>

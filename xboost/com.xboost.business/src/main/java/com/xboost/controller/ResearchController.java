@@ -10,9 +10,9 @@ public class ResearchController {
     /*
     * 跳转Overview页面
     * */
-    @RequestMapping(value = "/Overview",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String Overview() {
-        return "Research/Overview";
+        return "Research/Research";
     }
 
 }

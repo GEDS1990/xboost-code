@@ -15,14 +15,14 @@
                 	</a>
             	</li>
                 <li class="xb-hover" id="nav-Research">
-                    <a class="nav_xb" ><span class="icon alt icon-bar-chart"></span>Research</a>
+                    <a href="/Research" class="nav_xb" ><span class="icon alt icon-bar-chart"></span>My Research</a>
                 </li>
                 <shiro:hasRole name="管理员">
                 <li class="xb-hover" id="nav-AllScenarios">
                     <a href="/MyScenarios/AllScenarios" class="nav_xb" ><span class="icon alt icon-sitemap"></span>All Scenarios</a>
                 </li>
                 <li class="xb-hover" id="UserManage">
-                    <a href="/account" class="nav_xb" ><span class="icon alt icon-users"></span>User Manage</a>
+                    <a href="/account" class="nav_xb" ><span class="icon alt icon-users"></span>All Users</a>
                 </li>
                 <li class="xb-hover" id="System">
                     <a href="/druid" class="nav_xb" ><span class="icon alt icon-desktop"></span>System</a>

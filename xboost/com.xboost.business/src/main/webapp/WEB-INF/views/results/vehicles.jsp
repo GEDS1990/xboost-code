@@ -107,7 +107,7 @@
 	    	
 	    	
 	    	
-	    		<!--Solution Route-->
+	    		<!--Solution vehicle-->
 			    <div class="table-responsive active result-style">
 		            <table id="SolutionVehicles" class="table table-striped table-bordered table-hover">
 					    <thead>
@@ -124,7 +124,7 @@
 					    		<th rowspan="1">Next Deport & Distance</th>
 					    	</tr>
 					    </thead>
-			            <tbody id="route-tbody">
+			            <tbody id="vehicle-tbody">
 			            	<tr>
 				                <td></td>
 				                <td></td>

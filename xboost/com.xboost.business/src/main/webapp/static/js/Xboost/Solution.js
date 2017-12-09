@@ -18,7 +18,7 @@ $(function  () {
 	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
-	                url:"/route/route.json", //获取数据的URL
+	                url:"/depots/operateInfo.json", //获取数据的URL
 	                type:"get" //获取数据的方式
 	                
 	            },
@@ -163,7 +163,7 @@ $(function  () {
 		if (SolutionRoute) {
 			//加载列表
 			var dt =$("#SolutionRoute").DataTable({
-	            "processing": true, //loding效果
+	            "processing": true, //loading效果
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
 	            "destroy": true,
@@ -177,7 +177,7 @@ $(function  () {
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
 	                {"data":function  (res) {
-	                	return "Route "+add0(res.routeCount);
+	                	return "Route "+add0(res.id);
 	                },"name":"route_count"},
 	                {"data":"sequence","name":"sequence"},
 	                {"data":"curLoc","name":"cur_loc"},
@@ -241,8 +241,9 @@ $(function  () {
 	            		len = result.length;
 	            		$('#route-route').empty();
 	            		$('#route-route').off("click");
+	            		$('#route-route').append('<option value="0">All Route</option>');
 	            		for (var i=0;i<len;i++) {
-	            			arr.push(result[i].routeCount);
+	            			arr.push(result[i].id);
 	            		}
 	            		var Arr = unique(arr),
 	            		A_len = Arr.length;
@@ -252,7 +253,7 @@ $(function  () {
 	            		}
 	            		var _val = $('#route-route').find("option").eq(0).val(),
 	            		_text = $('#route-route').find("option").eq(0).text();
-	            		$('#route-name').text(_text);
+	//            		$('#route-name').text(_text);
 	            		var table = $('#SolutionRoute').DataTable();
 	            		table.search(_val).draw(false);
 	            	}
@@ -263,7 +264,7 @@ $(function  () {
 			        // 输出当前页的数据到浏览器控制台
 			        var data = api.rows( {page:'current'} ).data();
 			        //console.log(data);
-			        $('#route-name').text("Route 00"+data[0].routeCount);
+//			        $('#route-name').text("Route 00"+data[0].routeCount);
 	            }
 	        });
 	        //点击选项 来查询
@@ -274,13 +275,28 @@ $(function  () {
 					table.search("").draw(false);
 				}else{
 					table.search(val).draw(false);
+                    $.get("/route/route.json",{"siteCode":val}).done(function  (res) {
+                        console.log(res)
+                        if (res) {
+                            $('#route-name').text("Route "+res.id);
+                            $('#total-distance').text(res.sbVol);
+                            $('#vehicle-load-requirement').text(res.car_type);
+                            $('#vehicle-piece-capacity').text(res.calcDis);
+                            $('#speed-requirement').text(res.calcDis);
+                        }else{
+                            $('#route-name').text("No Data");
+                            $('#total-distance').text("--");
+                            $('#vehicle-load-requirement').text("--");
+                            $('#vehicle-piece-capacity').text("--");
+                            $('#speed-requirement').text("--");
+                        }
+
+                    }).fail(function  (e) {
+                      console.log('fail');
+                  });
 				}
-				
+
 			});
-	        
-	        
-	        
-	        
 		}
 		
 	}());
@@ -288,7 +304,7 @@ $(function  () {
 
 
 /**
-	 *route.jsp == SolutionRouteController
+	 *route.jsp == SolutionVehiclesController
 	 *
 	 */
 	(function  () {
