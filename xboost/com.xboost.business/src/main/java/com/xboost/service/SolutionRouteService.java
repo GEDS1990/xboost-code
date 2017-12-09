@@ -58,17 +58,27 @@ public class SolutionRouteService {
      * param param
      * @return
      */
+    public List<Route> findBySiteCode(Map<String, Object> param,String scenariosId) {
+        return solutionRouteMapper.findByParam(param,scenariosId);
+    }
+
+    /**
+     * 根据查询条件获取模型整体参数信息
+     * param param
+     * @return
+     */
     public List<Route> findByParam(Map<String, Object> param) {
         return solutionRouteMapper.findByParam(param);
     }
+
 
     /**
      * 根据查询条件获取模型整体参数信息的数量
      * @param param
      * @return
      */
-    public Integer findCountByParam(Map<String, Object> param) {
-        return solutionRouteMapper.findCountByParam(param).intValue();
+    public Integer findCountByParam(Map<String, Object> param,String scenariosId) {
+        return solutionRouteMapper.findCountByParam(param,scenariosId).intValue();
     }
 
 

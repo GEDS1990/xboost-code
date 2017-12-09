@@ -2,6 +2,7 @@ package com.xboost.mapper;
 
 import com.xboost.pojo.Activity;
 import com.xboost.pojo.Route;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -31,12 +32,16 @@ public interface SolutionRouteMapper {
     Route findById(Integer id);
 
     // 根据查询条件获取模型整体参数  @param param @return
-    List<Route> findByParam(Map<String, Object> param);
+    List<Route> findByParam(@Param("param") Map<String, Object> param,@Param("scenariosId") String scenariosId);
 
     //根据查询条件获取模型整体参数信息的数量
-    Long findCountByParam(Map<String, Object> param);
+    Long findCountByParam(@Param("param") Map<String, Object> param,@Param("scenariosId") String scenariosId);
 
+    // 根据查询条件获取模型整体参数  @param param @return
+    List<Route> findByParam(@Param("param") Map<String, Object> param,@Param("scenariosId") String scenariosId);
 
+    //根据查询条件获取模型整体参数信息的数量
+    Long findCountByParam(@Param("param") Map<String, Object> param,@Param("scenariosId") String scenariosId);
 
 }
 

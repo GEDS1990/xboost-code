@@ -44,7 +44,7 @@ public class SolutionRouteController {
     }
 
 
-    //查询所有模型整体参数信息
+    //查询路线信息
     @RequestMapping(value = "/route.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String,Object> load(HttpServletRequest request) {
@@ -67,18 +67,23 @@ public class SolutionRouteController {
         param.put("orderType",orderType);
         param.put("scenariosId",ShiroUtil.getOpenScenariosId());
 
-
-
         Map<String,Object> result = Maps.newHashMap();
 
-        List<Route> modelArgList = solutionRouteService.findByParam(param); //.findAll();
+        List<Route> routeList = solutionRouteService.findByParam(param,S); //.findAll();
         Integer count = solutionRouteService.findAllCount(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = solutionRouteService.findCountByParam(param);
+
+        List<>
+
+        for(int i=0;i<routeList.size();i++){
+            Route route = routeList.get(i);
+            if(route.getCurLoc())
+        }
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
-        result.put("data",modelArgList);
+        result.put("data",routeList);
         return result;
     }
 
