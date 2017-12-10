@@ -66,7 +66,7 @@ public class SiteDistController {
      */
     @RequestMapping(value = "/addByExcel",method = RequestMethod.POST)
     @ResponseBody
-    public String AddSiteDist(SiteDist siteDist,@RequestParam MultipartFile[] file) {
+    public String AddSiteDistByExcel(SiteDist siteDist,@RequestParam MultipartFile[] file) {
         siteDist.setScenariosId(ShiroUtil.getOpenScenariosId());
         siteDistService.saveSiteDist(siteDist,file);
         return "redirect:/siteDist";
@@ -140,7 +140,7 @@ public class SiteDistController {
         return "success";
     }
 
-    @RequestMapping(value = "/exportExcel",method = RequestMethod.POST,produces = {"application/vnd.ms-excel;charset=UTF-8"})
+    @RequestMapping(value = "/exportExcel",method = RequestMethod.GET,produces = {"application/vnd.ms-excel;charset=UTF-8"})
     @ResponseBody
     public String exportExcel(HttpServletResponse response)
     {
@@ -153,7 +153,7 @@ public class SiteDistController {
              response.setCharacterEncoding("utf-8");
              response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
              String scenariosId = ShiroUtil.getOpenScenariosId();
-             String[] titles = { "pickup depot","delivery depot","transportation distance(km)","night transportation time(min)" };
+             String[] titles = { "ID","carType","pickup depot","delivery depot","transportation distance(km)","night transportation time(min)" };
              siteDistService.exportExcel(scenariosId,titles,outputStream);
       //       System.out.println("outputStream:"+outputStream);
              }

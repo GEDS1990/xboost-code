@@ -151,7 +151,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	            	{
 	                    "targets":[0],
-	                    "visible":false
+	                    "visible":true
 	                },
 	                {
 	                    "targets":[0,13],
@@ -316,7 +316,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	            	{
 	                    "targets":[0],
-	                    "visible":false
+	                    "visible":true
 	                },
 	                {
 	                    "targets":[0,5],
@@ -478,7 +478,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	                {
 	                    "targets":[0],
-	                    "visible":false
+	                    "visible":true
 	                }
 	            ],
 	            "language":{
@@ -634,7 +634,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	                {
 	                    "targets":[0],
-	                    "visible":false
+	                    "visible":true
 	                },
 	                {
 	                    "targets":[0,1,2,3,4],
@@ -786,11 +786,17 @@ $(function  () {
 	                    return "<a href='javascript:;' class='editLink-tran' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-tran' data-id='"+row.id+"'>Del</a>";
 	                }},
 	                {"data":"a","name":"a"},
+                    {"data":"costa","name":"costa"},
 	                {"data":"b","name":"b"},
+                    {"data":"costb","name":"costb"},
 	                {"data":"c","name":"c"},
-	                {"data":"d","name":"d"},
+                    {"data":"costc","name":"costc"},
+                    {"data":"d","name":"d"},
+	                {"data":"costd","name":"costd"},
 	                {"data":"e","name":"e"},
-	                {"data":"f","name":"f"}
+                    {"data":"coste","name":"coste"},
+	                {"data":"f","name":"f"},
+                    {"data":"costf","name":"costf"}
 	            ],
 	            "columnDefs":[ //具体列的定义
 	                {
@@ -965,7 +971,7 @@ $(function  () {
 	            ],
 	            "columnDefs":[ //具体列的定义
 	            	{
-	                    "targets":[0,1,5,6],
+	                    "targets":[1,5,6],
 	                    "visible":false
 	                },
 	                {
@@ -1005,7 +1011,7 @@ $(function  () {
 	        $("body").on("click",".openLink-scen",function  () {
 	        	var $this = $(this);
 	        	var openScenariosId = $this.attr("data-scenariosid");
-	        	var scenName = $this.parent("td").parent("tr").find("td").eq(0).text();
+	        	var scenName = $this.parent("td").parent("tr").find("td").eq(1).text();
 	        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId,"openScenariosName":scenName}).done(function  (res) {
 	        		if (res == "success") {
 	        			$('#scen-name').remove();
@@ -1120,7 +1126,7 @@ $(function  () {
     	            ],
     	            "columnDefs":[ //具体列的定义
     	            	{
-    	                    "targets":[0,1,5,6],
+    	                    "targets":[1,5,6],
     	                    "visible":false
     	                },
     	                {
@@ -1182,7 +1188,7 @@ debugger;
     	        $("body").on("click",".openLink-scen",function  () {
     	        	var $this = $(this);
     	        	var openScenariosId = $this.attr("data-scenariosid");
-    	        	var scenName = $this.parent("td").parent("tr").find("td").eq(0).text();
+    	        	var scenName = $this.parent("td").parent("tr").find("td").eq(1).text();
     	        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId,"openScenariosName":scenName}).done(function  (res) {
     	        		if (res == "success") {
     	        			$('#scen-name').remove();

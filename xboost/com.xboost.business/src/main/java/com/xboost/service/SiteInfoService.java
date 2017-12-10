@@ -66,29 +66,31 @@ public class SiteInfoService {
                         List<String> lineList = excelUtil.readExcel(fileTmp);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
+                            //ID
+                            siteInfo.setId(Integer.parseInt(row[1]));
                             //网点编码
-                            siteInfo.setSiteCode(row[1]);
+                            siteInfo.setSiteCode(row[2]);
                             //网点经度
-                            siteInfo.setSiteLongitude(row[2]);
+                            siteInfo.setSiteLongitude(row[3]);
                             //网点纬度
-                            siteInfo.setSiteLatitude(row[3]);
+                            siteInfo.setSiteLatitude(row[4]);
                             //网点名称
-                            siteInfo.setSiteName(row[4]);
+                            siteInfo.setSiteName(row[5]);
                             //网点地址
-                            siteInfo.setSiteAddress(row[5]);
+                            siteInfo.setSiteAddress(row[6]);
                             //是否可以做夜配集散点
-                            siteInfo.setSiteNightDelivery(null);
+                            siteInfo.setSiteNightDelivery(Integer.parseInt(row[7]));
                             //网点面积
-                            siteInfo.setSiteArea(row[6]);
+                            siteInfo.setSiteArea(row[8]);
                             //网点类型
-                            siteInfo.setSiteType(row[7]);
+                            siteInfo.setSiteType(row[9]);
                             //停货车数(辆)(10分钟停靠能力)
-                            siteInfo.setCarNum(row[8]);
+                            siteInfo.setCarNum(row[10]);
                             //进出最大车型(10分钟停靠能力)
-                            siteInfo.setLargeCarModel(row[9]);
+                            siteInfo.setLargeCarModel(row[11]);
                             //单一批量操作处理量上限(以一个班次操作为单位)
-                            siteInfo.setMaxOperateNum(row[10]);
-                            siteInfo.setDistribCenter(row[11]);
+                            siteInfo.setMaxOperateNum(row[12]);
+                            siteInfo.setDistribCenter(row[13]);
                             siteInfo.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
 
@@ -222,51 +224,55 @@ public class SiteInfoService {
                 SiteInfo siteInfo = list.get(j);
 
                 cell = bodyRow.createCell(0);
+                cell.setCellValue(siteInfo.getId());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(1);
                 cell.setCellValue(siteInfo.getSiteCode());
                 cell.setCellStyle(bodyStyle);
 
 
-                cell = bodyRow.createCell(1);
+                cell = bodyRow.createCell(2);
                 cell.setCellValue(siteInfo.getSiteLongitude());
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(2);
+                cell = bodyRow.createCell(3);
                 cell.setCellValue(siteInfo.getSiteLatitude());
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(3);
+                cell = bodyRow.createCell(4);
                 cell.setCellValue(siteInfo.getSiteName());
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(4);
+                cell = bodyRow.createCell(5);
                 cell.setCellValue(siteInfo.getSiteAddress());
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(5);
+                cell = bodyRow.createCell(6);
                 cell.setCellValue(siteInfo.getSiteArea());
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(6);
+                cell = bodyRow.createCell(7);
                 cell.setCellValue(siteInfo.getSiteType());
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(7);
+                cell = bodyRow.createCell(8);
                 cell.setCellValue(siteInfo.getDistribCenter());
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(8);
+                cell = bodyRow.createCell(9);
                 cell.setCellValue(siteInfo.getSiteNightDelivery());
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(9);
+                cell = bodyRow.createCell(10);
                 cell.setCellValue(siteInfo.getCarNum());
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(10);
+                cell = bodyRow.createCell(11);
                 cell.setCellValue(siteInfo.getLargeCarModel());
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(11);
+                cell = bodyRow.createCell(12);
                 cell.setCellValue(siteInfo.getMaxOperateNum());
                 cell.setCellStyle(bodyStyle);
             }

@@ -73,23 +73,11 @@
 					    <thead>
 					    <!--
                         <tr>
-                            <th>ID</th>
-                            <th>type</th>
-                            <th>vehicle<br />source</th>
-                            <th>full load<br />unload<br />time (min)</th>
-                            <th>max<br />Stop</th>
-                            <th>maximum<br />load(p)</th>
                             <th>fixed<br />Round</th>计算
                             <th>fixed<br />RoundFee</th>计算
-                            <th>start<br />Location</th>
-                            <th>end<br />Location</th>
-                            <th>max<br />Distance</th>
-                            <th>max<br />RunningTime</th>
                             <th>cost<br />PerDistance</th>计算
                             <th>cost<br />PerTime</th>计算
                             <th>fixed<br />Cost</th>计算
-                            <th>velocity</th>
-                            <th>operation</th>
                         </tr>
                         -->
 					    	<tr>
@@ -106,18 +94,24 @@
                                 <th rowspan="3">speed(km/h)</th>
                                 <th rowspan="3">operation</th>
                                 <tr>
-                                    <th>(0,a] km</th>
-                                    <th>(a,b] km</th>
-                                    <th>(b,c] km</th>
-                                    <th>(c,d] km</th>
-                                    <th>(d,e] km</th>
-                                    <th>(e,f] km</th>
+                                    <th  colspan="2">cost(0-a)</th>
+                                    <th  colspan="2">cost(a-b)</th>
+                                    <th  colspan="2">cost(b-c)</th>
+                                    <th  colspan="2">cost(c-d)</th>
+                                    <th  colspan="2">cost(d-e)</th>
+                                    <th  colspan="2">cost(e-f)</th>
                                     <tr>
+                                        <th>(0,a] km</th>
                                         <th>ride/km</th>
+                                        <th>(a,b] km</th>
                                         <th>ride/km</th>
+                                        <th>(b,c] km</th>
                                         <th>ride/km</th>
+                                        <th>(c,d] km</th>
                                         <th>ride/km</th>
+                                        <th>(d,e] km</th>
                                         <th>ride/km</th>
+                                        <th>(e,f] km</th>
                                         <th>ride/km</th>
                                     </tr>
                                 </tr>
