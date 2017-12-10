@@ -72,8 +72,27 @@
 	    			</div>
 	    		</header>
 	    		<div class="sim-box">
-	    			<table id="research-table" style="display: none;"></table>
-	    			<div id="reserach-echarts">
+	    			<div style="display: none;">
+	    				<table id="research-table" style="display: none;">
+	    					<thead>
+	    						<tr>
+	    							<th>id</th>
+	    							<th>scenariosName</th>
+	    						</tr>
+	    					</thead>
+	    					<tbody>
+	    						<tr>
+	    							<td></td>
+	    							<td></td>
+	    						</tr>
+	    					</tbody>
+	    				</table>
+	    			</div>
+	    			
+	    			<div id="collect-reserach-echarts" style="border:1px solid #ccc;padding:10px;">
+	    				
+	    			</div>
+	    			<div id="branch-reserach-echarts" style="border:1px solid #ccc;padding:10px;margin-top: 20px;">
 	    				
 	    			</div>
 	    		</div>
@@ -120,6 +139,7 @@
 <script src="/static/js/echarts.js"></script>
 <script src="/static/js/Xboost/xbMain.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="/static/js/Xboost/ScenariosName.js" ></script>
+<script src="/static/js/Xboost/xb_echart.js"></script>
 <script type="text/javascript">
 	$(function  () {
 		(function  () {
