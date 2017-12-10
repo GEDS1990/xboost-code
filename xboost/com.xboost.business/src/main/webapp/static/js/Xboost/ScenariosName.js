@@ -151,7 +151,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	            	{
 	                    "targets":[0],
-	                    "visible":false
+	                    "visible":true
 	                },
 	                {
 	                    "targets":[0,13],
@@ -316,7 +316,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	            	{
 	                    "targets":[0],
-	                    "visible":false
+	                    "visible":true
 	                },
 	                {
 	                    "targets":[0,5],
@@ -471,7 +471,6 @@ $(function  () {
 	                {"data":"votes","name":"votes"},
 	                {"data":"weight","name":"weight"},
 	                {"data":"productType","name":"product_type"},
-	                {"data":"ageing","name":"ageing"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-dem' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dem' data-id='"+row.id+"'>Del</a>";
 	                }}
@@ -479,11 +478,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	                {
 	                    "targets":[0],
-	                    "visible":false
-	                },
-	                {
-	                    "targets":[0,10],
-	                    "orderable":false
+	                    "visible":true
 	                }
 	            ],
 	            "language":{
@@ -639,7 +634,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	                {
 	                    "targets":[0],
-	                    "visible":false
+	                    "visible":true
 	                },
 	                {
 	                    "targets":[0,1,2,3,4],
@@ -779,32 +774,34 @@ $(function  () {
 	                {"data":"id","name":"id"},
 	                {"data":"type","name":"type"},
 	                {"data":"carSource","name":"car_source"},
-	                {"data":"maxLoad","name":"max_load"},
 	                {"data":"durationUnloadFull","name":"duration_unload_full"},
 	                {"data":"maxStop","name":"max_stop"},
 	                {"data":"dimensions","name":"dimensions"},
-	                {"data":"fixed_round","name":"fixed_round"},
-	                {"data":"fixed_round_fee","name":"fixed_round_fee"},
 	                {"data":"start_location","name":"start_location"},
 	                {"data":"end_location","name":"end_location"},
 	                {"data":"max_distance","name":"max_distance"},
 	                {"data":"max_running_time","name":"max_running_time"},
-	                {"data":"cost_per_distance","name":"cost_per_distance"},
-	                {"data":"cost_per_time","name":"cost_per_time"},
-	                {"data":"fixed_cost","name":"fixed_cost"},
 	                {"data":"velocity","name":"velocity"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-tran' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-tran' data-id='"+row.id+"'>Del</a>";
-	                }}
+	                }},
+	                {"data":"a","name":"a"},
+                    {"data":"costa","name":"costa"},
+	                {"data":"b","name":"b"},
+                    {"data":"costb","name":"costb"},
+	                {"data":"c","name":"c"},
+                    {"data":"costc","name":"costc"},
+                    {"data":"d","name":"d"},
+	                {"data":"costd","name":"costd"},
+	                {"data":"e","name":"e"},
+                    {"data":"coste","name":"coste"},
+	                {"data":"f","name":"f"},
+                    {"data":"costf","name":"costf"}
 	            ],
 	            "columnDefs":[ //具体列的定义
 	                {
 	                    "targets":[0],
-	                    "visible":false
-	                },
-	                {
-	                    "targets":[0,17],
-	                    "orderable":false
+	                    "visible":true
 	                }
 	            ],
 	            "language":{
@@ -974,7 +971,7 @@ $(function  () {
 	            ],
 	            "columnDefs":[ //具体列的定义
 	            	{
-	                    "targets":[0,1,5,6],
+	                    "targets":[1,5,6],
 	                    "visible":false
 	                },
 	                {
@@ -1014,7 +1011,7 @@ $(function  () {
 	        $("body").on("click",".openLink-scen",function  () {
 	        	var $this = $(this);
 	        	var openScenariosId = $this.attr("data-scenariosid");
-	        	var scenName = $this.parent("td").parent("tr").find("td").eq(0).text();
+	        	var scenName = $this.parent("td").parent("tr").find("td").eq(1).text();
 	        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId,"openScenariosName":scenName}).done(function  (res) {
 	        		if (res == "success") {
 	        			$('#scen-name').remove();
@@ -1129,7 +1126,7 @@ $(function  () {
     	            ],
     	            "columnDefs":[ //具体列的定义
     	            	{
-    	                    "targets":[0,1,5,6],
+    	                    "targets":[1,5,6],
     	                    "visible":false
     	                },
     	                {
@@ -1191,7 +1188,7 @@ debugger;
     	        $("body").on("click",".openLink-scen",function  () {
     	        	var $this = $(this);
     	        	var openScenariosId = $this.attr("data-scenariosid");
-    	        	var scenName = $this.parent("td").parent("tr").find("td").eq(0).text();
+    	        	var scenName = $this.parent("td").parent("tr").find("td").eq(1).text();
     	        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId,"openScenariosName":scenName}).done(function  (res) {
     	        		if (res == "success") {
     	        			$('#scen-name').remove();

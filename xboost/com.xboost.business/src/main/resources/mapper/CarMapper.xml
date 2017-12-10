@@ -6,10 +6,10 @@
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT into t_car_info(scenariosId,type,dimensions,skills,start_location,end_location,max_distance,
         max_running_time,cost_per_distance,cost_per_time,fixed_cost,max_stop,velocity,fixed_round,fixed_round_fee,
-        car_source,max_load,duration_unload_full,createtime,updatetime)
+        car_source,max_load,duration_unload_full,a,b,c,d,e,f,costa,costb,costc,costd,coste,costf,createtime,updatetime)
         VALUES (#{scenariosId},#{type},#{dimensions},#{skills},#{startLocation},#{endLocation},#{maxDistance},
         #{maxRunningTime},#{costPerDistance},#{costPerTime},#{fixedCost},#{maxStop},#{velocity},#{fixedRound},#{fixedRoundFee},
-        #{carSource},#{maxLoad},#{durationUnloadFull},#{createTime},#{updateTime})
+        #{carSource},#{maxLoad},#{durationUnloadFull},#{a},#{b},#{c},#{d},#{e},#{f},#{costa},#{costb},#{costc},#{costd},#{coste},#{costf}, #{createTime},#{updateTime})
     </insert>
 
     <insert id="saveTimeWindow">
@@ -98,6 +98,18 @@
         <result property="maxLoad" column="max_load"/>
         <result property="durationUnloadFull" column="duration_unload_full"/>
         <result property="type" column="type"/>
+        <result property="a" column="a"/>
+        <result property="b" column="b"/>
+        <result property="c" column="c"/>
+        <result property="d" column="d"/>
+        <result property="e" column="e"/>
+        <result property="f" column="f"/>
+        <result property="costa" column="costa"/>
+        <result property="costb" column="costb"/>
+        <result property="costc" column="costc"/>
+        <result property="costd" column="costd"/>
+        <result property="coste" column="coste"/>
+        <result property="costf" column="costf"/>
         <association property="tw" javaType="com.mckinsey.sf.data.TimeWindow">
             <result property="start" column="start"/>
             <result property="end" column="end"/>

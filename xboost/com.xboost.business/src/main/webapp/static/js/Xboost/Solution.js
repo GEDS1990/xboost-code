@@ -305,7 +305,7 @@ $(function  () {
 
 
 /**
-	 *route.jsp == SolutionVehiclesController
+	 *Vehicles.jsp == SolutionVehiclesController
 	 *
 	 */
 	(function  () {

@@ -80,23 +80,11 @@
 				                <th>piece(p)</th>
 				                <th>weight(kg)</th>
 				                <th>product type</th>
-				                <th>effectiveness</th>
 				                <th>operation</th>
 			            	</tr>
 			            </thead>
 			            <tbody>
 			            	<tr>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
 			            	</tr>
 			            </tbody>
 		            </table>

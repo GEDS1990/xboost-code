@@ -70,10 +70,12 @@ public class SiteDistService {
                             List<String> lineList = excelUtil.readExcel(fileTmp);
                             for(int i=0;i<lineList.size();i++){
                                 String[] row = lineList.get(i).split("#");
-                                siteDist.setSiteCollect(row[0]);
-                                siteDist.setSiteDelivery(row[1]);
-                                siteDist.setCarDistance(Float.parseFloat(row[2]));
-                                siteDist.setDurationNightDelivery(Double.parseDouble(row[3]));
+                                siteDist.setId(Integer.parseInt(row[0]));
+                                siteDist.setCarType(row[1]);
+                                siteDist.setSiteCollect(row[2]);
+                                siteDist.setSiteDelivery(row[3]);
+                                siteDist.setCarDistance(Float.parseFloat(row[4]));
+                                siteDist.setDurationNightDelivery(Double.parseDouble(row[5]));
                                 siteDist.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
                                 //insert
                                 siteDistMapper.save(siteDist);
@@ -194,19 +196,27 @@ public class SiteDistService {
                  SiteDist siteDist = list.get(j);
 
                  cell = bodyRow.createCell(0);
+                 cell.setCellValue(siteDist.getId());
+                 cell.setCellStyle(bodyStyle);
+
+                 cell = bodyRow.createCell(1);
+                 cell.setCellValue(siteDist.getCarType());
+                 cell.setCellStyle(bodyStyle);
+
+                 cell = bodyRow.createCell(2);
                  cell.setCellValue(siteDist.getSiteCollect());
                  cell.setCellStyle(bodyStyle);
 
 
-                 cell = bodyRow.createCell(1);
+                 cell = bodyRow.createCell(3);
                  cell.setCellValue(siteDist.getSiteDelivery());
                  cell.setCellStyle(bodyStyle);
 
-                 cell = bodyRow.createCell(2);
+                 cell = bodyRow.createCell(4);
                  cell.setCellValue(siteDist.getCarDistance());
                  cell.setCellStyle(bodyStyle);
 
-                 cell = bodyRow.createCell(3);
+                 cell = bodyRow.createCell(5);
                  cell.setCellValue(siteDist.getDurationNightDelivery());
                  cell.setCellStyle(bodyStyle);
 

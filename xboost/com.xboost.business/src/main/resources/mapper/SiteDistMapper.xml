@@ -6,7 +6,7 @@
 
     <insert id="save">
         INSERT INTO `t_site_distance`(scenariosId,car_type,site_collect,site_delivery,car_distance,duration_night_delivery,createtime)
-        VALUES (#{scenariosId},#{carType}, #{siteCollect}, #{siteDelivery}, #{carDistance}, #{durationNightDelivery}, #{createTime});
+        VALUES (#{scenariosId},#{carType}, #{siteCollect}, #{siteDelivery}, #{carDistance}, #{durationNightDelivery},#{createTime});
     </insert>
     <select id="findAll" parameterType="map" resultType="SiteDist" resultMap="siteDistMap">
         SELECT * FROM t_site_distance where scenariosId = #{scenariosId}
