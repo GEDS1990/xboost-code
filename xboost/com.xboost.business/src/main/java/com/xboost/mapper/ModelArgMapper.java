@@ -15,7 +15,11 @@ public interface ModelArgMapper {
     void add(ModelArg modelArg);
 
 
-     // 查询所有模型整体参数信息  @return
+    //  update模型整体参数信息  @param siteInfo
+    void update(ModelArg modelArg);
+
+
+    // 查询所有模型整体参数信息  @return
     List<ModelArg> findAll(String scenariosId);
 
     //查询所有模型整体参数信息总数

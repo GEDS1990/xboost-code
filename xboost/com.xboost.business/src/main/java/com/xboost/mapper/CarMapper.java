@@ -14,6 +14,9 @@ public interface CarMapper {
     //  添加运力信息  @param transport
     void save(Car car);
 
+    //  update运力信息  @param transport
+    void update(Car car);
+
     //  添加TimeWindow  @param tw
     void saveTimeWindow(TimeWindow tw);
 

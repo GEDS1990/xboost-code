@@ -53,7 +53,7 @@ public class ModelArgService {
                     File fileTmp = null;
                     long tempTime = System.currentTimeMillis();
                     try {
-                        fileTmp=new File("src/main/resources/upload/temp/"+tempTime+ ".xlsx");
+                        fileTmp=new File(System.getProperty("user.dir")+"/temp/"+tempTime+ ".xlsx");
                         if (!fileTmp.exists()) fileTmp.mkdirs();
                         multipartFile.transferTo(fileTmp);
 //                      File fileTemp = (File) multipartFile;
@@ -61,15 +61,21 @@ public class ModelArgService {
                         List<String> lineList = excelUtil.readExcel(fileTmp);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-                            modelArg.setParameterName(row[0]);
-                            modelArg.setData(row[1]);
-                            modelArg.setNote(row[2]);
+                            modelArg.setParameterName(row[1]);
+                            modelArg.setData(row[2]);
+                            modelArg.setNote(row[3]);
                             modelArg.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
-
-                            //insert
-                            modelArgMapper.add(modelArg);
-                            logger.info("insert into db:"+modelArg.getParameterName()+":"+modelArg.getData());
+                            if(null==row[0] || ""==row[0] || " "==row[0] ){
+                                modelArg.setId(Integer.parseInt(row[0]));
+                                //update
+                                modelArgMapper.update(modelArg);
+                                logger.info("update db:"+modelArg.getParameterName()+":"+modelArg.getData());
+                            }else{
+                                //insert
+                                modelArgMapper.add(modelArg);
+                                logger.info("insert into db:"+modelArg.getParameterName()+":"+modelArg.getData());
+                            }
                         }
                         logger.info("insert into db complete");
                     } catch (Exception e) {

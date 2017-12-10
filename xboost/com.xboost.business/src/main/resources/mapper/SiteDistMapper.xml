@@ -8,6 +8,13 @@
         INSERT INTO `t_site_distance`(scenariosId,car_type,site_collect,site_delivery,car_distance,duration_night_delivery,createtime)
         VALUES (#{scenariosId},#{carType}, #{siteCollect}, #{siteDelivery}, #{carDistance}, #{durationNightDelivery},#{createTime});
     </insert>
+
+    <update id="update">
+        update t_site_distance set scenariosId = #{scenariosId},car_type = #{carType},site_collect = #{siteCollect},
+        site_delivery = #{siteDelivery},car_distance = #{carDistance},duration_night_delivery = #{durationNightDelivery}
+        where id = #{id}
+    </update>
+
     <select id="findAll" parameterType="map" resultType="SiteDist" resultMap="siteDistMap">
         SELECT * FROM t_site_distance where scenariosId = #{scenariosId}
     </select>

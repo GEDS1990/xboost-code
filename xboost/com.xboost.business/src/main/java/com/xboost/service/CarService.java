@@ -75,31 +75,37 @@ public class CarService {
                         List<String> lineList = excelUtil.readExcel(fileTmp);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-                            transport.setType(row[0]);
-                            transport.setDimensions(row[1]);
-                            transport.setCarSource(row[2]);
-                            transport.setVelocity(Double.parseDouble(row[3]));
-                            transport.setMaxDistance(Float.parseFloat(row[4]));
-                            transport.setCostPerDistance(Double.parseDouble(row[5]));
-                            transport.setCostPerTime(Double.parseDouble(row[6]));
-                            transport.setDurationUnloadFull(row[7]);
-                            transport.setFixedCost(Double.parseDouble(row[8]));
-                            transport.setFixedRound(Double.parseDouble(row[9]));
-                            transport.setFixedRoundFee(Double.parseDouble(row[10]));
-                            transport.setMaxLoad(row[11]);
-                            transport.setMaxRunningTime(Double.parseDouble(row[12]));
-                            transport.setMaxStop(Integer.parseInt(row[13]));
+                            transport.setType(row[1]);
+                            transport.setDimensions(row[2]);
+                            transport.setCarSource(row[3]);
+                            transport.setVelocity(Double.parseDouble(row[4]));
+                            transport.setMaxDistance(Float.parseFloat(row[5]));
+                            transport.setCostPerDistance(Double.parseDouble(row[6]));
+                            transport.setCostPerTime(Double.parseDouble(row[7]));
+                            transport.setDurationUnloadFull(row[8]);
+                            transport.setFixedCost(Double.parseDouble(row[9]));
+                            transport.setFixedRound(Double.parseDouble(row[10]));
+                            transport.setFixedRoundFee(Double.parseDouble(row[11]));
+                            transport.setMaxLoad(row[12]);
+                            transport.setMaxRunningTime(Double.parseDouble(row[13]));
+                            transport.setMaxStop(Integer.parseInt(row[14]));
 //                            transport.setSkills(row[0]);
-                            transport.setStartLocation(row[14]);
-                            transport.setEndLocation(row[15]);
+                            transport.setStartLocation(row[15]);
+                            transport.setEndLocation(row[16]);
 //                            transport.setTw(row[0]);
 
                             transport.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
-                            //insert
-                            transportMapper.save(transport);
-                            transport.getTw().setCarId(Integer.parseInt(transport.getId()));//save时间窗口
-                            transportMapper.saveTimeWindow(transport.getTw());
+                            if(null==row[0] || ""==row[0] || " "==row[0] ){
+                                transport.setId(row[0]);
+                                //update
+                                transportMapper.update(transport);
+                            }else{
+                                //insert
+                                transportMapper.save(transport);
+                                transport.getTw().setCarId(Integer.parseInt(transport.getId()));//save时间窗口
+                                transportMapper.saveTimeWindow(transport.getTw());
 //                            logger.info("insert into db:"+transport.getCarType());
+                            }
                         }
                         logger.info("insert into db complete");
                     } catch (Exception e) {

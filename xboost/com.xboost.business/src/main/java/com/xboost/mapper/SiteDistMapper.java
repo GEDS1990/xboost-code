@@ -14,6 +14,9 @@ public interface SiteDistMapper {
     //  添加网点距离信息  @param siteInfo
     void save(SiteDist siteDist);
 
+    //  update网点距离信息  @param siteInfo
+    void update(SiteDist siteDist);
+
     // 查询所有网点距离 ,导出excel
     List<SiteDist> findAll(String scenariosId);
 

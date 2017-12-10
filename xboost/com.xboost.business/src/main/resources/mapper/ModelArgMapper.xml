@@ -9,6 +9,11 @@
         VALUES (#{scenariosId},#{parameterName},#{data},#{note},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
+    <update id="update">
+        update t_model_arg set scenariosId=#{scenariosId} ,parameter_name=#{parameterName},data=#{data},note=#{note}
+        where id = #{id}
+    </update>
+
     <select id="findAll" parameterType="map" resultType="ModelArg" resultMap="modelArgMap">
         SELECT * FROM t_model_arg where scenariosId = #{scenariosId}
     </select>

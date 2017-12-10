@@ -69,7 +69,7 @@ public class DemandInfoService {
                     File fileTmp = null;
                     long tempTime = System.currentTimeMillis();
                     try {
-                        fileTmp=new File("src/main/resources/upload/temp/"+tempTime+ ".xlsx");
+                        fileTmp=new File(System.getProperty("user.dir")+"/temp/"+tempTime+ ".xlsx");
                         if (!fileTmp.exists()) fileTmp.mkdirs();
                         multipartFile.transferTo(fileTmp);
 //                      File fileTemp = (File) multipartFile;
@@ -78,35 +78,34 @@ public class DemandInfoService {
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
                             //日期
-                            demandInfo.setDate(row[0]);
+                            demandInfo.setDate(row[1]);
                             //收件网点编码
-                            demandInfo.setSiteCodeCollect(row[1]);
+                            demandInfo.setSiteCodeCollect(row[2]);
                             //时段（开始）
-                            demandInfo.setDurationStart(row[2]);
+                            demandInfo.setDurationStart(row[3]);
                             //派件网点编码
-                            demandInfo.setSiteCodeDelivery(row[3]);
+                            demandInfo.setSiteCodeDelivery(row[4]);
                             //时段(结束）
-                            demandInfo.setDurationEnd(row[4]);
+                            demandInfo.setDurationEnd(row[5]);
                             //票数（票）
-                            demandInfo.setVotes(Integer.parseInt(row[5]));
+                            demandInfo.setVotes(Integer.parseInt(row[6]));
                             //重量（公斤）
-                            demandInfo.setWeight(Float.parseFloat(row[6]));
+                            demandInfo.setWeight(Float.parseFloat(row[7]));
                             //产品类型
-                            demandInfo.setProductType(row[7]);
+                            demandInfo.setProductType(row[8]);
                             //时效要求(小时)
-                            demandInfo.setAgeing(Integer.parseInt(row[8]));
+                            demandInfo.setAgeing(Integer.parseInt(row[9]));
                             demandInfo.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
-
-                            //insert
-                            demandInfoMapper.add(demandInfo);
-                            logger.info("insert into db:"+demandInfo.getDate());
-                            logger.info("insert into db:"+demandInfo.getSiteCodeCollect());
-                            logger.info("insert into db:"+demandInfo.getSiteCodeDelivery());
-                            logger.info("insert into db:"+demandInfo.getProductType());
-                            logger.info("insert into db:"+demandInfo.getDurationStart());
-                            logger.info("insert into db:"+demandInfo.getDurationEnd());
-                            logger.info("insert into db:"+demandInfo.getWeight());
-                            logger.info("insert into db:"+demandInfo.getAgeing());
+                            if(null==row[0] || ""==row[0] || " "==row[0] ){
+                                demandInfo.setId(Integer.parseInt(row[0]));
+                                //update
+                                demandInfoMapper.add(demandInfo);
+                                logger.info("update into db:"+demandInfo.getId());
+                            }else{
+                                //insert
+                                demandInfoMapper.add(demandInfo);
+                                logger.info("insert into db:"+demandInfo.getId());
+                            }
 
                         }
                         logger.info("insert into db complete");

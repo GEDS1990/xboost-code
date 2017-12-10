@@ -15,6 +15,9 @@ public interface SiteInfoMapper {
     //  添加网点基础信息  @param siteInfo
     void save(SiteInfo siteInfo);
 
+    //  update网点基础信息  @param siteInfo
+    void update(SiteInfo siteInfo);
+
 
      // 查询所有网点  @return
     List<SiteInfo> findAll(String scenariosId);

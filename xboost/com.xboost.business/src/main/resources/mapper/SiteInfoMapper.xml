@@ -12,6 +12,14 @@
     </insert>
 
 
+    <update id="update">
+        update t_site_info set scenariosId = #{scenariosId},site_code = #{siteCode},longitude = #{siteLongitude},
+        latitude = #{siteLatitude},site_name= #{siteName},site_address = #{siteAddress},site_night_delivery = #{siteNightDelivery},
+        site_area = #{siteArea},site_type = #{siteType},car_num = #{carNum},
+        large_carModle = #{largeCarModel},max_operate_num = #{maxOperateNum},distrib_center = #{distribCenter}
+        where id = #{id}
+    </update>
+
     <select id="findAll" parameterType="map" resultType="SiteInfo" resultMap="siteInfoMap">
         SELECT * FROM t_site_info where scenariosId = #{scenariosId}
     </select>

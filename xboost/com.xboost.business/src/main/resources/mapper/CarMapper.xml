@@ -12,6 +12,16 @@
         #{carSource},#{maxLoad},#{durationUnloadFull},#{a},#{b},#{c},#{d},#{e},#{f},#{costa},#{costb},#{costc},#{costd},#{coste},#{costf}, #{createTime},#{updateTime})
     </insert>
 
+    <update id="update">
+        update t_car_info set scenariosId = #{scenariosId},type = #{type},dimensions = #{dimensions},skills = #{skills},
+        start_location = #{startLocation},end_location = #{endLocation},max_distance = #{maxDistance},
+        max_running_time = #{maxRunningTime},cost_per_distance = #{costPerDistance},cost_per_time = #{costPerTime},
+        fixed_cost = #{fixedCost},max_stop = #{maxStop},velocity = #{velocity},fixed_round = #{fixedRound},
+        fixed_round_fee = #{fixedRoundFee},car_source = #{carSource},max_load = #{maxLoad},duration_unload_full = #{durationUnloadFull},
+        a = #{a},b = #{b},c = #{c},d = #{d},e = #{e},f = #{f},costa = #{costa},costb = #{costb},costc = #{costc},costd = #{costd},
+        coste = #{coste},costf = #{costf} where id = #{id}
+    </update>
+
     <insert id="saveTimeWindow">
         INSERT into t_time_window(carId,start,end)
         VALUES (#{carId},#{start},#{end})

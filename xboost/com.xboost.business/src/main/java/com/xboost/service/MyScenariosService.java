@@ -38,7 +38,7 @@ public class MyScenariosService {
         scenario.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
         scenario.setUserId(ShiroUtil.getCurrentUserId());
         myScenariosMapper.save(scenario);
-        myScenariosMapper.saveScenariosIduserId(scenario.getId(),ShiroUtil.getCurrentUserId());
+        myScenariosMapper.saveScenariosIduserId(scenario.getId().toString(),ShiroUtil.getCurrentUserId());
 
     }
 

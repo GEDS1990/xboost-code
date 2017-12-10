@@ -53,7 +53,7 @@ public class SiteDistService {
     }
 
     //通过Excel新增网点距离信息
-    public void saveSiteDist(SiteDist siteDist,MultipartFile[] file) {
+    public void addSiteDistByExcel(SiteDist siteDist,MultipartFile[] file) {
         //判断文件集合是否有文件
         if(file != null && file.length > 0) {
             for(MultipartFile multipartFile : file) {
@@ -62,7 +62,7 @@ public class SiteDistService {
                     File fileTmp = null;
                     long tempTime = System.currentTimeMillis();
                     try {
-                        fileTmp=new File("src/main/resources/upload/temp/"+tempTime+ ".xlsx");
+                        fileTmp=new File(System.getProperty("user.dir")+"/temp/"+tempTime+ ".xlsx");
                         if (!fileTmp.exists()) fileTmp.mkdirs();
                         multipartFile.transferTo(fileTmp);
 //                        File fileTemp = (File) multipartFile;
@@ -70,16 +70,22 @@ public class SiteDistService {
                             List<String> lineList = excelUtil.readExcel(fileTmp);
                             for(int i=0;i<lineList.size();i++){
                                 String[] row = lineList.get(i).split("#");
-                                siteDist.setId(Integer.parseInt(row[0]));
                                 siteDist.setCarType(row[1]);
                                 siteDist.setSiteCollect(row[2]);
                                 siteDist.setSiteDelivery(row[3]);
                                 siteDist.setCarDistance(Float.parseFloat(row[4]));
                                 siteDist.setDurationNightDelivery(Double.parseDouble(row[5]));
                                 siteDist.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
-                                //insert
-                                siteDistMapper.save(siteDist);
-                                logger.info("insert into db:"+siteDist.getSiteCollect());
+                                if(null==row[0] || ""==row[0] || " "==row[0] ){
+                                    //insert
+                                    siteDistMapper.save(siteDist);
+                                    logger.info("insert into db:"+siteDist.getSiteCollect());
+                                }else{
+                                    siteDist.setId(Integer.parseInt(row[0]));
+                                    //insert
+                                    siteDistMapper.update(siteDist);
+                                    logger.info("insert into db:"+siteDist.getSiteCollect());
+                                }
                             }
                         logger.info("insert into db complete");
                     } catch (Exception e) {

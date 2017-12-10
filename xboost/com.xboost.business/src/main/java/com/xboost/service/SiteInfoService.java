@@ -58,7 +58,7 @@ public class SiteInfoService {
                     File fileTmp = null;
                     long tempTime = System.currentTimeMillis();
                     try {
-                        fileTmp=new File("src/main/resources/upload/temp/"+tempTime+ ".xlsx");
+                        fileTmp=new File(System.getProperty("user.dir")+"/temp/"+tempTime+ ".xlsx");
                         if (!fileTmp.exists()) fileTmp.mkdirs();
                         multipartFile.transferTo(fileTmp);
 //                      File fileTemp = (File) multipartFile;
@@ -66,8 +66,6 @@ public class SiteInfoService {
                         List<String> lineList = excelUtil.readExcel(fileTmp);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-                            //ID
-                            siteInfo.setId(Integer.parseInt(row[1]));
                             //网点编码
                             siteInfo.setSiteCode(row[2]);
                             //网点经度
@@ -93,10 +91,18 @@ public class SiteInfoService {
                             siteInfo.setDistribCenter(row[13]);
                             siteInfo.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
+                            //ID
+                            if(null==row[0] || ""==row[0] || " "==row[0] ){
+                                //insert
+                                siteInfoMapper.save(siteInfo);
+                                logger.info("insert into db:"+siteInfo.getSiteCode());
+                            }else{
+                                siteInfo.setId(Integer.parseInt(row[1]));
+                                //update
+                                siteInfoMapper.update(siteInfo);
+                                logger.info("update:"+siteInfo.getSiteCode());
+                            }
 
-                            //insert
-                            siteInfoMapper.save(siteInfo);
-                            logger.info("insert into db:"+siteInfo.getSiteCode());
                         }
                         logger.info("insert into db complete");
                     } catch (Exception e) {
