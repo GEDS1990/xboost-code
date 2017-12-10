@@ -28,7 +28,7 @@
                 and  cur_loc = #{keyword}
             </if>
         </where>
-        order by ${orderColumn} ${orderType}
+        <!--order by ${orderColumn} ${orderType}-->
         limit ${start},${length}
     </select>
 
@@ -55,6 +55,13 @@
         SELECT id FROM t_solution_route where scenariosId = #{scenariosId}
     </select>
 
+    <select id="findAllByRoute" resultType="map" resultMap="modelRouteAndSite">
+        SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code where r.scenariosId = #{scenariosId
+    </select>
+
+    <select id="findAllCountByRoute" resultType="long">
+        SELECT count(*) FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code where r.scenariosId = #{scenariosId}
+    </select>
 
     <select id="findByRoute" parameterType="map" resultType="map" resultMap="modelRouteAndSite">
         SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
