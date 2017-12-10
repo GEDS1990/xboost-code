@@ -70,7 +70,7 @@ public class SolutionRouteController {
         Map<String,Object> result = Maps.newHashMap();
 
         List<Map<String,Object>> routeList = solutionRouteService.findByRoute(param); //.findAll();
-        Integer count = solutionRouteService.findAllCount(ShiroUtil.getOpenScenariosId());
+        Integer count = solutionRouteService.findAllCountByRoute(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = solutionRouteService.findCountByRoute(param);
 
 

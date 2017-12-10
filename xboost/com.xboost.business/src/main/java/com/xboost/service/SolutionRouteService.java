@@ -95,6 +95,24 @@ public class SolutionRouteService {
         return solutionRouteMapper.findCountByRoute(param).intValue();
     }
 
+    /**
+     * 根据场景id查询全部线路信息
+     * param param
+     * @return
+     */
+    public List<Map<String, Object>> findAllByRoute(String scenariosId) {
+        return solutionRouteMapper.findAllByRoute(scenariosId);
+    }
+
+    /**
+     * 根据场景id查询全部线路数量
+     * @param scenariosId
+     * @return
+     */
+    public Integer findAllCountByRoute(String scenariosId) {
+        return solutionRouteMapper.findAllCountByRoute(scenariosId).intValue();
+    }
+
 
     /**
      * 根据用户的ID查询模型整体参数信息

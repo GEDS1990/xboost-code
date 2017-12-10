@@ -179,15 +179,15 @@ $(function  () {
 	                {"data":function  (res) {
 	                	return "Route "+add0(res.id);
 	                },"name":"route_count"},
-	                {"data":"sequence","name":"sequence"},
-	                {"data":"curLoc","name":"cur_loc"},
+	                {"data":function(res){return res.sequence;},"name":"sequence"},
+	                {"data":function(res){return res.curLoc},"name":"cur_loc"},
 	                {"data":function  (res) {
 	                	//console.log(res)
-	                	return "name";
-	                }},
+	                	return res.siteName
+	                },"name":"site_name"},
 	                {"data":function  (res) {
-	                	return "address";
-	                }},
+	                	return res.siteAddress;
+	                },"name":"site_address"},
 	                {"data":function  (res) {
 	                	var result = parseInt(res.arrTime),
 	                	h = parseInt(result/60),
@@ -278,6 +278,7 @@ $(function  () {
                     $.get("/route/route.json",{"siteCode":val}).done(function  (res) {
                         console.log(res)
                         if (res) {
+                        debugger;
                             $('#route-name').text("Route "+res.id);
                             $('#total-distance').text(res.sbVol);
                             $('#vehicle-load-requirement').text(res.car_type);
@@ -319,7 +320,7 @@ $(function  () {
 	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
-	                url:"/route/route.json", //获取数据的URL
+	                url:"/vehicles/vehicles.json", //获取数据的URL
 	                type:"get" //获取数据的方式
 	                
 	            },
@@ -327,16 +328,11 @@ $(function  () {
 	                {"data":"id","name":"id"},
 	                {"data":function  (res) {
 	                	return res.carType;
-	                },"name":"route_count"},
-	                {"data":"sequence","name":"sequence"},
-	                {"data":"curLoc","name":"cur_loc"},
-	                {"data":function  (res) {
-	                	//console.log(res)
-	                	return "name";
-	                }},
-	                {"data":function  (res) {
-	                	return "address";
-	                }},
+	                },"name":"car_type"},
+	                {"data":function(res){return res.sequence;},"name":"sequence"},
+	                {"data":function(res){return res.curLoc;},"name":"cur_loc"},
+	                {"data":function  (res) {return res.siteName;},"name":"site_name"},
+	                {"data":function  (res) {return res.siteAddress;},"name":"site_address"},
 	                {"data":function  (res) {
 	                	var result = parseInt(res.arrTime),
 	                	h = parseInt(result/60),
@@ -388,8 +384,9 @@ $(function  () {
 	            		var result = data.data,
 	            		arr = [],
 	            		len = result.length;
-	            		$('#route-route').empty();
-	            		$('#route-route').off("click");
+	            		$('#route-vehicles').empty();
+	            		$('#route-vehicles').off("click");
+	            		$('#route-vehicles').append('<option value="0">All Vehicles</option>');
 	            		for (var i=0;i<len;i++) {
 	            			arr.push(result[i].carType);
 	            		}
@@ -397,12 +394,12 @@ $(function  () {
 	            		A_len = Arr.length;
 	            		for (var j=0;j<A_len;j++) {
 	            			var add='<option value='+Arr[j]+'>'+Arr[j]+'</option>';
-							$('#route-route').append(add);
+							$('#route-vehicles').append(add);
 	            		}
-	            		var _val = $('#route-route').find("option").eq(0).val(),
-	            		_text = $('#route-route').find("option").eq(0).text();
-	            		$('#route-name').text(_text);
-	            		var table = $('#SolutionRoute').DataTable();
+	            		var _val = $('#route-vehicles').find("option").eq(0).val(),
+	            		_text = $('#route-vehicles').find("option").eq(0).text();
+//	            		$('#route-name').text(_text);
+	            		var table = $('#SolutionVehicles').DataTable();
 	            		table.search(_val).draw(false);
 	            	}
 	            	
@@ -412,13 +409,13 @@ $(function  () {
 			        // 输出当前页的数据到浏览器控制台
 			        var data = api.rows( {page:'current'} ).data();
 			        //console.log(data);
-			        $('#route-name').text(data[0].carType);
+//			        $('#route-name').text(data[0].carType);
 	            }
 	        });
 	        //点击选项 来查询
-	        var table = $('#SolutionRoute').DataTable();
-			$(document).on("click","#route-route",function  () {
-				var val = $('#route-route').val();
+	        var table = $('#SolutionVehicles').DataTable();
+			$(document).on("click","#route-vehicles",function  () {
+				var val = $('#route-vehicles').val();
 				if (val == 0) {
 					table.search("").draw(false);
 				}else{
@@ -426,31 +423,10 @@ $(function  () {
 				}
 				
 			});
-	        
-	        
-	        
-	        
+
 		}
 		
 	}());
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 });
