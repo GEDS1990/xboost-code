@@ -326,29 +326,29 @@ $(function  () {
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
-	                {"data":function  (res) {
+	                {"data":function(res) {
 	                	return res.carType;
 	                },"name":"car_type"},
 	                {"data":function(res){return res.sequence;},"name":"sequence"},
 	                {"data":function(res){return res.curLoc;},"name":"cur_loc"},
-	                {"data":function  (res) {return res.siteName;},"name":"site_name"},
-	                {"data":function  (res) {return res.siteAddress;},"name":"site_address"},
-	                {"data":function  (res) {
+	                {"data":function(res) {return res.siteName;},"name":"site_name"},
+	                {"data":function(res) {return res.siteAddress;},"name":"site_address"},
+	                {"data":function(res) {
 	                	var result = parseInt(res.arrTime),
 	                	h = parseInt(result/60),
 	                	m = result%60;
 	                	return add0(h)+":"+add0(m);
 	                },"name":"arr_time"},
-	                {"data":function  (res) {
+	                {"data":function(res) {
 	                	return "Unload "+res.unloadVol+" , "+"Load "+res.carGoods;
 	                },"name":"unload_vol&car_goods"},
-	                {"data":function  (res) {
+	                {"data":function(res) {
 	                	var result = parseInt(res.endTime),
 	                	h = parseInt(result/60),
 	                	m = result%60;
 	                	return add0(h)+":"+add0(m);
 	                },"name":"end_time"},
-	                {"data":function  (res) {
+	                {"data":function(res) {
 	                	return res.nextCurLoc+","+res.calcDis+"km";
 	                },"name":"nextCurLoc&calcDis"}
 	                
@@ -357,10 +357,6 @@ $(function  () {
 	            	{
 	                    "targets":[0],
 	                    "visible":false
-	                },
-	                {
-	                    "targets":[1,2,3,4,5],
-	                    "orderable":false
 	                }
 	            ],
 	            "language":{
