@@ -85,14 +85,14 @@ public class SolutionDepotsController {
        return siteInfo;
     }
 
-    //查询网点编码
-    @RequestMapping(value = "/siteCode.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    //查询网点信息
+    @RequestMapping(value = "/allSite.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String,Object> findSiteCode(HttpServletRequest request) {
+    public Map<String,Object> findAllSite(HttpServletRequest request) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
-        String siteCode = siteInfoService.findSiteCode(scenariosId);
-        Map<String,Object> result = Maps.newHashMap();;
-        result.put("data",result);
+        List<SiteInfo> siteInfo = siteInfoService.findAllSiteInfo(scenariosId);
+        Map<String,Object> result = Maps.newHashMap();
+        result.put("data",siteInfo);
         return result;
     }
 
