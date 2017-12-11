@@ -275,7 +275,7 @@ $(function  () {
 					table.search("").draw(false);
 				}else{
 					table.search(val).draw(false);
-                    $.get("/route/route.json",{"siteCode":val}).done(function  (res) {
+                    $.get("/route/route.json",{"routeId":val}).done(function  (res) {
                         console.log(res)
                         if (res) {
                         debugger;
