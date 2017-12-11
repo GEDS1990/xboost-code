@@ -90,7 +90,7 @@
 	    		</header>
 	    		<div class="scen-box clearfix">
 	    			<div class="scen-itembox1">
-	    				<p>11</p>
+	    				<iframe src="mapDepots.html" width="600" height="300" frameborder="0" scrolling="no"></iframe>
 	    			</div>
 	    			<div class="scen-itembox2">
 	    				<h1><span id="depot">No Data</span></h1>

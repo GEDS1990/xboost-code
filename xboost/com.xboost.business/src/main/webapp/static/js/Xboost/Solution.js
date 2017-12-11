@@ -264,7 +264,9 @@ $(function  () {
 	            		
 	            		var table = $('#SolutionRoute').DataTable();
 	            		console.log(table)
-	            		table.search(_val).draw(false);
+	            		setTimeout(function(){
+	            			table.search(_val).draw();
+	            		},0)
 	            	}
 	            	
 	            },
@@ -385,6 +387,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
+	            	var $this = this;
 	            	console.log(data);
 	            	if (data.data) {
 	            		var result = data.data,
@@ -401,14 +404,13 @@ $(function  () {
 	            			var add='<option value='+Arr[j]+'>'+Arr[j]+'</option>';
 							$('#route-vehicles').append(add);
 	            		}
-	            		var _val = $('#route-vehicles').find("option").eq(0).val(),
+	            		var val = $('#route-vehicles').find("option").eq(0).val(),
 	            		_text = $('#route-vehicles').find("option").eq(0).text();
 	            		$('#route-name').text(_text);
 	            		var table = $('#SolutionVehicles').DataTable();
-	            		(function(){
-	            			console.log(_val)
-	            			dt.search(_val).draw(false);
-	            		}());
+	            		setTimeout(function(){
+	            			table.search(val).draw();
+	            		},0)
 	            		
 	            	}
 	            	
@@ -422,15 +424,10 @@ $(function  () {
 	        });
 	        //点击选项 来查询
 	        var table = $('#SolutionVehicles').DataTable();
-			$(document).on("click","#route-vehicles",function  () {
-				var val = $('#route-vehicles').val();
-				if (val == 0) {
-					table.search("").draw(false);
-				}else{
-					table.search(val).draw(false);
-					$('#route-name').text(val);
-				}
-				
+			$(document).on("change","#route-vehicles",function  () {
+				console.log(this.value)
+				table.search(this.value).draw();
+				$('#route-name').text(this.value);
 			});
 
 		}
