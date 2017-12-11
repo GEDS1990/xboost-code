@@ -80,12 +80,31 @@ $(function  () {
 	            			var add='<option value='+result[i].curLoc+'>'+result[i].curLoc+'</option>';
 							$('#route-depot').append(add);
 	            		}
-//	            		var _val = $('#route-depot').find("option").eq(0).val();
-//	            		var table = $('#SolutionDeport').DataTable();
-//	            		table.search(_val).draw(false);
 						//查询所有网点坐标
 						$.get("/depots/allSite.json").done(function(res){
 							console.log(res)
+							//百度地图
+							var map = new BMap.Map("depots-map");
+							var point = new BMap.Point(120.98738,31.391479);
+							map.centerAndZoom(point, 15);
+							// 编写自定义函数,创建标注
+							function addMarker(point){
+							  var marker = new BMap.Marker(point);
+							  map.addOverlay(marker);
+							}
+							// 随机向地图添加25个标注
+							var bounds = map.getBounds();
+							var sw = bounds.getSouthWest();
+							var ne = bounds.getNorthEast();
+							var lngSpan = Math.abs(sw.lng - ne.lng);
+							var latSpan = Math.abs(ne.lat - sw.lat);
+							for (var i = 0; i < 25; i ++) {
+								var point = new BMap.Point(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+								addMarker(point);
+							}
+							
+							
+							
 						}).fail(function(){
 							console.log("fail")
 						});
@@ -136,7 +155,17 @@ $(function  () {
 						}
                         
                     }).fail(function  (e) {
-                      console.log('fail');
+                        $('#depot').text("No Data");
+                        $('#east').text("--");
+                        $('#north').text("--");
+                        $('#name').text("--");
+                        $('#address').text("--");
+                        $('#type').text("--");
+                        $('#distrib-center').text("--");
+                        $('#area').text("--");
+                        $('#vehicle-quantity-limit').text("--");
+                        $('#vehicle-weight-limit').text("--");
+                        $('#piece-capacity').text("--");
                   });
 				}
 				

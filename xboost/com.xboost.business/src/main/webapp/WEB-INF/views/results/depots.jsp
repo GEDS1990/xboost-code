@@ -33,6 +33,10 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Sjbn4XELTZZZKwunDx4AGqblQ2aViy3Z"></script>
+    <style>
+    	#depots-map {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
 
 </head>
 
@@ -89,8 +93,10 @@
 	    			</div>
 	    		</header>
 	    		<div class="scen-box clearfix">
-	    			<div class="scen-itembox1">
-	    				<iframe src="/map/mapDepots.html" width="100%" height="390px" frameborder="0" scrolling="no"></iframe>
+	    			<div class="scen-itembox1"style="height: 390px;">
+	    				<div id="depots-map" style="width: 100%; ">
+	    					
+	    				</div>
 	    			</div>
 	    			<div class="scen-itembox2">
 	    				<h1><span id="depot">No Data</span></h1>
@@ -240,102 +246,12 @@
   </div>
 </div>
 
-<div class="modal fade" id="newUserModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Adding dot information</h4>
-            </div>
-            <div class="modal-body">
-                <form id="newUserForm" class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">ID</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCode" >
-                        </div>
-                        <label class="col-sm-2 control-label">longitude</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteLongitude" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">latitude</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteLatitude" >
-                        </div>
-                        <label class="col-sm-2 control-label">name</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteName" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">address</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="siteAddress" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">area</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteArea" >
-                        </div>
-                        <label class="col-sm-2 control-label">type</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteType" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">distrib.center</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="distribCenter" >
-                        </div>
-                        <label class="col-sm-2 control-label">truck quantity limit</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carNum" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">truck weight limit</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="largeCarModel" >
-                        </div>
-                        <label class="col-sm-2 control-label">capacity</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxOperateNum" >
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn" class="btn btn-primary">Save</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 
 
 
 
-<div class="modal fade" id="modal-info">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Delete Data</h4>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure want to delete this line of data?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="button" id="modal-infodelBtn" class="btn btn-primary">Yes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 
 <!-- jQuery -->
 <script src="/static/js/jquery.min.js"></script>
@@ -362,6 +278,11 @@
 			$('#nav-Results').addClass("active");
 		})()
 	});
+</script>
+<script type="text/javascript">
+	// 百度地图API功能
+	
+	
 </script>
 </body>
 
