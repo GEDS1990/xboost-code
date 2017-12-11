@@ -83,6 +83,12 @@ $(function  () {
 //	            		var _val = $('#route-depot').find("option").eq(0).val();
 //	            		var table = $('#SolutionDeport').DataTable();
 //	            		table.search(_val).draw(false);
+						//查询所有网点坐标
+						$.get("/depots/allSite.json").done(function(res){
+							console.log(res)
+						}).fail(function(){
+							console.log("fail")
+						});
 	            	}
 	            	
 	            },
@@ -315,7 +321,7 @@ $(function  () {
 		var SolutionVehicles = doc.getElementById("SolutionVehicles");
 		if (SolutionVehicles) {
 			//加载列表
-			$("#SolutionVehicles").DataTable({
+			var dt = $("#SolutionVehicles").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
@@ -401,7 +407,7 @@ $(function  () {
 	            		var table = $('#SolutionVehicles').DataTable();
 	            		(function(){
 	            			console.log(_val)
-	            			table.search(_val).draw(false);
+	            			dt.search(_val).draw(false);
 	            		}());
 	            		
 	            	}
