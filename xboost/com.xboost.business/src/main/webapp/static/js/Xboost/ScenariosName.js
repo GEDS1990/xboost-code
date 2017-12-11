@@ -151,7 +151,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	            	{
 	                    "targets":[0],
-	                    "visible":true
+	                    "visible":false
 	                },
 	                {
 	                    "targets":[0,13],

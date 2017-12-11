@@ -7,7 +7,22 @@ var doc = document;
 var width;  
 var height;  
 var branchChart;  
-var collectChart;  
+var collectChart;
+
+(function (){
+	var collect_reserach_echarts = doc.getElementById('collect-reserach-echarts');
+	if (collect_reserach_echarts) {
+		//自适应设置  
+	    width = $(window).width();  
+	    height = $(window).height();  
+	    //$("#collect-reserach-echarts").css("width",width-40);  
+	    $("#collect-reserach-echarts").css("height",height-40);
+	    //$("#branch-reserach-echarts").css("width",width-40);  
+	    $("#branch-reserach-echarts").css("height",height-40);
+	    
+	}
+	 
+}());
 
 (function  () {
 	var collect_reserach_echarts = doc.getElementById('collect-reserach-echarts');
@@ -50,6 +65,14 @@ var collectChart;
 						$('#research-name2').append(add);
             		}
             	}
+            	var data1 = {
+            		"name":$('#research-name1').val()
+            	},
+            	data2 = {
+            		"name":$('#research-name2').val()
+            	}
+            	collectEcharts(data1,data2);
+	    		branchEcharts(data1,data2);//data1,data2
             	
             }
         });
@@ -57,21 +80,7 @@ var collectChart;
 }());
 
 
-(function (){
-	var collect_reserach_echarts = doc.getElementById('collect-reserach-echarts');
-	if (collect_reserach_echarts) {
-		//自适应设置  
-	    width = $(window).width();  
-	    height = $(window).height();  
-	    //$("#collect-reserach-echarts").css("width",width-40);  
-	    $("#collect-reserach-echarts").css("height",height-40);
-	    //$("#branch-reserach-echarts").css("width",width-40);  
-	    $("#branch-reserach-echarts").css("height",height-40);
-	    collectEcharts();
-	    branchEcharts();
-	}
-	 
-}());
+
 	
 function collectEcharts(){  
     collectChart = echarts.init(document.getElementById('collect-reserach-echarts'));  
@@ -89,7 +98,7 @@ function collectEcharts(){
         legend: { 
         	x:'center',
         	y:'bottom',
-            data:['蒸发量','降水量']  
+            data:['1','2']  
         },  
         toolbox: {  
             show : true,  
@@ -109,8 +118,8 @@ function collectEcharts(){
                 //设置字体倾斜  
                 axisLabel:{  
                     interval:0,  
-                    rotate:45,//倾斜度 -90 至 90 默认为0  
-                    margin:2,  
+                    rotate:0,//倾斜度 -90 至 90 默认为0  
+                    margin:5,  
                     textStyle:{  
                         fontWeight:"bolder",  
                         color:"#000000"  
@@ -126,7 +135,7 @@ function collectEcharts(){
         ],  
         series : [  
             {  
-                name:'蒸发量',  
+                name:'1',  
                 type:'bar',  
                 data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2],
                 barWidth : 30,//柱图宽度
@@ -145,10 +154,10 @@ function collectEcharts(){
                         }
                     }  
                 }
-                //barGap:'10%'
+                
             },  
             {  
-                name:'降水量',  
+                name:'1',  
                 type:'bar',  
                 data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2], 
                 barWidth : 30,//柱图宽度
@@ -172,7 +181,7 @@ function collectEcharts(){
         ]  
     });  
 }  	
-function branchEcharts(){  
+function branchEcharts(data1,data2){  
     branchChart = echarts.init(document.getElementById('branch-reserach-echarts'));  
     //自适应  
     window.onresize = branchChart.resize;  
@@ -188,7 +197,7 @@ function branchEcharts(){
         legend: { 
         	x:'center',
         	y:'bottom',
-            data:['蒸发量','降水量']  
+            data:[data1.name,data2.name]  
         },  
         toolbox: {  
             show : true,  
@@ -208,8 +217,8 @@ function branchEcharts(){
                 //设置字体倾斜  
                 axisLabel:{  
                     interval:0,  
-                    rotate:45,//倾斜度 -90 至 90 默认为0  
-                    margin:2,  
+                    rotate:0,//倾斜度 -90 至 90 默认为0  
+                    margin:5,  
                     textStyle:{  
                         fontWeight:"bolder",  
                         color:"#000000"  
@@ -225,7 +234,7 @@ function branchEcharts(){
         ],  
         series : [  
             {  
-                name:'蒸发量',  
+                name:data1.name,  
                 type:'bar',  
                 data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6],
                 barWidth : 30,//柱图宽度
@@ -246,7 +255,7 @@ function branchEcharts(){
                 },  
             },  
             {  
-                name:'降水量',  
+                name:data2.name,  
                 type:'bar',  
                 data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6], 
                 barWidth : 30,//柱图宽度
@@ -270,7 +279,19 @@ function branchEcharts(){
     });  
 }	
 	
-	
+//点击选项 切换图表信息
+(function  () {
+	var collect_reserach_echarts = doc.getElementById('collect-reserach-echarts');
+	if (collect_reserach_echarts) {
+		$('#research-name1').click(function (){
+			
+		});
+		$('#research-name2').click(function (){
+			
+		});
+		
+	}
+}());
 	
 	
 	
