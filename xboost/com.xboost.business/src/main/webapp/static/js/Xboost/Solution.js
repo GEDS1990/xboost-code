@@ -83,6 +83,12 @@ $(function  () {
 //	            		var _val = $('#route-depot').find("option").eq(0).val();
 //	            		var table = $('#SolutionDeport').DataTable();
 //	            		table.search(_val).draw(false);
+						//查询所有网点坐标
+						$.get("/depots/allSite.json").done(function(res){
+							console.log(res)
+						}).fail(function(){
+							console.log("fail")
+						});
 	            	}
 	            	
 	            },
@@ -92,6 +98,7 @@ $(function  () {
 			        //console.log( api.rows( {page:'current'} ).data() );
 	            }
 	        });
+	        //获取
 	        //点击选项 来查询
 	        var table = $('#SolutionDeport').DataTable();
 			$(document).on("click","#route-depot",function  () {
@@ -177,6 +184,7 @@ $(function  () {
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
 	                {"data":function  (res) {
+	                	console.log(res)
 	                	return "Route "+add0(res.id);
 	                },"name":"route_count"},
 	                {"data":function(res){return res.sequence;},"name":"sequence"},
@@ -241,7 +249,6 @@ $(function  () {
 	            		len = result.length;
 	            		$('#route-route').empty();
 	            		$('#route-route').off("click");
-	            		$('#route-route').append('<option value="0">All Route</option>');
 	            		for (var i=0;i<len;i++) {
 	            			arr.push(result[i].id);
 	            		}
@@ -253,8 +260,10 @@ $(function  () {
 	            		}
 	            		var _val = $('#route-route').find("option").eq(0).val(),
 	            		_text = $('#route-route').find("option").eq(0).text();
-	//            		$('#route-name').text(_text);
+	            		$('#route-name').text(_text);
+	            		
 	            		var table = $('#SolutionRoute').DataTable();
+	            		console.log(table)
 	            		table.search(_val).draw(false);
 	            	}
 	            	
@@ -312,7 +321,7 @@ $(function  () {
 		var SolutionVehicles = doc.getElementById("SolutionVehicles");
 		if (SolutionVehicles) {
 			//加载列表
-			var dt =$("#SolutionVehicles").DataTable({
+			var dt = $("#SolutionVehicles").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
@@ -327,6 +336,7 @@ $(function  () {
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
 	                {"data":function(res) {
+	                	console.log(res)
 	                	return res.carType;
 	                },"name":"car_type"},
 	                {"data":function(res){return res.sequence;},"name":"sequence"},
@@ -375,14 +385,13 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data);
+	            	console.log(data);
 	            	if (data.data) {
 	            		var result = data.data,
 	            		arr = [],
 	            		len = result.length;
 	            		$('#route-vehicles').empty();
 	            		$('#route-vehicles').off("click");
-	            		$('#route-vehicles').append('<option value="0">All Vehicles</option>');
 	            		for (var i=0;i<len;i++) {
 	            			arr.push(result[i].carType);
 	            		}
@@ -394,9 +403,13 @@ $(function  () {
 	            		}
 	            		var _val = $('#route-vehicles').find("option").eq(0).val(),
 	            		_text = $('#route-vehicles').find("option").eq(0).text();
-//	            		$('#route-name').text(_text);
+	            		$('#route-name').text(_text);
 	            		var table = $('#SolutionVehicles').DataTable();
-	            		table.search(_val).draw(false);
+	            		(function(){
+	            			console.log(_val)
+	            			dt.search(_val).draw(false);
+	            		}());
+	            		
 	            	}
 	            	
 	            },
@@ -404,8 +417,7 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var data = api.rows( {page:'current'} ).data();
-			        //console.log(data);
-//			        $('#route-name').text(data[0].carType);
+			        console.log(data);
 	            }
 	        });
 	        //点击选项 来查询
@@ -416,6 +428,7 @@ $(function  () {
 					table.search("").draw(false);
 				}else{
 					table.search(val).draw(false);
+					$('#route-name').text(val);
 				}
 				
 			});
