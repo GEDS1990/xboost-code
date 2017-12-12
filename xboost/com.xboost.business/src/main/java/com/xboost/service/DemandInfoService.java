@@ -74,7 +74,7 @@ public class DemandInfoService {
                         multipartFile.transferTo(fileTmp);
 //                      File fileTemp = (File) multipartFile;
                         ExcelUtil excelUtil = new ExcelUtil();
-                        List<String> lineList = excelUtil.readExcel(fileTmp);
+                        List<String> lineList = excelUtil.readExcel(fileTmp,1);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
                             //日期
@@ -88,16 +88,16 @@ public class DemandInfoService {
                             //时段(结束）
                             demandInfo.setDurationEnd(row[5]);
                             //票数（票）
-                            demandInfo.setVotes(Integer.parseInt(row[6]));
+                            demandInfo.setVotes(row[6]);
                             //重量（公斤）
-                            demandInfo.setWeight(Float.parseFloat(row[7]));
+                            demandInfo.setWeight(row[7]);
                             //产品类型
                             demandInfo.setProductType(row[8]);
                             //时效要求(小时)
-                            demandInfo.setAgeing(Integer.parseInt(row[9]));
+                            demandInfo.setAgeing("NA");
                             demandInfo.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
-                            if(null==row[0] || ""==row[0] || " "==row[0] ){
-                                demandInfo.setId(Integer.parseInt(row[0]));
+                            if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){
+                                demandInfo.setId(row[0]);
                                 //update
                                 demandInfoMapper.add(demandInfo);
                                 logger.info("update into db:"+demandInfo.getId());

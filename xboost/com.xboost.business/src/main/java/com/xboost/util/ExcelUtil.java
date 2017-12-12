@@ -60,7 +60,7 @@ public class ExcelUtil {
      *
      * @throws Exception
      */
-    public List<String> readExcel(File file) throws Exception {
+    public List<String> readExcel(File file,int headNum) throws Exception {
         List<String> list = new ArrayList<String>();
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -80,19 +80,15 @@ public class ExcelUtil {
 
             // 为跳过第一行目录设置count
             int count = 0;
-
-            for (Row row : sheet) {
-                // 跳过第一行的目录
-                if (count == 0) {
-                    count++;
+            for (int i = 0; i < sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
+                if(row==null){
+                    System.out.println(i+":null");
                     continue;
                 }
-                // 如果当前行没有数据，跳出循环
-                if (row.getCell(0).toString().equals("")) {
-                    return null;
-                }
                 String rowValue = "";
-                for (Cell cell : row) {
+                for (int r=0;r<row.getLastCellNum();r++) {
+                    Cell cell = row.getCell(r);
                     if (cell.toString() == null) {
                         continue;
                     }
@@ -114,7 +110,7 @@ public class ExcelUtil {
                             cellValue = String.valueOf(cell.getBooleanCellValue()) + "#";
                             break;
                         case Cell.CELL_TYPE_BLANK: // 空白
-                            cellValue = cell.getStringCellValue() + "#";
+                            cellValue = cell.getStringCellValue() + " #";
                             break;
                         case Cell.CELL_TYPE_ERROR: // 错误
                             cellValue = "错误#";
@@ -127,7 +123,8 @@ public class ExcelUtil {
                             cellValue = String.valueOf(cell.getRichStringCellValue().getString()) + "#";
                             break;
                         default:
-                            cellValue = "#";
+                            cellValue = " #";
+                            break;
                     }
                     //System.out.print(cellValue);
                     rowValue += cellValue;
@@ -136,10 +133,22 @@ public class ExcelUtil {
                 System.out.println(rowValue);
                 System.out.println();
                 list.add(rowValue);
-//                571WW#571W#20.051#45.102#
-//                571WW#571WA#12.909#25.818#
             }
-//            bw.flush();
+
+//            for (Row row : sheet) {
+//                // 跳过第一行的目录
+//                if (count < headNum) {
+//                    count++;
+//                    continue;
+//                }
+//                // 如果当前行没有数据，跳出循环
+//                if (row.getCell(1).toString().equals("")) {
+//                    return null;
+//                }
+////                571WW#571W#20.051#45.102#
+////                571WW#571WA#12.909#25.818#
+//            }
+////            bw.flush();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

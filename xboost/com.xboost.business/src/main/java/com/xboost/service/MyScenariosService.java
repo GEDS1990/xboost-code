@@ -57,7 +57,7 @@ public class MyScenariosService {
                         multipartFile.transferTo(fileTmp);
 //                      File fileTemp = (File) multipartFile;
                         ExcelUtil excelUtil = new ExcelUtil();
-                        List<String> lineList = excelUtil.readExcel(fileTmp);
+                        List<String> lineList = excelUtil.readExcel(fileTmp,2);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
                             scenario.setUserId(Integer.parseInt(row[1]));

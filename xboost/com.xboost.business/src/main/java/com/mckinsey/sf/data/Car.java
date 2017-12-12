@@ -63,18 +63,31 @@ public class Car implements Serializable{
 
 	private  String durationUnloadFull;
 
-	private String a;            //分段距离0-a
-	private String costa;            //0-a费用
-	private String b;            //分段距离b
-	private String costb;            //b费用
-	private String c;            //分段距离c
-	private String costc;            //c费用
-	private String d;            //分段距离d
-	private String costd;            //d费用
-	private String e;            //分段距离e
-	private String coste;            //e费用
-	private String f;            //分段距离f
-	private String costf;            //f费用
+	private String a1;            //分段距离0-a
+	private String costa1;            //0-a费用
+	private String b1;            //分段距离b
+	private String costb1;            //b费用
+	private String c1;            //分段距离c
+	private String costc1;            //c费用
+	private String d1;            //分段距离d
+	private String costd1;            //d费用
+	private String e1;            //分段距离e
+	private String coste1;            //e费用
+	private String f1;            //分段距离f
+	private String costf1;            //f费用
+
+	private String a2;            //分段距离0-a
+	private String costa2;            //0-a费用
+	private String b2;            //分段距离b
+	private String costb2;            //b费用
+	private String c2;            //分段距离c
+	private String costc2;            //c费用
+	private String d2;            //分段距离d
+	private String costd2;            //d费用
+	private String e2;            //分段距离e
+	private String coste2;            //e费用
+	private String f2;            //分段距离f
+	private String costf2;            //f费用
 
 	private String createTime;
 
@@ -252,100 +265,196 @@ public class Car implements Serializable{
 		this.maxLoad = maxLoad;
 	}
 
-	public String getA() {
-		return a;
+	public String getA1() {
+		return a1;
 	}
 
-	public void setA(String a) {
-		this.a = a;
+	public void setA1(String a1) {
+		this.a1 = a1;
 	}
 
-	public String getCosta() {
-		return costa;
+	public String getCosta1() {
+		return costa1;
 	}
 
-	public void setCosta(String costa) {
-		this.costa = costa;
+	public void setCosta1(String costa1) {
+		this.costa1 = costa1;
 	}
 
-	public String getB() {
-		return b;
+	public String getB1() {
+		return b1;
 	}
 
-	public void setB(String b) {
-		this.b = b;
+	public void setB1(String b1) {
+		this.b1 = b1;
 	}
 
-	public String getCostb() {
-		return costb;
+	public String getCostb1() {
+		return costb1;
 	}
 
-	public void setCostb(String costb) {
-		this.costb = costb;
+	public void setCostb1(String costb1) {
+		this.costb1 = costb1;
 	}
 
-	public String getC() {
-		return c;
+	public String getC1() {
+		return c1;
 	}
 
-	public void setC(String c) {
-		this.c = c;
+	public void setC1(String c1) {
+		this.c1 = c1;
 	}
 
-	public String getCostc() {
-		return costc;
+	public String getCostc1() {
+		return costc1;
 	}
 
-	public void setCostc(String costc) {
-		this.costc = costc;
+	public void setCostc1(String costc1) {
+		this.costc1 = costc1;
 	}
 
-	public String getD() {
-		return d;
+	public String getD1() {
+		return d1;
 	}
 
-	public void setD(String d) {
-		this.d = d;
+	public void setD1(String d1) {
+		this.d1 = d1;
 	}
 
-	public String getCostd() {
-		return costd;
+	public String getCostd1() {
+		return costd1;
 	}
 
-	public void setCostd(String costd) {
-		this.costd = costd;
+	public void setCostd1(String costd1) {
+		this.costd1 = costd1;
 	}
 
-	public String getE() {
-		return e;
+	public String getE1() {
+		return e1;
 	}
 
-	public void setE(String e) {
-		this.e = e;
+	public void setE1(String e1) {
+		this.e1 = e1;
 	}
 
-	public String getCoste() {
-		return coste;
+	public String getCoste1() {
+		return coste1;
 	}
 
-	public void setCoste(String coste) {
-		this.coste = coste;
+	public void setCoste1(String coste1) {
+		this.coste1 = coste1;
 	}
 
-	public String getF() {
-		return f;
+	public String getF1() {
+		return f1;
 	}
 
-	public void setF(String f) {
-		this.f = f;
+	public void setF1(String f1) {
+		this.f1 = f1;
 	}
 
-	public String getCostf() {
-		return costf;
+	public String getCostf1() {
+		return costf1;
 	}
 
-	public void setCostf(String costf) {
-		this.costf = costf;
+	public void setCostf1(String costf1) {
+		this.costf1 = costf1;
+	}
+
+	public String getA2() {
+		return a2;
+	}
+
+	public void setA2(String a2) {
+		this.a2 = a2;
+	}
+
+	public String getCosta2() {
+		return costa2;
+	}
+
+	public void setCosta2(String costa2) {
+		this.costa2 = costa2;
+	}
+
+	public String getB2() {
+		return b2;
+	}
+
+	public void setB2(String b2) {
+		this.b2 = b2;
+	}
+
+	public String getCostb2() {
+		return costb2;
+	}
+
+	public void setCostb2(String costb2) {
+		this.costb2 = costb2;
+	}
+
+	public String getC2() {
+		return c2;
+	}
+
+	public void setC2(String c2) {
+		this.c2 = c2;
+	}
+
+	public String getCostc2() {
+		return costc2;
+	}
+
+	public void setCostc2(String costc2) {
+		this.costc2 = costc2;
+	}
+
+	public String getD2() {
+		return d2;
+	}
+
+	public void setD2(String d2) {
+		this.d2 = d2;
+	}
+
+	public String getCostd2() {
+		return costd2;
+	}
+
+	public void setCostd2(String costd2) {
+		this.costd2 = costd2;
+	}
+
+	public String getE2() {
+		return e2;
+	}
+
+	public void setE2(String e2) {
+		this.e2 = e2;
+	}
+
+	public String getCoste2() {
+		return coste2;
+	}
+
+	public void setCoste2(String coste2) {
+		this.coste2 = coste2;
+	}
+
+	public String getF2() {
+		return f2;
+	}
+
+	public void setF2(String f2) {
+		this.f2 = f2;
+	}
+
+	public String getCostf2() {
+		return costf2;
+	}
+
+	public void setCostf2(String costf2) {
+		this.costf2 = costf2;
 	}
 
 	public String getDurationUnloadFull() {

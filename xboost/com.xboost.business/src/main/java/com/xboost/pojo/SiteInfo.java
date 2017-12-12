@@ -17,7 +17,7 @@ public class SiteInfo implements Serializable {
     private String siteLatitude;            //网点纬度
     private String siteName;                 //网点名称
     private String siteAddress;             //网点地址
-    private Integer siteNightDelivery;      //是否可以做夜配集散点
+    private String siteNightDelivery;      //是否可以做夜配集散点
     private String siteArea;               //场地运营面积(平方米)
     private String siteType;            //网点类型
     private String carNum;                //停货车数(辆)
@@ -85,11 +85,11 @@ public class SiteInfo implements Serializable {
         this.siteAddress = siteAddress;
     }
 
-    public Integer getSiteNightDelivery() {
+    public String getSiteNightDelivery() {
         return siteNightDelivery;
     }
 
-    public void setSiteNightDelivery(Integer siteNightDelivery) {
+    public void setSiteNightDelivery(String siteNightDelivery) {
         this.siteNightDelivery = siteNightDelivery;
     }
 

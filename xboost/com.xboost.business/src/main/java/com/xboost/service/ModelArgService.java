@@ -58,7 +58,7 @@ public class ModelArgService {
                         multipartFile.transferTo(fileTmp);
 //                      File fileTemp = (File) multipartFile;
                         ExcelUtil excelUtil = new ExcelUtil();
-                        List<String> lineList = excelUtil.readExcel(fileTmp);
+                        List<String> lineList = excelUtil.readExcel(fileTmp,2);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
                             modelArg.setParameterName(row[1]);
@@ -66,14 +66,14 @@ public class ModelArgService {
                             modelArg.setNote(row[3]);
                             modelArg.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
-                            if(null==row[0] || ""==row[0] || " "==row[0] ){
-                                modelArg.setId(Integer.parseInt(row[0]));
-                                //update
-                                modelArgMapper.update(modelArg);
-                                logger.info("update db:"+modelArg.getParameterName()+":"+modelArg.getData());
-                            }else{
+                            if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){
                                 //insert
                                 modelArgMapper.add(modelArg);
+                                logger.info("update db:"+modelArg.getParameterName()+":"+modelArg.getData());
+                            }else{
+                                //update
+                                modelArg.setId(row[0]);
+                                modelArgMapper.update(modelArg);
                                 logger.info("insert into db:"+modelArg.getParameterName()+":"+modelArg.getData());
                             }
                         }

@@ -67,8 +67,8 @@ public class SiteDistService {
                         multipartFile.transferTo(fileTmp);
 //                        File fileTemp = (File) multipartFile;
                         ExcelUtil excelUtil = new ExcelUtil();
-                            List<String> lineList = excelUtil.readExcel(fileTmp);
-                            for(int i=0;i<lineList.size();i++){
+                            List<String> lineList = excelUtil.readExcel(fileTmp,2);
+                            for(int i=2;i<lineList.size();i++){
                                 String[] row = lineList.get(i).split("#");
                                 siteDist.setCarType(row[1]);
                                 siteDist.setSiteCollect(row[2]);
@@ -76,7 +76,7 @@ public class SiteDistService {
                                 siteDist.setCarDistance(Float.parseFloat(row[4]));
                                 siteDist.setDurationNightDelivery(Double.parseDouble(row[5]));
                                 siteDist.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
-                                if(null==row[0] || ""==row[0] || " "==row[0] ){
+                                if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){
                                     //insert
                                     siteDistMapper.save(siteDist);
                                     logger.info("insert into db:"+siteDist.getSiteCollect());

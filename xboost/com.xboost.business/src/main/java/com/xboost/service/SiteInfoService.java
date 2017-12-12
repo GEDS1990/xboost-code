@@ -63,41 +63,41 @@ public class SiteInfoService {
                         multipartFile.transferTo(fileTmp);
 //                      File fileTemp = (File) multipartFile;
                         ExcelUtil excelUtil = new ExcelUtil();
-                        List<String> lineList = excelUtil.readExcel(fileTmp);
-                        for(int i=0;i<lineList.size();i++){
+                        List<String> lineList = excelUtil.readExcel(fileTmp,2);
+                        for(int i=2;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
                             //网点编码
-                            siteInfo.setSiteCode(row[2]);
+                            siteInfo.setSiteCode(row[1]);
                             //网点经度
-                            siteInfo.setSiteLongitude(row[3]);
+                            siteInfo.setSiteLongitude(row[2]);
                             //网点纬度
-                            siteInfo.setSiteLatitude(row[4]);
+                            siteInfo.setSiteLatitude(row[3]);
                             //网点名称
-                            siteInfo.setSiteName(row[5]);
+                            siteInfo.setSiteName(row[4]);
                             //网点地址
-                            siteInfo.setSiteAddress(row[6]);
+                            siteInfo.setSiteAddress(row[5]);
                             //是否可以做夜配集散点
-                            siteInfo.setSiteNightDelivery(Integer.parseInt(row[7]));
+                            siteInfo.setSiteNightDelivery(row[9]);
                             //网点面积
-                            siteInfo.setSiteArea(row[8]);
+                            siteInfo.setSiteArea(row[6]);
                             //网点类型
-                            siteInfo.setSiteType(row[9]);
+                            siteInfo.setSiteType(row[7]);
                             //停货车数(辆)(10分钟停靠能力)
                             siteInfo.setCarNum(row[10]);
                             //进出最大车型(10分钟停靠能力)
                             siteInfo.setLargeCarModel(row[11]);
                             //单一批量操作处理量上限(以一个班次操作为单位)
                             siteInfo.setMaxOperateNum(row[12]);
-                            siteInfo.setDistribCenter(row[13]);
+                            siteInfo.setDistribCenter(row[8]);
                             siteInfo.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
                             //ID
-                            if(null==row[0] || ""==row[0] || " "==row[0] ){
+                            if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){
                                 //insert
                                 siteInfoMapper.save(siteInfo);
                                 logger.info("insert into db:"+siteInfo.getSiteCode());
                             }else{
-                                siteInfo.setId(Integer.parseInt(row[1]));
+                                siteInfo.setId(Integer.parseInt(row[0]));
                                 //update
                                 siteInfoMapper.update(siteInfo);
                                 logger.info("update:"+siteInfo.getSiteCode());

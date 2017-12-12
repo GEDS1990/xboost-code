@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017/11/5 0005.
  */
 public class ModelArg implements Serializable {
-    private Integer id;
+    private String id;
     private String scenariosId;            //场景id
     private String parameterName;      //各环节时间参数
     private String data;           //数据
@@ -19,11 +19,11 @@ public class ModelArg implements Serializable {
     private String createTime;
     private String updateTime;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

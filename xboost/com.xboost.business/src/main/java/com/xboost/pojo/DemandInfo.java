@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017/11/5 0005.
  */
 public class DemandInfo implements Serializable {
-    private Integer id;
+    private String id;
     private String date;      //日期
     private String scenariosId;    //收件网点编码
     private String siteCodeCollect;    //收件网点编码
@@ -14,20 +14,20 @@ public class DemandInfo implements Serializable {
     private String productType;                 //产品类型
     private String durationStart;             //时段(开始)
     private String durationEnd;         //时段(结束）
-    private Float weight;               //重量（公斤）
-    private Integer votes;            //票数（票）
-    private Integer ageing;                //时效要求(小时)
+    private String weight;               //重量（公斤）
+    private String votes;            //票数（票）
+    private String ageing;                //时效要求(小时)
     private String str1;                   //预留字段
     private String str2;                    //预留字段
     private String str3;                  //预留字段
     private String createTime;
     private String updateTime;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -79,27 +79,27 @@ public class DemandInfo implements Serializable {
         this.durationEnd = durationEnd;
     }
 
-    public Float getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(Float weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
-    public Integer getVotes() {
+    public String getVotes() {
         return votes;
     }
 
-    public void setVotes(Integer votes) {
+    public void setVotes(String votes) {
         this.votes = votes;
     }
 
-    public Integer getAgeing() {
+    public String getAgeing() {
         return ageing;
     }
 
-    public void setAgeing(Integer ageing) {
+    public void setAgeing(String ageing) {
         this.ageing = ageing;
     }
 
