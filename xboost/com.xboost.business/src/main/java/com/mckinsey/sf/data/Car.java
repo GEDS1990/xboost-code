@@ -88,6 +88,12 @@ public class Car implements Serializable{
 	private String coste2;            //e费用
 	private String f2;            //分段距离f
 	private String costf2;            //f费用
+	private String costa3;            //0-a费用
+	private String costb3;            //b费用
+	private String costc3;            //c费用
+	private String costd3;            //d费用
+	private String coste3;            //e费用
+	private String costf3;            //f费用
 
 	private String createTime;
 
@@ -182,6 +188,7 @@ public class Car implements Serializable{
 	}
 
 	public void setCostPerDistance(double costPerDistance) {
+//		this.costPerDistance = Integer.parseInt(this.costa2+this.costb2+this.costc2+this.costd2+this.coste2+this.costf2)/6;
 		this.costPerDistance = costPerDistance;
 	}
 
@@ -190,6 +197,7 @@ public class Car implements Serializable{
 	}
 
 	public void setCostPerTime(double costPerTime) {
+//		this.costPerTime = Integer.parseInt(this.costa3+this.costb3+this.costc3+this.costd3+this.coste3+this.costf3)/6;
 		this.costPerTime = costPerTime;
 	}
 
@@ -198,7 +206,8 @@ public class Car implements Serializable{
 	}
 
 	public void setFixedCost(double fixedCost) {
-		this.fixedCost = fixedCost;
+//		this.fixedCost = Double.parseDouble(costa1);
+				this.fixedCost = fixedCost;
 	}
 
 	public int getMaxStop() {
@@ -222,6 +231,7 @@ public class Car implements Serializable{
 	}
 
 	public void setFixedRound(double fixedRound) {
+//		this.fixedRound = Double.parseDouble(this.a1+this.a2+this.b1+this.b2+this.c1+this.c2+this.d1+this.d2+this.e1+this.e2+this.f1+this.f2);
 		this.fixedRound = fixedRound;
 	}
 
@@ -230,6 +240,7 @@ public class Car implements Serializable{
 	}
 
 	public void setFixedRoundFee(double fixedRoundFee) {
+//		this.fixedRoundFee =  Double.parseDouble(costa1+costa2+costb1+costb2+costc1+costc2+costd1+costd2+coste1+coste2+costf1+costf2);
 		this.fixedRoundFee = fixedRoundFee;
 	}
 
@@ -455,6 +466,54 @@ public class Car implements Serializable{
 
 	public void setCostf2(String costf2) {
 		this.costf2 = costf2;
+	}
+
+	public String getCosta3() {
+		return costa3;
+	}
+
+	public void setCosta3(String costa3) {
+		this.costa3 = costa3;
+	}
+
+	public String getCostb3() {
+		return costb3;
+	}
+
+	public void setCostb3(String costb3) {
+		this.costb3 = costb3;
+	}
+
+	public String getCostc3() {
+		return costc3;
+	}
+
+	public void setCostc3(String costc3) {
+		this.costc3 = costc3;
+	}
+
+	public String getCostd3() {
+		return costd3;
+	}
+
+	public void setCostd3(String costd3) {
+		this.costd3 = costd3;
+	}
+
+	public String getCoste3() {
+		return coste3;
+	}
+
+	public void setCoste3(String coste3) {
+		this.coste3 = coste3;
+	}
+
+	public String getCostf3() {
+		return costf3;
+	}
+
+	public void setCostf3(String costf3) {
+		this.costf3 = costf3;
 	}
 
 	public String getDurationUnloadFull() {

@@ -63,6 +63,7 @@ public class ExcelUtil {
     public List<String> readExcel(File file,int headNum) throws Exception {
         List<String> list = new ArrayList<String>();
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat fmt2 = new SimpleDateFormat("yyyy-MM-dd");
         try {
             // 同时支持Excel 2003、2007
 //            File excelFile = file; // 创建文件对象
@@ -100,7 +101,8 @@ public class ExcelUtil {
                             break;
                         case Cell.CELL_TYPE_NUMERIC:    // 数字、日期
                             if (DateUtil.isCellDateFormatted(cell)) {
-                                cellValue = fmt.format(cell.getDateCellValue()) + "#";
+//                                cellValue = fmt.format(cell.getDateCellValue()) + "#";
+                                cellValue = cell.getDateCellValue() + "#";
                             } else {
                                 cell.setCellType(Cell.CELL_TYPE_STRING);
                                 cellValue = String.valueOf(cell.getRichStringCellValue().getString()) + "#";

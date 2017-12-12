@@ -94,32 +94,31 @@
                                 <th rowspan="3">speed(km/h)</th>
                                 <th rowspan="3">operation</th>
                                 <tr>
-                                    <th  colspan="4">distance interval 1</th>
-                                    <th  colspan="4">distance interval 2</th>
-                                    <th  colspan="4">distance interval 3</th>
-                                    <th  colspan="4">distance interval 4</th>
-                                    <th  colspan="4">distance interval 5</th>
+                                    <th  colspan="5">distance interval 1</th>
+                                    <th  colspan="5">distance interval 2</th>
+                                    <th  colspan="5">distance interval 3</th>
+                                    <th  colspan="5">distance interval 4</th>
                                     <tr>
                                         <th>0 km</th>
                                         <th>a km</th>
                                         <th>ride</th>
                                         <th>km</th>
+                                        <th>/min</th>
                                         <th>a km</th>
                                         <th>b km</th>
-                                        <th>ride</th>
-                                        <th>km</th>
+                                        <th>/ride</th>
+                                        <th>/km</th>
+                                        <th>/min</th>
                                         <th>b km</th>
                                         <th>c km</th>
-                                        <th>ride</th>
-                                        <th>km</th>
+                                        <th>/ride</th>
+                                        <th>/km</th>
+                                        <th>/min</th>
                                         <th>c km</th>
                                         <th>d km</th>
-                                        <th>ride</th>
-                                        <th>km</th>
-                                        <th>d km</th>
-                                        <th>e km</th>
-                                        <th>ride</th>
-                                        <th>km</th>
+                                        <th>/ride</th>
+                                        <th>/km</th>
+                                        <th>/min</th>
                                     </tr>
                                 </tr>
                             </tr>

@@ -75,18 +75,21 @@ public class DemandInfoService {
 //                      File fileTemp = (File) multipartFile;
                         ExcelUtil excelUtil = new ExcelUtil();
                         List<String> lineList = excelUtil.readExcel(fileTmp,1);
-                        for(int i=0;i<lineList.size();i++){
+                        int d = 0;
+                        for(int i=2;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
                             //日期
                             demandInfo.setDate(row[1]);
                             //收件网点编码
                             demandInfo.setSiteCodeCollect(row[2]);
                             //时段（开始）
-                            demandInfo.setDurationStart(row[3]);
+                            d = Integer.parseInt(row[3].split(":")[0])*60+Integer.parseInt(row[3].split(":")[1]);
+                            demandInfo.setDurationStart(String.valueOf(d));
                             //派件网点编码
                             demandInfo.setSiteCodeDelivery(row[4]);
                             //时段(结束）
-                            demandInfo.setDurationEnd(row[5]);
+                            d = Integer.parseInt(row[5].split(":")[0])*60+Integer.parseInt(row[5].split(":")[1]);
+                            demandInfo.setDurationEnd(String.valueOf(d));
                             //票数（票）
                             demandInfo.setVotes(row[6]);
                             //重量（公斤）
