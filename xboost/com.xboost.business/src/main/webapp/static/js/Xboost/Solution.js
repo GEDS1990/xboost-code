@@ -18,7 +18,7 @@ $(function  () {
 	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
-	                url:"/depots/operateInfo.json", //获取数据的URL
+	                url:"/depots/depots.json", //获取数据的URL
 	                type:"get" //获取数据的方式
 	                
 	            },
@@ -126,7 +126,7 @@ $(function  () {
 					table.search("").draw(false);
 				}else{
 					table.search(val).draw(false);
-					$.get("/depots/baseInfo.json",{"siteCode":val}).done(function  (res) {
+					$.get("/depots/depots.json",{"siteCode":val}).done(function  (res) {
 						console.log(res)
 						if (res) {
 							$('#depot').text("Depot "+res.siteCode);

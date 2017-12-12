@@ -96,4 +96,42 @@ public class SolutionDepotsController {
         return result;
     }
 
+    //查询网点操作信息
+    @RequestMapping(value = "/depots.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String,Object> loadDepotsInfo(HttpServletRequest request) {
+
+        String draw = request.getParameter("draw");
+        Integer start = Integer.valueOf(request.getParameter("start"));
+        Integer length = Integer.valueOf(request.getParameter("length"));
+        String searchValue = request.getParameter("search[value]");
+        String orderColumnIndex = request.getParameter("order[0][column]");
+        String orderType = request.getParameter("order[0][dir]");
+        String orderColumnName = request.getParameter("columns["+orderColumnIndex+"][name]");
+
+        Map<String,Object> param = Maps.newHashMap();
+        param.put("start",start);
+        param.put("length",length);
+        if(StringUtils.isNotEmpty(searchValue)) {
+            param.put("keyword", Strings.toUTF8(searchValue));
+        }
+        param.put("orderColumn",orderColumnName);
+        param.put("orderType",orderType);
+        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
+
+
+
+        Map<String,Object> result = Maps.newHashMap();
+
+        List<Map<String,Object>> siteList = siteInfoService.findBySiteCode(param); //.findAll();
+        Integer count = siteInfoService.findAllCountBySiteCode(ShiroUtil.getOpenScenariosId());
+        Integer filteredCount = siteInfoService.findCountBySiteCode(param);
+
+        result.put("draw",draw);
+        result.put("recordsTotal",count); //总记录数
+        result.put("recordsFiltered",filteredCount); //过滤出来的数量
+        result.put("data",siteList);
+        return result;
+    }
+
 }

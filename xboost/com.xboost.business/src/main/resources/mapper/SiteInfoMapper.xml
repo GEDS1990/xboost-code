@@ -73,10 +73,74 @@
         DELETE FROM t_site_info WHERE id = #{id}
     </delete>
 
+    <select id="findAllBySiteCode" resultType="map" resultMap="modelRouteAndSite">
+        SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findAllCountBySiteCode" resultType="long">
+        SELECT count(*) FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findBySiteCode" parameterType="map" resultType="map" resultMap="modelRouteAndSite">
+        SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        <where>
+            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and  r.cur_loc = #{keyword}
+            </if>
+        </where>
+        <!--order by ${orderColumn} ${orderType}-->
+        limit ${start},${length}
+    </select>
+
+    <select id="findCountBySiteCode" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        <where>
+            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and  r.cur_loc = #{keyword}
+            </if>
+        </where>
+    </select>
+
 
     <resultMap id="siteInfoMap" type="SiteInfo">
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
+        <result property="siteCode" column="site_code"/>
+        <result property="siteLongitude" column="longitude"/>
+        <result property="siteLatitude" column="latitude"/>
+        <result property="siteName" column="site_name"/>
+        <result property="siteAddress" column="site_address"/>
+        <result property="siteNightDelivery" column="site_night_delivery"/>
+        <result property="siteArea" column="site_area"/>
+        <result property="siteType" column="site_type"/>
+        <result property="carNum" column="car_num"/>
+        <result property="largeCarModel" column="large_carModle"/>
+        <result property="maxOperateNum" column="max_operate_num"/>
+        <result property="distribCenter" column="distrib_center"/>
+    </resultMap>
+
+    <resultMap id="modelRouteAndSite" type="map">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="routeCount" column="route_count"/>
+        <result property="carType" column="car_type"/>
+        <result property="location" column="location"/>
+        <result property="sequence" column="sequence"/>
+        <result property="curLoc" column="cur_loc"/>
+        <result property="type" column="type"/>
+        <result property="sbLoc" column="sb_loc"/>
+        <result property="sbVol" column="sb_vol"/>
+        <result property="arrTime" column="arr_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="unloadLoc" column="unload_loc"/>
+        <result property="unloadVol" column="unload_vol"/>
+        <result property="nextCurLoc" column="next_cur_loc"/>
+        <result property="calcDis" column="calc_dis"/>
+        <result property="carGoods" column="car_goods"/>
         <result property="siteCode" column="site_code"/>
         <result property="siteLongitude" column="longitude"/>
         <result property="siteLatitude" column="latitude"/>

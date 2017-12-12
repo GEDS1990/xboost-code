@@ -3,7 +3,6 @@ package com.xboost.service;
 import com.xboost.exception.ForbiddenException;
 import com.xboost.exception.NotFoundException;
 import com.xboost.mapper.SiteInfoMapper;
-import com.xboost.pojo.SiteDist;
 import com.xboost.pojo.SiteInfo;
 
 import com.xboost.util.ExportUtil;
@@ -299,6 +298,42 @@ public class SiteInfoService {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * 根据网点编码siteCode获取网点信息
+     * param param
+     * @return
+     */
+    public List<Map<String, Object>> findBySiteCode(Map<String, Object> param) {
+        return siteInfoMapper.findBySiteCode(param);
+    }
+
+    /**
+     * 根据网点编码siteCode获网点数量
+     * @param param
+     * @return
+     */
+    public Integer findCountBySiteCode(Map<String, Object> param) {
+        return siteInfoMapper.findCountBySiteCode(param).intValue();
+    }
+
+    /**
+     * 根据网点编码siteCode获网点信息
+     * param param
+     * @return
+     */
+    public List<Map<String, Object>> findAllBySiteCode(String scenariosId) {
+        return siteInfoMapper.findAllBySiteCode(scenariosId);
+    }
+
+    /**
+     * 根据网点编码siteCode获网点数量
+     * @param scenariosId
+     * @return
+     */
+    public Integer findAllCountBySiteCode(String scenariosId) {
+        return siteInfoMapper.findAllCountBySiteCode(scenariosId).intValue();
     }
 
 

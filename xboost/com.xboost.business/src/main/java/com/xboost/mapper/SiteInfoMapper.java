@@ -57,5 +57,18 @@ public interface SiteInfoMapper {
     //根据网点编码删除网点信息   * @param siteCode
     void delById(Integer id);
 
+    // 根据网点编码siteCode获网点信息,根据curLoc和siteCode关联查询t_solution_route,t_site_info   @param param @return
+    List<Map<String,Object>> findBySiteCode(Map<String, Object> param);
+
+    // 根据网点编码siteCode获取网点数量,根据curLoc和siteCode关联查询t_solution_route,t_site_info
+    Long findCountBySiteCode(Map<String, Object> param);
+
+    // 查询全部网点信息,根据curLoc和siteCode关联查询t_solution_route,t_site_info   @param param @return
+    List<Map<String,Object>> findAllBySiteCode(String scenariosId);
+
+    // 查询全部网点数量,根据curLoc和siteCode关联查询t_solution_route,t_site_info
+    Long findAllCountBySiteCode(String scenariosId);
+
+
 }
 
