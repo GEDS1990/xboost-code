@@ -94,25 +94,32 @@
                                 <th rowspan="3">speed(km/h)</th>
                                 <th rowspan="3">operation</th>
                                 <tr>
-                                    <th  colspan="2">cost(0-a)</th>
-                                    <th  colspan="2">cost(a-b)</th>
-                                    <th  colspan="2">cost(b-c)</th>
-                                    <th  colspan="2">cost(c-d)</th>
-                                    <th  colspan="2">cost(d-e)</th>
-                                    <th  colspan="2">cost(e-f)</th>
+                                    <th  colspan="4">distance interval 1</th>
+                                    <th  colspan="4">distance interval 2</th>
+                                    <th  colspan="4">distance interval 3</th>
+                                    <th  colspan="4">distance interval 4</th>
+                                    <th  colspan="4">distance interval 5</th>
                                     <tr>
-                                        <th>(0,a] km</th>
-                                        <th>ride/km</th>
-                                        <th>(a,b] km</th>
-                                        <th>ride/km</th>
-                                        <th>(b,c] km</th>
-                                        <th>ride/km</th>
-                                        <th>(c,d] km</th>
-                                        <th>ride/km</th>
-                                        <th>(d,e] km</th>
-                                        <th>ride/km</th>
-                                        <th>(e,f] km</th>
-                                        <th>ride/km</th>
+                                        <th>0 km</th>
+                                        <th>a km</th>
+                                        <th>ride</th>
+                                        <th>km</th>
+                                        <th>a km</th>
+                                        <th>b km</th>
+                                        <th>ride</th>
+                                        <th>km</th>
+                                        <th>b km</th>
+                                        <th>c km</th>
+                                        <th>ride</th>
+                                        <th>km</th>
+                                        <th>c km</th>
+                                        <th>d km</th>
+                                        <th>ride</th>
+                                        <th>km</th>
+                                        <th>d km</th>
+                                        <th>e km</th>
+                                        <th>ride</th>
+                                        <th>km</th>
                                     </tr>
                                 </tr>
                             </tr>
