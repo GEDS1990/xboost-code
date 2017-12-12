@@ -81,45 +81,45 @@
                         </tr>
                         -->
 					    	<tr>
-                                <th rowspan="3">Id</th>
-                                <th rowspan="3">vehicle type</th>
-                                <th rowspan="3">vehicle source</th>
-                                <th rowspan="3">full load unload time (min)</th>
-					    		<th rowspan="3">max<br />Stop</th>
-                                <th rowspan="3">maximum load(p)</th>
-					    		<th rowspan="3">start<br />Location</th>
-					    		<th rowspan="3">end<br />Location</th>
-                                <th rowspan="3">maximum distance (km)</th>
-					    		<th rowspan="3">max<br />RunningTime</th>
-                                <th rowspan="3">speed(km/h)</th>
-                                <th rowspan="3">operation</th>
+                                <th rowspan="2">Id</th>
+                                <th rowspan="2">vehicle type</th>
+                                <th rowspan="2">vehicle source</th>
+                                
+					    		<th rowspan="2">max<br />Stop</th>
+                                <th rowspan="2">maximum load(p)</th>
+					    		
+                                <th rowspan="2">maximum distance (km)</th>
+					    		<th rowspan="2">max<br />RunningTime</th>
+                                <th rowspan="2">speed(km/h)</th>
+                                <th rowspan="2">unload time (min)</th>
+                                <th rowspan="2">start<br />Location</th>
+					    		<th rowspan="2">end<br />Location</th>
+                                <th colspan="5">distance interval 1</th>
+                                <th colspan="5">distance interval 2</th>
+                                <th colspan="5">distance interval 3</th>
+                                <th colspan="5">distance interval 4</th>
+                                <th rowspan="2">operation</th>
                                 <tr>
-                                    <th  colspan="5">distance interval 1</th>
-                                    <th  colspan="5">distance interval 2</th>
-                                    <th  colspan="5">distance interval 3</th>
-                                    <th  colspan="5">distance interval 4</th>
-                                    <tr>
-                                        <th>0 km</th>
-                                        <th>a km</th>
-                                        <th>ride</th>
-                                        <th>km</th>
-                                        <th>/min</th>
-                                        <th>a km</th>
-                                        <th>b km</th>
-                                        <th>/ride</th>
-                                        <th>/km</th>
-                                        <th>/min</th>
-                                        <th>b km</th>
-                                        <th>c km</th>
-                                        <th>/ride</th>
-                                        <th>/km</th>
-                                        <th>/min</th>
-                                        <th>c km</th>
-                                        <th>d km</th>
-                                        <th>/ride</th>
-                                        <th>/km</th>
-                                        <th>/min</th>
-                                    </tr>
+                                    <th>0 km</th>
+                                    <th>a km</th>
+                                    <th>/ride</th>
+                                    <th>/km</th>
+                                    <th>/min</th>
+                                    <th>a km</th>
+                                    <th>b km</th>
+                                    <th>/ride</th>
+                                    <th>/km</th>
+                                    <th>/min</th>
+                                    <th>b km</th>
+                                    <th>c km</th>
+                                    <th>/ride</th>
+                                    <th>/km</th>
+                                    <th>/min</th>
+                                    <th>c km</th>
+                                    <th>d km</th>
+                                    <th>/ride</th>
+                                    <th>/km</th>
+                                    <th>/min</th>
                                 </tr>
                             </tr>
 					    </thead>
@@ -146,19 +146,23 @@
             <div class="modal-body">
                 <form id="newUserForm-tran" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">type</label>
+                        <label class="col-sm-2 control-label">vehicle type</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="type" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">carSource</label>
+                        <label class="col-sm-2 control-label">vehicle source</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carSource" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <select  class="form-control" name="carSource" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
+                            	<option value="hire">hire</option>
+                            	<option value="own">own</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">dimensions</label>
+                        
+                        <label class="col-sm-2 control-label">maxStop</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="dimensions" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <input type="text" class="form-control" name="maxStop" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">maxLoad</label>
                         <div class="col-sm-4">
@@ -166,33 +170,41 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">durationUnloadFull</label>
+                    	<label class="col-sm-2 control-label">maximum load(p)</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="dimensions" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                        </div>
+                        <label class="col-sm-2 control-label">maximum distance (km)</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="max_distance" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        
+                        <label class="col-sm-2 control-label">max RunningTime</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="max_running_time" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                        </div>
+                        <label class="col-sm-2 control-label">speed(km/h)</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="velocity" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">unload time (min)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationUnloadFull" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">maxStop</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxStop" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">fixed_round</label>
+                        <label class="col-sm-2 control-label">start Location</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedRound" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <input type="text" class="form-control" name="start_location" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">fixed_round_fee</label>
+                        <label class="col-sm-2 control-label">end Location</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedRoundFee" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">start_location</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="startLocation" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                        <label class="col-sm-2 control-label">end_location</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="endLocation" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <input type="text" class="form-control" name="end_location" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                 <!--
@@ -214,35 +226,48 @@
                         </div>
                     </div>-->
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">max_distance</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxDistance" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                        <label class="col-sm-2 control-label">max_running_time</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxRunningTime" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
+                        <label class="col-sm-2 control-label">start Location</label>
+                        <div class="table-responsive active" style="padding:0 15px;">
+							<table  class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>distance interval</th>
+										<th>price</th>
+									</tr>
+								</thead>
+								<tbody class="tran-add-tbody">
+									<tr>
+										<td>
+											<span class="tran-add-frspan">flag-fall</span>
+											<span><input type="number" min="0" /></span>
+											<span>km to</span>
+											<span><input type="number" min="0" /></span>
+											<span>km</span>
+										</td>
+										<td class="text-left">
+											<span><input type="number" min="0" /></span>
+											<span><input type="radio" value=""/>/ride</span>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span class="tran-add-frspan"></span>
+											<span><input type="number" min="0" /></span>
+											<span>km to</span>
+											<span><input type="number" min="0" /></span>
+											<span>km</span>
+										</td>
+										<td class="text-left">
+											<span><input type="number" min="0" /></span>
+											<span><input type="radio" value=""/>/ride</span>
+											<span><input type="radio" value=""/>/km</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">cost_per_distance</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="costPerDistance" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                        <label class="col-sm-2 control-label">cost_per_time</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="costPerTime" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">fixed_cost</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="fixedCost" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                        <label class="col-sm-2 control-label">velocity</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="velocity" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                    </div>
+                    
                 </form>
             </div>
             <div class="modal-footer">
