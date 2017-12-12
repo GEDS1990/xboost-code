@@ -78,7 +78,6 @@ function CategoryList () {
         });
         //点 选项 进行选择
         $('body').on("click","#userClass>li",function  () {
-        debugger;
             var _val = $(this).attr("data-value");
             var _text = $(this).text();
             $("#userId").val(_val);
@@ -140,7 +139,6 @@ function CategoryList () {
             $('#demand-quantity').text(res.demandsCounter);
             $('#farthest-distance').text(res.farthestDist);
         }).fail(function  (e) {
-        debugger;
             console.log('fail');
         });
 		

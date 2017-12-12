@@ -415,6 +415,9 @@ table.table-bordered.dataTable td:last-child {
 .tran-add-tbody>tr>td input{
 	width: 15%;
 }
+.tran-add-tbody>tr>td input[type=radio]{
+	width: 5%;
+}
 
 /************result***********************************/
 /***route***/

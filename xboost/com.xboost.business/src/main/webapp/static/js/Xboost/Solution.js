@@ -323,8 +323,6 @@ $(function  () {
                     $.get("/route/route.json",{"routeId":val}).done(function  (res) {
                         console.log(res)
                         if (res) {
-                        debugger;
-                            $('#route-name').text("Route "+res.id);
                             $('#total-distance').text(res.sbVol);
                             $('#vehicle-load-requirement').text(res.car_type);
                             $('#vehicle-piece-capacity').text(res.calcDis);

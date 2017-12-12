@@ -263,6 +263,23 @@
 											<span><input type="radio" value=""/>/km</span>
 										</td>
 									</tr>
+									<tr>
+										<td>
+											<span class="tran-add-frspan"></span>
+											<span><input type="number" min="0" /></span>
+											<span>km to</span>
+											<span><input type="number" min="0" /></span>
+											<span>km</span>
+										</td>
+										<td class="text-left">
+											<span><input type="number" min="0" /></span>
+											<span><input type="radio" value=""/>/ride</span>
+											<span><input type="radio" value=""/>/km</span>
+											<span>+</span>
+											<span><input type="number" min="0" /></span>
+											<span>/min</span>
+										</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
