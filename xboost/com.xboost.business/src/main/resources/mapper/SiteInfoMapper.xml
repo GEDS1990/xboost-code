@@ -105,6 +105,16 @@
         </where>
     </select>
 
+    <select id="findNextSite" resultType="map" resultMap="modelRouteAndSite">
+        SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.next_cur_loc = d.site_code
+        <where>
+            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+            <if test="siteCode != null and siteCode != ''">
+                and  r.cur_loc = #{siteCode}
+            </if>
+        </where>
+    </select>
+
 
     <resultMap id="siteInfoMap" type="SiteInfo">
         <result property="id" column="id"/>

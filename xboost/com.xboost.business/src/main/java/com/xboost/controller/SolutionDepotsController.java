@@ -37,64 +37,64 @@ public class SolutionDepotsController {
 
 
 
-    //查询网点操作信息
-    @RequestMapping(value = "/operateInfo.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Map<String,Object> loadOperateInfo(HttpServletRequest request) {
-
-        String draw = request.getParameter("draw");
-        Integer start = Integer.valueOf(request.getParameter("start"));
-        Integer length = Integer.valueOf(request.getParameter("length"));
-        String searchValue = request.getParameter("search[value]");
-        String orderColumnIndex = request.getParameter("order[0][column]");
-        String orderType = request.getParameter("order[0][dir]");
-        String orderColumnName = request.getParameter("columns["+orderColumnIndex+"][name]");
-
-        Map<String,Object> param = Maps.newHashMap();
-        param.put("start",start);
-        param.put("length",length);
-        if(StringUtils.isNotEmpty(searchValue)) {
-            param.put("keyword", Strings.toUTF8(searchValue));
-        }
-        param.put("orderColumn",orderColumnName);
-        param.put("orderType",orderType);
-        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
-
-
-
-        Map<String,Object> result = Maps.newHashMap();
-
-        List<Route> routeList = solutionRouteService.findByParam(param); //.findAll();
-        Integer count = solutionRouteService.findAllCount(ShiroUtil.getOpenScenariosId());
-        Integer filteredCount = solutionRouteService.findCountByParam(param);
-
-        result.put("draw",draw);
-        result.put("recordsTotal",count); //总记录数
-        result.put("recordsFiltered",filteredCount); //过滤出来的数量
-        result.put("data",routeList);
-        return result;
-    }
-
-    //查询网点信息
-    @RequestMapping(value = "/baseInfo.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public SiteInfo loadBaseSiteInfo(String siteCode) {
-       String scenariosId = ShiroUtil.getOpenScenariosId();
-       SiteInfo siteInfo = siteInfoService.findSiteInfoBySiteCode(scenariosId,siteCode);
-       System.out.println("success");
-       return siteInfo;
-    }
-
-    //查询网点信息
-    @RequestMapping(value = "/allSite.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Map<String,Object> findAllSite(HttpServletRequest request) {
-        String scenariosId = ShiroUtil.getOpenScenariosId();
-        List<SiteInfo> siteInfo = siteInfoService.findAllSiteInfo(scenariosId);
-        Map<String,Object> result = Maps.newHashMap();
-        result.put("data",siteInfo);
-        return result;
-    }
+//    //查询网点操作信息
+//    @RequestMapping(value = "/operateInfo.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+//    @ResponseBody
+//    public Map<String,Object> loadOperateInfo(HttpServletRequest request) {
+//
+//        String draw = request.getParameter("draw");
+//        Integer start = Integer.valueOf(request.getParameter("start"));
+//        Integer length = Integer.valueOf(request.getParameter("length"));
+//        String searchValue = request.getParameter("search[value]");
+//        String orderColumnIndex = request.getParameter("order[0][column]");
+//        String orderType = request.getParameter("order[0][dir]");
+//        String orderColumnName = request.getParameter("columns["+orderColumnIndex+"][name]");
+//
+//        Map<String,Object> param = Maps.newHashMap();
+//        param.put("start",start);
+//        param.put("length",length);
+//        if(StringUtils.isNotEmpty(searchValue)) {
+//            param.put("keyword", Strings.toUTF8(searchValue));
+//        }
+//        param.put("orderColumn",orderColumnName);
+//        param.put("orderType",orderType);
+//        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
+//
+//
+//
+//        Map<String,Object> result = Maps.newHashMap();
+//
+//        List<Route> routeList = solutionRouteService.findByParam(param); //.findAll();
+//        Integer count = solutionRouteService.findAllCount(ShiroUtil.getOpenScenariosId());
+//        Integer filteredCount = solutionRouteService.findCountByParam(param);
+//
+//        result.put("draw",draw);
+//        result.put("recordsTotal",count); //总记录数
+//        result.put("recordsFiltered",filteredCount); //过滤出来的数量
+//        result.put("data",routeList);
+//        return result;
+//    }
+//
+//    //查询网点信息
+//    @RequestMapping(value = "/baseInfo.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+//    @ResponseBody
+//    public SiteInfo loadBaseSiteInfo(String siteCode) {
+//       String scenariosId = ShiroUtil.getOpenScenariosId();
+//       SiteInfo siteInfo = siteInfoService.findSiteInfoBySiteCode(scenariosId,siteCode);
+//       System.out.println("success");
+//       return siteInfo;
+//    }
+//
+//    //查询网点信息
+//    @RequestMapping(value = "/allSite.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+//    @ResponseBody
+//    public Map<String,Object> findAllSite(HttpServletRequest request) {
+//        String scenariosId = ShiroUtil.getOpenScenariosId();
+//        List<SiteInfo> siteInfo = siteInfoService.findAllSiteInfo(scenariosId);
+//        Map<String,Object> result = Maps.newHashMap();
+//        result.put("data",siteInfo);
+//        return result;
+//    }
 
     //查询网点操作信息
     @RequestMapping(value = "/depots.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
@@ -108,16 +108,19 @@ public class SolutionDepotsController {
         String orderColumnIndex = request.getParameter("order[0][column]");
         String orderType = request.getParameter("order[0][dir]");
         String orderColumnName = request.getParameter("columns["+orderColumnIndex+"][name]");
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        String siteCode="";
 
         Map<String,Object> param = Maps.newHashMap();
         param.put("start",start);
         param.put("length",length);
         if(StringUtils.isNotEmpty(searchValue)) {
             param.put("keyword", Strings.toUTF8(searchValue));
+            siteCode =Strings.toUTF8(searchValue);
         }
         param.put("orderColumn",orderColumnName);
         param.put("orderType",orderType);
-        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
+        param.put("scenariosId",scenariosId);
 
 
 
@@ -126,12 +129,17 @@ public class SolutionDepotsController {
         List<Map<String,Object>> siteList = siteInfoService.findBySiteCode(param); //.findAll();
         Integer count = siteInfoService.findAllCountBySiteCode(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = siteInfoService.findCountBySiteCode(param);
+        List<Map<String,Object>> nextSiteList = siteInfoService.findNextSite(scenariosId,siteCode);
+
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",siteList);
+        result.put("nextSite",nextSiteList);
         return result;
     }
+
+
 
 }

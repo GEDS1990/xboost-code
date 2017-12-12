@@ -69,6 +69,9 @@ public interface SiteInfoMapper {
     // 查询全部网点数量,根据curLoc和siteCode关联查询t_solution_route,t_site_info
     Long findAllCountBySiteCode(String scenariosId);
 
+    //查询下个网点的信息
+    List<Map<String,Object>> findNextSite(@Param("scenariosId") String scenariosId,@Param("siteCode") String siteCode);
+
 
 }
 

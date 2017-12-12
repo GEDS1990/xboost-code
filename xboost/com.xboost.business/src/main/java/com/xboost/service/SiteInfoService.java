@@ -336,5 +336,15 @@ public class SiteInfoService {
         return siteInfoMapper.findAllCountBySiteCode(scenariosId).intValue();
     }
 
+    /**
+     * 根据网点编码siteCode查询下一个网点信息
+     * param param
+     * @return
+     */
+    public List<Map<String, Object>> findNextSite(String scenariosId,String siteCode) {
+        return siteInfoMapper.findNextSite(scenariosId,siteCode);
+    }
+
+
 
 }
