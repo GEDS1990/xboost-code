@@ -403,6 +403,22 @@ table.table-bordered.dataTable td:last-child {
 	width: auto;
 }
 
+/******************tran****************************/
+.tran-add-frspan{
+	display: inline-block;
+	width: 25%;
+}
+.table>tbody>tr>td.text-left{
+	text-align: left;
+	padding-left: 10px;
+}
+.tran-add-tbody>tr>td input{
+	width: 15%;
+}
+.tran-add-tbody>tr>td input[type=radio]{
+	width: 5%;
+}
+
 /************result***********************************/
 /***route***/
 #route-wrap{
