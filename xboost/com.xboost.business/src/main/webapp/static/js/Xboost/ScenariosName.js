@@ -64,18 +64,24 @@ $(function  () {
 	 */
 	function FormInput (id,fun) {
 		var _input = doc.getElementById(id).getElementsByTagName("input"),
-		pattern = new RegExp("[`~!@#$^&*=|{}':;',\\[\\]<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"),
+		pattern = new RegExp("[`~!@#$^&*=|{}':;',\\[\\]<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
 		len = _input.length;
 		for (var i=0;i<len;i++) {
 			var xss = pattern.test(_input[i].value);
-			console.log(xss)
-			if (_input[i].value == "" || xss == true) {
-				_input[i].focus();
-				_input[i].classList.add("active");
-				return false;
-			}else{
-				_input[i].classList.remove("active");
+			var _inputType = _input[i].getAttribute("required");
+			var _inputHid = _input[i].getAttribute("type");
+			console.log(_inputType+"----------"+_inputHid)
+			//console.log(xss)
+			if (Boolean(_inputType) == true  ) {
+				if (_input[i].value == "" || xss == true) {
+					_input[i].focus();
+					_input[i].classList.add("active");
+					return false;
+				}else{
+					_input[i].classList.remove("active");
+				}
 			}
+			
 		}
 		fun();
 	}
@@ -122,7 +128,7 @@ $(function  () {
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
-	            "order":[[0,'asc']],//默认排序方式
+	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/siteInfo/siteInfo.json", //获取数据的URL
@@ -138,7 +144,9 @@ $(function  () {
 	                {"data":"siteArea","name":"site_area"},
 	                {"data":"siteType","name":"site_type"},
 	                {"data":"distribCenter","name":"distrib_center"},
-	                {"data":"siteNightDelivery","name":"site_night_delivery"},
+	                {"data":function  (row) {
+	                	return "<span>"+(row.siteNightDelivery==1?'support':'not support')+"</span>"
+	                },"name":"site_night_delivery"},
 	                {"data":"carNum","name":"car_num"},
 	                {"data":"largeCarModel","name":"large_carModle"},
 	                {"data":"maxOperateNum","name":"max_operate_num"},
@@ -149,7 +157,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	            	{
 	                    "targets":[0],
-	                    "visible":true
+	                    "visible":false
 	                },
 	                {
 	                    "targets":[0,13],
@@ -294,7 +302,7 @@ $(function  () {
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
-	            "order":[[0,'asc']],//默认排序方式
+	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/siteDist/siteDist.json", //获取数据的URL
@@ -314,10 +322,10 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	            	{
 	                    "targets":[0],
-	                    "visible":true
+	                    "visible":false
 	                },
 	                {
-	                    "targets":[0,5],
+	                    "targets":[0,6],
 	                    "orderable":false
 	                }
 	            ],
@@ -461,7 +469,7 @@ $(function  () {
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
-	            "order":[[0,'asc']],//默认排序方式
+	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/demandInfo/demandInfo.json", //获取数据的URL
@@ -484,7 +492,11 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	                {
 	                    "targets":[0],
-	                    "visible":true
+	                    "visible":false
+	                },
+	                {
+	                    "targets":[0,9],
+	                    "orderable":false
 	                }
 	            ],
 	            "language":{
@@ -622,7 +634,7 @@ $(function  () {
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
-	            "order":[[0,'asc']],//默认排序方式
+	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/modelArg/modelArg.json", //获取数据的URL
@@ -640,10 +652,10 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	                {
 	                    "targets":[0],
-	                    "visible":true
+	                    "visible":false
 	                },
 	                {
-	                    "targets":[0,1,2,3,4],
+	                    "targets":[4],
 	                    "orderable":false
 	                }
 	            ],
@@ -679,7 +691,8 @@ $(function  () {
 	            $("#newUserModal-pata").modal('show');
 	        });
 	        $("#saveBtn-pata").click(function(){
-	            $.post("/modelArg/add",$("#newUserForm-pata").serialize())
+	        	FormInput("newUserForm-pata",function (){
+	        		$.post("/modelArg/add",$("#newUserForm-pata").serialize())
 	                    .done(function(result){
 	                        if("success" == result) {
 	                            $("#newUserForm-pata")[0].reset();
@@ -690,6 +703,8 @@ $(function  () {
 	                    }).fail(function(){
 	                        alert("Exception occurs when adding");
 	                    });
+	        	})
+	            
 	
 	        });
 	
@@ -723,23 +738,25 @@ $(function  () {
 	                $("#editUserModal-pata").modal("show");
 	
 	            }).fail(function(){
-	
+					alert("fail");
 	            });
 				
 	            
 	        });
 	
 	        $("#editBtn-pata").click(function(){
-	        
-	            $.post("/modelArg/edit",$("#editUserForm-pata").serialize()).done(function(result){
-	                if(result == "success") {
-	                    $("#editUserModal-pata").modal("hide");
-	                    dt.ajax.reload();
-	                    window.location.reload(); 
-	                }
-	            }).fail(function(){
-	                alert("Modify user exception");
+	        	FormInput("editUserForm-pata",function (){
+	            	$.post("/modelArg/edit",$("#editUserForm-pata").serialize()).done(function(result){
+		                if(result == "success") {
+		                    $("#editUserModal-pata").modal("hide");
+		                    dt.ajax.reload();
+		                    window.location.reload(); 
+		                }
+		            }).fail(function(){
+		                alert("Modify user exception");
+		            });
 	            });
+	            
 	
 	        });
 	        //导入excel表格
@@ -770,7 +787,7 @@ $(function  () {
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
-	            "order":[[0,'asc']],//默认排序方式
+	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/car/transport.json", //获取数据的URL
@@ -794,30 +811,44 @@ $(function  () {
 	                {"data":"a2","name":"a2"},
                     {"data":"costa1","name":"costa1"},
                     {"data":"costa2","name":"costa2"},
-                    {"data":"costa2","name":"costa2"},
+                    {"data":"costa3","name":"costa3"},
 	                {"data":"b1","name":"b1"},
 	                {"data":"b2","name":"b2"},
                     {"data":"costb1","name":"costb1"},
                     {"data":"costb2","name":"costb2"},
-                    {"data":"costb2","name":"costb2"},
+                    {"data":"costb3","name":"costb3"},
 	                {"data":"c1","name":"c1"},
 	                {"data":"c2","name":"c2"},
                     {"data":"costc1","name":"costc1"},
                     {"data":"costc2","name":"costc2"},
-                    {"data":"costc2","name":"costc2"},
+                    {"data":"costc3","name":"costc3"},
                     {"data":"d1","name":"d1"},
                     {"data":"d2","name":"d2"},
 	                {"data":"costd1","name":"costd1"},
 	                {"data":"costd2","name":"costd2"},
-	                {"data":"costd2","name":"costd2"},
+	                {"data":"costd3","name":"costd3"},
+	                {"data":"e1","name":"e1"},
+                    {"data":"e2","name":"e2"},
+	                {"data":"coste1","name":"coste1"},
+	                {"data":"coste2","name":"coste2"},
+	                {"data":"coste3","name":"coste3"},
+	                {"data":"f1","name":"f1"},
+                    {"data":"f2","name":"f2"},
+	                {"data":"costf1","name":"costf1"},
+	                {"data":"costf2","name":"costf2"},
+	                {"data":"costf3","name":"costf3"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-tran' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-tran' data-id='"+row.id+"'>Del</a>";
-	                }},
+	                }}
 	            ],
 	            "columnDefs":[ //具体列的定义
 	                {
 	                    "targets":[0],
-	                    "visible":true
+	                    "visible":false
+	                },
+	                {
+	                    "targets":[0,31],
+	                    "orderable":false
 	                }
 	            ],
 	            "language":{
@@ -834,8 +865,13 @@ $(function  () {
 	                    "next":       "Next",
 	                    "previous":   "Prev"
 	                }
+	            },
+	            "initComplete":function  (settings, data) {
+	            	console.log(data);
 	            }
 	        });
+	        
+	        //
         
         	//阻止表单提交
 			var formadd = doc.getElementById('newUserForm-tran'),
@@ -851,13 +887,47 @@ $(function  () {
 	        $("#addNewUser-tran").click(function(){
 	            $("#newUserModal-tran").modal('show');
 	        });
+	        //点击选框添加提示
+	        function AddAttr ($this,type) {
+	        	if (type == "/ride") {
+	        		$this.parents('tr').find("td:first-child").find('input[type="number"]').attr({"required":"required","oninvalid":"setCustomValidity('Please enter information');","oninput":"setCustomValidity('');"});
+	        		$this.parents('tr').find("td:nth-child(2)").find('span:first-child').find('input[type="number"]').attr({"required":"required","oninvalid":"setCustomValidity('Please enter information');","oninput":"setCustomValidity('');"});
+	        		$this.parents('tr').find("td:nth-child(2)").find('.km-min').removeAttr('required').removeAttr('oninvalid').removeAttr('oninput');
+	        	}else if(type == "/km"){
+	        		$this.parents('tr').find('input[type="number"]').attr({"required":"required","oninvalid":"setCustomValidity('Please enter information');","oninput":"setCustomValidity('');"});
+	        		$this.parents('tr').nextAll().find('input[type="number"]').removeAttr('required').removeAttr('oninvalid').removeAttr('oninput');
+	        	}
+	        	
+	        }
+	        function rideFun ($this){
+	        	var	dataname = $this.attr("data-name");
+	        	$this.parents('span').next().find('input[value="/km"]').removeAttr("checked");
+	        	$this.parents('tr').next().find('input[value="/ride"]').removeAttr('disabled').parent('label').css("color","#19a371");
+	        	//$(this).parents('tr').nextAll().find('input[value="/km"]').removeAttr("checked");
+	        	$this.parents("td").find("span:first-child").find("input").attr("name",dataname);
+	        	AddAttr($this,"/ride");
+	        };
+	        function kmFun ($this){
+	        	var	dataname = $this.attr("data-name");
+	        	$this.parents('span').prev().find('input[value="/ride"]').removeAttr("checked");
+	        	$this.parents('tr').nextAll().find('input[value="/ride"]').attr('disabled',"disabled").removeAttr("checked").parent('label').css("color","lightgrey");
+	        	$this.parents("td").find("span:first-child").find("input").attr("name",dataname);
+	        	AddAttr($this,"/km");
+	        };
+	        //点击选框
+	        $('input[value="/ride"]').change(function(){
+	        	var $this = $(this);
+	        	rideFun($this);
+	        });
+	        $('input[value="/km"]').change(function(){
+	        	var $this = $(this);
+	        	kmFun($this);
+	        });
+	        
+	        //点击 添加保存按钮
 	        $("#saveBtn-tran").click(function(){
-	        	var tw_start = $('#time_window_start').val();
-	        	var tw_end = $('#time_window_end').val();
-	        	var twData = tw_start+"."+tw_end;
-	        	$('#tw').val(twData);
-	        	console.log($("#newUserForm-tran").serialize())
-	            $.post("/car/add",$("#newUserForm-tran").serialize())
+	        	FormInput("newUserForm-tran",function  () {
+	        		$.post("/car/add",$("#newUserForm-tran").serialize())
 	                    .done(function(result){
 	                        if("success" == result) {
 	                            $("#newUserForm-tran")[0].reset();
@@ -868,8 +938,11 @@ $(function  () {
 	                    }).fail(function(){
 	                        alert("Exception occurs when adding");
 	                    });
+	        	});
+	            
 	
 	        });
+	        
 	
 	        //删除用户
 	        $(document).delegate(".delLink-tran","click",function(){
@@ -893,23 +966,98 @@ $(function  () {
 	            $("#editUserForm-tran")[0].reset();
 	            var id = $(this).attr("data-id");
 	            $.get("/car/transpt.json",{"id":id}).done(function(result){
+	            	console.log(result)
 	                $("#siteId-tran").val(result.id);
+	                $("#type").val(result.type);
 	                $("#carSource").val(result.carSource);
-	                $("#carType").val(result.type);
-	                $("#dimensions").val(result.dimensions);
-	                $("#maxLoad").val(result.maxLoad);
-	                $("#durationUnloadFull").val(result.durationUnloadFull);
 	                $("#maxStop").val(result.maxStop);
-	                $("#fixedRound").val(result.fixed_round);
-	                $("#fixedRoundFee").val(result.fixed_round_fee);
-	                $("#startLocation").val(result.start_location);
-	                $("#endLocation").val(result.end_location);
-	                $("#maxDistance").val(result.max_distance);
-	                $("#maxRunningTime").val(result.max_running_time);
-	                $("#costPerDistance").val(result.cost_per_distance);
-	                $("#costPerTime").val(result.cost_per_time);
-	                $("#fixedCost").val(result.fixed_cost);
+	                $("#maxLoad").val(result.maxLoad);
+	                $("#dimensions").val(result.dimensions);
+	                $("#max_distance").val(result.max_distance);
+	                $("#max_running_time").val(result.max_running_time);
 	                $("#velocity").val(result.velocity);
+	                $("#durationUnloadFull").val(result.durationUnloadFull);
+	                $("#start_location").val(result.start_location);
+	                $("#end_location").val(result.end_location);
+	                $("#a1").val(result.a1);
+	                $("#a2").val(result.a2);
+	                $("#costa1").val(result.costa1);
+	                $("#b1").val(result.b1);
+	                $("#b2").val(result.b2);
+	                if (result.costb1) {
+	                	$('#costb').val(result.costb1);
+	                	$('#costb').parents('td').find('input[value="/ride"]').attr("checked","checked");
+	                	var $this = $('#costb').parents('td').find('input[value="/ride"]');
+	                	rideFun($this);
+	                }
+	                if (result.costb2) {
+	                	$('#costb').val(result.costb2);
+	                	$('#costb3').val(result.costb3);
+	                	$('#costb').parents('td').find('input[value="/km"]').attr("checked","checked");
+	                	var $this = $('#costb').parents('td').find('input[value="/km"]');
+	                	kmFun($this);
+	                }
+	                $("#c1").val(result.c1);
+	                $("#c2").val(result.c2);
+	                if (result.costc1) {
+	                	$('#costc').val(result.costc1);
+	                	$('#costc').parents('td').find('input[value="/ride"]').attr("checked","checked");
+	                	var $this = $('#costc').parents('td').find('input[value="/ride"]');
+	                	rideFun($this);
+	                }
+	                if (result.costc2) {
+	                	$('#costc').val(result.costc2);
+	                	$('#costc3').val(result.costc3);
+	                	$('#costc').parents('td').find('input[value="/km"]').attr("checked","checked");
+	                	var $this = $('#costc').parents('td').find('input[value="/km"]');
+	                	kmFun($this);
+	                }
+	                $("#d1").val(result.d1);
+	                $("#d2").val(result.d2);
+	                if (result.costd1) {
+	                	$('#costd').val(result.costd1);
+	                	$('#costd').parents('td').find('input[value="/ride"]').attr("checked","checked");
+	                	var $this = $('#costd').parents('td').find('input[value="/ride"]');
+	                	rideFun($this);
+	                }
+	                if (result.costd2) {
+	                	$('#costd').val(result.costd2);
+	                	$('#costd3').val(result.costd3);
+	                	$('#costd').parents('td').find('input[value="/km"]').attr("checked","checked");
+	                	var $this = $('#costd').parents('td').find('input[value="/km"]');
+	                	kmFun($this);
+	                }
+	                $("#e1").val(result.e1);
+	                $("#e2").val(result.e2);
+	                if (result.coste1) {
+	                	$('#coste').val(result.coste1);
+	                	$('#coste').parents('td').find('input[value="/ride"]').attr("checked","checked");
+	                	var $this = $('#coste').parents('td').find('input[value="/ride"]');
+	                	rideFun($this);
+	                }
+	                if (result.coste2) {
+	                	$('#coste').val(result.coste2);
+	                	$('#coste3').val(result.coste3);
+	                	$('#coste').parents('td').find('input[value="/km"]').attr("checked","checked");
+	                	var $this = $('#coste').parents('td').find('input[value="/km"]');
+	                	kmFun($this);
+	                }
+	                $("#f1").val(result.f1);
+	                $("#f2").val(result.f2);
+	                if (result.costf1) {
+	                	$('#costf').val(result.costf1);
+	                	$('#costf').parents('td').find('input[value="/ride"]').attr("checked","checked");
+	                	var $this = $('#costf').parents('td').find('input[value="/ride"]');
+	                	rideFun($this);
+	                }
+	                if (result.costf2) {
+	                	$('#costf').val(result.costf2);
+	                	$('#costf3').val(result.costf3);
+	                	$('#costf').parents('td').find('input[value="/km"]').attr("checked","checked");
+	                	var $this = $('#costf').parents('td').find('input[value="/km"]');
+	                	kmFun($this);
+	                }
+	                
 	                
 	                $("#editUserModal-tran").modal("show");
 	
@@ -921,16 +1069,18 @@ $(function  () {
 	        });
 	
 	        $("#editBtn-tran").click(function(){
-	        
-	            $.post("/car/edit",$("#editUserForm-tran").serialize()).done(function(result){
-	                if(result == "success") {
-	                    $("#editUserModal-tran").modal("hide");
-	                    dt.ajax.reload();
-	                    window.location.reload(); 
-	                }
-	            }).fail(function(){
-	                alert("Modify user exception");
-	            });
+	        	FormInput("editUserForm-tran",function (){
+	        		$.post("/car/edit",$("#editUserForm-tran").serialize()).done(function(result){
+		                if(result == "success") {
+		                    $("#editUserModal-tran").modal("hide");
+		                    dt.ajax.reload();
+		                    window.location.reload(); 
+		                }
+		            }).fail(function(){
+		                alert("Modify user exception");
+		            });
+	        	});
+	            
 	
 	        });
 	        //导入excel表格
@@ -965,7 +1115,7 @@ $(function  () {
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
-	            "order":[[0,'asc']],//默认排序方式
+	            "order":[[0,'desc']],//默认排序方式
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"MyScenarios/scenarios.json", //获取数据的URL
@@ -987,7 +1137,7 @@ $(function  () {
 	            ],
 	            "columnDefs":[ //具体列的定义
 	            	{
-	                    "targets":[1,5,6],
+	                    "targets":[0,1,5,6],
 	                    "visible":false
 	                },
 	                {
@@ -1120,7 +1270,7 @@ $(function  () {
     	            "processing": true, //loding效果
     	            "serverSide":true, //服务端处理
     	            "searchDelay": 1000,//搜索延迟
-    	            "order":[[0,'asc']],//默认排序方式
+    	            "order":[[0,'desc']],//默认排序方式
     	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
     	            "ajax":{
     	                url:"MyScenarios/allscenarios.json", //获取数据的URL
@@ -1142,7 +1292,7 @@ $(function  () {
     	            ],
     	            "columnDefs":[ //具体列的定义
     	            	{
-    	                    "targets":[1,5,6],
+    	                    "targets":[0,1,5,6],
     	                    "visible":false
     	                },
     	                {
@@ -1292,7 +1442,7 @@ debugger;
             "processing": true, //loding效果
             "serverSide":true, //服务端处理
             "searchDelay": 1000,//搜索延迟
-            "order":[[0,'asc']],//默认排序方式
+            "order":[[0,'desc']],//默认排序方式
             "lengthMenu":[5,10,25,50,100],//每页显示数据条数菜单
             "ajax":{
                 url:"/account/users.json", //获取数据的URL
