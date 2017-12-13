@@ -1,5 +1,6 @@
 $(function  () {
-	var doc = document;
+	var doc = document,
+	listArry = '';
 	
 	/*
 	 *deport.jsp == SolutionActivityController
@@ -81,31 +82,66 @@ $(function  () {
 	            			var liser = {};
 	            			var add='<option value='+result[i].curLoc+'>'+result[i].curLoc+'</option>';
 							$('#route-depot').append(add);
+							liser["curLoc"] = result[i].curLoc;
+							liser["siteType"] = result[i].siteType;
+							liser["siteName"] = result[i].siteName;
+							liser["calcDis"] = result[i].calcDis;
 							liser["lng"] = result[i].siteLongitude;
 							liser["lat"] = result[i].siteLatitude;
+							liser["nextCurLoc"] = result[i].nextCurLoc
 							listPoint.push(liser);
 	            		}
 						//查询所有网点坐标
 						console.log(listPoint)
+						listArry = listPoint;
 							
 						//百度地图
 						var map = new BMap.Map("depots-map");
-						var point = new BMap.Point(120.98738,31.391479);
-						map.centerAndZoom(point, 15);
+						var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
+						map.centerAndZoom(point, 11);
+						map.enableScrollWheelZoom(true);
 						// 编写自定义函数,创建标注
-						function addMarker(point){
+						function addMarker(point,infoWindow){
 						  var marker = new BMap.Marker(point);
 						  map.addOverlay(marker);
+						  marker.addEventListener("mouseover", function(){
+						  	this.openInfoWindow(infoWindow);
+						  });
+						  marker.addEventListener("mouseout", function(){
+						  	this.closeInfoWindow(infoWindow);
+						  });
 						}
-						// 随机向地图添加25个标注
-						var bounds = map.getBounds();
-						var sw = bounds.getSouthWest();
-						var ne = bounds.getNorthEast();
-						var lngSpan = Math.abs(sw.lng - ne.lng);
-						var latSpan = Math.abs(ne.lat - sw.lat);
-						for (var i = 0; i < 25; i ++) {
-							var point = new BMap.Point(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-							addMarker(point);
+						//初始化坐标
+						var p_len = listPoint.length;
+						for (var j = 0;j<p_len;j++) {
+							var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
+							var sContent = "";
+							sContent += '<p>ID: '+listPoint[j].curLoc+'</p>';
+							sContent += '<p>Type: '+listPoint[j].siteType+'</p>';
+							sContent += '<p>Name: '+listPoint[j].siteName+'</p>';
+							var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+							addMarker(points,infoWindow);
+						}
+						//初始化路线
+						for (var x = 0;x<p_len;x++) {
+							for (var y = 0 ;y<p_len;y++) {
+								var _curLoc = listPoint[x].curLoc,
+									_nextCurLoc = listPoint[y].nextCurLoc
+								if (_curLoc == _nextCurLoc) {
+									var pointA = new BMap.Point(listPoint[x].lng,listPoint[x].lat),
+										pointB = new BMap.Point(listPoint[y].lng,listPoint[y].lat);					
+									var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});  //定义折线
+									map.addOverlay(polyline);//添加折线到地图上
+									var sContentLine = "11";
+									var infoWindowLine = new BMap.InfoWindow(sContentLine);  // 创建信息窗口对象
+									polyline.addEventListener("mouseover", function(){
+								  		this.openInfoWindow(infoWindowLine);
+								  	});
+								  	polyline.addEventListener("mouseout", function(){
+								  		this.closeInfoWindow(infoWindowLine);
+								  	});
+								}
+							}
 						}
 							
 							
@@ -119,7 +155,7 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var Datas = api.rows( {page:'current'} ).data();
-			        console.log(Datas.length);
+			        //console.log(Datas.length);
 			        var _len = Datas.length;
 			        if (_len == 1) {
 			        	var res = Datas[0];
