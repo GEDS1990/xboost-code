@@ -74,7 +74,7 @@ public class CarController {
 
 
     //查询运力信息
-    @RequestMapping(value = "/transport.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/transport.json",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String,Object> load(HttpServletRequest request) {
 
