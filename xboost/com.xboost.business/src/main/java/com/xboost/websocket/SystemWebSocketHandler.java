@@ -65,7 +65,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
      * @param message
      */
     public void sendMessageToUser(TextMessage message) {
-        for (WebSocketSession user : users) {
+    /*    for (WebSocketSession user : users) {
 //            if (user.getAttributes().get("WEBSOCKET_USERID").equals(ShiroUtil.getCurrentUserId())) {
                 try {
                     if (user.isOpen()) {
@@ -76,7 +76,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
                 }
 //                break;
 //            }
-        }
+        }*/
     }
     /**
      * 给所有在线用户发送消息

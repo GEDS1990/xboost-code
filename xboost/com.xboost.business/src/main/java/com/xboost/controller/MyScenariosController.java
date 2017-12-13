@@ -50,6 +50,7 @@ public class MyScenariosController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public String add(Scenarios scenario) {
+        scenario.setUserId(ShiroUtil.getCurrentUserId());
         myScenariosService.save(scenario);
         return "success";
     }
@@ -59,6 +60,7 @@ public class MyScenariosController {
     @RequestMapping(value = "/addByExcel",method = RequestMethod.POST)
     @ResponseBody
     public String AddByExcel(Scenarios scenario,@RequestParam MultipartFile[] file) {
+        scenario.setUserId(ShiroUtil.getCurrentUserId());
         myScenariosService.addByExcel(scenario,file);
         return "/ScenariosName/MyScenarios";
     }

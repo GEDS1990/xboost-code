@@ -76,7 +76,8 @@ public class CarService {
                         List<String> lineList = excelUtil.readExcel(fileTmp,2);
                         for(int i=2;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-                            transport.setType(row[1]);
+                            transport.setCarType(row[1]);
+                            transport.setType(row[2]);
                             transport.setDimensions(row[3]);
                             transport.setCarSource(row[4]);
                             transport.setVelocity(Double.parseDouble((row[5].trim().equals(""))?"0":row[5].trim()));
@@ -89,34 +90,46 @@ public class CarService {
 //                            transport.setFixedRoundFee(Double.parseDouble((row[11].trim().equals(""))?"0":row[11].trim()));
                             transport.setMaxLoad(row[3]);
                             transport.setMaxRunningTime(Double.parseDouble((row[8].trim().equals(""))?"0":row[8].trim()));
-                            transport.setMaxStop(Integer.parseInt((row[7].trim().equals(""))?"0":row[7].trim()));
+                            transport.setMaxStop(Integer.parseInt((row[6].trim().equals(""))?"0":row[6].trim()));
 //                            transport.setSkills(row[0]);
-                            transport.setStartLocation(row[12]);
-                            transport.setEndLocation(row[13]);
-                            transport.setA1(row[14]);
-                            transport.setA2(row[15]);
+                            transport.setStartLocation(row[11]);
+                            transport.setEndLocation(row[12]);
+
+                            transport.setA1(row[13]);
+                            transport.setA2(row[14]);
+                            transport.setCosta1(row[15]);
                             transport.setCosta2(row[16]);
-                            transport.setCosta1(row[17]);
+                            transport.setCosta3(row[17]);
+
                             transport.setB1(row[18]);
-                            transport.setCostb1(row[19]);
-                            transport.setB2(row[20]);
+                            transport.setB2(row[19]);
+                            transport.setCostb1(row[20]);
                             transport.setCostb2(row[21]);
-                            transport.setC1(row[22]);
-                            transport.setCostc1(row[23]);
+                            transport.setCostb3(row[22]);
+
+                            transport.setC1(row[23]);
                             transport.setC2(row[24]);
-                            transport.setCostc2(row[25]);
-                            transport.setD1(row[26]);
-                            transport.setCostd1(row[27]);
-                            transport.setD2(row[28]);
-                            transport.setCostd2(row[29]);
-                            transport.setE1(row[30]);
-                            transport.setCoste1(row[31]);
-                            transport.setE2(row[32]);
-                            transport.setCoste2(row[33]);
-                            transport.setF1(row[34]);
-                            transport.setCostf1(row[35]);
-                            transport.setF2(row[36]);
-                            transport.setCostf2(row[37]);
+                            transport.setCostc1(row[25]);
+                            transport.setCostc2(row[26]);
+                            transport.setCostc3(row[27]);
+
+                            transport.setD1(row[28]);
+                            transport.setD2(row[29]);
+                            transport.setCostd1(row[30]);
+                            transport.setCostd2(row[31]);
+                            transport.setCostd3(row[32]);
+
+                            transport.setE1(row[33]);
+                            transport.setE2(row[34]);
+                            transport.setCoste1(row[35]);
+                            transport.setCoste2(row[36]);
+                            transport.setCoste3(row[37]);
+
+                            transport.setF1(row[38]);
+                            transport.setF2(row[39]);
+                            transport.setCostf1(row[40]);
+                            transport.setCostf2(row[41]);
+                            transport.setCostf3(row[42]);
 //                            transport.setTw(row[0]);
 
                             if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){

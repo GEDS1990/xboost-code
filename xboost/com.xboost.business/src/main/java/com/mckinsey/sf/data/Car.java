@@ -23,6 +23,9 @@ public class Car implements Serializable{
 	private String id;
 	@JsonProperty("type")
 	private String type;
+
+	private String carType;
+
 	private String scenariosId;
 	@JsonProperty("dimensions")
 //	private double[] dimensions;
@@ -88,6 +91,7 @@ public class Car implements Serializable{
 	private String coste2;            //e费用
 	private String f2;            //分段距离f
 	private String costf2;            //f费用
+	///min
 	private String costa3;            //0-a费用
 	private String costb3;            //b费用
 	private String costc3;            //c费用
@@ -125,6 +129,14 @@ public class Car implements Serializable{
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getCarType() {
+		return carType;
+	}
+
+	public void setCarType(String carType) {
+		this.carType = carType;
 	}
 
 	public String getDimensions() {
