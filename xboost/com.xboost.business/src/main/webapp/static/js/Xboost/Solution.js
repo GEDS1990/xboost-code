@@ -16,9 +16,9 @@ $(function  () {
 	            "searchDelay": 1000,//搜索延迟
 	            "destroy": true,
 	            "order":[[0,'desc']],//默认排序方式
-	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
+	            "lengthMenu":[100000],//每页显示数据条数菜单
 	            "ajax":{
-	                url:"/depots/operateInfo.json", //获取数据的URL
+	                url:"/depots/depots.json", //获取数据的URL
 	                type:"get" //获取数据的方式
 	                
 	            },
@@ -69,52 +69,57 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data);
-	            	if (data.data) {
-	            		var result = data.data,
-	            		len = result.length;
-	            		$('#route-depot').empty();
-	            		$('#route-depot').off("click");
-	            		$('#route-depot').append('<option value="0">All Depots</option>');
-	            		for (var i=0;i<len;i++) {
-	            			var add='<option value='+result[i].curLoc+'>'+result[i].curLoc+'</option>';
-							$('#route-depot').append(add);
-	            		}
-						//查询所有网点坐标
-						$.get("/depots/allSite.json").done(function(res){
-							console.log(res)
-							//百度地图
-							var map = new BMap.Map("depots-map");
-							var point = new BMap.Point(120.98738,31.391479);
-							map.centerAndZoom(point, 15);
-							// 编写自定义函数,创建标注
-							function addMarker(point){
-							  var marker = new BMap.Marker(point);
-							  map.addOverlay(marker);
-							}
-							// 随机向地图添加25个标注
-							var bounds = map.getBounds();
-							var sw = bounds.getSouthWest();
-							var ne = bounds.getNorthEast();
-							var lngSpan = Math.abs(sw.lng - ne.lng);
-							var latSpan = Math.abs(ne.lat - sw.lat);
-							for (var i = 0; i < 25; i ++) {
-								var point = new BMap.Point(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-								addMarker(point);
-							}
-							
-							
-							
-						}).fail(function(){
-							console.log("fail")
-						});
-	            	}
+	            	console.log(data);
+
 	            	
 	            },
 	            "drawCallback":function  (settings, data) {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
-			        //console.log( api.rows( {page:'current'} ).data() );
+			        var res = api.rows( {page:'current'} ).data();
+			        console.log(res)
+	            	if (res) {
+	            		var result = res,
+	            		listPoint = [],
+	            		len = result.length;
+	            		$('#route-depot').empty();
+	            		$('#route-depot').off("click");
+	            		$('#route-depot').append('<option value="0">All Depots</option>');
+	            		for (var i=0;i<len;i++) {
+	            			var liser = {};
+	            			var add='<option value='+result[i].curLoc+'>'+result[i].curLoc+'</option>';
+							$('#route-depot').append(add);
+							liser["lng"] = result[i].siteLongitude;
+							liser["lat"] = result[i].siteLatitude;
+							listPoint.push(liser);
+	            		}
+						//查询所有网点坐标
+						console.log(listPoint)
+							
+						//百度地图
+						var map = new BMap.Map("depots-map");
+						var point = new BMap.Point(120.98738,31.391479);
+						map.centerAndZoom(point, 15);
+						// 编写自定义函数,创建标注
+						function addMarker(point){
+						  var marker = new BMap.Marker(point);
+						  map.addOverlay(marker);
+						}
+						// 随机向地图添加25个标注
+						var bounds = map.getBounds();
+						var sw = bounds.getSouthWest();
+						var ne = bounds.getNorthEast();
+						var lngSpan = Math.abs(sw.lng - ne.lng);
+						var latSpan = Math.abs(ne.lat - sw.lat);
+						for (var i = 0; i < 25; i ++) {
+							var point = new BMap.Point(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+							addMarker(point);
+						}
+							
+							
+							
+						
+	            	}
 	            }
 	        });
 	        //获取
@@ -126,7 +131,7 @@ $(function  () {
 					table.search("").draw(false);
 				}else{
 					table.search(val).draw(false);
-					$.get("/depots/baseInfo.json",{"siteCode":val}).done(function  (res) {
+					$.get("/depots/depots.json",{"siteCode":val}).done(function  (res) {
 						console.log(res)
 						if (res) {
 							$('#depot').text("Depot "+res.siteCode);
@@ -204,7 +209,7 @@ $(function  () {
 	            "searchDelay": 1000,//搜索延迟
 	            "destroy": true,
 	            "order":[[0,'desc']],//默认排序方式
-	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
+	            "lengthMenu":[100000],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/route/route.json", //获取数据的URL
 	                type:"get" //获取数据的方式
@@ -318,8 +323,6 @@ $(function  () {
                     $.get("/route/route.json",{"routeId":val}).done(function  (res) {
                         console.log(res)
                         if (res) {
-                        debugger;
-                            $('#route-name').text("Route "+res.id);
                             $('#total-distance').text(res.sbVol);
                             $('#vehicle-load-requirement').text(res.car_type);
                             $('#vehicle-piece-capacity').text(res.calcDis);
@@ -358,7 +361,7 @@ $(function  () {
 	            "searchDelay": 1000,//搜索延迟
 	            "destroy": true,
 	            "order":[[0,'desc']],//默认排序方式
-	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
+	            "lengthMenu":[100000],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/vehicles/vehicles.json", //获取数据的URL
 	                type:"get" //获取数据的方式

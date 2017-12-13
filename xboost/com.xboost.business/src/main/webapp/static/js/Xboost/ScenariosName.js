@@ -335,6 +335,14 @@ $(function  () {
 	                    "next":       "Next",
 	                    "previous":   "Prev"
 	                }
+	            },
+	            "initComplete": function (settings, data) {
+	            	//console.log(data)
+	            },
+	            "drawCallback":function  (settings, data) {
+	            	var api = this.api();
+			        // 输出当前页的数据到浏览器控制台
+			        console.log( api.rows( {page:'current'} ).data() );
 	            }
 	        });
         
@@ -772,17 +780,16 @@ $(function  () {
 	                {"data":"id","name":"id"},
 	                {"data":"type","name":"type"},
 	                {"data":"carSource","name":"car_source"},
-	                {"data":"durationUnloadFull","name":"duration_unload_full"},
+	                
 	                {"data":"maxStop","name":"max_stop"},
 	                {"data":"dimensions","name":"dimensions"},
-	                {"data":"start_location","name":"start_location"},
-	                {"data":"end_location","name":"end_location"},
+	                
 	                {"data":"max_distance","name":"max_distance"},
 	                {"data":"max_running_time","name":"max_running_time"},
 	                {"data":"velocity","name":"velocity"},
-	                {"data":function(row){
-	                    return "<a href='javascript:;' class='editLink-tran' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-tran' data-id='"+row.id+"'>Del</a>";
-	                }},
+	                {"data":"durationUnloadFull","name":"duration_unload_full"},
+	                {"data":"start_location","name":"start_location"},
+	                {"data":"end_location","name":"end_location"},
 	                {"data":"a1","name":"a1"},
 	                {"data":"a2","name":"a2"},
                     {"data":"costa1","name":"costa1"},
@@ -803,6 +810,9 @@ $(function  () {
 	                {"data":"costd1","name":"costd1"},
 	                {"data":"costd2","name":"costd2"},
 	                {"data":"costd2","name":"costd2"},
+	                {"data":function(row){
+	                    return "<a href='javascript:;' class='editLink-tran' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-tran' data-id='"+row.id+"'>Del</a>";
+	                }},
 	            ],
 	            "columnDefs":[ //具体列的定义
 	                {

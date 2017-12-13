@@ -5,17 +5,19 @@
     <cache/>
 
     <select id="findAllByCar" resultType="map" resultMap="modelCar">
-        SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code where r.scenariosId = #{scenariosId
+        SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
     </select>
 
     <select id="findAllCountByCar" resultType="long">
-        SELECT count(*) FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code where r.scenariosId = #{scenariosId}
+        SELECT count(*) FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
     </select>
 
     <select id="findByCar" parameterType="map" resultType="map" resultMap="modelCar">
         SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
         <where>
-            r.scenariosId = #{scenariosId}
+            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
                 and  r.car_type = #{keyword}
             </if>
@@ -27,7 +29,7 @@
     <select id="findCountByCar" resultType="long" parameterType="map">
         SELECT count(*) FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
         <where>
-            r.scenariosId = #{scenariosId}
+            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
                 and  r.car_type = #{keyword}
             </if>
