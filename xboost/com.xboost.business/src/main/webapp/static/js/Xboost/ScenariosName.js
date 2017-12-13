@@ -774,7 +774,7 @@ $(function  () {
 	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/car/transport.json", //获取数据的URL
-	                type:"get" //获取数据的方式
+	                type:"post" //获取数据的方式
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
