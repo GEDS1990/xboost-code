@@ -144,9 +144,7 @@ $(function  () {
 	                {"data":"siteArea","name":"site_area"},
 	                {"data":"siteType","name":"site_type"},
 	                {"data":"distribCenter","name":"distrib_center"},
-	                {"data":function  (row) {
-	                	return "<span>"+(row.siteNightDelivery==1?'support':'not support')+"</span>"
-	                },"name":"site_night_delivery"},
+	                {"data":"siteNightDelivery","name":"site_night_delivery"},
 	                {"data":"carNum","name":"car_num"},
 	                {"data":"largeCarModel","name":"large_carModle"},
 	                {"data":"maxOperateNum","name":"max_operate_num"},

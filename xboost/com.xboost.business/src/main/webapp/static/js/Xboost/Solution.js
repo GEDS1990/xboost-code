@@ -46,7 +46,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	            	{
 	                    "targets":[0],
-	                    "visible":false
+	                    "visible":true
 	                },
 	                {
 	                    "targets":[1,2,3,4,5],
@@ -70,16 +70,8 @@ $(function  () {
 	            },
 	            "initComplete": function (settings, data) {
 	            	console.log(data);
-
-	            	
-	            },
-	            "drawCallback":function  (settings, data) {
-	            	var api = this.api();
-			        // 输出当前页的数据到浏览器控制台
-			        var res = api.rows( {page:'current'} ).data();
-			        console.log(res)
-	            	if (res) {
-	            		var result = res,
+	            	if (data.data) {
+	            		var result = data.data,
 	            		listPoint = [],
 	            		len = result.length;
 	            		$('#route-depot').empty();
@@ -120,47 +112,30 @@ $(function  () {
 							
 						
 	            	}
-	            }
-	        });
-	        //获取
-	        //点击选项 来查询
-	        var table = $('#SolutionDeport').DataTable();
-			$(document).on("click","#route-depot",function  () {
-				var val = $('#route-depot').val();
-				if (val == 0) {
-					table.search("").draw(false);
-				}else{
-					table.search(val).draw(false);
-					$.get("/depots/depots.json",{"siteCode":val}).done(function  (res) {
-						console.log(res)
-						if (res) {
-							$('#depot').text("Depot "+res.siteCode);
-	                        $('#east').text(res.siteLatitude);
-	                        $('#north').text(res.siteLongitude);
-	                        $('#name').text(res.siteName);
-	                        $('#address').text(res.siteAddress);
-	                        $('#type').text(res.siteType);
-	                        $('#distrib-center').text(res.distribCenter);
-	                        $('#area').text(res.siteArea);
-	                        $('#vehicle-quantity-limit').text(res.carNum);
-	                        $('#vehicle-weight-limit').text(res.largeCarModel);
-	                        $('#piece-capacity').text(res.maxOperateNum);
-						}else{
-							$('#depot').text("No Data");
-	                        $('#east').text("--");
-	                        $('#north').text("--");
-	                        $('#name').text("--");
-	                        $('#address').text("--");
-	                        $('#type').text("--");
-	                        $('#distrib-center').text("--");
-	                        $('#area').text("--");
-	                        $('#vehicle-quantity-limit').text("--");
-	                        $('#vehicle-weight-limit').text("--");
-	                        $('#piece-capacity').text("--");
-						}
-                        
-                    }).fail(function  (e) {
-                        $('#depot').text("No Data");
+
+	            	
+	            },
+	            "drawCallback":function  (settings, data) {
+	            	var api = this.api();
+			        // 输出当前页的数据到浏览器控制台
+			        var Datas = api.rows( {page:'current'} ).data();
+			        console.log(Datas.length);
+			        var _len = Datas.length;
+			        if (_len == 1) {
+			        	var res = Datas[0];
+						$('#depot').text("Depot "+res.siteCode);
+                        $('#east').text(res.siteLatitude);
+                        $('#north').text(res.siteLongitude);
+                        $('#name').text(res.siteName);
+                        $('#address').text(res.siteAddress);
+                        $('#type').text(res.siteType);
+                        $('#distrib-center').text(res.distribCenter);
+                        $('#area').text(res.siteArea);
+                        $('#vehicle-quantity-limit').text(res.carNum);
+                        $('#vehicle-weight-limit').text(res.largeCarModel);
+                        $('#piece-capacity').text(res.maxOperateNum);
+					}else{
+						$('#depot').text("No Data");
                         $('#east').text("--");
                         $('#north').text("--");
                         $('#name').text("--");
@@ -171,7 +146,31 @@ $(function  () {
                         $('#vehicle-quantity-limit').text("--");
                         $('#vehicle-weight-limit').text("--");
                         $('#piece-capacity').text("--");
-                  });
+					}
+
+	            }
+	        });
+	        //获取
+	        //点击选项 来查询
+	        var table = $('#SolutionDeport').DataTable();
+			$(document).on("change","#route-depot",function  () {
+				var val = $('#route-depot').val();
+				if (val == 0) {
+					table.search("").draw(false);
+					$('#depot').text("No Data");
+                    $('#east').text("--");
+                    $('#north').text("--");
+                    $('#name').text("--");
+                    $('#address').text("--");
+                    $('#type').text("--");
+                    $('#distrib-center').text("--");
+                    $('#area').text("--");
+                    $('#vehicle-quantity-limit').text("--");
+                    $('#vehicle-weight-limit').text("--");
+                    $('#piece-capacity').text("--");
+				}else{
+					table.search(val).draw(false);
+					
 				}
 				
 			});
@@ -314,7 +313,7 @@ $(function  () {
 	        });
 	        //点击选项 来查询
 	        var table = $('#SolutionRoute').DataTable();
-			$(document).on("click","#route-route",function  () {
+			$(document).on("change","#route-route",function  () {
 				var val = $('#route-route').val();
 				if (val == 0) {
 					table.search("").draw(false);
