@@ -50,8 +50,23 @@ public class SolutionRouteController {
     public Map<String,Object> load(HttpServletRequest request) {
 
         String draw = request.getParameter("draw");
-        Integer start = Integer.valueOf(request.getParameter("start"));
-        Integer length = Integer.valueOf(request.getParameter("length"));
+        Integer start;
+        Integer length;
+        if(request.getParameter("start")==null || request.getParameter("start")=="")
+        {
+            start = 0;
+        }
+        else{
+            start =Integer.valueOf(request.getParameter("start"));
+        }
+        if(request.getParameter("length")==null || request.getParameter("length")=="")
+        {
+            length = 0;
+        }
+        else
+        {
+            length =Integer.valueOf(request.getParameter("length"));
+        }
         String searchValue = request.getParameter("search[value]");
         String orderColumnIndex = request.getParameter("order[0][column]");
         String orderType = request.getParameter("order[0][dir]");
