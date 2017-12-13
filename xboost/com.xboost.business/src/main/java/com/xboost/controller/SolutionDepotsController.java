@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -93,6 +96,30 @@ public class SolutionDepotsController {
         result.put("data",siteList);
         result.put("nextSite",nextSiteList);
         return result;
+    }
+
+    @RequestMapping(value = "/exportResult",method = RequestMethod.GET,produces = {"application/vnd.ms-excel;charset=UTF-8"})
+    @ResponseBody
+    public String exportResult(HttpServletResponse response)
+    {
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        try
+        {
+            ServletOutputStream outputStream = response.getOutputStream();
+            String fileName = new String(("Result_Depots").getBytes(), "utf-8");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
+            String scenariosId = ShiroUtil.getOpenScenariosId();
+            String[] titles = { "Depot ID","Incoming Vehicle","Arrival Time","Operation","Departure Time"};
+            siteInfoService.exportResult(scenariosId,titles,outputStream);
+            System.out.println("outputStream:"+outputStream);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.out.println("网络连接故障!错误信息:"+e.getMessage());
+        }
+        return null;
     }
 
 }

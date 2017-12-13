@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import com.xboost.util.ExcelUtil;
 
+import static java.lang.Math.floor;
+
 /**
  * Created by Administrator on 2017/11/5 0005.
  */
@@ -197,8 +199,179 @@ public class SiteInfoService {
         siteInfoMapper.delById(id);
     }
 
+    public String timeTransfer(String time){
+        Double result = Math.floor(Double.parseDouble(time));
+        Integer h = (int)(result/60);
+        Integer m = (int)(result%60);
+        String t= h.toString()+":"+m.toString();
+        return t;
+    }
+
     /**
-     * 导出excel
+     * 导出result_depots excel
+     */
+    public void exportResult(String scenariosId,String[] titles, ServletOutputStream outputStream)
+    {
+        List<Map<String,Object>> list = siteInfoMapper.findAllBySiteCode(scenariosId);
+        // 创建一个workbook 对应一个excel应用文件
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        // 在workbook中添加一个sheet,对应Excel文件中的sheet
+
+        XSSFSheet sheet = workBook.createSheet("Depots");
+        ExportUtil exportUtil = new ExportUtil(workBook, sheet);
+        XSSFCellStyle headStyle = exportUtil.getHeadStyle();
+        XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
+        // 构建表头
+        XSSFRow headRow = sheet.createRow(0);
+        XSSFCell cell = null;
+
+        for (int i = 0; i < titles.length; i++)
+        {
+            cell = headRow.createCell(i);
+            cell.setCellValue(titles[i]);
+            cell.setCellStyle(headStyle);
+            System.out.println(titles[i]);
+        }
+        // 构建表体数据
+        if (list != null && list.size() > 0)
+        {
+            for (int j = 0; j < list.size(); j++)
+            {
+                XSSFRow bodyRow = sheet.createRow(j + 1);
+                Map<String,Object> depots = list.get(j);
+
+                cell = bodyRow.createCell(0);
+                if(depots.get("siteCode").toString()==null || depots.get("siteCode").toString()=="")
+                {
+                    cell.setCellValue("");
+                }
+                else
+                {
+                    cell.setCellValue(depots.get("siteCode").toString());
+                }
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(1);
+                if(depots.get("carType").toString()==null || depots.get("carType").toString()=="")
+                {
+                    cell.setCellValue("");
+                }
+                else
+                {
+                    cell.setCellValue(depots.get("carType").toString());
+                }
+                cell.setCellStyle(bodyStyle);
+
+
+                cell = bodyRow.createCell(2);
+                if(depots.get("arrTime").toString()==null || depots.get("arrTime").toString()=="")
+                {
+                    cell.setCellValue("");
+                }
+                else
+                {
+                    cell.setCellValue(timeTransfer(depots.get("arrTime").toString()));
+
+                }
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(3);
+                if(depots.get("unloadVol").toString()==null || depots.get("unloadVol").toString()=="")
+                {
+                    cell.setCellValue("Unload 0,Load "+depots.get("sbVol").toString());
+                }
+                else if(depots.get("sbVol").toString()==null || depots.get("sbVol").toString()=="")
+                {
+                    cell.setCellValue("Unload "+depots.get("unloadVol")+",Load 0");
+                }
+                else if(depots.get("unloadVol").toString()==null || depots.get("unloadVol").toString()==""||depots.get("sbVol").toString()==null || depots.get("sbVol").toString()=="")
+                {
+                    cell.setCellValue("Unload 0,Load 0");
+                }
+                else
+                {
+                    cell.setCellValue("Unload "+depots.get("unloadVol").toString()+",Load "+depots.get("sbVol").toString());
+                }
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(4);
+                if(depots.get("endTime").toString()==null || depots.get("endTime").toString()=="")
+                {
+                    cell.setCellValue("");
+                }
+                else
+                {
+                    cell.setCellValue(timeTransfer(depots.get("endTime").toString()));
+                }
+                cell.setCellStyle(bodyStyle);
+
+            }
+        }
+        try
+        {
+//            FileOutputStream fout = new FileOutputStream("E:/Depots_info.xlsx");
+//            workBook.write(fout);
+//            fout.flush();
+//            fout.close();
+             workBook.write(outputStream);
+             outputStream.flush();
+             outputStream.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * 根据网点编码siteCode获取网点信息
+     * param param
+     * @return
+     */
+    public List<Map<String, Object>> findBySiteCode(Map<String, Object> param) {
+        return siteInfoMapper.findBySiteCode(param);
+    }
+
+    /**
+     * 根据网点编码siteCode获网点数量
+     * @param param
+     * @return
+     */
+    public Integer findCountBySiteCode(Map<String, Object> param) {
+        return siteInfoMapper.findCountBySiteCode(param).intValue();
+    }
+
+    /**
+     * 根据网点编码siteCode获网点信息
+     * param param
+     * @return
+     */
+    public List<Map<String, Object>> findAllBySiteCode(String scenariosId) {
+        return siteInfoMapper.findAllBySiteCode(scenariosId);
+    }
+
+    /**
+     * 根据网点编码siteCode获网点数量
+     * @param scenariosId
+     * @return
+     */
+    public Integer findAllCountBySiteCode(String scenariosId) {
+        return siteInfoMapper.findAllCountBySiteCode(scenariosId).intValue();
+    }
+
+    /**
+     * 根据网点编码siteCode查询下一个网点信息
+     * param param
+     * @return
+     */
+    public List<Map<String, Object>> findNextSite(String scenariosId,String siteCode) {
+        return siteInfoMapper.findNextSite(scenariosId,siteCode);
+    }
+
+
+    /**
+     * 导出settings_depots info excel
      */
     public void exportExcel(String scenariosId,String[] titles, ServletOutputStream outputStream)
     {
@@ -289,60 +462,15 @@ public class SiteInfoService {
 //            workBook.write(fout);
 //            fout.flush();
 //            fout.close();
-             workBook.write(outputStream);
-             outputStream.flush();
-             outputStream.close();
+            workBook.write(outputStream);
+            outputStream.flush();
+            outputStream.close();
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
 
-    }
-
-    /**
-     * 根据网点编码siteCode获取网点信息
-     * param param
-     * @return
-     */
-    public List<Map<String, Object>> findBySiteCode(Map<String, Object> param) {
-        return siteInfoMapper.findBySiteCode(param);
-    }
-
-    /**
-     * 根据网点编码siteCode获网点数量
-     * @param param
-     * @return
-     */
-    public Integer findCountBySiteCode(Map<String, Object> param) {
-        return siteInfoMapper.findCountBySiteCode(param).intValue();
-    }
-
-    /**
-     * 根据网点编码siteCode获网点信息
-     * param param
-     * @return
-     */
-    public List<Map<String, Object>> findAllBySiteCode(String scenariosId) {
-        return siteInfoMapper.findAllBySiteCode(scenariosId);
-    }
-
-    /**
-     * 根据网点编码siteCode获网点数量
-     * @param scenariosId
-     * @return
-     */
-    public Integer findAllCountBySiteCode(String scenariosId) {
-        return siteInfoMapper.findAllCountBySiteCode(scenariosId).intValue();
-    }
-
-    /**
-     * 根据网点编码siteCode查询下一个网点信息
-     * param param
-     * @return
-     */
-    public List<Map<String, Object>> findNextSite(String scenariosId,String siteCode) {
-        return siteInfoMapper.findNextSite(scenariosId,siteCode);
     }
 
 
