@@ -142,7 +142,7 @@ public class DemandInfoController {
             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
             //       response.setHeader("Content-disposition", "attachment; filename=distance.xlsx");
             String scenariosId = ShiroUtil.getOpenScenariosId();
-            String[] titles = { "date","start depot","start time","end depot","effective end time","piece (p)",
+            String[] titles = { "ID","date","start depot","start time","end depot","effective end time","piece (p)",
                     "weight (kg)","product type","effectiveness"};
             demandInfoService.exportExcel(scenariosId,titles,outputStream);
             //       System.out.println("outputStream:"+outputStream);

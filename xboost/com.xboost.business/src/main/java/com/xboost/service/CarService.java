@@ -247,7 +247,7 @@ public class CarService {
             cell = headRow.createCell(i);
             cell.setCellValue(titles[i]);
             cell.setCellStyle(headStyle);
-            System.out.println(titles[i]);
+            //System.out.println(titles[i]);
         }
         // 构建表体数据
         if (list != null && list.size() > 0)

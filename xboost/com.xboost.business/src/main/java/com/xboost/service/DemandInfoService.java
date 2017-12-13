@@ -228,41 +228,46 @@ public class DemandInfoService {
                 {
                     XSSFRow bodyRow = sheet.createRow(j + 1);
                     DemandInfo demandInfo = list.get(j);
+                    int i = 0;
 
-                    cell = bodyRow.createCell(0);
+                    cell = bodyRow.createCell(0+i);
+                    cell.setCellValue(demandInfo.getId());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(1+i);
                     cell.setCellValue(demandInfo.getDate());
                     cell.setCellStyle(bodyStyle);
 
 
-                    cell = bodyRow.createCell(1);
+                    cell = bodyRow.createCell(2+i);
                     cell.setCellValue(demandInfo.getSiteCodeCollect());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(2);
+                    cell = bodyRow.createCell(3+i);
                     cell.setCellValue(demandInfo.getDurationStart());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(3);
+                    cell = bodyRow.createCell(4+i);
                     cell.setCellValue(demandInfo.getSiteCodeDelivery());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(4);
+                    cell = bodyRow.createCell(5+i);
                     cell.setCellValue(demandInfo.getDurationEnd());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(5);
+                    cell = bodyRow.createCell(6+i);
                     cell.setCellValue(demandInfo.getVotes());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(6);
+                    cell = bodyRow.createCell(7+i);
                     cell.setCellValue(demandInfo.getWeight());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(7);
+                    cell = bodyRow.createCell(8+i);
                     cell.setCellValue(demandInfo.getProductType());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(8);
+                    cell = bodyRow.createCell(9+i);
                     cell.setCellValue(demandInfo.getAgeing());
                     cell.setCellStyle(bodyStyle);
                 }
