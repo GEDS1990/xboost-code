@@ -20,7 +20,7 @@
         <where>
             r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                and  r.car_type = #{keyword}
+                and  r.car_name = #{keyword}
             </if>
         </where>
         <!--order by ${orderColumn} ${orderType}-->

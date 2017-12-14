@@ -1161,6 +1161,9 @@ $(function  () {
 	                    "next":       "Next",
 	                    "previous":   "Prev"
 	                }
+	            },
+	            "initComplete": function (settings, data) {
+	            	console.log(data)
 	            }
 	        });
 	        

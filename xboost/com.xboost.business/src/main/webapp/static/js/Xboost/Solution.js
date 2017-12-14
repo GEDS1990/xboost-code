@@ -675,10 +675,10 @@ $(function  () {
 	                	//console.log(res)
 	                	return res.car_name;
 	                },"name":"car_type"},
-	                {"data":function(res){return res.sequence;},"name":"sequence"},
-	                {"data":function(res){return res.curLoc;},"name":"cur_loc"},
-	                {"data":function(res) {return res.siteName;},"name":"site_name"},
-	                {"data":function(res) {return res.siteAddress;},"name":"site_address"},
+	                {"data":"sequence","name":"sequence"},
+	                {"data":"curLoc","name":"cur_loc"},
+	                {"data":"siteName","name":"site_name"},
+	                {"data":"siteAddress","name":"site_address"},
 	                {"data":function(res) {
 	                	var result = parseInt(res.arrTime),
 	                	h = parseInt(result/60),
@@ -686,8 +686,8 @@ $(function  () {
 	                	return add0(h)+":"+add0(m);
 	                },"name":"arr_time"},
 	                {"data":function(res) {
-	                	return "Unload "+res.unloadVol+" , "+"Load "+res.carGoods;
-	                },"name":"unload_vol&car_goods"},
+	                	return "Unload "+res.unloadVol+" , "+"Load "+res.sbVol;
+	                },"name":"unload_vol&sbVol"},
 	                {"data":function(res) {
 	                	var result = parseInt(res.endTime),
 	                	h = parseInt(result/60),
@@ -723,14 +723,14 @@ $(function  () {
 	            "initComplete": function (settings, data) {
 	            	var $this = this;
 	            	console.log(data);
-	            	if (data.data) {
+	            	if (data.data.length != 0) {
 	            		var result = data.data,
 	            		arr = [],
 	            		len = result.length;
 	            		$('#route-vehicles').empty();
 	            		$('#route-vehicles').off("click");
 	            		for (var i=0;i<len;i++) {
-	            			arr.push(result[i].carType);
+	            			arr.push(result[i].car_name);
 	            		}
 	            		var Arr = unique(arr),
 	            		A_len = Arr.length;
