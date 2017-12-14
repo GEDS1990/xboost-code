@@ -21,7 +21,7 @@
     </insert>
 
     <select id="findCategory" parameterType="map" resultType="com.xboost.pojo.ScenariosCategory" resultMap="categoryMap">
-        SELECT * FROM t_scenarios_category where id in (select scenariosId from t_scenarios_user where userId=#{userId})
+        SELECT * FROM t_scenarios_category where user_id=#{userId}
     </select>
 
     <select id="findAll" resultType="com.xboost.pojo.Scenarios">

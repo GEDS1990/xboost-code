@@ -462,14 +462,20 @@ $(function  () {
 	            	//console.log(data.data.length);
 	            	if (data.data.length !=0) {
 	            		var result = data.data,
+	            		arr = [],
 	            		listPoint = [],
 	            		len = result.length;
 	            		$('#route-depot').empty();
 	            		$('#route-depot').off("click");
 	            		$('#route-depot').append('<option value="0">All Depots</option>');
 	            		for (var i=0;i<len;i++) {
+                            arr.push(result[i].curLoc);
+                        }
+                        var Arr = unique(arr),
+                        A_len = Arr.length;
+	            		for (var i=0;i<len;i++) {
 	            			var liser = {};
-	            			var add='<option value='+result[i].curLoc+'>'+result[i].curLoc+'</option>';
+	            			var add='<option value='+Arr[i]+'>'+add0(Arr[i])+'</option>';
 							$('#route-depot').append(add);
 							liser["curLoc"] = result[i].curLoc;
 							liser["siteType"] = result[i].siteType;
@@ -810,7 +816,7 @@ $(function  () {
 	            		$('#route-vehicles').empty();
 	            		$('#route-vehicles').off("click");
 	            		for (var i=0;i<len;i++) {
-	            			arr.push(result[i].car_name);
+	            			arr.push(result[i].carType+result[i].routeCount);
 	            		}
 	            		var Arr = unique(arr),
 	            		A_len = Arr.length;
@@ -823,7 +829,7 @@ $(function  () {
 	            		$('#route-name').text(_text);
 	            		for (var i=0;i<len;i++) {
 	            			var liser = {};
-	            			liser["car_name"] = result[i].car_name;
+	            			liser["car_name"] = result[i].carType+result[i].routeCount;
 							liser["curLoc"] = result[i].curLoc;
 							liser["siteType"] = result[i].siteType;
 							liser["siteName"] = result[i].siteName;
