@@ -93,18 +93,20 @@
 	    			</div>
 	    		</header>
 	    		<div class="scen-box clearfix">
-	    			<div class="scen-itembox1">
-	    				<p>11</p>
+	    			<div class="scen-itembox1"style="height: 380px;">
+	    				<div id="depots-map" style="width: 100%; ">
+	    					
+	    				</div>
 	    			</div>
 	    			<div class="scen-itembox2">
 	    				<h1 id="route-name">No Data</h1>
 	    				<ul class="scen-cost">
-	    					<li>vehicle type:<span>--</span></li>
-	    					<li>vehicle source:<span>--</span></li>
-	    					<li>vehicle weight limit:<span>--</span></li>
-	    					<li>vehicle piece capacity:<span>--</span></li>
-	    					<li>unloading time:<span>--</span></li>
-	    					<li>speed:<span>--</span></li>
+	    					<li>vehicle type:<span id="veh-type">--</span></li>
+	    					<li>vehicle source:<span id="veh-source">--</span></li>
+	    					<li>vehicle weight limit:<span id="veh-limit">--</span></li>
+	    					<li>vehicle piece capacity:<span id="veh-piece">--</span></li>
+	    					<li>unloading time:<span id="veh-unloadtime">--</span></li>
+	    					<li>speed:<span id="veh-speed">--</span></li>
 	    				</ul>
 	    			</div>
 	    		</div>
@@ -117,7 +119,7 @@
 					    <thead>
 					    	<tr>
 					    		<th rowspan="1">id</th>
-					    		<th rowspan="1">Vehicle ID</th>
+					    		<th rowspan="1">Vehicle name</th>
 					    		<th rowspan="1">Deport Order</th>
 					    		<th rowspan="1">Deport ID</th>
 					    		<th rowspan="1">Deport Name</th>
