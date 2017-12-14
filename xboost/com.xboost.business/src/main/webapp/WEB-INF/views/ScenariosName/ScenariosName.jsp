@@ -95,16 +95,17 @@
 	    			<p>Simulation & Results Overview</p>
 	    			<a>See details</a>
 	    		</header>
-	    		<table id="ScenariosName">
+	    		<table id="ScenariosNamet" style="display: none;">
 	    			<thead>
 	    				<tr>
 	    					<th>id</th>
 	    					<th>Depot ID</th>
 	    				</tr>
 	    			</thead>
+	    			<tbody></tbody>
 	    		</table>
 	    		<div class="scen-box clearfix">
-	    			<div class="scen-itembox1" style="height: 400px;">
+	    			<div class="scen-itembox1" style="height: 380px;">
 	    				<div id="depots-map" style="width: 100%; ">
 	    					
 	    				</div>

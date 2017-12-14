@@ -32,7 +32,7 @@
 }
 .scen-box{
 	padding: 10px;
-	height: 2.35rem;
+	height: 400px;
 }
 .scen-itembox1{
 	float: left;
@@ -73,6 +73,12 @@ input[type=radio]{
 .route-choose{
 	margin-top: 40px;
 }
+#ScenariosNamet_paginate,
+#ScenariosNamet_info,
+#ScenariosNamet_wrapper{
+	display: none;
+}
+
 /*******************************Conditions************/
 .cond-wrap{
 	margin: 0;

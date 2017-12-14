@@ -104,7 +104,7 @@ public class MyScenariosController {
         return result;
     }
     //查询场景信息
-    @RequestMapping(value = "/MyScenarios/allscenarios.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/allscenarios.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String,Object> loadAll(HttpServletRequest request) {
 
