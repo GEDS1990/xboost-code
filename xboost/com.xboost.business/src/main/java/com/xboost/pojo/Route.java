@@ -10,6 +10,7 @@ public class Route implements Serializable {
     private String scenariosId;            //场景id
     private String userId;            //
     private String routeCount;      //车辆编号
+    private String carName;          //车辆名称
     private String carType;           //车型
     private String location;            //出车网点-收车网点
     private String sequence;            //停靠点顺序
@@ -60,6 +61,14 @@ public class Route implements Serializable {
 
     public void setRouteCount(String routeCount) {
         this.routeCount = routeCount;
+    }
+
+    public String getCarName() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName = carName;
     }
 
     public String getCarType() {

@@ -465,5 +465,19 @@ table.table-bordered.dataTable td:last-child {
 .scen-cost>li>span{
 	font-weight: 300;
 }
-
+/*******deport******/
+.tip{
+	width:200px;  
+    border:2px solid #ddd;  
+    padding:8px;  
+    background:#f1f1f1;  
+    color:#666;
+    position:fixed;
+    float: left;
+    left:0;
+    top:0;
+    z-index:10000;
+    z-index: 1000000;
+    display:none;
+}
 

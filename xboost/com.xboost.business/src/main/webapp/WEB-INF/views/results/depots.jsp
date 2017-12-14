@@ -252,7 +252,6 @@
 
 
 
-
 <!-- jQuery -->
 <script src="/static/js/jquery.min.js"></script>
 
@@ -278,11 +277,6 @@
 			$('#nav-Results').addClass("active");
 		})()
 	});
-</script>
-<script type="text/javascript">
-	// 百度地图API功能
-	
-	
 </script>
 </body>
 

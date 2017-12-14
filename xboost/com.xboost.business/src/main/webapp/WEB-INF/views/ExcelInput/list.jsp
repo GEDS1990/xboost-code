@@ -193,14 +193,14 @@
             document.getElementById('console').innerHTML="";
             ws = new SockJS("http://182.254.216.232:8080/webSocketServer/sockjs");
             ws.onopen = function () {
-                console('Info: connection opened.');
+                log('Info: connection opened.');
             };
 
             ws.onmessage = function (event) {
                 log(event.data);
             };
             ws.onclose = function (event) {
-                console('Info: connection closed.');
+                log('Info: connection closed.');
                 log(event);
             };
 
