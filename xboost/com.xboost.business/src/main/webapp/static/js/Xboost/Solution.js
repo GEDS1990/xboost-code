@@ -375,8 +375,8 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data);
-	            	if (data.data) {
+	            	//console.log(data.data.length);
+	            	if (data.data.length !=0) {
 	            		var result = data.data,
 	            		listPoint = [],
 	            		len = result.length;
@@ -573,7 +573,7 @@ $(function  () {
 	            },
 	            "initComplete": function (settings, data) {
 	            	//console.log(data);
-	            	if (data.data) {
+	            	if (data.data.length != 0) {
 	            		var result = data.data,
 	            		arr = [],
 	            		listPoint = [],
@@ -672,8 +672,8 @@ $(function  () {
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
 	                {"data":function(res) {
-	                	console.log(res)
-	                	return res.carType;
+	                	//console.log(res)
+	                	return res.car_name;
 	                },"name":"car_type"},
 	                {"data":function(res){return res.sequence;},"name":"sequence"},
 	                {"data":function(res){return res.curLoc;},"name":"cur_loc"},
