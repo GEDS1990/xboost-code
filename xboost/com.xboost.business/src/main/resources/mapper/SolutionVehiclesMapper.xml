@@ -15,7 +15,8 @@
     </select>
 
     <select id="findByCar" parameterType="map" resultType="map" resultMap="modelCar">
-        SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        SELECT * FROM (t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code)
+        left join t_car_info c on r.car_name = c.name
         <where>
             r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
@@ -26,12 +27,14 @@
         limit ${start},${length}
     </select>
 
+
     <select id="findCountByCar" resultType="long" parameterType="map">
-        SELECT count(*) FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        SELECT count(*) FROM (t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code)
+        left join t_car_info c on r.car_name = c.name
         <where>
             r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                and  r.car_type = #{keyword}
+                and  r.car_name = #{keyword}
             </if>
         </where>
     </select>

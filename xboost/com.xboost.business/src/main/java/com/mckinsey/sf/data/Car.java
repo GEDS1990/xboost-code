@@ -23,7 +23,8 @@ public class Car implements Serializable{
 	private String id;
 	@JsonProperty("type")
 	private String type;
-
+	private String name;   //车辆名称；
+	private String busyIdle; //车辆是否空闲；
 	private String carType;
 
 	private String scenariosId;
@@ -129,6 +130,22 @@ public class Car implements Serializable{
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getBusyIdle() {
+		return busyIdle;
+	}
+
+	public void setBusyIdle(String busyIdle) {
+		this.busyIdle = busyIdle;
 	}
 
 	public String getCarType() {
