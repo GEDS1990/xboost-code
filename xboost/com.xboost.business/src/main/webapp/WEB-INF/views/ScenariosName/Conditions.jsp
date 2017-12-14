@@ -175,8 +175,8 @@
 	                    <label class="col-sm-2 control-label">night distrib</label>
 	                    <div class="col-sm-4">
 	                        <select type="text" class="form-control" name="siteNightDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-	                        	<option value="0">not support</option>
-	                        	<option value="1">support</option>
+	                        	<option value="not support">not support</option>
+	                        	<option value="support">support</option>
 	                        </select>
 	                    </div>
 	                    

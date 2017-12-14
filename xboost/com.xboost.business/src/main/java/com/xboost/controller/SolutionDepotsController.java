@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -36,74 +39,29 @@ public class SolutionDepotsController {
     }
 
 
-
-//    //查询网点操作信息
-//    @RequestMapping(value = "/operateInfo.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
-//    @ResponseBody
-//    public Map<String,Object> loadOperateInfo(HttpServletRequest request) {
-//
-//        String draw = request.getParameter("draw");
-//        Integer start = Integer.valueOf(request.getParameter("start"));
-//        Integer length = Integer.valueOf(request.getParameter("length"));
-//        String searchValue = request.getParameter("search[value]");
-//        String orderColumnIndex = request.getParameter("order[0][column]");
-//        String orderType = request.getParameter("order[0][dir]");
-//        String orderColumnName = request.getParameter("columns["+orderColumnIndex+"][name]");
-//
-//        Map<String,Object> param = Maps.newHashMap();
-//        param.put("start",start);
-//        param.put("length",length);
-//        if(StringUtils.isNotEmpty(searchValue)) {
-//            param.put("keyword", Strings.toUTF8(searchValue));
-//        }
-//        param.put("orderColumn",orderColumnName);
-//        param.put("orderType",orderType);
-//        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
-//
-//
-//
-//        Map<String,Object> result = Maps.newHashMap();
-//
-//        List<Route> routeList = solutionRouteService.findByParam(param); //.findAll();
-//        Integer count = solutionRouteService.findAllCount(ShiroUtil.getOpenScenariosId());
-//        Integer filteredCount = solutionRouteService.findCountByParam(param);
-//
-//        result.put("draw",draw);
-//        result.put("recordsTotal",count); //总记录数
-//        result.put("recordsFiltered",filteredCount); //过滤出来的数量
-//        result.put("data",routeList);
-//        return result;
-//    }
-//
-//    //查询网点信息
-//    @RequestMapping(value = "/baseInfo.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
-//    @ResponseBody
-//    public SiteInfo loadBaseSiteInfo(String siteCode) {
-//       String scenariosId = ShiroUtil.getOpenScenariosId();
-//       SiteInfo siteInfo = siteInfoService.findSiteInfoBySiteCode(scenariosId,siteCode);
-//       System.out.println("success");
-//       return siteInfo;
-//    }
-//
-//    //查询网点信息
-//    @RequestMapping(value = "/allSite.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
-//    @ResponseBody
-//    public Map<String,Object> findAllSite(HttpServletRequest request) {
-//        String scenariosId = ShiroUtil.getOpenScenariosId();
-//        List<SiteInfo> siteInfo = siteInfoService.findAllSiteInfo(scenariosId);
-//        Map<String,Object> result = Maps.newHashMap();
-//        result.put("data",siteInfo);
-//        return result;
-//    }
-
     //查询网点操作信息
     @RequestMapping(value = "/depots.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String,Object> loadDepotsInfo(HttpServletRequest request) {
 
         String draw = request.getParameter("draw");
-        Integer start = Integer.valueOf(request.getParameter("start"));
-        Integer length = Integer.valueOf(request.getParameter("length"));
+        Integer start;
+        Integer length;
+        if(request.getParameter("start")==null || request.getParameter("start")=="")
+        {
+            start = 0;
+        }
+        else{
+            start =Integer.valueOf(request.getParameter("start"));
+        }
+        if(request.getParameter("length")==null || request.getParameter("length")=="")
+        {
+            length = 0;
+        }
+        else
+        {
+            length =Integer.valueOf(request.getParameter("length"));
+        }
         String searchValue = request.getParameter("search[value]");
         String orderColumnIndex = request.getParameter("order[0][column]");
         String orderType = request.getParameter("order[0][dir]");
@@ -140,6 +98,28 @@ public class SolutionDepotsController {
         return result;
     }
 
-
+    @RequestMapping(value = "/exportResult",method = RequestMethod.GET,produces = {"application/vnd.ms-excel;charset=UTF-8"})
+    @ResponseBody
+    public String exportResult(HttpServletResponse response)
+    {
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        try
+        {
+            ServletOutputStream outputStream = response.getOutputStream();
+            String fileName = new String(("Result_Depots").getBytes(), "utf-8");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
+            String scenariosId = ShiroUtil.getOpenScenariosId();
+            String[] titles = { "Depot ID","Incoming Vehicle","Arrival Time","Operation","Departure Time"};
+            siteInfoService.exportResult(scenariosId,titles,outputStream);
+            System.out.println("outputStream:"+outputStream);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.out.println("网络连接故障!错误信息:"+e.getMessage());
+        }
+        return null;
+    }
 
 }
