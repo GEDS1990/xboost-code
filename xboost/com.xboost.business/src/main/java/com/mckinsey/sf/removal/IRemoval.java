@@ -58,7 +58,7 @@ public interface IRemoval {
 			logger.info("IllegalArgumentException at randomK k=" + k + "and max=" + max);
 			SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
 			TextMessage textMessage = new TextMessage("IllegalArgumentException at randomK k=" + k + "and max=" + max);
-			//systemWebSocketHandler.sendMessageToUser(textMessage);
+			systemWebSocketHandler.sendMessageToUser(textMessage);
 			k = 1;
 			Thread.interrupted();
 		}

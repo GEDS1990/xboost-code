@@ -65,7 +65,7 @@ public class CascadeController {
         }catch (NullPointerException e){
             SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
             TextMessage message = new TextMessage("NullPointerException");
-            //systemWebSocketHandler.sendMessageToUser(message);
+            systemWebSocketHandler.sendMessageToUser(message);
         }
 //        LogFactory.getLog(AccountController.class).info("input:"+input);
         return null;
