@@ -7,6 +7,7 @@ import com.xboost.pojo.DemandInfo;
 import com.xboost.util.ExcelUtil;
 import com.xboost.util.ExportUtil;
 import com.xboost.util.QiniuUtil;
+import com.xboost.util.Strings;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -235,7 +236,7 @@ public class CarService {
         XSSFWorkbook workBook = new XSSFWorkbook();
         // 在workbook中添加一个sheet,对应Excel文件中的sheet
 
-        XSSFSheet sheet = workBook.createSheet("Demands");
+        XSSFSheet sheet = workBook.createSheet("Vehicals");
         ExportUtil exportUtil = new ExportUtil(workBook, sheet);
         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
@@ -258,69 +259,73 @@ public class CarService {
                 {
                     XSSFRow bodyRow = sheet.createRow(j + 1);
                     Car car = list.get(j);
-
+                    int i = 1;
                     cell = bodyRow.createCell(0);
+                    cell.setCellValue(car.getId());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(0+i);
                     cell.setCellValue(car.getType());
                     cell.setCellStyle(bodyStyle);
 
 
-                    cell = bodyRow.createCell(1);
+                    cell = bodyRow.createCell(1+i);
                     cell.setCellValue(car.getDimensions());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(2);
-                    cell.setCellValue(car.getSkills().toString());
+                    cell = bodyRow.createCell(2+i);
+                    cell.setCellValue(Strings.isEmpty(car.getSkills().toString())?" ":car.getSkills().toString());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(3);
+                    cell = bodyRow.createCell(3+i);
                     cell.setCellValue(car.getStartLocation());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(4);
+                    cell = bodyRow.createCell(4+i);
                     cell.setCellValue(car.getEndLocation());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(5);
+                    cell = bodyRow.createCell(5+i);
                     cell.setCellValue(car.getMaxDistance());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(6);
+                    cell = bodyRow.createCell(6+i);
                     cell.setCellValue(car.getMaxRunningTime());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(7);
+                    cell = bodyRow.createCell(7+i);
                     cell.setCellValue(car.getCostPerDistance());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(8);
+                    cell = bodyRow.createCell(8+i);
                     cell.setCellValue(car.getFixedCost());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(9);
+                    cell = bodyRow.createCell(9+i);
                     cell.setCellValue(car.getMaxStop());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(10);
+                    cell = bodyRow.createCell(10+i);
                     cell.setCellValue(car.getVelocity());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(11);
+                    cell = bodyRow.createCell(11+i);
                     cell.setCellValue(car.getFixedRound());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(12);
+                    cell = bodyRow.createCell(12+i);
                     cell.setCellValue(car.getFixedRoundFee());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(13);
+                    cell = bodyRow.createCell(13+i);
                     cell.setCellValue(car.getCarSource());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(14);
+                    cell = bodyRow.createCell(14+i);
                     cell.setCellValue(car.getMaxLoad());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(15);
+                    cell = bodyRow.createCell(15+i);
                     cell.setCellValue(car.getDurationUnloadFull());
                     cell.setCellStyle(bodyStyle);
                 }

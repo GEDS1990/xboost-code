@@ -104,7 +104,7 @@ public class WorstRemoval implements IRemoval {
 				logger.info("IndexOutOfBoundsException at WorstRemoval...");
 				SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
 				TextMessage textMessage = new TextMessage("fail due to IndexOutOfBoundsException at WorstRemoval...");
-				systemWebSocketHandler.sendMessageToUser(textMessage);
+				//systemWebSocketHandler.sendMessageToUser(textMessage);
 				break;
 			}
 

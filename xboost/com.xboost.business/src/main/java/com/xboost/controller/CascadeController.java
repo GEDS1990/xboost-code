@@ -52,6 +52,9 @@ public class CascadeController {
         //查询car_info内容并set到config
         carlist =carService.findCarByParam(param);
         for(int i=0;i<carlist.length;i++){
+            carlist[i].setStartLocation(carlist[i].getStartLocation().trim());
+            carlist[i].setEndLocation(carlist[i].getEndLocation().trim());
+
             config.setCarTemplates(carlist);
         }
 
@@ -62,7 +65,7 @@ public class CascadeController {
         }catch (NullPointerException e){
             SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
             TextMessage message = new TextMessage("NullPointerException");
-            systemWebSocketHandler.sendMessageToUser(message);
+            //systemWebSocketHandler.sendMessageToUser(message);
         }
 //        LogFactory.getLog(AccountController.class).info("input:"+input);
         return null;

@@ -122,7 +122,7 @@ public class ActState implements IConstants,Serializable{
 //			if(capacity[0] < 0){
 //				capacity[0] = 0;
 //			}
-			if(capacity[0] > c.getDimensions().split(",")[0].length()){
+			if(capacity[0] > Double.parseDouble(c.getDimensions().split(",")[0])){
 //				System.err.println("false");
 				return false;
 			}

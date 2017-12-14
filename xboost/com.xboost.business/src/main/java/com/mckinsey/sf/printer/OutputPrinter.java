@@ -51,7 +51,7 @@ public class OutputPrinter implements IConstants {
 
 	public static void printLine(String str){
 		System.out.println(str);
-//		systemWebSocketHandler.sendMessageToUser(new TextMessage(str));
+//		//systemWebSocketHandler.sendMessageToUser(new TextMessage(str));
 	}
 	
 	public static void printError(String str){
@@ -63,18 +63,18 @@ public class OutputPrinter implements IConstants {
 		printLine("+---------------------------------------------------------------------------------------------------------------------------------------------------------------+");
 		printLine("| Solution                                                         ");
 		printLine("| Solution                                                         ");
-//		systemWebSocketHandler.sendMessageToUser(new TextMessage("+-----------------------------+"));
+//		//systemWebSocketHandler.sendMessageToUser(new TextMessage("+-----------------------------+"));
 		printLine("| Cost:"+ s.cost());
-//		systemWebSocketHandler.sendMessageToUser( new TextMessage("| Cost:"+ s.cost()));
+//		//systemWebSocketHandler.sendMessageToUser( new TextMessage("| Cost:"+ s.cost()));
 		printLine("+---------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-//		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
+//		//systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
 		for (Map.Entry<String, Route> entry : s.getRoutes().entrySet()) {  
 			Route r = entry.getValue();
 			printRoute(r,routeCost,s);
 		}
 
 		printLine("+-----------------------------+");
-		systemWebSocketHandler.sendMessageToUser(new TextMessage("+-----------------------------+"));
+		//systemWebSocketHandler.sendMessageToUser(new TextMessage("+-----------------------------+"));
 //		printLine("+-------------total cost : ----------------"+total);
 		
 	}
@@ -89,18 +89,18 @@ public class OutputPrinter implements IConstants {
 		printLine("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
 		printLine("|type\t\t|location\t|job ID\t\t\t|arr_time\t|end_timev\t| activity ID\t|\r\n");
 		printLine("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|Vechile Type\t|"+r.getC().getType()+"\t|Start Loc.\t|"+r.getC().getStartLocation()+"\t|\n"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("40%...."));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|  Route     \t|"+r.getId()+"\t|Vehicle\t|"+r.getC().getId()+"\t|\n"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("50%...."));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("| Total Dist.\t|"+rstat.getTotalDist()+"\t|Total Cost\t|"+rstat.getTotalCost()+"\t|\n"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("55%...."));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("60%...."));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|type\t\t|location\t|job ID\t\t\t|arr_time\t|end_timev\t| activity ID\t|\r\n"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("70%...."));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("80%...."));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("|Vechile Type\t|"+r.getC().getType()+"\t|Start Loc.\t|"+r.getC().getStartLocation()+"\t|\n"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("40%...."));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("|  Route     \t|"+r.getId()+"\t|Vehicle\t|"+r.getC().getId()+"\t|\n"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("50%...."));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("| Total Dist.\t|"+rstat.getTotalDist()+"\t|Total Cost\t|"+rstat.getTotalCost()+"\t|\n"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("55%...."));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("60%...."));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("|type\t\t|location\t|job ID\t\t\t|arr_time\t|end_timev\t| activity ID\t|\r\n"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("70%...."));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("80%...."));
 		if(r.getActs().size() != 0){
 			Activity start = r.getActs().get(0);
 			Activity end = r.getActs().get(r.getActs().size()-1);
@@ -185,13 +185,13 @@ public class OutputPrinter implements IConstants {
 		
 		if(type.equals(DELIVERY)){
 			printLine("|"+type+"\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n");
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+type+"\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
+			//systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+type+"\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
 		}else if(type.equals(START) || type.equals(END)){
 			printLine("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t\t\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n");
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t\t\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
+			//systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t\t\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
 		}else{
 			printLine("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n");
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
+			//systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
 		}
 		
 		return true;
@@ -311,39 +311,39 @@ public class OutputPrinter implements IConstants {
 //		}
 
 		printLine( "|cost\t\t|"+ df.format(s.cost())+"\t\t|");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|cost\t\t|"+ df.format(s.cost())+"\t\t|"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("|cost\t\t|"+ df.format(s.cost())+"\t\t|"));
 		printLine( "|noJobs\t\t|"+ df.format(s.numTotalJobs())+"\t\t\t|");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|noJobs\t\t|"+ df.format(s.numTotalJobs())+"\t\t\t|"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("|noJobs\t\t|"+ df.format(s.numTotalJobs())+"\t\t\t|"));
 		printLine( "|avgDis\t\t|"+ df.format(avgDis)+"\t\t|");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|avgDis\t\t|"+ df.format(avgDis)+"\t\t|"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("|avgDis\t\t|"+ df.format(avgDis)+"\t\t|"));
 		printLine( "|avgCost\t|"+ df.format(avgCost)+"\t\t\t|");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|avgCost\t|"+ df.format(avgCost)+"\t\t\t|"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("|avgCost\t|"+ df.format(avgCost)+"\t\t\t|"));
 		printLine( "|avgJobs\t|"+ df.format(avgJobs)+"\t\t\t|");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|avgJobs\t|"+ df.format(avgJobs)+"\t\t\t|"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("|avgJobs\t|"+ df.format(avgJobs)+"\t\t\t|"));
 		printLine( "|avgTime\t|"+ df.format(avgArrivalTime)+"\t\t|");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|avgTime\t|"+ df.format(avgArrivalTime)+"\t\t|"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("|avgTime\t|"+ df.format(avgArrivalTime)+"\t\t|"));
 		printLine( "|avgLoad\t|"+ df.format(avgLoad)+"\t\t\t|");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|avgLoad\t|"+ df.format(avgLoad)+"\t\t\t|"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("|avgLoad\t|"+ df.format(avgLoad)+"\t\t\t|"));
 		printLine( "|numRoutes\t|"+ s.getRoutes().size()+"\t\t\t|");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|numRoutes\t|"+ s.getRoutes().size()+"\t\t\t|"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("|numRoutes\t|"+ s.getRoutes().size()+"\t\t\t|"));
 		
 		for(Entry<String, Integer> keyValue : CascadeModelUtil.carsMap.entrySet()){
 			String key = keyValue.getKey();
 			int value = keyValue.getValue();
 			
 			printLine( "|"+key+"\t|"+ (CascadeModelUtil.carsMap.containsKey(key)?value:0)+"\t\t\t|");
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+key+"\t|"+ (CascadeModelUtil.carsMap.containsKey(key)?value:0)+"\t\t\t|"));
+			//systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+key+"\t|"+ (CascadeModelUtil.carsMap.containsKey(key)?value:0)+"\t\t\t|"));
 
 
 		}
 		
 		for(IConstraint c : s.getConstraints()){
 			printLine("Constraint\t|"+c.getName()+"\t|");
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("Constraint\t|"+c.getName()+"\t|"));
+			//systemWebSocketHandler.sendMessageToUser( new TextMessage("Constraint\t|"+c.getName()+"\t|"));
 		}
 		
 		printLine("+---------------------------------------+");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("+---------------------------------------+"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("+---------------------------------------+"));
 		
 	}
 
@@ -351,13 +351,13 @@ public class OutputPrinter implements IConstants {
 		printLine("+-----------------------------+");
 		printLine("| Unassigned                  |");
 		printLine("+-----------------------------+");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("| Unassigned                  |"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("| Unassigned                  |"));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
 		for (Map.Entry<String, Job> entry : s.getUnassigned().entrySet()) {  
 			Job j = entry.getValue();
 			printLine("| "+j.getId()+"\t | "+j.getPickup().getLocation()+" - "+j.getDelivery().getLocation()+"\t |\n");
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("| "+j.getId()+"\t | "+j.getPickup().getLocation()+" - "+j.getDelivery().getLocation()+"\t |\n"));
+			//systemWebSocketHandler.sendMessageToUser( new TextMessage("| "+j.getId()+"\t | "+j.getPickup().getLocation()+" - "+j.getDelivery().getLocation()+"\t |\n"));
 		}
 	}
 
@@ -387,11 +387,11 @@ public class OutputPrinter implements IConstants {
 			printLine("route start time:"+route.getActs().get(1).getTw().getStart());
 			printLine("route trace:"+routeTracer.toString());
 			printLine("route max stops:"+maxStopsCur);
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("route id:"+route.getId()));
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("route start time:"+route.getActs().get(1).getTw().getStart()));
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("route trace:"+routeTracer.toString()));
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("route max stops:"+maxStopsCur));
+			//systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
+			//systemWebSocketHandler.sendMessageToUser( new TextMessage("route id:"+route.getId()));
+			//systemWebSocketHandler.sendMessageToUser( new TextMessage("route start time:"+route.getActs().get(1).getTw().getStart()));
+			//systemWebSocketHandler.sendMessageToUser( new TextMessage("route trace:"+routeTracer.toString()));
+			//systemWebSocketHandler.sendMessageToUser( new TextMessage("route max stops:"+maxStopsCur));
 			
 			if(maxStopsCur < minStops){
 				minStops = maxStopsCur;
@@ -412,9 +412,9 @@ public class OutputPrinter implements IConstants {
 		printLine("total max stops:"+maxStops);
 		printLine("total min stops:"+minStops);
 		printLine("total mean stops:"+meanStops);
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("total max stops:"+maxStops));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("total min stops:"+minStops));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("total mean stops:"+meanStops));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("total max stops:"+maxStops));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("total min stops:"+minStops));
+		//systemWebSocketHandler.sendMessageToUser( new TextMessage("total mean stops:"+meanStops));
 	}
 	
 	public static void writeStandardOutputToExcel(Solution s, RoutingTransportCosts transportCost) {
@@ -423,10 +423,10 @@ public class OutputPrinter implements IConstants {
 		com.xboost.pojo.Activity activityPojo = new com.xboost.pojo.Activity();
 //		String fileName = "src/main/resources/标准串点输出.xls";
 
-		systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据...."));
+		//systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据...."));
 		solutionRouteService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));//删除该场景的旧数据
 		solutionActivityService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
-		systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据成功"));
+		//systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据成功"));
 
 //		Workbook wb = null;
 //		OutputStream out = null;
@@ -474,7 +474,7 @@ public class OutputPrinter implements IConstants {
 			//write route
 //			double totalLoadRate = 0;
 
-			systemWebSocketHandler.sendMessageToUser(new TextMessage("新增数据...."));
+			//systemWebSocketHandler.sendMessageToUser(new TextMessage("新增数据...."));
 			for (Map.Entry<String, Route> entry : s.getRoutes().entrySet()) {
 				Route r = entry.getValue();
 				ConstraintState cstat = s.getConstraintState(DEFAULT_CONSTRAINTS);
@@ -620,9 +620,9 @@ public class OutputPrinter implements IConstants {
 									//update sheet2 end
 									activityPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
 									activityPojo.setUserId(String.valueOf(ShiroUtil.getCurrentUserId()));
-									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据...."));
+									//systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据...."));
 									solutionActivityService.addActivity(activityPojo);
-									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据成功"));
+									//systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据成功"));
 								}else{
 									break;
 								}
@@ -697,7 +697,7 @@ public class OutputPrinter implements IConstants {
 				}
 				routeCount ++ ;
 			}
-			systemWebSocketHandler.sendMessageToUser(new TextMessage("增加数据成功"));
+			//systemWebSocketHandler.sendMessageToUser(new TextMessage("增加数据成功"));
 
 			
 //			out = new FileOutputStream(fileName);

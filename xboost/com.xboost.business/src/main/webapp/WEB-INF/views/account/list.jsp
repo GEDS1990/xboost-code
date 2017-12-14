@@ -49,13 +49,15 @@
 	        	<div class="xb-fl">
 	        		<p>All Users</p>
 	        	</div>
+                <div class="xb-fr">
+                    <button id="addNewUser-user" ><span class="icon-file-text-o"></span>Create User</button>
+                </div>
 	        </div>
 	        <div class="cond-top">
 	        </div>
 	    	<div>
 	    		<!--Depots Info-->
 			    <div class="table-responsive active">
-			    	<a href="javascript:;" id="addNewUser-user" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus"></i>Add New User</a>
 		            <table id="userTable" class="table table-striped table-bordered table-hover">
 			            <thead>
 			            	<tr>

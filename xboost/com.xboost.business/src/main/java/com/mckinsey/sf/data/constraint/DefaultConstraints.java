@@ -630,38 +630,55 @@ public class DefaultConstraints implements IConstraint,IConstants,Serializable {
 		//TODO
 		double total = 0;
 		//hangzhou toal
-		if(dist >0 && dist <= 50 ){
-			if("1.5T".equalsIgnoreCase(r.getC().getType())){
-				total = 200;
-			}else if("3.5T".equalsIgnoreCase(r.getC().getType())){
-				total = 263;
-			}else if("7T".equalsIgnoreCase(r.getC().getType())){
-				total = 500;
+//		if(dist >0 && dist <= 50 ){
+//			if("1.5T".equalsIgnoreCase(r.getC().getType())){
+//				total = 200;
+//			}else if("3.5T".equalsIgnoreCase(r.getC().getType())){
+//				total = 263;
+//			}else if("7T".equalsIgnoreCase(r.getC().getType())){
+//				total = 500;
+//			}else{
+//				System.err.println("no such car");
+//			}
+//		}else if(dist <= 100 ){
+//			if("1.5T".equalsIgnoreCase(r.getC().getType())){
+//				total = 220;
+//			}else if("3.5T".equalsIgnoreCase(r.getC().getType())){
+//				total = 263;
+//			}else if("7T".equalsIgnoreCase(r.getC().getType())){
+//				total = 500;
+//			}else{
+//				System.err.println("no such car");
+//			}
+//		}
+//		else{
+//			if("1.5T".equalsIgnoreCase(r.getC().getType())){
+//				total = 220;
+//			}else if("3.5T".equalsIgnoreCase(r.getC().getType())){
+//				total = 263;
+//			}
+//		}
+		if("百度".equalsIgnoreCase(r.getC().getType())){
+			total = 11;
+		}else if("滴滴".equalsIgnoreCase(r.getC().getType())){
+			if(dist<=15){
+				total = 8+2*dist+0.55*time;
 			}else{
-				System.err.println("no such car");
+				total = 8+2*dist+0.55*time+(dist-15)*1.5;
 			}
-		}else if(dist <= 100 ){
-			if("1.5T".equalsIgnoreCase(r.getC().getType())){
-				total = 220;
-			}else if("3.5T".equalsIgnoreCase(r.getC().getType())){
-				total = 263;
-			}else if("7T".equalsIgnoreCase(r.getC().getType())){
-				total = 500;
+		}else if("货车".equalsIgnoreCase(r.getC().getType())){
+			if(dist<=5){
+				total = 30;
 			}else{
-				System.err.println("no such car");
+				total = 30+(dist-5)*5;
 			}
-		}
-		else{
-			if("1.5T".equalsIgnoreCase(r.getC().getType())){
-				total = 220;
-			}else if("3.5T".equalsIgnoreCase(r.getC().getType())){
-				total = 263;
-			}
+		}else{
+			System.err.println("no such car");
 		}
 		
 		//initial total
-		total =  dist*wDist*r.getC().getCostPerDistance()
-				+time*wTime*r.getC().getCostPerTime();
+//		total =  dist*wDist*r.getC().getCostPerDistance()
+//				+time*wTime*r.getC().getCostPerTime();
 		
 		return total;
 		

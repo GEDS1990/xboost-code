@@ -63,9 +63,9 @@ public class ExcelToJson implements IConstants{
 		input.setCarTemplates(config.getCarTemplates());
 		for(Car c : input.getCarTemplates()){
 			double dimensionDouble = Double.parseDouble(c.getDimensions().split(",")[0]);
-			if(dimensionDouble > maxVol){
-				maxVol = dimensionDouble;
-			}
+//			if(dimensionDouble > maxVol){
+//				maxVol = dimensionDouble;
+//			}
 		}
 
 		inputJson.setCarTemplates(input.getCarTemplates());

@@ -13,8 +13,8 @@ public class Strings {
     }
 
     public static Boolean isEmpty(Object obj) {
-       String str = (obj==null ? "":obj.toString());
-        if (str == null || str == "" || str == " " || str.length()<=0) {
+       String str = (null==obj ? "":obj.toString());
+        if (null == str || "" == str || " " == str || str.length()<=0) {
             return true;
         } else {
             return false;
