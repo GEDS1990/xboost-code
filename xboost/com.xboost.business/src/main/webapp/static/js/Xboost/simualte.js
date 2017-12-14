@@ -27,14 +27,14 @@ $(function  () {
 					document.getElementById('sim-check-info').innerHTML="";
 		            socket  = new SockJS("http://"+document.location.host+"/webSocketServer/validate");
 		            socket .onopen = function () {
-		                console('Info: connection opened.');
+		                logg('Info: connection opened.');
 		            };
 		
 		            socket .onmessage = function (event) {
 		                logg(event.data);
 		            };
 		            socket .onclose = function (event) {
-		                console('Info: connection closed.');
+		                logg('Info: connection closed.');
 		                logg(event);
 		            };
 					
@@ -134,18 +134,18 @@ $(function  () {
 				document.getElementById('sim-run-info').innerHTML="";
 	            ws = new SockJS("http://"+document.location.host+"/webSocketServer/sockjs");
 	            ws.onopen = function () {
-	                console('Info: connection opened.');
+	                log('Info: connection opened.');
 	            };
 	
 	            ws.onmessage = function (event) {
 	                log(event.data);
 	            };
 	            ws.onclose = function (event) {
-	                console('Info: connection closed.');
+	                log('Info: connection closed.');
 	                log(event);
 	            };
 	
-                $.ajaxSettings.async = false;//修改默认使用同步
+
 	            $.post("/cascade/runSilumate",{"distMode":_distMode,"loadTime":_loadTime,"loopLimit":_loopLimit}).done(function(result){
 	                ws.onclose();
 	                console.log("success");
@@ -153,7 +153,6 @@ $(function  () {
 	                ws.onclose();
 	                console.log("fail");
 	            });
-	            $.ajaxSettings.async = true;//修改默认使用异步
 	            //停止算法
 				$('#sim-stop').click(function  () {
 					$('#modal-sim').modal("show");

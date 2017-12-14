@@ -33,6 +33,10 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Sjbn4XELTZZZKwunDx4AGqblQ2aViy3Z"></script>
+    <style>
+    	#depots-map {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
 
 </head>
 
@@ -91,9 +95,19 @@
 	    			<p>Simulation & Results Overview</p>
 	    			<a>See details</a>
 	    		</header>
+	    		<table id="ScenariosName">
+	    			<thead>
+	    				<tr>
+	    					<th>id</th>
+	    					<th>Depot ID</th>
+	    				</tr>
+	    			</thead>
+	    		</table>
 	    		<div class="scen-box clearfix">
-	    			<div class="scen-itembox1">
-	    				<p>11</p>
+	    			<div class="scen-itembox1" style="height: 400px;">
+	    				<div id="depots-map" style="width: 100%; ">
+	    					
+	    				</div>
 	    			</div>
 	    			<div class="scen-itembox2">
 	    				<h1>No Data</h1>
