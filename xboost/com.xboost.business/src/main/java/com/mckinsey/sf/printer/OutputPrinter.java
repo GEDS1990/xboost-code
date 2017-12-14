@@ -63,11 +63,11 @@ public class OutputPrinter implements IConstants {
 		printLine("+---------------------------------------------------------------------------------------------------------------------------------------------------------------+");
 		printLine("| Solution                                                         ");
 		printLine("| Solution                                                         ");
-		systemWebSocketHandler.sendMessageToUser(new TextMessage("+-----------------------------+"));
+//		systemWebSocketHandler.sendMessageToUser(new TextMessage("+-----------------------------+"));
 		printLine("| Cost:"+ s.cost());
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("| Cost:"+ s.cost()));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("| Cost:"+ s.cost()));
 		printLine("+---------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
 		for (Map.Entry<String, Route> entry : s.getRoutes().entrySet()) {  
 			Route r = entry.getValue();
 			printRoute(r,routeCost,s);
@@ -404,7 +404,11 @@ public class OutputPrinter implements IConstants {
 			totalStops += maxStopsCur;
 			
 		}
-		double meanStops = totalStops/s.getRoutes().size();
+		double meanStops = 0.0;
+		if(s.getRoutes().size()>0){
+
+			meanStops = totalStops/s.getRoutes().size();
+		}
 		printLine("total max stops:"+maxStops);
 		printLine("total min stops:"+minStops);
 		printLine("total mean stops:"+meanStops);

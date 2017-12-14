@@ -148,15 +148,15 @@ public class CascadeModelUtil implements IConstants {
         //将finalSolutionJson存储到数据库
 
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            mapper.writeValue(new File("src/main/resources/solution/solution.json"), finalSolutionJson);
-        } catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            mapper.writeValue(new File("src/main/resources/solution/solution.json"), finalSolutionJson);
+//        } catch (JsonGenerationException e) {
+//            e.printStackTrace();
+//        } catch (JsonMappingException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         Solution finalSolution = Solution.newSolution(finalSolutionJson.getUnassignedJobs(),finalSolutionJson.getRoutes(),
         cons,cm,costCalculator,noiser,constructive);

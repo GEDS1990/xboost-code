@@ -98,13 +98,15 @@ public class PalnsThread extends Thread implements IConstants  {
 		int index = roulette(initWs);
 		IRemoval rop = palns.getRemovalOps()[index/palns.getInsertionOps().length];
 		IInsertion iop = palns.getInsertionOps()[index%palns.getInsertionOps().length];
-		
+
+		Score scoreIndex = null;
+
 		ISolution tmp = palns.getCurrent().clone();
 		tmp = rop.remove(tmp);
 		tmp = iop.insert(tmp);
 		tmp.calcCost();
-		
-		Score scoreIndex = accept(tmp,palns.getCurrent(),temperature);
+
+		scoreIndex = accept(tmp,palns.getCurrent(),temperature);
 		if(palns.getCurrent().cost() < palns.getBest().cost()){
 			palns.setBest(palns.getCurrent());
 			scoreIndex = Score.NEWBEST;

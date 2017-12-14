@@ -84,30 +84,32 @@ public class RandomRemoval implements IRemoval, IConstants{
 		
 		HashMap<Integer,Boolean> removed = new HashMap<Integer,Boolean>();
 		HashMap<String,Boolean> changed = new HashMap<String,Boolean>();
-		
-		for(int i = 0; i < k;){
-			int index = new Random().nextInt(ctxs.size());
-			if(removed.containsKey(index)){
-				continue;
-			}else{
-				removed.put(index, true);
-				i++;
+		if(ctxs.size()>0){
+
+			for(int i = 0; i < k;){
+				int index = new Random().nextInt(ctxs.size());
+				if(removed.containsKey(index)){
+					continue;
+				}else{
+					removed.put(index, true);
+					i++;
+				}
+
+				RandomCtx ctx = ctxs.get(index);
+				Route route = ctx.getRoute();
+				Job job = ctx.getJob();
+				List<Activity> iters = route.getJtoA().get(job.getId());
+				RemovalCtx rctx = new RemovalCtx(s,route,job,iters);
+
+				boolean can = beforeRemoval(rctx, constraints);
+
+				if(can){
+					s.applyRemoval(rctx);
+					afterRemoval(rctx, constraints);
+					changed.put(rctx.getR().getId(), true);
+				}
+
 			}
-			
-			RandomCtx ctx = ctxs.get(index);
-			Route route = ctx.getRoute();
-			Job job = ctx.getJob();
-			List<Activity> iters = route.getJtoA().get(job.getId());
-			RemovalCtx rctx = new RemovalCtx(s,route,job,iters);
-			
-			boolean can = beforeRemoval(rctx, constraints);
-			
-			if(can){
-				s.applyRemoval(rctx);
-				afterRemoval(rctx, constraints);
-				changed.put(rctx.getR().getId(), true);
-			}
-			
 		}
 
 		updateStates(s,changed);

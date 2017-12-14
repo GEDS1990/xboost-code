@@ -67,9 +67,9 @@ public class ExcelToJson implements IConstants{
 				maxVol = dimensionDouble;
 			}
 		}
-		
-		inputJson.setCarTemplates(input.getCarTemplates());	
-		
+
+		inputJson.setCarTemplates(input.getCarTemplates());
+
 		//init demand info
 		SolutionJson solution = new SolutionJson();
 		List<Job> jobList = new ArrayList<Job>();
@@ -179,8 +179,8 @@ public class ExcelToJson implements IConstants{
 //		}
 
 
-		
-		
+
+
 //		try {
 //			mapper.writeValue(new File("src/main/resources/progInput.json"), inputJson);
 //			return inputJson;
