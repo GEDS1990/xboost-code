@@ -1163,7 +1163,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	console.log(data)
+	            	//console.log(data)
 	            }
 	        });
 	        
