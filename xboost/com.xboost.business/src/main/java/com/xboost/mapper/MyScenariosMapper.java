@@ -22,6 +22,8 @@ public interface MyScenariosMapper {
 
     Long findAllCount(Integer userId);
 
+    Long findAllScenariosCount();
+
     // 根据参数查询场景信息  @param param @return
     List<Scenarios> findByParam(Map<String, Object> param);
     Long findCountByParam(Map<String, Object> param);

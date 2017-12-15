@@ -153,7 +153,7 @@ public class CarController {
         try
         {
             ServletOutputStream outputStream = response.getOutputStream();
-            String fileName = new String(("Demands").getBytes(), "utf-8");
+            String fileName = new String(("Vehicles").getBytes(), "utf-8");
             response.setCharacterEncoding("utf-8");
             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
             //       response.setHeader("Content-disposition", "attachment; filename=distance.xlsx");
