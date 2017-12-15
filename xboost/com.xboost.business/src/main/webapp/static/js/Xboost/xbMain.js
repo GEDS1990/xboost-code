@@ -117,6 +117,42 @@ function CategoryList () {
  */
 
 
+//去除重复数组元素
+	function unique(arr) {
+		var result = [], hash = {};
+		for (var i = 0, elem; (elem = arr[i]) != null; i++) {
+			if (!hash[elem]) {
+				result.push(elem);
+				hash[elem] = true;
+			}
+		}
+		return result;
+	}
+	//去除重复数据 deport
+	//将对象元素转换成字符串以作比较
+	function obj2key(obj, keys){
+	    var n = keys.length,
+	        key = [];
+	    while(n--){
+	        key.push(obj[keys[n]]);
+	    }
+	    return key.join('|');
+	}
+	//去重操作
+	function uniqeByKeys(array,keys){
+	    var arr = [];
+	    var hash = {};
+	    for (var i = 0, j = array.length; i < j; i++) {
+	        var k = obj2key(array[i], keys);
+	        if (!(k in hash)) {
+	            hash[k] = true;
+	            arr .push(array[i]);
+	        }
+	    }
+	    return arr ;
+	}
+
+
 (function  () {
 	
 	var editBtn = doc.getElementById("edit-create-info");
@@ -294,20 +330,18 @@ function CategoryList () {
             		var result = data.data,
             		listPoint = [],
             		len = result.length;
-            		$('#route-depot').empty();
-            		$('#route-depot').off("click");
-            		$('#route-depot').append('<option value="0">All Depots</option>');
-            		for (var i=0;i<len;i++) {
+            		var newResult = uniqeByKeys(result,["curLoc"]),
+						newreslen = newResult.length;
+	            		//console.log(newResult)
+            		for (var f = 0;f<newreslen;f++) {
             			var liser = {};
-            			var add='<option value='+result[i].curLoc+'>'+result[i].curLoc+'</option>';
-						$('#route-depot').append(add);
-						liser["curLoc"] = result[i].curLoc;
-						liser["siteType"] = result[i].siteType;
-						liser["siteName"] = result[i].siteName;
-						liser["calcDis"] = result[i].calcDis;
-						liser["lng"] = result[i].siteLongitude;
-						liser["lat"] = result[i].siteLatitude;
-						liser["nextCurLoc"] = result[i].nextCurLoc
+						liser["curLoc"] = newResult[f].curLoc;
+						liser["siteType"] = newResult[f].siteType;
+						liser["siteName"] = newResult[f].siteName;
+						liser["calcDis"] = newResult[f].calcDis;
+						liser["lng"] = newResult[f].siteLongitude;
+						liser["lat"] = newResult[f].siteLatitude;
+						liser["nextCurLoc"] = newResult[f].nextCurLoc;
 						listPoint.push(liser);
             		}
 					//查询所有网点坐标
