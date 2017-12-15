@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Xboost System Login</title>
+    <title>Xboost</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
@@ -39,7 +39,7 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-coffee"></i>Xboost System Login</h3>
+                    <h3 class="panel-title"><i class="fa fa-coffee"></i>Xboost</h3>
                 </div>
                 <div class="panel-body">
                     <c:if test="${not empty message}">

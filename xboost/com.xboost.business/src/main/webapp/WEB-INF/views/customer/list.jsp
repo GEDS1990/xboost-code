@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Xboost-物流路线规划管理系统</title>
+    <title>Xboost</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">

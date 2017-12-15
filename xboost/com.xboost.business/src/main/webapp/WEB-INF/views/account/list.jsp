@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Xboost System Login</title>
+    <title>Xboost</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
