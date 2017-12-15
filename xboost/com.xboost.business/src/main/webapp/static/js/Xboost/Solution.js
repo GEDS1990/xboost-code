@@ -842,7 +842,7 @@ $(function  () {
 	            },
 	            "initComplete": function (settings, data) {
 	            	var $this = this;
-	            	console.log(data);
+	            	//console.log(data);
 	            	if (data.data.length != 0) {
 	            		var result = data.data,
 	            		arr = [],
@@ -906,7 +906,7 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var datas = api.rows( {page:'current'} ).data();
-			        console.log(datas);
+			        //console.log(datas);
 			        var datas_len = datas.length;
 			        if (datas_len !=0) {
 			        	var result = datas[0];
