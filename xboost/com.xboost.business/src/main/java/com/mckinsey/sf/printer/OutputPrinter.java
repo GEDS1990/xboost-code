@@ -1,11 +1,7 @@
 package com.mckinsey.sf.printer;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import com.xboost.service.*;
@@ -555,6 +551,7 @@ public class OutputPrinter implements IConstants {
 						routePojo.setRouteCount(String.valueOf(routeCount));
 //						rr.createCell(1).setCellValue(carType);
 						routePojo.setCarType(carType);
+						routePojo.setCarName(carType +"-"+ String.valueOf(UUID.randomUUID()));
 //						rr.createCell(2).setCellValue(newActs.get(1).getLocation()+"-"+newActs.get(newActs.size()-2).getLocation());
 						routePojo.setLocation(newActs.get(1).getLocation()+"-"+newActs.get(newActs.size()-2).getLocation());
 //						rr.createCell(4).setCellValue(cur.getLocation());
