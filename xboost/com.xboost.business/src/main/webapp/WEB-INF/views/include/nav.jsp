@@ -52,7 +52,7 @@
 		        <!-- /.dropdown-user -->
 		    </li>
 		    <li>
-            	<a class="xb-a" href="/logout"><i class="fa fa-fw icon-power-off"></i>LoginOut</a>
+            	<a class="xb-a" id="loginout" ><i class="fa fa-fw icon-power-off"></i>LoginOut</a>
             </li>
 		    <!-- /.dropdown -->
 		</ul>
@@ -94,6 +94,24 @@
 	    </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 	
+	<!--login out-->
+	<div class="modal fade" id="modal-loginout">
+	    <div class="modal-dialog" style="width: 500px;">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                <h4 class="modal-title">LoginOut</h4>
+	            </div>
+	            <div class="modal-body">
+	                <p>Are you sure want to loginout your account?</p>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+	                <button type="button" id="modal-loginBtn" class="btn btn-primary">Yes</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 	
 
 

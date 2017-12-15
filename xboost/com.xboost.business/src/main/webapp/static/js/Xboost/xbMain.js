@@ -8,7 +8,7 @@ $(function  () {
 function CategoryList () {
 	$.get("/MyScenarios/category.json").done(function  (res) {
 		if (res) {
-			console.log(res);
+			//console.log(res);
 			if (res.data.length !=0) {
 				var result = res.data,
 				len = result.length;

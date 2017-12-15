@@ -395,7 +395,10 @@ $(function  () {
 		
 		}  
 
-}
+	}
+	
+	
+	
 	//去除重复数组元素
 	function unique(arr) {
 		var result = [], hash = {};

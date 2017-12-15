@@ -27,7 +27,13 @@ $(document).ready(function  () {
 	});
 	*/
 	
-	
+	/*login out*///href="/logout"
+	$('#loginout').click(function (){
+		$('#modal-loginout').modal("show");
+		$('#modal-loginBtn').click(function (){
+			window.location.href = "/logout";
+		});
+	});
 	
 	
 	
