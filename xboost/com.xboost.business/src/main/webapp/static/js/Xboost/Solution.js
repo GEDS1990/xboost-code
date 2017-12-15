@@ -177,7 +177,7 @@ $(function  () {
 			}
 			var routelist = uniqeByKeys(list,["sequence"]);
 			routelist.sort(sortNumber);
-			console.log(routelist);
+			//console.log(routelist);
 			//console.log(listPoint);
 			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
 				if (i==rl_len-1) {
@@ -498,7 +498,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	console.log(data);
+	            	//console.log(data);
 	            	if (data.data.length !=0) {
 	            		var result = data.data,
 	            		arr = [],
@@ -536,7 +536,7 @@ $(function  () {
 							
 	            		
 						//查询所有网点坐标
-						console.log(listPoint)
+						//console.log(listPoint)
 						listArry="";
 						listArry = listPoint;
 							
@@ -565,7 +565,7 @@ $(function  () {
 						liser["nextCurLoc"] = Datas[f].nextCurLoc
 						listPoint.push(liser);
             		}
-			        console.log(listPoint)
+			        //console.log(listPoint)
 			        if (_len != 0 && count != "") {
 			        	var res = Datas[0];
 						$('#depot').text("Depot "+res.siteCode);
