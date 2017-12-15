@@ -125,7 +125,7 @@ $(function  () {
 			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.8});  //定义折线
 			map.addOverlay(polyline);//添加折线到地图上
 			
-			addArrow(polyline,10,Math.PI/7);
+			addArrow(polyline,2,Math.PI/7);
 			
 			polyline.addEventListener("mouseover", function(e){
 				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
@@ -176,7 +176,8 @@ $(function  () {
 				}
 			}
 			routelist.sort(sortNumber);
-			//console.log(routelist[3]);
+			console.log(routelist);
+			console.log(listPoint);
 			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
 				if (i==rl_len-1) {
 					continue;
@@ -209,7 +210,7 @@ $(function  () {
 			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.8});  //定义折线
 			map.addOverlay(polyline);//添加折线到地图上
 			
-			addArrow(polyline,10,Math.PI/7);
+			addArrow(polyline,2,Math.PI/7);
 			
 			polyline.addEventListener("mouseover", function(e){
 				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
@@ -715,26 +716,26 @@ $(function  () {
 	            		_text = $('#route-route').find("option").eq(0).text();
 	            		$('#route-name').text(_text);
 	            		
-	            		var newResult = uniqeByKeys(result,["curLoc"]),
-						newreslen = newResult.length;
+//	            		var newResult = uniqeByKeys(result,["curLoc"]),
+//						newreslen = newResult.length;
 	            		//console.log(newResult)
-	            		for (var f = 0;f<newreslen;f++) {
+	            		for (var f = 0;f<len;f++) {
 	            			var liser = {};
-	            			liser["routeCount"] = newResult[f].routeCount;
-							liser["curLoc"] = newResult[f].curLoc;
-							liser["siteType"] = newResult[f].siteType;
-							liser["siteName"] = newResult[f].siteName;
-							liser["calcDis"] = newResult[f].calcDis;
-							liser["lng"] = newResult[f].siteLongitude;
-							liser["lat"] = newResult[f].siteLatitude;
-							liser["nextCurLoc"] = newResult[f].nextCurLoc;
-							var arrTime = operationTime(newResult[f].arrTime);
-							var endTime = operationTime(newResult[f].endTime);
+	            			liser["routeCount"] = result[f].routeCount;
+							liser["curLoc"] = result[f].curLoc;
+							liser["siteType"] = result[f].siteType;
+							liser["siteName"] = result[f].siteName;
+							liser["calcDis"] = result[f].calcDis;
+							liser["lng"] = result[f].siteLongitude;
+							liser["lat"] = result[f].siteLatitude;
+							liser["nextCurLoc"] = result[f].nextCurLoc;
+							var arrTime = operationTime(result[f].arrTime);
+							var endTime = operationTime(result[f].endTime);
 							liser["arrTime"] = arrTime;
 							liser["endTime"] = endTime;
-							liser["sbVol"] = newResult[f].sbVol;
-							liser["unloadVol"] = newResult[f].unloadVol;
-							liser["sequence"] = newResult[f].sequence;
+							liser["sbVol"] = result[f].sbVol;
+							liser["unloadVol"] = result[f].unloadVol;
+							liser["sequence"] = result[f].sequence;
 							listPoint.push(liser);
 	            		}
 	            		//console.log(listPoint);
@@ -851,7 +852,7 @@ $(function  () {
 	            		$('#route-vehicles').empty();
 	            		$('#route-vehicles').off("click");
 	            		for (var i=0;i<len;i++) {
-	            			arr.push(result[i].carType+result[i].routeCount);
+	            			arr.push(result[i].carName);
 	            		}
 	            		var Arr = unique(arr),
 	            		A_len = Arr.length;
@@ -866,26 +867,26 @@ $(function  () {
 	            		
 	            		
 	            		
-	            		var newResult = uniqeByKeys(result,["curLoc"]),
-						newreslen = newResult.length;
+//	            		var newResult = uniqeByKeys(result,["curLoc"]),
+//						newreslen = newResult.length;
 	            		//console.log(newResult)
-	            		for (var f = 0;f<newreslen;f++) {
+	            		for (var f = 0;f<len;f++) {
 	            			var liser = {};
-	            			liser["carName"] = newResult[f].carType+newResult[f].routeCount;
-							liser["curLoc"] = newResult[f].curLoc;
-							liser["siteType"] = newResult[f].siteType;
-							liser["siteName"] = newResult[f].siteName;
-							liser["calcDis"] = newResult[f].calcDis;
-							liser["lng"] = newResult[f].siteLongitude;
-							liser["lat"] = newResult[f].siteLatitude;
-							liser["nextCurLoc"] = newResult[f].nextCurLoc;
-							var arrTime = operationTime(newResult[f].arrTime);
-							var endTime = operationTime(newResult[f].endTime);
+	            			liser["carName"] = result[f].carName;
+							liser["curLoc"] = result[f].curLoc;
+							liser["siteType"] = result[f].siteType;
+							liser["siteName"] = result[f].siteName;
+							liser["calcDis"] = result[f].calcDis;
+							liser["lng"] = result[f].siteLongitude;
+							liser["lat"] = result[f].siteLatitude;
+							liser["nextCurLoc"] = result[f].nextCurLoc;
+							var arrTime = operationTime(result[f].arrTime);
+							var endTime = operationTime(result[f].endTime);
 							liser["arrTime"] = arrTime;
 							liser["endTime"] = endTime;
-							liser["sbVol"] = newResult[f].sbVol;
-							liser["unloadVol"] = newResult[f].unloadVol;
-							liser["sequence"] = newResult[f].sequence;
+							liser["sbVol"] = result[f].sbVol;
+							liser["unloadVol"] = result[f].unloadVol;
+							liser["sequence"] = result[f].sequence;
 							listPoint.push(liser);
 	            		}
 	            		//console.log(listPoint);
