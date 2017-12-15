@@ -47,6 +47,11 @@
         SELECT COUNT(*) FROM t_scenarios_info where id in (select scenariosId from t_scenarios_user where userId=#{userId})
     </select>
 
+    <select id="findAllScenariosCount" resultType="long">
+        SELECT COUNT(*) FROM t_scenarios_info where id in (select scenariosId from t_scenarios_user)
+    </select>
+
+
     <select id="findCountByParam" resultType="long" parameterType="map">
         SELECT count(*) FROM t_scenarios_info
         <where>

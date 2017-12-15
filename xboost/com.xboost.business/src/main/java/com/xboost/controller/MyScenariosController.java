@@ -128,7 +128,7 @@ public class MyScenariosController {
         Map<String,Object> result = Maps.newHashMap();
 
         List<Scenarios> scenariosList = myScenariosService.findByParam(param); //.findAllSiteInfo();
-        Integer count = myScenariosService.findAllCount(ShiroUtil.getCurrentUserId());
+        Integer count = myScenariosService.findAllScenariosCount();
         Integer filteredCount = myScenariosService.findCountByParam(param);
 
         result.put("draw",draw);

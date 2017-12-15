@@ -103,6 +103,10 @@ public class MyScenariosService {
         return myScenariosMapper.findAllCount(userId).intValue();
     }
 
+    public Integer findAllScenariosCount() {
+        return myScenariosMapper.findAllScenariosCount().intValue();
+    }
+
     /**
      * 根据查询条件查询场景信息
      * param siteName
