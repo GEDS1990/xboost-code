@@ -7,7 +7,8 @@ $(function  () {
 	var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL}); //右上角，仅包含平移和缩放按钮
 	map.addControl(top_left_control);        
 	map.addControl(top_left_navigation);     
-	map.addControl(top_right_navigation);   
+	map.addControl(top_right_navigation);
+	var  count = "";//储存变量
 	
 	
 	//初始化地图
@@ -385,13 +386,54 @@ $(function  () {
 		
 		    pointArrow1  
 		
-		], {strokeColor:"blue", strokeWeight:8, strokeOpacity:0.8});  
+		], {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.8});  
 		
 		map.addOverlay(Arrow);  
 		
 		}  
 
 }
+	//去除重复数组元素
+	function unique(arr) {
+		var result = [], hash = {};
+		for (var i = 0, elem; (elem = arr[i]) != null; i++) {
+			if (!hash[elem]) {
+				result.push(elem);
+				hash[elem] = true;
+			}
+		}
+		return result;
+	}
+	//去除重复数据 deport
+	//将对象元素转换成字符串以作比较
+	function obj2key(obj, keys){
+	    var n = keys.length,
+	        key = [];
+	    while(n--){
+	        key.push(obj[keys[n]]);
+	    }
+	    return key.join('|');
+	}
+	//去重操作
+	function uniqeByKeys(array,keys){
+	    var arr = [];
+	    var hash = {};
+	    for (var i = 0, j = array.length; i < j; i++) {
+	        var k = obj2key(array[i], keys);
+	        if (!(k in hash)) {
+	            hash[k] = true;
+	            arr .push(array[i]);
+	        }
+	    }
+	    return arr ;
+	}
+	//求时间
+	function operationTime (data) {
+		var result = parseInt(data),
+	    	h = parseInt(result/60),
+	    	m = result%60;
+	    	return add0(h)+":"+add0(m);
+	}
 	/*
 	 *deport.jsp == SolutionActivityController
 	 * 
@@ -407,7 +449,7 @@ $(function  () {
 	            "searchDelay": 1000,//搜索延迟
 	            "destroy": true,
 	            "order":[[0,'desc']],//默认排序方式
-	            "lengthMenu":[100000],//每页显示数据条数菜单
+	            "lengthMenu":[10000],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/depots/depots.json", //获取数据的URL
 	                type:"get" //获取数据的方式
@@ -437,7 +479,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	            	{
 	                    "targets":[0],
-	                    "visible":true
+	                    "visible":false
 	                },
 	                {
 	                    "targets":[1,2,3,4,5],
@@ -459,7 +501,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data.data.length);
+	            	//console.log(data.data[0]);
 	            	if (data.data.length !=0) {
 	            		var result = data.data,
 	            		arr = [],
@@ -471,23 +513,33 @@ $(function  () {
 	            		for (var i=0;i<len;i++) {
                             arr.push(result[i].curLoc);
                         }
+	            		//console.log(arr)
                         var Arr = unique(arr),
                         A_len = Arr.length;
-	            		for (var i=0;i<len;i++) {
-	            			var liser = {};
+                        //console.log(Arr)
+	            		for (var i=0;i<A_len;i++) {
+	            			
 	            			var add='<option value='+Arr[i]+'>'+add0(Arr[i])+'</option>';
 							$('#route-depot').append(add);
-							liser["curLoc"] = result[i].curLoc;
-							liser["siteType"] = result[i].siteType;
-							liser["siteName"] = result[i].siteName;
-							liser["calcDis"] = result[i].calcDis;
-							liser["lng"] = result[i].siteLongitude;
-							liser["lat"] = result[i].siteLatitude;
-							liser["nextCurLoc"] = result[i].nextCurLoc
+						}
+	            		var newResult = uniqeByKeys(result,["curLoc"]),
+						newreslen = newResult.length;
+	            		//console.log(newResult)
+	            		for (var f = 0;f<newreslen;f++) {
+	            			var liser = {};
+							liser["curLoc"] = newResult[f].curLoc;
+							liser["siteType"] = newResult[f].siteType;
+							liser["siteName"] = newResult[f].siteName;
+							liser["calcDis"] = newResult[f].calcDis;
+							liser["lng"] = newResult[f].siteLongitude;
+							liser["lat"] = newResult[f].siteLatitude;
+							liser["nextCurLoc"] = newResult[f].nextCurLoc
 							listPoint.push(liser);
 	            		}
+							
+	            		
 						//查询所有网点坐标
-						//console.log(listPoint)
+						console.log(listPoint)
 						listArry="";
 						listArry = listPoint;
 							
@@ -502,9 +554,9 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var Datas = api.rows( {page:'current'} ).data();
-			        console.log(Datas);
+			        //console.log(Datas);
 			        var _len = Datas.length;
-			        if (_len == 1) {
+			        if (_len != 0 && count != "") {
 			        	var res = Datas[0];
 						$('#depot').text("Depot "+res.siteCode);
                         $('#east').text(res.siteLatitude);
@@ -517,7 +569,7 @@ $(function  () {
                         $('#vehicle-quantity-limit').text(res.carNum);
                         $('#vehicle-weight-limit').text(res.largeCarModel);
                         $('#piece-capacity').text(res.maxOperateNum);
-					}else{
+					}else if(_len == 0 || count == ""){
 						$('#depot').text("No Data");
                         $('#east').text("--");
                         $('#north').text("--");
@@ -539,9 +591,11 @@ $(function  () {
 			$(document).on("change","#route-depot",function  () {
 				var val = $('#route-depot').val();
 				//console.log(listArry)
+				count = val;
 				if (val == 0) {
 					depotMapInit(listArry,"");
 					table.search("").draw(false);
+					console.log(1)
 					$('#depot').text("No Data");
                     $('#east').text("--");
                     $('#north').text("--");
@@ -571,25 +625,8 @@ $(function  () {
 	 *route.jsp == SolutionRouteController
 	 *
 	 */
-	//去除重复数组元素
-	function unique(array){
-        var r = [];
-        for(var i = 0, l = array.length; i<l; i++){
-            for(var j = i + 1; j < l; j++)
-                if(array[i] == array[j]){
-                	j == ++i;
-                } 
-                r.push(array[i]);
-        }
-        return r;
-    }
-	//求时间
-	function operationTime (data) {
-		var result = parseInt(data),
-	    	h = parseInt(result/60),
-	    	m = result%60;
-	    	return add0(h)+":"+add0(m);
-	}
+	
+	
 	
 	(function  () {
 		var SolutionRoute = doc.getElementById("SolutionRoute");
@@ -613,15 +650,10 @@ $(function  () {
 	                	//console.log(res)
 	                	return "Route "+add0(res.routeCount);
 	                },"name":"route_count"},
-	                {"data":function(res){return res.sequence;},"name":"sequence"},
-	                {"data":function(res){return res.curLoc},"name":"cur_loc"},
-	                {"data":function  (res) {
-	                	//console.log(res)
-	                	return res.siteName
-	                },"name":"site_name"},
-	                {"data":function  (res) {
-	                	return res.siteAddress;
-	                },"name":"site_address"},
+	                {"data":"sequence","name":"sequence"},
+	                {"data":"curLoc","name":"cur_loc"},
+	                {"data":"siteName","name":"site_name"},
+	                {"data":"siteAddress","name":"site_address"},
 	                {"data":function  (res) {
 	                	return operationTime(res.arrTime);
 	                },"name":"arr_time"},
@@ -683,23 +715,26 @@ $(function  () {
 	            		_text = $('#route-route').find("option").eq(0).text();
 	            		$('#route-name').text(_text);
 	            		
-	            		for (var i=0;i<len;i++) {
+	            		var newResult = uniqeByKeys(result,["curLoc"]),
+						newreslen = newResult.length;
+	            		//console.log(newResult)
+	            		for (var f = 0;f<newreslen;f++) {
 	            			var liser = {};
-	            			liser["routeCount"] = result[i].routeCount;
-							liser["curLoc"] = result[i].curLoc;
-							liser["siteType"] = result[i].siteType;
-							liser["siteName"] = result[i].siteName;
-							liser["calcDis"] = result[i].calcDis;
-							liser["lng"] = result[i].siteLongitude;
-							liser["lat"] = result[i].siteLatitude;
-							liser["nextCurLoc"] = result[i].nextCurLoc;
-							var arrTime = operationTime(result[i].arrTime);
-							var endTime = operationTime(result[i].endTime);
+	            			liser["routeCount"] = newResult[f].routeCount;
+							liser["curLoc"] = newResult[f].curLoc;
+							liser["siteType"] = newResult[f].siteType;
+							liser["siteName"] = newResult[f].siteName;
+							liser["calcDis"] = newResult[f].calcDis;
+							liser["lng"] = newResult[f].siteLongitude;
+							liser["lat"] = newResult[f].siteLatitude;
+							liser["nextCurLoc"] = newResult[f].nextCurLoc;
+							var arrTime = operationTime(newResult[f].arrTime);
+							var endTime = operationTime(newResult[f].endTime);
 							liser["arrTime"] = arrTime;
 							liser["endTime"] = endTime;
-							liser["sbVol"] = result[i].sbVol;
-							liser["unloadVol"] = result[i].unloadVol;
-							liser["sequence"] = result[i].sequence;
+							liser["sbVol"] = newResult[f].sbVol;
+							liser["unloadVol"] = newResult[f].unloadVol;
+							liser["sequence"] = newResult[f].sequence;
 							listPoint.push(liser);
 	            		}
 	            		//console.log(listPoint);
@@ -761,7 +796,7 @@ $(function  () {
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
-	                {"data":"car_name","name":"car_name"},
+	                {"data":"carName","name":"car_name"},
 	                {"data":"sequence","name":"sequence"},
 	                {"data":"curLoc","name":"cur_loc"},
 	                {"data":"siteName","name":"site_name"},
@@ -807,7 +842,7 @@ $(function  () {
 	            },
 	            "initComplete": function (settings, data) {
 	            	var $this = this;
-	            	//console.log(data);
+	            	console.log(data);
 	            	if (data.data.length != 0) {
 	            		var result = data.data,
 	            		arr = [],
@@ -827,23 +862,30 @@ $(function  () {
 	            		var val = $('#route-vehicles').find("option").eq(0).val(),
 	            		_text = $('#route-vehicles').find("option").eq(0).text();
 	            		$('#route-name').text(_text);
-	            		for (var i=0;i<len;i++) {
+	            		
+	            		
+	            		
+	            		
+	            		var newResult = uniqeByKeys(result,["curLoc"]),
+						newreslen = newResult.length;
+	            		//console.log(newResult)
+	            		for (var f = 0;f<newreslen;f++) {
 	            			var liser = {};
-	            			liser["car_name"] = result[i].carType+result[i].routeCount;
-							liser["curLoc"] = result[i].curLoc;
-							liser["siteType"] = result[i].siteType;
-							liser["siteName"] = result[i].siteName;
-							liser["calcDis"] = result[i].calcDis;
-							liser["lng"] = result[i].siteLongitude;
-							liser["lat"] = result[i].siteLatitude;
-							liser["nextCurLoc"] = result[i].nextCurLoc;
-							var arrTime = operationTime(result[i].arrTime);
-							var endTime = operationTime(result[i].endTime);
+	            			liser["carName"] = newResult[f].carType+newResult[f].routeCount;
+							liser["curLoc"] = newResult[f].curLoc;
+							liser["siteType"] = newResult[f].siteType;
+							liser["siteName"] = newResult[f].siteName;
+							liser["calcDis"] = newResult[f].calcDis;
+							liser["lng"] = newResult[f].siteLongitude;
+							liser["lat"] = newResult[f].siteLatitude;
+							liser["nextCurLoc"] = newResult[f].nextCurLoc;
+							var arrTime = operationTime(newResult[f].arrTime);
+							var endTime = operationTime(newResult[f].endTime);
 							liser["arrTime"] = arrTime;
 							liser["endTime"] = endTime;
-							liser["sbVol"] = result[i].sbVol;
-							liser["unloadVol"] = result[i].unloadVol;
-							liser["sequence"] = result[i].sequence;
+							liser["sbVol"] = newResult[f].sbVol;
+							liser["unloadVol"] = newResult[f].unloadVol;
+							liser["sequence"] = newResult[f].sequence;
 							listPoint.push(liser);
 	            		}
 	            		//console.log(listPoint);
