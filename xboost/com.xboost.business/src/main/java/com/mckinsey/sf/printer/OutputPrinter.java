@@ -512,6 +512,7 @@ public class OutputPrinter implements IConstants {
 						}
 					}
 					int sequence = 0;
+					int num = 1;
 					for(int index = 0;index <newActs.size()-1;index++){
 						
 						Activity cur = newActs.get(index);
@@ -551,7 +552,8 @@ public class OutputPrinter implements IConstants {
 						routePojo.setRouteCount(String.valueOf(routeCount));
 //						rr.createCell(1).setCellValue(carType);
 						routePojo.setCarType(carType);
-						routePojo.setCarName(carType +"-"+ String.valueOf(UUID.randomUUID()));
+						routePojo.setCarName(carType.concat( String.valueOf(num)));
+						num++;
 //						rr.createCell(2).setCellValue(newActs.get(1).getLocation()+"-"+newActs.get(newActs.size()-2).getLocation());
 						routePojo.setLocation(newActs.get(1).getLocation()+"-"+newActs.get(newActs.size()-2).getLocation());
 //						rr.createCell(4).setCellValue(cur.getLocation());
