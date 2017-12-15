@@ -176,8 +176,8 @@ $(function  () {
 				}
 			}
 			routelist.sort(sortNumber);
-			console.log(routelist);
-			console.log(listPoint);
+			//console.log(routelist);
+			//console.log(listPoint);
 			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
 				if (i==rl_len-1) {
 					continue;
@@ -450,7 +450,7 @@ $(function  () {
 	            "searchDelay": 1000,//搜索延迟
 	            "destroy": true,
 	            "order":[[0,'desc']],//默认排序方式
-	            "lengthMenu":[10000],//每页显示数据条数菜单
+	            "lengthMenu":[100000],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/depots/depots.json", //获取数据的URL
 	                type:"get" //获取数据的方式
@@ -461,19 +461,13 @@ $(function  () {
 	                {"data":"curLoc","name":"cur_loc"},
 	                {"data":"carType","name":"car_type"},
 	                {"data":function  (res) {
-	                	var result = parseInt(res.arrTime),
-	                	h = parseInt(result/60),
-	                	m = result%60;
-	                	return add0(h)+":"+add0(m);
+	                	return operationTime(res.arrTime);
 	                },"name":"arr_time"},
 	                {"data":function  (res) {
 	                	return "Unload "+res.unloadVol+" , "+"Load "+res.sbVol;
 	                },"name":"unloadVol & sbVol"},
 	                {"data":function  (res) {
-	                	var result = parseInt(res.endTime),
-	                	h = parseInt(result/60),
-	                	m = result%60;
-	                	return add0(h)+":"+add0(m);
+	                	return operationTime(res.endTime);
 	                },"name":"end_time"}
 	                
 	            ],
@@ -502,14 +496,14 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data.data[0]);
+	            	console.log(data);
 	            	if (data.data.length !=0) {
 	            		var result = data.data,
 	            		arr = [],
 	            		listPoint = [],
 	            		len = result.length;
 	            		$('#route-depot').empty();
-	            		$('#route-depot').off("click");
+	            		$('#route-depot').off("change");
 	            		$('#route-depot').append('<option value="0">All Depots</option>');
 	            		for (var i=0;i<len;i++) {
                             arr.push(result[i].curLoc);
@@ -556,7 +550,20 @@ $(function  () {
 			        // 输出当前页的数据到浏览器控制台
 			        var Datas = api.rows( {page:'current'} ).data();
 			        //console.log(Datas);
+			        var listPoint = [];
 			        var _len = Datas.length;
+			        for (var f = 0;f<_len;f++) {
+            			var liser = {};
+						liser["curLoc"] = Datas[f].curLoc;
+						liser["siteType"] = Datas[f].siteType;
+						liser["siteName"] = Datas[f].siteName;
+						liser["calcDis"] = Datas[f].calcDis;
+						liser["lng"] = Datas[f].siteLongitude;
+						liser["lat"] = Datas[f].siteLatitude;
+						liser["nextCurLoc"] = Datas[f].nextCurLoc
+						listPoint.push(liser);
+            		}
+			        console.log(listPoint)
 			        if (_len != 0 && count != "") {
 			        	var res = Datas[0];
 						$('#depot').text("Depot "+res.siteCode);
