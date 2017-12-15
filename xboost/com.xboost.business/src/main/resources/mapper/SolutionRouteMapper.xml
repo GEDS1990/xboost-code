@@ -91,6 +91,7 @@
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
         <result property="routeCount" column="route_count"/>
+        <result property="carName" column="car_name"/>
         <result property="carType" column="car_type"/>
         <result property="location" column="location"/>
         <result property="sequence" column="sequence"/>
@@ -111,6 +112,7 @@
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
         <result property="routeCount" column="route_count"/>
+        <result property="carName" column="car_name"/>
         <result property="carType" column="car_type"/>
         <result property="location" column="location"/>
         <result property="sequence" column="sequence"/>
