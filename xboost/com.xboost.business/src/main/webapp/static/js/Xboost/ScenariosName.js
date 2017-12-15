@@ -1178,7 +1178,7 @@ $(function  () {
 	        $("body").on("click",".openLink-scen",function  () {
 	        	var $this = $(this);
 	        	var openScenariosId = $this.attr("data-scenariosid");
-	        	var scenName = $this.parent("td").parent("tr").find("td").eq(1).text();
+	        	var scenName = $this.parent("td").parent("tr").find("td").eq(0).text();
 	        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId,"openScenariosName":scenName}).done(function  (res) {
 	        		if (res == "success") {
 	        			$('#scen-name').remove();
