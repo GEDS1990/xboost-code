@@ -168,15 +168,16 @@ $(function  () {
 		}
 		if (val) {
 			//规划线路
-			var routelist = [];
+			var list = [];
 			for (var q=0;q<p_len;q++) {
 				var routeNum = listPoint[q].routeCount;
 				if (val == routeNum) {
-					routelist.push(listPoint[q]);
+					list.push(listPoint[q]);
 				}
 			}
+			var routelist = uniqeByKeys(list,["sequence"]);
 			routelist.sort(sortNumber);
-			//console.log(routelist);
+			console.log(routelist);
 			//console.log(listPoint);
 			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
 				if (i==rl_len-1) {
@@ -253,13 +254,14 @@ $(function  () {
 		}
 		if (val) {
 			//规划线路
-			var routelist = [];
+			var list = [];
 			for (var q=0;q<p_len;q++) {
 				var car_name = listPoint[q].car_name;
 				if (val == car_name) {
-					routelist.push(listPoint[q]);
+					list.push(listPoint[q]);
 				}
 			}
+			var routelist = uniqeByKeys(list,["sequence"]);
 			routelist.sort(sortNumber);
 			//console.log(routelist[3]);
 			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
