@@ -208,6 +208,9 @@ table.dataTable thead>tr>td.sorting{
 .modal-dialog{
 	width: 800px;
 }
+.modal-dialog.modal-del{
+	width: 500px;
+}
 #Depots_Info_filter,
 #Depots_Distance_filter,
 #Transportation_filter,
