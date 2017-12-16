@@ -781,8 +781,8 @@ $(function  () {
 			        var data_len = data.length;
 			        if (data_len != 0) {
 			        	var res = data[0];
-						$('#vehicle-load-requirement').text(res.max_load);
-						$('#vehicle-piece-capacity').text(res.max_running_time);
+						$('#vehicle-load-requirement').text(res.carType);
+						$('#vehicle-piece-capacity').text(res.max_load);
 						$('#speed-requirement').text(res.velocity);
 			        }else{
 			        	$('#route-name').text("No Data");
