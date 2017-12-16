@@ -10,6 +10,8 @@ import java.io.Serializable;
 public class ModelArg implements Serializable {
     private String id;
     private String scenariosId;            //场景id
+    private String modelType;              //算法模型
+    private String parameterCode;         //参数代码
     private String parameterName;      //各环节时间参数
     private String data;           //数据
     private String note;            //备注
@@ -33,6 +35,22 @@ public class ModelArg implements Serializable {
 
     public void setScenariosId(String scenariosId) {
         this.scenariosId = scenariosId;
+    }
+
+    public String getModelType() {
+        return modelType;
+    }
+
+    public void setModelType(String modelType) {
+        this.modelType = modelType;
+    }
+
+    public String getParameterCode() {
+        return parameterCode;
+    }
+
+    public void setParameterCode(String parameterCode) {
+        this.parameterCode = parameterCode;
     }
 
     public String getParameterName() {

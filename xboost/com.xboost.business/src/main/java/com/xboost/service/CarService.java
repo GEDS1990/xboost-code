@@ -236,7 +236,7 @@ public class CarService {
         XSSFWorkbook workBook = new XSSFWorkbook();
         // 在workbook中添加一个sheet,对应Excel文件中的sheet
 
-        XSSFSheet sheet = workBook.createSheet("Vehicals");
+        XSSFSheet sheet = workBook.createSheet("Vehicles");
         ExportUtil exportUtil = new ExportUtil(workBook, sheet);
         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();

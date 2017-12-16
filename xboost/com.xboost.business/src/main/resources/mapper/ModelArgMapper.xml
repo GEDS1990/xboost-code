@@ -5,12 +5,12 @@
     <cache/>
 
     <insert id="add">
-        INSERT into t_model_arg(scenariosId ,parameter_name,data,note,str1,str2,str3,createtime,updatetime)
-        VALUES (#{scenariosId},#{parameterName},#{data},#{note},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+        INSERT into t_model_arg(scenariosId ,model_type,parameter_code,parameter_name,data,note,str1,str2,str3,createtime,updatetime)
+        VALUES (#{scenariosId},#{modelType},#{parameterCode},#{parameterName},#{data},#{note},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
     <update id="update">
-        update t_model_arg set scenariosId=#{scenariosId} ,parameter_name=#{parameterName},data=#{data},note=#{note}
+        update t_model_arg set scenariosId=#{scenariosId},model_type=#{modelType},parameter_code=#{parameterCode},parameter_name=#{parameterName},data=#{data},note=#{note}
         where id = #{id}
     </update>
 
@@ -36,7 +36,7 @@
     </select>
 
     <select id="findCountByParam" resultType="long" parameterType="map">
-        SELECT count(*) FROM t_model_arg
+        SELECT count(*) FROM t_model_arg where scenariosId = #{scenariosId}
         <where>
             scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
@@ -50,16 +50,26 @@
     </select>
 
     <update id="editModelArg">
-        UPDATE t_model_arg SET scenariosId = #{scenariosId},parameter_name = #{parameterName},data = #{data},note=#{note} where id = #{id}
+        UPDATE t_model_arg SET scenariosId = #{scenariosId},model_type=#{modelType},parameter_code=#{parameterCode},parameter_name = #{parameterName},data = #{data},note=#{note} where id = #{id}
     </update>
 
     <delete id="delById">
         DELETE FROM t_model_arg WHERE id = #{id}
     </delete>
 
+    <select id="findSitePeopleWork" resultType="Integer">
+        SELECT data FROM t_model_arg where scenariosId=#{scenariosId} AND model_type = #{modelType} and parameter_code="site_people_work"
+    </select>
+
+    <select id="findDistribPeopleWork" resultType="Integer">
+        SELECT data FROM t_model_arg where scenariosId=#{scenariosId} AND model_type = #{modelType} and parameter_code="distrib_people_work"
+    </select>
+
     <resultMap id="modelArgMap" type="ModelArg">
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
+        <result property="modelType" column="model_type"/>
+        <result property="parameterCode" column="parameter_code"/>
         <result property="parameterName" column="parameter_name"/>
         <result property="data" column="data"/>
         <result property="note" column="note"/>
