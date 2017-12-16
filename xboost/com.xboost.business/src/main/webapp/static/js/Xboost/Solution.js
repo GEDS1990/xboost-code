@@ -528,15 +528,15 @@ $(function  () {
 	            		var newResult = uniqeByKeys(result,["curLoc"]),
 						newreslen = newResult.length;
 	            		//console.log(newResult)
-	            		for (var f = 0;f<newreslen;f++) {
+	            		for (var f = 0;f<len;f++) {
 	            			var liser = {};
-							liser["curLoc"] = newResult[f].curLoc;
-							liser["siteType"] = newResult[f].siteType;
-							liser["siteName"] = newResult[f].siteName;
-							liser["calcDis"] = newResult[f].calcDis;
-							liser["lng"] = newResult[f].siteLongitude;
-							liser["lat"] = newResult[f].siteLatitude;
-							liser["nextCurLoc"] = newResult[f].nextCurLoc
+							liser["curLoc"] = result[f].curLoc;
+							liser["siteType"] = result[f].siteType;
+							liser["siteName"] = result[f].siteName;
+							liser["calcDis"] = result[f].calcDis;
+							liser["lng"] = result[f].siteLongitude;
+							liser["lat"] = result[f].siteLatitude;
+							liser["nextCurLoc"] = result[f].nextCurLoc
 							listPoint.push(liser);
 	            		}
 							
