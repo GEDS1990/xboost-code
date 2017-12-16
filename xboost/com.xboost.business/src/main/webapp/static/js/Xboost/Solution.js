@@ -707,7 +707,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data);
+	            	console.log(data);
 	            	if (data.data.length != 0) {
 	            		var result = data.data,
 	            		arr = [],
