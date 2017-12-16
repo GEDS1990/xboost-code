@@ -87,14 +87,14 @@ public class SolutionRouteController {
         List<Map<String,Object>> routeList = solutionRouteService.findByRoute(param); //.findAll();
         Integer count = solutionRouteService.findAllCountByRoute(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = solutionRouteService.findCountByRoute(param);
-        String totalDistance = solutionRouteService.findTotalDistance(ShiroUtil.getOpenScenariosId(),Strings.toUTF8(searchValue));
+  //      String totalDistance = solutionRouteService.findTotalDistance(ShiroUtil.getOpenScenariosId(),searchValue);
 
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",routeList);
-        result.put("data",totalDistance);
+    //    result.put("totalDistance",totalDistance);
         return result;
     }
 
@@ -109,4 +109,13 @@ public class SolutionRouteController {
         return result;
     }
 
+
+    //查询路线id
+    @RequestMapping(value = "/totalDistance.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String totalDistance(String routeCount) {
+        String totalDistance =solutionRouteService.findTotalDistance(ShiroUtil.getOpenScenariosId(),routeCount);
+
+        return totalDistance;
+    }
 }
