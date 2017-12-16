@@ -707,7 +707,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	console.log(data);
+	            	//console.log(data);
 	            	if (data.data.length != 0) {
 	            		var result = data.data,
 	            		arr = [],
@@ -756,8 +756,18 @@ $(function  () {
 	            		
 	            		var table = $('#SolutionRoute').DataTable();
 	            		setTimeout(function(){
-	            			table.search(_val).draw();
-	            			routeMapInit(listPoint,_val)
+	            			if (_val) {
+	            				table.search(_val).draw();
+	            				routeMapInit(listPoint,_val);
+	            				$.get("/route/totalDistance.json",{"routeCount":_val}).done(function (res){
+									if (res) {
+										$('#total-distance').text(res);
+									}
+								}).fail(function (){
+									
+								});
+	            			}
+	            			
 	            		},0)
 	            		
 	            	}
@@ -767,11 +777,10 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var data = api.rows( {page:'current'} ).data();
-			        console.log(data)
+			        //console.log(data)
 			        var data_len = data.length;
 			        if (data_len != 0) {
 			        	var res = data[0];
-			        	$('#total-distance').text(res.totalDistance);
 						$('#vehicle-load-requirement').text(res.max_load);
 						$('#vehicle-piece-capacity').text(res.max_running_time);
 						$('#speed-requirement').text(res.velocity);
@@ -784,7 +793,7 @@ $(function  () {
 			        }
 			        
 			        
-	            }
+	           }
 	        });
 	        //点击选项 来查询
 	        var table = $('#SolutionRoute').DataTable();
@@ -795,6 +804,13 @@ $(function  () {
 				table.search(val).draw(false);
 	            $('#route-name').text(_text);
 				routeMapInit(listArry,val);
+				$.get("/route/totalDistance.json",{"routeCount":val}).done(function (res){
+					if (res) {
+						$('#total-distance').text(res);
+					}
+				}).fail(function (){
+					console.log("fail")
+				});
 			});
 		}
 		
