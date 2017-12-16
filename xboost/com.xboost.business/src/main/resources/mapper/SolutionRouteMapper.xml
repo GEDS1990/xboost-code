@@ -67,6 +67,7 @@
 
     <select id="findByRoute" parameterType="map" resultType="map" resultMap="modelRouteAndSite">
         SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        left join t_car_info c on r.car_name = c.name
         <where>
             r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
@@ -79,6 +80,7 @@
 
     <select id="findCountByRoute" resultType="long" parameterType="map">
         SELECT count(*) FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        left join t_car_info c on r.car_name = c.name
         <where>
             r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
