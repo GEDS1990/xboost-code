@@ -94,7 +94,7 @@ public class SolutionRouteController {
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",routeList);
-        result.put("totalDistance",totalDistance);
+        result.put("data",totalDistance);
         return result;
     }
 
