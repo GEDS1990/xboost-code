@@ -924,10 +924,10 @@ $(function  () {
 			        if (datas_len !=0) {
 			        	var result = datas[0];
 			        	$('#veh-type').text(result.carType);
-			        	$('#veh-source').text(result.car_source);
-			        	$('#veh-limit').text(result.max_load);
-			        	$('#veh-piece').text(result.max_running_time);
-			        	$('#veh-unloadtime').text(result.duration_unload_full);
+			        	$('#veh-source').text(result.carSource);
+			        	$('#veh-limit').text(result.maxLoad);
+			        	$('#veh-piece').text(result.maxRunningTime);
+			        	$('#veh-unloadtime').text(result.durationUnloadFull);
 			        	$('#veh-speed').text(result.velocity);
 			        }else{
 			        	$('#route-name').text("No Data");
