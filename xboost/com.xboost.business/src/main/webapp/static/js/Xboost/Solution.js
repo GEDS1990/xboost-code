@@ -767,7 +767,22 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var data = api.rows( {page:'current'} ).data();
-			        //console.log(data)
+			        console.log(data)
+			        var data_len = data.length;
+			        if (data_len != 0) {
+			        	var res = data[0];
+			        	$('#total-distance').text(res.totalDistance);
+						$('#vehicle-load-requirement').text(res.max_load);
+						$('#vehicle-piece-capacity').text(res.max_running_time);
+						$('#speed-requirement').text(res.velocity);
+			        }else{
+			        	$('#route-name').text("No Data");
+			        	$('#total-distance').text("--");
+						$('#vehicle-load-requirement').text("--");
+						$('#vehicle-piece-capacity').text("--");
+						$('#speed-requirement').text("--");
+			        }
+			        
 			        
 	            }
 	        });
@@ -776,7 +791,7 @@ $(function  () {
 			$(document).on("change","#route-route",function  () {
 				var val = $('#route-route').val(),
 					_text = "Route "+add0(val);
-					console.log(val)
+					//console.log(val)
 				table.search(val).draw(false);
 	            $('#route-name').text(_text);
 				routeMapInit(listArry,val);
