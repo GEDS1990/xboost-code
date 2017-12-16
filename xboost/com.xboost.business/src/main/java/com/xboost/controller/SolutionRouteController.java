@@ -87,12 +87,14 @@ public class SolutionRouteController {
         List<Map<String,Object>> routeList = solutionRouteService.findByRoute(param); //.findAll();
         Integer count = solutionRouteService.findAllCountByRoute(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = solutionRouteService.findCountByRoute(param);
+        String totalDistance = solutionRouteService.findTotalDistance(ShiroUtil.getOpenScenariosId(),Strings.toUTF8(searchValue));
 
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",routeList);
+        result.put("totalDistance",totalDistance);
         return result;
     }
 

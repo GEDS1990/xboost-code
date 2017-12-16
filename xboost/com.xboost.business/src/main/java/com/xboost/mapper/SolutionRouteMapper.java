@@ -52,5 +52,7 @@ public interface SolutionRouteMapper {
     // 查询全部路线信息,根据curLoc和siteCode关联查询t_solution_route,t_site_info
     Long findAllCountByRoute(String scenariosId);
 
+    String findTotalDistance(@Param("scenariosId")String scenariosId,@Param("routeCount") String routeCount);
+
 }
 

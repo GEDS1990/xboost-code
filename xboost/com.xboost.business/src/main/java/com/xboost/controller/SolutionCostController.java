@@ -77,6 +77,13 @@ public class SolutionCostController {
         Integer sitePeopleWork = modelArgService.findSitePeopleWork(scenariosId,modelType);
         Integer distribPeopleWork = modelArgService.findDistribPeopleWork(scenariosId,modelType);
 
+        //单日人工成本
+
+
+        //单日总体人工成本
+
+
+
         result.put("data",costList);
         result.put("sitePeopleWork",sitePeopleWork);
         result.put("distribPeopleWork",distribPeopleWork);

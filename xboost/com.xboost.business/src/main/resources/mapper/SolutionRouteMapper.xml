@@ -82,9 +82,13 @@
         <where>
             r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                and  r.id = #{keyword}
+                and  r.route_count = #{keyword}
             </if>
         </where>
+    </select>
+
+    <select id="findTotalDistance" resultType="String" parameterType="map">
+        SELECT SUM(calc_dis) FROM t_solution_route WHERE scenariosId=#{scenariosId} and route_count=#{routeCount}
     </select>
 
     <resultMap id="modelRoute" type="Route">
