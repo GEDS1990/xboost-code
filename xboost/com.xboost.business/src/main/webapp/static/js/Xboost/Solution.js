@@ -177,7 +177,7 @@ $(function  () {
 			}
 			var routelist = uniqeByKeys(list,["sequence"]);
 			routelist.sort(sortNumber);
-			//console.log(routelist);
+			console.log(routelist);
 			//console.log(listPoint);
 			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
 				if (i==rl_len-1) {
@@ -234,6 +234,7 @@ $(function  () {
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
+			console.log("v")
 		}
 		//初始化坐标
 		var p_len = listPoint.length;
@@ -254,16 +255,18 @@ $(function  () {
 		}
 		if (val) {
 			//规划线路
+			//console.log(listPoint)
 			var list = [];
 			for (var q=0;q<p_len;q++) {
-				var car_name = listPoint[q].car_name;
-				if (val == car_name) {
+				var carName = listPoint[q].carName;
+				if (val == carName) {
 					list.push(listPoint[q]);
 				}
 			}
+			//console.log(list)
 			var routelist = uniqeByKeys(list,["sequence"]);
 			routelist.sort(sortNumber);
-			//console.log(routelist[3]);
+			//console.log(routelist);
 			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
 				if (i==rl_len-1) {
 					continue;
@@ -886,7 +889,7 @@ $(function  () {
 	            },
 	            "initComplete": function (settings, data) {
 	            	var $this = this;
-	            	//console.log(data);
+	            	console.log(data);
 	            	if (data.data.length != 0) {
 	            		var result = data.data,
 	            		arr = [],
@@ -950,7 +953,7 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var datas = api.rows( {page:'current'} ).data();
-			        //console.log(datas);
+			        console.log(datas);
 			        var datas_len = datas.length;
 			        if (datas_len !=0) {
 			        	var result = datas[0];
