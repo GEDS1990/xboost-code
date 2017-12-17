@@ -72,12 +72,12 @@ public class CascadeController {
 //        LogFactory.getLog(AccountController.class).info("input:"+input);
 
         }else if("2".equals(distMode)){
-            RelayModeUtil rm = new RelayModeUtil();
-            try {
-                rm.excute();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            RelayModeUtil rm = new RelayModeUtil();
+//            try {
+//                rm.excute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }else{
 
         }
