@@ -75,7 +75,7 @@
 
     <select id="findAllBySiteCode" resultType="map" resultMap="modelRouteAndSite">
         SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
-        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} order by arr_time asc
     </select>
 
     <select id="findAllCountBySiteCode" resultType="long">
@@ -91,7 +91,7 @@
                 and  r.cur_loc = #{keyword}
             </if>
         </where>
-        <!--order by ${orderColumn} ${orderType}-->
+        order by arr_time asc
         limit ${start},${length}
     </select>
 
