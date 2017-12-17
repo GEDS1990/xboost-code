@@ -249,6 +249,11 @@
             <artifactId>spring-messaging</artifactId>
             <version>4.3.7.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.6.1</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>xboost</finalName>

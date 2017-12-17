@@ -81,7 +81,25 @@ public interface IConstants {
 	double PROCESSTING_TIME =0;
 	
 	double DISTANCE_COST = 0;
+	//接力模型变量 start
+	//assumptions
+	int truck_capacity = 400;
+	double cost_per_km = 6.8;
+	int shift_pct = 1;
+	int truck_capacity2 = 35;
+	int truck_capacity3 = 60;
+	int truck_capacity4 = 35;
+	int cost_per_km2 = 3;
+	int shift_pct2 = 1;
+	int speed1 = 15;
+	int speed2 = 12;
+	int speed3 = 20;
+	int speed4 = 30;
+	int dist_limit2 = 30;
+	int dist_limit_bike = 5;
+	int dist_limit_dada = 10;
 
+	//接力模型变量 end
 
 	SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
 }

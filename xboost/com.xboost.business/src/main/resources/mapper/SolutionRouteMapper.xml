@@ -57,7 +57,7 @@
 
     <select id="findAllByRoute" resultType="map" resultMap="modelRouteAndSite">
         SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
-        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} order by sequence asc
     </select>
 
     <select id="findAllCountByRoute" resultType="long">
@@ -74,7 +74,7 @@
                 and  r.route_count = #{keyword}
             </if>
         </where>
-        <!--order by ${orderColumn} ${orderType}-->
+        order by sequence asc
         limit ${start},${length}
     </select>
 

@@ -52,6 +52,7 @@ public class RoutingTransportCosts implements ITransportCosts,IConstants,Seriali
 //		this.fixedStopTime = fixedStopTime;
         this.distMode = distMode;
 		if(distMode == 1){
+			//串点模型
 			/*try {
 				BufferedReader br = new BufferedReader(new FileReader(distance));
 				line = br.readLine();
@@ -81,6 +82,7 @@ public class RoutingTransportCosts implements ITransportCosts,IConstants,Seriali
 		}
 		
 		if(distMode == 2){
+			//接力模型
 			//TODO read distance2
 //			To mod by geds
 			OutputPrinter.printError("To mod by geds----- ");

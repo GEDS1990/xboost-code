@@ -552,7 +552,7 @@ public class OutputPrinter implements IConstants {
 						routePojo.setRouteCount(String.valueOf(routeCount));
 //						rr.createCell(1).setCellValue(carType);
 						routePojo.setCarType(carType);
-						routePojo.setCarName(carType.concat( String.valueOf(num)));
+						routePojo.setCarName(carType.concat(String.valueOf(routeCount)));
 						num++;
 //						rr.createCell(2).setCellValue(newActs.get(1).getLocation()+"-"+newActs.get(newActs.size()-2).getLocation());
 						routePojo.setLocation(newActs.get(1).getLocation()+"-"+newActs.get(newActs.size()-2).getLocation());
@@ -590,7 +590,8 @@ public class OutputPrinter implements IConstants {
 									if(type.equals(curJ.getType())){
 										count1 ++;
 										sbLoc.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"/");
-										sbVol.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]+"/");
+										sbVol.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"-"
+												+CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]+"/");
 										currentLoc.add(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation());
 										
 										//TODO: update sheet2
@@ -598,7 +599,7 @@ public class OutputPrinter implements IConstants {
 //										rrr4.createCell(0).setCellValue(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getPickup().getLocation());
 										activityPojo.setPickupLoc(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getPickup().getLocation());
 //										rrr4.createCell(1).setCellValue(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation());
-										activityPojo.setDeliveryLoc(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation());
+//										activityPojo.setDeliveryLoc(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation());
 //										rrr4.createCell(2).setCellValue(routeCount);
 										activityPojo.setRouteCount(String.valueOf(routeCount));
 										//TODO
