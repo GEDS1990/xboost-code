@@ -6,6 +6,9 @@
 	-o-transform: translateX(-50%);
  * */
 /********scenariosname*********/
+select:hover{
+	cursor: pointer;
+}
 .sim-content.scen{
 	margin-top: 20px;
 }

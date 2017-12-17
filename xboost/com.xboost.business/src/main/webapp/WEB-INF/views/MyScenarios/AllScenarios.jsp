@@ -190,7 +190,7 @@
             	<div class="modal-body">
                     <input type="hidden" name="scenariosId" id="scenariosId" value="">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">User*:</label>
+                        <label class="col-sm-3 control-label">User*:</label>
                         <div class="col-sm-7">
                             <input type="hidden" name="userId"  id="userId"/>
                             <div  class="form-control user" id="user-out">

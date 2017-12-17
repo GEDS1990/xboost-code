@@ -22,6 +22,7 @@
     <!-- Custom Fonts -->
     <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/static/js/metisMenu/metisMenu.min.css">
+    <link rel="stylesheet" href="/static/css/iconfont.css" />
     <link rel="stylesheet" href="/static/css/Xboost/xb_main.css" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,43 +37,56 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+    	<header class="index-fl">
+    		<h1>McKinsey&Company</h1>
+    		<p>Xboost System</p>
+    	</header>
+        <div class="index-fr">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-coffee"></i>Xboost</h3>
+                    <h3 class="panel-title text-center">Account Login</h3>
                 </div>
                 <div class="panel-body">
-                    <c:if test="${not empty message}">
-                        <div class="alert ${message.state}">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            ${message.message}
-                        </div>
-                    </c:if>
                     <form id="loginForm" method="post">
                         <fieldset>
-                            <div class="form-group">
+                            <div class="form-group posr">
+                            	<i class="iconfont icon-user"></i>
                                 <input class="form-control" placeholder="User name" name="tel" type="text" id="tel" autofocus>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group posr">
+                            	<i class="iconfont icon-lock"></i>
                                 <input class="form-control" placeholder="Password" name="password" type="password" id="password" value="">
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input name="remember" type="checkbox" value="Remember Me">Remember user name
-                                </label>
-                            </div>
+                            <!--<div class="form-group posr">
+                            	<i class="iconfont icon-key"></i>
+                                <input type="text" class="form-control" id="vcode" placeholder="验证码" />
+                                <span id="code" title="看不清，换一张"></span>
+                            </div>-->
+                            <c:if test="${not empty message}">
+		                        <div class="alert ${message.state}">
+		                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                            ${message.message}
+		                        </div>
+		                    </c:if>
+		                    <c:if test="${not message}">
+			                    <div class="alert alert-danger " id="key-info">
+		                            <button type="button" class="close" ><span id="key-info-close">&times;</span></button>
+		                            <span id="keyerro-info"></span>
+		                        </div>
+	                        </c:if>
                             <!-- Change this to a button or input when using this as a form -->
                             <button id="loginBtn" type="button" class="btn btn-lg btn-success btn-block">Login in</button>
                             <%--<button id="registerBtn" type="button" class="btn btn-lg btn-register btn-block">注册账号</button>--%>
                         </fieldset>
                     </form>
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- /.navbar-static-side -->
-<div class="modal fade" id="newUserModal">
+<!--<div class="modal fade" id="newUserModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -129,9 +143,9 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" id="saveBtn" class="btn btn-primary">保存</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>-->
 <!-- jQuery -->
 <script src="/static/js/jquery.min.js"></script>
 
@@ -140,6 +154,7 @@
 <script src="/static/js/metisMenu/metisMenu.min.js"></script>
 <!-- Custom Theme JavaScript -->
 <script src="/static/js/sb-admin-2.js"></script>
+<script src="/static/js/Xboost/xbMain.js"></script>
 
 <script>
     $(function(){
@@ -148,38 +163,8 @@
 			setTimeout(function  () {
 				$('.alert.alert-success').fadeOut("slow");
 			},1000)
-		})(),
-        $("#loginBtn").click(function(){
-            if(!$("#tel").val()) {
-                $("#tel").focus();
-                return;
-            }
-            if(!$("#password").val()) {
-                $("#password").focus();
-                return;
-            }
-            $("#loginForm").submit();
-        });
-
-        //新用户注册
-        $("#registerBtn").click(function(){
-            $("#newUserModal").modal('show');
-        });
-        $("#saveBtn").click(function(){
-            debugger;
-            $.post("/account/new",$("#newUserForm").serialize())
-                .done(function(result){
-                    if("success" == result) {
-                        debugger;
-                        $("#newUserForm")[0].reset();
-                        $("#newUserModal").modal("hide");
-                        dt.ajax.reload();
-                    }
-                }).fail(function(){
-                alert("添加时出现异常");
-            });
-
-        });
+		})()
+        
     });
 </script>
 

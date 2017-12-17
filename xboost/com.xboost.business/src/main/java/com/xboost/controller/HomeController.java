@@ -71,13 +71,13 @@ public class HomeController {
             redirectAttributes.addFlashAttribute("message",new Message(Message.ERROR,ex.getMessage()));
             return "redirect:/";
         } catch (UnknownAccountException ex) {
-            redirectAttributes.addFlashAttribute("message",new Message(Message.ERROR,ex.getMessage()));
+            redirectAttributes.addFlashAttribute("message",new Message(Message.ERROR,"This name or password is incorrect"));
             return "redirect:/";
         } catch (AuthenticationException ex) {
-            redirectAttributes.addFlashAttribute("message",new Message(Message.ERROR,"账号或密码错误"));
+            redirectAttributes.addFlashAttribute("message",new Message(Message.ERROR,"This name or password is incorrect"));
             return "redirect:/";
         }catch (java.lang.IllegalArgumentException ex) {
-            redirectAttributes.addFlashAttribute("message",new Message(Message.ERROR,"服务错误"));
+            redirectAttributes.addFlashAttribute("message",new Message(Message.ERROR,"Service error"));
             return "redirect:/";
         }
     }
@@ -91,7 +91,7 @@ public class HomeController {
     public String logout(RedirectAttributes redirectAttributes) {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        redirectAttributes.addFlashAttribute("message",new Message(Message.SUCCESS,"你已安全退出"));
+        redirectAttributes.addFlashAttribute("message",new Message(Message.SUCCESS,"You have withdrawn safely"));
         return "redirect:/";
     }
 

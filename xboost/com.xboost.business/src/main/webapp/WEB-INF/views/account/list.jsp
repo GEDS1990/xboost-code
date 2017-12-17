@@ -50,7 +50,7 @@
 	        		<p>All Users</p>
 	        	</div>
                 <div class="xb-fr">
-                    <button id="addNewUser-user" ><span class="icon-file-text-o"></span>Create User</button>
+                    <button id="addNewUser-user" ><span class="icon-file-text-o"></span>Add New User</button>
                 </div>
 	        </div>
 	        <div class="cond-top">
@@ -96,28 +96,28 @@
 
 
 <div class="modal fade" id="newUserModal-user">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 600px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">添加用户</h4>
+                <h4 class="modal-title">Create Account</h4>
             </div>
             <div class="modal-body">
                 <form id="newUserForm-user" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">姓名</label>
+                        <label class="col-sm-2 control-label">Username*:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="username">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">联系电话</label>
+                        <label class="col-sm-2 control-label">Tel*:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="tel">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">密码</label>
+                        <label class="col-sm-2 control-label">Pa</label>
                         <div class="col-sm-10">
                             <input type="password" class="form-control" name="password" value="123123">
                             <span class="help-block">默认密码为：123123</span>
@@ -212,19 +212,20 @@
 
 
 
-<div class="modal fade" id="modal-dist">
-    <div class="modal-dialog">
+<!--Del info-->
+<div class="modal fade" id="modal-user">
+    <div class="modal-dialog modal-del">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Delete Data</h4>
+                <h4 class="modal-title">Delete Account</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure want to delete this line of data?</p>
+                <p>Are you sure want to delete this account?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="button" id="modal-distdelBtn" class="btn btn-primary">Yes</button>
+                <button type="button" id="modal-userdelBtn" class="btn btn-primary">Yes</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

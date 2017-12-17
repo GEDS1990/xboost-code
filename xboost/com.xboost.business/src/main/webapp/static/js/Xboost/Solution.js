@@ -234,7 +234,7 @@ $(function  () {
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
-			console.log("v")
+			//console.log("v")
 		}
 		//初始化坐标
 		var p_len = listPoint.length;
@@ -506,6 +506,7 @@ $(function  () {
 	            "initComplete": function (settings, data) {
 	            	//console.log(data);
 	            	if (data.data.length !=0) {
+	            		$('#depots-map').show();
 	            		var result = data.data,
 	            		arr = [],
 	            		listPoint = [],
@@ -549,6 +550,8 @@ $(function  () {
 						//百度地图
 						depotMapInit(listPoint,"");
 
+	            	}else{
+	            		$('#depots-map').hide();
 	            	}
 
 	            	
@@ -712,6 +715,7 @@ $(function  () {
 	            "initComplete": function (settings, data) {
 	            	//console.log(data);
 	            	if (data.data.length != 0) {
+	            		$('#depots-map').show();
 	            		var result = data.data,
 	            		arr = [],
 	            		listPoint = [],
@@ -773,6 +777,8 @@ $(function  () {
 	            			
 	            		},0)
 	            		
+	            	}else{
+	            		$('#depots-map').hide();
 	            	}
 	            	
 	            },
@@ -889,8 +895,9 @@ $(function  () {
 	            },
 	            "initComplete": function (settings, data) {
 	            	var $this = this;
-	            	console.log(data);
+	            	//console.log(data);
 	            	if (data.data.length != 0) {
+	            		$('#depots-map').show();
 	            		var result = data.data,
 	            		arr = [],
 	            		listPoint = [],
@@ -946,6 +953,8 @@ $(function  () {
 	            			vehiclesMapInit(listPoint,val)
 	            		},0)
 	            		
+	            	}else{
+	            		$('#depots-map').hide();
 	            	}
 	            	
 	            },

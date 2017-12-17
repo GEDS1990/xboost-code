@@ -33,15 +33,84 @@ body{
 	background-color: #d5dae6;
 }
 /*index bg*/
+.index-fl{
+	float: left;
+	margin-top: 50px;
+}
+.index-fl>h1{
+	font-size: 36px;
+	color: #fff;
+}
+.index-fl>p{
+	font-size: 16px;
+	color: #fff;
+}
+.index-fr{
+	float: right;
+	width: 30%;
+}
 .xb_index_bg{
-	background-color: #eaedf1;
-	background-image: url(/static/images/banner.jpg);
+	background-color: #364760;
+	background-image: url(../../images/banner.png);
 	background-size: cover;
 }
 .btn.btn-success,.btn-success:active:focus{
 	background-color: #5ab0ee;
 }
-
+.panel-heading{
+	border: 0;
+}
+.panel-title{
+	font-size: 20px;
+	font-weight: 700;
+	color: #687189;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+.posr{
+	position: relative;
+}
+#loginForm input{
+	padding-left: 24px;
+}
+#loginForm .iconfont{
+	color: #687189;
+	position: absolute;
+	left: 4px;
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+}
+#vcode{
+	width: 60%;
+}
+#code:hover{
+	cursor: pointer;
+}
+#code{
+	width: 110px;
+	text-align: center;
+	font-size: 16px;
+	color: #19a371;
+	background-color:#ccc; 
+	display: inline-block;
+	padding: 5px 15px;
+	letter-spacing:8px;
+	position: absolute;
+	right: 0px;
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+}
+#key-info{
+	display: none;
+}
 /*--xb导航样式--*/
 .sidebar-nav.navbar-collapse.collapse{
 	display: block;
