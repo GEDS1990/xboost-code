@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.SolutionCostMapper">
+
+    <cache/>
+
+    <insert id="add">
+        INSERT into t_model_arg(scenariosId ,model_type,plan,site_people_work,distrib_people_work,site_code,site_type,total_vol,
+        full_time_staff,part_time_staff,full_time_salary,part_time_salary,full_time_work_day,part_time_work_day,
+        str1,str2,str3,create_time,update_time)
+        VALUES (#{scenariosId},#{modelType},#{plan},#{sitePeopleWork},#{distribPeopleWork},#{siteCode},#{siteType},#{totalVol},
+        #{fullTimeStaff},#{partTimeStaff},#{fullTimeSalary},#{partTimeSalary},#{fullTimeWorkDay},#{partTimeWorkDay},
+        #{str1},#{str2},#{str3},#{createTime},#{updateTime})
+    </insert>
+
+    <select id="findAll" parameterType="map" resultType="ModelArg" resultMap="modelArgMap">
+        SELECT * FROM t_solution_cost where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findByParam" parameterType="map" resultType="ModelArg" resultMap="modelArgMap">
+        SELECT * from t_solution_cost where scenariosId = #{scenariosId} and model_type=#{modelType} and plan =#{plan}
+
+    </select>
+
+    <select id="findById" resultType="com.xboost.pojo.ModelArg"  resultMap="modelArgMap">
+        SELECT * FROM t_solution_cost where id = #{id}
+    </select>
+
+    <update id="edit">
+        UPDATE t_model_arg SET scenariosId = #{scenariosId},model_type=#{modelType},plan=#{plan},site_people_work = #{sitePeopleWork},
+        distrib_people_work = #{distribPeopleWork},site_code=#{siteCode},site_type = #{siteType},total_vol= #{totalVol},
+        full_time_staff= #{fullTimeStaff},part_time_staff = #{partTimeStaff},full_time_salary = #{fullTimeSalary},
+        part_time_salary = #{partTimeSalary},full_time_work_day = #{fullTimeWorkDay},part_time_work_day=#{partTimeWorkDay}
+        where scenariosId = #{scenariosId} and model_type=#{modelType} and plan =#{plan}
+    </update>
+
+
+    <resultMap id="modelArgMap" type="ModelArg">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="modelType" column="model_type"/>
+        <result property="plan" column="plan"/>
+        <result property="site_people_work" column="sitePeopleWork"/>
+        <result property="distrib_people_work" column="distribPeopleWork"/>
+        <result property="site_code" column="siteCode"/>
+        <result property="site_type" column="siteType"/>
+        <result property="total_vol" column="totalVol"/>
+        <result property="full_time_staff" column="fullTimeStaff"/>
+        <result property="part_time_staff" column="partTimeStaff"/>
+        <result property="full_time_salary" column="fullTimeSalary"/>
+        <result property="part_time_salary" column="partTimeSalary"/>
+        <result property="full_time_work_day" column="fullTimeWorkDay"/>
+        <result property="part_time_work_day" column="partTimeWorkDay"/>
+    </resultMap>
+
+</mapper>

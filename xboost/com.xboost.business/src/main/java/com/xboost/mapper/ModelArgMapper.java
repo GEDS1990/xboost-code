@@ -2,6 +2,7 @@ package com.xboost.mapper;
 
 import com.xboost.pojo.ModelArg;
 import com.xboost.pojo.SiteInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -46,5 +47,10 @@ public interface ModelArgMapper {
     //根据id 删除模型整体参数   * @param siteCode
     void delById(Integer id);
 
+    //根据场景id,算法模型查询网点集散点人效
+    Integer findSitePeopleWork(@Param("scenariosId") String scenariosId,@Param("modelType") String modelType);
+
+    //根据场景id,算法模型查询集配站集散点人效
+    Integer findDistribPeopleWork(@Param("scenariosId") String scenariosId,@Param("modelType") String modelType);
 }
 

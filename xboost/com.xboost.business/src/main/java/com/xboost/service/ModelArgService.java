@@ -6,6 +6,7 @@ import com.xboost.pojo.SiteInfo;
 import com.xboost.util.ExcelUtil;
 import com.xboost.util.ExportUtil;
 import com.xboost.util.ShiroUtil;
+import org.apache.ibatis.annotations.Param;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -150,6 +151,18 @@ public class ModelArgService {
     public void delById(Integer id) {
 
         modelArgMapper.delById(id);
+    }
+
+    //根据场景id,算法模型查询网点集散点人效
+    public Integer findSitePeopleWork(String scenariosId,String modelType){
+
+        return modelArgMapper.findSitePeopleWork(scenariosId,modelType);
+    }
+
+    //根据场景id,算法模型查询集配站集散点人效
+    public Integer findDistribPeopleWork(String scenariosId,String modelType){
+
+        return modelArgMapper.findDistribPeopleWork(scenariosId,modelType);
     }
 
 

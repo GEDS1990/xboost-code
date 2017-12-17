@@ -301,7 +301,7 @@
 
 <!--Del info-->
 <div class="modal fade" id="modal-info">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-del">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

@@ -1523,9 +1523,10 @@ debugger;
         });
 
         //删除用户
-        $(document).delegate(".delLink","click",function(){
+        $(document).delegate(".delLink-account","click",function(){
             var id = $(this).attr("data-id");
-            if(confirm("确定要删除该数据吗?")) {
+            $('#modal-del').modal("show");
+            $('#modal-delBtn').click(function  () {
                 $.post("/account/del",{"id":id}).done(function(result){
                     if("success" == result) {
                         dt.ajax.reload();
@@ -1533,8 +1534,8 @@ debugger;
                 }).fail(function(){
                     alert("删除出现异常");
                 });
-
-            }
+			});
+           	
         });
 
         //编辑用户

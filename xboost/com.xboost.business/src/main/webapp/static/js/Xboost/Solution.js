@@ -234,6 +234,7 @@ $(function  () {
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
+			console.log("v")
 		}
 		//初始化坐标
 		var p_len = listPoint.length;
@@ -254,16 +255,18 @@ $(function  () {
 		}
 		if (val) {
 			//规划线路
+			//console.log(listPoint)
 			var list = [];
 			for (var q=0;q<p_len;q++) {
-				var car_name = listPoint[q].car_name;
-				if (val == car_name) {
+				var carName = listPoint[q].carName;
+				if (val == carName) {
 					list.push(listPoint[q]);
 				}
 			}
+			//console.log(list)
 			var routelist = uniqeByKeys(list,["sequence"]);
 			routelist.sort(sortNumber);
-			//console.log(routelist[3]);
+			//console.log(routelist);
 			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
 				if (i==rl_len-1) {
 					continue;
@@ -395,7 +398,10 @@ $(function  () {
 		
 		}  
 
-}
+	}
+	
+	
+	
 	//去除重复数组元素
 	function unique(arr) {
 		var result = [], hash = {};
@@ -498,7 +504,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	console.log(data);
+	            	//console.log(data);
 	            	if (data.data.length !=0) {
 	            		var result = data.data,
 	            		arr = [],
@@ -522,21 +528,21 @@ $(function  () {
 	            		var newResult = uniqeByKeys(result,["curLoc"]),
 						newreslen = newResult.length;
 	            		//console.log(newResult)
-	            		for (var f = 0;f<newreslen;f++) {
+	            		for (var f = 0;f<len;f++) {
 	            			var liser = {};
-							liser["curLoc"] = newResult[f].curLoc;
-							liser["siteType"] = newResult[f].siteType;
-							liser["siteName"] = newResult[f].siteName;
-							liser["calcDis"] = newResult[f].calcDis;
-							liser["lng"] = newResult[f].siteLongitude;
-							liser["lat"] = newResult[f].siteLatitude;
-							liser["nextCurLoc"] = newResult[f].nextCurLoc
+							liser["curLoc"] = result[f].curLoc;
+							liser["siteType"] = result[f].siteType;
+							liser["siteName"] = result[f].siteName;
+							liser["calcDis"] = result[f].calcDis;
+							liser["lng"] = result[f].siteLongitude;
+							liser["lat"] = result[f].siteLatitude;
+							liser["nextCurLoc"] = result[f].nextCurLoc
 							listPoint.push(liser);
 	            		}
 							
 	            		
 						//查询所有网点坐标
-						console.log(listPoint)
+						//console.log(listPoint)
 						listArry="";
 						listArry = listPoint;
 							
@@ -565,7 +571,7 @@ $(function  () {
 						liser["nextCurLoc"] = Datas[f].nextCurLoc
 						listPoint.push(liser);
             		}
-			        console.log(listPoint)
+			        //console.log(listPoint)
 			        if (_len != 0 && count != "") {
 			        	var res = Datas[0];
 						$('#depot').text("Depot "+res.siteCode);
@@ -753,8 +759,18 @@ $(function  () {
 	            		
 	            		var table = $('#SolutionRoute').DataTable();
 	            		setTimeout(function(){
-	            			table.search(_val).draw();
-	            			routeMapInit(listPoint,_val)
+	            			if (_val) {
+	            				table.search(_val).draw();
+	            				routeMapInit(listPoint,_val);
+	            				$.get("/route/totalDistance.json",{"routeCount":_val}).done(function (res){
+									if (res) {
+										$('#total-distance').text(res);
+									}
+								}).fail(function (){
+									
+								});
+	            			}
+	            			
 	            		},0)
 	            		
 	            	}
@@ -765,18 +781,39 @@ $(function  () {
 			        // 输出当前页的数据到浏览器控制台
 			        var data = api.rows( {page:'current'} ).data();
 			        //console.log(data)
+			        var data_len = data.length;
+			        if (data_len != 0) {
+			        	var res = data[0];
+						$('#vehicle-load-requirement').text(res.carType);
+						$('#vehicle-piece-capacity').text(res.max_load);
+						$('#speed-requirement').text(res.velocity);
+			        }else{
+			        	$('#route-name').text("No Data");
+			        	$('#total-distance').text("--");
+						$('#vehicle-load-requirement').text("--");
+						$('#vehicle-piece-capacity').text("--");
+						$('#speed-requirement').text("--");
+			        }
 			        
-	            }
+			        
+	           }
 	        });
 	        //点击选项 来查询
 	        var table = $('#SolutionRoute').DataTable();
 			$(document).on("change","#route-route",function  () {
 				var val = $('#route-route').val(),
 					_text = "Route "+add0(val);
-					console.log(val)
+					//console.log(val)
 				table.search(val).draw(false);
 	            $('#route-name').text(_text);
 				routeMapInit(listArry,val);
+				$.get("/route/totalDistance.json",{"routeCount":val}).done(function (res){
+					if (res) {
+						$('#total-distance').text(res);
+					}
+				}).fail(function (){
+					console.log("fail")
+				});
 			});
 		}
 		
@@ -852,7 +889,7 @@ $(function  () {
 	            },
 	            "initComplete": function (settings, data) {
 	            	var $this = this;
-	            	//console.log(data);
+	            	console.log(data);
 	            	if (data.data.length != 0) {
 	            		var result = data.data,
 	            		arr = [],
@@ -916,15 +953,15 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var datas = api.rows( {page:'current'} ).data();
-			        //console.log(datas);
+			        console.log(datas);
 			        var datas_len = datas.length;
 			        if (datas_len !=0) {
 			        	var result = datas[0];
 			        	$('#veh-type').text(result.carType);
-			        	$('#veh-source').text(result.car_source);
-			        	$('#veh-limit').text(result.max_load);
-			        	$('#veh-piece').text(result.max_running_time);
-			        	$('#veh-unloadtime').text(result.duration_unload_full);
+			        	$('#veh-source').text(result.carSource);
+			        	$('#veh-limit').text(result.maxLoad);
+			        	$('#veh-piece').text(result.maxRunningTime);
+			        	$('#veh-unloadtime').text(result.durationUnloadFull);
 			        	$('#veh-speed').text(result.velocity);
 			        }else{
 			        	$('#route-name').text("No Data");

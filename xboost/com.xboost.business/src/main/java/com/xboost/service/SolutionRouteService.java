@@ -115,14 +115,13 @@ public class SolutionRouteService {
 
 
     /**
-     * 根据用户的ID查询模型整体参数信息
+     * 根据用户的ID查询路线信息
      * @param id 用户ID
      * @return
      */
     public Route findById(Integer id) {
         return solutionRouteMapper.findById(id);
     }
-
 
     /**
      * 根据id删除模型整体参数信息
@@ -131,5 +130,13 @@ public class SolutionRouteService {
     public void delByScenariosId(Integer scenariosId) {
 
         solutionRouteMapper.delByScenariosId(scenariosId);
+    }
+
+
+
+
+    //查询路线总路程
+    public String findTotalDistance(String scenariosId,String routeCount) {
+        return solutionRouteMapper.findTotalDistance(scenariosId,routeCount);
     }
 }

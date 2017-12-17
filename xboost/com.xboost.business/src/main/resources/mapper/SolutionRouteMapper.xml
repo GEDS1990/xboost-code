@@ -57,7 +57,7 @@
 
     <select id="findAllByRoute" resultType="map" resultMap="modelRouteAndSite">
         SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
-        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} order by sequence asc
     </select>
 
     <select id="findAllCountByRoute" resultType="long">
@@ -67,24 +67,30 @@
 
     <select id="findByRoute" parameterType="map" resultType="map" resultMap="modelRouteAndSite">
         SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        left join t_car_info c on r.car_name = c.name
         <where>
             r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
                 and  r.route_count = #{keyword}
             </if>
         </where>
-        <!--order by ${orderColumn} ${orderType}-->
+        order by sequence asc
         limit ${start},${length}
     </select>
 
     <select id="findCountByRoute" resultType="long" parameterType="map">
         SELECT count(*) FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        left join t_car_info c on r.car_name = c.name
         <where>
             r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                and  r.id = #{keyword}
+                and  r.route_count = #{keyword}
             </if>
         </where>
+    </select>
+
+    <select id="findTotalDistance" resultType="String" parameterType="map">
+        SELECT SUM(calc_dis) FROM t_solution_route WHERE scenariosId=#{scenariosId} and route_count=#{routeCount}
     </select>
 
     <resultMap id="modelRoute" type="Route">
