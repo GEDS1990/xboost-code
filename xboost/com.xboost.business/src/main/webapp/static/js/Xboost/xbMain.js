@@ -1,5 +1,86 @@
 $(function  () {
 	var doc = document;
+	/**
+	 * index
+	 */
+	var code;//声明一个变量用于存储生成的验证码  
+    function changeImg(){  
+        //alert("换图片");  
+        var arrays=new Array(  
+            '1','2','3','4','5','6','7','8','9','0',  
+            'a','b','c','d','e','f','g','h','i','j',  
+            'k','l','m','n','o','p','q','r','s','t',  
+            'u','v','w','x','y','z',  
+            'A','B','C','D','E','F','G','H','I','J',  
+            'K','L','M','N','O','P','Q','R','S','T',  
+            'U','V','W','X','Y','Z'               
+        );  
+        code='';//重新初始化验证码  
+        //alert(arrays.length);  
+        //随机从数组中获取四个元素组成验证码  
+        for(var i=0;i<4;i++){  
+        //随机获取一个数组的下标  
+            var r=parseInt(Math.random()*arrays.length);  
+            code+=arrays[r];  
+            //alert(arrays[r]);  
+        }  
+        //alert(code);  
+        doc.getElementById('code').innerHTML=code;//将验证码写入指定区域  
+    }
+    (function  () {
+    	var loginForm = doc.getElementById('loginForm');
+    	if (loginForm) {
+//  		keycode = doc.getElementById('code');
+//  		keycode.onclick=changeImg;
+//  		changeImg();
+    		//点击登录
+			$("#loginBtn").click(function(){
+	            if(!$("#tel").val()) {
+	                $("#tel").focus();
+	                return;
+	            }
+	            if(!$("#password").val()) {
+	                $("#password").focus();
+	                return;
+	            }
+//	            var input_code=document.getElementById('vcode').value;
+//	            if (input_code.toLowerCase() != code.toLowerCase()) {
+//	            	$('#keyerro-info').text("The verification code is incorrect.");
+//	            	$('#key-info').show();
+//	            	return false;
+//	            }
+	            $("#loginForm").submit();
+	        });
+	        //
+	        $('#key-info-close').click(function (){
+	        	$('#key-info').hide();
+	        });
+	
+	        //新用户注册
+	        $("#registerBtn").click(function(){
+	            $("#newUserModal").modal('show');
+	        });
+	        $("#saveBtn").click(function(){
+	            debugger;
+	            $.post("/account/new",$("#newUserForm").serialize())
+	                .done(function(result){
+	                    if("success" == result) {
+	                        debugger;
+	                        $("#newUserForm")[0].reset();
+	                        $("#newUserModal").modal("hide");
+	                        dt.ajax.reload();
+	                    }
+	                }).fail(function(){
+	                alert("添加时出现异常");
+	            });
+	
+	        });
+    	}
+    }());
+    
+	
+	
+	
 /*
  *MyScenarios.jsp
  */
@@ -268,7 +349,7 @@ function CategoryList () {
 			$('#scen-cate').text(res.scenariosCategory);
 			$('#scen-desc').text(res.scenariosDesc);
 			$('#scenariosName').val(res.scenariosName);
-			$('#class-first').text(res.scenariosName);
+			$('#class-first').text(res.scenariosCategory);
 			$('#scenariosCategory').val(res.scenariosCategory);
 			$('textarea[name="scenariosDesc"]').val(res.scenariosDesc);
 		}).fail(function  () {
@@ -331,6 +412,7 @@ function CategoryList () {
             "initComplete": function (settings, data) {
             	//console.log(data.data.length);
             	if (data.data.length !=0) {
+            		$('#depots-map').show();
             		var result = data.data,
             		listPoint = [],
             		len = result.length;
@@ -357,7 +439,7 @@ function CategoryList () {
 					depotMapInit(listPoint,"");
 
             	}else{
-            		map.centerAndZoom("北京", 11);
+            		$('#depots-map').hide();
             	}
 
             	

@@ -1288,7 +1288,7 @@ $(function  () {
     	                {"data":"lastOpenTime","name":"last_open_time"},
     	                {"data":"scenariosStatus","name":"scenarios_status"},
     	                {"data":function(row){
-    	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"' data-scenariosname="+row.scenariosName+">Open</a> <a href='javascript:;' class='sendToLink' data-scenariosId='"+row.id+"'>SendTo</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
+    	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"' data-scenariosname="+row.scenariosName+">Open</a> <a href='javascript:;' class='sendToLink' data-scenariosId='"+row.id+"'>SendTo</a> <a href='javascript:;' class='delLink-allscen' data-scenariosid='"+row.id+"'>Delete</a>";
     	                }}
     	            ],
     	            "columnDefs":[ //具体列的定义
@@ -1404,7 +1404,7 @@ debugger;
     	        });
 
     	        //删除用户
-    	        $(document).delegate(".delLink-scen","click",function(){
+    	        $(document).delegate(".delLink-allscen","click",function(){
     	            var id = $(this).attr("data-scenariosid");
     	            $('#modal-del').modal("show")
     	            $('#modal-delBtn').click(function  () {
@@ -1444,7 +1444,7 @@ debugger;
             "serverSide":true, //服务端处理
             "searchDelay": 1000,//搜索延迟
             "order":[[0,'asc']],//默认排序方式
-            "lengthMenu":[5,10,25,50,100],//每页显示数据条数菜单
+            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
             "ajax":{
                 url:"/account/users.json", //获取数据的URL
                 type:"get" //获取数据的方式
@@ -1469,7 +1469,7 @@ debugger;
                     return roleName;
                 }},
                 {"data":function(row){
-                    return "<a href='javascript:;' class='editLink' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink' data-id='"+row.id+"'>Delete</a>";
+                    return "<a href='javascript:;' class='editLink' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-account' data-id='"+row.id+"'>Delete</a>";
                 }}
             ],
             "columnDefs":[ //具体列的定义
@@ -1525,8 +1525,8 @@ debugger;
         //删除用户
         $(document).delegate(".delLink-account","click",function(){
             var id = $(this).attr("data-id");
-            $('#modal-del').modal("show");
-            $('#modal-delBtn').click(function  () {
+            $('#modal-user').modal("show");
+            $('#modal-userdelBtn').click(function  () {
                 $.post("/account/del",{"id":id}).done(function(result){
                     if("success" == result) {
                         dt.ajax.reload();
@@ -1563,13 +1563,13 @@ debugger;
                     $("#disable")[0].checked = true;
                 }
 
-
+				 $("#editUserModal-user").modal("show")
 
             }).fail(function(){
 
             });
 
-            $("#editUserModal-user").modal("show");
+           ;
         });
 
         $("#editBtn").click(function(){
