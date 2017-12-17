@@ -632,6 +632,8 @@ public class OutputPrinter implements IConstants {
 							routePojo.setSbLoc(sbLoc.toString().substring(0,sbLoc.toString().length()-1));
 //							rr.createCell(7).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setSbVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
+							routePojo.setUnloadLoc("");
+							routePojo.setUnloadVol("");
 //							rr.createCell(6).setCellValue(Main.totalJobs.get(cur.getJobId()).getDelivery().getLocation());
 //							rr.createCell(7).setCellValue(Main.totalJobs.get(cur.getJobId()).getDimensions()[0]);
 							
@@ -651,7 +653,8 @@ public class OutputPrinter implements IConstants {
 									if(type.equals(curJ.getType())){
 										count1 ++;
 										sbLoc.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"/");
-										sbVol.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]+"/");
+										sbVol.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"-"
+												+CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]+"/");
 									}
 								}else{
 									break;
@@ -667,6 +670,10 @@ public class OutputPrinter implements IConstants {
 							}
 //							rr.createCell(11).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setUnloadVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
+
+							routePojo.setSbLoc("");
+//							rr.createCell(7).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
+							routePojo.setSbVol("");
 //							rr.createCell(10).setCellValue(Main.totalJobs.get(cur.getJobId()).getDelivery().getLocation());
 //							rr.createCell(11).setCellValue(Main.totalJobs.get(cur.getJobId()).getDimensions()[0]);
 						}
