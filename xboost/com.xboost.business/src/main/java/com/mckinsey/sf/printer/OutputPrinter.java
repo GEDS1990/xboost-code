@@ -650,8 +650,8 @@ public class OutputPrinter implements IConstants {
 								if(curJ.getLocation().equalsIgnoreCase(cur.getLocation())){
 									if(type.equals(curJ.getType())){
 										count1 ++;
-//										sbLoc.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"/");
-//										sbVol.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]+"/");
+										sbLoc.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"/");
+										sbVol.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]+"/");
 									}
 								}else{
 									break;
