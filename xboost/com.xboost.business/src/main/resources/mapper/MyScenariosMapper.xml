@@ -6,9 +6,9 @@
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT into t_scenarios_info(scenarios_name,scenarios_category,scenarios_desc,scenarios_model,scenarios_out,
-        scenarios_status,last_open_time,str1,str2,str3,createtime,updatetime)
+        scenarios_status,last_open_time,simulate_finish_time,str1,str2,str3,createtime,updatetime)
         VALUES (#{scenariosName},#{scenariosCategory},#{scenariosDesc},#{scenariosModel},#{scenariosOut},
-        #{scenariosStatus},#{lastOpenTime},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+        #{scenariosStatus},#{lastOpenTime},#{simulateFinishTime},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
     <insert id="saveScenariosIduserId">
@@ -72,7 +72,7 @@
     <update id="edit">
         UPDATE t_scenarios_info SET scenarios_name = #{scenariosName},scenarios_category=#{scenariosCategory},
         scenarios_desc=#{scenariosDesc},scenarios_model=#{scenariosModel},scenarios_out=#{scenariosOut},
-        scenarios_status=#{scenariosStatus},last_open_time=#{lastOpenTime} where id = #{id}
+        scenarios_status=#{scenariosStatus},last_open_time=#{lastOpenTime},simulate_finish_time=#{simulateFinishTime} where id = #{id}
     </update>
 
     <update id="updateOpenTime">
