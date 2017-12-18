@@ -165,15 +165,18 @@ public class CascadeModelUtil implements IConstants {
         OutputPrinter.PrintUnassigned(finalSolution);
         //calculate max stops
         OutputPrinter.PrintRoutes(finalSolution);
-        OutputPrinter.printLine("finished.");systemWebSocketHandler.sendMessageToUser( new TextMessage("99%...."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("finished."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("83%...."));
         long endTime = System.currentTimeMillis();
-        OutputPrinter.printLine("total time used:"+(endTime-startTime)+"ms");
         systemWebSocketHandler.sendMessageToUser( new TextMessage("total time used:"+(endTime-startTime)+"ms"));
 //		OutputPrinter.writeSolutionToExcel(finalSolution);
         systemWebSocketHandler.sendMessageToUser( new TextMessage("write Standard Output To Databases"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("90%...."));
         OutputPrinter.writeStandardOutputToExcel(finalSolution,transportCost);
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("98%...."));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("finished write Output To Databases"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("100%...."));
+        OutputPrinter.printLine("All finished.");
+        OutputPrinter.printLine("total time used:"+(endTime-startTime)+"ms");
     }
     private Config initConf(Configuration config,DemandInfoService demandInfoService) {
 

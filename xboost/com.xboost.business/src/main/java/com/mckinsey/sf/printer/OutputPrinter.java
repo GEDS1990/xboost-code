@@ -552,7 +552,7 @@ public class OutputPrinter implements IConstants {
 						routePojo.setRouteCount(String.valueOf(routeCount));
 //						rr.createCell(1).setCellValue(carType);
 						routePojo.setCarType(carType);
-						routePojo.setCarName(carType.concat(String.valueOf(routeCount)));
+//						routePojo.setCarName(carType.concat(String.valueOf(routeCount)));
 						num++;
 //						rr.createCell(2).setCellValue(newActs.get(1).getLocation()+"-"+newActs.get(newActs.size()-2).getLocation());
 						routePojo.setLocation(newActs.get(1).getLocation()+"-"+newActs.get(newActs.size()-2).getLocation());
@@ -620,9 +620,9 @@ public class OutputPrinter implements IConstants {
 									//update sheet2 end
 									activityPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
 									activityPojo.setUserId(String.valueOf(ShiroUtil.getCurrentUserId()));
-									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据...."));
+//									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据...."));
 									solutionActivityService.addActivity(activityPojo);
-									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据成功"));
+//									systemWebSocketHandler.sendMessageToUser(new TextMessage("增加新数据成功"));
 								}else{
 									break;
 								}
