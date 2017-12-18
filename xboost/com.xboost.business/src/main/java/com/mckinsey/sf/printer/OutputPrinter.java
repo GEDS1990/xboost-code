@@ -582,6 +582,7 @@ public class OutputPrinter implements IConstants {
 							routePojo.setType(type);
 							StringBuilder sbLoc = new StringBuilder();
 							StringBuilder sbVol = new StringBuilder();
+							double sbVolSum = 0.0;
 							int j = index;
 							int count1 = 0;
 							for(;j<newActs.size();j++){
@@ -592,6 +593,7 @@ public class OutputPrinter implements IConstants {
 										sbLoc.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"/");
 										sbVol.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"-"
 												+CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]+"/");
+										sbVolSum = sbVolSum + CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0];
 										currentLoc.add(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation());
 										
 										//TODO: update sheet2
@@ -632,6 +634,8 @@ public class OutputPrinter implements IConstants {
 							routePojo.setSbLoc(sbLoc.toString().substring(0,sbLoc.toString().length()-1));
 //							rr.createCell(7).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setSbVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
+							routePojo.setSbVolSum(String.valueOf(sbVolSum));
+
 							routePojo.setUnloadLoc("");
 							routePojo.setUnloadVol("");
 //							rr.createCell(6).setCellValue(Main.totalJobs.get(cur.getJobId()).getDelivery().getLocation());
@@ -645,6 +649,7 @@ public class OutputPrinter implements IConstants {
 							routePojo.setType(type);
 							StringBuilder sbLoc = new StringBuilder();
 							StringBuilder sbVol = new StringBuilder();
+							double unloadVolSum = 0.0;
 							int j = index;
 							int count1 = 0;
 							for(;j<newActs.size();j++){
@@ -655,6 +660,7 @@ public class OutputPrinter implements IConstants {
 										sbLoc.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"/");
 										sbVol.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"-"
 												+CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]+"/");
+										unloadVolSum = unloadVolSum + CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0];
 									}
 								}else{
 									break;
@@ -670,7 +676,7 @@ public class OutputPrinter implements IConstants {
 							}
 //							rr.createCell(11).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setUnloadVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
-
+							routePojo.setUnloadVolSum(String.valueOf(unloadVolSum));
 							routePojo.setSbLoc("");
 //							rr.createCell(7).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setSbVol("");

@@ -18,10 +18,12 @@ public class Route implements Serializable {
     private String type;            //操作
     private String sbLoc;            //装货目的地代码
     private String sbVol;            //装货票数
+    private String sbVolSum;            //装货票数sum
     private String arrTime;            //到达本网点时间
     private String endTime;            //离开本网点时间
     private String unloadLoc;            //卸货目的地代码
     private String unloadVol;            //卸货票数
+    private String unloadVolSum;            //卸货票数sum
     private String nextCurLoc;            //下一个停靠网点代码
     private String calcDis;            //到下一个停靠点运行里程
     private String carGoods;            //车上货物
@@ -181,6 +183,22 @@ public class Route implements Serializable {
 
     public void setCarGoods(String carGoods) {
         this.carGoods = carGoods;
+    }
+
+    public String getSbVolSum() {
+        return sbVolSum;
+    }
+
+    public void setSbVolSum(String sbVolSum) {
+        this.sbVolSum = sbVolSum;
+    }
+
+    public String getUnloadVolSum() {
+        return unloadVolSum;
+    }
+
+    public void setUnloadVolSum(String unloadVolSum) {
+        this.unloadVolSum = unloadVolSum;
     }
 
     public String getStr1() {
