@@ -75,8 +75,17 @@ public class SolutionCostService {
      * 编辑成本信息
      * @param cost
      */
-    public void edit(Cost cost) {
-        solutionCostMapper.edit(cost);
+    public void editCost(Cost cost) {
+        solutionCostMapper.editCost(cost);
     }
+
+    /**
+     * 根据scenariosId和siteCode编辑site info 里的cost相关信息
+     * @param scenariosId,siteCode
+     */
+    public void editSiteInfo(String scenariosId,String siteCode) {
+        solutionCostMapper.editSiteInfo(scenariosId,siteCode);
+    }
+
 
 }

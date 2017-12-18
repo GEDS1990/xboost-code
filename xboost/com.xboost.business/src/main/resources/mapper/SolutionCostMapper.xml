@@ -4,11 +4,11 @@
 
     <cache/>
 
-    <insert id="add">
-        INSERT into t_model_arg(scenariosId ,model_type,plan,site_people_work,distrib_people_work,site_code,site_type,total_vol,
+    <insert id="addCost">
+        INSERT into t_model_arg(scenariosId ,model_type,plan,site_people_work,distrib_people_work,site_count,people_num_per_site,
         full_time_staff,part_time_staff,full_time_salary,part_time_salary,full_time_work_day,part_time_work_day,
         str1,str2,str3,create_time,update_time)
-        VALUES (#{scenariosId},#{modelType},#{plan},#{sitePeopleWork},#{distribPeopleWork},#{siteCode},#{siteType},#{totalVol},
+        VALUES (#{scenariosId},#{modelType},#{plan},#{sitePeopleWork},#{distribPeopleWork},#{siteCount},#{peopleNumPerSite},
         #{fullTimeStaff},#{partTimeStaff},#{fullTimeSalary},#{partTimeSalary},#{fullTimeWorkDay},#{partTimeWorkDay},
         #{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
@@ -26,12 +26,19 @@
         SELECT * FROM t_solution_cost where id = #{id}
     </select>
 
-    <update id="edit">
+
+    <update id="editCost">
         UPDATE t_model_arg SET scenariosId = #{scenariosId},model_type=#{modelType},plan=#{plan},site_people_work = #{sitePeopleWork},
-        distrib_people_work = #{distribPeopleWork},site_code=#{siteCode},site_type = #{siteType},total_vol= #{totalVol},
+        distrib_people_work = #{distribPeopleWork},site_count=#{siteCount},people_num_per_site = #{peopleNumPerSite},
         full_time_staff= #{fullTimeStaff},part_time_staff = #{partTimeStaff},full_time_salary = #{fullTimeSalary},
         part_time_salary = #{partTimeSalary},full_time_work_day = #{fullTimeWorkDay},part_time_work_day=#{partTimeWorkDay}
         where scenariosId = #{scenariosId} and model_type=#{modelType} and plan =#{plan}
+    </update>
+
+    <update id="editSiteInfo">
+        UPDATE t_site_info SET total_vol=#{totalVol},full_time_staff1 = #{fullTimeStaff1},part_time_staff1 = #{partTimeStaff1},
+        full_time_staff2= #{fullTimeStaff2},part_time_staff2 = #{partTimeStaff2}
+        where scenariosId = #{scenariosId} and site_code=#{siteCode}
     </update>
 
 

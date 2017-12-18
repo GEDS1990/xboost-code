@@ -12,6 +12,7 @@ public class Scenarios implements Serializable {
     private String scenariosOut;            //场景所需输出结果
     private String scenariosStatus;         //场景状态
     private String lastOpenTime;           //最近一次打开时间
+    private String simulateFinishTime;    //算法运行结束时间
     private String str1;                   //预留字段
     private String str2;                    //预留字段
     private String str3;                  //预留字段
@@ -88,6 +89,14 @@ public class Scenarios implements Serializable {
 
     public void setLastOpenTime(String lastOpenTime) {
         this.lastOpenTime = lastOpenTime;
+    }
+
+    public String getSimulateFinishTime() {
+        return simulateFinishTime;
+    }
+
+    public void setSimulateFinishTime(String simulateFinishTime) {
+        this.simulateFinishTime = simulateFinishTime;
     }
 
     public String getStr1() {

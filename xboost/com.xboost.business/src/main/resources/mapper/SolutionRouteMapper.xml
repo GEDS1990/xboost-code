@@ -90,7 +90,7 @@
     </select>
 
     <select id="findTotalDistance" resultType="String" parameterType="map">
-        SELECT SUM(calc_dis) FROM t_solution_route WHERE scenariosId=#{scenariosId} and route_count=#{routeCount}
+        SELECT ROUND(SUM(calc_dis),2) FROM t_solution_route WHERE scenariosId=#{scenariosId} and route_count=#{routeCount}
     </select>
 
     <resultMap id="modelRoute" type="Route">

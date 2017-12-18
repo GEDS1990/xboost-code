@@ -2,6 +2,7 @@ package com.xboost.mapper;
 
 import com.xboost.pojo.Cost;
 import com.xboost.pojo.SiteInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,10 @@ public interface SolutionCostMapper {
     List<Cost> findByParam(Map<String, Object> param);
 
     // 根据id编辑cost信息  @param siteInfo
-    void edit(Cost cost);
+    void editCost(Cost cost);
+
+    // 根据scenariosId和siteCode编辑site info 里的cost相关信息  @param
+    void editSiteInfo(@Param("scenariosId")String scenariosId,@Param("siteCode")String siteCode);
 
 }
 

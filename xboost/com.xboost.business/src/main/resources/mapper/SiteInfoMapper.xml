@@ -6,11 +6,12 @@
 
     <insert id="save">
         INSERT into t_site_info(scenariosId,site_code,longitude,latitude,site_name,site_address,site_night_delivery,site_area,site_type,car_num,
-        large_carModle,max_operate_num,distrib_center,str2,str3,createtime,updatetime)
+        large_carModle,max_operate_num,distrib_center,total_vol,full_time_staff1,part_time_staff1,full_time_staff2,
+        part_time_staff2,str2,str3,createtime,updatetime)
         VALUES (#{scenariosId},#{siteCode},#{siteLongitude},#{siteLatitude},#{siteName},#{siteAddress},#{siteNightDelivery},#{siteArea},#{siteType},
-        #{carNum},#{largeCarModel},#{maxOperateNum},#{distribCenter},#{str2},#{str3},#{createTime},#{updateTime})
+        #{carNum},#{largeCarModel},#{maxOperateNum},#{distribCenter},#{totalVol},#{fullTimeStaff1},#{partTimeStaff1},
+        #{full_time_staff2},#{partTimeStaff2},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
-
 
     <update id="update">
         update t_site_info set scenariosId = #{scenariosId},site_code = #{siteCode},longitude = #{siteLongitude},
@@ -115,7 +116,6 @@
         </where>
     </select>
 
-
     <resultMap id="siteInfoMap" type="SiteInfo">
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
@@ -131,6 +131,11 @@
         <result property="largeCarModel" column="large_carModle"/>
         <result property="maxOperateNum" column="max_operate_num"/>
         <result property="distribCenter" column="distrib_center"/>
+        <result property="totalVol" column="total_vol"/>
+        <result property="full_time_staff1" column="fullTimeStaff1"/>
+        <result property="part_time_staff1" column="partTimeStaff1"/>
+        <result property="fullTimeStaff2" column="fullTimeStaff2"/>
+        <result property="partTimeStaff2" column="partTimeStaff2"/>
     </resultMap>
 
     <resultMap id="modelRouteAndSite" type="map">
@@ -163,6 +168,11 @@
         <result property="largeCarModel" column="large_carModle"/>
         <result property="maxOperateNum" column="max_operate_num"/>
         <result property="distribCenter" column="distrib_center"/>
+        <result property="totalVol" column="total_vol"/>
+        <result property="full_time_staff1" column="fullTimeStaff1"/>
+        <result property="part_time_staff1" column="partTimeStaff1"/>
+        <result property="fullTimeStaff2" column="fullTimeStaff2"/>
+        <result property="partTimeStaff2" column="partTimeStaff2"/>
     </resultMap>
 
 
