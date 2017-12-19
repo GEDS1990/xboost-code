@@ -88,7 +88,6 @@ public class SolutionCostController {
         List<Map<String,Object>> siteInfoList = siteInfoService.findAllBySiteCode(scenariosId);
 
         //总票数
-
         String totalVol = "100";
 
         result.put("data",costList);
