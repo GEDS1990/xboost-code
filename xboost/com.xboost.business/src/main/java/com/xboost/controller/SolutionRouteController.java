@@ -2,6 +2,7 @@ package com.xboost.controller;
 
 import com.google.common.collect.Maps;
 import com.xboost.pojo.Route;
+import com.xboost.pojo.SiteInfo;
 import com.xboost.service.SolutionRouteService;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
@@ -89,12 +90,17 @@ public class SolutionRouteController {
         Integer filteredCount = solutionRouteService.findCountByRoute(param);
   //      String totalDistance = solutionRouteService.findTotalDistance(ShiroUtil.getOpenScenariosId(),searchValue);
 
+        List<String> usingCar = solutionRouteService.findUsingCar(ShiroUtil.getOpenScenariosId());
+        List<String> idleCar = solutionRouteService.findIdleCar(ShiroUtil.getOpenScenariosId());
+
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",routeList);
     //    result.put("totalDistance",totalDistance);
+        result.put("usingCar",usingCar);
+        result.put("idleCar",idleCar);
         return result;
     }
 
@@ -118,4 +124,43 @@ public class SolutionRouteController {
 
         return totalDistance;
     }
+
+    /**排车更新route表carName
+     * @return
+     */
+    @RequestMapping(value = "/updateCarName",method = RequestMethod.POST)
+    @ResponseBody
+    public void updateCarName(HttpServletRequest request) {
+        String routeCount = request.getParameter("routeCount");
+        String carName = request.getParameter("carName");
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+
+        Map<String,Object> param = Maps.newHashMap();
+        param.put("routeCount",routeCount);
+        param.put("carName",carName);
+        param.put("scenariosId",scenariosId);
+
+        solutionRouteService.updateCarName(param);
+    }
+
+    /**把车的状态更新为busy
+     * @return
+     */
+    @RequestMapping(value = "/updateCarToBusy",method = RequestMethod.POST)
+    @ResponseBody
+    public void updateCarToBusy(String scenariosId,String carName) {
+        solutionRouteService.updateCarToBusy(scenariosId,carName);
+    }
+
+    /**把车的状态更新为idle
+     * @return
+     */
+    @RequestMapping(value = "/updateCarToIdle",method = RequestMethod.POST)
+    @ResponseBody
+    public void updateCarToIdle(String scenariosId,String carName) {
+        solutionRouteService.updateCarToIdle(scenariosId,carName);
+    }
+
+
+
 }

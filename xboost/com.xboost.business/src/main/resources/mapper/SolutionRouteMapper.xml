@@ -93,6 +93,26 @@
         SELECT ROUND(SUM(calc_dis),2) FROM t_solution_route WHERE scenariosId=#{scenariosId} and route_count=#{routeCount}
     </select>
 
+    <update id="updateCarName" parameterType="map">
+        UPDATE t_solution_route SET car_name=#{carName} WHERE scenariosId=#{scenariosId} and route_count=#{routeCount}
+    </update>
+
+    <update id="updateCarToBusy">
+        UPDATE t_car_info SET busy_idle="1" WHERE scenariosId=#{scenariosId} and name=#{carName}
+    </update>
+
+    <update id="updateCarToIdle">
+        UPDATE t_car_info SET busy_idle="0" WHERE scenariosId=#{scenariosId} and name=#{carName}
+    </update>
+
+    <select id="findUsingCar" resultType="String" parameterType="map">
+        SELECT name FROM t_car_info WHERE scenariosId=#{scenariosId} and busy_idle="1"
+    </select>
+
+    <select id="findIdleCar" resultType="String" parameterType="map">
+        SELECT name FROM t_car_info WHERE scenariosId=#{scenariosId} and busy_idle="0"
+    </select>
+
     <resultMap id="modelRoute" type="Route">
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
