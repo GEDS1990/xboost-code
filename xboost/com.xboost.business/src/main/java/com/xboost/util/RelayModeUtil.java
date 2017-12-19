@@ -23,7 +23,7 @@ import java.util.Map;
 public class RelayModeUtil implements IConstants {
     public void excute(DemandInfoService demandInfoService, SiteDistService siteDistService,SiteInfoService siteInfoService) throws IOException {
 
-        String fileName = "D:/chinaxin/rdemo/input/集散点能力配置v11.xlsx";
+       /* String fileName = "D:/chinaxin/rdemo/input/集散点能力配置v11.xlsx";
         String fileNamedd = "D:/chinaxin/rdemo/input/集散点滴滴配置v11.xlsx";
         File f = new File(fileName);
         File fdd = new File(fileNamedd);
@@ -86,7 +86,8 @@ public class RelayModeUtil implements IConstants {
         for(int i=2;i<lineListdemands.size();i++){
             String[] row = lineListdemands.get(i).split("#");
             resdemands[1][i] = row[i];
-        }
+        }*/
+
         //params
         int TimeLimit = 6000;
         double MIPgap = 0.05;
@@ -98,8 +99,8 @@ public class RelayModeUtil implements IConstants {
         //mip
 //        mip<-Rglpk_solve_LP(obj=obj,mat=cons,dir=sense,rhs=rhs,max=FALSE,types=types)
         //model
-//        cons = rbind(cbind(M11,M12,M13,M14,M15),cbind(M21,M22,M23,M24,M25),cbind(M31,M32,M33,M34,M35),cbind(M41,M42,M43,M44,M45),cbind(M51,M52,M53,M54,M55));
-//        obj<-c(rep(0,I), connection$cost_truck, connection$cost_bike,connection$cost_didi,connection$cost_data)
+        cons = rbind(cbind(M11,M12,M13,M14,M15),cbind(M21,M22,M23,M24,M25),cbind(M31,M32,M33,M34,M35),cbind(M41,M42,M43,M44,M45),cbind(M51,M52,M53,M54,M55));
+        obj<-c(rep(0,I), connection$cost_truck, connection$cost_bike,connection$cost_didi,connection$cost_data)
 //        rhs = c(rep(1,M),rep(0,J),outflow_lim,inflow_lim,didi_outflow_lim,didi_inflow_lim,0);
 //        types<-c(rep("B",I),rep("I",J*4))
 //        sense = c(rep("=",M),rep("<=",J),rep("<=",N*4*max(timebucket_num)),"=");
@@ -491,19 +492,26 @@ public class RelayModeUtil implements IConstants {
         Object route_four_point = null;
 //        ###two point route###
         int[][] site1 = new int[1][full_time/route_time_unit];
+        int timebucket_site;
         for(int j=0;j<full_time/route_time_unit;j++){
             site1[1][j] = j+1;
+            timebucket_site = j+1;
         }
+        //route_temp
+        for(int j=0;j<two_points_route_list.size();j++){
+            two_points_route.put("timebucket_1",two_points_route_list.get(j).get("connection1"));
+            two_points_route.put("timebucket_"+j+1,"");
+        }
+        List<Map> code1 = two_points_route_list;
 
-
-//        connection.put("kmh_didi",);
-//        connection.put("kmh_truck",);
-//        connection.put("kmh_bike",);
-//        connection.put("min_didi",);
-//        connection.put("cost_bike",);
-//        connection.put("cost_didi",);
-//        connection.put("cost_truck",);
-//        connection.put("cost_data",);
+        connection.put("kmh_didi",);
+        connection.put("kmh_truck",);
+        connection.put("kmh_bike",);
+        connection.put("min_didi",);
+        connection.put("cost_bike",);
+        connection.put("cost_didi",);
+        connection.put("cost_truck",);
+        connection.put("cost_data",);
         int[] obj = new int[I];
         for(int j=0;j<I;j++){
             obj[j] = 0;
@@ -574,7 +582,7 @@ public class RelayModeUtil implements IConstants {
         sense[i+1] ="=";
 
         Map<String,Object> model = new HashMap<String,Object>();
-//        model.put("A",cons);
+        model.put("A",cons);
         model.put("obj",obj);
         model.put("sense",sense);
         model.put("rhs",rhs);
