@@ -48,6 +48,7 @@ public class CarController {
     @ResponseBody
     public String AddCar(Car car) {
         car.setScenariosId(ShiroUtil.getOpenScenariosId().toString());
+        car.setBusyIdle("0");
 //        timeWindow.setStart(0);
 //        timeWindow.setEnd(1440);
         com.mckinsey.sf.data.TimeWindow tw = new com.mckinsey.sf.data.TimeWindow();
@@ -64,6 +65,7 @@ public class CarController {
     @ResponseBody
     public String AddCarByExcel(Car transport,@RequestParam MultipartFile[] file) {
         transport.setScenariosId(ShiroUtil.getOpenScenariosId());
+        transport.setBusyIdle("0");
         com.mckinsey.sf.data.TimeWindow tw = new com.mckinsey.sf.data.TimeWindow();
         tw.setStart(0);
         tw.setEnd(1440);

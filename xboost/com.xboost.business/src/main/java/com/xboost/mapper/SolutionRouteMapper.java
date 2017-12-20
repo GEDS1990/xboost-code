@@ -2,6 +2,7 @@ package com.xboost.mapper;
 
 import com.xboost.pojo.Activity;
 import com.xboost.pojo.Route;
+import com.xboost.pojo.SiteInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -53,6 +54,17 @@ public interface SolutionRouteMapper {
     Long findAllCountByRoute(String scenariosId);
 
     String findTotalDistance(@Param("scenariosId")String scenariosId,@Param("routeCount") String routeCount);
+
+    //排车更新carName到route表
+    void updateCarName(Map<String, Object> param);
+
+    void updateCarToBusy(@Param("scenariosId")String scenariosId,@Param("carName") String carName);
+
+    void updateCarToIdle(@Param("scenariosId")String scenariosId,@Param("carName") String carName);
+
+    List<String> findUsingCar(String scenariosId);
+
+    List<String> findIdleCar(String scenariosId);
 
 }
 

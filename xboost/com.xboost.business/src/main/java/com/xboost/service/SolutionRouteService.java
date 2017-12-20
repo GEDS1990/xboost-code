@@ -3,6 +3,7 @@ package com.xboost.service;
 import com.xboost.mapper.SolutionRouteMapper;
 import com.xboost.pojo.Activity;
 import com.xboost.pojo.Route;
+import org.apache.ibatis.annotations.Param;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,11 +133,28 @@ public class SolutionRouteService {
         solutionRouteMapper.delByScenariosId(scenariosId);
     }
 
-
-
-
     //查询路线总路程
     public String findTotalDistance(String scenariosId,String routeCount) {
         return solutionRouteMapper.findTotalDistance(scenariosId,routeCount);
+    }
+
+    //把排车的车名更新到route表
+    public void updateCarName(Map<String, Object> param){
+        solutionRouteMapper.updateCarName(param);
+    }
+
+    public void updateCarToBusy(String scenariosId,String carName){
+        solutionRouteMapper.updateCarToBusy(scenariosId,carName);
+    }
+
+    public void updateCarToIdle(String scenariosId,String carName){
+        solutionRouteMapper.updateCarToIdle(scenariosId,carName);
+    }
+    public List<String> findUsingCar(String scenariosId){
+        return solutionRouteMapper.findUsingCar(scenariosId);
+    }
+
+    public List<String> findIdleCar(String scenariosId){
+        return solutionRouteMapper.findIdleCar(scenariosId);
     }
 }
