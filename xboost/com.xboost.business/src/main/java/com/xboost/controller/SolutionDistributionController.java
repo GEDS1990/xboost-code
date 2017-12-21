@@ -42,8 +42,6 @@ public class SolutionDistributionController {
     @RequestMapping(value = "/getMaxMix.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String,Object> list(String type) {
-//        Map<String,Object> param = new HashMap<String,Object>();
-//        param.put("scenariosId", ShiroUtil.getOpenScenariosId());
         String maxmix = demandInfoService.findMinMax(ShiroUtil.getOpenScenariosId());
         int min = Integer.parseInt(maxmix.split("-")[0]);
         int max = Integer.parseInt(maxmix.split("-")[1]);
@@ -51,15 +49,28 @@ public class SolutionDistributionController {
         int jiange = 10;
         Map<String,Object> map = new HashMap<String,Object>();
         List<DemandInfo> demandInfoList = demandInfoService.findAll(ShiroUtil.getOpenScenariosId());
-        for(int i=0;i<(max-min)/jiange;i++){
-            int total = 0;
-            for(DemandInfo demandInfo : demandInfoList){
-                int res = Integer.parseInt(demandInfo.getDurationEnd());
-                if(res>=(min+jiange*i) && res<(min+jiange*(i+1))){
-                    total = total + Integer.parseInt(demandInfo.getVotes());
+        int totalAll = 0;
+        for(DemandInfo demandInfo : demandInfoList){
+            totalAll = totalAll + Integer.parseInt(demandInfo.getVotes());
+        }
+        switch (type){
+            case "0":
+                for(int i=0;i<(max-min)/jiange;i++){
+                    int total = 0;
+                    for(DemandInfo demandInfo : demandInfoList){
+                        int res = Integer.parseInt(demandInfo.getDurationEnd());
+                        if(res>=(min+jiange*i) && res<(min+jiange*(i+1))){
+                            total = total + Integer.parseInt(demandInfo.getVotes());
+                        }
+                    }
+                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total/totalAll*0.1));
                 }
-            }
-            map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total));
+                break;
+            case "1":
+                String s ="";
+                break;
+            default:
+                break;
         }
         return map;
     }
