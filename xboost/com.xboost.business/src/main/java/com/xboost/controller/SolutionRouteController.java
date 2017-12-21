@@ -140,7 +140,10 @@ public class SolutionRouteController {
         param.put("carName",carName);
         param.put("scenariosId",scenariosId);
 
+
         solutionRouteService.updateCarName(param);
+        //把车的状态更新为busy
+        solutionRouteService.updateCarToBusy(scenariosId,carName);
     }
 
     /**把车的状态更新为busy
