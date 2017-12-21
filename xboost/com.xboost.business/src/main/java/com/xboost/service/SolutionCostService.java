@@ -87,5 +87,9 @@ public class SolutionCostService {
         solutionCostMapper.editSiteInfo(scenariosId,siteCode);
     }
 
+    public Integer findTotalPiece(String scenariosId){
+        return solutionCostMapper.findTotalPiece(scenariosId);
+    }
+
 
 }

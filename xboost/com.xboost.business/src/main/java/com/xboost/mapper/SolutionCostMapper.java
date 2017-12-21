@@ -40,5 +40,6 @@ public interface SolutionCostMapper {
     List<Map<String,Object>> findTotalVol(@Param("scenariosId")String scenariosId,@Param("siteCode")String siteCode);
 
 
+    Integer findTotalPiece(String scenariosId);
 }
 

@@ -43,6 +43,10 @@
         where scenariosId = #{scenariosId} and site_code=#{siteCode}
     </update>
 
+	<select id="findTotalPiece" resultType="Integer">
+        SELECT SUM(votes) FROM t_demand_info WHERE scenariosId = #{scenariosId}
+    </select>
+
     <select id="findTotalVol" resultType="String">
         SELECT cur_loc,GREATEST(MAX(sb_vol_sum),MAX(unload_vol_sum)) as totalVol FROM t_solution_route
         WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc}

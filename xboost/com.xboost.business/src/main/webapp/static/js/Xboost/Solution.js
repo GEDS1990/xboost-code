@@ -645,7 +645,9 @@ $(function  () {
 	 *
 	 */
 	
-	
+	function rountNum (a,b){
+		return a-b;
+	}
 	
 	(function  () {
 		var SolutionRoute = doc.getElementById("SolutionRoute");
@@ -713,7 +715,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data);
+	            	console.log(data);
 	            	if (data.data.length != 0) {
 	            		$('#depots-map').show();
 	            		var result = data.data,
@@ -727,6 +729,7 @@ $(function  () {
 	            		}
 	            		var Arr = unique(arr),
 	            		A_len = Arr.length;
+	            		Arr.sort(rountNum);
 	            		for (var j=0;j<A_len;j++) {
 	            			var add='<option value='+Arr[j]+'>'+"Route "+add0(Arr[j])+'</option>';
 							$('#route-route').append(add);
@@ -821,6 +824,12 @@ $(function  () {
 					console.log("fail")
 				});
 			});
+			//获取checked值
+			$('input[type="radio"]').click(function (){
+				var _val = $("input[type='radio']:checked").val();
+				console.log(_val);
+			});
+			
 		}
 		
 	}());

@@ -63,7 +63,7 @@
 	        		<li><a href="/depots">Depots</a></li>
 	        		<li class="active"><a class="active" href="/route">Route</a></li>
 	        		<li><a href="/vehicles">Vehicles</a></li>
-	        		<li><a href="#">Costs</a></li>
+	        		<li><a href="/costs">Costs</a></li>
 	        		<li><a href="#">Efficiency</a></li>
 	        		<li><a href="#">Distribution</a></li>
 	        	</ul>
@@ -109,14 +109,17 @@
 	    					<li>
 	    						<form>
 		    						<label >
-		    							<input type="radio" name="type" id="us-vehicle"  value="0"/> Using Vehicle
+		    							<input type="radio" name="type"  checked="checked"  value="0"/> Using Vehicle
 		    						</label>
 		    						<label style="margin-left: 10px;">
 		    							<input type="radio" name="type" id="idle-vehicle" value="1"/> Idle Vehicle
 		    						</label>
 	    						</form>
 	    					</li>
-	    					<li><select style="width: 50%;"></select></li>
+	    					<li>
+	    						<select id="us-vehicle" style="width: 50%;"></select>
+	    						<select id="idle-vehicle" style="width: 50%;"></select>
+	    					</li>
 	    				</ul>
 	    			</div>
 	    		</div>
