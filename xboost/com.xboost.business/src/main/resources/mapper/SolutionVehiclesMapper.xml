@@ -7,20 +7,20 @@
     <select id="findAllByCar" resultType="map" resultMap="modelCar">
         SELECT * FROM t_solution_route r INNER join t_car_info c on r.car_name = c.name
         INNER join t_car_info c on r.car_name = c.name
-        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
     </select>
 
     <select id="findAllCountByCar" resultType="long">
         SELECT count(*) FROM t_solution_route r INNER join t_car_info c on r.car_name = c.name
         LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
-        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
     </select>
 
     <select id="findByCar" parameterType="map" resultType="map" resultMap="modelCar">
         SELECT * FROM t_solution_route r INNER join t_car_info c on r.car_name = c.name
         LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
         <where>
-            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
                 and  r.car_name = #{keyword}
             </if>
@@ -33,9 +33,8 @@
     <select id="findCountByCar" resultType="long" parameterType="map">
         SELECT count(*) FROM t_solution_route r INNER join t_car_info c on r.car_name = c.name
         LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
-
         <where>
-            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
                 and  r.car_name = #{keyword}
             </if>
