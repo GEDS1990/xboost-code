@@ -418,4 +418,62 @@ body{
 
 
 /****************result****************/
-
+/***costs***/
+.result-cost-item{
+	float: left;
+	width: 50%;
+	text-align: center;
+	color: #687189;
+}
+.result-cost-item.itemstyle{
+	border-right: 1px solid #ccc;
+	
+}
+.result-cost-item h1{
+	font-size: 20px;
+	font-weight: 900;
+	padding: 10px 0;
+}
+.cost-item{
+	width: 400px;
+	margin: 0 auto;
+}
+.item-box{
+	padding: 15px;
+	background-color: #f9f9f9;
+	margin-bottom: 15px;
+}
+.item-content{
+	padding-top: 10px;
+	border-top:1px solid #ccc ;
+}
+.item-content>li{
+	padding: 5px 0;
+	font-weight: 600;
+}
+.item-content input{
+	display: inline-block;
+	width: 80px;
+}
+.item-content>li span,
+.item-content>li input,
+.item-content+p span{
+	font-weight: 500;
+}
+.item-box>p{
+	font-weight: 600;
+	margin-top: 50px;
+}
+.cost-plan-choose{
+	padding: 20px;
+	text-align: center;
+	border-bottom: 1px solid #ccc;
+    color: #687189;
+}
+.cost-choose{
+	font-size: 20px;
+	font-weight: 700;
+}
+.cost-plan-choose.alt{
+	border-top: 1px solid #ccc;
+}

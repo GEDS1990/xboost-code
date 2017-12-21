@@ -25,7 +25,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/cost")
+@RequestMapping("/costs")
 public class SolutionCostController {
     @Inject
     private SolutionCostService solutionCostService;
@@ -36,7 +36,7 @@ public class SolutionCostController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
-        return "results/cost";
+        return "results/costs";
     }
 
 
