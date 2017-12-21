@@ -12,8 +12,8 @@ public interface DemandInfoMapper {
 
     //新增需求信息  @param siteInfo
     void add(DemandInfo demandInfo);
-	
-
+	//max-min
+    String findMinMax(String scenariosId);
 
      // 查询所有需求信息  @return
     List<DemandInfo> findAll(String scenariosId);

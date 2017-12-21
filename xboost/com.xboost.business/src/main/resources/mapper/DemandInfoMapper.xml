@@ -22,6 +22,10 @@
         SELECT * FROM t_demand_info where scenariosId = #{scenariosId}
     </select>
 
+    <select id="findMinMax" parameterType="String" resultType="map">
+        SELECT Mix(duration_start)+"-"+Max(duration_end) as maxMin FROM t_demand_info where scenariosId = #{scenariosId}
+    </select>
+
     <select id="findByParam" parameterType="map" resultType="DemandInfo" resultMap="demandInfoMap">
         SELECT * from t_demand_info
         <where>
