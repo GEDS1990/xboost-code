@@ -41,10 +41,15 @@ public class SolutionDistributionController {
         int min = Integer.parseInt(maxmix.split("-")[0]);
         int max = Integer.parseInt(maxmix.split("-")[1]);
         //间隔
-
+        int jiange = 10;
+        Map<String,Object> map = new HashMap<String,Object>();
         List<DemandInfo> demandInfoList = demandInfoService.findAll(ShiroUtil.getOpenScenariosId());
-        for(DemandInfo demandInfo : demandInfoList){
-            demandInfo.getDurationEnd();
+        for(int i=0;i<max;i++){
+            for(DemandInfo demandInfo : demandInfoList){
+                int res = Integer.parseInt(demandInfo.getDurationEnd());
+                if(min+(jiange*i)<res<(min+jiange*(i+1))
+            }
+            map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),"");
         }
         return demandInfoList;
     }
