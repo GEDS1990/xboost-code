@@ -21,6 +21,11 @@ import java.util.Map;
 public class SolutionDistributionController {
     @Inject
     private DemandInfoService demandInfoService;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String list() {
+        return "results/distribution";
+    }
     /**
      *
      * @param type
