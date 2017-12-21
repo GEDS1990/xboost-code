@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.xboost.pojo.Cost;
 import com.xboost.pojo.ModelArg;
 import com.xboost.service.ModelArgService;
+import com.xboost.service.MyScenariosService;
 import com.xboost.service.SiteInfoService;
 import com.xboost.service.SolutionCostService;
 import com.xboost.util.ShiroUtil;
@@ -121,6 +122,36 @@ public class SolutionCostController {
         solutionCostService.editCost(cost);
         solutionCostService.editSiteInfo(scenariosId,siteCode);
         return "success";
+    }
+
+    //查询成本信息
+    @RequestMapping(value = "/costInitData.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String,Object> loadInitData(HttpServletRequest request) {
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+    //    String modelType1 = MyScenariosService.;
+        String modelType ="1";
+        
+        Map<String,Object> result = Maps.newHashMap();
+
+        //网点集散点人效
+        Integer sitePeopleWork = modelArgService.findSitePeopleWork(scenariosId,modelType);
+        //集配站集散点人效
+        Integer distribPeopleWork = modelArgService.findDistribPeopleWork(scenariosId,modelType);
+        //当前场景下网点总数
+        Integer siteCount = siteInfoService.findAllCountBySiteCode(scenariosId);
+
+        //总件量
+        Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
+
+
+        result.put("sitePeopleWork",sitePeopleWork);
+        result.put("distribPeopleWork",distribPeopleWork);
+        result.put("siteCount",siteCount);
+        result.put("totalPiece",totalPiece);
+
+
+        return result;
     }
 
 }
