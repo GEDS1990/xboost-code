@@ -7,6 +7,7 @@ import org.junit.runners.Parameterized;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
 import java.util.HashMap;
@@ -38,8 +39,9 @@ public class SolutionDistributionController {
      * 6：始发集散点的发车分布
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
-    public Object list(String type) {
+    @RequestMapping(value = "/getMaxMix.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String,Object> list(String type) {
 //        Map<String,Object> param = new HashMap<String,Object>();
 //        param.put("scenariosId", ShiroUtil.getOpenScenariosId());
         String maxmix = demandInfoService.findMinMax(ShiroUtil.getOpenScenariosId());
@@ -59,6 +61,6 @@ public class SolutionDistributionController {
             }
             map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total));
         }
-        return demandInfoList;
+        return map;
     }
 }
