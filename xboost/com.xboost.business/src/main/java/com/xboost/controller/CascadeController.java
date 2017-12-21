@@ -60,10 +60,9 @@ public class CascadeController {
                 config.setCarTemplates(carlist);
             }
 
-
-            CascadeModelUtil cmu = new CascadeModelUtil();
             try{
-                cmu.excute(config,demandInfoService,siteDistService);
+                CascadeModelUtil cmu = new CascadeModelUtil(config,demandInfoService,siteDistService);
+                cmu.run();
             }catch (NullPointerException e){
                 SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
                 TextMessage message = new TextMessage("NullPointerException");

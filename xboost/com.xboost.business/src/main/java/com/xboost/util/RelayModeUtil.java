@@ -8,22 +8,17 @@ import com.xboost.pojo.SiteInfo;
 import com.xboost.service.DemandInfoService;
 import com.xboost.service.SiteDistService;
 import com.xboost.service.SiteInfoService;
-import com.xboost.websocket.SystemWebSocketHandler;
-import jxl.Workbook;
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.linear.RealMatrix;
+import com.xboost.service.jieli.TempService;
 import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.Matrix;
-
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class RelayModeUtil implements IConstants {
-    public void excute(DemandInfoService demandInfoService, SiteDistService siteDistService,SiteInfoService siteInfoService) throws IOException {
+    public void excute(TempService tempService, DemandInfoService demandInfoService, SiteDistService siteDistService, SiteInfoService siteInfoService) throws IOException {
 
        /* String fileName = "D:/chinaxin/rdemo/input/集散点能力配置v11.xlsx";
         String fileNamedd = "D:/chinaxin/rdemo/input/集散点滴滴配置v11.xlsx";

@@ -37,7 +37,7 @@ import java.util.Map;
  * Created by Administrator on 2017/11/10 0010.
  * 串点模型工具类
  */
-public class CascadeModelUtil implements IConstants {
+public class CascadeModelUtil extends Thread implements IConstants{
     private  PalnsConfig palnsConf;
     private  TransportCost transportCost;
     private  ICostCalculator costCalculator;
@@ -55,7 +55,16 @@ public class CascadeModelUtil implements IConstants {
     public static HashMap<String,Integer> carsMap = new HashMap<String,Integer>();
     public static int distMode;
 
-    public void excute(Configuration config,DemandInfoService demandInfoService,SiteDistService siteDistService){
+    public Configuration config;
+    public DemandInfoService demandInfoService;
+    public SiteDistService siteDistService;
+
+    public CascadeModelUtil(Configuration config,DemandInfoService demandInfoService,SiteDistService siteDistService){
+        this.config = config;
+        this.demandInfoService = demandInfoService;
+        this.siteDistService = siteDistService;
+    }
+    public void run(){
         String inputJsonPath = "src/main/resources/input.json";
         String demandFilePath = "src/main/resources/demand/";
 //        Input inputJson = ExcelToJson.transferInput();
