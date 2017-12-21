@@ -87,6 +87,7 @@ public class SolutionCostService {
         solutionCostMapper.editSiteInfo(scenariosId,siteCode);
     }
 
+    //查询总件量
     public Integer findTotalPiece(String scenariosId){
         return solutionCostMapper.findTotalPiece(scenariosId);
     }

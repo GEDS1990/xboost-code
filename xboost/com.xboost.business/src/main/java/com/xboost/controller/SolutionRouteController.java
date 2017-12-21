@@ -130,7 +130,7 @@ public class SolutionRouteController {
      */
     @RequestMapping(value = "/updateCarName",method = RequestMethod.POST)
     @ResponseBody
-    public void updateCarName(HttpServletRequest request) {
+    public String updateCarName(HttpServletRequest request) {
         String routeCount = request.getParameter("routeCount");
         String carName = request.getParameter("carName");
         String scenariosId = ShiroUtil.getOpenScenariosId();
@@ -140,7 +140,12 @@ public class SolutionRouteController {
         param.put("carName",carName);
         param.put("scenariosId",scenariosId);
 
+
         solutionRouteService.updateCarName(param);
+        //把车的状态更新为busy
+        solutionRouteService.updateCarToBusy(scenariosId,carName);
+
+        return "success";
     }
 
     /**把车的状态更新为busy
