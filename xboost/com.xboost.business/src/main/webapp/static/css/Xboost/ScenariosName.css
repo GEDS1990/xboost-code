@@ -477,6 +477,9 @@ table.table-bordered.dataTable td:last-child {
 .scen-cost>li>span{
 	font-weight: 300;
 }
+#idle-vehicle{
+	display: none;
+}
 /*******deport******/
 .tip{
 	width:200px;  

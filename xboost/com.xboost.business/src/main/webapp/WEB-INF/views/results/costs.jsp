@@ -92,8 +92,8 @@
 	    			<span> 选中的Plan的数据会被用于其它页面的展示</span>
 	    		</div>
 	    		<div class="result-cost clearfix">
-	    			<div class="result-cost-item itemstyle">
-	    				<form id="cost-form-a">
+	    			<div class="result-cost-item itemstyle" >
+	    				<form id="cost-form-a" v-show="cseen">
 	    					<h1>Plan A</h1>
 		    				<div class="cost-item text-left">
 		    					<div class="item-box">
@@ -106,7 +106,7 @@
 		    					<div class="item-box">
 		    						<h1>人员配备</h1>
 		    						<ul class="item-content">
-		    							<li>支线depot&distrib.center数量: <span id="site-count">{{depotcount}}</span></li>
+		    							<li>支线depot&distrib.center数量: <span>{{depotcount}}</span></li>
 		    							<li>每个支线depot/distrib.center的人数: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<li>支线depot&distrib.center总人数: <span>{{depotAllPeople}}</span></li>
 		    							<li>Full-time Staff: <input type="number"  min="0" v-model="full_staff"/></li>
@@ -135,8 +135,8 @@
 	    				</form>
 	    				
 	    			</div>
-	    			<div class="result-cost-item">
-	    				<form id="cost-form-b">
+	    			<div class="result-cost-item" >
+	    				<form id="cost-form-b" v-show="cseen">
 	    					<h1>Plan B</h1>
 		    				<div class="cost-item text-left">
 		    					<div class="item-box">
@@ -261,8 +261,6 @@
 	$(function  () {
 		(function  () {
 			$('#nav-Results').addClass("active");
-			var a = Math.round(5/3);
-			console.log(a)
 		})()
 	});
 </script>
