@@ -859,7 +859,17 @@ $(function  () {
 				}
 			});
 			$('#idle-vehicle').change(function  () {
-				console.log($(this).val())
+				var _val = $(this).val();
+				$('#vehicle-btn').click(function  () {
+					var routeNum = $('#route-route').val();
+					$.post("/route/updateCarName",{"routeCount":routeNum,"carName":_val,}).done(function(res){
+//						if (res) {
+//							
+//						}
+					}).fail(function  () {
+						alert("fail");
+					})
+				});
 			});
 			
 		}
