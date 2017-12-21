@@ -64,8 +64,8 @@
 	        		<li><a href="/route">Route</a></li>
 	        		<li><a href="/vehicles">Vehicles</a></li>
 	        		<li><a href="/costs">Costs</a></li>
-	        		<li><a href="#">Efficiency</a></li>
-	        		<li><a href="#">Distribution</a></li>
+	        		<li><a href="/efficiency">Efficiency</a></li>
+	        		<li><a href="/distribution">Distribution</a></li>
 	        	</ul>
 	        	<!--<ul class="cond-top-ul clearfix">
 	        		<li class="active"><a class="active" href="/route">Solution Route</a></li>

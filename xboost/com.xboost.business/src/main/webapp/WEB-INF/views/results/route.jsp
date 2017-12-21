@@ -64,8 +64,8 @@
 	        		<li class="active"><a class="active" href="/route">Route</a></li>
 	        		<li><a href="/vehicles">Vehicles</a></li>
 	        		<li><a href="/costs">Costs</a></li>
-	        		<li><a href="#">Efficiency</a></li>
-	        		<li><a href="#">Distribution</a></li>
+	        		<li><a href="/efficiency">Efficiency</a></li>
+	        		<li><a href="/distribution">Distribution</a></li>
 	        	</ul>
 	        	<!--<ul class="cond-top-ul clearfix">
 	        		<li class="active"><a class="active" href="/route">Solution Route</a></li>
@@ -109,10 +109,10 @@
 	    					<li>
 	    						<form>
 		    						<label >
-		    							<input type="radio" name="type"  checked="checked"  value="0"/> Using Vehicle
+		    							<input type="radio" name="type"  checked="checked"  value="1"/> Using Vehicle
 		    						</label>
 		    						<label style="margin-left: 10px;">
-		    							<input type="radio" name="type" id="idle-vehicle" value="1"/> Idle Vehicle
+		    							<input type="radio" name="type"  value="0"/> Idle Vehicle
 		    						</label>
 	    						</form>
 	    					</li>
@@ -120,6 +120,7 @@
 	    						<select id="us-vehicle" style="width: 50%;"></select>
 	    						<select id="idle-vehicle" style="width: 50%;"></select>
 	    					</li>
+	    					<li><button id="vehicle-btn">submit</button></li>
 	    				</ul>
 	    			</div>
 	    		</div>
