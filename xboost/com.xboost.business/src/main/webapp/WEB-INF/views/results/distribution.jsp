@@ -88,6 +88,9 @@
 	    				<button><span class="icon-upload"></span>Export this Sheet</button>
 	    			</div>
 	    		</header>
+	    		<div class="sim-box">
+	    			<div id="distribution-echarts" style="border:1px solid #ccc;padding:10px;">
+	    		</div>
 	    		
 	    	
 	    	
@@ -149,10 +152,12 @@
 <script src="/static/js/morris/raphael-min.js"></script>
 <script src="/static/js/morris/morris.min.js"></script>
 <%-- DataTables JS--%>
+<script src="/static/js/echarts.js"></script>
 <script src="/static/js/datatables/media/js/jquery.dataTables.js"></script>
 <script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
 <script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/flex.js"></script>
+<script src="/static/js/Xboost/xb_echart.js"></script>
 <script type="text/javascript">
 	$(function  () {
 		(function  () {
