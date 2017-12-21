@@ -863,9 +863,9 @@ $(function  () {
 				$('#vehicle-btn').click(function  () {
 					var routeNum = $('#route-route').val();
 					$.post("/route/updateCarName",{"routeCount":routeNum,"carName":_val,}).done(function(res){
-//						if (res) {
-//							
-//						}
+						if (res == "success") {
+							window.location.href = "/vehicles";
+						}
 					}).fail(function  () {
 						alert("fail");
 					})
