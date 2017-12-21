@@ -52,7 +52,7 @@ public class SolutionDistributionController {
         for(int i=0;i<max;i++){
             for(DemandInfo demandInfo : demandInfoList){
                 int res = Integer.parseInt(demandInfo.getDurationEnd());
-                if(min+(jiange*i)<res<(min+jiange*(i+1))
+//                if(min+(jiange*i)<res<(min+jiange*(i+1))
             }
             map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),"");
         }
