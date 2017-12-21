@@ -177,7 +177,7 @@ $(function  () {
 			}
 			var routelist = uniqeByKeys(list,["sequence"]);
 			routelist.sort(sortNumber);
-			console.log(routelist);
+			//console.log(routelist);
 			//console.log(listPoint);
 			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
 				if (i==rl_len-1) {
@@ -737,6 +737,28 @@ $(function  () {
 	            		var _val = $('#route-route').find("option").eq(0).val(),
 	            		_text = $('#route-route').find("option").eq(0).text();
 	            		$('#route-name').text(_text);
+	            		//创建安排车辆
+	            		if (data.usingCar) {
+	            			var useCar = data.usingCar,
+	            			useCarLen = useCar.length;
+	            			$('#us-vehicle').append('<option>--Choose--</option>');
+	            			for (var x=0;x<useCarLen;x++) {
+	            				var useCarAdd = '<option value='+useCar[x]+'>'+useCar[x]+'</option>';
+	            				$('#us-vehicle').append(useCarAdd);
+	            			}
+	            		}
+	            		if (data.idleCar) {
+	            			var idleCar = data.idleCar,
+	            			idleCarLen = idleCar.length;
+	            			$('#idle-vehicle').append('<option>--Choose--</option>');
+	            			for (var y=0;y<idleCarLen;y++) {
+	            				var idleCarAdd = '<option value='+idleCar[y]+'>'+idleCar[y]+'</option>';
+	            				$('#idle-vehicle').append(idleCarAdd);
+	            			}
+	            		}
+	            		
+	            		
+	            		
 	            		
 //	            		var newResult = uniqeByKeys(result,["curLoc"]),
 //						newreslen = newResult.length;
@@ -827,7 +849,17 @@ $(function  () {
 			//获取checked值
 			$('input[type="radio"]').click(function (){
 				var _val = $("input[type='radio']:checked").val();
-				console.log(_val);
+				//console.log(_val)
+				if (_val == 1) {
+					$('#us-vehicle').show();
+					$('#idle-vehicle').hide();
+				}else if (_val == 0){
+					$('#us-vehicle').hide();
+					$('#idle-vehicle').show();
+				}
+			});
+			$('#idle-vehicle').change(function  () {
+				console.log($(this).val())
 			});
 			
 		}
