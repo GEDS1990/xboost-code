@@ -1,7 +1,10 @@
 package com.xboost.controller;
 
 import com.xboost.pojo.DemandInfo;
+import com.xboost.pojo.Route;
+import com.xboost.service.ArrInfoService;
 import com.xboost.service.DemandInfoService;
+import com.xboost.service.SolutionRouteService;
 import com.xboost.util.ShiroUtil;
 import org.junit.runners.Parameterized;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,8 @@ import java.util.Map;
 public class SolutionDistributionController {
     @Inject
     private DemandInfoService demandInfoService;
+    @Inject
+    private SolutionRouteService solutionRouteService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -49,9 +54,14 @@ public class SolutionDistributionController {
         int jiange = 10;
         Map<String,Object> map = new HashMap<String,Object>();
         List<DemandInfo> demandInfoList = demandInfoService.findAll(ShiroUtil.getOpenScenariosId());
+        List<Route> routeList = solutionRouteService.findAllRoute(ShiroUtil.getOpenScenariosId());
         int totalAll = 0;
+        int totalAllRoute = 0;
         for(DemandInfo demandInfo : demandInfoList){
             totalAll = totalAll + Integer.parseInt(demandInfo.getVotes());
+        }
+        for(Route route : routeList){
+            totalAllRoute = totalAllRoute + Integer.parseInt(route.getSbVolSum());
         }
         switch (type){
             case "0":
@@ -67,7 +77,16 @@ public class SolutionDistributionController {
                 }
                 break;
             case "1":
-                String s ="";
+                for(int i=0;i<(max-min)/jiange;i++){
+                    int total = 0;
+                    for(Route route : routeList){
+                        int res = Integer.parseInt(route.getArrTime());
+                        if(res>=(min+jiange*i) && res<(min+jiange*(i+1))){
+                            total = total + Integer.parseInt(route.getSbVolSum());
+                        }
+                    }
+                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total/totalAllRoute*0.1));
+                }
                 break;
             default:
                 break;
