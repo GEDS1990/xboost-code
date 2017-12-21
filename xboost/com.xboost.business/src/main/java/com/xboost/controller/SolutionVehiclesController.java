@@ -82,10 +82,27 @@ public class SolutionVehiclesController {
 
 
         Map<String,Object> result = Maps.newHashMap();
+        Integer usingCarCount = solutionVehiclesService.findBusyCarCount(ShiroUtil.getOpenScenariosId());
 
         List<Map<String,Object>> vehiclesList = solutionVehiclesService.findByCar(param); //.findAll();
         Integer count = solutionVehiclesService.findAllCountByCar(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = solutionVehiclesService.findCountByCar(param);
+
+//        List<Map<String,Object>> vehiclesList;
+//        Integer count;
+//        Integer filteredCount;
+//
+//        if(usingCarCount>0){
+//            vehiclesList = solutionVehiclesService.findByCar(param); //.findAll();
+//            count = solutionVehiclesService.findAllCountByCar(ShiroUtil.getOpenScenariosId());
+//            filteredCount = solutionVehiclesService.findCountByCar(param);
+//        }
+//        else{
+//            vehiclesList = null;
+//            count = 0;
+//            filteredCount = 0;
+//        }
+
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数

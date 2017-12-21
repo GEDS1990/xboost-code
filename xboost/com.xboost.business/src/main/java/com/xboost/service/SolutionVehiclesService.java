@@ -52,4 +52,13 @@ public class SolutionVehiclesService {
         return solutionVehiclesMapper.findAllCountByCar(scenariosId).intValue();
     }
 
+    /**
+     *  查询已使用的车数
+     * @param scenariosId
+     * @return
+     */
+    public Integer findBusyCarCount(String scenariosId) {
+        return solutionVehiclesMapper.findBusyCarCount(scenariosId).intValue();
+    }
+
 }
