@@ -49,12 +49,15 @@ public class SolutionDistributionController {
         int jiange = 10;
         Map<String,Object> map = new HashMap<String,Object>();
         List<DemandInfo> demandInfoList = demandInfoService.findAll(ShiroUtil.getOpenScenariosId());
-        for(int i=0;i<max;i++){
+        for(int i=0;i<(max-min)/jiange;i++){
+            int total = 0;
             for(DemandInfo demandInfo : demandInfoList){
                 int res = Integer.parseInt(demandInfo.getDurationEnd());
-//                if(min+(jiange*i)<res<(min+jiange*(i+1))
+                if(res>=(min+jiange*i) && res<(min+jiange*(i+1))){
+                    total = total + Integer.parseInt(demandInfo.getVotes());
+                }
             }
-            map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),"");
+            map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total));
         }
         return demandInfoList;
     }
