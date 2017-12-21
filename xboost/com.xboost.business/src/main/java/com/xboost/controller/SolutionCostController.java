@@ -144,11 +144,15 @@ public class SolutionCostController {
         //总件量
         Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
 
+        //支线总运输成本
+        Double branchTransportCost = 100.00;
+
 
         result.put("sitePeopleWork",sitePeopleWork);
         result.put("distribPeopleWork",distribPeopleWork);
         result.put("siteCount",siteCount);
         result.put("totalPiece",totalPiece);
+        result.put("branchTransportCost",branchTransportCost);
 
 
         return result;

@@ -12,4 +12,6 @@ public class SolutionEfficiencyController {
     public String list() {
         return "results/efficiency";
     }
+
+    
 }
