@@ -84,6 +84,10 @@ public class SolutionCostController {
         //当前场景下网点总数
         Integer siteCount = siteInfoService.findAllCountBySiteCode(scenariosId);
 
+        //总件量
+        Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
+
+
         //网点
         List<Map<String,Object>> siteInfoList = siteInfoService.findAllBySiteCode(scenariosId);
 
@@ -94,6 +98,7 @@ public class SolutionCostController {
         result.put("sitePeopleWork",sitePeopleWork);
         result.put("distribPeopleWork",distribPeopleWork);
         result.put("siteCount",siteCount);
+        result.put("totalPiece",totalPiece);
         result.put("siteInfoList",siteInfoList);
         result.put("totalVol",totalVol);
 
