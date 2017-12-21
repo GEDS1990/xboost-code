@@ -36,5 +36,9 @@ public interface SolutionCostMapper {
     // 根据scenariosId和siteCode编辑site info 里的cost相关信息  @param
     void editSiteInfo(@Param("scenariosId")String scenariosId,@Param("siteCode")String siteCode);
 
+    //查询网点类型，网点编码，最大票数
+    List<Map<String,Object>> findTotalVol(@Param("scenariosId")String scenariosId,@Param("siteCode")String siteCode);
+
+
 }
 

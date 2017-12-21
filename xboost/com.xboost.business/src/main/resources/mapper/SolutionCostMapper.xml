@@ -43,8 +43,9 @@
         where scenariosId = #{scenariosId} and site_code=#{siteCode}
     </update>
 
-    <select id="findTotalVol" resultType="map" resultMap="costMap">
-        SELECT * FROM t_solution_cost where scenariosId = #{scenariosId}
+    <select id="findTotalVol" resultType="String">
+        SELECT cur_loc,GREATEST(MAX(sb_vol_sum),MAX(unload_vol_sum)) as totalVol FROM t_solution_route
+        WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc}
     </select>
 
 
@@ -73,5 +74,6 @@
         <result property="delivery_transport_cost" column="deliveryTransportCost"/>
         <result property="total_cost" column="totalCost"/>
     </resultMap>
+
 
 </mapper>

@@ -19,5 +19,8 @@ public interface SolutionVehiclesMapper {
     // 根据路线id获取路线信息总数,根据carType和type关联查询t_solution_route,t_car_info
     Long findAllCountByCar(String scenariosId);
 
+    // 查询已使用的车数
+    Long findBusyCarCount(String scenariosId);
+
 }
 
