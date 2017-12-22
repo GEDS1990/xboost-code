@@ -33,7 +33,7 @@
 
 </head>
 
-<body class="xb_index_bg">
+<body class="xb_index_bg" id="index-body">
 
 <div class="container">
     <div class="row">
@@ -68,12 +68,12 @@
 		                            ${message.message}
 		                        </div>
 		                    </c:if>
-		                    <c:if test="${not message}">
-			                    <div class="alert alert-danger " id="key-info">
-		                            <button type="button" class="close" ><span id="key-info-close">&times;</span></button>
-		                            <span id="keyerro-info"></span>
-		                        </div>
-	                        </c:if>
+		                    
+		                    <div class="alert alert-danger " id="key-info">
+	                            <button type="button" class="close" ><span id="key-info-close">&times;</span></button>
+	                            <span id="keyerro-info"></span>
+	                        </div>
+	                        
                             <!-- Change this to a button or input when using this as a form -->
                             <button id="loginBtn" type="button" class="btn btn-lg btn-success btn-block">Login in</button>
                             <%--<button id="registerBtn" type="button" class="btn btn-lg btn-register btn-block">注册账号</button>--%>

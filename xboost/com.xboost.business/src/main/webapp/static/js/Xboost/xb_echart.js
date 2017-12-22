@@ -305,28 +305,45 @@ function branchEcharts(data1,data2){
 		//自适应设置  
 	    width = $(window).width();  
 	    height = $(window).height();  
-	    $("#distribution-echarts").css("height",600);  
-		distributionEcharts();
+	    $("#distribution-echarts").css("height",height-300); 
+	    var _val = $('#distribution-choose').val();
+	    $.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
+	    	console.log(res)
+	    }).fail(function  () {
+	    	alert("fail");
+	    });
+	    $('#distribution-choose').change(function  () {
+	    	console.log($(this).val())
+	    });
+	    
+	    var data = {
+	    	"xinfo":['提早70','提早60','提早50','提早40','提早30','提早20','提早10','准时到'],
+	    	"seriesinfo":[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 80, 90]
+	    }
+		distributionEcharts(data);
+		
+		
+		
 	}
 }());	
-function distributionEcharts(){  
+function distributionEcharts(datas){  
     distributionEchart = echarts.init(document.getElementById('distribution-echarts'));  
     //自适应  
     window.onresize = distributionEchart.resize;  
     distributionEchart.setOption({ 
-    	title : {
-	        text: '收端到达集散点时间分布',
-	        x:'center',
-        	y:'top'
-	    },
+//  	title : {
+//	        text: '收端到达集散点时间分布',
+//	        x:'center',
+//      	y:'top'
+//	    },
         tooltip : {
             trigger: 'axis'  
         },  
-        legend: { 
-        	x:'center',
-        	y:'bottom',
-            data:['1','2']  
-        },  
+//      legend: { 
+//      	x:'center',
+//      	y:'bottom',
+//          data:['1','2']  
+//      },  
         toolbox: {  
             show : true,  
             feature : {  
@@ -341,7 +358,7 @@ function distributionEcharts(){
         xAxis : [  
             {  
                 type : 'category',  
-                data : ['提早70','提早60','提早50','提早40','提早30','提早20','提早10','准时到'],  
+                data : datas.xinfo,  
                 //设置字体倾斜  
                 axisLabel:{  
                     interval:0,  
@@ -357,6 +374,11 @@ function distributionEcharts(){
         yAxis : [  
             {  
                 type : 'value',  
+                axisLabel: {  
+               		show: true,  
+                    interval: 'auto',  
+                    formatter: '{value} %'  //显示百分比
+                },  
                 splitArea : {show : true}  
             }  
         ],  
@@ -364,7 +386,7 @@ function distributionEcharts(){
             {  
                 name:'1',  
                 type:'bar',  
-                data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2],
+                data:datas.seriesinfo,
                 barWidth : 30,//柱图宽度
                 //顶部数字展示pzr  
                 itemStyle: {  
@@ -373,6 +395,8 @@ function distributionEcharts(){
                         label: {  
                             show: true,//是否展示 
                             position: 'top',
+                            //formatter:'{b}\n{c}%',
+                            formatter:'{c}%', //显示百分比
                             textStyle: {  
                                 fontWeight:'bolder',  
                                 fontSize : '12',  

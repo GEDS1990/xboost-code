@@ -11,7 +11,7 @@
     <title>Xboost</title>
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
 
     <!-- MetisMenu CSS -->
     <link href="/static/js/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -78,16 +78,39 @@
 	    		<header class="clearfix result-header">
 	    			<div class="xb-fl">
 		    			<div class="select-depot">
-		    				<span class="glyphicon glyphicon-align-left"></span>
-		    				<select id="route-route" class="route-select">
-		    					
-		    				</select>
+		    				
 		    			</div>
 	    			</div>
 	    			<div class="xb-fr">
 	    				<button><span class="icon-upload"></span>Export this Sheet</button>
 	    			</div>
 	    		</header>
+	    		<div class="table-responsive active">
+					<table class="table table-hover efficiency">
+						<thead>
+							<tr>
+								<th colspan="4">发出票数</th>
+								<th>总票数</th>
+							</tr>
+							<tr>
+								<th>装车网点</th>
+								<th>峰值发出票数</th>
+								<th>0:00</th>
+								<th>总发出量</th>
+								<th>0</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>55Q</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 	    		
 	    	
 	    	

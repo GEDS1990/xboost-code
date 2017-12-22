@@ -34,6 +34,15 @@ $(function  () {
 //  		keycode.onclick=changeImg;
 //  		changeImg();
     		//点击登录
+    		$("#index-body").keydown(function  () {
+				keyLogin();
+			});
+			function keyLogin(){
+				if (event.keyCode==13){//回车键的键值为13
+					document.getElementById("loginBtn").click(); //调用登录按钮的登录事件
+				}
+					
+			}
 			$("#loginBtn").click(function(){
 	            if(!$("#tel").val()) {
 	                $("#tel").focus();

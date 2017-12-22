@@ -199,6 +199,9 @@ $(function (){
 				}
 			
 			});
+			
+//			//请求数据
+//			$.get("/costInitData.json")
 	
 		}
 	}());
