@@ -154,6 +154,7 @@ $(function (){
 							r=0
 						}
 						this.day_p_cost = r;
+						
 					},
 					sumG:function (){
 						this.day_allp_cost = (this.day_p_cost/this.piece).toFixed(2);
@@ -239,6 +240,21 @@ $(function (){
 			
 			});
 			
+			$('.cost-btn').click(function (){
+				var _val = $('#cost-choose').val();
+				if (_val == "a") {
+					var data = $("#cost-form-a").serialize();
+				}else{
+					var data = $("#cost-form-b").serialize();
+				}
+				$.post("/costs/addCost",data).done(function (res){
+					console.log(res)
+				}).fail(function  () {
+					console.log("fail")
+				});
+				
+			})
+			
 			//请求数据
 			$.get("/costs/costInitData.json").done(function (res){
 				console.log(res)
@@ -257,6 +273,8 @@ $(function (){
 			}).fail(function  () {
 				console.log("fail");
 			});
+			
+			//
 	
 		}
 	}());
