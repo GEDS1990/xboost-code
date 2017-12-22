@@ -58,42 +58,43 @@ public class SolutionDistributionController {
         int totalAll = 0;
         int totalAllRoute = 0;
         for(DemandInfo demandInfo : demandInfoList){
-            totalAll = totalAll + Integer.parseInt(demandInfo.getVotes());
+            totalAll = totalAll + Integer.parseInt((demandInfo.getVotes()!=null)?demandInfo.getVotes():"0");
         }
         for(Route route : routeList){
-            totalAllRoute = totalAllRoute + Integer.parseInt(route.getSbVolSum());
+            totalAllRoute = totalAllRoute + Integer.parseInt((route.getSbVolSum()!=null)?route.getSbVolSum():"0");
         }
+        type = (type!=null)?type:"0";
         switch (type){
             case "0":
                 for(int i=0;i<(max-min)/jiange;i++){
                     int total = 0;
                     for(DemandInfo demandInfo : demandInfoList){
-                        int res = Integer.parseInt(demandInfo.getDurationEnd());
+                        int res = Integer.parseInt(demandInfo.getDurationEnd()!=null?demandInfo.getDurationEnd():"0");
                         if(res>=(min+jiange*i) && res<(min+jiange*(i+1))){
-                            total = total + Integer.parseInt(demandInfo.getVotes());
+                            total = total + Integer.parseInt(demandInfo.getVotes()!=null?demandInfo.getVotes():"0");
                         }
                     }
                     map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total/totalAll*0.1));
                 }
                 break;
             case "1":
-                int total1 = 0,total2 = 0,total3 = 0,total4 = 0,total5 = 0,total6 = 0,total7 = 0;
+                double total1 = 0,total2 = 0,total3 = 0,total4 = 0,total5 = 0,total6 = 0,total7 = 0;
                 for(Route route : routeList){
-                    int res = Integer.parseInt(route.getArrTime())-min;
+                    Double res = Double.parseDouble(route.getArrTime()!=null?route.getArrTime():"0")-min;
                     if(res>50&&res<=60){
-                        total1 = total1 + Integer.parseInt(route.getSbVolSum());
+                        total1 = total1 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
                     }else if(res>40&&res<=50){
-                        total2 = total2 + Integer.parseInt(route.getSbVolSum());
+                        total2 = total2 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
                     }else if(res>30&&res<=40){
-                        total3 = total3 + Integer.parseInt(route.getSbVolSum());
+                        total3 = total3 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
                     }else if(res>20&&res<=30){
-                        total4 = total4 + Integer.parseInt(route.getSbVolSum());
+                        total4 = total4 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
                     }else if(res>10&&res<=20){
-                        total5 = total5 + Integer.parseInt(route.getSbVolSum());
+                        total5 = total5 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
                     }else if(res>0&&res<=10){
-                        total6 = total6 + Integer.parseInt(route.getSbVolSum());
+                        total6 = total6 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
                     }else if(res == 0){
-                        total7 = total7 + Integer.parseInt(route.getSbVolSum());
+                        total7 = total7 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
                     }
                 }
                 map.put("tiqian60",total1);

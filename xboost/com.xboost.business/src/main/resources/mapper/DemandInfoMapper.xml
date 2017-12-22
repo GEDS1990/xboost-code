@@ -23,7 +23,7 @@
     </select>
 
     <select id="findMinMax" parameterType="String" resultType="String">
-        SELECT Min(duration_start)+"-"+Max(duration_end) as maxMin FROM t_demand_info where scenariosId = #{scenariosId}
+        SELECT concat(concat(Min(duration_start),"-"),Max(duration_end)) as maxMin FROM t_demand_info where scenariosId = #{scenariosId}
     </select>
 
     <select id="findMax" parameterType="String" resultType="String">
