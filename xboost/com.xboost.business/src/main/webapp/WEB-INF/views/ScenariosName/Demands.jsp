@@ -72,7 +72,6 @@
 			            <thead>
 			            	<tr>
 			            		<th>ID</th>
-				                <th>date</th>
 				                <th>start depot</th>
 				                <th>start time</th>
 				                <th>end depot</th>
