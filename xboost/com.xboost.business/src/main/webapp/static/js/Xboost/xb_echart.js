@@ -11,8 +11,7 @@ var collectChart;
 
 (function (){
 	var collect_reserach_echarts = doc.getElementById('collect-reserach-echarts');
-	var distribution_echarts = doc.getElementById('distribution-echarts');
-	if (collect_reserach_echarts || distribution_echarts) {
+	if (collect_reserach_echarts) {
 		//自适应设置  
 	    width = $(window).width();  
 	    height = $(window).height();  
