@@ -45,6 +45,7 @@ public class SolutionEfficiencyController {
         List<String> siteList = solutionEfficiencyService.findAllSite(scenariosId);
 
         Map<String,Object> result = Maps.newHashMap();
+        Map<String,Object> res = Maps.newHashMap();
         Map<String,Object> param = Maps.newHashMap();
         Integer sbVol;
 
@@ -58,7 +59,12 @@ public class SolutionEfficiencyController {
                 param.put("min",min+(periodTime*j));
                 param.put("periodTime",periodTime);
                 sbVol = (null == solutionEfficiencyService.findSbVol(param)?0:solutionEfficiencyService.findSbVol(param));
-                result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),sbVol);
+               // result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),sbVol);
+                res.put("site",site);
+                res.put("start",min+periodTime*j);
+                res.put("end",min+periodTime*(j+1));
+                res.put("sbVol",sbVol);
+                result.put("sbVol",res);
             }
         }
         return result;

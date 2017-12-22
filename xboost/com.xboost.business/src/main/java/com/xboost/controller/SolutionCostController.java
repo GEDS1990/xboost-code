@@ -96,9 +96,9 @@ public class SolutionCostController {
         String totalVol = "100";
 
         result.put("data",costList);
-        result.put("sitePeopleWork",sitePeopleWork);
-        result.put("distribPeopleWork",distribPeopleWork);
-        result.put("siteCount",siteCount);
+//        result.put("sitePeopleWork",sitePeopleWork);
+//        result.put("distribPeopleWork",distribPeopleWork);
+//        result.put("siteCount",siteCount);
         result.put("totalPiece",totalPiece);
         result.put("siteInfoList",siteInfoList);
         result.put("totalVol",totalVol);

@@ -20,7 +20,7 @@
     </select>
 
     <select id="findByParam" parameterType="map" resultType="Cost" resultMap="costMap">
-        SELECT * from t_solution_cost where scenariosId = #{scenariosId} and model_type=#{modelType} and plan =#{plan}
+        SELECT * from t_solution_cost where scenariosId = #{scenariosId} and plan =#{plan}
     </select>
 
     <select id="findById" resultType="com.xboost.pojo.Cost"  resultMap="costMap">
