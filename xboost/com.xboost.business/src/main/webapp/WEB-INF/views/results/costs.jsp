@@ -85,22 +85,24 @@
 	    		</header>
 	    		<div class="cost-plan-choose">
 	    			<span class="cost-choose">Choose Plan </span>
-	    			<select>
-	    				<option>Plan A</option>
-	    				<option>Plan B</option>
+	    			<select id="cost-choose">
+	    				<option value="a">Plan A</option>
+	    				<option value="b">Plan B</option>
 	    			</select>
+	    			<button class="cost-btn">submit</button>
 	    			<span> 选中的Plan的数据会被用于其它页面的展示</span>
 	    		</div>
 	    		<div class="result-cost clearfix">
 	    			<div class="result-cost-item itemstyle" >
 	    				<form id="cost-form-a" v-show="cseen">
+	    					<input type="hidden" name="plan" value="A" />
 	    					<h1>Plan A</h1>
 		    				<div class="cost-item text-left">
 		    					<div class="item-box">
 		    						<h1>人效</h1>
 		    						<ul class="item-content">
-		    							<li>网点集散点人效 (p): <input type="number"  min="0" v-model="sitePeople"/></li>
-		    							<li>集配站集散点人效 (p): <input type="number"  min="0" v-model="collectPeople"/></li>
+		    							<li>网点集散点人效 (p): <input type="number" name="sitePeopleWork"  min="0" v-model="sitePeople"/></li>
+		    							<li>集配站集散点人效 (p): <input type="number" name="distribPeopleWork" min="0" v-model="collectPeople"/></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
@@ -109,17 +111,17 @@
 		    							<li>支线depot&distrib.center数量: <span>{{depotcount}}</span></li>
 		    							<li>每个支线depot/distrib.center的人数: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<li>支线depot&distrib.center总人数: <span>{{depotAllPeople}}</span></li>
-		    							<li>Full-time Staff: <input type="number"  min="0" v-model="full_staff"/></li>
-		    							<li>Part-time Staff: <input type="number"  min="0" v-model="part_staff"/></li>
+		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
+		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
 		    						<h1>工资设定</h1>
 		    						<ul class="item-content">
-		    							<li>Full-time salary: <input type="number" min="0" v-model="full_salaty" /> <span>/month</span></li>
-		    							<li>Full-time working days: <input type="number"  min="0" max="30" v-model="full_days"/> <span>/month</span></li>
-		    							<li>Part-time wage: <input type="number" min="0" max="24" v-model="part_wage"/> <span>/hour</span></li>
-		    							<li>Part-time working hours: <input type="number" min="0" v-model="part_work"/> <span>/month</span></li>
+		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>/month</span></li>
+		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>/month</span></li>
+		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>/hour</span></li>
+		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>/month</span></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
@@ -128,6 +130,10 @@
 		    							<li>支线depot&distrib.center单日人工成本: <span>{{day_p_cost}}</span></li>
 		    							<li>单日总体人工成本: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>支线运输成本: <span>{{line_cost}}</span> <span> (per piece)</span></li>
+		    							<input type="hidden" name="sum1" v-bind:value="day_p_cost"/>
+		    							<input type="hidden" name="totalDailyLaborCost" v-bind:value="day_allp_cost"/>
+		    							<input type="hidden" name="branchTransportCost" v-bind:value="line_cost"/>
+		    							<input type="hidden" name="totalCost" v-bind:value="allcost"/>
 		    						</ul>
 		    						<p>总成本: {{allcost}} <span> (per piece)</span></p>
 		    					</div>
@@ -137,32 +143,33 @@
 	    			</div>
 	    			<div class="result-cost-item" >
 	    				<form id="cost-form-b" v-show="cseen">
-	    					<h1>Plan B</h1>
+	    					<input type="hidden" name="plan" value="A" />
+	    					<h1>Plan A</h1>
 		    				<div class="cost-item text-left">
 		    					<div class="item-box">
 		    						<h1>人效</h1>
 		    						<ul class="item-content">
-		    							<li>网点集散点人效 (p): <input type="number"  min="0" v-model="sitePeople"/></li>
-		    							<li>集配站集散点人效 (p): <input type="number"  min="0" v-model="collectPeople"/></li>
+		    							<li>网点集散点人效 (p): <input type="number" name="sitePeopleWork"  min="0" v-model="sitePeople"/></li>
+		    							<li>集配站集散点人效 (p): <input type="number" name="distribPeopleWork" min="0" v-model="collectPeople"/></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
 		    						<h1>人员配备</h1>
 		    						<ul class="item-content">
-		    							<li>支线depot&distrib.center数量: <span id="site-count">{{depotcount}}</span></li>
+		    							<li>支线depot&distrib.center数量: <span>{{depotcount}}</span></li>
 		    							<li>每个支线depot/distrib.center的人数: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<li>支线depot&distrib.center总人数: <span>{{depotAllPeople}}</span></li>
-		    							<li>Full-time Staff: <input type="number"  min="0" v-model="full_staff"/></li>
-		    							<li>Part-time Staff: <input type="number"  min="0" v-model="part_staff"/></li>
+		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
+		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
 		    						<h1>工资设定</h1>
 		    						<ul class="item-content">
-		    							<li>Full-time salary: <input type="number" min="0" v-model="full_salaty" /> <span>/month</span></li>
-		    							<li>Full-time working days: <input type="number"  min="0" max="30" v-model="full_days"/> <span>/month</span></li>
-		    							<li>Part-time wage: <input type="number" min="0" max="24" v-model="part_wage"/> <span>/hour</span></li>
-		    							<li>Part-time working hours: <input type="number" min="0" v-model="part_work"/> <span>/month</span></li>
+		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>/month</span></li>
+		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>/month</span></li>
+		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>/hour</span></li>
+		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>/month</span></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
@@ -171,6 +178,10 @@
 		    							<li>支线depot&distrib.center单日人工成本: <span>{{day_p_cost}}</span></li>
 		    							<li>单日总体人工成本: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>支线运输成本: <span>{{line_cost}}</span> <span> (per piece)</span></li>
+		    							<input type="hidden" name="sum1" v-bind:value="day_p_cost"/>
+		    							<input type="hidden" name="totalDailyLaborCost" v-bind:value="day_allp_cost"/>
+		    							<input type="hidden" name="branchTransportCost" v-bind:value="line_cost"/>
+		    							<input type="hidden" name="totalCost" v-bind:value="allcost"/>
 		    						</ul>
 		    						<p>总成本: {{allcost}} <span> (per piece)</span></p>
 		    					</div>
@@ -185,6 +196,7 @@
 	    				<option>Plan A</option>
 	    				<option>Plan B</option>
 	    			</select>
+	    			<button class="cost-btn">submit</button>
 	    			<span> 选中的Plan的数据会被用于其它页面的展示</span>
 	    		</div>
 	    		
