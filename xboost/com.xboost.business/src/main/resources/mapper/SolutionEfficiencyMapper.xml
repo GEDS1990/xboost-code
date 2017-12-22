@@ -10,7 +10,22 @@
 
     <select id="findSbVol" parameterType="map" resultType="Integer">
         SELECT sum(sb_vol_sum) FROM t_solution_route
+        WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and end_time>= #{min} and end_time &lt; #{min}+#{periodTime}
+    </select>
+
+    <select id="findUnloadVol" parameterType="map" resultType="Integer">
+        SELECT sum(unload_vol_sum) FROM t_solution_route
         WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and arr_time>= #{min} and arr_time &lt; #{min}+#{periodTime}
+    </select>
+
+    <select id="findArrCar" parameterType="map" resultType="String">
+        SELECT DISTINCT(car_name) FROM t_solution_route
+        WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and arr_time>= #{min} and arr_time &lt; #{min}+#{periodTime}
+    </select>
+
+    <select id="findLeaveCar" parameterType="map" resultType="String">
+        SELECT DISTINCT(car_name) FROM t_solution_route
+        WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and end_time>= #{min} and end_time &lt; #{min}+#{periodTime}
     </select>
 
 

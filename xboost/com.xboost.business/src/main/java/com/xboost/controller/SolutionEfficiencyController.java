@@ -39,11 +39,13 @@ public class SolutionEfficiencyController {
     public Map<String,Object> load(HttpServletRequest request) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
 
-        int periodTime = 10;
+//        String maxmix = demandInfoService.findMinMax(ShiroUtil.getOpenScenariosId());
+//        int min = Integer.parseInt(maxmix.split("-")[0]);
+//        int max = Integer.parseInt(maxmix.split("-
 
-        String maxmix = demandInfoService.findMinMax(ShiroUtil.getOpenScenariosId());
-        int min = Integer.parseInt(maxmix.split("-")[0]);
-        int max = Integer.parseInt(maxmix.split("-")[1]);
+        int periodTime = 10;
+        int min = Integer.parseInt(demandInfoService.findMin(scenariosId));
+        int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
 
         List<Route> routeList = solutionRouteService.findAllRoute(scenariosId);
         List<String> siteList = solutionEfficiencyService.findAllSite(scenariosId);
@@ -51,7 +53,9 @@ public class SolutionEfficiencyController {
         Map<String,Object> result = Maps.newHashMap();
         Map<String,Object> param = Maps.newHashMap();
         Integer sbVol;
+        Integer unloadVol;
 
+        //发出票数
         for(int i=0;i<siteList.size();i++){
             String site = siteList.get(i);
             for(int j=0;j<(max-min)/periodTime;j++)
@@ -64,6 +68,35 @@ public class SolutionEfficiencyController {
                 result.put(String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),site+"-"+sbVol);
             }
         }
+
+        //发出票数
+        for(int i=0;i<siteList.size();i++){
+            String site = siteList.get(i);
+            for(int j=0;j<(max-min)/periodTime;j++)
+            {
+                param.put("scenariosId",scenariosId);
+                param.put("curLoc",site);
+                param.put("min",min);
+                param.put("periodTime",periodTime);
+                unloadVol = solutionEfficiencyService.findUnloadVol(param);
+                result.put(String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),site+"-"+unloadVol);
+            }
+        }
+
+		//到达车辆数
+//        for(int i=0;i<siteList.size();i++){
+//            String site = siteList.get(i);
+//            for(int j=0;j<(max-min)/periodTime;j++)
+//            {
+//                param.put("scenariosId",scenariosId);
+//                param.put("curLoc",site);
+//                param.put("min",min);
+//                param.put("periodTime",periodTime);
+//                unloadVol = solutionEfficiencyService.findUnloadVol(param);
+//                result.put(String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),site+"-"+unloadVol);
+//            }
+//        }
+
 
         return result;
     }

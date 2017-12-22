@@ -15,6 +15,10 @@ public interface DemandInfoMapper {
 	//max-min
     String findMinMax(String scenariosId);
 
+    String findMax(String scenariosId);
+
+    String findMin(String scenariosId);
+
      // 查询所有需求信息  @return
     List<DemandInfo> findAll(String scenariosId);
 

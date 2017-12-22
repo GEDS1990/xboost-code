@@ -135,6 +135,17 @@ public class DemandInfoService {
     public String findMinMax(String scenariosId){
         return demandInfoMapper.findMinMax(scenariosId);
     }
+
+    //max
+    public String findMax(String scenariosId){
+        return demandInfoMapper.findMax(scenariosId);
+    }
+
+    //min
+    public String findMin(String scenariosId){
+        return demandInfoMapper.findMin(scenariosId);
+    }
+
     /**
      * 获取需求信息总数量
      * @return

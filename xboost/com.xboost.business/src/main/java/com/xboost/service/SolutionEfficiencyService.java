@@ -46,8 +46,24 @@ public class SolutionEfficiencyService {
         return solutionEfficiencyMapper.findAllSite(scenariosId);
     }
 
+    //发出票数
     public Integer findSbVol(Map<String,Object> param){
         return solutionEfficiencyMapper.findSbVol(param);
+    }
+
+    //到达票数
+    public Integer findUnloadVol(Map<String,Object> param){
+        return solutionEfficiencyMapper.findUnloadVol(param);
+    }
+
+    //到达车辆
+    public List<String> findArrCar(Map<String,Object> param) {
+        return solutionEfficiencyMapper.findArrCar(param);
+    }
+
+    //发出车辆
+    public List<String> findLeaveCar(Map<String,Object> param) {
+        return solutionEfficiencyMapper.findLeaveCar(param);
     }
 
 
