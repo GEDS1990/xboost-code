@@ -1,9 +1,16 @@
 $(function (){
 	
 	var doc = document;
+	
+	
+	/*
+	 * 
+	 * costs.jsp == SolutionCostController
+	 * 
+	 */
 	(function  () {
-		var result_cost_item = doc.getElementsByClassName('result-cost-item');
-		if (result_cost_item) {
+		var costs = doc.getElementById('costs');
+		if (costs) {
 			var vmA = new Vue({
 				el:'#cost-form-a',
 				data:{
@@ -254,7 +261,6 @@ $(function (){
 				});
 				
 			})
-			
 			//请求数据
 			$.get("/costs/costInitData.json").done(function (res){
 				console.log(res)
@@ -274,12 +280,102 @@ $(function (){
 				console.log("fail");
 			});
 			
+			$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
+				console.log(res)
+				
+			}).fail(function (){
+				console.log("fail");
+			})
 			//
 	
 		}
 	}());
 	
 	
+	/*
+	 * efficiency.jsp == SolutionEfficiencyController
+	 * 
+	 */
+	//将对象元素转换成字符串以作比较
+	function obj2key(obj, keys){
+	    var n = keys.length,
+	        key = [];
+	    while(n--){
+	        key.push(obj[keys[n]]);
+	    }
+	    return key.join('|');
+	}
+	//去重操作
+	function uniqeByKeys(array,keys){
+	    var arr = [];
+	    var hash = {};
+	    for (var i = 0, j = array.length; i < j; i++) {
+	        var k = obj2key(array[i], keys);
+	        if (!(k in hash)) {
+	            hash[k] = true;
+	            arr .push(array[i]);
+	        }
+	    }
+	    return arr ;
+	}
+	function startNum (a,b) {
+		return a.start-b.start;
+	}
+	//处理返回数据
+	function efficList (res){
+		var arr = [];
+		var allnewarr = []
+		for (var i in res) {
+			var obj = {}
+			var s = i.split("-");
+			s.push(res[i]);
+			obj["site"] = s[0];
+			obj["start"] = s[1];
+			obj["end"] = s[2];
+			obj["num"] = s[3];
+			arr.push(obj);
+		}
+		//console.log(arr);
+		var arrSite = uniqeByKeys(arr,["site"]);
+		for (var j=0,alen = arrSite.length;j<alen;j++) {
+			
+			var newarr = {};
+			var lista = [];
+			for (var x=0,arrlen = arr.length;x<arrlen;x++) {
+				var site1 = arrSite[j].site;
+				var site2 = arr[x].site;
+				if (site1 == site2) {
+					var objj = {};
+					objj["start"] = arr[x].start;
+					objj["end"] = arr[x].end;
+					objj["num"] = arr[x].num;
+					lista.push(objj);
+				}
+			}
+			lista.sort(startNum);
+			newarr["site"]=arrSite[j].site;
+			newarr["list"]=lista;
+			allnewarr.push(newarr);
+		}
+		return allnewarr;
+	}
+	(function  () {
+		var efficiency = doc.getElementById('efficiency-car');
+		if (efficiency) {
+			$.get("/efficiency/leaveCarNum.json").done(function (res){
+				console.log(res)
+				var carlist = efficList(res);
+				
+				
+
+				
+				
+				
+			}).fail(function (){
+				console.log("fail")
+			});
+		}
+	}());
 	
 	
 	
