@@ -67,6 +67,16 @@
 	    	<div>
 		        <!--Parameters-->
 		        <div class="table-responsive active">
+		        	<div class="xb-fl" style="margin-bottom: 10px;">
+		    			<div class="select-depot">
+		    				<span class="glyphicon glyphicon-align-left"></span>
+		    				<select id="pata-model-type" class="route-select">
+		    					<option value="1">串点模型</option>
+		    					<option value="2">接力模型</option>
+		    					<option value="3">综合模型</option>
+		    				</select>
+		    			</div>
+	    			</div>
 		        	<a href="javascript:;" id="addNewUser-pata" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus"></i>Add Info</a>
 		            <table id="Patameters" class="table table-striped table-bordered table-hover">
 			            <thead>

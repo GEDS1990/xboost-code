@@ -79,8 +79,10 @@
 	    			<div class="xb-fl">
 		    			<div class="select-depot">
 		    				<span class="glyphicon glyphicon-align-left"></span>
-		    				<select id="route-route" class="route-select">
-		    					
+		    				<select id="distribution-choose" class="route-select">
+		    					<option value="0">各个网点的截单时间分布</option>
+		    					<option value="1">各个网点的实际送达时间分布</option>
+		    					<option value="2">支线到达目的地集散点时间分布</option>
 		    				</select>
 		    			</div>
 	    			</div>

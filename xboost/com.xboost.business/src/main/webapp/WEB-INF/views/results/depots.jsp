@@ -107,7 +107,7 @@
 	    				</ul>
 	    				<ul class="scen-cost">
 	    					<li>depot type:<span id ="type">--</span></li>
-	    					<li>to distrib.center:<span id="distrib-center">--</span></li>
+	    					<!--<li>to distrib.center:<span id="distrib-center">--</span></li>-->
 	    					<li>deport area:<span id="area">--</span></li>
 	    					<li>vehicle quantity limit:<span id="vehicle-quantity-limit">--</span><span>(per 10mins)</span></li>
 	    					<li>vehicle weight limit:<span id="vehicle-weight-limit">--</span><span>(per 10mins)</span></li>

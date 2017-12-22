@@ -477,3 +477,11 @@ body{
 .cost-plan-choose.alt{
 	border-top: 1px solid #ccc;
 }
+
+/***********efficiency***********/
+.table.table-hover.efficiency>thead>tr>th{
+	background-color: #fff;
+}
+.table.table-hover.efficiency>tbody>tr>td{
+    border: 1px solid #ddd;
+}

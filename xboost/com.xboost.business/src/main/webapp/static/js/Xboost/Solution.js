@@ -472,6 +472,11 @@ $(function  () {
 	                	return operationTime(res.arrTime);
 	                },"name":"arr_time"},
 	                {"data":function  (res) {
+	                	if (res.unloadVol == "") {
+	                		res.unloadVol = 0;
+	                	}else if(res.sbVol == ""){
+	                		res.sbVol = 0;
+	                	}
 	                	return "Unload "+res.unloadVol+" , "+"Load "+res.sbVol;
 	                },"name":"unloadVol & sbVol"},
 	                {"data":function  (res) {
@@ -583,8 +588,8 @@ $(function  () {
                         $('#name').text(res.siteName);
                         $('#address').text(res.siteAddress);
                         $('#type').text(res.siteType);
-                        $('#distrib-center').text(res.distribCenter);
-                        $('#area').text(res.siteArea);
+                        //$('#distrib-center').text(res.distribCenter);
+                        $('#area').text(res.siteArea + " m²");
                         $('#vehicle-quantity-limit').text(res.carNum);
                         $('#vehicle-weight-limit').text(res.largeCarModel);
                         $('#piece-capacity').text(res.maxOperateNum);
@@ -679,6 +684,11 @@ $(function  () {
 	                	return operationTime(res.arrTime);
 	                },"name":"arr_time"},
 	                {"data":function  (res) {
+	                	if (res.unloadVol == "") {
+	                		res.unloadVol = 0;
+	                	}else if(res.sbVol == ""){
+	                		res.sbVol = 0;
+	                	}
 	                	return "Unload "+res.unloadVol+" , "+"Load "+res.sbVol;
 	                },"name":"unload_vol&sb_vol"},
 	                {"data":function  (res) {
@@ -715,7 +725,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	console.log(data);
+	            	//console.log(data);
 	            	if (data.data.length != 0) {
 	            		$('#depots-map').show();
 	            		var result = data.data,
@@ -793,10 +803,11 @@ $(function  () {
 	            				routeMapInit(listPoint,_val);
 	            				$.get("/route/totalDistance.json",{"routeCount":_val}).done(function (res){
 									if (res) {
-										$('#total-distance').text(res);
+										$('#total-distance').text(res+" km");
 									}
 								}).fail(function (){
-									
+									alert("fail");
+									console.log("fail");
 								});
 	            			}
 	            			
@@ -817,7 +828,7 @@ $(function  () {
 			        	var res = data[0];
 						$('#vehicle-load-requirement').text(res.carType);
 						$('#vehicle-piece-capacity').text(res.max_load);
-						$('#speed-requirement').text(res.velocity);
+						$('#speed-requirement').text(res.velocity+" km/h");
 			        }else{
 			        	$('#route-name').text("No Data");
 			        	$('#total-distance').text("--");
@@ -840,13 +851,13 @@ $(function  () {
 				routeMapInit(listArry,val);
 				$.get("/route/totalDistance.json",{"routeCount":val}).done(function (res){
 					if (res) {
-						$('#total-distance').text(res);
+						$('#total-distance').text(res+" km");
 					}
 				}).fail(function (){
 					console.log("fail")
 				});
 			});
-			//获取checked值
+			//获取checked值paiche
 			$('input[type="radio"]').click(function (){
 				var _val = $("input[type='radio']:checked").val();
 				//console.log(_val)
@@ -882,6 +893,11 @@ $(function  () {
 	 *Vehicles.jsp == SolutionVehiclesController
 	 *
 	 */
+	function vehNum (a,b) {
+		var indexa = a.search(/\d/),
+		indexb = b.search(/\d/);
+		return a.substr(indexa) - b.substr(indexb);
+	}
 	(function  () {
 		var SolutionVehicles = doc.getElementById("SolutionVehicles");
 		if (SolutionVehicles) {
@@ -909,6 +925,11 @@ $(function  () {
 	                	return operationTime(res.arrTime);
 	                },"name":"arr_time"},
 	                {"data":function(res) {
+	                	if (res.unloadVol == "") {
+	                		res.unloadVol = 0;
+	                	}else if(res.sbVol == ""){
+	                		res.sbVol = 0;
+	                	}
 	                	return "Unload "+res.unloadVol+" , "+"Load "+res.sbVol;
 	                },"name":"unload_vol&sbVol"},
 	                {"data":function(res) {
@@ -960,6 +981,8 @@ $(function  () {
 	            		}
 	            		var Arr = unique(arr),
 	            		A_len = Arr.length;
+	            		Arr.sort(vehNum);
+	            		
 	            		for (var j=0;j<A_len;j++) {
 	            			var add='<option value='+Arr[j]+'>'+Arr[j]+'</option>';
 							$('#route-vehicles').append(add);
@@ -1013,7 +1036,7 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var datas = api.rows( {page:'current'} ).data();
-			        console.log(datas);
+			        //console.log(datas);
 			        var datas_len = datas.length;
 			        if (datas_len !=0) {
 			        	var result = datas[0];
@@ -1022,7 +1045,7 @@ $(function  () {
 			        	$('#veh-limit').text(result.maxLoad);
 			        	$('#veh-piece').text(result.maxRunningTime);
 			        	$('#veh-unloadtime').text(result.durationUnloadFull);
-			        	$('#veh-speed').text(result.velocity);
+			        	$('#veh-speed').text(result.velocity+" km/h");
 			        }else{
 			        	$('#route-name').text("No Data");
 			        	$('#veh-type').text("--");
@@ -1037,7 +1060,7 @@ $(function  () {
 	        //点击选项 来查询
 	        var table = $('#SolutionVehicles').DataTable();
 			$(document).on("change","#route-vehicles",function  () {
-				console.log(this.value)
+				//console.log(this.value)
 				table.search(this.value).draw();
 				$('#route-name').text(this.value);
 				vehiclesMapInit(listArry,this.value)

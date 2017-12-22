@@ -453,11 +453,19 @@ $(function  () {
          
 		}
 		
-	})(),
+	}());
 	/*
 	 *Demands.jsp == DemandInfoController
 	 * 
 	 * */
+	//求时间
+	function operationTime (data) {
+		var result = parseInt(data),
+	    	h = parseInt(result/60),
+	    	m = result%60;
+	    	return add0(h)+":"+add0(m);
+	}
+	function add0(m){return m<10?'0'+m:m };
 	(function  () {
 		var Demands = doc.getElementById("Demands");
 		if (Demands) {
@@ -475,11 +483,14 @@ $(function  () {
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
-	                {"data":"date","name":"date"},
 	                {"data":"siteCodeCollect","name":"site_code_collect"},
-	                {"data":"durationStart","name":"duration_start"},
+	                {"data":function (res){
+	                	return operationTime(res.durationStart);
+	                },"name":"duration_start"},
 	                {"data":"siteCodeDelivery","name":"site_code_delivery"},
-	                {"data":"durationEnd","name":"duration_end"},
+	                {"data":function (res){
+	                	return operationTime(res.durationEnd);
+	                },"name":"duration_end"},
 	                {"data":"votes","name":"votes"},
 	                {"data":"weight","name":"weight"},
 	                {"data":"productType","name":"product_type"},
@@ -493,7 +504,7 @@ $(function  () {
 	                    "visible":true
 	                },
 	                {
-	                    "targets":[0,9],
+	                    "targets":[0,8],
 	                    "orderable":false
 	                }
 	            ],
@@ -671,7 +682,24 @@ $(function  () {
 	                    "next":       "Next",
 	                    "previous":   "Prev"
 	                }
+	            },
+	            "initComplete": function (settings, data) {
+	            	var _val = $('#pata-model-type').val();
+	            	var table = $('#Patameters').DataTable();
+	            		setTimeout(function(){
+	            			if (_val) {
+	            				table.search(_val).draw();
+	            			}
+	            			
+	            		},0)
 	            }
+	        });
+	        
+	        //点击选项搜索
+	        $('#pata-model-type').change(function  () {
+	        	var _val = $(this).val();
+	        	var table = $('#Patameters').DataTable();
+	        	table.search(_val).draw();
 	        });
 	     
         	//阻止表单提交
@@ -841,8 +869,8 @@ $(function  () {
 	            ],
 	            "columnDefs":[ //具体列的定义
 	                {
-	                    "targets":[0],
-	                    "visible":true
+	                    "targets":[0,8],
+	                    "visible":false
 	                },
 	                {
 	                    "targets":[0,31],

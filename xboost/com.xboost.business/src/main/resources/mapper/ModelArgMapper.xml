@@ -23,7 +23,7 @@
         <where>
             scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
-                and parameter_name LIKE #{keyword}
+                and model_type LIKE #{keyword}
             </if>
         </where>
         order by ${orderColumn} ${orderType}
