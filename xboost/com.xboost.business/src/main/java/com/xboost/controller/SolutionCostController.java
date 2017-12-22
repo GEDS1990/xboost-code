@@ -55,8 +55,8 @@ public class SolutionCostController {
     @ResponseBody
     public String addCost(HttpServletRequest request,Cost cost) { ;
         cost.setScenariosId(ShiroUtil.getOpenScenariosId().toString());
-        cost.setModelType(request.getParameter("modelType"));
-        cost.setModelType(request.getParameter("plan"));
+    //    cost.setModelType(request.getParameter("modelType"));
+   //     cost.setModelType(request.getParameter("plan"));
         solutionCostService.add(cost);
         return "success";
     }
