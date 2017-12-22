@@ -8,9 +8,9 @@ $(function (){
 				el:'#cost-form-a',
 				data:{
 					cseen:true,
-					sitePeople:'300',
-					collectPeople:'500',
-					depotcount:'67',
+					sitePeople:'',
+					collectPeople:'',
+					depotcount:'',
 					depotPeoplecount:'',
 					depotAllPeople:'',
 					full_salaty:'',
@@ -23,7 +23,8 @@ $(function (){
 					allcost:'',
 					full_staff:'',
 					part_staff:'',
-					piece:'500'//网络
+					piece:'',//总件数
+					branch_cost:""
 				},
 				methods:{
 					sum1:function (){ //单日人工总成本
@@ -38,6 +39,12 @@ $(function (){
 					},
 					sumG:function (){
 						this.day_allp_cost = (this.day_p_cost/this.piece).toFixed(2);
+					},
+					sumI:function (){
+						this.line_cost = (this.branch_cost/this.piece).toFixed(2);
+					},
+					sumK:function (){
+						this.allcost = Number(this.day_allp_cost) + Number(this.line_cost);
 					}
 					
 				},
@@ -51,6 +58,8 @@ $(function (){
 						this.part_staff = 0;
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 					},
 					full_staff:function  (val) {
 						if (val>this.depotAllPeople) {
@@ -64,6 +73,8 @@ $(function (){
 						}
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 						
 					},
 					part_staff:function (val){
@@ -78,10 +89,14 @@ $(function (){
 						}
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 					},
 					full_salaty:function  () {
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 					},
 					full_days:function  () {
 						this.sum1();
@@ -90,10 +105,14 @@ $(function (){
 					part_wage:function (){
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 					},
 					part_work:function (){
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 					}
 					
 				}
@@ -107,9 +126,9 @@ $(function (){
 				el:'#cost-form-b',
 				data:{
 					cseen:true,
-					sitePeople:'300',
-					collectPeople:'500',
-					depotcount:'67',
+					sitePeople:'',
+					collectPeople:'',
+					depotcount:'',
 					depotPeoplecount:'',
 					depotAllPeople:'',
 					full_salaty:'',
@@ -122,7 +141,8 @@ $(function (){
 					allcost:'',
 					full_staff:'',
 					part_staff:'',
-					piece:'500'//网络
+					piece:'',//总件数
+					branch_cost:""
 				},
 				methods:{
 					sum1:function (){ //单日人工总成本
@@ -132,12 +152,17 @@ $(function (){
 						//console.log(Boolean(r))
 						if (!Boolean(r)) {
 							r=0
-							
 						}
 						this.day_p_cost = r;
 					},
 					sumG:function (){
-						this.day_allp_cost = this.day_p_cost/this.piece;
+						this.day_allp_cost = (this.day_p_cost/this.piece).toFixed(2);
+					},
+					sumI:function (){
+						this.line_cost = (this.branch_cost/this.piece).toFixed(2);
+					},
+					sumK:function (){
+						this.allcost = Number(this.day_allp_cost) + Number(this.line_cost);
 					}
 					
 				},
@@ -151,6 +176,8 @@ $(function (){
 						this.part_staff = 0;
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 					},
 					full_staff:function  (val) {
 						if (val>this.depotAllPeople) {
@@ -164,6 +191,8 @@ $(function (){
 						}
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 						
 					},
 					part_staff:function (val){
@@ -178,30 +207,56 @@ $(function (){
 						}
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 					},
 					full_salaty:function  () {
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 					},
 					full_days:function  () {
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 					},
 					part_wage:function (){
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 					},
 					part_work:function (){
 						this.sum1();
 						this.sumG();
+						this.sumI();
+						this.sumK();
 					}
 					
 				}
 			
 			});
 			
-//			//请求数据
-//			$.get("/costInitData.json")
+			//请求数据
+			$.get("/costs/costInitData.json").done(function (res){
+				console.log(res)
+				if (res) {
+					vmA.sitePeople = res.sitePeopleWork;
+					vmA.collectPeople = res.distribPeopleWork;
+					vmA.depotcount = res.siteCount;
+					vmA.piece = res.totalPiece;
+					vmA.branch_cost = res.branchTransportCost;
+					vmB.sitePeople = res.sitePeopleWork;
+					vmB.collectPeople = res.distribPeopleWork;
+					vmB.depotcount = res.siteCount;
+					vmB.piece = res.totalPiece;
+					vmB.branch_cost = res.branchTransportCost;
+				}
+			}).fail(function  () {
+				console.log("fail");
+			});
 	
 		}
 	}());
