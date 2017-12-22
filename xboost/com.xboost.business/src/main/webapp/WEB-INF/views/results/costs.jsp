@@ -92,7 +92,7 @@
 	    			<button class="cost-btn">submit</button>
 	    			<span> 选中的Plan的数据会被用于其它页面的展示</span>
 	    		</div>
-	    		<div class="result-cost clearfix">
+	    		<div id="costs" class="result-cost clearfix">
 	    			<div class="result-cost-item itemstyle" >
 	    				<form id="cost-form-a" v-show="cseen">
 	    					<input type="hidden" name="plan" value="A" />

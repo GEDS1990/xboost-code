@@ -55,8 +55,8 @@ public class SolutionCostController {
     @ResponseBody
     public String addCost(HttpServletRequest request,Cost cost) { ;
         cost.setScenariosId(ShiroUtil.getOpenScenariosId().toString());
-        cost.setModelType(request.getParameter("modelType"));
-        cost.setModelType(request.getParameter("plan"));
+    //    cost.setModelType(request.getParameter("modelType"));
+   //     cost.setModelType(request.getParameter("plan"));
         solutionCostService.add(cost);
         return "success";
     }
@@ -96,9 +96,9 @@ public class SolutionCostController {
         String totalVol = "100";
 
         result.put("data",costList);
-        result.put("sitePeopleWork",sitePeopleWork);
-        result.put("distribPeopleWork",distribPeopleWork);
-        result.put("siteCount",siteCount);
+//        result.put("sitePeopleWork",sitePeopleWork);
+//        result.put("distribPeopleWork",distribPeopleWork);
+//        result.put("siteCount",siteCount);
         result.put("totalPiece",totalPiece);
         result.put("siteInfoList",siteInfoList);
         result.put("totalVol",totalVol);

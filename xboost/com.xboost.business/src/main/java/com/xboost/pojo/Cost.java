@@ -13,9 +13,8 @@ public class Cost implements Serializable {
     private String selected;       //是否被选中0否1是
     private String sitePeopleWork;    //网点集散点人数
     private String distribPeopleWork;  //集配站集散点人数
-    private String siteCode;            //网点编码
-    private String siteType;            //网点类型
-    private Integer totalVol;                 //总票数
+    private String siteCount;            //网点数量
+    private String peopleNumPerSite;    //每个网点的人数
     private Integer fullTimeStaff;                 //全职人数
     private Integer partTimeStaff;                 //兼职人数
     private Integer fullTimeSalary;                 //全职薪资
@@ -92,28 +91,20 @@ public class Cost implements Serializable {
         this.distribPeopleWork = distribPeopleWork;
     }
 
-    public String getSiteCode() {
-        return siteCode;
+    public String getSiteCount() {
+        return siteCount;
     }
 
-    public void setSiteCode(String siteCode) {
-        this.siteCode = siteCode;
+    public void setSiteCount(String siteCount) {
+        this.siteCount = siteCount;
     }
 
-    public String getSiteType() {
-        return siteType;
+    public String getPeopleNumPerSite() {
+        return peopleNumPerSite;
     }
 
-    public void setSiteType(String siteType) {
-        this.siteType = siteType;
-    }
-
-    public Integer getTotalVol() {
-        return totalVol;
-    }
-
-    public void setTotalVol(Integer totalVol) {
-        this.totalVol = totalVol;
+    public void setPeopleNumPerSite(String peopleNumPerSite) {
+        this.peopleNumPerSite = peopleNumPerSite;
     }
 
     public Integer getFullTimeStaff() {

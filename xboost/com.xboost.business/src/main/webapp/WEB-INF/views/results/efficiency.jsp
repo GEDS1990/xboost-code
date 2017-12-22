@@ -86,7 +86,7 @@
 	    			</div>
 	    		</header>
 	    		<div class="table-responsive active">
-					<table class="table table-hover efficiency">
+					<table id="efficiency-car" class="table table-hover efficiency">
 						<thead>
 							<tr>
 								<th colspan="4">发出票数</th>
@@ -176,6 +176,7 @@
 <script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
 <script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/flex.js"></script>
+<script src="/static/js/Xboost/costs.js"></script>
 <script type="text/javascript">
 	$(function  () {
 		(function  () {
