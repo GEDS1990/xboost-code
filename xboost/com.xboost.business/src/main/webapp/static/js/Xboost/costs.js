@@ -258,8 +258,9 @@ $(function (){
 				if (data) {
 					
 					$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
-						//console.log(res);
-						if (res.data == null) {
+						
+						if (res.data.length == 0) {
+							console.log(1)
 							var urlcost = "/costs/addCost";
 							vmA.sitePeople = $res.sitePeopleWork;
 							vmA.collectPeople = $res.distribPeopleWork;
@@ -272,7 +273,9 @@ $(function (){
 							vmB.piece = $res.totalPiece;
 							vmB.branch_cost = $res.branchTransportCost;
 						}else{
-							var result = res.data;
+							
+							var result = res.data[0];
+							console.log(result)
 							var urlcost = "/costs/edit"; 
 							vmA.sitePeople = result.sitePeopleWork;
 							vmA.collectPeople = result.distribPeopleWork;
@@ -281,10 +284,11 @@ $(function (){
 							vmA.branch_cost = $res.branchTransportCost;
 							vmA.depotPeoplecount = result.peopleNumPerSite;
 							vmA.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
-							setTimeout(function(){
+							setTimeout(function (){
 								vmA.full_staff = result.fullTimeStaff;
-								vmA.part_staff = result.partTimeStaff;
+							vmA.part_staff = result.partTimeStaff;
 							},100)
+							
 							vmA.full_salaty = result.fullTimeSalary;
 							vmA.full_days = result.fullTimeWorkDay;
 							vmA.part_wage = result.partTimeSalary;
@@ -293,6 +297,7 @@ $(function (){
 							vmA.day_allp_cost = result.totalDailyLaborCost;
 							vmA.line_cost = result.branchTransportCost;
 							vmA.allcost = result.totalCost;
+							
 						}
 						
 						
@@ -308,7 +313,7 @@ $(function (){
 							$.post(urlcost,data).done(function (res){
 								console.log(res);
 								if (res == "success") {
-									window.location.reload
+									window.location.reload();
 								}
 							}).fail(function  () {
 								console.log("fail")
