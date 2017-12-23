@@ -81,7 +81,7 @@ public class ExcelUtil {
 
             // 为跳过第一行目录设置count
             int count = 0;
-            for (int i = 0; i < sheet.getLastRowNum(); i++) {
+            for (int i = 0; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
                 if(row==null){
                     System.out.println(i+":null");
