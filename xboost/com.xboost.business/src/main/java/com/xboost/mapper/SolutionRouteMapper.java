@@ -62,6 +62,10 @@ public interface SolutionRouteMapper {
 
     void updateCarToIdle(@Param("scenariosId")String scenariosId,@Param("carName") String carName);
 
+    void updateAllCarToIdle(String scenariosId);
+
+    void updateScenariosModel(@Param("scenariosModel")String scenariosModel,@Param("openScenariosId") String scenariosId);
+
     List<String> findUsingCar(String scenariosId);
 
     List<String> findIdleCar(String scenariosId);
