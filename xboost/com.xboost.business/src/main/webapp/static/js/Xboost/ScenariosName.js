@@ -406,6 +406,7 @@ $(function  () {
             var id = $(this).attr("data-id");
             $.get("siteDist/siteDistInfo.json",{"id":id}).done(function(result){
                 $("#siteId-dist").val(result.id);
+                $("#carType").val(result.carType);
                 $("#siteCollect").val(result.siteCollect);
                 $("#siteDelivery").val(result.siteDelivery);
                 $("#carDistance").val(result.carDistance);
@@ -869,7 +870,7 @@ $(function  () {
 	            ],
 	            "columnDefs":[ //具体列的定义
 	                {
-	                    "targets":[0,8],
+	                    "targets":[0],
 	                    "visible":false
 	                },
 	                {
