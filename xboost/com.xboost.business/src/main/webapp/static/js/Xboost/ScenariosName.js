@@ -406,6 +406,7 @@ $(function  () {
             var id = $(this).attr("data-id");
             $.get("siteDist/siteDistInfo.json",{"id":id}).done(function(result){
                 $("#siteId-dist").val(result.id);
+                $("#carType").val(result.carType);
                 $("#siteCollect").val(result.siteCollect);
                 $("#siteDelivery").val(result.siteDelivery);
                 $("#carDistance").val(result.carDistance);
@@ -644,7 +645,7 @@ $(function  () {
 	            "serverSide":true, //服务端处理
 	            "searchDelay": 1000,//搜索延迟
 	            "order":[[0,'asc']],//默认排序方式
-	            "lengthMenu":[10,25,50,100],//每页显示数据条数菜单
+	            "lengthMenu":[15,25,50,100],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/modelArg/modelArg.json", //获取数据的URL
 	                type:"get" //获取数据的方式
@@ -869,7 +870,7 @@ $(function  () {
 	            ],
 	            "columnDefs":[ //具体列的定义
 	                {
-	                    "targets":[0,8],
+	                    "targets":[0],
 	                    "visible":false
 	                },
 	                {

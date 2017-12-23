@@ -62,9 +62,11 @@ public class ModelArgService {
                         List<String> lineList = excelUtil.readExcel(fileTmp,2);
                         for(int i=0;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-                            modelArg.setParameterName(row[1]);
-                            modelArg.setData(row[2]);
-                            modelArg.setNote(row[3]);
+                            modelArg.setModelType(row[1]);
+                            modelArg.setParameterCode(row[2]);
+                            modelArg.setParameterName(row[3]);
+                            modelArg.setData(row[4]);
+                            modelArg.setNote(row[5]);
                             modelArg.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
                             if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){

@@ -123,7 +123,7 @@
 		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>/month</span></li>
 		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>/month</span></li>
 		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>/hour</span></li>
-		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>/month</span></li>
+		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>/day</span></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
@@ -173,7 +173,7 @@
 		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>/month</span></li>
 		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>/month</span></li>
 		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>/hour</span></li>
-		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>/month</span></li>
+		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>/day</span></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">

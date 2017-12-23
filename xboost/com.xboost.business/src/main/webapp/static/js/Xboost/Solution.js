@@ -765,7 +765,21 @@ $(function  () {
 	            				var idleCarAdd = '<option value='+idleCar[y]+'>'+idleCar[y]+'</option>';
 	            				$('#idle-vehicle').append(idleCarAdd);
 	            			}
+
 	            		}
+//	            		$.get("/route/idleCar.json",{"routeCount":_val}).done(function (res){
+//                            $('#idle-vehicle').append('<option>--Choose--</option>');
+//                            if (res) {
+//                                for (var y=0;y<res.length;y++) {
+//                                    var idleCarAdd = '<option value='+res[y]+'>'+res[y]+'</option>';
+//                                    $('#idle-vehicle').append(idleCarAdd);
+//                                }
+//                            }
+//                        }).fail(function (){
+//                            alert("fail");
+//                            console.log("fail");
+//                        });
+
 	            		
 	            		
 	            		

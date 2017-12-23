@@ -176,9 +176,9 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="maxStop" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">maxLoad</label>
+                        <label class="col-sm-2 control-label">unload time (min)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxLoad" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <input type="text" class="form-control" name="durationUnloadFull" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -201,12 +201,6 @@
                         <label class="col-sm-2 control-label">speed(km/h)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="velocity" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">unload time (min)</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationUnloadFull" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -238,7 +232,7 @@
                         </div>
                     </div>-->
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">start Location</label>
+                        <label class="col-sm-2 control-label">vehicle cost</label>
                         <div class="table-responsive active" style="padding:0 15px;">
 							<table  class="table table-striped table-bordered table-hover">
 								<thead>
@@ -390,9 +384,9 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="maxStop" id="maxStop" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">maxLoad</label>
+                        <label class="col-sm-2 control-label">unload time (min)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="maxLoad" id="maxLoad" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <input type="text" class="form-control" name="durationUnloadFull" id="durationUnloadFull" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -404,7 +398,6 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="max_distance" id="max_distance" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        
                     </div>
                     <div class="form-group">
                         
@@ -418,13 +411,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">unload time (min)</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="durationUnloadFull" id="durationUnloadFull" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">start Location</label>
+                        <label class="col-sm-2 control-label">start location</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="startLocation" id="start_location" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
@@ -452,7 +439,7 @@
                         </div>
                     </div>-->
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">start Location</label>
+                        <label class="col-sm-2 control-label">vehicle cost</label>
                         <div class="table-responsive active" style="padding:0 15px;">
 							<table  class="table table-striped table-bordered table-hover">
 								<thead>

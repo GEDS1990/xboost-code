@@ -4,12 +4,12 @@
 
     <cache/>
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        INSERT into t_car_info(scenariosId,name,type,dimensions,skills,start_location,end_location,max_distance,
+        INSERT into t_car_info(scenariosId,name,carType,busy_idle,type,dimensions,skills,start_location,end_location,max_distance,
         max_running_time,cost_per_distance,cost_per_time,fixed_cost,max_stop,velocity,fixed_round,fixed_round_fee,
         car_source,max_load,duration_unload_full,a1,b1,c1,d1,e1,f1,a2,b2,c2,d2,e2,f2,costa1,costb1,costc1,costd1,coste1,costf1,
         costa2,costb2,costc2,costd2,coste2,costf2,costa3,costb3,costc3,costd3,coste3,costf3,
         createtime,updatetime)
-        VALUES (#{scenariosId},#{name},#{type},#{dimensions},#{skills},#{startLocation},#{endLocation},#{maxDistance},
+        VALUES (#{scenariosId},#{name},#{carType},#{busyIdle},#{type},#{dimensions},#{skills},#{startLocation},#{endLocation},#{maxDistance},
         #{maxRunningTime},#{costPerDistance},#{costPerTime},#{fixedCost},#{maxStop},#{velocity},#{fixedRound},#{fixedRoundFee},
         #{carSource},#{maxLoad},#{durationUnloadFull},#{a1},#{b1},#{c1},#{d1},#{e1},#{f1},#{a2},#{b2},#{c2},#{d2},#{e2},#{f2},
         #{costa1},#{costb1},#{costc1},#{costd1},#{coste1},#{costf1}, #{costa2},#{costb2},#{costc2},#{costd2},#{coste2},#{costf2},

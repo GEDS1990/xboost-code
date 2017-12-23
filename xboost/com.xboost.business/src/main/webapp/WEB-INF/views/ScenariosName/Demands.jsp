@@ -153,12 +153,6 @@
                             <input type="text" class="form-control" name="productType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">effectiveness</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="ageing" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                    </div>
                 
 	            </div>
 	            <div class="modal-footer">
@@ -223,12 +217,7 @@
                             <input type="text" class="form-control" name="productType" id="productType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">effectiveness</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="ageing" id="ageing" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                    </div>
+
                 
 	            </div>
 	            <div class="modal-footer">

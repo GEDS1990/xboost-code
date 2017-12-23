@@ -72,7 +72,7 @@
 			            <thead>
 			            	<tr>
 			            		<th rowspan="2">ID</th>
-				                <th rowspan="2">car type</th>
+				                <th rowspan="2">vehicle name</th>
 				                <th rowspan="2">start depot</th>
 				                <th rowspan="2">end depot</th>
 				                <th colspan="2">be used to calculating the transportation time</th>
@@ -119,7 +119,7 @@
             <form id="newUserForm-dist" class="form-horizontal">
             	<div class="modal-body">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">car type</label>
+                        <label class="col-sm-2 control-label">vehicle name</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="carType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
@@ -166,6 +166,12 @@
             <form id="editUserForm-dist" class="form-horizontal">
             	<div class="modal-body">
                     <input type="hidden" name="id" id="siteId-dist" value="">
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">vehicle name</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="carType" id="carType" /required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">start depot</label>
                         <div class="col-sm-4">
