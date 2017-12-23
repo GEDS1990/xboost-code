@@ -79,7 +79,7 @@ public class SolutionCostController {
 
         Map<String,Object> result = Maps.newHashMap();
         List<Cost> costList = solutionCostService.findByParam(param);
-        Cost cost = solutionCostService.findByScenariosId(scenariosId);
+//        Cost cost = solutionCostService.findByScenariosId(scenariosId);
 
         //网点集散点人效
         Integer sitePeopleWork = modelArgService.findSitePeopleWork(scenariosId,modelType);
@@ -95,7 +95,7 @@ public class SolutionCostController {
         //总票数
         String totalVol = "100";
 
-        result.put("data",cost);
+        result.put("data",costList);
 //        result.put("sitePeopleWork",sitePeopleWork);
 //        result.put("distribPeopleWork",distribPeopleWork);
 //        result.put("siteCount",siteCount);
