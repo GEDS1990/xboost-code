@@ -89,11 +89,11 @@ public class SolutionDistributionController {
                             total = total + Double.parseDouble(route.getSbVolSum()!=null?route.getSbVolSum():"0");
                         }
                     }
-                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(df.format(total/totalAll*100)).concat("%"));
+                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(df.format(total/totalAll*100)));
                 }
                 break;
             case "3":
-                double total1 = 0,total2 = 0,total3 = 0,total4 = 0,total5 = 0,total6 = 0,total7 = 0;
+                double total1 = 0,total2 = 0,total3 = 0,total4 = 0,total5 = 0,total6 = 0,total7 = 0,totalD=0;
                 for(Map arr : arrT){
                     double arrTime = 0;
                     double vol = 0;
@@ -124,15 +124,15 @@ public class SolutionDistributionController {
                     }else{
                         //晚到
                     }
-
+                    totalD = total1+total2+total3+total4+total5+total6+total7;
                 }
-                map.put("tiqian60",total1);
-                map.put("tiqian50",total2);
-                map.put("tiqian40",total3);
-                map.put("tiqian30",total4);
-                map.put("tiqian20",total5);
-                map.put("tiqian10",total6);
-                map.put("zunshi",total7);
+                map.put("tiqian60",df.format((total1/totalD)*100));
+                map.put("tiqian50",df.format((total2/totalD)*100));
+                map.put("tiqian40",df.format((total3/totalD)*100));
+                map.put("tiqian30",df.format((total4/totalD)*100));
+                map.put("tiqian20",df.format((total5/totalD)*100));
+                map.put("tiqian10",df.format((total6/totalD)*100));
+                map.put("zunshi",df.format((total7/totalD)*100));
             break;
             default:
                 break;
