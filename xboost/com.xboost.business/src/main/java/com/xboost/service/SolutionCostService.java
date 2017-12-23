@@ -66,17 +66,17 @@ public class SolutionCostService {
      * @param scenariosId
      * @return
      */
-    public Cost findByScenariosId(String scenariosId) {
-        return solutionCostMapper.findByScenariosId(scenariosId);
-    }
+//    public Cost findByScenariosId(String scenariosId) {
+//        return solutionCostMapper.findByScenariosId(scenariosId);
+//    }
 
 
     /**
      * 编辑成本信息
      * @param cost
      */
-    public void editCost(Cost cost) {
-        solutionCostMapper.editCost(cost);
+    public void editCost(String scenariosId,Cost cost) {
+        solutionCostMapper.editCost(scenariosId,cost);
     }
 
     /**

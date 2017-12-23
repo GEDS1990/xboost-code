@@ -3,10 +3,7 @@ package com.xboost.controller;
 import com.google.common.collect.Maps;
 import com.xboost.pojo.Cost;
 import com.xboost.pojo.ModelArg;
-import com.xboost.service.ModelArgService;
-import com.xboost.service.MyScenariosService;
-import com.xboost.service.SiteInfoService;
-import com.xboost.service.SolutionCostService;
+import com.xboost.service.*;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +32,8 @@ public class SolutionCostController {
     private SiteInfoService siteInfoService;
     @Inject
     private MyScenariosService myScenariosService;
+    @Inject
+    private SolutionRouteService solutionRouteService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -79,14 +78,14 @@ public class SolutionCostController {
 
         Map<String,Object> result = Maps.newHashMap();
         List<Cost> costList = solutionCostService.findByParam(param);
-        Cost cost = solutionCostService.findByScenariosId(scenariosId);
+//        Cost cost = solutionCostService.findByScenariosId(scenariosId);
 
         //网点集散点人效
         Integer sitePeopleWork = modelArgService.findSitePeopleWork(scenariosId,modelType);
         //集配站集散点人效
         Integer distribPeopleWork = modelArgService.findDistribPeopleWork(scenariosId,modelType);
         //当前场景下网点总数
-        Integer siteCount = siteInfoService.findAllCountBySiteCode(scenariosId);
+        Integer siteCount = siteInfoService.findSiteInfoCount(scenariosId);
         //总件量
         Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
         //网点
@@ -95,7 +94,7 @@ public class SolutionCostController {
         //总票数
         String totalVol = "100";
 
-        result.put("data",cost);
+        result.put("data",costList);
 //        result.put("sitePeopleWork",sitePeopleWork);
 //        result.put("distribPeopleWork",distribPeopleWork);
 //        result.put("siteCount",siteCount);
@@ -117,9 +116,8 @@ public class SolutionCostController {
     public String edit(HttpServletRequest request,Cost cost) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
         String siteCode = "";
-        cost.setScenariosId(scenariosId);
-        solutionCostService.editCost(cost);
-        solutionCostService.editSiteInfo(scenariosId,siteCode);
+        solutionCostService.editCost(scenariosId,cost);
+   //     solutionCostService.editSiteInfo(scenariosId,siteCode);
         return "success";
     }
 
@@ -135,12 +133,14 @@ public class SolutionCostController {
         //集配站集散点人效
         Integer distribPeopleWork = modelArgService.findDistribPeopleWork(scenariosId,modelType);
         //当前场景下网点总数
-        Integer siteCount = siteInfoService.findAllCountBySiteCode(scenariosId);
+        Integer siteCount = siteInfoService.findSiteInfoCount(scenariosId);
         //总件量
         Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
 
         //支线总运输成本
         Double branchTransportCost = 100.00;
+        String routeCount="1";
+        String distance = solutionRouteService.findTotalDistance(scenariosId,routeCount);
 
         Map<String,Object> result = Maps.newHashMap();
         result.put("modelType",modelType);
@@ -151,6 +151,13 @@ public class SolutionCostController {
         result.put("branchTransportCost",branchTransportCost);
 
         return result;
+    }
+
+    //支线运输成本
+    public String branchTransportCost()
+    {
+
+        return "";
     }
 
 }

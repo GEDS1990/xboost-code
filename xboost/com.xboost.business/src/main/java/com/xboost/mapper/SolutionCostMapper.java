@@ -27,13 +27,13 @@ public interface SolutionCostMapper {
      * @param scenariosId
      * @return
      */
-    Cost findByScenariosId(String scenariosId);
+//    Cost findByScenariosId(String scenariosId);
 
     // 根据查询条件Cost信息  @param param @return
     List<Cost> findByParam(Map<String, Object> param);
 
     // 根据id编辑cost信息  @param siteInfo
-    void editCost(Cost cost);
+    void editCost(@Param("scenariosId")String scenariosId,@Param("cost")Cost cost);
 
     // 根据scenariosId和siteCode编辑site info 里的cost相关信息  @param
     void editSiteInfo(@Param("scenariosId")String scenariosId,@Param("siteCode")String siteCode);
