@@ -66,6 +66,6 @@ public interface MyScenariosMapper {
     // 根据用户id查询场景类别  @return
     List<ScenariosCategory> findCategory(Integer userId);
 
-
+    void updateFinishTime(String finishTime);
 }
 

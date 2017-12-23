@@ -195,6 +195,8 @@ public class MyScenariosService {
         return myScenariosMapper.findCategory(userId);
     }
 
-
+    public void updateFinishTime(){
+        myScenariosMapper.updateFinishTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+    }
 
 }

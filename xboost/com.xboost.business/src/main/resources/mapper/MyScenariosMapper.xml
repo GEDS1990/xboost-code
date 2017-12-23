@@ -51,6 +51,9 @@
         SELECT COUNT(*) FROM t_scenarios_info where id in (select scenariosId from t_scenarios_user)
     </select>
 
+    <update id="updateFinishTime" parameterType="String">
+        update t_scenarios_info set simulate_finish_time = #{finishTime}
+    </update>
 
     <select id="findCountByParam" resultType="long" parameterType="map">
         SELECT count(*) FROM t_scenarios_info

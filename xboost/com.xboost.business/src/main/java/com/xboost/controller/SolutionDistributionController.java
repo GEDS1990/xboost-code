@@ -46,7 +46,7 @@ public class SolutionDistributionController {
      */
     @RequestMapping(value = "/getMaxMix.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String,Object> list(String type) {
+    public Map<String,Object> getMaxMix(String type) {
         String maxmix = demandInfoService.findMinMax(ShiroUtil.getOpenScenariosId());
         int min = Integer.parseInt(maxmix.split("-")[0]);
         int max = Integer.parseInt(maxmix.split("-")[1]);
@@ -60,6 +60,7 @@ public class SolutionDistributionController {
         for(DemandInfo demandInfo : demandInfoList){
             totalAll = totalAll + Integer.parseInt((demandInfo.getVotes()!=null)?demandInfo.getVotes():"0");
         }
+        List<Object> arrT = demandInfoService.findarrTime();
 //        for(Route route : routeList){
 //            totalAllRoute = totalAllRoute + Integer.parseInt((route.getSbVolSum()!=null)?route.getSbVolSum():"0");
 //        }
@@ -78,6 +79,18 @@ public class SolutionDistributionController {
                 }
                 break;
             case "1":
+                for(int i=0;i<(max-min)/jiange;i++){
+                    int total = 0;
+                    for(Route route : routeList){
+                        int res = Integer.parseInt(route.getArrTime()!=null?route.getArrTime():"0");
+                        if(res>(min+jiange*i) && res<=(min+jiange*(i+1))){
+                            total = total + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
+                        }
+                    }
+                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total/totalAll*100).concat("%"));
+                }
+                break;
+            case "3":
                 double total1 = 0,total2 = 0,total3 = 0,total4 = 0,total5 = 0,total6 = 0,total7 = 0;
                 for(Route route : routeList){
                     Double res = Double.parseDouble(route.getArrTime()!=null?route.getArrTime():"0")-min;
