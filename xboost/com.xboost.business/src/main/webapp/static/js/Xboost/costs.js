@@ -323,12 +323,13 @@ $(function (){
 						
 						
 						
-						//点击保存或者跟新数据
+						//点击保存或者跟新数据  上
 						$('.cost-btn').click(function (){
-							var _val = $('#cost-choose').val();
+							var _val = $('#costs-choose').val();
+							//console.log(_val)
 							if (_val == "a") {
 								var data = $("#cost-form-a").serialize();
-							}else{
+							}else if(_val == "b"){
 								var data = $("#cost-form-b").serialize();
 							}
 							$.post(urlcost,data).done(function (res){
@@ -339,7 +340,25 @@ $(function (){
 							}).fail(function  () {
 								console.log("fail")
 							});
-						})
+						});
+						//点击保存或者跟新数据 下
+						$('.costs-btn').click(function (){
+							var _val = $('#costss-choose').val();
+							//console.log(_val)
+							if (_val == "a") {
+								var data = $("#cost-form-a").serialize();
+							}else if(_val == "b"){
+								var data = $("#cost-form-b").serialize();
+							}
+							$.post(urlcost,data).done(function (res){
+								console.log(res);
+								if (res == "success") {
+									window.location.reload();
+								}
+							}).fail(function  () {
+								console.log("fail")
+							});
+						});
 						
 					}).fail(function (){
 						console.log("fail");
