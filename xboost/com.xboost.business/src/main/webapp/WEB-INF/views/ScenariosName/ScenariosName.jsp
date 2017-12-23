@@ -111,18 +111,18 @@
 	    				</div>
 	    			</div>
 	    			<div class="scen-itembox2">
-	    				<h1>No Data</h1>
+	    				<h1 id="title">No Data</h1>
 	    				<ul class="scen-result">
-	    					<li>Simulation Method:<span>--</span></li>
-	    					<li>Simulation Progress:<span>--</span></li>
-	    					<li>Simulation Finished:<span>--</span></li>
+	    					<li>Simulation Method:<span id ="simulation-method">--</span></li>
+	    					<li>Simulation Progress:<span id ="simulation-progress">--</span></li>
+	    					<li>Simulation Finished:<span id ="simulation-finished">--</span></li>
 	    				</ul>
 	    				<ul class="scen-cost">
-	    					<li>Staff Quantity:<span>--</span></li>
-	    					<li>Staff Cost:<span>--</span></li>
-	    					<li>Vehicle Quantity:<span>--</span></li>
-	    					<li>Vehicle Cost:<span>--</span></li>
-	    					<li class="totalcost">Total Cost:<span>--</span></li>
+	    					<li>Staff Quantity:<span id ="staff-quantity">--</span></li>
+	    					<li>Staff Cost:<span id ="staff-cost">--</span></li>
+	    					<li>Vehicle Quantity:<span id ="vehicle-quantity1">--</span></li>
+	    					<li>Vehicle Cost:<span id ="vehicle-cost">--</span></li>
+	    					<li class="totalcost">Total Cost:<span id="total-cost">--</span></li>
 	    				</ul>
 	    			</div>
 	    		</div>
