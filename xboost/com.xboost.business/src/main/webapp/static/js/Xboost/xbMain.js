@@ -370,6 +370,22 @@ function CategoryList () {
             $('#vehicle-quantity').text(res.tranCounter);
             $('#demand-quantity').text(res.demandsCounter);
             $('#farthest-distance').text(res.farthestDist);
+            $('#title').text("Results Overview");
+
+            if(res.scenario.scenariosModel=="1"){
+            $('#simulation-method').text("串点模型");
+            }else if(res.scenario.scenariosModel=="2"){
+            $('#simulation-method').text("接力模型");}
+            else if(res.scenario.scenariosModel=="3"){
+            $('#simulation-method').text("综合模型");
+            }
+            $('#simulation-progress').text("100%");
+            $('#simulation-finished').text(res.scenario.simulateFinishTime);
+            $('#staff-quantity').text(res.staffCount);
+            $('#staff-cost').text(res.cost.sum1);
+            $('#vehicle-quantity1').text(res.carCount);
+            $('#vehicle-cost').text(res.cost.branchTransportCost);
+            $('#total-cost').text(res.cost.totalCost);
         }).fail(function  (e) {
             console.log('fail');
         });

@@ -105,6 +105,7 @@ public class ScenariosNameController {
         result.put("scenario",scenario);
         result.put("staffCount",staffCount);
         result.put("carCount",carCount);
+        result.put("cost",cost);
         return result;
     }
 }
