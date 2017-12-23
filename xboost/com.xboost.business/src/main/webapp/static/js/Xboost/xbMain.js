@@ -382,7 +382,7 @@ function CategoryList () {
             $('#simulation-progress').text("100%");
             $('#simulation-finished').text(res.scenario.simulateFinishTime);
             $('#staff-quantity').text(res.staffCount);
-            $('#staff-cost').text(res.cost.sum1);
+            $('#staff-cost').text(res.cost.sum2);
             $('#vehicle-quantity1').text(res.carCount);
             $('#vehicle-cost').text(res.cost.branchTransportCost);
             $('#total-cost').text(res.cost.totalCost);
