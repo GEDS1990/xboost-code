@@ -24,6 +24,11 @@ public class SiteInfo implements Serializable {
     private String largeCarModel;          //进出最大车型（T）
     private String maxOperateNum;        //单一批量操作处理量上限(票)
     private String distribCenter;                   //预留字段(指定集散点)
+    private String totalVol;
+    private String fullTimeStaff1;
+    private String partTimeStaff1;
+    private String full_time_staff2;
+    private String partTimeStaff2;
     private String str2;                    //预留字段
     private String str3;                  //预留字段
     private String createTime;
@@ -139,6 +144,46 @@ public class SiteInfo implements Serializable {
 
     public void setDistribCenter(String distribCenter) {
         this.distribCenter = distribCenter;
+    }
+
+    public String getTotalVol() {
+        return totalVol;
+    }
+
+    public void setTotalVol(String totalVol) {
+        this.totalVol = totalVol;
+    }
+
+    public String getFullTimeStaff1() {
+        return fullTimeStaff1;
+    }
+
+    public void setFullTimeStaff1(String fullTimeStaff1) {
+        this.fullTimeStaff1 = fullTimeStaff1;
+    }
+
+    public String getPartTimeStaff1() {
+        return partTimeStaff1;
+    }
+
+    public void setPartTimeStaff1(String partTimeStaff1) {
+        this.partTimeStaff1 = partTimeStaff1;
+    }
+
+    public String getFull_time_staff2() {
+        return full_time_staff2;
+    }
+
+    public void setFull_time_staff2(String full_time_staff2) {
+        this.full_time_staff2 = full_time_staff2;
+    }
+
+    public String getPartTimeStaff2() {
+        return partTimeStaff2;
+    }
+
+    public void setPartTimeStaff2(String partTimeStaff2) {
+        this.partTimeStaff2 = partTimeStaff2;
     }
 
     public String getStr2() {
