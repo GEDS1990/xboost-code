@@ -45,7 +45,6 @@ public class SolutionEfficiencyController {
         List<String> siteList = solutionEfficiencyService.findAllSite(scenariosId);
 
         Map<String,Object> result = Maps.newHashMap();
-        Map<String,Object> res = Maps.newHashMap();
         Map<String,Object> param = Maps.newHashMap();
         Integer sbVol;
 
@@ -59,12 +58,7 @@ public class SolutionEfficiencyController {
                 param.put("min",min+(periodTime*j));
                 param.put("periodTime",periodTime);
                 sbVol = (null == solutionEfficiencyService.findSbVol(param)?0:solutionEfficiencyService.findSbVol(param));
-               // result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),sbVol);
-                res.put("site",site);
-                res.put("start",min+periodTime*j);
-                res.put("end",min+periodTime*(j+1));
-                res.put("sbVol",sbVol);
-                result.put("sbVol",res);
+                result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),sbVol);
             }
         }
         return result;
@@ -124,15 +118,15 @@ public class SolutionEfficiencyController {
                 param.put("curLoc",site);
                 param.put("min",min+(periodTime*j));
                 param.put("periodTime",periodTime);
-//                for(String s:solutionEfficiencyService.findLeaveCar(param)){
-//                    if(null==s){
-//                        leaveCarNum = leaveCarNum + 0;
-//                    }
-//                    else
-//                    {
-//                        leaveCarNum = leaveCarNum + 1;
-//                    }
-//                }
+                for(String s:solutionEfficiencyService.findLeaveCar(param)){
+                    if(null==s){
+                        leaveCarNum = leaveCarNum + 0;
+                    }
+                    else
+                    {
+                        leaveCarNum = leaveCarNum +1;
+                    }
+                }
                 leaveCarNum = solutionEfficiencyService.findLeaveCar(param).size();
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),leaveCarNum);
             }
@@ -163,16 +157,16 @@ public class SolutionEfficiencyController {
                 param.put("curLoc",site);
                 param.put("min",min);
                 param.put("periodTime",min+(periodTime*j));
-//                for(String s:solutionEfficiencyService.findArrCar(param)){
-//                    if(null==s){
-//                        arrCarNum=arrCarNum+0;
-//                    }
-//                    else
-//                    {
-//                        arrCarNum = arrCarNum+1;
-//                    }
-//                }
-                arrCarNum = solutionEfficiencyService.findArrCar(param).size();
+                for(String s:solutionEfficiencyService.findArrCar(param)){
+                    if(null==s){
+                        arrCarNum=arrCarNum+0;
+                    }
+                    else
+                    {
+                        arrCarNum = arrCarNum+1;
+                    }
+                }
+             //   arrCarNum = solutionEfficiencyService.findArrCar(param).size();
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),arrCarNum);
             }
         }
