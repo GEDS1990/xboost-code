@@ -77,6 +77,7 @@ public class CarService {
                         List<String> lineList = excelUtil.readExcel(fileTmp,2);
                         for(int i=2;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
+                            transport.setName(row[1]);
                             transport.setCarType(row[1]);
                             transport.setType(row[2]);
                             transport.setDimensions(row[3]);
@@ -131,6 +132,7 @@ public class CarService {
                             transport.setCostf1(row[40]);
                             transport.setCostf2(row[41]);
                             transport.setCostf3(row[42]);
+                            transport.setBusyIdle("0");
 //                            transport.setTw(row[0]);
 
                             if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){

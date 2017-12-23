@@ -66,6 +66,7 @@ public class CarController {
     public String AddCarByExcel(Car transport,@RequestParam MultipartFile[] file) {
         transport.setScenariosId(ShiroUtil.getOpenScenariosId());
         transport.setBusyIdle("0");
+        System.out.println("车辆是否空闲"+transport.getBusyIdle());
         com.mckinsey.sf.data.TimeWindow tw = new com.mckinsey.sf.data.TimeWindow();
         tw.setStart(0);
         tw.setEnd(1440);
