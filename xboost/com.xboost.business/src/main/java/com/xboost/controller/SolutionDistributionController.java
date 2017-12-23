@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,11 +61,12 @@ public class SolutionDistributionController {
         for(DemandInfo demandInfo : demandInfoList){
             totalAll = totalAll + Integer.parseInt((demandInfo.getVotes()!=null)?demandInfo.getVotes():"0");
         }
-        List<Object> arrT = demandInfoService.findarrTime();
+        List<Map> arrT = demandInfoService.findarrTime();
 //        for(Route route : routeList){
 //            totalAllRoute = totalAllRoute + Integer.parseInt((route.getSbVolSum()!=null)?route.getSbVolSum():"0");
 //        }
         type = (type!=null)?type:"0";
+        DecimalFormat df = new DecimalFormat("#.00");
         switch (type){
             case "0":
                 for(int i=0;i<(max-min)/jiange;i++){
@@ -80,35 +82,49 @@ public class SolutionDistributionController {
                 break;
             case "1":
                 for(int i=0;i<(max-min)/jiange;i++){
-                    int total = 0;
+                    double total = 0;
                     for(Route route : routeList){
-                        int res = Integer.parseInt(route.getArrTime()!=null?route.getArrTime():"0");
+                        double res = Double.parseDouble(route.getArrTime()!=null?route.getArrTime():"0");
                         if(res>(min+jiange*i) && res<=(min+jiange*(i+1))){
-                            total = total + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
+                            total = total + Double.parseDouble(route.getSbVolSum()!=null?route.getSbVolSum():"0");
                         }
                     }
-                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total/totalAll*100).concat("%"));
+                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(df.format(total/totalAll*100)).concat("%"));
                 }
                 break;
             case "3":
                 double total1 = 0,total2 = 0,total3 = 0,total4 = 0,total5 = 0,total6 = 0,total7 = 0;
-                for(Route route : routeList){
-                    Double res = Double.parseDouble(route.getArrTime()!=null?route.getArrTime():"0")-min;
-                    if(res>50&&res<=60){
-                        total1 = total1 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
-                    }else if(res>40&&res<=50){
-                        total2 = total2 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
-                    }else if(res>30&&res<=40){
-                        total3 = total3 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
-                    }else if(res>20&&res<=30){
-                        total4 = total4 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
-                    }else if(res>10&&res<=20){
-                        total5 = total5 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
-                    }else if(res>0&&res<=10){
-                        total6 = total6 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
-                    }else if(res == 0){
-                        total7 = total7 + Integer.parseInt(route.getSbVolSum()!=null?route.getSbVolSum():"0");
+                for(Map arr : arrT){
+                    double arrTime = 0;
+                    double vol = 0;
+                    try {
+                        arrTime = Double.parseDouble(arr.get("arr_time").toString());
+                        vol = Double.parseDouble(arr.get("vol").toString());
+                    }catch (Exception e){
+                        continue;
                     }
+                    double res = arrTime;
+                    if(0<=arrTime){
+                        //提前到
+                        if(res>50&&res<=60){
+                            total1 = total1 + vol;
+                        }else if(res>40&&res<=50){
+                            total2 = total2 + vol;
+                        }else if(res>30&&res<=40){
+                            total3 = total3 + vol;
+                        }else if(res>20&&res<=30){
+                            total4 = total4 + vol;
+                        }else if(res>10&&res<=20){
+                            total5 = total5 + vol;
+                        }else if(res>0&&res<=10){
+                            total6 = total6 + vol;
+                        }else if(res == 0){
+                            total7 = total7 + vol;
+                        }
+                    }else{
+                        //晚到
+                    }
+
                 }
                 map.put("tiqian60",total1);
                 map.put("tiqian50",total2);
