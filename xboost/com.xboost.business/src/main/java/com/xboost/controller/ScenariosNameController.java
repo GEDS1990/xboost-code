@@ -57,55 +57,60 @@ public class ScenariosNameController {
         Integer demandCounter1 = demandInfoService.findAllCount(ShiroUtil.getOpenScenariosId());
         Integer siteDistCounter1 = siteDistService.findAllCount(ShiroUtil.getOpenScenariosId());
         Float farthestDist1 = siteDistService.findFarthestDist(ShiroUtil.getOpenScenariosId());
+        Map<String,Object> result = Maps.newHashMap();
         String siteCounter;
         String tranCounter;
         String demandCounter;
         String farthestDist;
-        Map<String,Object> result = Maps.newHashMap();
+        try{
 
-        //判断是否有场景数据
-        //判断网点信息是否有数据
-        if(siteCounter1 > 0){
-            siteCounter = siteCounter1.toString();
-        }
-        else{
-            siteCounter = "--";
-        }
-        //判断车辆信息是否有数据
-        if(tranCounter1 > 0){
-            tranCounter = tranCounter1.toString();
-        }
-        else{
-            tranCounter = "--";
-        }
-       //判断需求信息是否有数据
-        if(demandCounter1 > 0){
-            demandCounter = demandCounter1.toString();
-        }
-        else{
-            demandCounter = "--";
-        }
-        //判断网点距离是否有数据
-        if(siteDistCounter1 > 0){
-            farthestDist = farthestDist1.toString();
-        }
-        else{
-            farthestDist = "--";
-        }
+            //判断是否有场景数据
+            //判断网点信息是否有数据
+            if(siteCounter1 > 0){
+                siteCounter = siteCounter1.toString();
+            }
+            else{
+                siteCounter = "--";
+            }
+            //判断车辆信息是否有数据
+            if(tranCounter1 > 0){
+                tranCounter = tranCounter1.toString();
+            }
+            else{
+                tranCounter = "--";
+            }
+            //判断需求信息是否有数据
+            if(demandCounter1 > 0){
+                demandCounter = demandCounter1.toString();
+            }
+            else{
+                demandCounter = "--";
+            }
+            //判断网点距离是否有数据
+            if(siteDistCounter1 > 0){
+                farthestDist = farthestDist1.toString();
+            }
+            else{
+                farthestDist = "--";
+            }
 
-        Scenarios scenario = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
-        Cost cost = solutionCostService.findByScenariosId(ShiroUtil.getOpenScenariosId());
-        Integer staffCount = Integer.parseInt(cost.getSiteCount()) * Integer.parseInt(cost.getPeopleNumPerSite());
-        Integer carCount = transportService.findAllCount(ShiroUtil.getOpenScenariosId());
+            Scenarios scenario = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
+            Cost cost = solutionCostService.findByScenariosId(ShiroUtil.getOpenScenariosId());
+            Integer staffCount = Integer.parseInt(cost.getSiteCount()) * Integer.parseInt(cost.getPeopleNumPerSite());
+            Integer carCount = transportService.findAllCount(ShiroUtil.getOpenScenariosId());
 
-        result.put("siteCounter",siteCounter);
-        result.put("tranCounter",tranCounter); //总记录数
-        result.put("demandsCounter",demandCounter); //过滤出来的数量
-        result.put("farthestDist",farthestDist);
-        result.put("scenario",scenario);
-        result.put("staffCount",staffCount);
-        result.put("carCount",carCount);
-        result.put("cost",cost);
+            result.put("siteCounter",siteCounter);
+            result.put("tranCounter",tranCounter); //总记录数
+            result.put("demandsCounter",demandCounter); //过滤出来的数量
+            result.put("farthestDist",farthestDist);
+            result.put("scenario",scenario);
+            result.put("staffCount",staffCount);
+            result.put("carCount",carCount);
+            result.put("cost",cost);
+            
+        }catch (Exception e){
+
+        }
         return result;
     }
 }
