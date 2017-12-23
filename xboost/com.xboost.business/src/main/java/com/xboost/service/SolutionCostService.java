@@ -66,9 +66,9 @@ public class SolutionCostService {
      * @param scenariosId
      * @return
      */
-//    public Cost findByScenariosId(String scenariosId) {
-//        return solutionCostMapper.findByScenariosId(scenariosId);
-//    }
+    public Cost findByScenariosId(String scenariosId) {
+        return solutionCostMapper.findByScenariosId(scenariosId);
+    }
 
 
     /**

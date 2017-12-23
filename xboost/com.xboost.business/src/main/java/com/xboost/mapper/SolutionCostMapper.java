@@ -27,7 +27,7 @@ public interface SolutionCostMapper {
      * @param scenariosId
      * @return
      */
-//    Cost findByScenariosId(String scenariosId);
+    Cost findByScenariosId(String scenariosId);
 
     // 根据查询条件Cost信息  @param param @return
     List<Cost> findByParam(Map<String, Object> param);

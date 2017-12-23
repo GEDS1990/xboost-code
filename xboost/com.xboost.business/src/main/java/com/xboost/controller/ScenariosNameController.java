@@ -1,6 +1,8 @@
 package com.xboost.controller;
 
 import com.google.common.collect.Maps;
+import com.xboost.pojo.Scenarios;
+import com.xboost.pojo.Cost;
 import com.xboost.service.*;
 import com.xboost.util.ShiroUtil;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,8 @@ public class ScenariosNameController {
     CarService transportService;
     @Inject
     DemandInfoService demandInfoService;
+    @Inject
+    SolutionCostService solutionCostService;
 
     /**
      * 跳转ScenariosName页面
@@ -89,10 +93,18 @@ public class ScenariosNameController {
             farthestDist = "--";
         }
 
+        Scenarios scenario = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
+        Cost cost = solutionCostService.findByScenariosId(ShiroUtil.getOpenScenariosId());
+        Integer staffCount = Integer.parseInt(cost.getSiteCount()) * Integer.parseInt(cost.getPeopleNumPerSite());
+        Integer carCount = transportService.findAllCount(ShiroUtil.getOpenScenariosId());
+
         result.put("siteCounter",siteCounter);
         result.put("tranCounter",tranCounter); //总记录数
         result.put("demandsCounter",demandCounter); //过滤出来的数量
         result.put("farthestDist",farthestDist);
+        result.put("scenario",scenario);
+        result.put("staffCount",staffCount);
+        result.put("carCount",carCount);
         return result;
     }
 }
