@@ -3,8 +3,10 @@ package com.xboost.service;
 import com.xboost.mapper.SolutionRouteMapper;
 import com.xboost.pojo.Activity;
 import com.xboost.pojo.Route;
+import com.xboost.util.ShiroUtil;
 import org.apache.ibatis.annotations.Param;
 import org.joda.time.DateTime;
+import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -150,6 +152,14 @@ public class SolutionRouteService {
     public void updateCarToIdle(String scenariosId,String carName){
         solutionRouteMapper.updateCarToIdle(scenariosId,carName);
     }
+
+    public void updateAllCarToIdle(String scenariosId){
+        solutionRouteMapper.updateAllCarToIdle(scenariosId);
+    }
+    public void updateScenariosModel(String scenariosModel){
+        solutionRouteMapper.updateScenariosModel(scenariosModel, ShiroUtil.getOpenScenariosId());
+    }
+
     public List<String> findUsingCar(String scenariosId){
         return solutionRouteMapper.findUsingCar(scenariosId);
     }

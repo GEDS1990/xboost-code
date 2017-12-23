@@ -38,7 +38,18 @@
         part_time_salary = #{partTimeSalary},full_time_work_day = #{fullTimeWorkDay},part_time_work_day=#{partTimeWorkDay},
         sum1=#{sum1},sum2=#{sum2},sum3=#{sum3},total_daily_labor_cost=#{totalDailyLaborCost},pickup_transport_cost=#{pickupTransportCost},
         branch_transport_cost=#{branchTransportCost},delivery_transport_cost=#{deliveryTransportCost},total_cost={totalCost}
-        where scenariosId = #{scenariosId} and model_type=#{modelType} and plan =#{plan}
+        <where>
+            1=1
+            <if test="scenariosId != null and scenariosId != ''">
+                and scenariosId = #{scenariosId}
+            </if>
+            <if test="modelType != null and modelType != ''">
+                and model_type=#{modelType}
+            </if>
+            <if test="plan != null and plan != ''">
+                and plan =#{plan}
+            </if>
+        </where>
     </update>
 
     <update id="editSiteInfo">
@@ -55,6 +66,10 @@
         SELECT cur_loc,GREATEST(MAX(sb_vol_sum),MAX(unload_vol_sum)) as totalVol FROM t_solution_route
         WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc}
     </select>
+
+    <delete id="delByScenariosId">
+        DELETE FROM t_solution_cost WHERE scenariosId = #{scenariosId}
+    </delete>
 
 
     <resultMap id="costMap" type="Cost">

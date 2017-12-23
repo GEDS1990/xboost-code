@@ -35,15 +35,12 @@ import org.springframework.web.socket.TextMessage;
 */
 public class OutputPrinter implements IConstants {
 
-//	@Inject
-//	static ArrInfoService arrInfoService;
-//	@Inject
-//	static SolutionRouteService solutionRouteService;
 	static SolutionRouteService solutionRouteService = (SolutionRouteService)SpringBeanFactoryUtil.getBean("solutionRouteService");
 	static SolutionActivityService solutionActivityService = (SolutionActivityService)SpringBeanFactoryUtil.getBean("solutionActivityService");
 	static ArrInfoService arrInfoService = (ArrInfoService)SpringBeanFactoryUtil.getBean("arrInfoService");
 	static JobInfoService jobInfoService = (JobInfoService)SpringBeanFactoryUtil.getBean("jobInfoService");
 	static StatInfoService statInfoService = (StatInfoService)SpringBeanFactoryUtil.getBean("statInfoService");
+	static SolutionCostService solutionCostService = (SolutionCostService)SpringBeanFactoryUtil.getBean("solutionCostService");
 
 	public static void printLine(String str){
 		System.out.println(str);
@@ -421,6 +418,9 @@ public class OutputPrinter implements IConstants {
 
 		systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据...."));
 		solutionRouteService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));//删除该场景的旧数据
+		solutionRouteService.updateAllCarToIdle(ShiroUtil.getOpenScenariosId());//更新车辆为可用
+		solutionCostService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));//删除该场景的旧数据
+
 		solutionActivityService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
 		systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据成功"));
 

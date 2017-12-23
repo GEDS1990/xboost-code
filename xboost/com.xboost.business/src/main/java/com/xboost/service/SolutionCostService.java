@@ -92,5 +92,13 @@ public class SolutionCostService {
         return solutionCostMapper.findTotalPiece(scenariosId);
     }
 
+    /**
+     * 根据id删除模型整体参数信息
+     * @param scenariosId
+     */
+    public void delByScenariosId(Integer scenariosId) {
+
+        solutionCostMapper.delByScenariosId(scenariosId);
+    }
 
 }

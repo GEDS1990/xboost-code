@@ -247,45 +247,87 @@ $(function (){
 			
 			});
 			
-			$('.cost-btn').click(function (){
-				var _val = $('#cost-choose').val();
-				if (_val == "a") {
-					var data = $("#cost-form-a").serialize();
-				}else{
-					var data = $("#cost-form-b").serialize();
-				}
-				$.post("/costs/addCost",data).done(function (res){
-					console.log(res)
-				}).fail(function  () {
-					console.log("fail")
-				});
-				
-			})
+			
 			//请求数据
-			$.get("/costs/costInitData.json").done(function (res){
-				console.log(res)
-				if (res) {
-					vmA.sitePeople = res.sitePeopleWork;
-					vmA.collectPeople = res.distribPeopleWork;
-					vmA.depotcount = res.siteCount;
-					vmA.piece = res.totalPiece;
-					vmA.branch_cost = res.branchTransportCost;
-					vmB.sitePeople = res.sitePeopleWork;
-					vmB.collectPeople = res.distribPeopleWork;
-					vmB.depotcount = res.siteCount;
-					vmB.piece = res.totalPiece;
-					vmB.branch_cost = res.branchTransportCost;
+			$.get("/costs/costInitData.json").done(function (data){
+				console.log(data)
+				var $res=data;
+				if (data.modelType == 1) {
+					$('#model-type').text("串点模型");
 				}
+				if (data) {
+					
+					$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
+						//console.log(res);
+						if (res.data == null) {
+							var urlcost = "/costs/addCost";
+							vmA.sitePeople = $res.sitePeopleWork;
+							vmA.collectPeople = $res.distribPeopleWork;
+							vmA.depotcount = $res.siteCount;
+							vmA.piece = $res.totalPiece;
+							vmA.branch_cost = $res.branchTransportCost;
+							vmB.sitePeople = $res.sitePeopleWork;
+							vmB.collectPeople = $res.distribPeopleWork;
+							vmB.depotcount = $res.siteCount;
+							vmB.piece = $res.totalPiece;
+							vmB.branch_cost = $res.branchTransportCost;
+						}else{
+							var result = res.data;
+							var urlcost = "/costs/edit"; 
+							vmA.sitePeople = result.sitePeopleWork;
+							vmA.collectPeople = result.distribPeopleWork;
+							vmA.depotcount = result.siteCount;
+							vmA.piece = $res.totalPiece;
+							vmA.branch_cost = $res.branchTransportCost;
+							vmA.depotPeoplecount = result.peopleNumPerSite;
+							vmA.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
+							setTimeout(function(){
+								vmA.full_staff = result.fullTimeStaff;
+								vmA.part_staff = result.partTimeStaff;
+							},100)
+							vmA.full_salaty = result.fullTimeSalary;
+							vmA.full_days = result.fullTimeWorkDay;
+							vmA.part_wage = result.partTimeSalary;
+							vmA.part_work = result.partTimeWorkDay;
+							vmA.day_p_cost = result.sum1;
+							vmA.day_allp_cost = result.totalDailyLaborCost;
+							vmA.line_cost = result.branchTransportCost;
+							vmA.allcost = result.totalCost;
+						}
+						
+						
+						
+						//点击保存或者跟新数据
+						$('.cost-btn').click(function (){
+							var _val = $('#cost-choose').val();
+							if (_val == "a") {
+								var data = $("#cost-form-a").serialize();
+							}else{
+								var data = $("#cost-form-b").serialize();
+							}
+							$.post(urlcost,data).done(function (res){
+								console.log(res);
+								if (res == "success") {
+									window.location.reload
+								}
+							}).fail(function  () {
+								console.log("fail")
+							});
+						})
+						
+					}).fail(function (){
+						console.log("fail");
+					})
+					
+				}
+				
+				
+				
 			}).fail(function  () {
 				console.log("fail");
 			});
 			
-			$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
-				console.log(res)
-				
-			}).fail(function (){
-				console.log("fail");
-			})
+			
 			//
 	
 		}
