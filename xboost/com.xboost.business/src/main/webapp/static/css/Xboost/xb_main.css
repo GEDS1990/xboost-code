@@ -482,6 +482,7 @@ body{
 .table.table-hover.efficiency>thead>tr>th{
 	background-color: #fff;
 }
-.table.table-hover.efficiency>tbody>tr>td{
+.table.table-hover.efficiency>tbody>tr>td,
+.table.table-hover.efficiency>thead{
     border: 1px solid #ddd;
 }

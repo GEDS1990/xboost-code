@@ -353,27 +353,224 @@ $(function (){
 				}
 			}
 			lista.sort(startNum);
+			var sum = "";
+			var maxnum = lista[0].num;
+			for (var y=0,listalen=lista.length;y<listalen;y++) {
+				sum=Number(sum)+Number(lista[y].num);
+				if (maxnum < lista[y].num) {
+					maxnum = lista[y].num;
+				}
+			}
 			newarr["site"]=arrSite[j].site;
 			newarr["list"]=lista;
+			newarr["sum"] = sum;
+			newarr["max"] = maxnum;
 			allnewarr.push(newarr);
 		}
 		return allnewarr;
 	}
+	
+	//求时间
+	function operationTime (data) {
+		var result = parseInt(data),
+	    	h = parseInt(result/60),
+	    	m = result%60;
+	    	return add0(h)+":"+add0(m);
+	}
+	function add0(m){return m<10?'0'+m:m };
+	function addth (result){
+		var addtime ='';
+		for (var j=0,timelen=result.length;j<timelen;j++) {
+			addtime+='<th>'+operationTime(result[j].start)+'-'+operationTime(result[j].end)+'</th>';
+		}
+		return addtime;
+	}
+	function addtd (result){
+		var addtime ='';
+		for (var j=0,timelen=result.length;j<timelen;j++) {
+			addtime+='<td>'+result[j].num+'</td>';
+		}
+		return addtime;
+	}
 	(function  () {
 		var efficiency = doc.getElementById('efficiency-car');
 		if (efficiency) {
+			//请求发出 车辆数
 			$.get("/efficiency/leaveCarNum.json").done(function (res){
-				console.log(res)
-				var carlist = efficList(res);
-				
-				
-
-				
-				
+				//console.log(res)
+				if (res) {
+					var list = efficList(res);
+					//console.log(list);
+					//操作dom
+					var result = list[0].list;
+					//console.log(result)
+					var allsum = "";
+					var addthead="";
+					
+					for (var i=0,len = list.length;i<len;i++) {
+						var addtbody ="";
+						addtbody+='<tr>';
+						addtbody+='<td>'+list[i].site+'</td>';
+						addtbody+='<td>'+list[i].max+'</td>';addtd
+						addtbody+=addtd(list[i].list);
+						//console.log(list[i].list)
+						addtbody+='<td>'+list[i].sum+'</td>';
+						addtbody+='<td></td>';
+						addtbody+='</tr>';
+						allsum = Number(allsum)+Number(list[i].sum);
+						$('#car-tbody').append(addtbody);
+					}
+					addthead+='<tr>';
+					addthead+='<th colspan='+(result.length+3)+'>发出车辆数</th>';
+					addthead+='<th>总车次</th>';
+					addthead+='</tr>';
+					addthead+='<tr>';
+					addthead+='<th>装车网点</th>';
+					addthead+='<th>峰值发出次数</th>';
+					addthead+=addth(result);
+					addthead+='<th>总发出量</th>';
+					addthead+='<th>'+allsum+'</th></tr>';
+					$('#car-thead').append(addthead);	
+					
+				}
 				
 			}).fail(function (){
 				console.log("fail")
 			});
+			
+			//请求发出票数
+			$.get("/efficiency/sbVol.json").done(function (res){
+				console.log(res);
+				if (res) {
+					var list = efficList(res);
+					//console.log(list);
+					//操作dom
+					var result = list[0].list;
+					//console.log(result)
+					var allsum = "";
+					var addthead="";
+					
+					for (var i=0,len = list.length;i<len;i++) {
+						var addtbody ="";
+						addtbody+='<tr>';
+						addtbody+='<td>'+list[i].site+'</td>';
+						addtbody+='<td>'+list[i].max+'</td>';addtd
+						addtbody+=addtd(list[i].list);
+						//console.log(list[i].list)
+						addtbody+='<td>'+list[i].sum+'</td>';
+						addtbody+='<td></td>';
+						addtbody+='</tr>';
+						allsum = Number(allsum)+Number(list[i].sum);
+						$('#sbVol-tbody').append(addtbody);
+					}
+					addthead+='<tr>';
+					addthead+='<th colspan='+(result.length+3)+'>发出票数</th>';
+					addthead+='<th>总票数</th>';
+					addthead+='</tr>';
+					addthead+='<tr>';
+					addthead+='<th>装车网点</th>';
+					addthead+='<th>峰值发出票数</th>';
+					addthead+=addth(result);
+					addthead+='<th>总发出量</th>';
+					addthead+='<th>'+allsum+'</th></tr>';
+					$('#sbVol-thead').append(addthead);	
+					
+				}
+			}).fail(function (){
+				console.log("fail");
+			});
+			
+			//请求到达车辆数
+			$.get("/efficiency/arrCarNum.json").done(function (res){
+				console.log(res);
+				if (res) {
+					var list = efficList(res);
+					//console.log(list);
+					//操作dom
+					var result = list[0].list;
+					//console.log(result)
+					var allsum = "";
+					var addthead="";
+					
+					for (var i=0,len = list.length;i<len;i++) {
+						var addtbody ="";
+						addtbody+='<tr>';
+						addtbody+='<td>'+list[i].site+'</td>';
+						addtbody+='<td>'+list[i].max+'</td>';addtd
+						addtbody+=addtd(list[i].list);
+						//console.log(list[i].list)
+						addtbody+='<td>'+list[i].sum+'</td>';
+						addtbody+='<td></td>';
+						addtbody+='</tr>';
+						allsum = Number(allsum)+Number(list[i].sum);
+						$('#arrcar-tbody').append(addtbody);
+					}
+					addthead+='<tr>';
+					addthead+='<th colspan='+(result.length+3)+'>到达车辆数</th>';
+					addthead+='<th>总车次</th>';
+					addthead+='</tr>';
+					addthead+='<tr>';
+					addthead+='<th>卸车网点</th>';
+					addthead+='<th>峰值到达车次</th>';
+					addthead+=addth(result);
+					addthead+='<th>总到达量</th>';
+					addthead+='<th>'+allsum+'</th></tr>';
+					$('#arrcar-thead').append(addthead);	
+					
+				}
+			}).fail(function (){
+				console.log("fail");
+			});
+			
+			
+			//请求到达票数
+			$.get("/efficiency/unloadVol.json").done(function (res){
+				console.log(res);
+				if (res) {
+					var list = efficList(res);
+					//console.log(list);
+					//操作dom
+					var result = list[0].list;
+					//console.log(result)
+					var allsum = "";
+					var addthead="";
+					
+					for (var i=0,len = list.length;i<len;i++) {
+						var addtbody ="";
+						addtbody+='<tr>';
+						addtbody+='<td>'+list[i].site+'</td>';
+						addtbody+='<td>'+list[i].max+'</td>';addtd
+						addtbody+=addtd(list[i].list);
+						//console.log(list[i].list)
+						addtbody+='<td>'+list[i].sum+'</td>';
+						addtbody+='<td></td>';
+						addtbody+='</tr>';
+						allsum = Number(allsum)+Number(list[i].sum);
+						$('#unloadVol-tbody').append(addtbody);
+					}
+					addthead+='<tr>';
+					addthead+='<th colspan='+(result.length+3)+'>到达票数</th>';
+					addthead+='<th>总票数</th>';
+					addthead+='</tr>';
+					addthead+='<tr>';
+					addthead+='<th>卸车网点</th>';
+					addthead+='<th>峰值到达票数</th>';
+					addthead+=addth(result);
+					addthead+='<th>总到达量</th>';
+					addthead+='<th>'+allsum+'</th></tr>';
+					$('#unloadVol-thead').append(addthead);	
+					
+				}
+			}).fail(function (){
+				console.log("fail");
+			});
+			
+			
+			
+			
+			
+			
+			
 		}
 	}());
 	
