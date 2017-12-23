@@ -89,7 +89,7 @@ public class SolutionDistributionController {
                             total = total + Double.parseDouble(route.getSbVolSum()!=null?route.getSbVolSum():"0");
                         }
                     }
-                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(df.format(total/totalAll*100)).concat("%"));
+                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(df.format(total/totalAll*100)));
                 }
                 break;
             case "3":

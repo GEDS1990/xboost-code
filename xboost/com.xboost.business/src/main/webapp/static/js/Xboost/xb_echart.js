@@ -353,6 +353,34 @@ function add0(m){return m<10?'0'+m:m };
 	    	var _val = $(this).val();
 	    	$.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
 		    	console.log(res);
+		    	if (_val == 0 || _val== 1) {
+		    		var arr = [];
+			    	for (var i in res) {
+			    		var obj = {}
+			    		var s = i.split("-");
+			    		s.push(res[i]);
+			    		//console.log(s)
+						obj["start"] = s[0];
+						obj["end"] = s[1];
+						obj["num"] = s[2];
+						arr.push(obj);
+			    	}
+			    	arr.sort(startNum);
+			    	//console.log(arr);
+			    	var xinfo = [];
+			    	var seriesinfo = [];
+			    	for (var j=0,len=arr.length;j<len;j++) {
+			    		var time = operationTime(arr[j].start) +"-"+operationTime(arr[j].end);
+			    		xinfo.push(time);
+			    		var val = arr[j].num;
+			    		seriesinfo.push(val);
+			    	}
+			    	var data = {
+				    	"xinfo":xinfo,
+				    	"seriesinfo":seriesinfo
+				    }
+					distributionEcharts(data);
+		    	}
 		    }).fail(function  () {
 		    	alert("fail");
 		    });

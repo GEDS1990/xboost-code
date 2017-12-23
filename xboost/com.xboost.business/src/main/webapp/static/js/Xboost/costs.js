@@ -275,7 +275,7 @@ $(function (){
 						}else{
 							
 							var result = res.data[0];
-							console.log(result)
+							//console.log(result)
 							var urlcost = "/costs/edit"; 
 							vmA.sitePeople = result.sitePeopleWork;
 							vmA.collectPeople = result.distribPeopleWork;
@@ -286,7 +286,7 @@ $(function (){
 							vmA.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
 							setTimeout(function (){
 								vmA.full_staff = result.fullTimeStaff;
-							vmA.part_staff = result.partTimeStaff;
+								vmA.part_staff = result.partTimeStaff;
 							},100)
 							vmA.full_salaty = result.fullTimeSalary;
 							vmA.full_days = result.fullTimeWorkDay;
@@ -308,7 +308,7 @@ $(function (){
 							vmB.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
 							setTimeout(function (){
 								vmB.full_staff = result.fullTimeStaff;
-							vmB.part_staff = result.partTimeStaff;
+								vmB.part_staff = result.partTimeStaff;
 							},100)
 							vmB.full_salaty = result.fullTimeSalary;
 							vmB.full_days = result.fullTimeWorkDay;
