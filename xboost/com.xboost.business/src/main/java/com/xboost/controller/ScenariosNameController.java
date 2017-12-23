@@ -107,7 +107,7 @@ public class ScenariosNameController {
             result.put("staffCount",staffCount);
             result.put("carCount",carCount);
             result.put("cost",cost);
-            
+
         }catch (Exception e){
 
         }
