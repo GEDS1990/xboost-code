@@ -8,6 +8,7 @@
         SELECT * FROM t_solution_route r INNER join t_car_info c on r.car_name = c.name
         INNER join t_car_info c on r.car_name = c.name
         where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
+        order by arr_time
     </select>
 
     <select id="findAllCountByCar" resultType="long">
@@ -25,6 +26,7 @@
                 and  r.car_name = #{keyword}
             </if>
         </where>
+        order by arr_time
         <!--order by ${orderColumn} ${orderType}-->
         limit ${start},${length}
     </select>
