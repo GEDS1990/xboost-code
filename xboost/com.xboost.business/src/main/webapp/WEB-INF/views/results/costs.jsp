@@ -85,7 +85,7 @@
 	    		</header>
 	    		<div class="cost-plan-choose">
 	    			<span class="cost-choose">Choose Plan </span>
-	    			<select id="cost-choose">
+	    			<select id="costs-choose">
 	    				<option value="a">Plan A</option>
 	    				<option value="b">Plan B</option>
 	    			</select>
@@ -146,7 +146,7 @@
 	    			<div class="result-cost-item" >
 	    				<form id="cost-form-b" v-show="cseen">
 	    					<input type="hidden" name="plan" value="A" />
-	    					<h1>Plan A</h1>
+	    					<h1>Plan B</h1>
 		    				<div class="cost-item text-left">
 		    					<div class="item-box">
 		    						<h1>人效</h1>
@@ -182,7 +182,7 @@
 		    							<li>支线depot&distrib.center单日人工成本: <span>{{day_p_cost}}</span></li>
 		    							<li>单日总体人工成本: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>支线运输成本: <span>{{line_cost}}</span> <span> (per piece)</span></li>
-		    							<input type="hidden" name="sum2" v-bind:value="day_p_cost"/>
+		    							<input type="hidden" name="sum1" v-bind:value="day_p_cost"/>
 		    							<input type="hidden" name="totalDailyLaborCost" v-bind:value="day_allp_cost"/>
 		    							<input type="hidden" name="branchTransportCost" v-bind:value="line_cost"/>
 		    							<input type="hidden" name="totalCost" v-bind:value="allcost"/>
@@ -196,11 +196,11 @@
 	    		
 	    		<div class="cost-plan-choose alt">
 	    			<span class="cost-choose">Choose Plan </span>
-	    			<select>
-	    				<option>Plan A</option>
-	    				<option>Plan B</option>
+	    			<select id="costss-choose">
+	    				<option value="a">Plan A</option>
+	    				<option value="b">Plan B</option>
 	    			</select>
-	    			<button class="cost-btn">submit</button>
+	    			<button class="costs-btn">submit</button>
 	    			<span> 选中的Plan的数据会被用于其它页面的展示</span>
 	    		</div>
 	    		
