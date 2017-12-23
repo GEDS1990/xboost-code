@@ -51,6 +51,7 @@ public class MyScenariosController {
     @ResponseBody
     public String add(Scenarios scenario) {
         scenario.setUserId(ShiroUtil.getCurrentUserId());
+        scenario.setScenariosStatus("Editable");
         myScenariosService.save(scenario);
         return "success";
     }
