@@ -288,15 +288,36 @@ $(function (){
 								vmA.full_staff = result.fullTimeStaff;
 							vmA.part_staff = result.partTimeStaff;
 							},100)
-							
 							vmA.full_salaty = result.fullTimeSalary;
 							vmA.full_days = result.fullTimeWorkDay;
 							vmA.part_wage = result.partTimeSalary;
 							vmA.part_work = result.partTimeWorkDay;
-							vmA.day_p_cost = result.sum1;
+							vmA.day_p_cost = result.sum2;
 							vmA.day_allp_cost = result.totalDailyLaborCost;
 							vmA.line_cost = result.branchTransportCost;
 							vmA.allcost = result.totalCost;
+							
+							
+							
+							vmB.sitePeople = result.sitePeopleWork;
+							vmB.collectPeople = result.distribPeopleWork;
+							vmB.depotcount = result.siteCount;
+							vmB.piece = $res.totalPiece;
+							vmB.branch_cost = $res.branchTransportCost;
+							vmB.depotPeoplecount = result.peopleNumPerSite;
+							vmB.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
+							setTimeout(function (){
+								vmB.full_staff = result.fullTimeStaff;
+							vmB.part_staff = result.partTimeStaff;
+							},100)
+							vmB.full_salaty = result.fullTimeSalary;
+							vmB.full_days = result.fullTimeWorkDay;
+							vmB.part_wage = result.partTimeSalary;
+							vmB.part_work = result.partTimeWorkDay;
+							vmB.day_p_cost = result.sum2;
+							vmB.day_allp_cost = result.totalDailyLaborCost;
+							vmB.line_cost = result.branchTransportCost;
+							vmB.allcost = result.totalCost;
 							
 						}
 						
