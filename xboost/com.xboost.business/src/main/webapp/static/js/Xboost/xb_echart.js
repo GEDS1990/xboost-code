@@ -298,6 +298,17 @@ function branchEcharts(data1,data2){
  *distribution.jsp == SolutionDistributionController
  *
  */
+function startNum (a,b) {
+	return a.start-b.start;
+}
+//求时间
+function operationTime (data) {
+	var result = parseInt(data),
+    	h = parseInt(result/60),
+    	m = result%60;
+    	return add0(h)+":"+add0(m);
+}
+function add0(m){return m<10?'0'+m:m };
 (function  () {
 	var distribution_echarts = doc.getElementById('distribution-echarts');
 	if (distribution_echarts) {
@@ -307,19 +318,47 @@ function branchEcharts(data1,data2){
 	    $("#distribution-echarts").css("height",height-300); 
 	    var _val = $('#distribution-choose').val();
 	    $.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
-	    	console.log(res)
+	    	//console.log(res);
+	    	var arr = [];
+	    	for (var i in res) {
+	    		var obj = {}
+	    		var s = i.split("-");
+	    		s.push(res[i]);
+	    		//console.log(s)
+				obj["start"] = s[0];
+				obj["end"] = s[1];
+				obj["num"] = s[2];
+				arr.push(obj);
+	    	}
+	    	arr.sort(startNum);
+	    	//console.log(arr);
+	    	var xinfo = [];
+	    	var seriesinfo = [];
+	    	for (var j=0,len=arr.length;j<len;j++) {
+	    		var time = operationTime(arr[j].start) +"-"+operationTime(arr[j].end);
+	    		xinfo.push(time);
+	    		var val = arr[j].num;
+	    		seriesinfo.push(val);
+	    	}
+	    	var data = {
+		    	"xinfo":xinfo,
+		    	"seriesinfo":seriesinfo
+		    }
+			distributionEcharts(data);
+	    	
 	    }).fail(function  () {
 	    	alert("fail");
 	    });
 	    $('#distribution-choose').change(function  () {
-	    	console.log($(this).val())
+	    	var _val = $(this).val();
+	    	$.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
+		    	console.log(res)
+		    }).fail(function  () {
+		    	alert("fail");
+		    });
 	    });
 	    
-	    var data = {
-	    	"xinfo":['提早70','提早60','提早50','提早40','提早30','提早20','提早10','准时到'],
-	    	"seriesinfo":[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 80, 90]
-	    }
-		distributionEcharts(data);
+	    
 		
 		
 		
@@ -361,7 +400,7 @@ function distributionEcharts(datas){
                 //设置字体倾斜  
                 axisLabel:{  
                     interval:0,  
-                    rotate:0,//倾斜度 -90 至 90 默认为0  
+                    rotate:45,//倾斜度 -90 至 90 默认为0  
                     margin:5,  
                     textStyle:{  
                         fontWeight:"bolder",  
@@ -374,9 +413,10 @@ function distributionEcharts(datas){
             {  
                 type : 'value',  
                 axisLabel: {  
+                	formatter: '{value} %',  //显示百分比
                		show: true,  
                     interval: 'auto',  
-                    formatter: '{value} %'  //显示百分比
+                    
                 },  
                 splitArea : {show : true}  
             }  

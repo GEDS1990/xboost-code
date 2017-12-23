@@ -74,7 +74,7 @@ public class SolutionDistributionController {
                             total = total + Integer.parseInt(demandInfo.getVotes()!=null?demandInfo.getVotes():"0");
                         }
                     }
-                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total/totalAll*100).concat("%"));
+                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total/totalAll*100));
                 }
                 break;
             case "1":

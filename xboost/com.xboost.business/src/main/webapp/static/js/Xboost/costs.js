@@ -281,9 +281,10 @@ $(function (){
 							vmA.branch_cost = $res.branchTransportCost;
 							vmA.depotPeoplecount = result.peopleNumPerSite;
 							vmA.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
-							vmA.full_staff = result.fullTimeStaff;
-							vmA.part_staff = result.partTimeStaff;
-							console.log(result.partTimeStaff)
+							setTimeout(function(){
+								vmA.full_staff = result.fullTimeStaff;
+								vmA.part_staff = result.partTimeStaff;
+							},100)
 							vmA.full_salaty = result.fullTimeSalary;
 							vmA.full_days = result.fullTimeWorkDay;
 							vmA.part_wage = result.partTimeSalary;
@@ -305,7 +306,10 @@ $(function (){
 								var data = $("#cost-form-b").serialize();
 							}
 							$.post(urlcost,data).done(function (res){
-								console.log(res)
+								console.log(res);
+								if (res == "success") {
+									window.location.reload
+								}
 							}).fail(function  () {
 								console.log("fail")
 							});
