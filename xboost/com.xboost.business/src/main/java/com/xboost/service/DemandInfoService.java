@@ -308,6 +308,9 @@ public class DemandInfoService {
         }
 
     }
-
+    //
+    public List<Object> findarrTime(){
+        return demandInfoMapper.findarrTime(ShiroUtil.getOpenScenariosId());
+    }
 
 }

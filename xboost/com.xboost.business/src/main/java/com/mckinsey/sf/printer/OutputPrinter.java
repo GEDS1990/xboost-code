@@ -24,6 +24,7 @@ import com.mckinsey.sf.data.solution.JobInfo;
 import com.mckinsey.sf.data.solution.Solution;
 import com.mckinsey.sf.data.solution.StatInfo;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
 import org.springframework.web.socket.TextMessage;
 
 /**   
@@ -41,6 +42,7 @@ public class OutputPrinter implements IConstants {
 	static JobInfoService jobInfoService = (JobInfoService)SpringBeanFactoryUtil.getBean("jobInfoService");
 	static StatInfoService statInfoService = (StatInfoService)SpringBeanFactoryUtil.getBean("statInfoService");
 	static SolutionCostService solutionCostService = (SolutionCostService)SpringBeanFactoryUtil.getBean("solutionCostService");
+	static MyScenariosService myScenariosService = (MyScenariosService)SpringBeanFactoryUtil.getBean("myScenariosService");
 
 	public static void printLine(String str){
 		System.out.println(str);
@@ -711,7 +713,7 @@ public class OutputPrinter implements IConstants {
 				routeCount ++ ;
 			}
 			systemWebSocketHandler.sendMessageToUser(new TextMessage("增加数据成功"));
-
+			myScenariosService.updateFinishTime();
 			
 //			out = new FileOutputStream(fileName);
 //			wb.write(out);

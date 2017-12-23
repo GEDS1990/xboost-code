@@ -75,7 +75,11 @@
     <delete id="delById">
         DELETE FROM t_demand_info WHERE id = #{id}
     </delete>
-	
+
+    <select id="findarrTime" resultType="map"  parameterType="String">
+        SELECT d.duration_end-s.Arr_time as arr_time,s.vol as vol FROM t_demand_info d left join t_solution_activity s on d.scenariosId=#{scenariosId}
+        and d.site_collect=s.pickup_loc and d.site_delivery=s.delivery_loc
+    </select>
 
     <resultMap id="demandInfoMap" type="DemandInfo">
         <result property="id" column="id"/>
