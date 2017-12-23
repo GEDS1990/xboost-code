@@ -21,7 +21,7 @@ public interface SolutionCostMapper {
 
 
     /**
-     * 根据ID查询Cost信息
+     * 根据场景ID查询Cost信息
      * @param scenariosId
      * @return
      */

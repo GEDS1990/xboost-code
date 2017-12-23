@@ -19,8 +19,12 @@
         SELECT * FROM t_solution_cost where scenariosId = #{scenariosId}
     </select>
 
-    <select id="findByParam" parameterType="map" resultType="map" resultMap="costMap">
+    <select id="findByParam" parameterType="map" resultType="com.xboost.pojo.Cost" resultMap="costMap">
         SELECT * from t_solution_cost where scenariosId = #{scenariosId} and plan =#{plan}
+    </select>
+
+    <select id="findByScenariosId" parameterType="map" resultType="com.xboost.pojo.Cost" resultMap="costMap">
+        SELECT * from t_solution_cost where scenariosId = #{scenariosId}
     </select>
 
     <select id="findById" resultType="com.xboost.pojo.Cost"  resultMap="costMap">
@@ -59,24 +63,24 @@
         <result property="modelType" column="model_type"/>
         <result property="plan" column="plan"/>
         <result property="selected" column="selected"/>
-        <result property="site_people_work" column="sitePeopleWork"/>
-        <result property="distrib_people_work" column="distribPeopleWork"/>
-        <result property="site_count" column="siteCount"/>
-        <result property="people_num_per_site" column="peopleNumPerSite"/>
-        <result property="full_time_staff" column="fullTimeStaff"/>
-        <result property="part_time_staff" column="partTimeStaff"/>
-        <result property="full_time_salary" column="fullTimeSalary"/>
-        <result property="part_time_salary" column="partTimeSalary"/>
-        <result property="full_time_work_day" column="fullTimeWorkDay"/>
-        <result property="part_time_work_day" column="partTimeWorkDay"/>
+        <result property="sitePeopleWork" column="site_people_work"/>
+        <result property="distribPeopleWork" column="distrib_people_work"/>
+        <result property="siteCount" column="site_count"/>
+        <result property="peopleNumPerSite" column="people_num_per_site"/>
+        <result property="fullTimeStaff" column="full_time_staff"/>
+        <result property="partTimeStaff" column="part_time_staff"/>
+        <result property="fullTimeSalary" column="full_time_salary"/>
+        <result property="partTimeSalary" column="part_time_salary"/>
+        <result property="fullTimeWorkDay" column="full_time_work_day"/>
+        <result property="partTimeWorkDay" column="part_time_work_day"/>
         <result property="sum1" column="sum1"/>
         <result property="sum2" column="sum2"/>
         <result property="sum3" column="sum3"/>
-        <result property="total_daily_labor_cost" column="totalDailyLaborCost"/>
-        <result property="pickup_transport_cost" column="pickupTransportCost"/>
-        <result property="branch_transport_cost" column="branchTransportCost"/>
-        <result property="delivery_transport_cost" column="deliveryTransportCost"/>
-        <result property="total_cost" column="totalCost"/>
+        <result property="totalDailyLaborCost" column="total_daily_labor_cost"/>
+        <result property="pickupTransportCost" column="pickup_transport_cost"/>
+        <result property="branchTransportCost" column="branch_transport_cost"/>
+        <result property="deliveryTransportCost" column="delivery_transport_cost"/>
+        <result property="totalCost" column="total_cost"/>
     </resultMap>
 
 
