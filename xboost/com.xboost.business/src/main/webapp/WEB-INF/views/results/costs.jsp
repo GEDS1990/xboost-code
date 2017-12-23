@@ -77,7 +77,7 @@
 	    	<div id="route-wrap">
 	    		<header class="clearfix result-header">
 	    			<div class="xb-fl">
-		    			<p style="color: #000;">Costs of <span>串点模型</span></p>
+		    			<p style="color: #000;">Costs of <span id="model-type"></span></p>
 	    			</div>
 	    			<div class="xb-fr">
 	    				<button><span class="icon-upload"></span>Export this Sheet</button>
@@ -109,7 +109,9 @@
 		    						<h1>人员配备</h1>
 		    						<ul class="item-content">
 		    							<li>支线depot&distrib.center数量: <span>{{depotcount}}</span></li>
+		    							<input type="hidden" name="siteCount" v-bind:value="depotcount" />
 		    							<li>每个支线depot/distrib.center的人数: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
+		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
 		    							<li>支线depot&distrib.center总人数: <span>{{depotAllPeople}}</span></li>
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
 		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
