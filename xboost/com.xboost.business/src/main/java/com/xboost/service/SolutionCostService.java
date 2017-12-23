@@ -75,8 +75,8 @@ public class SolutionCostService {
      * 编辑成本信息
      * @param cost
      */
-    public void editCost(Cost cost) {
-        solutionCostMapper.editCost(cost);
+    public void editCost(String scenariosId,Cost cost) {
+        solutionCostMapper.editCost(scenariosId,cost);
     }
 
     /**
