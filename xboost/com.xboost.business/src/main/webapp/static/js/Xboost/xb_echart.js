@@ -380,7 +380,18 @@ function add0(m){return m<10?'0'+m:m };
 				    	"seriesinfo":seriesinfo
 				    }
 					distributionEcharts(data);
+		    	}else{
+		    		var xinfo = ['提早60','提早50','提早40','提早30','提早20','提早10','准时到'];
+		    		var seriesinfo = [res.tiqian60,res.tiqian50,res.tiqian40,res.tiqian30,res.tiqian20,res.tiqian10,res.zunshi];
+		    		var data = {
+		    			"xinfo":xinfo,
+				    	"seriesinfo":seriesinfo
+		    		}
+		    		distributionEcharts(data);
 		    	}
+		    	
+		    	
+		    	
 		    }).fail(function  () {
 		    	alert("fail");
 		    });
