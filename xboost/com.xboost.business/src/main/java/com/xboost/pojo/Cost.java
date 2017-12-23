@@ -15,20 +15,20 @@ public class Cost implements Serializable {
     private String distribPeopleWork;  //集配站集散点人数
     private String siteCount;            //网点数量
     private String peopleNumPerSite;    //每个网点的人数
-    private Integer fullTimeStaff;                 //全职人数
-    private Integer partTimeStaff;                 //兼职人数
-    private Integer fullTimeSalary;                 //全职薪资
-    private Integer partTimeSalary;                 //兼职薪资
-    private Integer fullTimeWorkDay;                 //全职工作天数
-    private Integer partTimeWorkDay;               //兼职工作天数
-    private Double sum1;                         //收端派端depot&distrib.center单日人工成本
-    private Double sum2;                         //支线depot单日人工成本
-    private Double sum3;                         //支线distrib.center单日人工成本
-    private Double totalDailyLaborCost;            //单日总体人工成本
-    private Double pickupTransportCost;          //收端运输成本
-    private Double branchTransportCost;         //支线运输成本
-    private Double deliveryTransportCost;      //派端运输成本
-    private Double totalCost;                       //总成本
+    private String fullTimeStaff;                 //全职人数
+    private String partTimeStaff;                 //兼职人数
+    private String fullTimeSalary;                 //全职薪资
+    private String partTimeSalary;                 //兼职薪资
+    private String fullTimeWorkDay;                 //全职工作天数
+    private String partTimeWorkDay;               //兼职工作天数
+    private String sum1;                         //收端派端depot&distrib.center单日人工成本
+    private String sum2;                         //支线depot单日人工成本
+    private String sum3;                         //支线distrib.center单日人工成本
+    private String totalDailyLaborCost;            //单日总体人工成本
+    private String pickupTransportCost;          //收端运输成本
+    private String branchTransportCost;         //支线运输成本
+    private String deliveryTransportCost;      //派端运输成本
+    private String totalCost;                       //总成本
     private String str1;                   //预留字段
     private String str2;                    //预留字段
     private String str3;                  //预留字段
@@ -107,115 +107,115 @@ public class Cost implements Serializable {
         this.peopleNumPerSite = peopleNumPerSite;
     }
 
-    public Integer getFullTimeStaff() {
+    public String getFullTimeStaff() {
         return fullTimeStaff;
     }
 
-    public void setFullTimeStaff(Integer fullTimeStaff) {
+    public void setFullTimeStaff(String fullTimeStaff) {
         this.fullTimeStaff = fullTimeStaff;
     }
 
-    public Integer getPartTimeStaff() {
+    public String getPartTimeStaff() {
         return partTimeStaff;
     }
 
-    public void setPartTimeStaff(Integer partTimeStaff) {
+    public void setPartTimeStaff(String partTimeStaff) {
         this.partTimeStaff = partTimeStaff;
     }
 
-    public Integer getFullTimeSalary() {
+    public String getFullTimeSalary() {
         return fullTimeSalary;
     }
 
-    public void setFullTimeSalary(Integer fullTimeSalary) {
+    public void setFullTimeSalary(String fullTimeSalary) {
         this.fullTimeSalary = fullTimeSalary;
     }
 
-    public Integer getPartTimeSalary() {
+    public String getPartTimeSalary() {
         return partTimeSalary;
     }
 
-    public void setPartTimeSalary(Integer partTimeSalary) {
+    public void setPartTimeSalary(String partTimeSalary) {
         this.partTimeSalary = partTimeSalary;
     }
 
-    public Integer getFullTimeWorkDay() {
+    public String getFullTimeWorkDay() {
         return fullTimeWorkDay;
     }
 
-    public void setFullTimeWorkDay(Integer fullTimeWorkDay) {
+    public void setFullTimeWorkDay(String fullTimeWorkDay) {
         this.fullTimeWorkDay = fullTimeWorkDay;
     }
 
-    public Integer getPartTimeWorkDay() {
+    public String getPartTimeWorkDay() {
         return partTimeWorkDay;
     }
 
-    public void setPartTimeWorkDay(Integer partTimeWorkDay) {
+    public void setPartTimeWorkDay(String partTimeWorkDay) {
         this.partTimeWorkDay = partTimeWorkDay;
     }
 
-    public Double getSum1() {
+    public String getSum1() {
         return sum1;
     }
 
-    public void setSum1(Double sum1) {
+    public void setSum1(String sum1) {
         this.sum1 = sum1;
     }
 
-    public Double getSum2() {
+    public String getSum2() {
         return sum2;
     }
 
-    public void setSum2(Double sum2) {
+    public void setSum2(String sum2) {
         this.sum2 = sum2;
     }
 
-    public Double getSum3() {
+    public String getSum3() {
         return sum3;
     }
 
-    public void setSum3(Double sum3) {
+    public void setSum3(String sum3) {
         this.sum3 = sum3;
     }
 
-    public Double getTotalDailyLaborCost() {
+    public String getTotalDailyLaborCost() {
         return totalDailyLaborCost;
     }
 
-    public void setTotalDailyLaborCost(Double totalDailyLaborCost) {
+    public void setTotalDailyLaborCost(String totalDailyLaborCost) {
         this.totalDailyLaborCost = totalDailyLaborCost;
     }
 
-    public Double getPickupTransportCost() {
+    public String getPickupTransportCost() {
         return pickupTransportCost;
     }
 
-    public void setPickupTransportCost(Double pickupTransportCost) {
+    public void setPickupTransportCost(String pickupTransportCost) {
         this.pickupTransportCost = pickupTransportCost;
     }
 
-    public Double getBranchTransportCost() {
+    public String getBranchTransportCost() {
         return branchTransportCost;
     }
 
-    public void setBranchTransportCost(Double branchTransportCost) {
+    public void setBranchTransportCost(String branchTransportCost) {
         this.branchTransportCost = branchTransportCost;
     }
 
-    public Double getDeliveryTransportCost() {
+    public String getDeliveryTransportCost() {
         return deliveryTransportCost;
     }
 
-    public void setDeliveryTransportCost(Double deliveryTransportCost) {
+    public void setDeliveryTransportCost(String deliveryTransportCost) {
         this.deliveryTransportCost = deliveryTransportCost;
     }
 
-    public Double getTotalCost() {
+    public String getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(Double totalCost) {
+    public void setTotalCost(String totalCost) {
         this.totalCost = totalCost;
     }
 
