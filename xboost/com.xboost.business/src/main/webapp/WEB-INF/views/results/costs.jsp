@@ -182,7 +182,7 @@
 		    							<li>支线depot&distrib.center单日人工成本: <span>{{day_p_cost}}</span></li>
 		    							<li>单日总体人工成本: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>支线运输成本: <span>{{line_cost}}</span> <span> (per piece)</span></li>
-		    							<input type="hidden" name="sum1" v-bind:value="day_p_cost"/>
+		    							<input type="hidden" name="sum2" v-bind:value="day_p_cost"/>
 		    							<input type="hidden" name="totalDailyLaborCost" v-bind:value="day_allp_cost"/>
 		    							<input type="hidden" name="branchTransportCost" v-bind:value="line_cost"/>
 		    							<input type="hidden" name="totalCost" v-bind:value="allcost"/>
