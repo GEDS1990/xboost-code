@@ -56,13 +56,13 @@ public class SolutionDistributionController {
         List<DemandInfo> demandInfoList = demandInfoService.findAll(ShiroUtil.getOpenScenariosId());
         List<Route> routeList = solutionRouteService.findAllRoute(ShiroUtil.getOpenScenariosId());
         int totalAll = 0;
-        int totalAllRoute = 0;
+//        int totalAllRoute = 0;
         for(DemandInfo demandInfo : demandInfoList){
             totalAll = totalAll + Integer.parseInt((demandInfo.getVotes()!=null)?demandInfo.getVotes():"0");
         }
-        for(Route route : routeList){
-            totalAllRoute = totalAllRoute + Integer.parseInt((route.getSbVolSum()!=null)?route.getSbVolSum():"0");
-        }
+//        for(Route route : routeList){
+//            totalAllRoute = totalAllRoute + Integer.parseInt((route.getSbVolSum()!=null)?route.getSbVolSum():"0");
+//        }
         type = (type!=null)?type:"0";
         switch (type){
             case "0":
@@ -70,11 +70,11 @@ public class SolutionDistributionController {
                     int total = 0;
                     for(DemandInfo demandInfo : demandInfoList){
                         int res = Integer.parseInt(demandInfo.getDurationEnd()!=null?demandInfo.getDurationEnd():"0");
-                        if(res>=(min+jiange*i) && res<(min+jiange*(i+1))){
+                        if(res>(min+jiange*i) && res<=(min+jiange*(i+1))){
                             total = total + Integer.parseInt(demandInfo.getVotes()!=null?demandInfo.getVotes():"0");
                         }
                     }
-                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total/totalAll*0.1));
+                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total/totalAll*100).concat("%"));
                 }
                 break;
             case "1":

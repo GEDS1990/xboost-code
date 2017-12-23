@@ -15,6 +15,8 @@ public interface SolutionCostMapper {
     //  添加Cost  @param cost
     void add(Cost cost);
 
+    //scenariosId 删除   * @param scenariosId
+    void delByScenariosId(Integer scenariosId);
 
     // 查询所有Cost信息  @return
     List<Cost> findAll(String scenariosId);

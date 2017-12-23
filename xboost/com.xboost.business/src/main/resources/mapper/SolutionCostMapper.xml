@@ -56,6 +56,10 @@
         WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc}
     </select>
 
+    <delete id="delByScenariosId">
+        DELETE FROM t_solution_cost WHERE scenariosId = #{scenariosId}
+    </delete>
+
 
     <resultMap id="costMap" type="Cost">
         <result property="id" column="id"/>

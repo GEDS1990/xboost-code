@@ -28,6 +28,8 @@ public class CascadeController {
 
     @Inject
     CascadeService cascadeService;
+    @Inject
+    SolutionRouteService solutionRouteService;
 
     @Inject
     CarService carService;
@@ -41,6 +43,7 @@ public class CascadeController {
     @RequestMapping(value="/runSilumate",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> docascade(String distMode,String loadTime,String loopLimit){
+        solutionRouteService.updateScenariosModel(distMode);//更新模型参数
         if("1".equals(distMode)){
             //查询Confiuration表数据
             Map<String, Object> param = new HashMap<String,Object>();
