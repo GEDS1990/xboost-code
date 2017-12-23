@@ -85,32 +85,62 @@
 	    				<button><span class="icon-upload"></span>Export this Sheet</button>
 	    			</div>
 	    		</header>
-	    		<div class="table-responsive active">
-					<table id="efficiency-car" class="table table-hover efficiency">
-						<thead>
-							<tr>
-								<th colspan="4">发出票数</th>
-								<th>总票数</th>
-							</tr>
-							<tr>
-								<th>装车网点</th>
-								<th>峰值发出票数</th>
-								<th>0:00</th>
-								<th>总发出量</th>
-								<th>0</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>55Q</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+	    		
+	    		<!--发出 车辆数-->
+	    		<div style="padding: 10px;">
+	    			<div class="table-responsive active">
+						<table id="efficiency-car" class="table table-hover efficiency">
+							<thead id="car-thead">
+								
+							</thead>
+							<tbody id="car-tbody">
+								
+							</tbody>
+						</table>
+					</div>
+	    		</div>
+	    		
+	    		<!--发出 票数-->
+	    		<div style="padding: 10px;">
+	    			<div class="table-responsive active">
+						<table id="efficiency-sbVol" class="table table-hover efficiency">
+							<thead id="sbVol-thead">
+								
+							</thead>
+							<tbody id="sbVol-tbody">
+								
+							</tbody>
+						</table>
+					</div>
+	    		</div>
+	    		
+	    		<!--到达车辆数-->
+	    		<div style="padding: 10px;">
+	    			<div class="table-responsive active">
+						<table id="efficiency-arrcar" class="table table-hover efficiency">
+							<thead id="arrcar-thead">
+								
+							</thead>
+							<tbody id="arrcar-tbody">
+								
+							</tbody>
+						</table>
+					</div>
+	    		</div>
+	    		
+	    		<!--到达票数-->
+	    		<div style="padding: 10px;">
+	    			<div class="table-responsive active">
+						<table id="efficiency-unloadVol" class="table table-hover efficiency">
+							<thead id="unloadVol-thead">
+								
+							</thead>
+							<tbody id="unloadVol-tbody">
+								
+							</tbody>
+						</table>
+					</div>
+	    		</div>
 	    		
 	    	
 	    	
