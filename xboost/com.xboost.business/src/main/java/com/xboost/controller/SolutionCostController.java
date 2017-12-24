@@ -34,6 +34,8 @@ public class SolutionCostController {
     private MyScenariosService myScenariosService;
     @Inject
     private SolutionRouteService solutionRouteService;
+    @Inject
+    private DemandInfoService demandInfoService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -85,7 +87,7 @@ public class SolutionCostController {
         //集配站集散点人效
         Integer distribPeopleWork = modelArgService.findDistribPeopleWork(scenariosId,modelType);
         //当前场景下网点总数
-        Integer siteCount = siteInfoService.findSiteInfoCount(scenariosId);
+        Integer siteCount = demandInfoService.siteCount();
         //总件量
         Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
         //网点
@@ -133,7 +135,7 @@ public class SolutionCostController {
         //集配站集散点人效
         Integer distribPeopleWork = modelArgService.findDistribPeopleWork(scenariosId,modelType);
         //当前场景下网点总数
-        Integer siteCount = siteInfoService.findSiteInfoCount(scenariosId);
+        Integer siteCount = demandInfoService.siteCount();
         //总件量
         Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
 
