@@ -77,7 +77,7 @@
 					    		<th rowspan="2">latitude</th>
 					    		<th rowspan="2">depot<br />name</th>
 					    		<th rowspan="2">depot<br />address</th>
-					    		<th rowspan="2">depot<br />area</th>
+					    		<th rowspan="2">depot<br />area(㎡)</th>
 					    		<th rowspan="2">depot<br />type</th>
 					    		<th rowspan="2">to distrib.<br />center</th>
 					    		<th rowspan="2">night<br />distrib</th>
