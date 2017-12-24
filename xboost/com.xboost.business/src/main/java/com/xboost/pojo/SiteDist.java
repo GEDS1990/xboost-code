@@ -15,7 +15,7 @@ public class SiteDist implements Serializable {
     private String siteCollect;           //收件网点
     private String siteDelivery;            //派件网点
     private Float carDistance;                 //车辆运行距离(公里)
-    private Double durationNightDelivery;             //夜配运行时长（分钟）
+    private String durationNightDelivery;             //夜配运行时长（分钟）
     private String str1;                   //预留字段
     private String str2;                    //预留字段
     private String str3;                  //预留字段
@@ -70,11 +70,11 @@ public class SiteDist implements Serializable {
         this.carDistance = carDistance;
     }
 
-    public Double getDurationNightDelivery() {
+    public String getDurationNightDelivery() {
         return durationNightDelivery;
     }
 
-    public void setDurationNightDelivery(Double durationNightDelivery) {
+    public void setDurationNightDelivery(String durationNightDelivery) {
         this.durationNightDelivery = durationNightDelivery;
     }
 

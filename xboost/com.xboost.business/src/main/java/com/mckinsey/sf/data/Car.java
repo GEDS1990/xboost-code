@@ -47,7 +47,7 @@ public class Car implements Serializable{
 	private double costPerDistance;
 	@JsonProperty("cost_per_time")
 	private double costPerTime;
-		@JsonProperty("fixed_cost")
+	@JsonProperty("fixed_cost")
 	private double fixedCost;
 	private int maxStop;
 	@JsonProperty("velocity")

@@ -74,7 +74,7 @@ public class SiteDistService {
                                 siteDist.setSiteCollect(row[2]);
                                 siteDist.setSiteDelivery(row[3]);
                                 siteDist.setCarDistance(Float.parseFloat(row[4]));
-                                siteDist.setDurationNightDelivery(Double.parseDouble(row[5]));
+                                siteDist.setDurationNightDelivery(row[5]);
                                 siteDist.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
                                 if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){
                                     //insert
