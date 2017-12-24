@@ -1,9 +1,11 @@
 package com.xboost.service;
 
 import com.xboost.mapper.SolutionCostMapper;
+import com.xboost.mapper.SolutionRouteMapper;
 import com.xboost.pojo.Cost;
 import com.xboost.util.ExcelUtil;
 import com.xboost.util.ExportUtil;
+import com.xboost.util.ShiroUtil;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -31,6 +33,8 @@ public class SolutionCostService {
 
     @Inject
     private SolutionCostMapper solutionCostMapper;
+    @Inject
+    private SolutionRouteMapper solutionRouteMapper;
 
     /**
      * 新增成本基础信息
@@ -99,6 +103,17 @@ public class SolutionCostService {
     public void delByScenariosId(Integer scenariosId) {
 
         solutionCostMapper.delByScenariosId(scenariosId);
+    }
+
+    //支线运输成本
+    public String branchTransportCost()
+    {
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        String routeCount="1";
+
+        String totalDistance = solutionRouteMapper.findTotalDistance(scenariosId,routeCount);
+
+        return "";
     }
 
 }
