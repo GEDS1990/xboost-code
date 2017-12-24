@@ -640,6 +640,7 @@ public class OutputPrinter implements IConstants {
 
 							routePojo.setUnloadLoc("");
 							routePojo.setUnloadVol("");
+							routePojo.setUnloadVolSum("");
 //							rr.createCell(6).setCellValue(Main.totalJobs.get(cur.getJobId()).getDelivery().getLocation());
 //							rr.createCell(7).setCellValue(Main.totalJobs.get(cur.getJobId()).getDimensions()[0]);
 							
@@ -660,8 +661,7 @@ public class OutputPrinter implements IConstants {
 									if(type.equals(curJ.getType())){
 										count1 ++;
 										sbLoc.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"/");
-										sbVol.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDelivery().getLocation()+"-"
-												+CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]+"/");
+										sbVol.append(CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0]+"/");
 										unloadVolSum = unloadVolSum + CascadeModelUtil.totalJobs.get(curJ.getJobId()).getDimensions()[0];
 									}
 								}else{
@@ -671,11 +671,11 @@ public class OutputPrinter implements IConstants {
 							index += count1-1;
 //							rr.createCell(10).setCellValue(cur.getLocation());
 							routePojo.setUnloadLoc(cur.getLocation());
-							try{
+//							try{
 								currentLoc.remove(cur.getLocation());
-							}catch (Exception e){
-								//TODO
-							}
+//							}catch (Exception e){
+//								//TODO
+//							}
 //							rr.createCell(11).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setUnloadVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setUnloadVolSum(String.valueOf(unloadVolSum));
