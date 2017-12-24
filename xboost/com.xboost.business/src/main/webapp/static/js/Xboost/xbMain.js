@@ -369,7 +369,7 @@ function CategoryList () {
             $('#depot-quantity').text(res.siteCounter);
             $('#vehicle-quantity').text(res.tranCounter);
             $('#demand-quantity').text(res.demandsCounter);
-            $('#farthest-distance').text(res.farthestDist);
+            $('#farthest-distance').text(Math.round(res.farthestDist * 100) / 100);
         }).fail(function  (e) {
             console.log('fail');
         });
