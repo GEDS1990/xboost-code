@@ -115,7 +115,12 @@ public class ScenariosNameController {
         Map<String,Object> result = Maps.newHashMap();
 
         Cost cost = solutionCostService.findByScenariosId(ShiroUtil.getOpenScenariosId());
-        Integer staffCount = Integer.parseInt(cost.getSiteCount()) * Integer.parseInt(cost.getPeopleNumPerSite());
+        Integer staffCount = 0;
+        try{
+            staffCount = Integer.parseInt(cost.getSiteCount()) * Integer.parseInt(cost.getPeopleNumPerSite());
+        }catch (Exception e){
+
+        }
         Integer carCount = transportService.findAllCount(ShiroUtil.getOpenScenariosId());
 
         result.put("staffCount",staffCount);

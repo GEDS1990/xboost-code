@@ -263,7 +263,7 @@ function CategoryList () {
 		function depotMapInit (listPoint,val) {
 			map.clearOverlays();
 			var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
-			map.centerAndZoom(point, 17);
+			map.centerAndZoom(point, 14);
 			map.enableScrollWheelZoom(true);
 			// 编写自定义函数,创建标注
 			function addMarker(point,info){
@@ -315,16 +315,17 @@ function CategoryList () {
 				addMarker(points)//addMarker(points,infoWindow);
 			}
 			if (val == "") {
-				//初始化路线
-				for (var x = 0;x<p_len;x++) {
-					for (var y = 0 ;y<p_len;y++) {
-						var _curLoc = listPoint[x].curLoc,
-							_nextCurLoc = listPoint[y].nextCurLoc;
-						if (_curLoc == _nextCurLoc) {
-							depotPylineInfo(listPoint[x],listPoint[y]);
-						}
-					}
-				}
+				console.log("a")
+//				//初始化路线
+//				for (var x = 0;x<p_len;x++) {
+//					for (var y = 0 ;y<p_len;y++) {
+//						var _curLoc = listPoint[x].curLoc,
+//							_nextCurLoc = listPoint[y].nextCurLoc;
+//						if (_curLoc == _nextCurLoc) {
+//							depotPylineInfo(listPoint[x],listPoint[y]);
+//						}
+//					}
+//				}
 			}else{
 				//根据网点 规划线路
 				for (var a=0;a<p_len;a++) {
@@ -374,7 +375,8 @@ function CategoryList () {
             console.log('fail');
         });
 
-        $.get("/ScenariosName/resultOverview1.json",{"id":scenId}).done(function  (res) {
+        $.get("/ScenariosName/resultOverview2.json",{"id":scenId}).done(function  (res) {
+        	console.log(res)
                     $('#title').text("Results Overview");
                     if(res.scenario.scenariosModel=="1"){
                     $('#simulation-method').text("串点模型");
