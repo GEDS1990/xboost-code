@@ -72,7 +72,7 @@
         LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
 
         <where>
-            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and r.scenariosId = #{scenariosId}
+            r.scenariosId = d.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
                 and  r.route_count = #{keyword}
             </if>
