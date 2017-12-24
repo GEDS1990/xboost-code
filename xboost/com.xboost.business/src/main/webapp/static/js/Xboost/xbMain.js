@@ -263,7 +263,7 @@ function CategoryList () {
 		function depotMapInit (listPoint,val) {
 			map.clearOverlays();
 			var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
-			map.centerAndZoom(point, 14);
+			map.centerAndZoom(point, 17);
 			map.enableScrollWheelZoom(true);
 			// 编写自定义函数,创建标注
 			function addMarker(point,info){
