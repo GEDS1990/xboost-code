@@ -129,6 +129,7 @@
 		    					<div class="item-box">
 		    						<h1>成本</h1>
 		    						<ul class="item-content">
+		    							<li>总件量:{{piece}}</li>
 		    							<li>支线depot&distrib.center单日人工成本: <span>{{day_p_cost}}</span></li>
 		    							<li>单日总体人工成本: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>支线运输成本: <span>{{line_cost}}</span> <span> (per piece)</span></li>
@@ -179,6 +180,7 @@
 		    					<div class="item-box">
 		    						<h1>成本</h1>
 		    						<ul class="item-content">
+		    							<li>总件量:{{piece}}</li>
 		    							<li>支线depot&distrib.center单日人工成本: <span>{{day_p_cost}}</span></li>
 		    							<li>单日总体人工成本: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>支线运输成本: <span>{{line_cost}}</span> <span> (per piece)</span></li>

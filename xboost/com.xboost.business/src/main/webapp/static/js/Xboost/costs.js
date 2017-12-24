@@ -265,11 +265,13 @@ $(function (){
 							vmA.sitePeople = $res.sitePeopleWork;
 							vmA.collectPeople = $res.distribPeopleWork;
 							vmA.depotcount = $res.siteCount;
+							vmA.depotPeoplecount = 1;
 							vmA.piece = $res.totalPiece;
 							vmA.branch_cost = $res.branchTransportCost;
 							vmB.sitePeople = $res.sitePeopleWork;
 							vmB.collectPeople = $res.distribPeopleWork;
 							vmB.depotcount = $res.siteCount;
+							vmB.depotPeoplecount = 1;
 							vmB.piece = $res.totalPiece;
 							vmB.branch_cost = $res.branchTransportCost;
 						}else{
