@@ -124,7 +124,7 @@ public class SolutionRouteController {
     }
 
 
-    //查询路线id
+    //查询路线距离
     @RequestMapping(value = "/totalDistance.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String totalDistance(String routeCount) {
