@@ -141,7 +141,10 @@ $(function  () {
 	                {"data":"siteLatitude","name":"latitude"},
 	                {"data":"siteName","name":"site_name"},
 	                {"data":"siteAddress","name":"site_address"},
-	                {"data":"siteArea","name":"site_area"},
+	                {"data":function(res){
+	                return Math.round(res.siteArea);
+	                }
+	                ,"name":"site_area"},
 	                {"data":"siteType","name":"site_type"},
 	                {"data":"distribCenter","name":"distrib_center"},
 	                {"data":"siteNightDelivery","name":"site_night_delivery"},
@@ -155,7 +158,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	            	{
 	                    "targets":[0],
-	                    "visible":true
+	                    "visible":false
 	                },
 	                {
 	                    "targets":[0,13],
@@ -311,7 +314,8 @@ $(function  () {
 	                {"data":"carType","name":"car_type"},
 	                {"data":"siteCollect","name":"site_collect"},
 	                {"data":"siteDelivery","name":"site_delivery"},
-	                {"data":"carDistance","name":"car_distance"},
+	                {"data":function(res){return res.carDistance.toFixed(2)}
+	                ,"name":"car_distance"},
 	                {"data":"durationNightDelivery","name":"duration_night_delivery"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-dist' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dist' data-id='"+row.id+"'>Del</a>";
@@ -320,7 +324,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	            	{
 	                    "targets":[0],
-	                    "visible":true
+	                    "visible":false
 	                },
 	                {
 	                    "targets":[0,6],
@@ -502,7 +506,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	                {
 	                    "targets":[0],
-	                    "visible":true
+	                    "visible":false
 	                },
 	                {
 	                    "targets":[0,8],
@@ -662,7 +666,7 @@ $(function  () {
 	            "columnDefs":[ //具体列的定义
 	                {
 	                    "targets":[0],
-	                    "visible":true
+	                    "visible":false
 	                },
 	                {
 	                    "targets":[4],
@@ -828,8 +832,16 @@ $(function  () {
 	                {"data":"maxStop","name":"max_stop"},
 	                {"data":"dimensions","name":"dimensions"},
 	                
-	                {"data":"max_distance","name":"max_distance"},
-	                {"data":"max_running_time","name":"max_running_time"},
+	                {"data":function(res){
+	                if(res.max_distance=="99999"){return "∞";}
+	                else{return res.max_distance;}
+	                },"name":"max_distance"},
+
+	                {"data":function(res){
+                    if(res.max_distance=="99999"){return "∞";}
+                    else{return res.max_distance;}
+                    },"name":"max_running_time"},
+
 	                {"data":"velocity","name":"velocity"},
 	                {"data":"durationUnloadFull","name":"duration_unload_full"},
 	                {"data":"start_location","name":"start_location"},

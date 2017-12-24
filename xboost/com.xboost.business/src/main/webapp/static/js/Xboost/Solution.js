@@ -589,7 +589,7 @@ $(function  () {
                         $('#address').text(res.siteAddress);
                         $('#type').text(res.siteType);
                         //$('#distrib-center').text(res.distribCenter);
-                        $('#area').text(res.siteArea + " m²");
+                        $('#area').text(Math.round(res.siteArea) + " m²");
                         $('#vehicle-quantity-limit').text(res.carNum);
                         $('#vehicle-weight-limit').text(res.largeCarModel);
                         $('#piece-capacity').text(res.maxOperateNum);
