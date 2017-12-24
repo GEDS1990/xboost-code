@@ -375,35 +375,30 @@ function CategoryList () {
             console.log('fail');
         });
 
+        $.get("/ScenariosName/resultOverview1.json",{"id":scenId}).done(function  (res) {
+        console.log(res)
+            $('#title').text("Results Overview");
+            if(res.scenario.scenariosModel=="1"){
+            $('#simulation-method').text("串点模型");
+            }else if(res.scenario.scenariosModel=="2"){
+            $('#simulation-method').text("接力模型");}
+            else if(res.scenario.scenariosModel=="3"){
+            $('#simulation-method').text("综合模型");
+            }
+            $('#simulation-progress').text("100%");
+            $('#simulation-finished').text(res.scenario.simulateFinishTime);
+        }).fail(function  (e) {
+            console.log('fail');
+        });
         $.get("/ScenariosName/resultOverview2.json",{"id":scenId}).done(function  (res) {
-        	console.log(res)
-                    $('#title').text("Results Overview");
-                    if(res.scenario.scenariosModel=="1"){
-                    $('#simulation-method').text("串点模型");
-                    }else if(res.scenario.scenariosModel=="2"){
-                    $('#simulation-method').text("接力模型");}
-                    else if(res.scenario.scenariosModel=="3"){
-                    $('#simulation-method').text("综合模型");
-                    }
-                    $('#simulation-progress').text("100%");
-                    $('#simulation-finished').text(res.scenario.simulateFinishTime);
-                    $('#staff-quantity').text(res.staffCount);
-                    $('#staff-cost').text(res.cost.sum2);
-                    $('#vehicle-quantity1').text(res.carCount);
-                    $('#vehicle-cost').text(res.cost.branchTransportCost);
-                    $('#total-cost').text(res.cost.totalCost);
-                }).fail(function  (e) {
-                    console.log('fail');
-                });
-                $.get("/ScenariosName/resultOverview2.json",{"id":scenId}).done(function  (res) {
-                    $('#staff-quantity').text(res.staffCount);
-                    $('#staff-cost').text(res.cost.sum2);
-                    $('#vehicle-quantity1').text(res.carCount);
-                    $('#vehicle-cost').text(res.cost.branchTransportCost);
-                    $('#total-cost').text(res.cost.totalCost);
-                }).fail(function  (e) {
-                    console.log('fail');
-                });
+            $('#staff-quantity').text(res.staffCount);
+            $('#staff-cost').text(res.cost.sum2);
+            $('#vehicle-quantity1').text(res.carCount);
+            $('#vehicle-cost').text(res.cost.branchTransportCost);
+            $('#total-cost').text(res.cost.totalCost);
+        }).fail(function  (e) {
+            console.log('fail');
+        });
 		
 		//创建场景
         $("#edit-create-info").click(function(){

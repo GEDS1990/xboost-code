@@ -68,11 +68,11 @@
     </select>
 
     <select id="findByRoute" parameterType="map" resultType="map" resultMap="modelRouteAndSite">
-        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_type = c.type
-        LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
-
+        SELECT * FROM t_solution_route r ,t_car_info c ,t_site_info d
         <where>
-            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
+            r.car_type = c.type
+            and r.cur_loc = d.site_code
+            and r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
                 and  r.route_count = #{keyword}
             </if>
@@ -82,10 +82,11 @@
     </select>
 
     <select id="findCountByRoute" resultType="long" parameterType="map">
-        SELECT count(*) FROM t_solution_route r inner join t_car_info c on r.car_type = c.type
-        LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        SELECT count(*) FROM t_solution_route r ,t_car_info c ,t_site_info d
         <where>
-            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
+            r.car_type = c.type
+            and r.cur_loc = d.site_code
+            and r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
             <if test="keyword != null and keyword != ''">
                 and  r.route_count = #{keyword}
             </if>
