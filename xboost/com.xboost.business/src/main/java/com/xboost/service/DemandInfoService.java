@@ -313,4 +313,23 @@ public class DemandInfoService {
         return demandInfoMapper.findarrTime(ShiroUtil.getOpenScenariosId());
     }
 
+    //网点数
+    public Integer siteCount()
+    {
+        List<String> siteCollect = demandInfoMapper.findSiteCollect(ShiroUtil.getOpenScenariosId());
+        List<String> siteDelivery = demandInfoMapper.findSiteDelivery(ShiroUtil.getOpenScenariosId());
+        int siteCount = 0;
+        for(int i=0;i<siteCollect.size();i++){
+            siteCount = siteDelivery.size();
+            if(siteDelivery.contains(siteCollect.get(i))){
+                siteCount = siteCount + 0;
+            }
+            else
+            {
+                siteCount = siteCount + 1;
+            }
+        }
+        return siteCount;
+    }
+
 }

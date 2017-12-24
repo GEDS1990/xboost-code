@@ -50,5 +50,9 @@ public interface DemandInfoMapper {
     void delById(Integer id);
 
     List<Map> findarrTime(String scenariosId);
+
+    List<String> findSiteCollect(String scenariosId);
+
+    List<String> findSiteDelivery(String scenariosId);
 }
 
