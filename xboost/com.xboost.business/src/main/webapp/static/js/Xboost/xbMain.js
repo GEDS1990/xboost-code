@@ -266,8 +266,9 @@ function CategoryList () {
 			map.centerAndZoom(point, 14);
 			map.enableScrollWheelZoom(true);
 			// 编写自定义函数,创建标注
-			function addMarker(point,info){
-			  var marker = new BMap.Marker(point);
+			function addMarker(point,info,icon){
+				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,24));
+			  var marker = new BMap.Marker(point,{icon:myIcon});
 			  map.addOverlay(marker);
 			  marker.addEventListener("mouseover", function(){
 			  	//this.openInfoWindow(info);
