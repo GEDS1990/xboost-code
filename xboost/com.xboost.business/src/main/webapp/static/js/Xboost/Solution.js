@@ -15,7 +15,7 @@ $(function  () {
 	function depotMapInit (listPoint,val) {
 		map.clearOverlays();
 		var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
-		map.centerAndZoom(point, 11);
+		map.centerAndZoom(point, 17);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
@@ -29,7 +29,7 @@ $(function  () {
 		  });
 		}
 		function addpPyline (pointA,pointB,infoWindowLine) {
-			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.8});  //定义折线
+			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
 			map.addOverlay(polyline);//添加折线到地图上
 			polyline.addEventListener("mouseover", function(e){
 				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
@@ -108,7 +108,7 @@ $(function  () {
 	function routeMapInit (listPoint,val) {
 		map.clearOverlays();
 		var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
-		map.centerAndZoom(point, 11);
+		map.centerAndZoom(point, 17);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
@@ -122,7 +122,7 @@ $(function  () {
 		  });
 		}
 		function addpPyline (pointA,pointB,infoWindowLine) {
-			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.8});  //定义折线
+			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
 			map.addOverlay(polyline);//添加折线到地图上
 			
 			addArrow(polyline,2,Math.PI/7);
@@ -194,7 +194,7 @@ $(function  () {
 	function vehiclesMapInit (listPoint,val) {
 		map.clearOverlays();
 		var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
-		map.centerAndZoom(point, 11);
+		map.centerAndZoom(point, 17);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
@@ -208,7 +208,7 @@ $(function  () {
 		  });
 		}
 		function addpPyline (pointA,pointB,infoWindowLine) {
-			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.8});  //定义折线
+			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
 			map.addOverlay(polyline);//添加折线到地图上
 			
 			addArrow(polyline,2,Math.PI/7);
@@ -392,7 +392,7 @@ $(function  () {
 		
 		    pointArrow1  
 		
-		], {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.8});  
+		], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  
 		
 		map.addOverlay(Arrow);  
 		

@@ -56,19 +56,19 @@
     </select>
 
     <select id="findAllByRoute" resultType="map" resultMap="modelRouteAndSite">
-        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_name = c.name
+        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_type = c.type
         LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
         where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and r.scenariosId = #{scenariosId} order by arr_time
     </select>
 
     <select id="findAllCountByRoute" resultType="long">
-        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_name = c.name
+        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_type = c.type
         LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
         where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and r.scenariosId = #{scenariosId}
     </select>
 
     <select id="findByRoute" parameterType="map" resultType="map" resultMap="modelRouteAndSite">
-        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_name = c.name
+        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_type = c.type
         LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
 
         <where>
@@ -82,7 +82,7 @@
     </select>
 
     <select id="findCountByRoute" resultType="long" parameterType="map">
-        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_name = c.name
+        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_type = c.type
         LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
         <where>
             r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and r.scenariosId = #{scenariosId}
