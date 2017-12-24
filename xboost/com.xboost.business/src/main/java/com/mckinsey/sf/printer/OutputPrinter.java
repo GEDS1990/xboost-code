@@ -677,7 +677,7 @@ public class OutputPrinter implements IConstants {
 //								//TODO
 //							}
 //							rr.createCell(11).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
-							routePojo.setUnloadVol(routePojo.getUnloadLoc()+"-"+sbVol.toString().substring(0,sbVol.toString().length()-1));
+							routePojo.setUnloadVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setUnloadVolSum(String.valueOf(unloadVolSum));
 							routePojo.setSbLoc("");
 //							rr.createCell(7).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
