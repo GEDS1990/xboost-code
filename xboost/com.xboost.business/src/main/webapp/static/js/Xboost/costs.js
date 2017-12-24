@@ -268,12 +268,20 @@ $(function (){
 							vmA.depotPeoplecount = 1;
 							vmA.piece = $res.totalPiece;
 							vmA.branch_cost = $res.branchTransportCost;
+							vmA.full_salaty = 6000;
+							vmA.full_days = 30;
+							vmA.part_wage = 20;
+							vmA.part_work = 2;
 							vmB.sitePeople = $res.sitePeopleWork;
 							vmB.collectPeople = $res.distribPeopleWork;
 							vmB.depotcount = $res.siteCount;
 							vmB.depotPeoplecount = 1;
 							vmB.piece = $res.totalPiece;
 							vmB.branch_cost = $res.branchTransportCost;
+							vmB.full_salaty = 6000;
+							vmB.full_days = 30;
+							vmB.part_wage = 20;
+							vmB.part_work = 2;
 						}else{
 							
 							var result = res.data[0];
