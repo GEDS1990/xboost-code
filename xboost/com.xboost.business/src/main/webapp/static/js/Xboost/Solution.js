@@ -15,7 +15,7 @@ $(function  () {
 	function depotMapInit (listPoint,val) {
 		map.clearOverlays();
 		var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
-		map.centerAndZoom(point, 17);
+		map.centerAndZoom(point, 14);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
@@ -35,9 +35,11 @@ $(function  () {
 				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
 				var point = new BMap.Point(e.point.lng,e.point.lat);
 		  		map.openInfoWindow(infoWindowLine,point);
+		  		
 		  	});
 		  	polyline.addEventListener("mouseout", function(){
 		  		map.closeInfoWindow();
+		  		
 		  	});
 		}
 		function depotPylineInfo (listPointX,listPointY) {
@@ -56,6 +58,9 @@ $(function  () {
 		//初始化坐标
 		var p_len = listPoint.length;
 		for (var j = 0;j<p_len;j++) {
+//			if (listPoint[j].curLoc == val) {
+//				
+//			}
 			var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
 			//console.log(points)
 			var sContent = "";
@@ -68,15 +73,16 @@ $(function  () {
 		}
 		if (val == "") {
 			//初始化路线
-			for (var x = 0;x<p_len;x++) {
-				for (var y = 0 ;y<p_len;y++) {
-					var _curLoc = listPoint[x].curLoc,
-						_nextCurLoc = listPoint[y].nextCurLoc;
-					if (_curLoc == _nextCurLoc) {
-						depotPylineInfo(listPoint[x],listPoint[y]);
-					}
-				}
-			}
+			console.log("a")
+//			for (var x = 0;x<p_len;x++) {
+//				for (var y = 0 ;y<p_len;y++) {
+//					var _curLoc = listPoint[x].curLoc,
+//						_nextCurLoc = listPoint[y].nextCurLoc;
+//					if (_curLoc == _nextCurLoc) {
+//						depotPylineInfo(listPoint[x],listPoint[y]);
+//					}
+//				}
+//			}
 		}else{
 			//根据网点 规划线路
 			for (var a=0;a<p_len;a++) {
@@ -108,7 +114,7 @@ $(function  () {
 	function routeMapInit (listPoint,val) {
 		map.clearOverlays();
 		var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
-		map.centerAndZoom(point, 17);
+		map.centerAndZoom(point, 14);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
@@ -194,7 +200,7 @@ $(function  () {
 	function vehiclesMapInit (listPoint,val) {
 		map.clearOverlays();
 		var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
-		map.centerAndZoom(point, 17);
+		map.centerAndZoom(point, 14);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
@@ -461,7 +467,8 @@ $(function  () {
 	            "lengthMenu":[100000],//每页显示数据条数菜单
 	            "ajax":{
 	                url:"/depots/depots.json", //获取数据的URL
-	                type:"get" //获取数据的方式
+	                type:"get", //获取数据的方式
+	                cache:true
 	                
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
