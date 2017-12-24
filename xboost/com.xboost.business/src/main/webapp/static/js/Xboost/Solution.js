@@ -14,12 +14,24 @@ $(function  () {
 	//初始化地图
 	function depotMapInit (listPoint,val) {
 		map.clearOverlays();
-		var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
+		var p_len = listPoint.length;
+		if (val) {
+			for (var a=0;a<p_len;a++) {
+				if (listPoint[a].curLoc == val) {
+					var point = new BMap.Point(listPoint[a].lng,listPoint[a].lat);
+				}
+			}
+		}else{
+			var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
+		}
+		
+		
 		map.centerAndZoom(point, 14);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
-		function addMarker(point,info){
-		  var marker = new BMap.Marker(point);
+		function addMarker(point,info,myIcon){
+		  	
+		  	var marker = new BMap.Marker(point,{icon:myIcon});
 		  map.addOverlay(marker);
 		  marker.addEventListener("mouseover", function(){
 		  	this.openInfoWindow(info);
@@ -58,10 +70,15 @@ $(function  () {
 		//初始化坐标
 		var p_len = listPoint.length;
 		for (var j = 0;j<p_len;j++) {
-//			if (listPoint[j].curLoc == val) {
-//				
-//			}
-			var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
+			if (listPoint[j].curLoc == val) {
+				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
+				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(32,32));
+				console.log(val)
+			}else{
+				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
+				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,24));
+			}
+			
 			//console.log(points)
 			var sContent = "";
 			sContent += '<p>ID: '+listPoint[j].curLoc+'</p>';
@@ -69,8 +86,9 @@ $(function  () {
 			sContent += '<p>Name: '+listPoint[j].siteName+'</p>';
 			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
 			//console.log(infoWindow)
-			addMarker(points,infoWindow);
-		}
+			addMarker(points,infoWindow,myIcon);
+			//addMarkers(pointss);
+		};
 		if (val == "") {
 			//初始化路线
 			console.log("a")
@@ -118,7 +136,8 @@ $(function  () {
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
-		  var marker = new BMap.Marker(point);
+		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,24));
+			  var marker = new BMap.Marker(point,{icon:myIcon});
 		  map.addOverlay(marker);
 		  marker.addEventListener("mouseover", function(){
 		  	this.openInfoWindow(info);
@@ -131,7 +150,7 @@ $(function  () {
 			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
 			map.addOverlay(polyline);//添加折线到地图上
 			
-			addArrow(polyline,2,Math.PI/7);
+			addArrow(polyline,15,Math.PI/7);
 			
 			polyline.addEventListener("mouseover", function(e){
 				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
@@ -204,7 +223,8 @@ $(function  () {
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
-		  var marker = new BMap.Marker(point);
+		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,24));
+			  var marker = new BMap.Marker(point,{icon:myIcon});
 		  map.addOverlay(marker);
 		  marker.addEventListener("mouseover", function(){
 		  	this.openInfoWindow(info);
@@ -214,15 +234,16 @@ $(function  () {
 		  });
 		}
 		function addpPyline (pointA,pointB,infoWindowLine) {
-			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
+			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:10, strokeOpacity:0.8});  //定义折线
 			map.addOverlay(polyline);//添加折线到地图上
 			
-			addArrow(polyline,2,Math.PI/7);
+			addArrow(polyline,15,Math.PI/7);
 			
 			polyline.addEventListener("mouseover", function(e){
-				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
+				console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
 				var point = new BMap.Point(e.point.lng,e.point.lat);
 		  		map.openInfoWindow(infoWindowLine,point);
+		  		
 		  	});
 		  	polyline.addEventListener("mouseout", function(){
 		  		map.closeInfoWindow();
