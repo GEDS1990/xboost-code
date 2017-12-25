@@ -829,7 +829,10 @@ $(function  () {
 	                {"data":"type","name":"type"},
 	                {"data":"carSource","name":"car_source"},
 	                
-	                {"data":"maxStop","name":"max_stop"},
+	                {"data":function(res){
+                    if(res.maxStop=="99999"){return "∞";}
+                    else{return res.maxStop;}
+                    },"name":"max_stop"},
 	                {"data":"dimensions","name":"dimensions"},
 	                
 	                {"data":function(res){
@@ -838,8 +841,8 @@ $(function  () {
 	                },"name":"max_distance"},
 
 	                {"data":function(res){
-                    if(res.max_distance=="99999"){return "∞";}
-                    else{return res.max_distance;}
+                    if(res.max_running_time=="99999"){return "∞";}
+                    else{return res.max_running_time;}
                     },"name":"max_running_time"},
 
 	                {"data":"velocity","name":"velocity"},
