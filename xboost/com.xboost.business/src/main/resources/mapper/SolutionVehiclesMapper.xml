@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xboost.mapper.SolutionVehiclesMapper">
 
-    <cache/>
+
 
     <select id="findAllByCar" resultType="map" resultMap="modelCar">
         SELECT * FROM t_solution_route r INNER join t_car_info c on r.car_name = c.name
