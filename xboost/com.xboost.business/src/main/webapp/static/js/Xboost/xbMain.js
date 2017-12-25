@@ -260,96 +260,132 @@ function CategoryList () {
 		map.addControl(top_left_navigation);     
 		map.addControl(top_right_navigation);
 		
-		function depotMapInit (listPoint,val) {
-			map.clearOverlays();
+	//初始化地图
+	function depotMapInit (listPoint,val) {
+		map.clearOverlays();
+		var p_len = listPoint.length;
+		if (val) {
+			for (var a=0;a<p_len;a++) {
+				if (listPoint[a].curLoc == val) {
+					var point = new BMap.Point(listPoint[a].lng,listPoint[a].lat);
+				}
+			}
+		}else{
 			var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
-			map.centerAndZoom(point, 14);
-			map.enableScrollWheelZoom(true);
-			// 编写自定义函数,创建标注
-			function addMarker(point,info,icon){
-				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,24));
-			  var marker = new BMap.Marker(point,{icon:myIcon});
-			  map.addOverlay(marker);
-			  marker.addEventListener("mouseover", function(){
-			  	//this.openInfoWindow(info);
-			  });
-			  marker.addEventListener("mouseout", function(){
-			  	//this.closeInfoWindow();
-			  });
-			}
-			function addpPyline (pointA,pointB,infoWindowLine) {
-				var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
-				map.addOverlay(polyline);//添加折线到地图上
-				polyline.addEventListener("mouseover", function(e){
-					//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
-					var point = new BMap.Point(e.point.lng,e.point.lat);
-			  		//map.openInfoWindow(infoWindowLine,point);
-			  	});
-			  	polyline.addEventListener("mouseout", function(){
-			  		//map.closeInfoWindow();
-			  	});
-			}
-			function depotPylineInfo (listPointX,listPointY) {
-				var pointA = new BMap.Point(listPointX.lng,listPointX.lat),
-					pointB = new BMap.Point(listPointY.lng,listPointY.lat);					
-				var sContentLine = "";
-				sContentLine +='<div class="clearfix">';
-				sContentLine +='<p style="float: left;">Distance:</p>';
-				sContentLine +='<div style="float: left;">';
-				sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+" "+listPointX.calcDis+'km'+'</p>';
-				sContentLine +='<p>'+listPointY.curLoc+' to '+listPointX.curLoc+" "+listPointX.calcDis+'km'+'</p>';
-				sContentLine +='</div></div>';
-				var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
-				addpPyline(pointA,pointB);//addpPyline(pointA,pointB,infoWindowLine);
-			}
-			//初始化坐标
-			var p_len = listPoint.length;
-			for (var j = 0;j<p_len;j++) {
+		}
+		
+		
+		map.centerAndZoom(point, 12);
+		map.enableScrollWheelZoom(true);
+		// 编写自定义函数,创建标注
+		function addMarker(point,info,myIcon){
+		  	
+		  	var marker = new BMap.Marker(point,{icon:myIcon});
+		  map.addOverlay(marker);
+		  marker.addEventListener("mouseover", function(){
+		  	this.openInfoWindow(info);
+		  });
+		  marker.addEventListener("mouseout", function(){
+		  	this.closeInfoWindow();
+		  });
+		}
+		function addpPyline (pointA,pointB,infoWindowLine) {
+			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
+			map.addOverlay(polyline);//添加折线到地图上
+			polyline.addEventListener("mouseover", function(e){
+				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
+				var point = new BMap.Point(e.point.lng,e.point.lat);
+		  		map.openInfoWindow(infoWindowLine,point);
+		  		
+		  	});
+		  	polyline.addEventListener("mouseout", function(){
+		  		map.closeInfoWindow();
+		  		
+		  	});
+		}
+		function depotPylineInfo (listPointX,listPointY) {
+			var pointA = new BMap.Point(listPointX.lng,listPointX.lat),
+				pointB = new BMap.Point(listPointY.lng,listPointY.lat);					
+			var sContentLine = "";
+			sContentLine +='<div class="clearfix">';
+			sContentLine +='<p style="float: left;">Distance:</p>';
+			sContentLine +='<div style="float: left;">';
+			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+" "+listPointX.calcDis+'km'+'</p>';
+			sContentLine +='<p>'+listPointY.curLoc+' to '+listPointX.curLoc+" "+listPointX.calcDis+'km'+'</p>';
+			sContentLine +='</div></div>';
+			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
+			addpPyline(pointA,pointB,infoWindowLine);
+		}
+		//初始化坐标
+		var p_len = listPoint.length;
+		for (var j = 0;j<p_len;j++) {
+			if (listPoint[j].curLoc == val) {
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				//console.log(points)
-				var sContent = "";
-				sContent += '<p>ID: '+listPoint[j].curLoc+'</p>';
-				sContent += '<p>Type: '+listPoint[j].siteType+'</p>';
-				sContent += '<p>Name: '+listPoint[j].siteName+'</p>';
-				var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
-				//console.log(infoWindow)
-				addMarker(points)//addMarker(points,infoWindow);
-			}
-			if (val == "") {
-				console.log("a")
-//				//初始化路线
-//				for (var x = 0;x<p_len;x++) {
-//					for (var y = 0 ;y<p_len;y++) {
-//						var _curLoc = listPoint[x].curLoc,
-//							_nextCurLoc = listPoint[y].nextCurLoc;
-//						if (_curLoc == _nextCurLoc) {
-//							depotPylineInfo(listPoint[x],listPoint[y]);
-//						}
-//					}
-//				}
+				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(21,32),{
+					anchor: new BMap.Size(10, 30)
+				});
+				console.log(val)
 			}else{
-				//根据网点 规划线路
-				for (var a=0;a<p_len;a++) {
-					if (listPoint[a].curLoc == val) {
-						var index = a;
-					}
-				}
-				for (var y=0;y<p_len;y++) {
-					for (var x=0;x<p_len;x++) {
-						var _nextCurLoc = listPoint[y].nextCurLoc,
-							indexNextCurLoc = listPoint[index].nextCurLoc,
-							_xCurLoc = listPoint[x].curLoc;
-						if (val == _nextCurLoc) {
-							depotPylineInfo(listPoint[index],listPoint[y]);
-						}else if (indexNextCurLoc == _xCurLoc){
-							depotPylineInfo(listPoint[index],listPoint[x]);
-						}
-					}
-					
-				}
+				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
+				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(16,24),{
+					anchor: new BMap.Size(10, 25)
+				});
 			}
 			
+			//console.log(points)
+			var sContent = "";
+			sContent += '<p>ID: '+listPoint[j].curLoc+'</p>';
+			sContent += '<p>Type: '+listPoint[j].siteType+'</p>';
+			sContent += '<p>Name: '+listPoint[j].siteName+'</p>';
+			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+			//console.log(infoWindow)
+			addMarker(points,infoWindow,myIcon);
+			//addMarkers(pointss);
+		};
+		if (val == "") {
+			//初始化路线
+			console.log("a")
+//			for (var x = 0;x<p_len;x++) {
+//				for (var y = 0 ;y<p_len;y++) {
+//					var _curLoc = listPoint[x].curLoc,
+//						_nextCurLoc = listPoint[y].nextCurLoc;
+//					if (_curLoc == _nextCurLoc) {
+//						depotPylineInfo(listPoint[x],listPoint[y]);
+//					}
+//				}
+//			}
+		}else{
+			//根据网点 规划线路
+			for (var a=0;a<p_len;a++) {
+				if (listPoint[a].curLoc == val) {
+					var index = a;
+					var indnext = listPoint[a].nextCurLoc;
+					var indlen = listPoint[a].nextCurLoc.length;
+				}
+			}
+			for (var b=0;b<indlen;b++) {
+				for (var q=0;q<p_len;q++) {
+					var b1 = indnext[b];
+					var b2 = listPoint[q].curLoc;
+					if (b1==b2) {
+						depotPylineInfo(listPoint[index],listPoint[q]);
+					}
+				}
+				
+			}
+			for (var x=0;x<p_len;x++) {
+				var nextlist = listPoint[x].nextCurLoc;
+				var nlen = nextlist.length;
+				for (var y=0;y<nlen;y++) {
+					if (nextlist[y] == val) {
+						depotPylineInfo(listPoint[index],listPoint[x]);
+					} 
+				}
+			}
+
 		}
+		
+	}
 		
 		
 		
@@ -447,36 +483,64 @@ function CategoryList () {
             ],
             "initComplete": function (settings, data) {
             	//console.log(data.data.length);
-            	if (data.data.length !=0) {
-            		$('#depots-map').show();
-            		var result = data.data,
-            		listPoint = [],
-            		len = result.length;
-            		var newResult = uniqeByKeys(result,["curLoc"]),
-						newreslen = newResult.length;
-	            		//console.log(newResult)
-            		for (var f = 0;f<len;f++) {
-            			var liser = {};
-						liser["curLoc"] = result[f].curLoc;
-						liser["siteType"] = result[f].siteType;
-						liser["siteName"] = result[f].siteName;
-						liser["calcDis"] = result[f].calcDis;
-						liser["lng"] = result[f].siteLongitude;
-						liser["lat"] = result[f].siteLatitude;
-						liser["nextCurLoc"] = result[f].nextCurLoc;
-						listPoint.push(liser);
-            		}
-					//查询所有网点坐标
-					//console.log(listPoint)
-//					listArry="";
-//					listArry = listPoint;
-						
-					//百度地图
-					depotMapInit(listPoint,"");
+	            	if (data.data.length !=0) {
+	            		$('#depots-map').show();
+	            		var result = data.data,
+	            		arr = [],
+	            		listPoint = [],
+	            		len = result.length;
+	            		$('#route-depot').empty();
+	            		$('#route-depot').off("change");
+	            		$('#route-depot').append('<option value="0">All Depots</option>');
+//	            		for (var i=0;i<len;i++) {
+//                          arr.push(result[i].curLoc);
+//                      }
+	            		//console.log(arr)
+                        var Arr = uniqeByKeys(result,["curLoc"]),
+                        A_len = Arr.length;
+                        //console.log(Arr)
+	            		for (var i=0;i<A_len;i++) {
+	            			
+	            			var add='<option value='+Arr[i].curLoc+'>'+Arr[i].curLoc+'</option>';
+							$('#route-depot').append(add);
+						}
+	            		
+	            		for (var j=0;j<A_len;j++) {
+	            			var nextlist = [];
+	            			var nextlists = [];
+	            			var liser = {};
+	            			for (var f = 0;f<len;f++) {
+	            				var s1 = Arr[j].curLoc;
+	            				var s2 = result[f].curLoc;
+	            				if (s1 == s2) {
+	            					nextlists.push(result[f].nextCurLoc);
+	            					nextlist = unique(nextlists);
+	            				}
+								
+		            		}
+	            			liser["curLoc"] = Arr[j].curLoc;
+							liser["siteType"] = Arr[j].siteType;
+							liser["siteName"] = Arr[j].siteName;
+							liser["calcDis"] = Arr[j].calcDis;
+							liser["lng"] = Arr[j].siteLongitude;
+							liser["lat"] = Arr[j].siteLatitude;
+							liser["nextCurLoc"] = nextlist;
+							listPoint.push(liser);
+	            		}
+	            		
+							
+	            		
+						//查询所有网点坐标
+						//console.log(listPoint)
+						listArry="";
+						listArry = listPoint;
+							
+						//百度地图
+						depotMapInit(listPoint,"");
 
-            	}else{
-            		$('#depots-map').hide();
-            	}
+	            	}else{
+	            		$('#depots-map').hide();
+	            	}
 
             	
             }
