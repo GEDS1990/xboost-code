@@ -829,7 +829,13 @@ $(function  () {
 	                {"data":"type","name":"type"},
 	                {"data":"carSource","name":"car_source"},
 	                
-	                {"data":"maxStop","name":"max_stop"},
+	                {"data":function  (res) {
+	                	if (res.maxStop == 99999) {
+	                		return "∞";
+	                	}else{
+	                		return res.maxStop;
+	                	}
+	                },"name":"max_stop"},
 	                {"data":"dimensions","name":"dimensions"},
 	                
 	                {"data":function(res){

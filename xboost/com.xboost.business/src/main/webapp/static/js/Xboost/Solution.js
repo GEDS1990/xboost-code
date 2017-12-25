@@ -72,11 +72,15 @@ $(function  () {
 		for (var j = 0;j<p_len;j++) {
 			if (listPoint[j].curLoc == val) {
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(32,32));
+				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(21,32),{
+					anchor: new BMap.Size(10, 30)
+				});
 				console.log(val)
 			}else{
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,24));
+				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(16,24),{
+					anchor: new BMap.Size(10, 25)
+				});
 			}
 			
 			//console.log(points)
@@ -106,21 +110,30 @@ $(function  () {
 			for (var a=0;a<p_len;a++) {
 				if (listPoint[a].curLoc == val) {
 					var index = a;
+					var indnext = listPoint[a].nextCurLoc;
+					var indlen = listPoint[a].nextCurLoc.length;
 				}
 			}
-			for (var y=0;y<p_len;y++) {
-				for (var x=0;x<p_len;x++) {
-					var _nextCurLoc = listPoint[y].nextCurLoc,
-						indexNextCurLoc = listPoint[index].nextCurLoc,
-						_xCurLoc = listPoint[x].curLoc;
-					if (val == _nextCurLoc) {
-						depotPylineInfo(listPoint[index],listPoint[y]);
-					}else if (indexNextCurLoc == _xCurLoc){
-						depotPylineInfo(listPoint[index],listPoint[x]);
+			for (var b=0;b<indlen;b++) {
+				for (var q=0;q<p_len;q++) {
+					var b1 = indnext[b];
+					var b2 = listPoint[q].curLoc;
+					if (b1==b2) {
+						depotPylineInfo(listPoint[index],listPoint[q]);
 					}
 				}
 				
 			}
+			for (var x=0;x<p_len;x++) {
+				var nextlist = listPoint[x].nextCurLoc;
+				var nlen = nextlist.length;
+				for (var y=0;y<nlen;y++) {
+					if (nextlist[y] == val) {
+						depotPylineInfo(listPoint[index],listPoint[x]);
+					} 
+				}
+			}
+
 		}
 		
 	}
@@ -136,7 +149,9 @@ $(function  () {
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
-		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,24));
+		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(16,24),{
+		  	anchor: new BMap.Size(10, 24)
+		  });
 			  var marker = new BMap.Marker(point,{icon:myIcon});
 		  map.addOverlay(marker);
 		  marker.addEventListener("mouseover", function(){
@@ -433,6 +448,9 @@ $(function  () {
 	function unique(arr) {
 		var result = [], hash = {};
 		for (var i = 0, elem; (elem = arr[i]) != null; i++) {
+			if (arr[i] == "") {
+				continue;
+			}
 			if (!hash[elem]) {
 				result.push(elem);
 				hash[elem] = true;
@@ -547,32 +565,42 @@ $(function  () {
 	            		$('#route-depot').empty();
 	            		$('#route-depot').off("change");
 	            		$('#route-depot').append('<option value="0">All Depots</option>');
-	            		for (var i=0;i<len;i++) {
-                            arr.push(result[i].curLoc);
-                        }
+//	            		for (var i=0;i<len;i++) {
+//                          arr.push(result[i].curLoc);
+//                      }
 	            		//console.log(arr)
-                        var Arr = unique(arr),
+                        var Arr = uniqeByKeys(result,["curLoc"]),
                         A_len = Arr.length;
                         //console.log(Arr)
 	            		for (var i=0;i<A_len;i++) {
 	            			
-	            			var add='<option value='+Arr[i]+'>'+add0(Arr[i])+'</option>';
+	            			var add='<option value='+Arr[i].curLoc+'>'+Arr[i].curLoc+'</option>';
 							$('#route-depot').append(add);
 						}
-	            		var newResult = uniqeByKeys(result,["curLoc"]),
-						newreslen = newResult.length;
-	            		//console.log(newResult)
-	            		for (var f = 0;f<len;f++) {
+	            		
+	            		for (var j=0;j<A_len;j++) {
+	            			var nextlist = [];
+	            			var nextlists = [];
 	            			var liser = {};
-							liser["curLoc"] = result[f].curLoc;
-							liser["siteType"] = result[f].siteType;
-							liser["siteName"] = result[f].siteName;
-							liser["calcDis"] = result[f].calcDis;
-							liser["lng"] = result[f].siteLongitude;
-							liser["lat"] = result[f].siteLatitude;
-							liser["nextCurLoc"] = result[f].nextCurLoc
+	            			for (var f = 0;f<len;f++) {
+	            				var s1 = Arr[j].curLoc;
+	            				var s2 = result[f].curLoc;
+	            				if (s1 == s2) {
+	            					nextlists.push(result[f].nextCurLoc);
+	            					nextlist = unique(nextlists);
+	            				}
+								
+		            		}
+	            			liser["curLoc"] = Arr[j].curLoc;
+							liser["siteType"] = Arr[j].siteType;
+							liser["siteName"] = Arr[j].siteName;
+							liser["calcDis"] = Arr[j].calcDis;
+							liser["lng"] = Arr[j].siteLongitude;
+							liser["lat"] = Arr[j].siteLatitude;
+							liser["nextCurLoc"] = nextlist;
 							listPoint.push(liser);
 	            		}
+	            		
 							
 	            		
 						//查询所有网点坐标
