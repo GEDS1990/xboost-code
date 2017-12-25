@@ -90,8 +90,8 @@ public class SolutionRouteController {
         Integer filteredCount = solutionRouteService.findCountByRoute(param);
   //      String totalDistance = solutionRouteService.findTotalDistance(ShiroUtil.getOpenScenariosId(),searchValue);
 
-        List<String> usingCar = solutionRouteService.findUsingCar(ShiroUtil.getOpenScenariosId(),searchValue);
-        List<String> idleCar = solutionRouteService.findIdleCar(ShiroUtil.getOpenScenariosId(),searchValue);
+        List<String> usingCar = solutionRouteService.findUsingCar1(ShiroUtil.getOpenScenariosId());
+        List<String> idleCar = solutionRouteService.findIdleCar1(ShiroUtil.getOpenScenariosId());
 
 
         result.put("draw",draw);

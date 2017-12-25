@@ -164,6 +164,9 @@ public class SolutionRouteService {
         return solutionRouteMapper.findUsingCar(scenariosId,routeCount);
     }
 
+    public List<String> findUsingCar1(String scenariosId){
+        return solutionRouteMapper.findUsingCar1(scenariosId);
+    }
     public List<String> findIdleCar1(String scenariosId){
         return solutionRouteMapper.findIdleCar1(scenariosId);
     }
