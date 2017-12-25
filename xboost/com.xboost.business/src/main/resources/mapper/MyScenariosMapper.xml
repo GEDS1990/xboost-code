@@ -52,7 +52,7 @@
     </select>
 
     <update id="updateFinishTime" parameterType="String">
-        update t_scenarios_info set simulate_finish_time = #{finishTime}
+        update t_scenarios_info set simulate_finish_time = #{finishTime} where id = #{openScenariosId}
     </update>
 
     <select id="findCountByParam" resultType="long" parameterType="map">

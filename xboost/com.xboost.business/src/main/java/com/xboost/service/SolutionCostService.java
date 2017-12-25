@@ -105,15 +105,18 @@ public class SolutionCostService {
         solutionCostMapper.delByScenariosId(scenariosId);
     }
 
-    //支线运输成本
-    public String branchTransportCost()
-    {
-        String scenariosId = ShiroUtil.getOpenScenariosId();
-        String routeCount="1";
-
-        String totalDistance = solutionRouteMapper.findTotalDistance(scenariosId,routeCount);
-
-        return "";
-    }
+//    //支线运输成本
+//    public String branchTransportCost()
+//    {
+//        String scenariosId = ShiroUtil.getOpenScenariosId();
+//        String routeCount="1";
+//
+//        Float totalDistance = Float.parseFloat(solutionRouteMapper.findTotalDistance(scenariosId,routeCount));
+//        if(totalDistance>a1 && totalDistance<=a2){
+//
+//        }
+//
+//        return "";
+//    }
 
 }

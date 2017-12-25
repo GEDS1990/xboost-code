@@ -76,9 +76,9 @@ public class RoutingTransportCosts implements ITransportCosts,IConstants,Seriali
 			for(int i=0;i<siteDistsList.size();i++){
 				double dist = siteDistsList.get(i).getCarDistance();
 				addTransportDistance(siteDistsList.get(i).getSiteCollect(), siteDistsList.get(i).getSiteDelivery(), dist);
-				Car car = new Car();
-				double time = calcTime(car,siteDistsList.get(i).getSiteCollect(),siteDistsList.get(i).getSiteDelivery());
-//				Double.parseDouble(siteDistsList.get(i).getDurationNightDelivery());//geds
+//				Car car = new Car();
+//				double time = calcTime(car,siteDistsList.get(i).getSiteCollect(),siteDistsList.get(i).getSiteDelivery());
+				double time = Double.parseDouble(siteDistsList.get(i).getDurationNightDelivery());
 				addTransportTime(siteDistsList.get(i).getSiteCollect(), siteDistsList.get(i).getSiteDelivery(), time);
 			}
 		}

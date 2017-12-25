@@ -20,20 +20,20 @@ public class SystemWebSocketHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        System.out.println("ConnectionEstablished");
-        log.debug("ConnectionEstablished");
+//        System.out.println("ConnectionEstablished");
+//        log.debug("ConnectionEstablished");
         users.add(session);
 
 //        session.sendMessage(new TextMessage("connect"));
 //        session.sendMessage(new TextMessage("new_msg"));
-        session.sendMessage(new TextMessage("connected"));
+//        session.sendMessage(new TextMessage("connected"));
 
     }
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        System.out.println("handleMessage" + message.toString());
-        log.debug("handleMessage" + message.toString());
+//        System.out.println("handleMessage" + message.toString());
+//        log.debug("handleMessage" + message.toString());
         //sendMessageToUsers();
         session.sendMessage(new TextMessage(new Date() + ""));
     }
@@ -45,13 +45,13 @@ public class SystemWebSocketHandler implements WebSocketHandler {
         }
         users.remove(session);
 
-        log.debug("handleTransportError" + exception.getMessage());
+//        log.debug("handleTransportError" + exception.getMessage());
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         users.remove(session);
-        log.debug("afterConnectionClosed" + closeStatus.getReason());
+//        log.debug("afterConnectionClosed" + closeStatus.getReason());
 
     }
 

@@ -160,10 +160,13 @@ public class SolutionRouteService {
         solutionRouteMapper.updateScenariosModel(scenariosModel, ShiroUtil.getOpenScenariosId());
     }
 
-    public List<String> findUsingCar(String scenariosId){
-        return solutionRouteMapper.findUsingCar(scenariosId);
+    public List<String> findUsingCar(String scenariosId,String routeCount){
+        return solutionRouteMapper.findUsingCar(scenariosId,routeCount);
     }
 
+    public List<String> findUsingCar1(String scenariosId){
+        return solutionRouteMapper.findUsingCar1(scenariosId);
+    }
     public List<String> findIdleCar1(String scenariosId){
         return solutionRouteMapper.findIdleCar1(scenariosId);
     }

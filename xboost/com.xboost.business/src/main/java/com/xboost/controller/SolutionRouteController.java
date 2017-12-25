@@ -90,7 +90,7 @@ public class SolutionRouteController {
         Integer filteredCount = solutionRouteService.findCountByRoute(param);
   //      String totalDistance = solutionRouteService.findTotalDistance(ShiroUtil.getOpenScenariosId(),searchValue);
 
-        List<String> usingCar = solutionRouteService.findUsingCar(ShiroUtil.getOpenScenariosId());
+        List<String> usingCar = solutionRouteService.findUsingCar1(ShiroUtil.getOpenScenariosId());
         List<String> idleCar = solutionRouteService.findIdleCar1(ShiroUtil.getOpenScenariosId());
 
 
@@ -105,11 +105,16 @@ public class SolutionRouteController {
     }
 
     //查询路线id
-    @RequestMapping(value = "/idleCar.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/planCar.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public List<String> findIdleCar(String routeCount) {
+    public Map<String,Object> findIdleCar(String routeCount) {
+        Map<String,Object> result = Maps.newHashMap();
         List<String> idleCar = solutionRouteService.findIdleCar(ShiroUtil.getOpenScenariosId(),routeCount);
-        return idleCar;
+        List<String> usingCar = solutionRouteService.findUsingCar(ShiroUtil.getOpenScenariosId(),routeCount);
+
+        result.put("usingCar",usingCar);
+        result.put("idleCar",idleCar);
+        return result;
     }
 
 

@@ -234,7 +234,7 @@ $(function  () {
 		  });
 		}
 		function addpPyline (pointA,pointB,infoWindowLine) {
-			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:10, strokeOpacity:0.8});  //定义折线
+			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
 			map.addOverlay(polyline);//添加折线到地图上
 			
 			addArrow(polyline,15,Math.PI/7);
