@@ -548,14 +548,14 @@ public class RelayModeUtil implements IConstants {
 
         Matrix dense = DenseMatrix.Factory.zeros(4, 4);
 
-        connection.put("kmh_didi",);
-        connection.put("kmh_truck",);
-        connection.put("kmh_bike",);
-        connection.put("min_didi",);
-        connection.put("cost_bike",);
-        connection.put("cost_didi",);
-        connection.put("cost_truck",);
-        connection.put("cost_data",);
+//        connection.put("kmh_didi",);
+//        connection.put("kmh_truck",);
+//        connection.put("kmh_bike",);
+//        connection.put("min_didi",);
+//        connection.put("cost_bike",);
+//        connection.put("cost_didi",);
+//        connection.put("cost_truck",);
+//        connection.put("cost_data",);
         int[] obj = new int[I];
         for(int j=0;j<I;j++){
             obj[j] = 0;
