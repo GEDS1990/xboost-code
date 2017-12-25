@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xboost.mapper.SolutionRouteMapper">
 
-    <cache/>
+
     <insert id="addRoute">
         INSERT into t_solution_route(scenariosId ,userId,route_count,car_type,car_name,location,sequence,cur_loc,
         type,sb_loc,sb_vol,sb_vol_sum,arr_time,end_time,unload_loc,unload_vol,unload_vol_sum,next_cur_loc,calc_dis,
