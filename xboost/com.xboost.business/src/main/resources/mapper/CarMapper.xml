@@ -66,6 +66,13 @@
         </where>
     </select>
 
+    <select id="findCarCost" resultMap="transportMap">
+        SELECT * FROM t_car_info WHERE scenariosId = #{scenariosId} and
+        type = (SELECT DISTINCT(car_type) FROM t_solution_route WHERE scenariosId=#{scenariosId} AND route_count=#{routeCount})
+        <!--SELECT * FROM t_solution_route r INNER JOIN t_car_info c ON c.type=r.car_type-->
+        <!--where r.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId} and r.route_count = #{routeCount}-->
+    </select>
+
     <select id="findById" resultMap="transportMap">
         SELECT * FROM t_car_info where id = #{id}
     </select>

@@ -72,5 +72,8 @@ public interface SolutionRouteMapper {
 
     List<String> findIdleCar(@Param("scenariosId")String scenariosId,@Param("routeCount") String routeCount);
 
+    //查询线路编号
+    List<String> findRouteCount(String scenariosId);
+
 }
 

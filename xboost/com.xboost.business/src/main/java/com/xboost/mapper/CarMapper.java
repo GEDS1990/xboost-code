@@ -2,6 +2,7 @@ package com.xboost.mapper;
 
 import com.mckinsey.sf.data.Car;
 import com.mckinsey.sf.data.TimeWindow;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,8 @@ public interface CarMapper {
     List<Car> findByParam(Map<String, Object> param);
 
     Long findCountByParam(Map<String, Object> param);
+
+    List<Car> findCarCost(@Param("scenariosId")String scenariosId,@Param("routeCount")String routeCount);
 
     /**
      * 根据ID查询运力信息
