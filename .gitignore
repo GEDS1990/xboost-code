@@ -1,0 +1,6 @@
+/xboost/com.xboost.business/target
+/.idea
+/xboost/.idea
+/xboost/com.xboost.business/src/main/resources/upload/temp
+/xboost/com.xboost.business/temp
+/xboost/com.xboost.common/target/classes/com/xboost/pojo/*.class
