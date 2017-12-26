@@ -75,7 +75,7 @@
     <delete id="delById">
         DELETE FROM t_demand_info WHERE id = #{id}
     </delete>
-    
+
     <delete id="delByScenariosId">
         DELETE FROM t_demand_info WHERE scenariosId = #{scenariosId}
     </delete>

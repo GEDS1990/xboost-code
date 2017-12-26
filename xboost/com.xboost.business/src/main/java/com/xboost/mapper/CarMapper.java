@@ -41,7 +41,12 @@ public interface CarMapper {
      * @return
      */
     Car findById(Integer id);
-
+    /**
+     * 根据ID查询运力信息
+     * @param scenariosId
+     * @return
+     */
+    void delByScenariosId(String scenariosId);
 
     // 根据id编辑运力信息  @param transport
     void editTransport(Car transport);
