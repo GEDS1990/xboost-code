@@ -5,12 +5,12 @@
     <cache/>
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT into t_car_info(scenariosId,name,carType,busy_idle,type,dimensions,skills,start_location,end_location,max_distance,
-        max_running_time,cost_per_distance,cost_per_time,fixed_cost,max_stop,velocity,fixed_round,fixed_round_fee,
+        max_running_time,cost_per_distance,cost_per_time,fixed_cost,max_stop,velocity,velocity2,velocity3,fixed_round,fixed_round_fee,
         car_source,max_load,duration_unload_full,a1,b1,c1,d1,e1,f1,a2,b2,c2,d2,e2,f2,costa1,costb1,costc1,costd1,coste1,costf1,
         costa2,costb2,costc2,costd2,coste2,costf2,costa3,costb3,costc3,costd3,coste3,costf3,
         createtime,updatetime)
         VALUES (#{scenariosId},#{name},#{carType},#{busyIdle},#{type},#{dimensions},#{skills},#{startLocation},#{endLocation},#{maxDistance},
-        #{maxRunningTime},#{costPerDistance},#{costPerTime},#{fixedCost},#{maxStop},#{velocity},#{fixedRound},#{fixedRoundFee},
+        #{maxRunningTime},#{costPerDistance},#{costPerTime},#{fixedCost},#{maxStop},#{velocity},#{velocity2},#{velocity3},#{fixedRound},#{fixedRoundFee},
         #{carSource},#{maxLoad},#{durationUnloadFull},#{a1},#{b1},#{c1},#{d1},#{e1},#{f1},#{a2},#{b2},#{c2},#{d2},#{e2},#{f2},
         #{costa1},#{costb1},#{costc1},#{costd1},#{coste1},#{costf1}, #{costa2},#{costb2},#{costc2},#{costd2},#{coste2},#{costf2},
         #{costa3},#{costb3},#{costc3},#{costd3},#{coste3},#{costf3},
@@ -21,7 +21,7 @@
         update t_car_info set scenariosId = #{scenariosId},name=#{name},type = #{type},dimensions = #{dimensions},skills = #{skills},
         start_location = #{startLocation},end_location = #{endLocation},max_distance = #{maxDistance},
         max_running_time = #{maxRunningTime},cost_per_distance = #{costPerDistance},cost_per_time = #{costPerTime},
-        fixed_cost = #{fixedCost},max_stop = #{maxStop},velocity = #{velocity},fixed_round = #{fixedRound},
+        fixed_cost = #{fixedCost},max_stop = #{maxStop},velocity = #{velocity},velocity2 = #{velocity2},velocity3 = #{velocity3},fixed_round = #{fixedRound},
         fixed_round_fee = #{fixedRoundFee},car_source = #{carSource},max_load = #{maxLoad},duration_unload_full = #{durationUnloadFull},
         a1 = #{a1},b1 = #{b1},c1 = #{c1},d1 = #{d1},e1 = #{e1},f1 = #{f1},costa1 = #{costa1},costb1 = #{costb1},costc1 = #{costc1},costd1 = #{costd1},
         coste1 = #{coste1},costf1 = #{costf1},
@@ -119,6 +119,8 @@
         <result property="costPerTime" column="cost_per_time"/>
         <result property="fixedCost" column="fixed_cost"/>
         <result property="velocity" column="velocity"/>
+        <result property="velocity2" column="velocity2"/>
+        <result property="velocity3" column="velocity3"/>
         <result property="carSource" column="car_source"/>
         <result property="maxLoad" column="max_load"/>
         <result property="durationUnloadFull" column="duration_unload_full"/>
