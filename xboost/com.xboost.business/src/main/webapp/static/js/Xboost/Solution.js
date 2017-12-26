@@ -804,6 +804,11 @@ $(function  () {
 	            		_text = $('#route-route').find("option").eq(0).text();
 	            		$('#route-name').text(_text);
 	            		//创建安排车辆
+	            		$.get("/route/planCar.json").done(function (res){
+	            			console.log(res)
+	            		}).fail(function (){
+	            			console.log("fail");
+	            		})
 	            		if (data.usingCar) {
 	            			var useCar = data.usingCar,
 	            			useCarLen = useCar.length;
@@ -823,26 +828,6 @@ $(function  () {
 	            			}
 
 	            		}
-//	            		$.get("/route/idleCar.json",{"routeCount":_val}).done(function (res){
-//                            $('#idle-vehicle').append('<option>--Choose--</option>');
-//                            if (res) {
-//                                for (var y=0;y<res.length;y++) {
-//                                    var idleCarAdd = '<option value='+res[y]+'>'+res[y]+'</option>';
-//                                    $('#idle-vehicle').append(idleCarAdd);
-//                                }
-//                            }
-//                        }).fail(function (){
-//                            alert("fail");
-//                            console.log("fail");
-//                        });
-
-	            		
-	            		
-	            		
-	            		
-//	            		var newResult = uniqeByKeys(result,["curLoc"]),
-//						newreslen = newResult.length;
-	            		//console.log(newResult)
 	            		for (var f = 0;f<len;f++) {
 	            			var liser = {};
 	            			liser["routeCount"] = result[f].routeCount;
