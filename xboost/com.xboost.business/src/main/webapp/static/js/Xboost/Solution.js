@@ -1,6 +1,7 @@
 $(function  () {
 	var doc = document,
-	listArry = '';
+	listArry = '',
+	listLen = '';
 	var map = new BMap.Map("depots-map");
 	var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
 	var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
@@ -144,7 +145,9 @@ $(function  () {
 	//route map
 	function routeMapInit (listPoints,val,listPoint) {
 		map.clearOverlays();
+		
 		var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
+		
 		map.centerAndZoom(point, 14);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
@@ -210,8 +213,10 @@ $(function  () {
 		}
 		if (val) {
 			//规划线路
+			//console.log(listPoint)
 			var list = [];
-			for (var q=0;q<p_len;q++) {
+			var p_lens = listPoint.length;
+			for (var q=0;q<p_lens;q++) {
 				var routeNum = listPoint[q].routeCount;
 				if (val == routeNum) {
 					list.push(listPoint[q]);
@@ -786,6 +791,8 @@ $(function  () {
 	            "initComplete": function (settings, data) {
 	            	//console.log(data);
 	            	if (data.data.length != 0) {
+	            		listLen = '';
+	            		listLen = data.data.length;
 	            		$('#depots-map').show();
 	            		var result = data.data,
 	            		arr = [],
@@ -808,7 +815,7 @@ $(function  () {
 	            		$('#route-name').text(_text);
 	            		//创建安排车辆
 	            		$.get("/route/planCar.json",{"routeCount":_val}).done(function (data){
-	            			console.log(data);
+	            			//console.log(data);
 	            			if (data.usingCar) {
 		            			var useCar = data.usingCar,
 		            			useCarLen = useCar.length;
@@ -933,7 +940,10 @@ $(function  () {
 								listPoint.push(liser);
 		            		}
 		            		var val = $('#route-route').val();
-		            		routeMapInit(listArry,val,listPoint);
+		            		if (data_len<listLen) {
+		            			routeMapInit(listArry,val,listPoint);
+		            		}
+		            		
 		            		//console.log(listPoint)
 		            		
 	            		}).fail(function (){
