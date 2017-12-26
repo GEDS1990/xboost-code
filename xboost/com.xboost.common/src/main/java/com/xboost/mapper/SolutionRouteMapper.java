@@ -66,10 +66,14 @@ public interface SolutionRouteMapper {
 
     void updateScenariosModel(@Param("scenariosModel")String scenariosModel,@Param("openScenariosId") String scenariosId);
 
-    List<String> findUsingCar(String scenariosId);
+    List<String> findUsingCar(@Param("scenariosId")String scenariosId,@Param("routeCount") String routeCount);
+    List<String> findUsingCar1(String scenariosId);
     List<String> findIdleCar1(String scenariosId);
 
     List<String> findIdleCar(@Param("scenariosId")String scenariosId,@Param("routeCount") String routeCount);
+
+    //查询线路编号
+    List<String> findRouteCount(String scenariosId);
 
 }
 
