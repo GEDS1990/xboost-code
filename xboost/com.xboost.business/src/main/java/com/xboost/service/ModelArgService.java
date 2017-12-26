@@ -154,6 +154,14 @@ public class ModelArgService {
 
         modelArgMapper.delById(id);
     }
+    /**
+     * 根据id删除模型整体参数信息
+     * @param scenariosId
+     */
+    public void delByScenariosId(String scenariosId) {
+
+        modelArgMapper.delByScenariosId(scenariosId);
+    }
 
     //根据场景id,算法模型查询网点集散点人效
     public Integer findSitePeopleWork(String scenariosId,String modelType){
