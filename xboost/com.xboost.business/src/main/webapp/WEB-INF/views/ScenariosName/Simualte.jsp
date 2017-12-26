@@ -69,7 +69,7 @@
 	    			</div>
 	    			
 	    			<div class="form-group  clearfix">
-	    				<p class="sim-run-btn"><button id="sim-stop">Stop Simulation</button></p>
+	    				<p class="sim-run-btn"><button id="sim-stop">Restart Simulation</button></p>
 	    			</div>
 	    		</div>
 	    	</div>
@@ -85,10 +85,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Stop Simulation</h4>
+                <h4 class="modal-title">Restart Simulation</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure want to stop simulation</p>
+                <p>Are you sure want to restart simulation</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -97,6 +97,23 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal fade" id="modal-simfail">
+    <div class="modal-dialog modal-del">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Restart Simulation</h4>
+            </div>
+            <div class="modal-body">
+                <p>Simulation restart failure</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-
 
 
 

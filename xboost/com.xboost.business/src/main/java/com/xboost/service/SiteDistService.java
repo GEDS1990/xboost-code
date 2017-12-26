@@ -75,6 +75,8 @@ public class SiteDistService {
                                 siteDist.setSiteDelivery(row[3]);
                                 siteDist.setCarDistance(Float.parseFloat(row[4]));
                                 siteDist.setDurationNightDelivery(row[5]);
+                                siteDist.setDurationNightDelivery2(row[6]);
+                                siteDist.setDurationNightDelivery3(row[7]);
                                 siteDist.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
                                 if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){
                                     //insert
@@ -233,6 +235,15 @@ public class SiteDistService {
                  cell = bodyRow.createCell(5);
                  cell.setCellValue(siteDist.getDurationNightDelivery());
                  cell.setCellStyle(bodyStyle);
+
+                 cell = bodyRow.createCell(6);
+                 cell.setCellValue(siteDist.getDurationNightDelivery2());
+                 cell.setCellStyle(bodyStyle);
+
+                 cell = bodyRow.createCell(7);
+                 cell.setCellValue(siteDist.getDurationNightDelivery3());
+                 cell.setCellStyle(bodyStyle);
+
 
              }
          }

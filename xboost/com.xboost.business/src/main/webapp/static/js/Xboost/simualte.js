@@ -157,8 +157,18 @@ $(function  () {
 				$('#sim-stop').click(function  () {
 					$('#modal-sim').modal("show");
 					$('#modal-simdelBtn').click(function  () {
-						ws.close();
-						$('#modal-sim').modal("hide");
+						$.get("/cascade/restartSilumate").done(function (res){
+							if (res == "success") {
+								$('#modal-sim').modal("hide");
+							}else{
+								$('#modal-sim').modal("hide");
+								$('#modal-simfail').modal("show");
+							}
+						}).fail(function(){
+							$('#modal-sim').modal("hide");
+							$('#modal-simfail').modal("show");
+						});
+						
 					});
 					
 				});
