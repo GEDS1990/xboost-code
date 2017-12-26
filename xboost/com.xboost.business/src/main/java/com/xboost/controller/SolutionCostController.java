@@ -140,9 +140,7 @@ public class SolutionCostController {
         Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
 
         //支线总运输成本
-        Double branchTransportCost = 100.00;
-        String routeCount="1";
-        String distance = solutionRouteService.findTotalDistance(scenariosId,routeCount);
+        Double branchTransportCost = solutionCostService.branchTransportCost();
 
         Map<String,Object> result = Maps.newHashMap();
         result.put("modelType",modelType);

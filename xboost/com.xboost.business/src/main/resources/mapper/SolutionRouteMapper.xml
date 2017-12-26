@@ -137,6 +137,10 @@
         and r.route_count=#{routeCount} and c.busy_idle="0"
     </select>
 
+    <select id="findRouteCount" resultType="String">
+        SELECT DISTINCT(route_count) FROM t_solution_route WHERE c.scenariosId=#{scenariosId}
+    </select>
+
     <resultMap id="modelRoute" type="Route">
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
