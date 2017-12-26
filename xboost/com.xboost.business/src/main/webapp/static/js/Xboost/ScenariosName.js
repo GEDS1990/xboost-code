@@ -317,6 +317,8 @@ $(function  () {
 	                {"data":function(res){return res.carDistance.toFixed(2)}
 	                ,"name":"car_distance"},
 	                {"data":"durationNightDelivery","name":"duration_night_delivery"},
+	                {"data":"durationNightDelivery2","name":"duration_night_delivery2"},
+	                {"data":"durationNightDelivery3","name":"duration_night_delivery3"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-dist' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dist' data-id='"+row.id+"'>Del</a>";
 	                }}
@@ -327,7 +329,7 @@ $(function  () {
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[0,6],
+	                    "targets":[0,8],
 	                    "orderable":false
 	                }
 	            ],
@@ -352,7 +354,7 @@ $(function  () {
 	            "drawCallback":function  (settings, data) {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
-			        console.log( api.rows( {page:'current'} ).data() );
+			        //console.log( api.rows( {page:'current'} ).data() );
 	            }
 	        });
         
