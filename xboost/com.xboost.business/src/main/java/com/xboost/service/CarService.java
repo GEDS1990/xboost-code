@@ -224,6 +224,14 @@ public class CarService {
         transportMapper.delById(id);
         transportMapper.delTimeWindow(id);
     }
+    /**
+     * 删除运力信息
+     * @param scenariosId
+     */
+    public void delByScenariosId(String scenariosId) {
+
+        transportMapper.delByScenariosId(scenariosId);
+    }
 
     public Car[] findCarByParam(Map<String, Object> param) {
         return transportMapper.findCarByParam(param);

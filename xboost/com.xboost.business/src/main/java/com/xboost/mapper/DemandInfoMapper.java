@@ -49,6 +49,9 @@ public interface DemandInfoMapper {
     //根据id 删除需求信息   * @param siteCode
     void delById(Integer id);
 
+    //根据id 删除需求信息   * @param scenariosId
+    void delByScenariosId(String scenariosId);
+
     List<Map> findarrTime(String scenariosId);
 
     List<String> findSiteCollect(String scenariosId);

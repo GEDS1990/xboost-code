@@ -804,30 +804,33 @@ $(function  () {
 	            		_text = $('#route-route').find("option").eq(0).text();
 	            		$('#route-name').text(_text);
 	            		//创建安排车辆
-	            		$.get("/route/planCar.json").done(function (res){
-	            			console.log(res)
+	            		$.get("/route/planCar.json",{"routeCount":_val}).done(function (data){
+	            			console.log(data);
+	            			if (data.usingCar) {
+		            			var useCar = data.usingCar,
+		            			useCarLen = useCar.length;
+		            			$('#us-vehicle').empty();
+		            			$('#us-vehicle').append('<option>--Choose--</option>');
+		            			for (var x=0;x<useCarLen;x++) {
+		            				var useCarAdd = '<option value='+useCar[x]+'>'+useCar[x]+'</option>';
+		            				$('#us-vehicle').append(useCarAdd);
+		            			}
+		            		}
+		            		if (data.idleCar) {
+		            			var idleCar = data.idleCar,
+		            			idleCarLen = idleCar.length;
+		            			$('#idle-vehicle').empty();
+		            			$('#idle-vehicle').append('<option>--Choose--</option>');
+		            			for (var y=0;y<idleCarLen;y++) {
+		            				var idleCarAdd = '<option value='+idleCar[y]+'>'+idleCar[y]+'</option>';
+		            				$('#idle-vehicle').append(idleCarAdd);
+		            			}
+	
+		            		}
 	            		}).fail(function (){
 	            			console.log("fail");
 	            		})
-	            		if (data.usingCar) {
-	            			var useCar = data.usingCar,
-	            			useCarLen = useCar.length;
-	            			$('#us-vehicle').append('<option>--Choose--</option>');
-	            			for (var x=0;x<useCarLen;x++) {
-	            				var useCarAdd = '<option value='+useCar[x]+'>'+useCar[x]+'</option>';
-	            				$('#us-vehicle').append(useCarAdd);
-	            			}
-	            		}
-	            		if (data.idleCar) {
-	            			var idleCar = data.idleCar,
-	            			idleCarLen = idleCar.length;
-	            			$('#idle-vehicle').append('<option>--Choose--</option>');
-	            			for (var y=0;y<idleCarLen;y++) {
-	            				var idleCarAdd = '<option value='+idleCar[y]+'>'+idleCar[y]+'</option>';
-	            				$('#idle-vehicle').append(idleCarAdd);
-	            			}
-
-	            		}
+	            		
 	            		for (var f = 0;f<len;f++) {
 	            			var liser = {};
 	            			liser["routeCount"] = result[f].routeCount;
@@ -881,6 +884,32 @@ $(function  () {
 			        var data_len = data.length;
 			        if (data_len != 0) {
 			        	var res = data[0];
+			        	$.get("/route/planCar.json",{"routeCount":res.routeCount}).done(function (data){
+	            			//console.log(data);
+	            			if (data.usingCar) {
+		            			var useCar = data.usingCar,
+		            			useCarLen = useCar.length;
+		            			$('#us-vehicle').empty();
+		            			$('#us-vehicle').append('<option>--Choose--</option>');
+		            			for (var x=0;x<useCarLen;x++) {
+		            				var useCarAdd = '<option value='+useCar[x]+'>'+useCar[x]+'</option>';
+		            				$('#us-vehicle').append(useCarAdd);
+		            			}
+		            		}
+		            		if (data.idleCar) {
+		            			var idleCar = data.idleCar,
+		            			idleCarLen = idleCar.length;
+		            			$('#idle-vehicle').empty();
+		            			$('#idle-vehicle').append('<option>--Choose--</option>');
+		            			for (var y=0;y<idleCarLen;y++) {
+		            				var idleCarAdd = '<option value='+idleCar[y]+'>'+idleCar[y]+'</option>';
+		            				$('#idle-vehicle').append(idleCarAdd);
+		            			}
+	
+		            		}
+	            		}).fail(function (){
+	            			console.log("fail");
+	            		})
 						$('#vehicle-load-requirement').text(res.carType);
 						$('#vehicle-piece-capacity').text(res.max_load);
 						$('#speed-requirement').text(res.velocity+" km/h");

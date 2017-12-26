@@ -47,6 +47,9 @@ public interface ModelArgMapper {
     //根据id 删除模型整体参数   * @param siteCode
     void delById(Integer id);
 
+    //根据id 删除模型整体参数   * @param scenariosId
+    void delByScenariosId(String scenariosId);
+
     //根据场景id,算法模型查询网点集散点人效
     Integer findSitePeopleWork(@Param("scenariosId") String scenariosId,@Param("modelType") String modelType);
 

@@ -76,6 +76,10 @@
         DELETE FROM t_demand_info WHERE id = #{id}
     </delete>
 
+    <delete id="delByScenariosId">
+        DELETE FROM t_demand_info WHERE scenariosId = #{scenariosId}
+    </delete>
+
     <select id="findarrTime" resultType="map"  parameterType="String">
         SELECT d.duration_end-s.Arr_time as arr_time,s.vol as vol FROM t_demand_info d left join t_solution_activity s on d.scenariosId=#{scenariosId}
         and d.site_collect=s.pickup_loc and d.site_delivery=s.delivery_loc

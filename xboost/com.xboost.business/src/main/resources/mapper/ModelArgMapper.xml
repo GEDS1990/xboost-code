@@ -57,6 +57,10 @@
         DELETE FROM t_model_arg WHERE id = #{id}
     </delete>
 
+    <delete id="delByScenariosId">
+        DELETE FROM t_model_arg WHERE scenariosId = #{scenariosId}
+    </delete>
+
     <select id="findSitePeopleWork" resultType="Integer">
         SELECT data FROM t_model_arg where scenariosId=#{scenariosId} AND model_type = #{modelType} and parameter_code="site_people_work"
     </select>

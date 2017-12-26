@@ -54,6 +54,7 @@ public class ModelArgController {
     @ResponseBody
     public String AddByExcel(ModelArg modelArg, @RequestParam MultipartFile[] file) {
         modelArg.setScenariosId(ShiroUtil.getOpenScenariosId());
+        modelArgService.delByScenariosId(ShiroUtil.getOpenScenariosId());
         modelArgService.addByExcel(modelArg,file);
         return "/ScenariosName/Parameters";
     }

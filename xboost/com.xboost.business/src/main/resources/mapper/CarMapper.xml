@@ -91,6 +91,9 @@
     <delete id="delById">
         DELETE FROM t_car_info WHERE id = #{id}
     </delete>
+    <delete id="delByScenariosId">
+        DELETE FROM t_car_info WHERE scenariosId = #{scenariosId}
+    </delete>
 
     <delete id="delTimeWindow">
         DELETE FROM t_time_window WHERE carId = #{id}
