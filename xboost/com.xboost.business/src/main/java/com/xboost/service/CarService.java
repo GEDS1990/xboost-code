@@ -83,8 +83,8 @@ public class CarService {
                             transport.setDimensions(row[3]);
                             transport.setCarSource(row[4]);
                             transport.setVelocity(Double.parseDouble((row[5].trim().equals(""))?"0":row[5].trim()));
-                            transport.setVelocity(Double.parseDouble((row[6].trim().equals(""))?"0":row[6].trim()));
-                            transport.setVelocity(Double.parseDouble((row[7].trim().equals(""))?"0":row[7].trim()));
+                            transport.setVelocity2(Double.parseDouble((row[6].trim().equals(""))?"0":row[6].trim()));
+                            transport.setVelocity3(Double.parseDouble((row[7].trim().equals(""))?"0":row[7].trim()));
                             transport.setMaxDistance(Float.parseFloat((row[9].trim().equals(""))?"0":row[9].trim()));
 //                            transport.setCostPerDistance(Double.parseDouble((row[6].trim().equals(""))?"0":row[6].trim()));
 //                            transport.setCostPerTime(Double.parseDouble((row[7].trim().equals(""))?"0":row[7].trim()));
