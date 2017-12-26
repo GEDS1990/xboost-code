@@ -43,7 +43,6 @@ public interface SiteDistMapper {
     // 根据id编辑网点距离信息  @param siteInfo
     void editSiteDist(SiteDist siteDist);
 
-
     //根据网点编码删除网点距离信息   * @param siteCode
     void delById(Integer id);
 

@@ -63,6 +63,7 @@ public class SiteController {
     @ResponseBody
     public String AddSiteInfoByExcel(SiteInfo siteInfo,@RequestParam MultipartFile[] file) {
         siteInfo.setScenariosId(ShiroUtil.getOpenScenariosId());
+        siteInfoService.delbyScenariodId(ShiroUtil.getOpenScenariosId());
         siteInfoService.addSiteInfoByExcel(siteInfo,file);
         return "/ScenariosName/Conditions";
     }

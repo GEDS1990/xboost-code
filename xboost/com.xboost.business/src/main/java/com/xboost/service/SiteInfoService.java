@@ -198,6 +198,14 @@ public class SiteInfoService {
 
         siteInfoMapper.delById(id);
     }
+    /**
+     * 删除网点信息
+     * @param scenariosId
+     */
+    public void delbyScenariodId(String scenariosId) {
+
+        siteInfoMapper.delbyScenariodId(scenariosId);
+    }
 
     public String timeTransfer(String time){
         Double result = Math.floor(Double.parseDouble(time));

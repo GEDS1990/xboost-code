@@ -74,6 +74,10 @@
         DELETE FROM t_site_info WHERE id = #{id}
     </delete>
 
+    <delete id="delbyScenariodId">
+        DELETE FROM t_site_info WHERE scenariosId = #{scenariosId}
+    </delete>
+
     <select id="findAllBySiteCode" resultType="map" resultMap="modelRouteAndSite">
         SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
         where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} order by arr_time asc
