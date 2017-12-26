@@ -848,7 +848,15 @@ $(function  () {
                     else{return res.max_distance;}
                     },"name":"max_running_time"},
 
-	                {"data":"velocity","name":"velocity"},
+	                {"data":function(res){
+	                	return res.velocity;
+	                },"name":"velocity"},
+	                {"data":function(res){
+	                	return res.velocity2;
+	                },"name":"velocity2"},
+	                {"data":function(res){
+	                	return res.velocity3;
+	                },"name":"velocity3"},
 	                {"data":"durationUnloadFull","name":"duration_unload_full"},
 	                {"data":"start_location","name":"start_location"},
 	                {"data":"end_location","name":"end_location"},
@@ -912,7 +920,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete":function  (settings, data) {
-	            	console.log(data);
+	            	//console.log(data);
 	            }
 	        });
 	        
@@ -1021,6 +1029,8 @@ $(function  () {
 	                $("#max_distance").val(result.max_distance);
 	                $("#max_running_time").val(result.max_running_time);
 	                $("#velocity").val(result.velocity);
+	                $("#velocity2").val(result.velocity2);
+	                $("#velocity3").val(result.velocity3);
 	                $("#durationUnloadFull").val(result.durationUnloadFull);
 	                $("#start_location").val(result.start_location);
 	                $("#end_location").val(result.end_location);
