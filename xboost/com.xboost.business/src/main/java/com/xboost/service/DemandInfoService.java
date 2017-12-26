@@ -209,6 +209,15 @@ public class DemandInfoService {
 
         demandInfoMapper.delById(id);
     }
+    /**
+     * 根据id删除需求信息
+     * @param scenariosId
+     */
+    public void delByScenariosId(String scenariosId) {
+
+        demandInfoMapper.delByScenariosId(scenariosId);
+    }
+
 
     /**
      * 导出excel

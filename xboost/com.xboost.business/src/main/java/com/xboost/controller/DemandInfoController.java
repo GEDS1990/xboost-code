@@ -56,6 +56,7 @@ public class DemandInfoController {
     public String AddDemandInfoByExcel(DemandInfo demandInfo, @RequestParam MultipartFile[] file) {
         //设置场景Id
         demandInfo.setScenariosId(ShiroUtil.getOpenScenariosId());
+        demandInfoService.delByScenariosId(ShiroUtil.getOpenScenariosId());
         demandInfoService.addDemandInfoByExcel(demandInfo,file);
         return "redirect:/siteInfo";
     }
