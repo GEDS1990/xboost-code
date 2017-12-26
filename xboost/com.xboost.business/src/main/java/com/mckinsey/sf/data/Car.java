@@ -52,6 +52,8 @@ public class Car implements Serializable{
 	private int maxStop;
 	@JsonProperty("velocity")
 	private double velocity;
+	private double velocity2;
+	private double velocity3;
 	@JsonProperty("fixed_round")
 //	private double[] fixedRound;
 	private double fixedRound;
@@ -253,6 +255,26 @@ public class Car implements Serializable{
 
 	public void setVelocity(double velocity) {
 		this.velocity = velocity;
+	}
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public double getVelocity2() {
+		return velocity2;
+	}
+
+	public void setVelocity2(double velocity2) {
+		this.velocity2 = velocity2;
+	}
+
+	public double getVelocity3() {
+		return velocity3;
+	}
+
+	public void setVelocity3(double velocity3) {
+		this.velocity3 = velocity3;
 	}
 
 	public double getFixedRound() {
