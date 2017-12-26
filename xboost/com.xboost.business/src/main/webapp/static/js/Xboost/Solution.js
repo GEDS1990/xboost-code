@@ -142,7 +142,7 @@ $(function  () {
 		return a.sequence - b.sequence;
 	}
 	//route map
-	function routeMapInit (listPoint,val) {
+	function routeMapInit (listPoints,val,listPoint) {
 		map.clearOverlays();
 		var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
 		map.centerAndZoom(point, 14);
@@ -175,6 +175,7 @@ $(function  () {
 		  	polyline.addEventListener("mouseout", function(){
 		  		map.closeInfoWindow();
 		  	});
+		  	
 		}
 		function depotPylineInfo (listPointX,listPointY) {
 			var pointA = new BMap.Point(listPointX.lng,listPointX.lat),
@@ -188,20 +189,21 @@ $(function  () {
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
+			
 		}
 		//初始化坐标
-		var p_len = listPoint.length;
+		var p_len = listPoints.length;
 		for (var j = 0;j<p_len;j++) {
-			var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
+			var points = new BMap.Point(listPoints[j].lng,listPoints[j].lat);
 			//console.log(points)
 			var sContent = "";
-			sContent += '<p>ID: '+listPoint[j].curLoc+'</p>';
-			sContent += '<p>Type: '+listPoint[j].siteType+'</p>';
-			sContent += '<p>Name: '+listPoint[j].siteName+'</p>';
-			sContent += '<p>Arrival Time: '+listPoint[j].arrTime+'</p>';
-			sContent += '<p>Unload: '+listPoint[j].unloadVol+'</p>';
-			sContent += '<p>Load: '+listPoint[j].sbVol+'</p>';
-			sContent += '<p>Departure Time: '+listPoint[j].endTime+'</p>';
+			sContent += '<p>ID: '+listPoints[j].curLoc+'</p>';
+			sContent += '<p>Type: '+listPoints[j].siteType+'</p>';
+			sContent += '<p>Name: '+listPoints[j].siteName+'</p>';
+			sContent += '<p>Arrival Time: '+listPoints[j].arrTime+'</p>';
+			sContent += '<p>Unload: '+ listPoints[j].unloadVol+'</p>';
+			sContent += '<p>Load: '+ listPoints[j].sbVol+'</p>';
+			sContent += '<p>Departure Time: '+ listPoints[j].endTime+'</p>';
 			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
 			//console.log(infoWindow)
 			addMarker(points,infoWindow);
@@ -437,6 +439,7 @@ $(function  () {
 		], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  
 		
 		map.addOverlay(Arrow);  
+		
 		
 		}  
 
@@ -852,8 +855,9 @@ $(function  () {
 	            		}
 	            		//console.log(listPoint);
 	            		listArry="";
-						listArry = listPoint;
-	            		
+	            		//listArry = listPoint;
+						listArry = uniqeByKeys(listPoint,["curLoc"]);
+	            		// console.log(listArry);
 	            		var table = $('#SolutionRoute').DataTable();
 	            		setTimeout(function(){
 	            			if (_val) {
@@ -883,6 +887,8 @@ $(function  () {
 			        //console.log(data)
 			        var data_len = data.length;
 			        if (data_len != 0) {
+			        	var result = data,
+			        	listPoint = [];
 			        	var res = data[0];
 			        	$.get("/route/planCar.json",{"routeCount":res.routeCount}).done(function (data){
 	            			//console.log(data);
@@ -907,6 +913,29 @@ $(function  () {
 		            			}
 	
 		            		}
+		            		for (var f = 0;f<data_len;f++) {
+		            			var liser = {};
+		            			liser["routeCount"] = result[f].routeCount;
+								liser["curLoc"] = result[f].curLoc;
+								liser["siteType"] = result[f].siteType;
+								liser["siteName"] = result[f].siteName;
+								liser["calcDis"] = result[f].calcDis;
+								liser["lng"] = result[f].siteLongitude;
+								liser["lat"] = result[f].siteLatitude;
+								liser["nextCurLoc"] = result[f].nextCurLoc;
+								var arrTime = operationTime(result[f].arrTime);
+								var endTime = operationTime(result[f].endTime);
+								liser["arrTime"] = arrTime;
+								liser["endTime"] = endTime;
+								liser["sbVol"] = result[f].sbVol;
+								liser["unloadVol"] = result[f].unloadVol;
+								liser["sequence"] = result[f].sequence;
+								listPoint.push(liser);
+		            		}
+		            		var val = $('#route-route').val();
+		            		routeMapInit(listArry,val,listPoint);
+		            		//console.log(listPoint)
+		            		
 	            		}).fail(function (){
 	            			console.log("fail");
 	            		})
@@ -932,7 +961,7 @@ $(function  () {
 					//console.log(val)
 				table.search(val).draw(false);
 	            $('#route-name').text(_text);
-				routeMapInit(listArry,val);
+				
 				$.get("/route/totalDistance.json",{"routeCount":val}).done(function (res){
 					if (res) {
 						$('#total-distance').text(res+" km");
