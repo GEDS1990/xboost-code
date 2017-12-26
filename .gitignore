@@ -4,3 +4,11 @@
 /xboost/com.xboost.business/src/main/resources/upload/temp
 /xboost/com.xboost.business/temp
 /xboost/com.xboost.common/target/classes/com/xboost/pojo/*.class
+/xboost/com.xboost.cascade/target/classes/org/demo/spring/*.class
+/xboost/com.xboost.cascade/target
+/xboost/com.xboost.common/target
+/xboost/com.xboost.relay/target/classes/org/demo/spring/*.class
+/xboost/com.xboost.relay/target/classes/org/demo/spring/core/*.class
+/xboost/com.xboost.relay/target/classes/org/demo/spring/dao/*.class
+/xboost/com.xboost.relay/target/classes/org/demo/spring/restController/*.class
+/xboost/com.xboost.relay/target/maven-archiver
