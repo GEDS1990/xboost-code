@@ -12,3 +12,9 @@
 /xboost/com.xboost.relay/target/classes/org/demo/spring/dao/*.class
 /xboost/com.xboost.relay/target/classes/org/demo/spring/restController/*.class
 /xboost/com.xboost.relay/target/maven-archiver
+/xboost/com.xboost.relay/target/classes/org/demo/spring/model/*.class
+/xboost/com.xboost.relay/target/classes/org/demo/spring/service/*.class
+/xboost/com.xboost.relay/target/classes/org/demo/spring/service/impl/*.class
+/xboost/com.xboost.relay/target/maven-status/maven-compiler-plugin/compile/default-compile
+/xboost/com.xboost.relay/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile
+/xboost/com.xboost.relay/target

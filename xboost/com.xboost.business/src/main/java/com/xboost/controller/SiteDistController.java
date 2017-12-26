@@ -68,6 +68,7 @@ public class SiteDistController {
     @ResponseBody
     public String AddSiteDistByExcel(SiteDist siteDist,@RequestParam MultipartFile[] file) {
         siteDist.setScenariosId(ShiroUtil.getOpenScenariosId());
+        siteDistService.delByScenariosIdd(ShiroUtil.getOpenScenariosId());
         siteDistService.addSiteDistByExcel(siteDist,file);
         return "redirect:/siteDist";
     }

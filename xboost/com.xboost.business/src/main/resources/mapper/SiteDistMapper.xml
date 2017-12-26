@@ -69,6 +69,9 @@
     <delete id="delById">
         DELETE FROM t_site_distance WHERE id = #{id}
     </delete>
+    <delete id="delByScenariosIdd">
+        DELETE FROM t_site_distance WHERE scenariosId = #{scenariosId}
+    </delete>
 
     <resultMap id="siteDistMap" type="SiteDist">
         <result property="id" column="id"/>

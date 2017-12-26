@@ -168,6 +168,14 @@ public class SiteDistService {
 
         siteDistMapper.delById(id);
     }
+    /**
+     * 删除网点信息
+     * @param scenariosId
+     */
+    public void delByScenariosIdd(String scenariosId) {
+
+        siteDistMapper.delByScenariosIdd(scenariosId);
+    }
 
     /**
      * 导出excel

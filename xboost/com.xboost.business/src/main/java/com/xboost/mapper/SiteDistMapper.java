@@ -47,5 +47,7 @@ public interface SiteDistMapper {
     //根据网点编码删除网点距离信息   * @param siteCode
     void delById(Integer id);
 
+    //根据网点编码删除网点距离信息   * @param scenariosId
+    void delByScenariosIdd(String scenariosId);
 
 }
