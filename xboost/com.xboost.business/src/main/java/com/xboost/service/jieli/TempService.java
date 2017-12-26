@@ -20,7 +20,7 @@ public class TempService {
      */
     @Inject
     TempMapper tempMapper;
-    public void saveArrInfo(Temp temp) {
+    public void saveTempInfo(Temp temp) {
         tempMapper.saveTemp(temp);
     }
     /**
