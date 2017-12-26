@@ -9,6 +9,6 @@ public interface TempMapper {
     // 根据查询条件获取模型整体参数  @param param @return
     void saveTemp(Temp tmep);
     //findAll
-    List<Temp> findAll(String scenariosId);
+    List<Temp> findAll01(String scenariosId);
 
 }

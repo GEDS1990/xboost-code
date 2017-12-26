@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.TempMapper">
+
+    <insert id="save" >
+        INSERT into t_jieli_temp(scenarios_name,scenarios_category,scenarios_desc,scenarios_model,scenarios_out,
+        scenarios_status,last_open_time,simulate_finish_time,str1,str2,str3,createtime,updatetime)
+        VALUES (#{scenariosName},#{scenariosCategory},#{scenariosDesc},#{scenariosModel},#{scenariosOut},
+        #{scenariosStatus},#{lastOpenTime},#{simulateFinishTime},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+    </insert>
+
+    <select id="findAll01" resultType="map">
+        select
+            m_od_id, scenario, scenario_lim1, scenario_lim2, i_route_id, distance, time, demand, point1, point2,
+            point3, point4, connection1, connection2, connection3, time1, time2, time3, dist1, dist2, dist3, timecost,
+            wait_time, timebucket_1, timebucket_2, timebucket_3, timebucket_4, timebucket_5, timebucket_6, timebucket_7,
+            timebucket_8, timebucket_9, timebucket_10, timebucket_11, timebucket_12, timebucket_13, timebucket_14,
+            timebucket_15, timebucket_16, timebucket_17, timebucket_18, timebucket_19, timebucket_20, timebucket_21, time_id1,
+            time_id2
+        from
+        (select
+            *, 1 as time_id1, 2 as time_id2, connection1||'-t1' as timebucket_1,connection2||'-t2' as timebucket_2,
+            '' as timebucket_3, '' as timebucket_4, '' as timebucket_5, '' as timebucket_6, '' as timebucket_7,
+            '' as timebucket_8, '' as timebucket_9, '' as timebucket_10, '' as timebucket_11, '' as timebucket_12,
+            '' as timebucket_13, '' as timebucket_14, '' as timebucket_15, '' as timebucket_16, '' as timebucket_17,
+            '' as timebucket_18, '' as timebucket_19, '' as timebucket_20, '' as timebucket_21
+        from three_points_route)
+    </select>
+
+    <select id="findByParam" parameterType="map">
+        SELECT * from t_jieli_temp
+        <where>
+            1 = 1
+            <if test="userId != null and userId != ''">
+                and id in (select scenariosId from t_jieli_temp where userId=#{userId})
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and scenarios_name LIKE #{keyword} or scenarios_category like #{keyword} or scenarios_desc like #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(*) FROM t_jieli_temp where id in (select scenariosId from t_scenarios_user where userId=#{userId})
+    </select>
+
+
+    <select id="findCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_jieli_temp
+        <where>
+            1 = 1
+            <if test="userId != null and userId != ''">
+                and id in (select scenariosId from t_scenarios_user where userId=#{userId})
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and scenarios_name LIKE #{keyword} or scenarios_category like #{keyword} or scenarios_desc like #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <delete id="delById">
+        DELETE FROM t_jieli_temp WHERE scenariosId = #{id} and userId = #{userId}
+    </delete>
+</mapper>

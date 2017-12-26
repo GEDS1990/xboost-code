@@ -28,7 +28,7 @@ public class TempService {
      * param
      * @return
      */
-    public List<Temp> findAll(String scenariosId) {
-        return tempMapper.findAll(scenariosId);
+    public List<Temp> findAll01(String scenariosId) {
+        return tempMapper.findAll01(scenariosId);
     }
 }
