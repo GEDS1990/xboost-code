@@ -39,6 +39,7 @@ public class CascadeController {
 
     @Inject
 	private SiteDistService siteDistService;
+    CascadeModelUtil cmu;
 
     @RequestMapping(value="/runSilumate",method = RequestMethod.POST)
     @ResponseBody
@@ -64,7 +65,7 @@ public class CascadeController {
             }
 
             try{
-                CascadeModelUtil cmu = new CascadeModelUtil(config,demandInfoService,siteDistService);
+                cmu = new CascadeModelUtil(config,demandInfoService,siteDistService);
                 cmu.run();
             }catch (NullPointerException e){
                 SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
@@ -84,5 +85,12 @@ public class CascadeController {
 
         }
         return null;
+    }
+    @RequestMapping(value="/restartSilumate",method = RequestMethod.GET)
+    @ResponseBody
+    public String restartSilumate(){
+        cmu.interrupt();
+        cmu.run();
+        return "success";
     }
 }
