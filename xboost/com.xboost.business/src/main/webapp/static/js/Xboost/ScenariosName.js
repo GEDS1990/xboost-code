@@ -846,8 +846,8 @@ $(function  () {
 	                },"name":"max_distance"},
 
 	                {"data":function(res){
-                    if(res.max_distance=="99999"){return "∞";}
-                    else{return res.max_distance;}
+                    if(res.max_running_time=="99999"){return "∞";}
+                    else{return res.max_running_time;}
                     },"name":"max_running_time"},
 
 	                {"data":function(res){
@@ -866,32 +866,68 @@ $(function  () {
 	                {"data":"a2","name":"a2"},
                     {"data":"costa1","name":"costa1"},
                     {"data":"costa2","name":"costa2"},
-                    {"data":"costa3","name":"costa3"},
+                    {"data":function (res){
+                    	var num = Number(res.costa3);
+                    	if (num != 0) {
+                    		return num.toFixed(2);
+                    	}
+                    	return res.costa3;
+                    },"name":"costa3"},
 	                {"data":"b1","name":"b1"},
 	                {"data":"b2","name":"b2"},
                     {"data":"costb1","name":"costb1"},
                     {"data":"costb2","name":"costb2"},
-                    {"data":"costb3","name":"costb3"},
+                    {"data":function (res){
+                    	var num = Number(res.costb3);
+                    	if (num != 0) {
+                    		return num.toFixed(2);
+                    	}
+                    	return res.costb3;
+                    },"name":"costb3"},
 	                {"data":"c1","name":"c1"},
 	                {"data":"c2","name":"c2"},
                     {"data":"costc1","name":"costc1"},
                     {"data":"costc2","name":"costc2"},
-                    {"data":"costc3","name":"costc3"},
+                    {"data":function (res){
+                    	var num = Number(res.costc3);
+                    	if (num != 0) {
+                    		return num.toFixed(2);
+                    	}
+                    	return res.costc3;
+                    },"name":"costc3"},
                     {"data":"d1","name":"d1"},
                     {"data":"d2","name":"d2"},
 	                {"data":"costd1","name":"costd1"},
 	                {"data":"costd2","name":"costd2"},
-	                {"data":"costd3","name":"costd3"},
+	                {"data":function (res){
+                    	var num = Number(res.costd3);
+                    	if (num != 0) {
+                    		return num.toFixed(2);
+                    	}
+                    	return res.costd3;
+                    },"name":"costd3"},
 	                {"data":"e1","name":"e1"},
                     {"data":"e2","name":"e2"},
 	                {"data":"coste1","name":"coste1"},
 	                {"data":"coste2","name":"coste2"},
-	                {"data":"coste3","name":"coste3"},
+	                {"data":function (res){
+                    	var num = Number(res.coste3);
+                    	if (num != 0) {
+                    		return num.toFixed(2);
+                    	}
+                    	return res.coste3;
+                    },"name":"coste3"},
 	                {"data":"f1","name":"f1"},
                     {"data":"f2","name":"f2"},
 	                {"data":"costf1","name":"costf1"},
 	                {"data":"costf2","name":"costf2"},
-	                {"data":"costf3","name":"costf3"},
+	                {"data":function (res){
+                    	var num = Number(res.costf3);
+                    	if (num != 0) {
+                    		return num.toFixed(2);
+                    	}
+                    	return res.costf3;
+                    },"name":"costf3"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-tran' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-tran' data-id='"+row.id+"'>Del</a>";
 	                }}
