@@ -82,7 +82,7 @@
         dimensions = #{dimensions},skills = #{skills},start_location = #{startLocation},
         end_location = #{endLocation},max_distance = #{maxDistance},max_running_time = #{maxRunningTime},
         cost_per_distance = #{costPerDistance},cost_per_time = #{costPerTime},fixed_cost = #{fixedCost},max_stop = #{maxStop},
-        velocity = #{velocity},fixed_round = #{fixedRound},fixed_round_fee = #{fixedRoundFee},
+        velocity = #{velocity},velocity2 = #{velocity2},velocity3 = #{velocity3},fixed_round = #{fixedRound},fixed_round_fee = #{fixedRoundFee},
         car_source = #{carSource},max_load = #{maxLoad},duration_unload_full = #{durationUnloadFull}
         where id = #{id}
     </update>

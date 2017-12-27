@@ -6,15 +6,15 @@
 
     <insert id="save">
         INSERT INTO t_site_distance(scenariosId,car_type,site_collect,site_delivery,car_distance,duration_night_delivery,
-        duration_night_delivery2，duration_night_delivery3，createtime)
-        VALUES (#{scenariosId},#{carType}, #{siteCollect}, #{siteDelivery}, #{carDistance}, #{durationNightDelivery},
+        duration_night_delivery2,duration_night_delivery3,createtime)
+        VALUES (#{scenariosId},#{carType},#{siteCollect}, #{siteDelivery},#{carDistance},#{durationNightDelivery},
         #{durationNightDelivery2},#{durationNightDelivery3},#{createTime})
     </insert>
 
     <update id="update">
         update t_site_distance set scenariosId = #{scenariosId},car_type = #{carType},site_collect = #{siteCollect},
         site_delivery = #{siteDelivery},car_distance = #{carDistance},duration_night_delivery = #{durationNightDelivery}，
-        duration_night_delivery2 = #{durationNightDelivery2}，duration_night_delivery3 = #{durationNightDelivery3}
+        duration_night_delivery2 = #{durationNightDelivery2},duration_night_delivery3 = #{durationNightDelivery3}
         where id = #{id}
     </update>
 
@@ -66,7 +66,7 @@
 
     <update id="editSiteDist">
         UPDATE t_site_distance SET scenariosId = #{scenariosId},carType = #{car_type},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
-        car_distance=#{car_distance},duration_night_delivery=#{durationNightDelivery},duration_night_delivery2 = #{durationNightDelivery2}，
+        car_distance=#{car_distance},duration_night_delivery=#{durationNightDelivery},duration_night_delivery2 = #{durationNightDelivery2},
         duration_night_delivery3 = #{durationNightDelivery3},createtime=#{createTime}
         where id = #{id}
     </update>
