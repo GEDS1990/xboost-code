@@ -9,6 +9,7 @@ public class CarLicence implements Serializable {
     private Integer id;
     private String scenariosId;
     private String name;         // 车名
+    private String busyIdle;
     private String type;           //车
     private String str1;                   //预留字段
     private String str2;                    //预留字段
@@ -46,6 +47,14 @@ public class CarLicence implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getBusyIdle() {
+        return busyIdle;
+    }
+
+    public void setBusyIdle(String busyIdle) {
+        this.busyIdle = busyIdle;
     }
 
     public String getStr1() {

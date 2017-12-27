@@ -161,6 +161,7 @@ public class CarService {
                                 carLicence.setScenariosId(ShiroUtil.getOpenScenariosId());
                                 carLicence.setName(name);
                                 carLicence.setType(type);
+                                carLicence.setBusyIdle("0");
                                 carLicence.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
                                 transportMapper.saveCarLincence(carLicence);
                             }

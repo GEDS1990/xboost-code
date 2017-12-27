@@ -18,8 +18,8 @@
     </insert>
 
     <insert id="saveCarLincence" useGeneratedKeys="true" keyProperty="id">
-        INSERT into t_car_licence(scenariosId,name,type,str1,str2,str3,create_time,update_time)
-        VALUES (#{scenariosId},#{name},#{type},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+        INSERT into t_car_licence(scenariosId,name,type,busy_idle,str1,str2,str3,create_time,update_time)
+        VALUES (#{scenariosId},#{name},#{type},#{busyIdle},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
     <update id="update">
@@ -138,6 +138,7 @@
         <result property="durationUnloadFull" column="duration_unload_full"/>
         <result property="type" column="type"/>
         <result property="name" column="name"/>
+        <result property="num" column="num"/>
         <result property="a1" column="a1"/>
         <result property="b1" column="b1"/>
         <result property="c1" column="c1"/>
