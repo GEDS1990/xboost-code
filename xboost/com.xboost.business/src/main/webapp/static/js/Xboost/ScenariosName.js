@@ -830,7 +830,7 @@ $(function  () {
 	                {"data":"id","name":"id"},
 	                {"data":"type","name":"type"},
 	                {"data":"carSource","name":"car_source"},
-	                
+	                {"data":"num","name":"num"},
 	                {"data":function  (res) {
 	                	if (res.maxStop == 99999) {
 	                		return "∞";
@@ -1061,6 +1061,7 @@ $(function  () {
 	                $("#siteId-tran").val(result.id);
 	                $("#type").val(result.type);
 	                $("#carSource").val(result.carSource);
+	                $("#num").val(result.num);
 	                $("#maxStop").val(result.maxStop);
 	                $("#maxLoad").val(result.maxLoad);
 	                $("#dimensions").val(result.dimensions);
