@@ -2,6 +2,7 @@ package com.xboost.mapper;
 
 import com.mckinsey.sf.data.Car;
 import com.mckinsey.sf.data.TimeWindow;
+import com.xboost.pojo.CarLicence;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public interface CarMapper {
 
     //  添加运力信息  @param transport
     void save(Car car);
+
+    void saveCarLincence(CarLicence carLicence);
 
     //  update运力信息  @param transport
     void update(Car car);
@@ -47,6 +50,7 @@ public interface CarMapper {
      * @return
      */
     void delByScenariosId(String scenariosId);
+    void delCarLincenceByScenariosId(String scenariosId);
 
     // 根据id编辑运力信息  @param transport
     void editTransport(Car transport);

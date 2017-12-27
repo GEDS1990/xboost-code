@@ -3,11 +3,9 @@ package com.xboost.service;
 import com.mckinsey.sf.data.Car;
 import com.mckinsey.sf.data.TimeWindow;
 import com.xboost.mapper.CarMapper;
+import com.xboost.pojo.CarLicence;
 import com.xboost.pojo.DemandInfo;
-import com.xboost.util.ExcelUtil;
-import com.xboost.util.ExportUtil;
-import com.xboost.util.QiniuUtil;
-import com.xboost.util.Strings;
+import com.xboost.util.*;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -50,6 +48,11 @@ public class CarService {
         transportMapper.saveTimeWindow(transport.getTw());
     }
 
+    public void saveCarLincence(CarLicence carLicence) {
+        carLicence.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+        transportMapper.saveCarLincence(carLicence);
+    }
+
     /**
      * 保存TimeWindow
      * @param tw
@@ -75,12 +78,15 @@ public class CarService {
 //                        File fileTemp = (File) multipartFile;
                         ExcelUtil excelUtil = new ExcelUtil();
                         List<String> lineList = excelUtil.readExcel(fileTmp,2);
+                        CarLicence carLicence = new CarLicence();
                         for(int i=2;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
                             transport.setName(row[1]);
                             transport.setCarType(row[1]);
-                            transport.setType(row[2]);
-                            transport.setDimensions(row[3]);
+                            transport.setType(row[1]);
+                            String type = transport.getType();
+                            transport.setNum(row[3]);
+                            Integer num = Integer.parseInt(transport.getNum());
                             transport.setCarSource(row[4]);
                             transport.setVelocity(Double.parseDouble((row[5].trim().equals(""))?"0":row[5].trim()));
                             transport.setVelocity2(Double.parseDouble((row[6].trim().equals(""))?"0":row[6].trim()));
@@ -148,6 +154,15 @@ public class CarService {
                                 transport.setId(row[0]);
                                 //update
                                 transportMapper.update(transport);
+                            }
+
+                            for(int k=1;k<num+1;k++){
+                                String name = type + k;
+                                carLicence.setScenariosId(ShiroUtil.getOpenScenariosId());
+                                carLicence.setName(name);
+                                carLicence.setType(type);
+                                carLicence.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+                                transportMapper.saveCarLincence(carLicence);
                             }
                         }
                         logger.info("insert into db complete");
@@ -231,6 +246,15 @@ public class CarService {
     public void delByScenariosId(String scenariosId) {
 
         transportMapper.delByScenariosId(scenariosId);
+    }
+
+    /**
+     * 删除运力信息
+     * @param scenariosId
+     */
+    public void delCarLincenceByScenariosId(String scenariosId) {
+
+        transportMapper.delCarLincenceByScenariosId(scenariosId);
     }
 
     public Car[] findCarByParam(Map<String, Object> param) {

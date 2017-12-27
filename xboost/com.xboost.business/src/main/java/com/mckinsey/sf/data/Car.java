@@ -26,6 +26,7 @@ public class Car implements Serializable{
 	private String name;   //车辆名称；
 	private String busyIdle; //车辆是否空闲；
 	private String carType;
+	private String num;
 
 	private String scenariosId;
 	@JsonProperty("dimensions")
@@ -156,6 +157,14 @@ public class Car implements Serializable{
 
 	public void setCarType(String carType) {
 		this.carType = carType;
+	}
+
+	public String getNum() {
+		return num;
+	}
+
+	public void setNum(String num) {
+		this.num = num;
 	}
 
 	public String getDimensions() {

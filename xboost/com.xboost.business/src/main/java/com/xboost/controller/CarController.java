@@ -72,6 +72,7 @@ public class CarController {
         tw.setEnd(1440);
         transport.setTw(tw);
         transportService.delByScenariosId(ShiroUtil.getOpenScenariosId());
+        transportService.delCarLincenceByScenariosId(ShiroUtil.getOpenScenariosId());
         transportService.addCarByExcel(transport,file);
         return "/ScenariosName/Conditions";
     }
