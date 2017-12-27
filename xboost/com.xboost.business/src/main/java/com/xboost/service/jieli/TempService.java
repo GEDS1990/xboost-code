@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.Map;
 
 @Named
 @Transactional
@@ -28,7 +29,7 @@ public class TempService {
      * param
      * @return
      */
-    public List<Temp> findAll01(String scenariosId) {
+    public List<Map> findAll01(String scenariosId) {
         return tempMapper.findAll01(scenariosId);
     }
 }
