@@ -480,7 +480,7 @@ public class RelayModeUtil implements IConstants {
         }
 //20171226
         //String code1 = "";
-
+        List<Map> route_three_point_list = tempService.findAll01(ShiroUtil.getOpenScenariosId());
 
 
         Matrix dense = DenseMatrix.Factory.zeros(4, 4);
