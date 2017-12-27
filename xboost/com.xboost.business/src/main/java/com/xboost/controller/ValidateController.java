@@ -69,77 +69,77 @@ public class ValidateController {
         String result="";
         int flag=0;
         Logger logger = LoggerFactory.getLogger(ValidateController.class);
-        for(int i=0;i<siteInfoList.size();i++){
+        for(int i=0;i<transportationList.size();i++){
             Car car = transportationList.get(i);
             if(Integer.parseInt(car.getMaxLoad())<1){
                 flag = flag + 1;
-                result = car.getCarType()+":maximum load is nust >1.\n";
+                result = ":maximum load is must >1.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(car.getMaxLoad())>2000){
                 flag = flag + 1;
-                result = car.getCarType()+":maximum load is nust >2000.\n";
+                result = ":maximum load is must <2000.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getVelocity()<5){
                 flag = flag + 1;
-                result = car.getCarType()+":speed is nust >5.\n";
+                result = ":speed is must >5.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getVelocity()>80){
                 flag = flag + 1;
-                result = car.getCarType()+":speed is nust >80.\n";
+                result = ":speed is must <80.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getMaxStop()<0){
                 flag = flag + 1;
-                result = car.getCarType()+":maximum stop is nust >0.\n";
+                result = ":maximum stop is must >0.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getMaxStop()>99){
                 flag = flag + 1;
-                result = car.getCarType()+":maximum stop is nust >99.\n";
+                result = ":maximum stop is must <99.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getMaxDistance()<0){
                 flag = flag + 1;
-                result = car.getCarType()+":maximum distance is nust >0.\n";
+                result = ":maximum distance is must >0.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getMaxDistance()>999){
                 flag = flag + 1;
-                result = car.getCarType()+":maximum distance is nust >999.\n";
+                result = ":maximum distance is must <999.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getMaxRunningTime()<0){
                 flag = flag + 1;
-                result = car.getCarType()+":maximum time is nust >0.\n";
+                result = ":maximum time is must >0.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getMaxRunningTime()>999){
+            if(car.getType().equals("百度")&&car.getMaxRunningTime()>999){
                 flag = flag + 1;
-                result = car.getCarType()+":maximum time is nust >999.\n";
+                result = ":maximum time is must <999.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getCostPerDistance()<1){
                 flag = flag + 1;
-                result = car.getCarType()+":vehicle piece capacity (p) is nust >1.\n";
+                result = ":vehicle piece capacity (p) is must >1.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getCostPerDistance()>2000){
                 flag = flag + 1;
-                result = car.getCarType()+":vehicle piece capacity (p) is nust >2000.\n";
+                result = ":vehicle piece capacity (p) is must <2000.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }

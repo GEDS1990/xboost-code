@@ -6,7 +6,7 @@
 
     <insert id="save">
         INSERT INTO t_site_distance(scenariosId,car_type,site_collect,site_delivery,car_distance,duration_night_delivery,
-        duration_night_delivery2，duration_night_delivery3，createtime)
+        duration_night_delivery2,duration_night_delivery3,createtime)
         VALUES (#{scenariosId},#{carType}, #{siteCollect}, #{siteDelivery}, #{carDistance}, #{durationNightDelivery},
         #{durationNightDelivery2},#{durationNightDelivery3},#{createTime})
     </insert>
