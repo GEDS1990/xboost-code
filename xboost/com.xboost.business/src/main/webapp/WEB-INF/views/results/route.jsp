@@ -138,7 +138,7 @@
 					    		<th rowspan="1">Deport ID</th>
 					    		<th rowspan="1">Deport Name</th>
 					    		<th rowspan="1">Deport Address</th>
-					    		<th rowspan="1">Arriva Time</th>
+					    		<th rowspan="1">Arrival Time</th>
 					    		<th rowspan="1">Operation</th>
 					    		<th rowspan="1">Departure Time</th>
 					    		<th rowspan="1">Next Deport & Distance</th>

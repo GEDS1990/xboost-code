@@ -105,7 +105,7 @@
 	    					<li>vehicle source:<span id="veh-source">--</span></li>
 	    					<li>vehicle weight limit:<span id="veh-limit">--</span></li>
 	    					<li>vehicle piece capacity:<span id="veh-piece">--</span></li>
-	    					<li>unloading time:<span id="veh-unloadtime">--</span></li>
+	    					<!--<li>unloading time:<span id="veh-unloadtime">--</span></li>-->
 	    					<li>speed:<span id="veh-speed">--</span></li>
 	    				</ul>
 	    			</div>

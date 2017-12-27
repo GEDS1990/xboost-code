@@ -193,8 +193,8 @@ $(function  () {
 			sContentLine +='<div class="clearfix">';
 			sContentLine +='<p style="float: left;">'+listPointX.curLoc+' to '+listPointY.curLoc+':</p>';
 			sContentLine +='<div style="float: left;">';
-			sContentLine +='<p>Departure time '+listPointX.arrTime+'</p>';
-			sContentLine +='<p>Arrival time '+listPointX.endTime+'</p>';
+			sContentLine +='<p>Arrival time '+listPointX.arrTime+'</p>';
+			sContentLine +='<p>Departure time '+listPointX.endTime+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
