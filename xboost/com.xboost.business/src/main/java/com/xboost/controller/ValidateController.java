@@ -113,9 +113,9 @@ public class ValidateController {
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getMaxDistance()>999){
+            if(car.getType().equals("百度")&&car.getMaxDistance()>5){
                 flag = flag + 1;
-                result = ":maximum distance is must <999.\n";
+                result = ":百度 maximum distance is must <5.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
@@ -125,12 +125,12 @@ public class ValidateController {
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getType().equals("百度")&&car.getMaxRunningTime()>999){
-                flag = flag + 1;
-                result = ":maximum time is must <999.\n";
-                logger.info(result);
-                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
+//            if(car.getType().equals("百度")&&car.getMaxRunningTime()>999){
+//                flag = flag + 1;
+//                result = ":maximum time is must <999.\n";
+//                logger.info(result);
+//                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+//            }
             if(car.getCostPerDistance()<1){
                 flag = flag + 1;
                 result = ":vehicle piece capacity (p) is must >1.\n";
