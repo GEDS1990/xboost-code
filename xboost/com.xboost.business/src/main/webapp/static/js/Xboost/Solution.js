@@ -27,7 +27,7 @@ $(function  () {
 		}
 		
 		
-		map.centerAndZoom(point, 14);
+		map.centerAndZoom(point, 13);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info,myIcon){
@@ -185,10 +185,10 @@ $(function  () {
 				pointB = new BMap.Point(listPointY.lng,listPointY.lat);					
 			var sContentLine = "";
 			sContentLine +='<div class="clearfix">';
-			sContentLine +='<p style="float: left;">Distance:</p>';
+			sContentLine +='<p style="float: left;">'+listPointX.curLoc+' to '+listPointY.curLoc+':</p>';
 			sContentLine +='<div style="float: left;">';
-			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+" "+listPointX.calcDis+'km'+'</p>';
-			sContentLine +='<p>'+listPointY.curLoc+' to '+listPointX.curLoc+" "+listPointX.calcDis+'km'+'</p>';
+			sContentLine +='<p>Departure time '+listPointX.arrTime+'</p>';
+			sContentLine +='<p>Arrival time '+listPointX.endTime+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
