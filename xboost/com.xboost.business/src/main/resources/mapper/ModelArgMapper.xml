@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xboost.mapper.ModelArgMapper">
 
-    <cache/>
 
     <insert id="add">
         INSERT into t_model_arg(scenariosId ,model_type,parameter_code,parameter_name,data,note,str1,str2,str3,createtime,updatetime)
