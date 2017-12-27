@@ -110,7 +110,7 @@ public class SolutionRouteController {
     public Map<String,Object> findIdleCar(String routeCount) {
         Map<String,Object> result = Maps.newHashMap();
         List<String> idleCar = solutionRouteService.findIdleCar(ShiroUtil.getOpenScenariosId(),routeCount);
-        List<String> usingCar = solutionRouteService.findUsingCar(ShiroUtil.getOpenScenariosId(),routeCount);
+        List<String> usingCar = solutionRouteService.findUsingCar1(ShiroUtil.getOpenScenariosId());
 
         result.put("usingCar",usingCar);
         result.put("idleCar",idleCar);

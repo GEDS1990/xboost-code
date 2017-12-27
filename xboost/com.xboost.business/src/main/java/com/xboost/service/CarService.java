@@ -85,7 +85,7 @@ public class CarService {
                             transport.setCarType(row[1]);
                             transport.setType(row[1]);
                             String type = transport.getType();
-                            transport.setNum(row[3]);
+                            transport.setNum(row[2]);
                             Integer num = Integer.parseInt(transport.getNum());
                             transport.setCarSource(row[4]);
                             transport.setVelocity(Double.parseDouble((row[5].trim().equals(""))?"0":row[5].trim()));
@@ -99,6 +99,7 @@ public class CarService {
 //                            transport.setFixedRound(Double.parseDouble((row[10].trim().equals(""))?"0":row[10].trim()));
 //                            transport.setFixedRoundFee(Double.parseDouble((row[11].trim().equals(""))?"0":row[11].trim()));
                             transport.setMaxLoad(row[3]);
+                            transport.setDimensions(row[3]);
                             transport.setMaxRunningTime(Double.parseDouble((row[10].trim().equals(""))?"0":row[10].trim()));
                             transport.setMaxStop(Integer.parseInt((row[8].trim().equals(""))?"0":row[8].trim()));
 //                            transport.setSkills(row[0]);

@@ -118,7 +118,7 @@
     </update>
 
     <select id="findUsingCar" resultType="String" parameterType="map">
-        SELECT DISTINCT(c.t_car_licence) FROM t_car_info c inner join t_solution_route r on r.car_type = c.type
+        SELECT DISTINCT(c.t_name) FROM t_car_info c inner join t_solution_route r on r.car_type = c.type
         WHERE c.scenariosId=#{scenariosId} and r.scenariosId=#{scenariosId}
         and r.route_count=#{routeCount} and c.busy_idle="1"
     </select>
