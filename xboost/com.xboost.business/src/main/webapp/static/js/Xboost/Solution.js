@@ -41,8 +41,13 @@ $(function  () {
 		  	this.closeInfoWindow();
 		  });
 		}
-		function addpPyline (pointA,pointB,infoWindowLine) {
-			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
+		function addpPyline (pointA,pointB,infoWindowLine,color) {
+			if (color == 1) {
+				var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"deeppink", strokeWeight:2, strokeOpacity:0.8});  //定义折线
+			}else{
+				var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
+			}
+			
 			map.addOverlay(polyline);//添加折线到地图上
 			polyline.addEventListener("mouseover", function(e){
 				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
@@ -55,7 +60,7 @@ $(function  () {
 		  		
 		  	});
 		}
-		function depotPylineInfo (listPointX,listPointY) {
+		function depotPylineInfo (listPointX,listPointY,color) {
 			var pointA = new BMap.Point(listPointX.lng,listPointX.lat),
 				pointB = new BMap.Point(listPointY.lng,listPointY.lat);					
 			var sContentLine = "";
@@ -66,8 +71,9 @@ $(function  () {
 			sContentLine +='<p>'+listPointY.curLoc+' to '+listPointX.curLoc+" "+listPointX.calcDis+'km'+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
-			addpPyline(pointA,pointB,infoWindowLine);
+			addpPyline(pointA,pointB,infoWindowLine,color);
 		}
+		
 		//初始化坐标
 		var p_len = listPoint.length;
 		for (var j = 0;j<p_len;j++) {
@@ -130,7 +136,7 @@ $(function  () {
 				var nlen = nextlist.length;
 				for (var y=0;y<nlen;y++) {
 					if (nextlist[y] == val) {
-						depotPylineInfo(listPoint[index],listPoint[x]);
+						depotPylineInfo(listPoint[index],listPoint[x],1);
 					} 
 				}
 			}
