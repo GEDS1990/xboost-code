@@ -138,7 +138,7 @@
     </select>
 
     <select id="findRouteCount" resultType="String">
-        SELECT DISTINCT(route_count) FROM t_solution_route WHERE c.scenariosId=#{scenariosId}
+        SELECT DISTINCT(route_count) FROM t_solution_route WHERE scenariosId=#{scenariosId}
     </select>
 
     <resultMap id="modelRoute" type="Route">
