@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xboost.mapper.CarMapper">
 
-    <cache/>
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT into t_car_info(scenariosId,name,carType,busy_idle,type,num,dimensions,skills,start_location,end_location,max_distance,
         max_running_time,cost_per_distance,cost_per_time,fixed_cost,max_stop,velocity,velocity2,velocity3,fixed_round,fixed_round_fee,
