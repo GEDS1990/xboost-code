@@ -251,7 +251,9 @@ $(function  () {
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
-		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,24));
+		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,24),{
+		  	anchor: new BMap.Size(10, 24)
+		  });
 			  var marker = new BMap.Marker(point,{icon:myIcon});
 		  map.addOverlay(marker);
 		  marker.addEventListener("mouseover", function(){
@@ -1165,7 +1167,7 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var datas = api.rows( {page:'current'} ).data();
-			        //console.log(datas);
+			        console.log(datas);
 			        var datas_len = datas.length;
 			        if (datas_len !=0) {
 			        	var result = datas[0];
