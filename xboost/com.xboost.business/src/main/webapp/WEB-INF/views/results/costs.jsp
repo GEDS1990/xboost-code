@@ -139,6 +139,7 @@
 		    							<input type="hidden" name="totalCost" v-bind:value="allcost"/>
 		    						</ul>
 		    						<p>总成本: {{allcost}} <span> (per piece)</span></p>
+		    						<p>{{a}}</p>
 		    					</div>
 		    				</div>
 	    				</form>
