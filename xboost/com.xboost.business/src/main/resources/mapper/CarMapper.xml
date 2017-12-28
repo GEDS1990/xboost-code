@@ -5,12 +5,12 @@
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT into t_car_info(scenariosId,name,carType,busy_idle,type,num,dimensions,skills,start_location,end_location,max_distance,
         max_running_time,cost_per_distance,cost_per_time,fixed_cost,max_stop,velocity,velocity2,velocity3,fixed_round,fixed_round_fee,
-        car_source,max_load,duration_unload_full,a1,b1,c1,d1,e1,f1,a2,b2,c2,d2,e2,f2,costa1,costb1,costc1,costd1,coste1,costf1,
+        car_source,max_load,duration_unload_full,price_type,a1,b1,c1,d1,e1,f1,a2,b2,c2,d2,e2,f2,costa1,costb1,costc1,costd1,coste1,costf1,
         costa2,costb2,costc2,costd2,coste2,costf2,costa3,costb3,costc3,costd3,coste3,costf3,
         createtime,updatetime)
         VALUES (#{scenariosId},#{name},#{carType},#{busyIdle},#{type},#{num},#{dimensions},#{skills},#{startLocation},#{endLocation},#{maxDistance},
         #{maxRunningTime},#{costPerDistance},#{costPerTime},#{fixedCost},#{maxStop},#{velocity},#{velocity2},#{velocity3},#{fixedRound},#{fixedRoundFee},
-        #{carSource},#{maxLoad},#{durationUnloadFull},#{a1},#{b1},#{c1},#{d1},#{e1},#{f1},#{a2},#{b2},#{c2},#{d2},#{e2},#{f2},
+        #{carSource},#{maxLoad},#{durationUnloadFull},#{priceType},#{a1},#{b1},#{c1},#{d1},#{e1},#{f1},#{a2},#{b2},#{c2},#{d2},#{e2},#{f2},
         #{costa1},#{costb1},#{costc1},#{costd1},#{coste1},#{costf1}, #{costa2},#{costb2},#{costc2},#{costd2},#{coste2},#{costf2},
         #{costa3},#{costb3},#{costc3},#{costd3},#{coste3},#{costf3},
         #{createTime},#{updateTime})
@@ -27,7 +27,7 @@
         max_running_time = #{maxRunningTime},cost_per_distance = #{costPerDistance},cost_per_time = #{costPerTime},
         fixed_cost = #{fixedCost},max_stop = #{maxStop},velocity = #{velocity},velocity2 = #{velocity2},velocity3 = #{velocity3},fixed_round = #{fixedRound},
         fixed_round_fee = #{fixedRoundFee},car_source = #{carSource},max_load = #{maxLoad},duration_unload_full = #{durationUnloadFull},
-        a1 = #{a1},b1 = #{b1},c1 = #{c1},d1 = #{d1},e1 = #{e1},f1 = #{f1},costa1 = #{costa1},costb1 = #{costb1},costc1 = #{costc1},costd1 = #{costd1},
+        price_type = #{priceType},a1 = #{a1},b1 = #{b1},c1 = #{c1},d1 = #{d1},e1 = #{e1},f1 = #{f1},costa1 = #{costa1},costb1 = #{costb1},costc1 = #{costc1},costd1 = #{costd1},
         coste1 = #{coste1},costf1 = #{costf1},
         a2 = #{a2},b2 = #{b2},c2 = #{c2},d2 = #{d2},e2 = #{e2},f2 = #{f2},costa2 = #{costa2},costb2 = #{costb2},costc2 = #{costc2},costd2 = #{costd2},
         coste2 = #{coste2},costf2 = #{costf2}，costa3 = #{costa3},costb3 = #{costb3},costc3 = #{costc3},costd3 = #{costd3},
@@ -87,7 +87,7 @@
         end_location = #{endLocation},max_distance = #{maxDistance},max_running_time = #{maxRunningTime},
         cost_per_distance = #{costPerDistance},cost_per_time = #{costPerTime},fixed_cost = #{fixedCost},max_stop = #{maxStop},
         velocity = #{velocity},velocity2 = #{velocity2},velocity3 = #{velocity3},fixed_round = #{fixedRound},fixed_round_fee = #{fixedRoundFee},
-        car_source = #{carSource},max_load = #{maxLoad},duration_unload_full = #{durationUnloadFull}
+        car_source = #{carSource},max_load = #{maxLoad},duration_unload_full = #{durationUnloadFull},price_type = #{priceType}
         where id = #{id}
     </update>
 
@@ -138,6 +138,7 @@
         <result property="type" column="type"/>
         <result property="name" column="name"/>
         <result property="num" column="num"/>
+        <result property="priceType" column="price_type"/>
         <result property="a1" column="a1"/>
         <result property="b1" column="b1"/>
         <result property="c1" column="c1"/>

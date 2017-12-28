@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xboost.mapper.SolutionCostMapper">
 
-    <cache/>
 
     <insert id="add">
         INSERT into t_solution_cost(scenariosId ,model_type,plan,selected,site_people_work,distrib_people_work,site_count,people_num_per_site,
