@@ -287,7 +287,7 @@
 											<span><label><input type="radio" data-name="costb1" value="/ride" />/ride</span></label>
 											<span><label><input type="radio" data-name="costb2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="costb3" min="1" /></span>
+											<span><input type="number" class="km-min" name="costb3" min="0" /></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -304,7 +304,7 @@
 											<span><label><input type="radio" data-name="costc1" value="/ride" />/ride</span></label>
 											<span><label><input type="radio" data-name="costc2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="costc3" min="1" /></span>
+											<span><input type="number" class="km-min" name="costc3" min="0" /></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -321,7 +321,7 @@
 											<span><label><input type="radio" data-name="costd1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="costd2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="costd3" min="1" /></span>
+											<span><input type="number" class="km-min" name="costd3" min="0" /></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -338,7 +338,7 @@
 											<span><label><input type="radio" data-name="coste1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="coste2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="coste3" min="1" /></span>
+											<span><input type="number" class="km-min" name="coste3" min="0" /></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -355,7 +355,7 @@
 											<span><label><input type="radio" data-name="costf1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="costf2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="costf3" min="1" /></span>
+											<span><input type="number" class="km-min" name="costf3" min="0" /></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -510,7 +510,7 @@
 											<span><label><input type="radio" data-name="costb1" value="/ride" />/ride</span></label>
 											<span><label><input type="radio" data-name="costb2" value="/km" />/km</span></label>
 											<span>+</span>
-											<span><input type="number" name="costb3" class="km-min" id="costb3" min="1" /></span>
+											<span><input type="number" name="costb3" class="km-min" id="costb3" min="0" /></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -527,7 +527,7 @@
 											<span><label><input type="radio" data-name="costc1" value="/ride" />/ride</span></label>
 											<span><label><input type="radio" data-name="costc2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" name="costc3" class="km-min" id="costc3" min="1" /></span>
+											<span><input type="number" name="costc3" class="km-min" id="costc3" min="0" /></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -544,7 +544,7 @@
 											<span><label><input type="radio" data-name="costd1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="costd2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" name="costd3" class="km-min" id="costd3" min="1" /></span>
+											<span><input type="number" name="costd3" class="km-min" id="costd3" min="0" /></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -561,7 +561,7 @@
 											<span><label><input type="radio" data-name="coste1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="coste2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" name="coste3" class="km-min" id="coste3" min="1" /></span>
+											<span><input type="number" name="coste3" class="km-min" id="coste3" min="0" /></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -578,7 +578,7 @@
 											<span><label><input type="radio" data-name="costf1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="costf2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="costf3" id="costf3" min="1" /></span>
+											<span><input type="number" class="km-min" name="costf3" id="costf3" min="0" /></span>
 											<span>/min</span>
 										</td>
 								</tbody>
