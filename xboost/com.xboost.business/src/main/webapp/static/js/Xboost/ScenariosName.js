@@ -70,7 +70,7 @@ $(function  () {
 			var xss = pattern.test(_input[i].value);
 			var _inputType = _input[i].getAttribute("required");
 			var _inputHid = _input[i].getAttribute("type");
-			console.log(_inputType+"----------"+_inputHid)
+			//console.log(_inputType+"----------"+_inputHid)
 			//console.log(xss)
 			if (Boolean(_inputType) == true  ) {
 				if (_input[i].value == "" || xss == true) {
@@ -1196,17 +1196,24 @@ $(function  () {
 	        });
 	
 	        $("#editBtn-tran").click(function(){
-	        	FormInput("editUserForm-tran",function (){
-	        		$.post("/car/edit",$("#editUserForm-tran").serialize()).done(function(result){
-		                if(result == "success") {
-		                    $("#editUserModal-tran").modal("hide");
-		                    dt.ajax.reload();
-		                    window.location.reload(); 
-		                }
-		            }).fail(function(){
-		                alert("Modify user exception");
-		            });
-	        	});
+//	        	var km = $('input[value="/km"]:checked');
+//	        	km.each(function  (){
+//	        		console.log($(this).val())
+//	        	});
+	        	//console.log(_val)
+	        		FormInput("editUserForm-tran",function (){
+		        		$.post("/car/edit",$("#editUserForm-tran").serialize()).done(function(result){
+			                if(result == "success") {
+			                    $("#editUserModal-tran").modal("hide");
+			                    dt.ajax.reload();
+			                    window.location.reload(); 
+			                }
+			            }).fail(function(){
+			                alert("Modify user exception");
+			            });
+		        	});
+
+	        	
 	            
 	
 	        });

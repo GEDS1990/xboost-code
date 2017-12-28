@@ -122,6 +122,11 @@ $(function (){
 						this.sumK();
 					}
 					
+				},
+				computed:{
+					a:function (){
+						console.log(this.allcost);
+					}
 				}
 				
 			});
@@ -243,6 +248,11 @@ $(function (){
 						this.sumK();
 					}
 					
+				},
+				computed:{
+					allcost:function (){
+						console.log(this.allcost);
+					}
 				}
 			
 			});

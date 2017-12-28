@@ -151,8 +151,9 @@ $(function  () {
 	//route map
 	function routeMapInit (listPoints,val,listPoint) {
 		map.clearOverlays();
-		
-		var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
+		if (listPoint != undefined) {
+			var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
+		}
 		
 		map.centerAndZoom(point, 14);
 		map.enableScrollWheelZoom(true);
@@ -217,7 +218,7 @@ $(function  () {
 			//console.log(infoWindow)
 			addMarker(points,infoWindow);
 		}
-		if (val) {
+		if (val && listPoint != undefined) {
 			//规划线路
 			//console.log(listPoint)
 			var list = [];
@@ -284,10 +285,10 @@ $(function  () {
 				pointB = new BMap.Point(listPointY.lng,listPointY.lat);					
 			var sContentLine = "";
 			sContentLine +='<div class="clearfix">';
-			sContentLine +='<p style="float: left;">Distance:</p>';
+			sContentLine +='<p style="float: left;">'+listPointX.curLoc+' to '+listPointY.curLoc+':</p>';
 			sContentLine +='<div style="float: left;">';
-			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+" "+listPointX.calcDis+'km'+'</p>';
-			sContentLine +='<p>'+listPointY.curLoc+' to '+listPointX.curLoc+" "+listPointX.calcDis+'km'+'</p>';
+			sContentLine +='<p>Arrival time '+listPointX.arrTime+'</p>';
+			sContentLine +='<p>Departure time '+listPointX.endTime+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
@@ -878,7 +879,9 @@ $(function  () {
 	            			if (_val) {
 	            				table.search(_val).draw();
 	            				routeMapInit(listPoint,_val);
+	            				console.log(1)
 	            				$.get("/route/totalDistance.json",{"routeCount":_val}).done(function (res){
+	            					console.log(res)
 									if (res) {
 										$('#total-distance').text(res+" km");
 									}
@@ -905,6 +908,7 @@ $(function  () {
 			        	var result = data,
 			        	listPoint = [];
 			        	var res = data[0];
+			        	//派车
 			        	$.get("/route/planCar.json",{"routeCount":res.routeCount}).done(function (data){
 	            			//console.log(data);
 	            			if (data.usingCar) {
@@ -981,6 +985,7 @@ $(function  () {
 	            $('#route-name').text(_text);
 				
 				$.get("/route/totalDistance.json",{"routeCount":val}).done(function (res){
+					
 					if (res) {
 						$('#total-distance').text(res+" km");
 					}
