@@ -84,7 +84,7 @@
                                 <th rowspan="2">Id</th>
                                 <th rowspan="2">vehicle type</th>
                                 <th rowspan="2">vehicle source</th>
-                                
+                                <th rowspan="2">vehicle num</th>
 					    		<th rowspan="2">max<br />Stop</th>
                                 <th rowspan="2">maximum load(p)</th>
 					    		
@@ -171,6 +171,13 @@
                             	<option value="hire">hire</option>
                             	<option value="own">own</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        
+                        <label class="col-sm-2 control-label">vehicle num</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="num" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -388,6 +395,13 @@
                             	<option value="hire">hire</option>
                             	<option value="own">own</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        
+                        <label class="col-sm-2 control-label">vehicle num</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="num" id="num" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
