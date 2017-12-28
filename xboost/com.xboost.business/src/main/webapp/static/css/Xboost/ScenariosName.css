@@ -437,6 +437,9 @@ table.table-bordered.dataTable td:last-child {
 .tran-add-tbody>tr>td label{
 	width: 20%;
 }
+.km-min.active{
+	cursor: not-allowed;
+}
 
 /************result***********************************/
 /***route***/
