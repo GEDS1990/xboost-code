@@ -225,7 +225,7 @@ public class OutputPrinter implements IConstants {
 				if(!prevLoc.equals(cur.getLocation())){
 					ArrInfo arrInfo = new ArrInfo();
 					arrInfo.setArrTime(astat.getArrTime());
-					arrInfo.setEndTime(astat.getEndTime());
+					arrInfo.setEndTime(astat.getEndTime()+SE_TIME);
 					arrInfo.setLocation(cur.getLocation());
 					arrInfo.setRouteId(r.getId());
 //					arrInfos.add(arrInfo);
@@ -537,7 +537,7 @@ public class OutputPrinter implements IConstants {
 							case POS_MIDDLE :
 							case POS_END :
 								arrTime = actStat.getArrTime();
-								endTime = actStat.getEndTime();
+								endTime = actStat.getEndTime()+SE_TIME;
 								break;
 						
 						}
