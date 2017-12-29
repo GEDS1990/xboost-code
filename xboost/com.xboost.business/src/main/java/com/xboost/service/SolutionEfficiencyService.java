@@ -57,12 +57,12 @@ public class SolutionEfficiencyService {
     }
 
     //到达车辆
-    public List<String> findArrCar(Map<String,Object> param) {
+    public Integer findArrCar(Map<String,Object> param) {
         return solutionEfficiencyMapper.findArrCar(param);
     }
 
     //发出车辆
-    public List<String> findLeaveCar(Map<String,Object> param) {
+    public Integer findLeaveCar(Map<String,Object> param) {
         return solutionEfficiencyMapper.findLeaveCar(param);
     }
 
