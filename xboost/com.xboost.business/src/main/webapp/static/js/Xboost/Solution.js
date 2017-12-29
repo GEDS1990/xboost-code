@@ -15,8 +15,9 @@ $(function  () {
 	//初始化地图
 	function depotMapInit (listPoint,val) {
 		map.clearOverlays();
-		var p_len = listPoint.length;
+		
 		if (val) {
+			var p_len = listPoint.length;
 			for (var a=0;a<p_len;a++) {
 				if (listPoint[a].curLoc == val) {
 					var point = new BMap.Point(listPoint[a].lng,listPoint[a].lat);
@@ -60,15 +61,15 @@ $(function  () {
 		  		
 		  	});
 		}
-		function depotPylineInfo (listPointX,listPointY,color) {
+		function depotPylineInfo (listPointX,listPointY,calcDis,color) {
 			var pointA = new BMap.Point(listPointX.lng,listPointX.lat),
 				pointB = new BMap.Point(listPointY.lng,listPointY.lat);					
 			var sContentLine = "";
 			sContentLine +='<div class="clearfix">';
 			sContentLine +='<p style="float: left;">Distance:</p>';
 			sContentLine +='<div style="float: left;">';
-			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+" "+listPointX.calcDis+'km'+'</p>';
-			sContentLine +='<p>'+listPointY.curLoc+' to '+listPointX.curLoc+" "+listPointX.calcDis+'km'+'</p>';
+			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+" "+calcDis+'km'+'</p>';
+			sContentLine +='<p>'+listPointY.curLoc+' to '+listPointX.curLoc+" "+calcDis+'km'+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine,color);
@@ -119,14 +120,16 @@ $(function  () {
 					var index = a;
 					var indnext = listPoint[a].nextCurLoc;
 					var indlen = listPoint[a].nextCurLoc.length;
+					
 				}
 			}
 			for (var b=0;b<indlen;b++) {
 				for (var q=0;q<p_len;q++) {
-					var b1 = indnext[b];
+					var b0 = indnext[b].calcDis;
+					var b1 = indnext[b].nextCurLoc;
 					var b2 = listPoint[q].curLoc;
 					if (b1==b2) {
-						depotPylineInfo(listPoint[index],listPoint[q]);
+						depotPylineInfo(listPoint[index],listPoint[q],b0);
 					}
 				}
 				
@@ -135,8 +138,10 @@ $(function  () {
 				var nextlist = listPoint[x].nextCurLoc;
 				var nlen = nextlist.length;
 				for (var y=0;y<nlen;y++) {
-					if (nextlist[y] == val) {
-						depotPylineInfo(listPoint[index],listPoint[x],1);
+					var res1 = nextlist[y].nextCurLoc;
+					var res2 = nextlist[y].calcDis;
+					if (res1 == val) {
+						depotPylineInfo(listPoint[index],listPoint[x],res2,1);
 					} 
 				}
 			}
@@ -245,9 +250,12 @@ $(function  () {
 		
 	}
 	//
-	function vehiclesMapInit (listPoint,val) {
+	function vehiclesMapInit (listPoints,val,listPoint) {
 		map.clearOverlays();
-		var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
+		if (listPoint != undefined) {
+			var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
+		}
+		
 		map.centerAndZoom(point, 14);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
@@ -271,7 +279,7 @@ $(function  () {
 			addArrow(polyline,15,Math.PI/7);
 			
 			polyline.addEventListener("mouseover", function(e){
-				console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
+				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
 				var point = new BMap.Point(e.point.lng,e.point.lat);
 		  		map.openInfoWindow(infoWindowLine,point);
 		  		
@@ -295,27 +303,28 @@ $(function  () {
 			//console.log("v")
 		}
 		//初始化坐标
-		var p_len = listPoint.length;
+		var p_len = listPoints.length;
 		for (var j = 0;j<p_len;j++) {
-			var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
+			var points = new BMap.Point(listPoints[j].lng,listPoints[j].lat);
 			//console.log(points)
 			var sContent = "";
-			sContent += '<p>ID: '+listPoint[j].curLoc+'</p>';
-			sContent += '<p>Type: '+listPoint[j].siteType+'</p>';
-			sContent += '<p>Name: '+listPoint[j].siteName+'</p>';
-			sContent += '<p>Arrival Time: '+listPoint[j].arrTime+'</p>';
-			sContent += '<p>Unload: '+listPoint[j].unloadVol+'</p>';
-			sContent += '<p>Load: '+listPoint[j].sbVol+'</p>';
-			sContent += '<p>Departure Time: '+listPoint[j].endTime+'</p>';
+			sContent += '<p>ID: '+listPoints[j].curLoc+'</p>';
+			sContent += '<p>Type: '+listPoints[j].siteType+'</p>';
+			sContent += '<p>Name: '+listPoints[j].siteName+'</p>';
+			sContent += '<p>Arrival Time: '+listPoints[j].arrTime+'</p>';
+			sContent += '<p>Unload: '+listPoints[j].unloadVol+'</p>';
+			sContent += '<p>Load: '+listPoints[j].sbVol+'</p>';
+			sContent += '<p>Departure Time: '+listPoints[j].endTime+'</p>';
 			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
 			//console.log(infoWindow)
 			addMarker(points,infoWindow);
 		}
-		if (val) {
+		if (val && listPoint != undefined) {
 			//规划线路
 			//console.log(listPoint)
 			var list = [];
-			for (var q=0;q<p_len;q++) {
+			var p_lens = listPoint.length;
+			for (var q=0;q<p_lens;q++) {
 				var carName = listPoint[q].carName;
 				if (val == carName) {
 					list.push(listPoint[q]);
@@ -599,19 +608,47 @@ $(function  () {
 	            			var nextlist = [];
 	            			var nextlists = [];
 	            			var liser = {};
+	            			
 	            			for (var f = 0;f<len;f++) {
+	            				var liserN = {};
 	            				var s1 = Arr[j].curLoc;
 	            				var s2 = result[f].curLoc;
 	            				if (s1 == s2) {
-	            					nextlists.push(result[f].nextCurLoc);
-	            					nextlist = unique(nextlists);
+	            					if (result[f].nextCurLoc != '') {
+	            						liserN["nextCurLoc"] = result[f].nextCurLoc;
+	            						liserN["calcDis"] = result[f].calcDis;
+	            						nextlists.push(liserN);
+	            						nextlist =uniqeByKeys(nextlists,["nextCurLoc"]);
+	            					}
+	            					
 	            				}
 								
 		            		}
+	            			/*
+	            			for (var f = 0;f<len;f++) {
+	            				var liserN = {};
+	            				var s1 = Arr[j].curLoc;
+	            				var s2 = result[f].curLoc;
+	            				if (s1 == s2) {
+	            					if (result[f].nextCurLoc != '') {
+	            						liserN["nextCurLoc"] = result[f].nextCurLoc;
+	            						var arrTime = operationTime(result[f].arrTime);
+										var endTime = operationTime(result[f].endTime);
+										liserN["arrTime"] = arrTime;
+										liserN["endTime"] = endTime;
+										liserN["sbVol"] = result[f].sbVol;
+										liserN["unloadVol"] = result[f].unloadVol;
+	            						nextlists.push(liserN);
+	            						nextlist = nextlists;
+	            					}
+	            					
+	            				}
+								
+		            		}*/
+	            			
 	            			liser["curLoc"] = Arr[j].curLoc;
 							liser["siteType"] = Arr[j].siteType;
 							liser["siteName"] = Arr[j].siteName;
-							liser["calcDis"] = Arr[j].calcDis;
 							liser["lng"] = Arr[j].siteLongitude;
 							liser["lat"] = Arr[j].siteLatitude;
 							liser["nextCurLoc"] = nextlist;
@@ -621,7 +658,7 @@ $(function  () {
 							
 	            		
 						//查询所有网点坐标
-						//console.log(listPoint)
+						console.log(listPoint)
 						listArry="";
 						listArry = listPoint;
 							
@@ -638,21 +675,9 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var Datas = api.rows( {page:'current'} ).data();
-			        //console.log(Datas);
+			        console.log(Datas);
 			        var listPoint = [];
 			        var _len = Datas.length;
-			        for (var f = 0;f<_len;f++) {
-            			var liser = {};
-						liser["curLoc"] = Datas[f].curLoc;
-						liser["siteType"] = Datas[f].siteType;
-						liser["siteName"] = Datas[f].siteName;
-						liser["calcDis"] = Datas[f].calcDis;
-						liser["lng"] = Datas[f].siteLongitude;
-						liser["lat"] = Datas[f].siteLatitude;
-						liser["nextCurLoc"] = Datas[f].nextCurLoc
-						listPoint.push(liser);
-            		}
-			        //console.log(listPoint)
 			        if (_len != 0 && count != "") {
 			        	var res = Datas[0];
 						$('#depot').text("Depot "+res.siteCode);
@@ -879,9 +904,9 @@ $(function  () {
 	            			if (_val) {
 	            				table.search(_val).draw();
 	            				routeMapInit(listPoint,_val);
-	            				console.log(1)
+	            				
 	            				$.get("/route/totalDistance.json",{"routeCount":_val}).done(function (res){
-	            					console.log(res)
+	            					//console.log(res)
 									if (res) {
 										$('#total-distance').text(res+" km");
 									}
@@ -952,9 +977,7 @@ $(function  () {
 								listPoint.push(liser);
 		            		}
 		            		var val = $('#route-route').val();
-		            		if (data_len<listLen) {
-		            			routeMapInit(listArry,val,listPoint);
-		            		}
+	            			routeMapInit(listArry,val,listPoint);
 		            		
 		            		//console.log(listPoint)
 		            		
@@ -1105,6 +1128,8 @@ $(function  () {
 	            	var $this = this;
 	            	//console.log(data);
 	            	if (data.data.length != 0) {
+	            		listLen = '';
+	            		listLen = data.data.length;
 	            		$('#depots-map').show();
 	            		var result = data.data,
 	            		arr = [],
@@ -1154,7 +1179,7 @@ $(function  () {
 	            		}
 	            		//console.log(listPoint);
 	            		listArry="";
-						listArry = listPoint;
+						listArry = uniqeByKeys(listPoint,["curLoc"]);
 	            		
 	            		
 	            		var table = $('#SolutionVehicles').DataTable();
@@ -1172,16 +1197,40 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var datas = api.rows( {page:'current'} ).data();
-			        console.log(datas);
+			        //console.log(datas);
 			        var datas_len = datas.length;
 			        if (datas_len !=0) {
-			        	var result = datas[0];
-			        	$('#veh-type').text(result.carType);
-			        	$('#veh-source').text(result.carSource);
-			        	$('#veh-limit').text(result.maxLoad);
-			        	$('#veh-piece').text(result.maxRunningTime);
-			        	$('#veh-unloadtime').text(result.durationUnloadFull);
-			        	$('#veh-speed').text(result.velocity+" km/h");
+			        	var result = datas,
+			        	listPoint = [];
+			        	var res = datas[0];
+			        	$('#veh-type').text(res.carType);
+			        	$('#veh-source').text(res.carSource);
+			        	$('#veh-limit').text(res.maxLoad);
+			        	$('#veh-piece').text(res.maxRunningTime);
+			        	$('#veh-unloadtime').text(res.durationUnloadFull);
+			        	$('#veh-speed').text(res.velocity+" km/h");
+			        	for (var f = 0;f<datas_len;f++) {
+	            			var liser = {};
+	            			liser["carName"] = result[f].carName;
+							liser["curLoc"] = result[f].curLoc;
+							liser["siteType"] = result[f].siteType;
+							liser["siteName"] = result[f].siteName;
+							liser["calcDis"] = result[f].calcDis;
+							liser["lng"] = result[f].siteLongitude;
+							liser["lat"] = result[f].siteLatitude;
+							liser["nextCurLoc"] = result[f].nextCurLoc;
+							var arrTime = operationTime(result[f].arrTime);
+							var endTime = operationTime(result[f].endTime);
+							liser["arrTime"] = arrTime;
+							liser["endTime"] = endTime;
+							liser["sbVol"] = result[f].sbVol;
+							liser["unloadVol"] = result[f].unloadVol;
+							liser["sequence"] = result[f].sequence;
+							listPoint.push(liser);
+	            		}
+			        	var _val = $('#route-vehicles').val();
+			        	vehiclesMapInit(listArry,_val,listPoint);
+			        	
 			        }else{
 			        	$('#route-name').text("No Data");
 			        	$('#veh-type').text("--");
