@@ -72,6 +72,9 @@ public interface IConstants {
 	int POS_START = 1;
 	int	POS_MIDDLE = 2;
 	int POS_END = 3;
+
+	//上/下车装卸货耗时
+	int SE_TIME = 10;
 	
 	String PICKUP = "PICKUP";
 	String DELIVERY = "DELIVERY";
