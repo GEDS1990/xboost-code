@@ -123,13 +123,18 @@ public class SolutionCostService {
             Double velocity = car.getVelocity();
             Double totalDistance = Double.parseDouble(solutionRouteMapper.findTotalDistance(scenariosId,routeCount));
 
+
+            if((car.getC1()).trim()==""||(car.getC1()).trim()==" "||(car.getC1()).trim()==null){
+                String c="0";
+            }
+
             String A1= car.getA1();
             int a1=Integer.parseInt(car.getA1().isEmpty()?"0":car.getA1());
             int a2=Integer.parseInt(car.getA1().isEmpty()?"0":car.getA2());
             int b1=Integer.parseInt(car.getA1().isEmpty()?"0":car.getB1());
             int b2=Integer.parseInt(car.getB2().isEmpty()?"0":car.getB2());
-            int c1=Integer.parseInt(car.getC1().isEmpty()?"0":car.getC1());
-            int c2=Integer.parseInt(car.getC2().isEmpty()?"0":car.getC2());
+            int c1=Integer.parseInt((car.getC1()).trim()==""||(car.getC1()).trim()==" "?"0":car.getC1());
+            int c2=Integer.parseInt((car.getC2()).trim()==""||(car.getC2()).trim()==" "?"0":car.getC2());
             int d1=Integer.parseInt(car.getD1().isEmpty()?"0":car.getD1());
             int d2=Integer.parseInt(car.getD2().isEmpty()?"0":car.getD2());
             int e1=Integer.parseInt(car.getE1().isEmpty()?"0":car.getE1());
