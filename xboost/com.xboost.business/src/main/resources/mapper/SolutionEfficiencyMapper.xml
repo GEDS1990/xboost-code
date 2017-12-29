@@ -17,13 +17,13 @@
         WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and arr_time &gt;= #{min} and arr_time &lt; #{min}+#{periodTime}
     </select>
 
-    <select id="findArrCar" parameterType="map" resultType="String">
-        SELECT DISTINCT(car_name) FROM t_solution_route
+    <select id="findArrCar" parameterType="map" resultType="Integer">
+        SELECT count(*) FROM t_solution_route
         WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and arr_time &gt;= #{min} and arr_time &lt; #{min}+#{periodTime}
     </select>
 
-    <select id="findLeaveCar" parameterType="map" resultType="String">
-        SELECT DISTINCT(car_name) FROM t_solution_route
+    <select id="findLeaveCar" parameterType="map" resultType="Integer">
+        SELECT count(*) FROM t_solution_route
         WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and end_time &gt;= #{min} and end_time &lt; #{min}+#{periodTime}
     </select>
 

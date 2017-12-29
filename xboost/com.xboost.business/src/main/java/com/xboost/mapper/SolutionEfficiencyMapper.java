@@ -20,9 +20,9 @@ public interface SolutionEfficiencyMapper {
 
     Integer findUnloadVol(Map<String, Object> param);
 
-    List<String> findArrCar(Map<String, Object> param);
+    Integer findArrCar(Map<String, Object> param);
 
-    List<String> findLeaveCar(Map<String, Object> param);
+    Integer findLeaveCar(Map<String, Object> param);
 
 }
 

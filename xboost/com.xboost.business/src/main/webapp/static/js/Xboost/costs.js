@@ -122,6 +122,11 @@ $(function (){
 						this.sumK();
 					}
 					
+				},
+				computed:{
+					a:function (){
+						console.log(this.allcost);
+					}
 				}
 				
 			});
@@ -243,6 +248,11 @@ $(function (){
 						this.sumK();
 					}
 					
+				},
+				computed:{
+					allcost:function (){
+						console.log(this.allcost);
+					}
 				}
 			
 			});
@@ -254,127 +264,125 @@ $(function (){
 				var $res=data;
 				if (data.modelType == 1) {
 					$('#model-type').text("串点模型");
-				}
-				if (data) {
-					
-					$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
-						
-						if (res.data.length == 0) {
-							console.log(1)
-							var urlcost = "/costs/addCost";
-							vmA.sitePeople = $res.sitePeopleWork;
-							vmA.collectPeople = $res.distribPeopleWork;
-							vmA.depotcount = $res.siteCount;
-							vmA.depotPeoplecount = 1;
-							vmA.piece = $res.totalPiece;
-							vmA.branch_cost = $res.branchTransportCost;
-							vmA.full_salaty = 6000;
-							vmA.full_days = 30;
-							vmA.part_wage = 20;
-							vmA.part_work = 2;
-							vmB.sitePeople = $res.sitePeopleWork;
-							vmB.collectPeople = $res.distribPeopleWork;
-							vmB.depotcount = $res.siteCount;
-							vmB.depotPeoplecount = 1;
-							vmB.piece = $res.totalPiece;
-							vmB.branch_cost = $res.branchTransportCost;
-							vmB.full_salaty = 6000;
-							vmB.full_days = 30;
-							vmB.part_wage = 20;
-							vmB.part_work = 2;
-						}else{
-							
-							var result = res.data[0];
-							//console.log(result)
-							var urlcost = "/costs/edit"; 
-							vmA.sitePeople = result.sitePeopleWork;
-							vmA.collectPeople = result.distribPeopleWork;
-							vmA.depotcount = result.siteCount;
-							vmA.piece = $res.totalPiece;
-							vmA.branch_cost = $res.branchTransportCost;
-							vmA.depotPeoplecount = result.peopleNumPerSite;
-							vmA.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
-							setTimeout(function (){
-								vmA.full_staff = result.fullTimeStaff;
-								vmA.part_staff = result.partTimeStaff;
-							},100)
-							vmA.full_salaty = result.fullTimeSalary;
-							vmA.full_days = result.fullTimeWorkDay;
-							vmA.part_wage = result.partTimeSalary;
-							vmA.part_work = result.partTimeWorkDay;
-							vmA.day_p_cost = result.sum2;
-							vmA.day_allp_cost = result.totalDailyLaborCost;
-							vmA.line_cost = result.branchTransportCost;
-							vmA.allcost = result.totalCost;
-							
-							
-							
-							vmB.sitePeople = result.sitePeopleWork;
-							vmB.collectPeople = result.distribPeopleWork;
-							vmB.depotcount = result.siteCount;
-							vmB.piece = $res.totalPiece;
-							vmB.branch_cost = $res.branchTransportCost;
-							vmB.depotPeoplecount = result.peopleNumPerSite;
-							vmB.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
-							setTimeout(function (){
-								vmB.full_staff = result.fullTimeStaff;
-								vmB.part_staff = result.partTimeStaff;
-							},100)
-							vmB.full_salaty = result.fullTimeSalary;
-							vmB.full_days = result.fullTimeWorkDay;
-							vmB.part_wage = result.partTimeSalary;
-							vmB.part_work = result.partTimeWorkDay;
-							vmB.day_p_cost = result.sum2;
-							vmB.day_allp_cost = result.totalDailyLaborCost;
-							vmB.line_cost = result.branchTransportCost;
-							vmB.allcost = result.totalCost;
-							
-						}
-						
-						
-						
-						//点击保存或者跟新数据  上
-						$('.cost-btn').click(function (){
-							var _val = $('#costs-choose').val();
-							//console.log(_val)
-							if (_val == "a") {
-								var data = $("#cost-form-a").serialize();
-							}else if(_val == "b"){
-								var data = $("#cost-form-b").serialize();
+					if (data) {
+						$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
+							if (res.data.length == 0) {
+								var urlcost = "/costs/addCost";
+								vmA.sitePeople = $res.sitePeopleWork;
+								vmA.collectPeople = $res.distribPeopleWork;
+								vmA.depotcount = $res.siteCount;
+								vmA.depotPeoplecount = 1;
+								vmA.piece = $res.totalPiece;
+								vmA.branch_cost = $res.branchTransportCost;
+								vmA.full_salaty = 6000;
+								vmA.full_days = 30;
+								vmA.part_wage = 20;
+								vmA.part_work = 2;
+								vmB.sitePeople = $res.sitePeopleWork;
+								vmB.collectPeople = $res.distribPeopleWork;
+								vmB.depotcount = $res.siteCount;
+								vmB.depotPeoplecount = 1;
+								vmB.piece = $res.totalPiece;
+								vmB.branch_cost = $res.branchTransportCost;
+								vmB.full_salaty = 6000;
+								vmB.full_days = 30;
+								vmB.part_wage = 20;
+								vmB.part_work = 2;
+							}else{
+								
+								var result = res.data[0];
+								//console.log(result)
+								var urlcost = "/costs/edit"; 
+								vmA.sitePeople = result.sitePeopleWork;
+								vmA.collectPeople = result.distribPeopleWork;
+								vmA.depotcount = result.siteCount;
+								vmA.piece = $res.totalPiece;
+								vmA.branch_cost = $res.branchTransportCost;
+								vmA.depotPeoplecount = result.peopleNumPerSite;
+								vmA.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
+								setTimeout(function (){
+									vmA.full_staff = result.fullTimeStaff;
+									vmA.part_staff = result.partTimeStaff;
+								},100)
+								vmA.full_salaty = result.fullTimeSalary;
+								vmA.full_days = result.fullTimeWorkDay;
+								vmA.part_wage = result.partTimeSalary;
+								vmA.part_work = result.partTimeWorkDay;
+								vmA.day_p_cost = result.sum2;
+								vmA.day_allp_cost = result.totalDailyLaborCost;
+								vmA.line_cost = result.branchTransportCost;
+								vmA.allcost = result.totalCost;
+								
+								
+								
+								vmB.sitePeople = result.sitePeopleWork;
+								vmB.collectPeople = result.distribPeopleWork;
+								vmB.depotcount = result.siteCount;
+								vmB.piece = $res.totalPiece;
+								vmB.branch_cost = $res.branchTransportCost;
+								vmB.depotPeoplecount = result.peopleNumPerSite;
+								vmB.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
+								setTimeout(function (){
+									vmB.full_staff = result.fullTimeStaff;
+									vmB.part_staff = result.partTimeStaff;
+								},100)
+								vmB.full_salaty = result.fullTimeSalary;
+								vmB.full_days = result.fullTimeWorkDay;
+								vmB.part_wage = result.partTimeSalary;
+								vmB.part_work = result.partTimeWorkDay;
+								vmB.day_p_cost = result.sum2;
+								vmB.day_allp_cost = result.totalDailyLaborCost;
+								vmB.line_cost = result.branchTransportCost;
+								vmB.allcost = result.totalCost;
+								
 							}
-							$.post(urlcost,data).done(function (res){
-								console.log(res);
-								if (res == "success") {
-									window.location.reload();
+							
+							
+							
+							//点击保存或者跟新数据  上
+							$('.cost-btn').click(function (){
+								var _val = $('#costs-choose').val();
+								//console.log(_val)
+								if (_val == "a") {
+									var data = $("#cost-form-a").serialize();
+								}else if(_val == "b"){
+									var data = $("#cost-form-b").serialize();
 								}
-							}).fail(function  () {
-								console.log("fail")
+								$.post(urlcost,data).done(function (res){
+									console.log(res);
+									if (res == "success") {
+										window.location.reload();
+									}
+								}).fail(function  () {
+									console.log("fail")
+								});
 							});
-						});
-						//点击保存或者跟新数据 下
-						$('.costs-btn').click(function (){
-							var _val = $('#costss-choose').val();
-							//console.log(_val)
-							if (_val == "a") {
-								var data = $("#cost-form-a").serialize();
-							}else if(_val == "b"){
-								var data = $("#cost-form-b").serialize();
-							}
-							$.post(urlcost,data).done(function (res){
-								console.log(res);
-								if (res == "success") {
-									window.location.reload();
+							//点击保存或者跟新数据 下
+							$('.costs-btn').click(function (){
+								var _val = $('#costss-choose').val();
+								//console.log(_val)
+								if (_val == "a") {
+									var data = $("#cost-form-a").serialize();
+								}else if(_val == "b"){
+									var data = $("#cost-form-b").serialize();
 								}
-							}).fail(function  () {
-								console.log("fail")
+								$.post(urlcost,data).done(function (res){
+									console.log(res);
+									if (res == "success") {
+										window.location.reload();
+									}
+								}).fail(function  () {
+									console.log("fail")
+								});
 							});
-						});
+							
+						}).fail(function (){
+							console.log("fail");
+						})
 						
-					}).fail(function (){
-						console.log("fail");
-					})
-					
+					}
 				}
+
 				
 				
 				

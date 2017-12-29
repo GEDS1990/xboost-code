@@ -207,17 +207,17 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="max_running_time" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">(&lt;10km)speed(km/h)</label>
+                        <label class="col-sm-2 control-label">(&lt;10km)speed (km/h)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="velocity" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">(10km-30km)speed(km/h)</label>
+                        <label class="col-sm-2 control-label">(10km-30km)speed (km/h)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="velocity2" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">(&gt;30km)speed(km/h)</label>
+                        <label class="col-sm-2 control-label">(&gt;30km)speed (km/h)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="velocity3" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
@@ -430,17 +430,17 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="max_running_time" id="max_running_time" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">(&lt;10km)speed(km/h)</label>
+                        <label class="col-sm-2 control-label">(&lt;10km)speed (km/h)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="velocity" id="velocity" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">(10km-30km)speed(km/h)</label>
+                        <label class="col-sm-2 control-label">(10km-30km)speed (km/h)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="velocity2" id="velocity2" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">(&gt;30km)speed(km/h)</label>
+                        <label class="col-sm-2 control-label">(&gt;30km)speed (km/h)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="velocity3" id="velocity3" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>

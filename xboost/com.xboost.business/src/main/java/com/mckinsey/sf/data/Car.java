@@ -69,6 +69,7 @@ public class Car implements Serializable{
 	private  String maxLoad;
 
 	private  String durationUnloadFull;
+	private String priceType;   //计价方式
 
 	private String a1;            //分段距离0-a
 	private String costa1;            //0-a费用
@@ -334,6 +335,14 @@ public class Car implements Serializable{
 
 	public void setMaxLoad(String maxLoad) {
 		this.maxLoad = maxLoad;
+	}
+
+	public String getPriceType() {
+		return priceType;
+	}
+
+	public void setPriceType(String priceType) {
+		this.priceType = priceType;
 	}
 
 	public String getA1() {

@@ -70,7 +70,7 @@ $(function  () {
 			var xss = pattern.test(_input[i].value);
 			var _inputType = _input[i].getAttribute("required");
 			var _inputHid = _input[i].getAttribute("type");
-			console.log(_inputType+"----------"+_inputHid)
+			//console.log(_inputType+"----------"+_inputHid)
 			//console.log(xss)
 			if (Boolean(_inputType) == true  ) {
 				if (_input[i].value == "" || xss == true) {
@@ -832,7 +832,7 @@ $(function  () {
 	                {"data":"carSource","name":"car_source"},
 	                {"data":"num","name":"num"},
 	                {"data":function  (res) {
-	                	if (res.maxStop == 99999) {
+	                	if (res.maxStop > 998) {
 	                		return "∞";
 	                	}else{
 	                		return res.maxStop;
@@ -841,12 +841,12 @@ $(function  () {
 	                {"data":"dimensions","name":"dimensions"},
 	                
 	                {"data":function(res){
-	                if(res.max_distance=="99999"){return "∞";}
+	                if(res.max_distance > "998"){return "∞";}
 	                else{return res.max_distance;}
 	                },"name":"max_distance"},
 
 	                {"data":function(res){
-                    if(res.max_running_time=="99999"){return "∞";}
+                    if(res.max_running_time > "998"){return "∞";}
                     else{return res.max_running_time;}
                     },"name":"max_running_time"},
 
@@ -863,7 +863,12 @@ $(function  () {
 	                {"data":"start_location","name":"start_location"},
 	                {"data":"end_location","name":"end_location"},
 	                {"data":"a1","name":"a1"},
-	                {"data":"a2","name":"a2"},
+	                {"data":function  (res) {
+	                	if (res.a2 > 998) {
+	                		return "∞";
+	                	}
+	                	return res.a2
+	                },"name":"a2"},
                     {"data":"costa1","name":"costa1"},
                     {"data":"costa2","name":"costa2"},
                     {"data":function (res){
@@ -874,7 +879,12 @@ $(function  () {
                     	return res.costa3;
                     },"name":"costa3"},
 	                {"data":"b1","name":"b1"},
-	                {"data":"b2","name":"b2"},
+	                {"data":function  (res) {
+	                	if (res.b2 > 998) {
+	                		return "∞";
+	                	}
+	                	return res.b2
+	                },"name":"b2"},
                     {"data":"costb1","name":"costb1"},
                     {"data":"costb2","name":"costb2"},
                     {"data":function (res){
@@ -885,7 +895,12 @@ $(function  () {
                     	return res.costb3;
                     },"name":"costb3"},
 	                {"data":"c1","name":"c1"},
-	                {"data":"c2","name":"c2"},
+	                {"data":function  (res) {
+	                	if (res.c2 > 998) {
+	                		return "∞";
+	                	}
+	                	return res.c2
+	                },"name":"c2"},
                     {"data":"costc1","name":"costc1"},
                     {"data":"costc2","name":"costc2"},
                     {"data":function (res){
@@ -896,7 +911,12 @@ $(function  () {
                     	return res.costc3;
                     },"name":"costc3"},
                     {"data":"d1","name":"d1"},
-                    {"data":"d2","name":"d2"},
+                    {"data":function  (res) {
+	                	if (res.d2 > 998) {
+	                		return "∞";
+	                	}
+	                	return res.d2
+	                },"name":"d2"},
 	                {"data":"costd1","name":"costd1"},
 	                {"data":"costd2","name":"costd2"},
 	                {"data":function (res){
@@ -907,7 +927,12 @@ $(function  () {
                     	return res.costd3;
                     },"name":"costd3"},
 	                {"data":"e1","name":"e1"},
-                    {"data":"e2","name":"e2"},
+                    {"data":function  (res) {
+	                	if (res.e2 > 998) {
+	                		return "∞";
+	                	}
+	                	return res.e2
+	                },"name":"e2"},
 	                {"data":"coste1","name":"coste1"},
 	                {"data":"coste2","name":"coste2"},
 	                {"data":function (res){
@@ -918,7 +943,12 @@ $(function  () {
                     	return res.coste3;
                     },"name":"coste3"},
 	                {"data":"f1","name":"f1"},
-                    {"data":"f2","name":"f2"},
+                    {"data":function  (res) {
+	                	if (res.f2 > 998) {
+	                		return "∞";
+	                	}
+	                	return res.f2
+	                },"name":"f2"},
 	                {"data":"costf1","name":"costf1"},
 	                {"data":"costf2","name":"costf2"},
 	                {"data":function (res){
@@ -984,9 +1014,11 @@ $(function  () {
 	        		$this.parents('tr').find("td:first-child").find('input[type="number"]').attr({"required":"required","oninvalid":"setCustomValidity('Please enter information');","oninput":"setCustomValidity('');"});
 	        		$this.parents('tr').find("td:nth-child(2)").find('span:first-child').find('input[type="number"]').attr({"required":"required","oninvalid":"setCustomValidity('Please enter information');","oninput":"setCustomValidity('');"});
 	        		$this.parents('tr').find("td:nth-child(2)").find('.km-min').removeAttr('required').removeAttr('oninvalid').removeAttr('oninput');
+	        		$this.parents('td').find(".km-min").attr("disabled","disabled").val("").addClass('active');
 	        	}else if(type == "/km"){
-	        		$this.parents('tr').find('input[type="number"]').attr({"required":"required","oninvalid":"setCustomValidity('Please enter information');","oninput":"setCustomValidity('');"});
+	        		$this.parents('tr').find('input[type="number"]').attr({"required":"required","oninvalid":"setCustomValidity('Please enter information');","oninput":"setCustomValidity('0');"});
 	        		$this.parents('tr').nextAll().find('input[type="number"]').removeAttr('required').removeAttr('oninvalid').removeAttr('oninput');
+	        		$this.parents('td').find(".km-min").removeAttr("disabled").removeClass('active');
 	        	}
 	        	
 	        }
@@ -1057,7 +1089,7 @@ $(function  () {
 	            $("#editUserForm-tran")[0].reset();
 	            var id = $(this).attr("data-id");
 	            $.get("/car/transpt.json",{"id":id}).done(function(result){
-	            	console.log(result)
+	            	//console.log(result)
 	                $("#siteId-tran").val(result.id);
 	                $("#type").val(result.type);
 	                $("#carSource").val(result.carSource);
@@ -1078,13 +1110,14 @@ $(function  () {
 	                $("#costa1").val(result.costa1);
 	                $("#b1").val(result.b1);
 	                $("#b2").val(result.b2);
-	                if (result.costb1) {
+	                if (result.costb1 != " " && result.costb1 != "" && result.costb1 != null) {
 	                	$('#costb').val(result.costb1);
 	                	$('#costb').parents('td').find('input[value="/ride"]').attr("checked","checked");
 	                	var $this = $('#costb').parents('td').find('input[value="/ride"]');
 	                	rideFun($this);
+	                	
 	                }
-	                if (result.costb2) {
+	                if (result.costb2 != " " && result.costb2 != "" && result.costb2 != null) {
 	                	$('#costb').val(result.costb2);
 	                	$('#costb3').val(result.costb3);
 	                	$('#costb').parents('td').find('input[value="/km"]').attr("checked","checked");
@@ -1093,13 +1126,13 @@ $(function  () {
 	                }
 	                $("#c1").val(result.c1);
 	                $("#c2").val(result.c2);
-	                if (result.costc1) {
+	                if (result.costc1 != " " && result.costc1 != "" && result.costc1 != null) {
 	                	$('#costc').val(result.costc1);
 	                	$('#costc').parents('td').find('input[value="/ride"]').attr("checked","checked");
 	                	var $this = $('#costc').parents('td').find('input[value="/ride"]');
 	                	rideFun($this);
 	                }
-	                if (result.costc2) {
+	                if (result.costc2 != " " && result.costc2 != "" && result.costc2 != null) {
 	                	$('#costc').val(result.costc2);
 	                	$('#costc3').val(result.costc3);
 	                	$('#costc').parents('td').find('input[value="/km"]').attr("checked","checked");
@@ -1108,13 +1141,13 @@ $(function  () {
 	                }
 	                $("#d1").val(result.d1);
 	                $("#d2").val(result.d2);
-	                if (result.costd1) {
+	                if (result.costd1 != " " && result.costd1 != "" && result.costd1 != null) {
 	                	$('#costd').val(result.costd1);
 	                	$('#costd').parents('td').find('input[value="/ride"]').attr("checked","checked");
 	                	var $this = $('#costd').parents('td').find('input[value="/ride"]');
 	                	rideFun($this);
 	                }
-	                if (result.costd2) {
+	                if (result.costd2 != " " && result.costd2 != "" && result.costd2 != null) {
 	                	$('#costd').val(result.costd2);
 	                	$('#costd3').val(result.costd3);
 	                	$('#costd').parents('td').find('input[value="/km"]').attr("checked","checked");
@@ -1123,13 +1156,13 @@ $(function  () {
 	                }
 	                $("#e1").val(result.e1);
 	                $("#e2").val(result.e2);
-	                if (result.coste1) {
+	                if (result.coste1 != " " && result.coste1 != "" && result.coste1 != null) {
 	                	$('#coste').val(result.coste1);
 	                	$('#coste').parents('td').find('input[value="/ride"]').attr("checked","checked");
 	                	var $this = $('#coste').parents('td').find('input[value="/ride"]');
 	                	rideFun($this);
 	                }
-	                if (result.coste2) {
+	                if (result.coste2 != " " && result.coste2 != "" && result.coste2 != null) {
 	                	$('#coste').val(result.coste2);
 	                	$('#coste3').val(result.coste3);
 	                	$('#coste').parents('td').find('input[value="/km"]').attr("checked","checked");
@@ -1138,13 +1171,13 @@ $(function  () {
 	                }
 	                $("#f1").val(result.f1);
 	                $("#f2").val(result.f2);
-	                if (result.costf1) {
+	                if (result.costf1 != " " && result.costf1 != "" && result.costf1 != null) {
 	                	$('#costf').val(result.costf1);
 	                	$('#costf').parents('td').find('input[value="/ride"]').attr("checked","checked");
 	                	var $this = $('#costf').parents('td').find('input[value="/ride"]');
 	                	rideFun($this);
 	                }
-	                if (result.costf2) {
+	                if (result.costf2 != " " && result.costf2 != "" && result.costf2 != null) {
 	                	$('#costf').val(result.costf2);
 	                	$('#costf3').val(result.costf3);
 	                	$('#costf').parents('td').find('input[value="/km"]').attr("checked","checked");
@@ -1163,17 +1196,24 @@ $(function  () {
 	        });
 	
 	        $("#editBtn-tran").click(function(){
-	        	FormInput("editUserForm-tran",function (){
-	        		$.post("/car/edit",$("#editUserForm-tran").serialize()).done(function(result){
-		                if(result == "success") {
-		                    $("#editUserModal-tran").modal("hide");
-		                    dt.ajax.reload();
-		                    window.location.reload(); 
-		                }
-		            }).fail(function(){
-		                alert("Modify user exception");
-		            });
-	        	});
+//	        	var km = $('input[value="/km"]:checked');
+//	        	km.each(function  (){
+//	        		console.log($(this).val())
+//	        	});
+	        	//console.log(_val)
+	        		FormInput("editUserForm-tran",function (){
+		        		$.post("/car/edit",$("#editUserForm-tran").serialize()).done(function(result){
+			                if(result == "success") {
+			                    $("#editUserModal-tran").modal("hide");
+			                    dt.ajax.reload();
+			                    window.location.reload(); 
+			                }
+			            }).fail(function(){
+			                alert("Modify user exception");
+			            });
+		        	});
+
+	        	
 	            
 	
 	        });

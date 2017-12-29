@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xboost.mapper.SolutionActivityMapper">
 
-    <cache/>
+
     <insert id="addActivity">
         INSERT into t_solution_activity(scenariosId ,userId,pickup_loc,delivery_loc,route_count,end_time,Arr_time,
         vol,createtime)

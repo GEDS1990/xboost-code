@@ -113,21 +113,11 @@ public class SolutionEfficiencyController {
             String site = siteList.get(i);
             for(int j=0;j<(max-min)/periodTime;j++)
             {
-                leaveCarNum=0;
                 param.put("scenariosId",scenariosId);
                 param.put("curLoc",site);
                 param.put("min",min+(periodTime*j));
                 param.put("periodTime",periodTime);
-                for(String s:solutionEfficiencyService.findLeaveCar(param)){
-                    if(null==s){
-                        leaveCarNum = leaveCarNum + 0;
-                    }
-                    else
-                    {
-                        leaveCarNum = leaveCarNum +1;
-                    }
-                }
-                leaveCarNum = solutionEfficiencyService.findLeaveCar(param).size();
+                leaveCarNum = solutionEfficiencyService.findLeaveCar(param);
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),leaveCarNum);
             }
         }
@@ -146,7 +136,7 @@ public class SolutionEfficiencyController {
 
         Map<String,Object> result = Maps.newHashMap();
         Map<String,Object> param = Maps.newHashMap();
-        Integer arrCarNum=0;
+        Integer arrCarNum;
 
         //到达车辆数
         for(int i=0;i<siteList.size();i++){
@@ -155,18 +145,10 @@ public class SolutionEfficiencyController {
             {
                 param.put("scenariosId",scenariosId);
                 param.put("curLoc",site);
-                param.put("min",min);
-                param.put("periodTime",min+(periodTime*j));
-                for(String s:solutionEfficiencyService.findArrCar(param)){
-                    if(null==s){
-                        arrCarNum=arrCarNum+0;
-                    }
-                    else
-                    {
-                        arrCarNum = arrCarNum+1;
-                    }
-                }
-             //   arrCarNum = solutionEfficiencyService.findArrCar(param).size();
+                param.put("min",min+(periodTime*j));
+                param.put("periodTime",periodTime);
+
+                arrCarNum = solutionEfficiencyService.findArrCar(param);
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),arrCarNum);
             }
         }

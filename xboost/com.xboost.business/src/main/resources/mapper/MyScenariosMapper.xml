@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xboost.mapper.MyScenariosMapper">
 
-    <cache/>
+
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT into t_scenarios_info(scenarios_name,scenarios_category,scenarios_desc,scenarios_model,scenarios_out,

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xboost.mapper.ArrInfoMapper">
 
-    <cache/>
+
     <insert id="saveArrInfo">
         INSERT into t_solution_arr(scenariosId,userId,route_id,arr_time,end_time,location,createtime)
         VALUES (#{scenariosId},#{userId},#{routeId},#{arrTime},#{endTime},#{location},#{createTime})
