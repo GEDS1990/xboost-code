@@ -32,4 +32,45 @@ public class TempService {
     public List<Map> findAll01(String scenariosId) {
         return tempMapper.findAll01(scenariosId);
     }
+    /**
+     * 查询所有运力信息
+     * param
+     * @return
+     */
+    public List<Map> findAll02(String scenariosId) {
+        return tempMapper.findAll02(scenariosId);
+    }
+    /**
+     * 查询所有运力信息
+     * param
+     * @return
+     */
+    public List<Map> findAll03(String scenariosId) {
+        return tempMapper.findAll03(scenariosId);
+    }
+    /**
+     * 查询所有运力信息
+     * param
+     * @return
+     */
+    public List<Map> findAll04(String scenariosId) {
+        return tempMapper.findAll04(scenariosId);
+    }
+    /**
+     * 查询所有运力信息
+     * param
+     * @return
+     */
+    public List<Map> findAll05(String scenariosId) {
+        return tempMapper.findAll05(scenariosId);
+    }
+    /**
+     * 查询所有运力信息
+     * param
+     * @return
+     */
+    public List<Map> findAll06(String scenariosId) {
+        return tempMapper.findAll05(scenariosId);
+    }
+
 }
