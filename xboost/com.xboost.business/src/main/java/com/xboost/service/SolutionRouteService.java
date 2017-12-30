@@ -40,6 +40,15 @@ public class SolutionRouteService {
     }
 
     /**
+     * update route信息
+     * @param route
+     */
+    public void updateRouteByTemp(Route route) {
+        solutionRouteMapper.updateRouteByTemp(route);
+
+    }
+
+    /**
      * 根据场景id查询所有路线信息
      * param
      * @return
