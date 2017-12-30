@@ -667,19 +667,20 @@ public class OutputPrinter implements IConstants {
 						}
 						routePojo.setScenariosId(ShiroUtil.getOpenScenariosId());
 						routePojo.setUserId(String.valueOf(ShiroUtil.getCurrentUserId()));
-						if(null!=routePojoTemp
-								&&routePojoTemp.getArrTime().equals(routePojo.getArrTime())
+						if(null==routePojoTemp.getArrTime()){
+							solutionRouteService.addRoute(routePojo);//将route插入数据库
+						}else if(routePojoTemp.getArrTime().equals(routePojo.getArrTime())
 								&&routePojoTemp.getEndTime().equals(routePojo.getEndTime())
 								&&routePojoTemp.getSequence().equals(routePojo.getSequence())
 								&&routePojoTemp.getUnloadLoc().equals(routePojo.getUnloadLoc())){
-							routePojoTemp.setUnloadVolSum(String.valueOf(Double.parseDouble(routePojo.getUnloadVolSum())+Double.parseDouble(routePojoTemp.getUnloadVolSum())));
+							routePojoTemp.setUnloadVolSum(String.valueOf(Integer.parseInt(routePojo.getUnloadVolSum())+Integer.parseInt(routePojoTemp.getUnloadVolSum())));
 							routePojoTemp.setUnloadVol(routePojoTemp.getUnloadVol().concat("/"+routePojo.getUnloadVol()));
-							routePojoTemp.setSbVolSum(String.valueOf(Double.parseDouble(routePojo.getSbVolSum())+Double.parseDouble(routePojoTemp.getSbVolSum())));
+							routePojoTemp.setSbVolSum(String.valueOf(Integer.parseInt(routePojo.getSbVolSum())+Integer.parseInt(routePojoTemp.getSbVolSum())));
 							routePojoTemp.setSbVol(routePojoTemp.getSbVol().concat("/"+routePojo.getSbVol()));
 							routePojoTemp.setScenariosId(routePojo.getScenariosId());
 							solutionRouteService.updateRouteByTemp(routePojoTemp);//
 						}else{
-							solutionRouteService.addRoute(routePojo);//将route插入数据库
+//							solutionRouteService.addRoute(routePojo);//将route插入数据库
 						}
 						//保存到临时对象
 						routePojoTemp = routePojo;
