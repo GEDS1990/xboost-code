@@ -207,12 +207,12 @@ public class ValidateController {
                 result = siteInfo.getSiteCode()+":piece capacity is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getSiteArea())<0){
+            if(Double.parseDouble(siteInfo.getSiteArea())<0){
                 flag = flag + 1;
                 result = siteInfo.getSiteCode()+":depot area is must >0. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getSiteArea())>3000){
+            if(Double.parseDouble(siteInfo.getSiteArea())>3000){
                 flag = flag + 1;
                 result = siteInfo.getSiteCode()+":depot area is must <3000. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
@@ -247,22 +247,22 @@ public class ValidateController {
                 result = siteInfo.getSiteCode()+":piece capacity (p)  is must <999. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getSiteLatitude())<-90){
+            if(Double.parseDouble(siteInfo.getSiteLatitude())<-90){
                 flag = flag + 1;
                 result = siteInfo.getSiteCode()+":latitude  is must >-90. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getSiteLatitude())>90){
+            if(Double.parseDouble(siteInfo.getSiteLatitude())>90){
                 flag = flag + 1;
                 result = siteInfo.getSiteCode()+":latitude  is must <90. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getSiteLongitude())<-180){
+            if(Double.parseDouble(siteInfo.getSiteLongitude())<-180){
                 flag = flag + 1;
                 result = siteInfo.getSiteCode()+":longitude  is must >-180. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getSiteLongitude())>180){
+            if(Double.parseDouble(siteInfo.getSiteLongitude())>180){
                 flag = flag + 1;
                 result = siteInfo.getSiteCode()+":longitude  is must <180. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
