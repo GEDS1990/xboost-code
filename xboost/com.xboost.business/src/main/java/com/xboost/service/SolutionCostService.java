@@ -202,7 +202,7 @@ public class SolutionCostService {
                         + costf3*((totalDistance-f1)/velocity*60);
                 branchCostRide = costf1;
             }
-            
+
         }
 
         return branchCost;
