@@ -3,6 +3,7 @@ package com.xboost.controller;
 import com.mckinsey.sf.data.Car;
 import com.xboost.pojo.Configuration;
 import com.xboost.service.*;
+import com.xboost.service.jieli.TempService;
 import com.xboost.util.CascadeModelUtil;
 import com.xboost.util.RelayModeUtil;
 import com.xboost.util.ShiroUtil;
@@ -39,6 +40,13 @@ public class CascadeController {
 
     @Inject
 	private SiteDistService siteDistService;
+
+    @Inject
+    private TempService tempService;
+
+    @Inject
+    private SiteInfoService siteInfoService;
+
     CascadeModelUtil cmu;
 
     @RequestMapping(value="/runSilumate",method = RequestMethod.POST)
@@ -75,12 +83,12 @@ public class CascadeController {
 //        LogFactory.getLog(AccountController.class).info("input:"+input);
 
         }else if("2".equals(distMode)){
-//            RelayModeUtil rm = new RelayModeUtil();
-//            try {
-//                rm.excute();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            RelayModeUtil rm = new RelayModeUtil(tempService,demandInfoService,siteDistService,siteInfoService);
+            try {
+                rm.run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }else{
 
         }

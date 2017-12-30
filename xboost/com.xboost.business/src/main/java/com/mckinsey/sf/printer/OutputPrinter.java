@@ -685,12 +685,12 @@ public class OutputPrinter implements IConstants {
 						}else{
 //							solutionRouteService.addRoute(routePojo);//将route插入数据库
 						}
-						//保存到临时对象
-						routePojoTemp = routePojo;
 					}
 				}
 				routeCount ++ ;
 			}
+			//保存到临时对象
+			routePojoTemp = routePojo;
 			systemWebSocketHandler.sendMessageToUser(new TextMessage("增加数据成功"));
 			myScenariosService.updateFinishTime();
 			

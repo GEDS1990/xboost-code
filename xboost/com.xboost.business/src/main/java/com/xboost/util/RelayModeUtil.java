@@ -11,13 +11,24 @@ import com.xboost.service.SiteInfoService;
 import com.xboost.service.jieli.TempService;
 import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.Matrix;
-
 import java.io.IOException;
 import java.util.*;
+import gurobi.*;
 
-public class RelayModeUtil implements IConstants {
+public class RelayModeUtil extends Thread implements IConstants {
 
-    public void excute(TempService tempService, DemandInfoService demandInfoService, SiteDistService siteDistService, SiteInfoService siteInfoService) throws IOException {
+    public com.xboost.pojo.Configuration config;
+    public DemandInfoService demandInfoService;
+    public SiteDistService siteDistService;
+    public TempService tempService;
+    public SiteInfoService siteInfoService;
+
+    public RelayModeUtil(TempService tempService, DemandInfoService demandInfoService, SiteDistService siteDistService, SiteInfoService siteInfoService){
+        this.config = config;
+        this.demandInfoService = demandInfoService;
+        this.siteDistService = siteDistService;
+    }
+    public void run(){
 
 
         //params
@@ -836,6 +847,31 @@ public class RelayModeUtil implements IConstants {
         model.put("modelsense","min");
 
         //call gurobi
+//        mip<-gurobi(model,params)
+
+        try{
+            GRBEnv    env   = new GRBEnv("mip1.log");
+//            GRBModel  model2 = new GRBModel(env);
+            GRBModel  model2 = (GRBModel)model;
+
+//            GRBVar x = model2.addVar(0.0, 1.0, 0.0, GRB.BINARY, "x");
+//            GRBVar y = model2.addVar(0.0, 1.0, 0.0, GRB.BINARY, "y");
+//            GRBVar z = model2.addVar(0.0, 1.0, 0.0, GRB.BINARY, "z");
+
+//            GRBLinExpr expr = new GRBLinExpr();
+//            expr.addTerm(1.0, x); expr.addTerm(1.0, y); expr.addTerm(2.0, z);
+//            model2.setObjective(expr, GRB.MAXIMIZE);
+            model2.setObjective((GRBLinExpr)params, GRB.MAXIMIZE);
+            // Optimize model
+
+            model2.optimize();
+            // Dispose of model and environment
+            model2.dispose();
+            env.dispose();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
     }
 }

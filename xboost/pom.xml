@@ -257,6 +257,25 @@
       <artifactId>ujmp-core</artifactId>
       <version>0.3.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.github.vagmcs/optimus-solver-gurobi -->
+    <dependency>
+      <groupId>com.github.vagmcs</groupId>
+      <artifactId>optimus-solver-gurobi_2.12</artifactId>
+      <version>2.1.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.indago/gurobi-installer -->
+    <dependency>
+      <groupId>com.indago</groupId>
+      <artifactId>gurobi-installer</artifactId>
+      <version>0.1.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/net.sf.jmpi/jmpi-solver-gurobi -->
+    <dependency>
+      <groupId>net.sf.jmpi</groupId>
+      <artifactId>jmpi-solver-gurobi</artifactId>
+      <version>0.6</version>
+    </dependency>
+
   </dependencies>
   <build>
     <plugins>
