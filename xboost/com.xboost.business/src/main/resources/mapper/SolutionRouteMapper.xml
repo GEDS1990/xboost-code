@@ -117,6 +117,11 @@
         UPDATE t_scenarios_info SET scenarios_model=#{scenariosModel} where id = #{openScenariosId}
     </update>
 
+    <update id="updateRouteByTemp">
+        UPDATE t_car_licence SET ,sb_vol=#{sbVol},sb_vol_sum=#{sbVolSum},unload_vol#{unloadVol},unload_vol_sum#{unloadVolSum}
+        WHERE scenariosId=#{scenariosId} and arr_time=#{arrTime} and name=#{carName}
+    </update>
+
     <select id="findUsingCar" resultType="String" parameterType="map">
         SELECT DISTINCT(c.t_name) FROM t_car_info c inner join t_solution_route r on r.car_type = c.type
         WHERE c.scenariosId=#{scenariosId} and r.scenariosId=#{scenariosId}

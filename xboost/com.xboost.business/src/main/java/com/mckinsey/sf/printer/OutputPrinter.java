@@ -412,6 +412,7 @@ public class OutputPrinter implements IConstants {
 	public static void writeStandardOutputToExcel(Solution s, RoutingTransportCosts transportCost) {
 //		SolutionRouteService solutionRouteService = new SolutionRouteService();
 		com.xboost.pojo.Route routePojo = new com.xboost.pojo.Route();
+		com.xboost.pojo.Route routePojoTemp = new com.xboost.pojo.Route();
 		com.xboost.pojo.Activity activityPojo = new com.xboost.pojo.Activity();
 //		String fileName = "src/main/resources/标准串点输出.xls";
 
@@ -426,48 +427,9 @@ public class OutputPrinter implements IConstants {
 //		Workbook wb = null;
 //		OutputStream out = null;
 		try {
-//			wb = new HSSFWorkbook();
-//			Sheet sheet = wb.createSheet("车辆");
-//			Sheet sheet2 = wb.createSheet("货物");
 			int count = 0;
 			int count2 = 0;
 			int routeCount = 1;
-
-//			Row row = sheet.createRow(count++);
-//			row.createCell(0).setCellValue("total cost:");
-//			row.createCell(1).setCellValue(s.cost());
-
-
-//			Row rr3 = sheet.createRow(count++);
-//			rr3.createCell(0).setCellValue("车辆编号");
-//			rr3.createCell(1).setCellValue("车型");
-//			rr3.createCell(2).setCellValue("出车网点-收车网点");
-//			rr3.createCell(3).setCellValue("停靠点顺序");
-//			rr3.createCell(4).setCellValue("当前网点");
-//			rr3.createCell(5).setCellValue("操作");
-//			rr3.createCell(6).setCellValue("装货目的地代码");
-//			rr3.createCell(7).setCellValue("装货票数");
-//			rr3.createCell(8).setCellValue("到达本网点时间");
-//			rr3.createCell(9).setCellValue("离开本网点时间");
-//			rr3.createCell(10).setCellValue("卸货目的地代码");
-//			rr3.createCell(11).setCellValue("卸货票数");
-//			rr3.createCell(12).setCellValue("下一个停靠网点代码");
-//			rr3.createCell(13).setCellValue("到下一个停靠点运行里程");
-//			rr3.createCell(14).setCellValue("车上货物");
-
-			//sheet2
-
-//			Row rr4 = sheet2.createRow(count2++);
-//			rr4.createCell(0).setCellValue("寄件网点");
-//			rr4.createCell(1).setCellValue("派件网点");
-//			rr4.createCell(2).setCellValue("车辆编号");
-//			rr4.createCell(3).setCellValue("发车时间");
-//			rr4.createCell(4).setCellValue("到车时间");
-//			rr4.createCell(5).setCellValue("票数");
-
-
-			//write route
-//			double totalLoadRate = 0;
 
 			systemWebSocketHandler.sendMessageToUser(new TextMessage("新增数据...."));
 			for (Entry<String, Route> entry : s.getRoutes().entrySet()) {
@@ -573,7 +535,8 @@ public class OutputPrinter implements IConstants {
 //						}else{
 //						rr.createCell(8).setCellValue(Math.max(arrTime, CascadeModelUtil.totalJobs.get(jobId).getPickup().getTw().getStart()));
 						routePojo.setArrTime(String.valueOf(Math.max(arrTime, CascadeModelUtil.totalJobs.get(jobId).getPickup().getTw().getStart())));
-//						rr.createCell(9).setCellValue(endTime);
+
+						// rr.createCell(9).setCellValue(endTime);
 						routePojo.setEndTime(String.valueOf(endTime));
 //						}
 						if("PICKUP".equals(type)){
@@ -704,7 +667,22 @@ public class OutputPrinter implements IConstants {
 						}
 						routePojo.setScenariosId(ShiroUtil.getOpenScenariosId());
 						routePojo.setUserId(String.valueOf(ShiroUtil.getCurrentUserId()));
-						solutionRouteService.addRoute(routePojo);//将route插入数据库
+						if(null!=routePojoTemp
+								&&routePojoTemp.getArrTime().equals(routePojo.getArrTime())
+								&&routePojoTemp.getEndTime().equals(routePojo.getEndTime())
+								&&routePojoTemp.getSequence().equals(routePojo.getSequence())
+								&&routePojoTemp.getUnloadLoc().equals(routePojo.getUnloadLoc())){
+							routePojoTemp.setUnloadVolSum(String.valueOf(Double.parseDouble(routePojo.getUnloadVolSum())+Double.parseDouble(routePojoTemp.getUnloadVolSum())));
+							routePojoTemp.setUnloadVol(routePojoTemp.getUnloadVol().concat("/"+routePojo.getUnloadVol()));
+							routePojoTemp.setSbVolSum(String.valueOf(Double.parseDouble(routePojo.getSbVolSum())+Double.parseDouble(routePojoTemp.getSbVolSum())));
+							routePojoTemp.setSbVol(routePojoTemp.getSbVol().concat("/"+routePojo.getSbVol()));
+							routePojoTemp.setScenariosId(routePojo.getScenariosId());
+							solutionRouteService.updateRouteByTemp(routePojoTemp);//
+						}else{
+							solutionRouteService.addRoute(routePojo);//将route插入数据库
+						}
+						//保存到临时对象
+						routePojoTemp = routePojo;
 					}
 				}
 				routeCount ++ ;

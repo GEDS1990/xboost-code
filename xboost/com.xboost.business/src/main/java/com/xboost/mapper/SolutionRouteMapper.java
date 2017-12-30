@@ -16,6 +16,9 @@ public interface SolutionRouteMapper {
     //  添加Route信息  @param route
     void addRoute(Route route);
 
+    //  添加Route信息  @param route
+    void updateRouteByTemp(Route route);
+
     //scenariosId 删除   * @param scenariosId
     void delByScenariosId(Integer scenariosId);
 
