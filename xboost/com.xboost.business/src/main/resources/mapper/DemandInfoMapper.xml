@@ -80,8 +80,8 @@
     </delete>
 
     <select id="findarrTime" resultType="map"  parameterType="String">
-        SELECT d.duration_end-s.Arr_time as arr_time,s.vol as vol FROM t_demand_info d left join t_solution_activity s on d.scenariosId=#{scenariosId}
-        and d.site_collect=s.pickup_loc and d.site_delivery=s.delivery_loc
+        SELECT d.duration_end-s.arr_time as arr_time,s.vol as vol FROM t_demand_info d left join t_solution_route s on d.scenariosId=#{scenariosId}
+        and d.site_delivery=s.unload_loc
     </select>
 
     <select id="findSiteCollect" resultType="String">

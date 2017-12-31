@@ -196,7 +196,11 @@ public class MyScenariosService {
     }
 
     public void updateFinishTime(){
-        myScenariosMapper.updateFinishTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
+        myScenariosMapper.updateFinishTime(DateTime.now().toString("yyyy-MM-dd HH:mm"),ShiroUtil.getOpenScenariosId());
+    }
+
+    public void updateStatus(String status){
+        myScenariosMapper.updateStatus(status,ShiroUtil.getOpenScenariosId());
     }
 
 }
