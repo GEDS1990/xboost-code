@@ -599,9 +599,9 @@ public class OutputPrinter implements IConstants {
 							routePojo.setSbVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setSbVolSum(String.valueOf(sbVolSum));
 
-							routePojo.setUnloadLoc("");
-							routePojo.setUnloadVol("");
-							routePojo.setUnloadVolSum("");
+							routePojo.setUnloadLoc("0");
+							routePojo.setUnloadVol("0");
+							routePojo.setUnloadVolSum("0");
 //							rr.createCell(6).setCellValue(Main.totalJobs.get(cur.getJobId()).getDelivery().getLocation());
 //							rr.createCell(7).setCellValue(Main.totalJobs.get(cur.getJobId()).getDimensions()[0]);
 							
@@ -640,9 +640,10 @@ public class OutputPrinter implements IConstants {
 //							rr.createCell(11).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setUnloadVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setUnloadVolSum(String.valueOf(unloadVolSum));
-							routePojo.setSbLoc("");
+							routePojo.setSbLoc("0");
 //							rr.createCell(7).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
-							routePojo.setSbVol("");
+							routePojo.setSbVol("0");
+							routePojo.setSbVolSum("0");
 //							rr.createCell(10).setCellValue(Main.totalJobs.get(cur.getJobId()).getDelivery().getLocation());
 //							rr.createCell(11).setCellValue(Main.totalJobs.get(cur.getJobId()).getDimensions()[0]);
 						}
