@@ -51,7 +51,7 @@ $(function (){
 						this.line_cost = (this.branch_cost/this.piece).toFixed(2);
 					},
 					sumK:function (){
-						this.allcost = Number(this.day_allp_cost) + Number(this.line_cost);
+						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
 					}
 					
 				},
@@ -175,7 +175,7 @@ $(function (){
 						this.line_cost = (this.branch_cost/this.piece).toFixed(2);
 					},
 					sumK:function (){
-						this.allcost = Number(this.day_allp_cost) + Number(this.line_cost);
+						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
 					}
 					
 				},

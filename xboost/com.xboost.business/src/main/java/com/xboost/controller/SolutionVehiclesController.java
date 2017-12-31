@@ -88,6 +88,29 @@ public class SolutionVehiclesController {
         Integer count = solutionVehiclesService.findAllCountByCar(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = solutionVehiclesService.findCountByCar(param);
 
+        Double sbVolSum;
+        Double unloadVolSum;
+        for(int i=0;i<vehiclesList.size();i++)
+        {
+            Map<String,Object> vehicle = vehiclesList.get(i);
+            for(int j=0;j<vehiclesList.size()&&j!=i;j++)
+            {
+                if(vehicle.get("sequence").equals(vehiclesList.get(j).get("sequence"))){
+                    sbVolSum = Double.parseDouble(vehicle.get("sbVolSum").toString())
+                            +Double.parseDouble(vehiclesList.get(j).get("sbVolSum").toString());
+                    unloadVolSum = Double.parseDouble(vehicle.get("unloadVolSum").toString())
+                            +Double.parseDouble(vehiclesList.get(j).get("unloadVolSum").toString());
+
+                    vehicle.put("sbVolSum",sbVolSum);
+                    vehicle.put("unloadVolSum",unloadVolSum);
+                    vehiclesList.remove(j);
+                    count = count -1;
+                    filteredCount = filteredCount-1;
+                }
+
+            }
+        }
+
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
