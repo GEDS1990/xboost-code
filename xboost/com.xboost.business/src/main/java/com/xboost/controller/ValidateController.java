@@ -60,7 +60,7 @@ public class ValidateController {
      */
     @RequestMapping(value = "/Validate",method = RequestMethod.POST)
     @ResponseBody
-    public void Validate() {
+    public String Validate() {
         List<SiteInfo> siteInfoList = siteInfoService.findAllSiteInfo(ShiroUtil.getOpenScenariosId());
         List<SiteDist> siteDistList = siteDistService.findAllSiteDist(ShiroUtil.getOpenScenariosId());
         List<DemandInfo> demandInfoList = demandInfoService.findAll(ShiroUtil.getOpenScenariosId());
@@ -422,11 +422,13 @@ public class ValidateController {
             result = DateTime.now().toString("yyyy-MM-dd HH:mm:ss，")+ success;
             systemWebSocketHandler.sendMessageToUser( new TextMessage(delimiter));
             systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            return "success";
         }
         else{
             result = DateTime.now().toString("yyyy-MM-dd HH:mm:ss，") + fail;
             systemWebSocketHandler.sendMessageToUser( new TextMessage(delimiter));
             systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            return "fail";
         }
 
     }
