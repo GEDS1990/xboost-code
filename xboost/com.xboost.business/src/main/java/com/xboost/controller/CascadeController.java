@@ -56,7 +56,7 @@ public class CascadeController {
     @ResponseBody
     public Map<String,Object> docascade(String distMode,String loadTime,String loopLimit){
         solutionRouteService.updateScenariosModel(distMode);//更新模型参数
-        myScenariosService.updateStatus("silumate");
+        myScenariosService.updateStatus("Silumate");
         if("1".equals(distMode)){
             //查询Confiuration表数据
             Map<String, Object> param = new HashMap<String,Object>();
@@ -97,6 +97,7 @@ public class CascadeController {
 
         }
         myScenariosService.updateFinishTime();
+        myScenariosService.updateStatus("Editable");
         return null;
     }
     @RequestMapping(value="/restartSilumate",method = RequestMethod.GET)
