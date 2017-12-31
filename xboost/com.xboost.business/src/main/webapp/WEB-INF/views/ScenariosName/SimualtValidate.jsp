@@ -78,7 +78,7 @@
 	    			</div>
 	    			
 	    			<div class="form-group sim-ground" id="sim-check-info">
-	    				
+	    				${sessionScope.ValidateLog}
 	    			</div>
 	    			<div class="sim-settings">
 	    				<div class="clearfix">
