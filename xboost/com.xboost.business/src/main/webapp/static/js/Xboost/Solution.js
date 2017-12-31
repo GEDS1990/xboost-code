@@ -157,7 +157,6 @@ $(function  () {
 				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(21,32),{
 					anchor: new BMap.Size(10, 30)
 				});
-				console.log(val)
 			}else{
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
 				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(16,24),{
@@ -735,16 +734,12 @@ $(function  () {
 	            	if (data.data.length !=0) {
 	            		$('#depots-map').show();
 	            		var result = data.data,
-	            		arr = [],
 	            		listPoint = [],
 	            		len = result.length;
 	            		$('#route-depot').empty();
 	            		$('#route-depot').off("change");
 	            		$('#route-depot').append('<option value="0">All Depots</option>');
-//	            		for (var i=0;i<len;i++) {
-//                          arr.push(result[i].curLoc);
-//                      }
-	            		console.log(result)
+	            		//console.log(result)
                         var Arr = uniqeByKeys(result,["curLoc"]),
                         A_len = Arr.length;
                         //console.log(Arr)
@@ -830,7 +825,7 @@ $(function  () {
 							
 	            		
 						//查询所有网点坐标
-						console.log(listPoint)
+						//console.log(listPoint)
 						listArry="";
 						listArry = listPoint;
 							
