@@ -505,7 +505,7 @@ $(function (){
 				//console.log(res)
 				if (res) {
 					var list = efficList(res);
-					//console.log(list);
+					console.log(list);
 					//操作dom
 					var result = list[0].list;
 					//console.log(result)
@@ -545,7 +545,7 @@ $(function (){
 			
 			//请求发出票数
 			$.get("/efficiency/sbVol.json").done(function (res){
-				console.log(res);
+				//console.log(res);
 				if (res) {
 					var list = efficList(res);
 					//console.log(list);
@@ -587,7 +587,7 @@ $(function (){
 			
 			//请求到达车辆数
 			$.get("/efficiency/arrCarNum.json").done(function (res){
-				console.log(res);
+				//console.log(res);
 				if (res) {
 					var list = efficList(res);
 					//console.log(list);
@@ -630,7 +630,7 @@ $(function (){
 			
 			//请求到达票数
 			$.get("/efficiency/unloadVol.json").done(function (res){
-				console.log(res);
+				//console.log(res);
 				if (res) {
 					var list = efficList(res);
 					//console.log(list);
