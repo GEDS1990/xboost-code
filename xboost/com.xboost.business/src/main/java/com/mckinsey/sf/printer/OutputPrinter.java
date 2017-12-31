@@ -13,6 +13,7 @@ import com.xboost.service.*;
 import com.xboost.util.CascadeModelUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.SpringBeanFactoryUtil;
+import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.web.socket.TextMessage;
@@ -598,9 +599,9 @@ public class OutputPrinter implements IConstants {
 							routePojo.setSbVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setSbVolSum(String.valueOf(sbVolSum));
 
-							routePojo.setUnloadLoc("");
-							routePojo.setUnloadVol("");
-							routePojo.setUnloadVolSum("");
+							routePojo.setUnloadLoc("0");
+							routePojo.setUnloadVol("0");
+							routePojo.setUnloadVolSum("0");
 //							rr.createCell(6).setCellValue(Main.totalJobs.get(cur.getJobId()).getDelivery().getLocation());
 //							rr.createCell(7).setCellValue(Main.totalJobs.get(cur.getJobId()).getDimensions()[0]);
 							
@@ -639,9 +640,10 @@ public class OutputPrinter implements IConstants {
 //							rr.createCell(11).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setUnloadVol(sbVol.toString().substring(0,sbVol.toString().length()-1));
 							routePojo.setUnloadVolSum(String.valueOf(unloadVolSum));
-							routePojo.setSbLoc("");
+							routePojo.setSbLoc("0");
 //							rr.createCell(7).setCellValue(sbVol.toString().substring(0,sbVol.toString().length()-1));
-							routePojo.setSbVol("");
+							routePojo.setSbVol("0");
+							routePojo.setSbVolSum("0");
 //							rr.createCell(10).setCellValue(Main.totalJobs.get(cur.getJobId()).getDelivery().getLocation());
 //							rr.createCell(11).setCellValue(Main.totalJobs.get(cur.getJobId()).getDimensions()[0]);
 						}
@@ -673,21 +675,23 @@ public class OutputPrinter implements IConstants {
 								&&routePojoTemp.getEndTime().equals(routePojo.getEndTime())
 								&&routePojoTemp.getSequence().equals(routePojo.getSequence())
 								&&routePojoTemp.getUnloadLoc().equals(routePojo.getUnloadLoc())){
-							routePojoTemp.setUnloadVolSum(String.valueOf(Integer.parseInt(routePojo.getUnloadVolSum())+Integer.parseInt(routePojoTemp.getUnloadVolSum())));
-							routePojoTemp.setUnloadVol(routePojoTemp.getUnloadVol().concat("/"+routePojo.getUnloadVol()));
-							routePojoTemp.setSbVolSum(String.valueOf(Integer.parseInt(routePojo.getSbVolSum())+Integer.parseInt(routePojoTemp.getSbVolSum())));
-							routePojoTemp.setSbVol(routePojoTemp.getSbVol().concat("/"+routePojo.getSbVol()));
-							routePojoTemp.setScenariosId(routePojo.getScenariosId());
+								routePojoTemp.setUnloadVolSum(String.valueOf(Strings.isEmpty(routePojo.getUnloadVolSum().trim())?0:Double.parseDouble(routePojo.getUnloadVolSum())+
+										(Strings.isEmpty(routePojoTemp.getUnloadVolSum().trim())?0:Double.parseDouble(routePojoTemp.getUnloadVolSum()))));
+								routePojoTemp.setUnloadVol(routePojoTemp.getUnloadVol().concat("/"+routePojo.getUnloadVol()));
+								routePojoTemp.setSbVolSum(String.valueOf(Strings.isEmpty(routePojo.getSbVolSum().trim())?0:Double.parseDouble(routePojo.getSbVolSum())+
+										(Strings.isEmpty(routePojoTemp.getSbVolSum().trim())?0:Double.parseDouble(routePojoTemp.getSbVolSum()))));
+								routePojoTemp.setSbVol(routePojoTemp.getSbVol().concat("/"+routePojo.getSbVol()));
+								routePojoTemp.setScenariosId(routePojo.getScenariosId());
 							solutionRouteService.updateRouteByTemp(routePojoTemp);//
 						}else{
 //							solutionRouteService.addRoute(routePojo);//将route插入数据库
 						}
-						//保存到临时对象
-						routePojoTemp = routePojo;
 					}
 				}
 				routeCount ++ ;
 			}
+			//保存到临时对象
+			routePojoTemp = routePojo;
 			systemWebSocketHandler.sendMessageToUser(new TextMessage("增加数据成功"));
 			myScenariosService.updateFinishTime();
 			

@@ -42,11 +42,13 @@ $(function  () {
 		  	this.closeInfoWindow();
 		  });
 		}
-		function addpPyline (pointA,pointB,infoWindowLine,color) {
-			if (color == 1) {
-				var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"deeppink", strokeWeight:2, strokeOpacity:0.8});  //定义折线
-			}else{
-				var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
+		function addpPyline (point,infoWindowLine,color) {
+			if (color == 1) { //上一个网点
+				var polyline = new BMap.Polyline(point, {strokeColor:"black", strokeWeight:2, strokeOpacity:1});  //定义折线
+			}else if (color == 2){ //下一个网点
+				var polyline = new BMap.Polyline(point, {strokeColor:"blue", strokeWeight:2, strokeOpacity:1});  //定义折线
+			}else{ // 彼此是网点
+				var polyline = new BMap.Polyline(point, {strokeColor:"red", strokeWeight:2, strokeOpacity:1});  //定义折线
 			}
 			
 			map.addOverlay(polyline);//添加折线到地图上
@@ -61,18 +63,22 @@ $(function  () {
 		  		
 		  	});
 		}
-		function depotPylineInfo (listPointX,listPointY,calcDis,color) {
+		function depotPylineInfo (listPointX,listPointY,color) {
 			var pointA = new BMap.Point(listPointX.lng,listPointX.lat),
-				pointB = new BMap.Point(listPointY.lng,listPointY.lat);					
+				pointB = new BMap.Point(listPointY.lng,listPointY.lat);	
+			var point = [pointA,pointB];
 			var sContentLine = "";
+			var add = "";
+//			for (var i=0,listlen = list.length;i<listlen;i++) {
+//				
+//			}
 			sContentLine +='<div class="clearfix">';
 			sContentLine +='<p style="float: left;">Distance:</p>';
 			sContentLine +='<div style="float: left;">';
-			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+" "+calcDis+'km'+'</p>';
-			sContentLine +='<p>'+listPointY.curLoc+' to '+listPointX.curLoc+" "+calcDis+'km'+'</p>';
+			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+" :"+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
-			addpPyline(pointA,pointB,infoWindowLine,color);
+			addpPyline(point,infoWindowLine,color);
 		}
 		
 		//初始化坐标
@@ -119,31 +125,27 @@ $(function  () {
 				if (listPoint[a].curLoc == val) {
 					var index = a;
 					var indnext = listPoint[a].nextCurLoc;
-					var indlen = listPoint[a].nextCurLoc.length;
+					var indNlen = listPoint[a].nextCurLoc.length;
+					var indprev = listPoint[a].prevCurLoc;
+					var indPlen = listPoint[a].prevCurLoc.length;
 					
 				}
 			}
-			for (var b=0;b<indlen;b++) {
-				for (var q=0;q<p_len;q++) {
-					var b0 = indnext[b].calcDis;
-					var b1 = indnext[b].nextCurLoc;
-					var b2 = listPoint[q].curLoc;
-					if (b1==b2) {
-						depotPylineInfo(listPoint[index],listPoint[q],b0);
+			for (var bb=0;bb<indNlen;bb++) {
+				depotPylineInfo(listPoint[index],listPoint[bb],2);
+			}
+			for (var qq=0;qq<indPlen;qq++) {
+				depotPylineInfo(listPoint[index],listPoint[qq],1);
+			}
+			for (var b=0;b<indNlen;b++) {
+				for (var q=0;q<indPlen;q++) {
+					var res1 = indnext[b].nextCurLoc;
+					var res2 = indprev[q].prevCurLoc;
+					if (res1 == res2) {
+						depotPylineInfo(listPoint[index],listPoint[q],3);
 					}
 				}
 				
-			}
-			for (var x=0;x<p_len;x++) {
-				var nextlist = listPoint[x].nextCurLoc;
-				var nlen = nextlist.length;
-				for (var y=0;y<nlen;y++) {
-					var res1 = nextlist[y].nextCurLoc;
-					var res2 = nextlist[y].calcDis;
-					if (res1 == val) {
-						depotPylineInfo(listPoint[index],listPoint[x],res2,1);
-					} 
-				}
 			}
 
 		}
@@ -199,8 +201,9 @@ $(function  () {
 			sContentLine +='<div class="clearfix">';
 			sContentLine +='<p style="float: left;">'+listPointX.curLoc+' to '+listPointY.curLoc+':</p>';
 			sContentLine +='<div style="float: left;">';
-			sContentLine +='<p>Arrival time '+listPointX.arrTime+'</p>';
-			sContentLine +='<p>Departure time '+listPointX.endTime+'</p>';
+			sContentLine +='<p>Arrival time: '+listPointX.arrTime+'</p>';
+			sContentLine +='<p>Departure time: '+listPointX.endTime+'</p>';
+			sContentLine +='<p>Goods: '+listPointX.carGoods+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
@@ -215,10 +218,8 @@ $(function  () {
 			sContent += '<p>ID: '+listPoints[j].curLoc+'</p>';
 			sContent += '<p>Type: '+listPoints[j].siteType+'</p>';
 			sContent += '<p>Name: '+listPoints[j].siteName+'</p>';
-			sContent += '<p>Arrival Time: '+listPoints[j].arrTime+'</p>';
 			sContent += '<p>Unload: '+ listPoints[j].unloadVol+'</p>';
 			sContent += '<p>Load: '+ listPoints[j].sbVol+'</p>';
-			sContent += '<p>Departure Time: '+ listPoints[j].endTime+'</p>';
 			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
 			//console.log(infoWindow)
 			addMarker(points,infoWindow);
@@ -295,8 +296,9 @@ $(function  () {
 			sContentLine +='<div class="clearfix">';
 			sContentLine +='<p style="float: left;">'+listPointX.curLoc+' to '+listPointY.curLoc+':</p>';
 			sContentLine +='<div style="float: left;">';
-			sContentLine +='<p>Arrival time '+listPointX.arrTime+'</p>';
-			sContentLine +='<p>Departure time '+listPointX.endTime+'</p>';
+			sContentLine +='<p>Arrival time: '+listPointX.arrTime+'</p>';
+			sContentLine +='<p>Departure time: '+listPointX.endTime+'</p>';
+			sContentLine +='<p>Goods: '+listPointX.carGoods+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
@@ -311,10 +313,8 @@ $(function  () {
 			sContent += '<p>ID: '+listPoints[j].curLoc+'</p>';
 			sContent += '<p>Type: '+listPoints[j].siteType+'</p>';
 			sContent += '<p>Name: '+listPoints[j].siteName+'</p>';
-			sContent += '<p>Arrival Time: '+listPoints[j].arrTime+'</p>';
 			sContent += '<p>Unload: '+listPoints[j].unloadVol+'</p>';
 			sContent += '<p>Load: '+listPoints[j].sbVol+'</p>';
-			sContent += '<p>Departure Time: '+listPoints[j].endTime+'</p>';
 			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
 			//console.log(infoWindow)
 			addMarker(points,infoWindow);
@@ -514,6 +514,66 @@ $(function  () {
 	    	m = result%60;
 	    	return add0(h)+":"+add0(m);
 	}
+	function depotsNextList (arr){
+		var allnewarr = []
+		//console.log(arr);
+		var arrSite = uniqeByKeys(arr,["nextCurLoc"]);
+		for (var j=0,alen = arrSite.length;j<alen;j++) {
+			
+			var newarr = {};
+			var lista = [];
+			for (var x=0,arrlen = arr.length;x<arrlen;x++) {
+				var site1 = arrSite[j].nextCurLoc;
+				var site2 = arr[x].nextCurLoc;
+				if (site1 == site2) {
+					var objj = {};
+					objj["calcDis"] = arr[x].calcDis;
+					objj["arrTime"] = arr[x].arrTime;
+					objj["endTime"] = arr[x].endTime;
+					objj["sbVol"] = arr[x].sbVol;
+					objj["unloadVol"] = arr[x].unloadVol;
+					lista.push(objj);
+					
+				}
+			}
+			newarr["nextCurLoc"]=arrSite[j].nextCurLoc;
+			newarr["lng"]=arrSite[j].lng;
+			newarr["lat"]=arrSite[j].lat;
+			newarr["list"]=lista;
+			allnewarr.push(newarr);
+		}
+		return allnewarr;
+	}
+	function depotsPrevList (arr){
+		var allnewarr = []
+		//console.log(arr);
+		var arrSite = uniqeByKeys(arr,["prevCurLoc"]);
+		for (var j=0,alen = arrSite.length;j<alen;j++) {
+			
+			var newarr = {};
+			var lista = [];
+			for (var x=0,arrlen = arr.length;x<arrlen;x++) {
+				var site1 = arrSite[j].prevCurLoc;
+				var site2 = arr[x].prevCurLoc;
+				if (site1 == site2) {
+					var objj = {};
+					objj["calcDis"] = arr[x].calcDis;
+					objj["arrTime"] = arr[x].arrTime;
+					objj["endTime"] = arr[x].endTime;
+					objj["sbVol"] = arr[x].sbVol;
+					objj["unloadVol"] = arr[x].unloadVol;
+					lista.push(objj);
+					
+				}
+			}
+			newarr["prevCurLoc"]=arrSite[j].prevCurLoc;
+			newarr["lng"]=arrSite[j].lng;
+			newarr["lat"]=arrSite[j].lat;
+			newarr["list"]=lista;
+			allnewarr.push(newarr);
+		}
+		return allnewarr;
+	}
 	/*
 	 *deport.jsp == SolutionActivityController
 	 * 
@@ -594,7 +654,7 @@ $(function  () {
 //	            		for (var i=0;i<len;i++) {
 //                          arr.push(result[i].curLoc);
 //                      }
-	            		//console.log(arr)
+	            		console.log(result)
                         var Arr = uniqeByKeys(result,["curLoc"]),
                         A_len = Arr.length;
                         //console.log(Arr)
@@ -605,54 +665,76 @@ $(function  () {
 						}
 	            		
 	            		for (var j=0;j<A_len;j++) {
-	            			var nextlist = [];
-	            			var nextlists = [];
-	            			var liser = {};
 	            			
+	            			
+	            			var nextlist = [];
+	            			var liser = {};
+	            			var prevlist = [];
 	            			for (var f = 0;f<len;f++) {
+	            				
 	            				var liserN = {};
+	            				var liserP = {};
 	            				var s1 = Arr[j].curLoc;
 	            				var s2 = result[f].curLoc;
+	            				var s3 = result[f].nextCurLoc;
 	            				if (s1 == s2) {
 	            					if (result[f].nextCurLoc != '') {
 	            						liserN["nextCurLoc"] = result[f].nextCurLoc;
 	            						liserN["calcDis"] = result[f].calcDis;
-	            						nextlists.push(liserN);
-	            						nextlist =uniqeByKeys(nextlists,["nextCurLoc"]);
-	            					}
-	            					
-	            				}
-								
-		            		}
-	            			/*
-	            			for (var f = 0;f<len;f++) {
-	            				var liserN = {};
-	            				var s1 = Arr[j].curLoc;
-	            				var s2 = result[f].curLoc;
-	            				if (s1 == s2) {
-	            					if (result[f].nextCurLoc != '') {
-	            						liserN["nextCurLoc"] = result[f].nextCurLoc;
 	            						var arrTime = operationTime(result[f].arrTime);
 										var endTime = operationTime(result[f].endTime);
 										liserN["arrTime"] = arrTime;
 										liserN["endTime"] = endTime;
 										liserN["sbVol"] = result[f].sbVol;
 										liserN["unloadVol"] = result[f].unloadVol;
-	            						nextlists.push(liserN);
-	            						nextlist = nextlists;
+										for (var w=0;w<A_len;w++) {
+											if (result[f].nextCurLoc == Arr[w].curLoc) {
+												liserN["lng"] = Arr[w].siteLongitude;
+												liserN["lat"] = Arr[w].siteLatitude;
+											}
+										}
+										
+	            						nextlist.push(liserN);
+	            	
 	            					}
 	            					
 	            				}
+	            				if (result[f].nextCurLoc != '' && s1 == s3) {
+	            					liserP["prevCurLoc"] = result[f].curLoc;
+            						liserP["calcDis"] = result[f].calcDis;
+            						var arrTime = operationTime(result[f].arrTime);
+									var endTime = operationTime(result[f].endTime);
+									liserP["arrTime"] = arrTime;
+									liserP["endTime"] = endTime;
+									liserP["sbVol"] = result[f].sbVol;
+									liserP["unloadVol"] = result[f].unloadVol;
+									for (var e=0;e<A_len;e++) {
+										if (result[f].curLoc == Arr[e].curLoc) {
+											liserP["lng"] = Arr[e].siteLongitude;
+											liserP["lat"] = Arr[e].siteLatitude;
+										}
+									}
+            						prevlist.push(liserP);
+	            				}
+	            				
 								
-		            		}*/
+		            		}
 	            			
+	            			
+	            			
+	            			//处理返回数据
+	
+	            			//console.log(rlist)
 	            			liser["curLoc"] = Arr[j].curLoc;
 							liser["siteType"] = Arr[j].siteType;
 							liser["siteName"] = Arr[j].siteName;
 							liser["lng"] = Arr[j].siteLongitude;
 							liser["lat"] = Arr[j].siteLatitude;
-							liser["nextCurLoc"] = nextlist;
+							liser["nextCurLoc"] = depotsNextList(nextlist);
+							liser["prevCurLoc"] = depotsPrevList(prevlist);
 							listPoint.push(liser);
+							
+							
 	            		}
 	            		
 							
@@ -675,7 +757,7 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var Datas = api.rows( {page:'current'} ).data();
-			        console.log(Datas);
+			        //console.log(Datas);
 			        var listPoint = [];
 			        var _len = Datas.length;
 			        if (_len != 0 && count != "") {
@@ -892,6 +974,7 @@ $(function  () {
 							liser["sbVol"] = result[f].sbVol;
 							liser["unloadVol"] = result[f].unloadVol;
 							liser["sequence"] = result[f].sequence;
+							
 							listPoint.push(liser);
 	            		}
 	            		//console.log(listPoint);
@@ -974,12 +1057,13 @@ $(function  () {
 								liser["sbVol"] = result[f].sbVol;
 								liser["unloadVol"] = result[f].unloadVol;
 								liser["sequence"] = result[f].sequence;
+								liser["carGoods"] = result[f].carGoods;
 								listPoint.push(liser);
 		            		}
 		            		var val = $('#route-route').val();
 	            			routeMapInit(listArry,val,listPoint);
 		            		
-		            		//console.log(listPoint)
+		            		console.log(listPoint)
 		            		
 	            		}).fail(function (){
 	            			console.log("fail");
@@ -1175,6 +1259,7 @@ $(function  () {
 							liser["sbVol"] = result[f].sbVol;
 							liser["unloadVol"] = result[f].unloadVol;
 							liser["sequence"] = result[f].sequence;
+							liser["carGoods"] = result[f].carGoods;
 							listPoint.push(liser);
 	            		}
 	            		//console.log(listPoint);
@@ -1226,6 +1311,7 @@ $(function  () {
 							liser["sbVol"] = result[f].sbVol;
 							liser["unloadVol"] = result[f].unloadVol;
 							liser["sequence"] = result[f].sequence;
+							liser["carGoods"] = result[f].carGoods;
 							listPoint.push(liser);
 	            		}
 			        	var _val = $('#route-vehicles').val();

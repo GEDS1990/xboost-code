@@ -200,8 +200,7 @@
                 log(event.data);
             };
             ws.onclose = function (event) {
-                log('Info: connection closed.');
-                log(event);
+
             };
 
             var json = {"senairoid":1}
