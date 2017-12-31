@@ -65,10 +65,6 @@ public class CascadeModelUtil extends Thread implements IConstants{
         this.siteDistService = siteDistService;
     }
     public void run(){
-        String inputJsonPath = "src/main/resources/input.json";
-        String demandFilePath = "src/main/resources/demand/";
-//        Input inputJson = ExcelToJson.transferInput();
-        //initialize input and config from json file and constants
         Config conf = initConf(config,demandInfoService);
 
         systemWebSocketHandler.sendMessageToUser( new TextMessage("1%...."));
@@ -149,24 +145,10 @@ public class CascadeModelUtil extends Thread implements IConstants{
         OutputPrinter.printLine("start running ...");
         systemWebSocketHandler.sendMessageToUser( new TextMessage("start running..."));
         Solution finalPackSolution = (Solution)algo.runAlgo();
-//		OutputPrinter.PrintSolution(finalPackSolution);
-//		OutputPrinter.PrintProblem(finalPackSolution);
-//		OutputPrinter.PrintUnassigned(finalPackSolution);
         SolutionJson finalSolutionJson = finalPackSolution.SolutionToJson(finalPackSolution);
         finalSolutionJson = jobPacker.unpack(finalSolutionJson);
         //将finalSolutionJson存储到数据库
-
         ObjectMapper mapper = new ObjectMapper();
-//        try {
-//            mapper.writeValue(new File("src/main/resources/solution/solution.json"), finalSolutionJson);
-//        } catch (JsonGenerationException e) {
-//            e.printStackTrace();
-//        } catch (JsonMappingException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         Solution finalSolution = Solution.newSolution(finalSolutionJson.getUnassignedJobs(),finalSolutionJson.getRoutes(),
         cons,cm,costCalculator,noiser,constructive);
         OutputPrinter.PrintSolution(finalSolution);
@@ -177,7 +159,6 @@ public class CascadeModelUtil extends Thread implements IConstants{
         systemWebSocketHandler.sendMessageToUser( new TextMessage("83%...."));
         long endTime = System.currentTimeMillis();
         systemWebSocketHandler.sendMessageToUser( new TextMessage("total time used:"+(endTime-startTime)+"ms"));
-//		OutputPrinter.writeSolutionToExcel(finalSolution);
         systemWebSocketHandler.sendMessageToUser( new TextMessage("write Standard Output To Databases"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("90%...."));
         OutputPrinter.writeStandardOutputToExcel(finalSolution,transportCost);
@@ -192,19 +173,12 @@ public class CascadeModelUtil extends Thread implements IConstants{
         distMode = config.getDistMode();
         //todo by geds
         //设置目的地分拣耗时PALNS_SEGMENT
-//        modelArgService.findConfigByParam()
 
         Score[] scores = new Score[]{Score.REJECTED,Score.ACCEPTED,Score.BETTER_THAN_CURRENT,Score.NEWBEST};
         palnsConf = new PalnsConfig(PALNS_CORES, config.getOptimizeIterations(),PALNS_MAX_TIME, PALNS_W,PALNS_DECAY, PALNS_ALPHA, scores,
                 PALNS_SEGMENT);
-
-
-//        transportCost = new TransportCost("src/main/resources/distance/"+config.getDistanceFile(),TRANSPORT_COST_NEAREST,config.getLoadTime());
         //读取文件改为读取数据库（替换BufferedReader）
         transportCost = new TransportCost("",TRANSPORT_COST_NEAREST,config.getLoadTime());
-
-
-
         costCalculator = new DefaultCostCalculator(COST_CALCULATOR_MIN,COST_CALCULATOR_MAX,COST_CALCULATOR_N);
         timeConstraint = new TimeConstraint(TIME_CONSTRAINT_WEIGHT);
         distanceConstraint = new DistanceConstraint(DISTANCE_CONSTRAINT_WEIGHT);
@@ -215,7 +189,6 @@ public class CascadeModelUtil extends Thread implements IConstants{
         regretInsertion = new RegretInsertion(REGRET_INSERTION_K);
         noiseMaker = new NoiseMaker(NOISE_LEVEL,NOISE_PORB);
         jobPacker = new JobPacker(JOB_PACKER_INTERVAL);
-
         Config conf = new Config(palnsConf,transportCost, costCalculator,
                 timeConstraint, distanceConstraint, randomRemoval,
                 routeRemoval, worstRemoval, shawRemoval,
@@ -224,12 +197,8 @@ public class CascadeModelUtil extends Thread implements IConstants{
     }
     private Input initInput(Configuration config,DemandInfoService demandInfoService) {
         Input input = null;
-//            input = mapper.readValue(new File("src/main/resources/progInput.json"), Input.class);
         ExcelToJson etj = new ExcelToJson();
             input = etj.transferInput(config,demandInfoService);//替换掉对progInput.json的依赖
-//            for(int i = 0;i<input.getCarTemplates().length ;i++){
-//                input.setCarTemplates();
-//            }
             for(Job j: input.getInitSolution().getUnassignedJobs()){
                 totalJobs.put(j.getId(), j);
             }

@@ -73,10 +73,8 @@ public class CascadeController {
             for(int i=0;i<carlist.length;i++){
                 carlist[i].setStartLocation(carlist[i].getStartLocation().trim());
                 carlist[i].setEndLocation(carlist[i].getEndLocation().trim());
-
                 config.setCarTemplates(carlist);
             }
-
             try{
                 cmu = new CascadeModelUtil(config,demandInfoService,siteDistService);
                 cmu.run();
@@ -86,7 +84,6 @@ public class CascadeController {
                 systemWebSocketHandler.sendMessageToUser(message);
             }
 //        LogFactory.getLog(AccountController.class).info("input:"+input);
-
         }else if("2".equals(distMode)){
             RelayModeUtil rm = new RelayModeUtil(tempService,demandInfoService,siteDistService,siteInfoService);
             try {
@@ -94,7 +91,7 @@ public class CascadeController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
+        }else if("3".equals(distMode)){
 
         }
         myScenariosService.updateFinishTime();
