@@ -345,9 +345,9 @@ public class OutputPrinter implements IConstants {
 		printLine("+-----------------------------+");
 		printLine("| Unassigned                  |");
 		printLine("+-----------------------------+");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("| Unassigned                  |"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("| Unassigned                  |"));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
 		for (Entry<String, Job> entry : s.getUnassigned().entrySet()) {
 			Job j = entry.getValue();
 			printLine("| "+j.getId()+"\t | "+j.getPickup().getLocation()+" - "+j.getDelivery().getLocation()+"\t |\n");
@@ -434,10 +434,10 @@ public class OutputPrinter implements IConstants {
 			int routeCount = 1;
 
 			systemWebSocketHandler.sendMessageToUser(new TextMessage("Insert into DB...."));
-			double d = 90.0;
+//			double d = 90.0;
 			for (Entry<String, Route> entry : s.getRoutes().entrySet()) {
-				d = d<95.0?d+0.01:d;
-				systemWebSocketHandler.sendMessageToUser(new TextMessage(d+"%"));
+//				d = d<95.0?d+0.01:d;
+//				systemWebSocketHandler.sendMessageToUser(new TextMessage(d+"%"));
 				Route r = entry.getValue();
 				ConstraintState cstat = s.getConstraintState(DEFAULT_CONSTRAINTS);
 				RouteState rstat = cstat.getRouteState(r);
@@ -696,7 +696,7 @@ public class OutputPrinter implements IConstants {
 			}
 			//保存到临时对象
 			routePojoTemp = routePojo;
-			systemWebSocketHandler.sendMessageToUser(new TextMessage("增加数据成功"));
+//			systemWebSocketHandler.sendMessageToUser(new TextMessage("增加数据成功"));
 			myScenariosService.updateFinishTime();
 			
 //			out = new FileOutputStream(fileName);

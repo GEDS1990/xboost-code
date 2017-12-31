@@ -61,6 +61,7 @@ public class ValidateController {
     @RequestMapping(value = "/Validate",method = RequestMethod.POST)
     @ResponseBody
     public String Validate() {
+        ShiroUtil.clearSimulateConsole();
         List<SiteInfo> siteInfoList = siteInfoService.findAllSiteInfo(ShiroUtil.getOpenScenariosId());
         List<SiteDist> siteDistList = siteDistService.findAllSiteDist(ShiroUtil.getOpenScenariosId());
         List<DemandInfo> demandInfoList = demandInfoService.findAll(ShiroUtil.getOpenScenariosId());
