@@ -75,14 +75,14 @@ public class CascadeController {
                 carlist[i].setEndLocation(carlist[i].getEndLocation().trim());
                 config.setCarTemplates(carlist);
             }
-            try{
+//            try{
                 cmu = new CascadeModelUtil(config,demandInfoService,siteDistService);
                 cmu.run();
-            }catch (NullPointerException e){
-                SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
-                TextMessage message = new TextMessage("NullPointerException");
-                systemWebSocketHandler.sendMessageToUser(message);
-            }
+//            }catch (NullPointerException e){
+//                SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
+//                TextMessage message = new TextMessage("NullPointerException");
+//                systemWebSocketHandler.sendMessageToUser(message);
+//            }
 //        LogFactory.getLog(AccountController.class).info("input:"+input);
         }else if("2".equals(distMode)){
             RelayModeUtil rm = new RelayModeUtil(tempService,demandInfoService,siteDistService,siteInfoService);
