@@ -119,4 +119,30 @@ public class ShiroUtil {
         String scenariosName = session.getAttribute(User.SESSION_openScenariosName).toString();
         return scenariosName;
     }
+    //websocket
+
+    /**
+     * 将当前simulate日志设置到session中
+     * @return
+     */
+    public static String setSimulateConsole(String SimulateLog){
+        //获取认证主体
+        Subject subject = SecurityUtils.getSubject();
+        //将场景名称放入到Session中
+        Session session = subject.getSession();
+        session.setAttribute(User.SESSION_Simulate,getSimulateConsole()+"/n"+SimulateLog);
+        return "success";
+    }
+
+    /**
+     * 从session中获取当前simulate日志
+     * @return
+     */
+    public static String getSimulateConsole(){
+
+        org.apache.shiro.subject.Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        String SimulateLog = session.getAttribute(User.SESSION_Simulate).toString();
+        return SimulateLog;
+    }
 }

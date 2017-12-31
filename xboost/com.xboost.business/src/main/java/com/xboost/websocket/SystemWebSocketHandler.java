@@ -70,6 +70,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
                 try {
                     if (user.isOpen()) {
                         user.sendMessage(message);
+                        ShiroUtil.setSimulateConsole(message.getPayload());
                     }
                 } catch (IOException e) {
 //                    e.printStackTrace();
