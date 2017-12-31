@@ -90,25 +90,37 @@ public class SolutionVehiclesController {
 
         Double sbVolSum;
         Double unloadVolSum;
-        for(int i=0;i<vehiclesList.size();i++)
+        String sbVol;
+        String unloadVol;
+        if(""!=searchValue)
         {
-            Map<String,Object> vehicle = vehiclesList.get(i);
-            for(int j=0;j<vehiclesList.size()&&j!=i;j++)
+            for(int i=0;i<vehiclesList.size();i++)
             {
-                if(vehicle.get("sequence").equals(vehiclesList.get(j).get("sequence"))){
-                    sbVolSum = Double.parseDouble(vehicle.get("sbVolSum").toString())
-                            +Double.parseDouble(vehiclesList.get(j).get("sbVolSum").toString());
-                    unloadVolSum = Double.parseDouble(vehicle.get("unloadVolSum").toString())
-                            +Double.parseDouble(vehiclesList.get(j).get("unloadVolSum").toString());
+                Map<String,Object> vehicle = vehiclesList.get(i);
+                for(int j=i+1;j<vehiclesList.size();j++)
+                {
+                    if(vehicle.get("sequence").equals(vehiclesList.get(j).get("sequence"))){
+                        sbVolSum = Double.parseDouble(vehicle.get("sbVolSum").toString())
+                                +Double.parseDouble(vehiclesList.get(j).get("sbVolSum").toString());
+                        unloadVolSum = Double.parseDouble(vehicle.get("unloadVolSum").toString())
+                                +Double.parseDouble(vehiclesList.get(j).get("unloadVolSum").toString());
+                        sbVol = (vehicle.get("sbVol").equals("0")?"":vehicle.get("sbVol").toString())
+                                +(vehiclesList.get(j).get("sbVol").equals("0")?"":vehiclesList.get(j).get("sbVol").toString());
+                        unloadVol = (vehicle.get("unloadVol").equals("0")?"":vehicle.get("unloadVol").toString())
+                                +(vehiclesList.get(j).get("unloadVol").equals("0")?"":(vehiclesList.get(j).get("unloadVol").toString()));
 
-                    vehicle.put("sbVolSum",sbVolSum);
-                    vehicle.put("unloadVolSum",unloadVolSum);
-                    vehiclesList.remove(j);
-                    count = count -1;
-                    filteredCount = filteredCount-1;
+                        vehiclesList.get(i).put("sbVolSum",sbVolSum);
+                        vehiclesList.get(i).put("unloadVolSum",unloadVolSum);
+                        vehiclesList.get(i).put("sbVol",sbVol);
+                        vehiclesList.get(i).put("unloadVol",unloadVol);
+                        vehiclesList.remove(j);
+                        count = count -1;
+                        filteredCount = filteredCount-1;
+                    }
+
                 }
-
             }
+
         }
 
         result.put("draw",draw);

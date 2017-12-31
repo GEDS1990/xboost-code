@@ -90,19 +90,28 @@ public class SolutionDepotsController {
     //    List<Map<String,Object>> nextSiteList = siteInfoService.findNextSite(scenariosId,siteCode);
         Double sbVolSum;
         Double unloadVolSum;
+        String sbVol;
+        String unloadVol;
         for(int i=0;i<siteList.size();i++)
         {
             Map<String,Object> site = siteList.get(i);
-            for(int j=0;j<siteList.size()&&j!=i;j++)
+            for(int j=i+1;j<siteList.size();j++)
             {
-                if(site.get("routeCount").equals(siteList.get(j).get("routeCount"))&&site.get("sequence").equals(siteList.get(j).get("sequence"))){
+                if(site.get("curLoc").equals(siteList.get(j).get("curLoc"))&&site.get("arrTime").equals(siteList.get(j).get("arrTime"))
+                        &&site.get("carType").equals(siteList.get(j).get("carType"))){
                     sbVolSum = Double.parseDouble(site.get("sbVolSum").toString())
                             +Double.parseDouble(siteList.get(j).get("sbVolSum").toString());
                     unloadVolSum = Double.parseDouble(site.get("unloadVolSum").toString())
                             +Double.parseDouble(siteList.get(j).get("unloadVolSum").toString());
+                    sbVol = (site.get("sbVol").equals("0")?"":site.get("sbVol").toString())
+                            +(siteList.get(j).get("sbVol").equals("0")?"":siteList.get(j).get("sbVol").toString());
+                    unloadVol = (site.get("unloadVol").equals("0")?"":site.get("unloadVol").toString())
+                            +(siteList.get(j).get("unloadVol").equals("0")?"":(siteList.get(j).get("unloadVol").toString()));
 
-                    site.put("sbVolSum",sbVolSum);
-                    site.put("unloadVolSum",unloadVolSum);
+                    siteList.get(i).put("sbVolSum",sbVolSum);
+                    siteList.get(i).put("unloadVolSum",unloadVolSum);
+                    siteList.get(i).put("sbVol",sbVol);
+                    siteList.get(i).put("unloadVol",unloadVol);
                     siteList.remove(j);
                     count = count -1;
                     filteredCount = filteredCount-1;

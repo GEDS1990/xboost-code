@@ -85,6 +85,7 @@ public class SolutionRouteController {
 
         Map<String,Object> result = Maps.newHashMap();
 
+        List<Route> allRoute = solutionRouteService.findAllRoute(ShiroUtil.getOpenScenariosId());
         List<Map<String,Object>> routeList = solutionRouteService.findByRoute(param); //.findAll();
         Integer count = solutionRouteService.findAllCountByRoute(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = solutionRouteService.findCountByRoute(param);
@@ -92,26 +93,40 @@ public class SolutionRouteController {
 
         Double sbVolSum;
         Double unloadVolSum;
-        for(int i=0;i<routeList.size();i++)
+        String sbVol;
+        String unloadVol;
+
+        if(""!=searchValue)
         {
-            Map<String,Object> route = routeList.get(i);
-            for(int j=0;j<routeList.size()&&j!=i;j++)
+            for(int i=0;i<routeList.size();i++)
             {
-                if(route.get("sequence").equals(routeList.get(j).get("sequence"))){
-                    sbVolSum = Double.parseDouble(route.get("sbVolSum").toString())
-                            +Double.parseDouble(routeList.get(j).get("sbVolSum").toString());
-                    unloadVolSum = Double.parseDouble(route.get("unloadVolSum").toString())
-                            +Double.parseDouble(routeList.get(j).get("unloadVolSum").toString());
+                Map<String,Object> route = routeList.get(i);
+                for(int j=i+1;j<routeList.size();j++)
+                {
+                    if(route.get("sequence").equals(routeList.get(j).get("sequence"))){
+                        sbVolSum = Double.parseDouble(route.get("sbVolSum").toString())
+                                +Double.parseDouble(routeList.get(j).get("sbVolSum").toString());
+                        unloadVolSum = Double.parseDouble(route.get("unloadVolSum").toString())
+                                +Double.parseDouble(routeList.get(j).get("unloadVolSum").toString());
+                        sbVol = (route.get("sbVol").equals("0")?"":route.get("sbVol").toString())
+                                +(routeList.get(j).get("sbVol").equals("0")?"":routeList.get(j).get("sbVol").toString());
+                        unloadVol = (route.get("unloadVol").equals("0")?"":route.get("unloadVol").toString())
+                                +(routeList.get(j).get("unloadVol").equals("0")?"":(routeList.get(j).get("unloadVol").toString()));
 
-                    route.put("sbVolSum",sbVolSum);
-                    route.put("unloadVolSum",unloadVolSum);
-                    routeList.remove(j);
-                    count = count -1;
-                    filteredCount = filteredCount-1;
+                        routeList.get(i).put("sbVolSum",sbVolSum);
+                        routeList.get(i).put("unloadVolSum",unloadVolSum);
+                        routeList.get(i).put("sbVol",sbVol);
+                        routeList.get(i).put("unloadVol",unloadVol);
+                        routeList.remove(j);
+                        count = count -1;
+                        filteredCount = filteredCount-1;
+                    }
+
                 }
-
             }
+
         }
+
 
         List<String> usingCar = solutionRouteService.findUsingCar1(ShiroUtil.getOpenScenariosId());
         List<String> idleCar = solutionRouteService.findIdleCar1(ShiroUtil.getOpenScenariosId());
