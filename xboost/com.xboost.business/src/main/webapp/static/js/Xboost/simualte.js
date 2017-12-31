@@ -1,5 +1,5 @@
 var doc = document;
-
+var type = "";
 
 
 $(function  () {
@@ -19,6 +19,9 @@ $(function  () {
 					return false;
 				}else{
 					$('#sim-error-check').hide();
+					$('#timelimit').hide();
+					$('#loopslimit').hide();
+					$('#sim-error-run').hide();
 					//执行验证
 					if(typeof(WebSocket) == "undefined") {
 	                alert("您的浏览器不支持WebSocket");
@@ -34,15 +37,17 @@ $(function  () {
 		                logg(event.data);
 		            };
 		            socket .onclose = function (event) {
-//		                logg('Info: connection closed.');
-//		                logg(event);
+		                logg('Info: connection closed.');
+		                logg(event);
 		            };
 					
 					$.post("/simualte/Validate").done(function  (result) {
-					    ws.onclose();
-						console.log("success");
+						console.log(result);
+						type = result;
+					    socket.onclose();
+					
 					}).fail(function  () {
-					    ws.onclose();
+					    socket.onclose();
 						console.log("fail");
 					});
 					
@@ -76,10 +81,14 @@ $(function  () {
 					$('#loopslimit').show();
 					$('#sim-run-count').focus();
 					return false;
-				}else{
+				}
+				if (type == "" || type == "fail") {
+					$('#sim-error-run').show();
+				}else if (type == "success"){
 					$('#sim-error-check').hide();
 					$('#loopslimit').hide();
 					$('#timelimit').hide();
+					$('#sim-error-run').hide();
 					window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+runTime+"&loopLimit="+runCount;
 				}
 				

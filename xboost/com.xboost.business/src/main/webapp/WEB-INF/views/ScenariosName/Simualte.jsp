@@ -65,7 +65,7 @@
 	    		<div class="sim-box">
 	    			
 	    			<div class="form-group sim-ground alt-sims" id="sim-run-info">
-	    				
+	    				${sessionScope.SimulateLog}
 	    			</div>
 	    			
 	    			<div class="form-group  clearfix">

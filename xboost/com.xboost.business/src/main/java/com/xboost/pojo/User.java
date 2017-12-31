@@ -11,6 +11,8 @@ public class User implements Serializable {
     public static final String SESSION_openScenariosName = "openScenariosName";
     public static final String SESSION_openScenariosId = "openScenariosId";
 
+    public static final String SESSION_Simulate = "SimulateLog";
+    public static final String SESSION_Validate = "ValidateLog";
 
     private Integer id;
     private String username;

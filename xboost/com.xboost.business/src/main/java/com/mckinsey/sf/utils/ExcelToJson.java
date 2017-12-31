@@ -28,17 +28,6 @@ public class ExcelToJson implements IConstants{
 		Input inputJson = new Input();
 
 		ObjectMapper mapper = new ObjectMapper();
-//		Configuration input = null;
-//		try {
-//			input = mapper.readValue(new File("src/main/resources/input.json"), Configuration.class);
-//		} catch (JsonParseException e) {
-//			e.printStackTrace();
-//		} catch (JsonMappingException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		Configuration input = config;
 		com.mckinsey.sf.data.Configuration input = new com.mckinsey.sf.data.Configuration();
 		input.setDistMode(config.getDistMode());
 		input.setCarCostMode(config.getCarCostMode());
@@ -108,73 +97,6 @@ public class ExcelToJson implements IConstants{
 			}
 			solution.setUnassignedJobs(jobs);
 			inputJson.setInitSolution(solution);
-
-//			int jobID = 0;
-//			while((line = br.readLine()) !=null){
-//				String[] row = line.split(splitBy);
-//				String jobSize = row[3];
-//				String pickupLoc = row[1];
-//				String deliverLoc = row[2];
-//
-//				String pickupStart = row[4];
-//				String deliverStart = row[4];
-//				String end = row[5];
-//
-//				TimeWindow pickupTime = new TimeWindow(Integer.parseInt(pickupStart),Integer.parseInt(end)+input.getLoadTime());
-//				TimeWindow deliverTime = new TimeWindow(Integer.parseInt(deliverStart),Integer.parseInt(end)+input.getLoadTime());
-//
-//				double size = Math.ceil(Double.parseDouble(jobSize)*VOL_PERCENT);
-//
-//				//TODO
-////				if("571WW".equalsIgnoreCase(pickupLoc)){
-////					size = size *3;
-////				}
-//
-//				while(size > maxVol){
-//					jobID++;
-//					Activity delivery = new Activity(String.valueOf(UUID.randomUUID()),"DELIVER", pickupTime, 0, deliverLoc);
-//					delivery.setJobId(String.valueOf(jobID));
-//					Activity pickup = new Activity(String.valueOf(UUID.randomUUID()),"PICKUP", pickupTime, 0, pickupLoc);
-//					pickup.setJobId(String.valueOf(jobID));
-//					Job j = new Job(String.valueOf(jobID),1, new String[]{},new double[]{maxVol}, pickup, delivery,false);
-//					jobList.add(j);
-//					size -= maxVol;
-//				}
-//
-//				jobID++;
-//				Activity delivery = new Activity(String.valueOf(UUID.randomUUID()),"DELIVER", deliverTime, 0, deliverLoc);
-//				delivery.setJobId(String.valueOf(jobID));
-//				Activity pickup = new Activity(String.valueOf(UUID.randomUUID()),"PICKUP", pickupTime, 0, pickupLoc);
-//				pickup.setJobId(String.valueOf(jobID));
-//				Job j = new Job(String.valueOf(jobID),1, new String[]{},new double[]{size}, pickup, delivery,false);
-//				jobList.add(j);
-//
-//			}
-//			br.close();
-
-//			Job[] jobs = new Job[jobList.size()];
-//			for(int i =0; i< jobList.size();i++){
-//				jobs[i] = jobList.get(i);
-//			}
-//			solution.setUnassignedJobs(jobs);
-//			inputJson.setInitSolution(solution);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-
-
-
-
-//		try {
-//			mapper.writeValue(new File("src/main/resources/progInput.json"), inputJson);
-//			return inputJson;
-//		} catch (JsonGenerationException e) {
-//			e.printStackTrace();
-//		} catch (JsonMappingException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
 		return inputJson;
 	}
 

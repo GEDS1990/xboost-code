@@ -67,7 +67,7 @@
 	    	<div class="sim-content scen">
 	    		<header class="clearfix">
 	    			<p>Settings Overview</p>
-	    			<a>See details</a>
+	    			<a href="/siteInfo">See details</a>
 	    		</header>
 	    		<div class="sim-box">
 	    			<ul id="scen-ul" class="clearfix">

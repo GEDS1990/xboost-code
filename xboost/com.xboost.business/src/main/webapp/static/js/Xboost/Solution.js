@@ -63,19 +63,87 @@ $(function  () {
 		  		
 		  	});
 		}
-		function depotPylineInfo (listPointX,listPointY,color) {
+		function depotPylineInfo (listPointX,listPointY,color,data) {
 			var pointA = new BMap.Point(listPointX.lng,listPointX.lat),
 				pointB = new BMap.Point(listPointY.lng,listPointY.lat);	
 			var point = [pointA,pointB];
 			var sContentLine = "";
+			var res = data.list;
 			var add = "";
-//			for (var i=0,listlen = list.length;i<listlen;i++) {
-//				
-//			}
+			for (var i=0,listlen = res.length;i<listlen;i++) {
+				var sbVol = res[i].sbVol;
+				var unloadVol = res[i].unloadVol;
+				if (sbVol == 0 && unloadVol != 0) {
+					add +='<p>prevCurLoc:'+data.curLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
+				}
+				if (unloadVol == 0 && sbVol !=0) {
+					add +='<p>nextCurLoc:'+data.nextCurLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+				}else if (unloadVol != 0 && sbVol !=0){
+					add +='<p>prevCurLoc:'+data.curLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
+					add +='<p>nextCurLoc:'+data.nextCurLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+				}
+			}
 			sContentLine +='<div class="clearfix">';
-			sContentLine +='<p style="float: left;">Distance:</p>';
 			sContentLine +='<div style="float: left;">';
-			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+" :"+'</p>';
+			//sContentLine +='<p>'+listPointX.curLoc+' to '+(listPointY.nextCurLoc?listPointY.nextCurLoc:listPointY.prevCurLoc)+" :"+'</p>';
+			sContentLine +=add;
+			sContentLine +='</div></div>';
+			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
+			addpPyline(point,infoWindowLine,color);
+		}
+		function depotPylineInfo1 (listPointX,listPointY,color,data) {
+			var pointA = new BMap.Point(listPointX.lng,listPointX.lat),
+				pointB = new BMap.Point(listPointY.lng,listPointY.lat);	
+			var point = [pointA,pointB];
+			var sContentLine = "";
+			var res = data.list;
+			var add = "";
+			for (var i=0,listlen = res.length;i<listlen;i++) {
+				var sbVol = res[i].sbVol;
+				var unloadVol = res[i].unloadVol;
+				if (sbVol == 0 && unloadVol != 0) {
+					add +='<p>prevCurLoc:'+data.prevCurLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
+				}
+				if (unloadVol == 0 && sbVol !=0) {
+					add +='<p>nextCurLoc:'+data.curLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+				}else if (unloadVol != 0 && sbVol !=0){
+					add +='<p>prevCurLoc:'+data.prevCurLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
+					add +='<p>nextCurLoc:'+data.curLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+					
+				}
+			}
+			sContentLine +='<div class="clearfix">';
+			sContentLine +='<div style="float: left;">';
+			//sContentLine +='<p>'+listPointX.curLoc+' to '+(listPointY.nextCurLoc?listPointY.nextCurLoc:listPointY.prevCurLoc)+" :"+'</p>';
+			sContentLine +=add;
+			sContentLine +='</div></div>';
+			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
+			addpPyline(point,infoWindowLine,color);
+		}
+		function depotPylineInfo2 (listPointX,listPointY,color,data) {
+			var pointA = new BMap.Point(listPointX.lng,listPointX.lat),
+				pointB = new BMap.Point(listPointY.lng,listPointY.lat);	
+			var point = [pointA,pointB];
+			var sContentLine = "";
+			var res = data.list;
+			var add = "";
+			for (var i=0,listlen = res.length;i<listlen;i++) {
+				var sbVol = res[i].sbVol;
+				var unloadVol = res[i].unloadVol;
+				if (sbVol == 0 && unloadVol != 0) {
+					add +='<p>prevCurLoc:'+data.prevCurLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
+				}
+				if (unloadVol == 0 && sbVol !=0) {
+					add +='<p>nextCurLoc:'+data.curLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+				}else if (unloadVol != 0 && sbVol !=0){
+					add +='<p>prevCurLoc:'+data.prevCurLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
+					add +='<p>nextCurLoc:'+data.curLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+				}
+			}
+			sContentLine +='<div class="clearfix">';
+			sContentLine +='<div style="float: left;">';
+			//sContentLine +='<p>'+listPointX.curLoc+' to '+(listPointY.nextCurLoc?listPointY.nextCurLoc:listPointY.prevCurLoc)+" :"+'</p>';
+			sContentLine +=add;
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(point,infoWindowLine,color);
@@ -89,7 +157,6 @@ $(function  () {
 				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(21,32),{
 					anchor: new BMap.Size(10, 30)
 				});
-				console.log(val)
 			}else{
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
 				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(16,24),{
@@ -132,17 +199,39 @@ $(function  () {
 				}
 			}
 			for (var bb=0;bb<indNlen;bb++) {
-				depotPylineInfo(listPoint[index],listPoint[bb],2);
+				var bblist = {
+					"curLoc":listPoint[index].curLoc,
+					"nextCurLoc":indnext[bb].nextCurLoc,
+					"list":indnext[bb].list
+				}
+				//console.log(bblist)
+				depotPylineInfo(listPoint[index],indnext[bb],2,bblist);
 			}
 			for (var qq=0;qq<indPlen;qq++) {
-				depotPylineInfo(listPoint[index],listPoint[qq],1);
+				var qqlist = {
+					"curLoc":listPoint[index].curLoc,
+					"prevCurLoc":indprev[qq].prevCurLoc,
+					"list":indprev[qq].list
+				}
+				depotPylineInfo1(listPoint[index],indprev[qq],1,qqlist);
 			}
 			for (var b=0;b<indNlen;b++) {
 				for (var q=0;q<indPlen;q++) {
 					var res1 = indnext[b].nextCurLoc;
 					var res2 = indprev[q].prevCurLoc;
 					if (res1 == res2) {
-						depotPylineInfo(listPoint[index],listPoint[q],3);
+						var _list = indnext[b].list;
+						for (var z=0,zlen=indprev[q].list.length;z<zlen;z++) {
+							_list.push(indprev[q].list[z]);
+						}
+						var blist = {
+							"curLoc":listPoint[index].curLoc,
+							"prevCurLoc":res2,
+							"nextCurLoc":res1,
+							"list":_list
+						}
+						//console.log(indnext[b].list)
+						depotPylineInfo2(listPoint[index],indprev[q],3,blist);
 					}
 				}
 				
@@ -645,16 +734,12 @@ $(function  () {
 	            	if (data.data.length !=0) {
 	            		$('#depots-map').show();
 	            		var result = data.data,
-	            		arr = [],
 	            		listPoint = [],
 	            		len = result.length;
 	            		$('#route-depot').empty();
 	            		$('#route-depot').off("change");
 	            		$('#route-depot').append('<option value="0">All Depots</option>');
-//	            		for (var i=0;i<len;i++) {
-//                          arr.push(result[i].curLoc);
-//                      }
-	            		console.log(result)
+	            		//console.log(result)
                         var Arr = uniqeByKeys(result,["curLoc"]),
                         A_len = Arr.length;
                         //console.log(Arr)
@@ -740,7 +825,7 @@ $(function  () {
 							
 	            		
 						//查询所有网点坐标
-						console.log(listPoint)
+						//console.log(listPoint)
 						listArry="";
 						listArry = listPoint;
 							

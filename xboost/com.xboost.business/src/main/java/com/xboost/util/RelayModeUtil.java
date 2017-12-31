@@ -51,7 +51,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         Map map = new HashMap<String,Object>();
         map.put("scenariosId", ShiroUtil.getOpenScenariosId());
         //obj
-        List<DemandInfo> demandInfoList = demandInfoService.findByParam(map);
+        List<DemandInfo> demandInfoList = demandInfoService.findByScenairoIdParam(map);
         Map<String,Object> connection = new HashMap<String,Object>();
         Map<String,Object> OD_demand = new HashMap<String,Object>();
         Map<String,Object> distance_ref = new HashMap<String,Object>();
@@ -85,7 +85,7 @@ public class RelayModeUtil extends Thread implements IConstants {
             OD_demand_list.add(OD_demand);
         }
         //distance_ref
-        List<SiteDist> siteDistList = siteDistService.findByParam(map);
+        List<SiteDist> siteDistList = siteDistService.findSiteDistByScenariosId(map);
         for(int j=0;j<siteDistList.size();j++){
             distance_ref.put("inbound_id",siteDistList.get(j).getSiteCollect());
             distance_ref.put("outbound_id",siteDistList.get(j).getSiteDelivery());

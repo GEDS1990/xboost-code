@@ -207,6 +207,7 @@ public class OutputPrinter implements IConstants {
 		List<JobInfo> jobInfos = new ArrayList<JobInfo>();
 		List<ArrInfo> arrInfos = new ArrayList<ArrInfo>();
 
+		systemWebSocketHandler.sendMessageToUser( new TextMessage("It May Take Some Minutes,Please Waiting..."));
 		for(Route r : s.getRoutes().values()){
 			ConstraintState cstat = s.getConstraintState(DEFAULT_CONSTRAINTS);
 			RouteState rstat = cstat.getRouteState(r);
@@ -350,7 +351,7 @@ public class OutputPrinter implements IConstants {
 		for (Entry<String, Job> entry : s.getUnassigned().entrySet()) {
 			Job j = entry.getValue();
 			printLine("| "+j.getId()+"\t | "+j.getPickup().getLocation()+" - "+j.getDelivery().getLocation()+"\t |\n");
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("| "+j.getId()+"\t | "+j.getPickup().getLocation()+" - "+j.getDelivery().getLocation()+"\t |\n"));
+//			systemWebSocketHandler.sendMessageToUser( new TextMessage("| "+j.getId()+"\t | "+j.getPickup().getLocation()+" - "+j.getDelivery().getLocation()+"\t |\n"));
 		}
 	}
 
@@ -417,13 +418,13 @@ public class OutputPrinter implements IConstants {
 		com.xboost.pojo.Activity activityPojo = new com.xboost.pojo.Activity();
 //		String fileName = "src/main/resources/标准串点输出.xls";
 
-		systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据...."));
+		systemWebSocketHandler.sendMessageToUser(new TextMessage("Delete Old Data..."));
 		solutionRouteService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));//删除该场景的旧数据
 		solutionRouteService.updateAllCarToIdle(ShiroUtil.getOpenScenariosId());//更新车辆为可用
 		solutionCostService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));//删除该场景的旧数据
 
 		solutionActivityService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
-		systemWebSocketHandler.sendMessageToUser(new TextMessage("删除该场景的旧数据成功"));
+		systemWebSocketHandler.sendMessageToUser(new TextMessage("Delete Old Data Success..."));
 
 //		Workbook wb = null;
 //		OutputStream out = null;
@@ -432,8 +433,11 @@ public class OutputPrinter implements IConstants {
 			int count2 = 0;
 			int routeCount = 1;
 
-			systemWebSocketHandler.sendMessageToUser(new TextMessage("新增数据...."));
+			systemWebSocketHandler.sendMessageToUser(new TextMessage("Insert into DB...."));
+			double d = 90.0;
 			for (Entry<String, Route> entry : s.getRoutes().entrySet()) {
+				d = d<95.0?d+0.01:d;
+				systemWebSocketHandler.sendMessageToUser(new TextMessage(d+"%"));
 				Route r = entry.getValue();
 				ConstraintState cstat = s.getConstraintState(DEFAULT_CONSTRAINTS);
 				RouteState rstat = cstat.getRouteState(r);

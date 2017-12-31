@@ -90,11 +90,12 @@ public class ExcelUtil {
                 String rowValue = "";
                 for (int r=0;r<row.getLastCellNum();r++) {
                     Cell cell = row.getCell(r);
-                    if (cell.toString() == null) {
+                    String cellValue = "";
+                    if (cell== null) {
+                        rowValue +=  "#";;
                         continue;
                     }
                     int cellType = cell.getCellType();
-                    String cellValue = "";
                     switch (cellType) {
                         case Cell.CELL_TYPE_STRING:        // 文本
                             cellValue = cell.getRichStringCellValue().getString() + "#";
