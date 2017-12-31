@@ -1,5 +1,5 @@
 var doc = document;
-
+var type = "";
 
 
 $(function  () {
@@ -34,15 +34,16 @@ $(function  () {
 		                logg(event.data);
 		            };
 		            socket .onclose = function (event) {
-//		                logg('Info: connection closed.');
-//		                logg(event);
+		                logg('Info: connection closed.');
+		                logg(event);
 		            };
 					
 					$.post("/simualte/Validate").done(function  (result) {
-					    ws.onclose();
-						console.log("success");
+					    socket.onclose();
+						//console.log(result);
+						type = result;
 					}).fail(function  () {
-					    ws.onclose();
+					    socket.onclose();
 						console.log("fail");
 					});
 					
@@ -76,10 +77,14 @@ $(function  () {
 					$('#loopslimit').show();
 					$('#sim-run-count').focus();
 					return false;
-				}else{
+				}
+				if (type == "" || type == "fail") {
+					$('#sim-error-run').show();
+				}else if (type == "success"){
 					$('#sim-error-check').hide();
 					$('#loopslimit').hide();
 					$('#timelimit').hide();
+					$('#sim-error-run').hide();
 					window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+runTime+"&loopLimit="+runCount;
 				}
 				
