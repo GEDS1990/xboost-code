@@ -67,7 +67,7 @@ public interface MyScenariosMapper {
     // 根据用户id查询场景类别  @return
     List<ScenariosCategory> findCategory(Integer userId);
 
-    void updateFinishTime(String finishTime, String scenariosId);
+    void updateFinishTime(@Param("finishTime") String finishTime, @Param("openScenariosId") String scenariosId);
 
     void updateStatus(@Param("status") String status,@Param("openScenariosId") String scenariosId);
 
