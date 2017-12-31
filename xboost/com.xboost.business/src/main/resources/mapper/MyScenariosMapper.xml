@@ -55,6 +55,10 @@
         update t_scenarios_info set simulate_finish_time = #{finishTime} where id = #{openScenariosId}
     </update>
 
+    <update id="updateStatus" parameterType="String">
+        update t_scenarios_info set scenarios_status = #{status} where id = #{openScenariosId}
+    </update>
+
     <select id="findCountByParam" resultType="long" parameterType="map">
         SELECT count(*) FROM t_scenarios_info
         <where>

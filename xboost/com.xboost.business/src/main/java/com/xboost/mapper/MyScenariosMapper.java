@@ -2,6 +2,7 @@ package com.xboost.mapper;
 
 import com.xboost.pojo.Scenarios;
 import com.xboost.pojo.ScenariosCategory;
+import com.xboost.util.ShiroUtil;
 import org.apache.ibatis.annotations.Param;
 import org.joda.time.DateTime;
 
@@ -66,6 +67,9 @@ public interface MyScenariosMapper {
     // 根据用户id查询场景类别  @return
     List<ScenariosCategory> findCategory(Integer userId);
 
-    void updateFinishTime(String finishTime);
+    void updateFinishTime(String finishTime, String scenariosId);
+
+    void updateStatus(String status, String scenariosId);
+
 }
 
