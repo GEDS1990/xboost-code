@@ -98,7 +98,7 @@ public class SiteInfoService {
                                 siteInfoMapper.save(siteInfo);
                                 logger.info("insert into db:"+siteInfo.getSiteCode());
                             }else{
-                                siteInfo.setId(Integer.parseInt(row[0]));
+//                                siteInfo.setId(Integer.parseInt(row[0]));
                                 //update
                                 siteInfoMapper.update(siteInfo);
                                 logger.info("update:"+siteInfo.getSiteCode());

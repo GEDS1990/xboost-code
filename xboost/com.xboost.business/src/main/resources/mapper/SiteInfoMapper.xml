@@ -9,14 +9,15 @@
         part_time_staff2,str2,str3,createtime,updatetime)
         VALUES (#{scenariosId},#{siteCode},#{siteLongitude},#{siteLatitude},#{siteName},#{siteAddress},#{siteNightDelivery},#{siteArea},#{siteType},
         #{carNum},#{largeCarModel},#{maxOperateNum},#{distribCenter},#{totalVol},#{fullTimeStaff1},#{partTimeStaff1},
-        #{full_time_staff2},#{partTimeStaff2},#{str2},#{str3},#{createTime},#{updateTime})
+        #{fullTimeStaff2},#{partTimeStaff2},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
     <update id="update">
         update t_site_info set scenariosId = #{scenariosId},site_code = #{siteCode},longitude = #{siteLongitude},
         latitude = #{siteLatitude},site_name= #{siteName},site_address = #{siteAddress},site_night_delivery = #{siteNightDelivery},
-        site_area = #{siteArea},site_type = #{siteType},car_num = #{carNum},
-        large_carModle = #{largeCarModel},max_operate_num = #{maxOperateNum},distrib_center = #{distribCenter}
+        site_area = #{siteArea},site_type = #{siteType},car_num = #{carNum},large_carModle = #{largeCarModel},
+        max_operate_num = #{maxOperateNum},distrib_center = #{distribCenter},total_vol=#{totalVol},full_time_staff1=#{fullTimeStaff1},
+        part_time_staff1=#{partTimeStaff1},full_time_staff2=#{fullTimeStaff2},part_time_staff2=#{partTimeStaff2}
         where id = #{id}
     </update>
 
@@ -66,7 +67,8 @@
     <update id="editSiteInfo">
         UPDATE t_site_info SET scenariosId = #{scenariosId},site_code = #{siteCode},longitude = #{siteLongitude},latitude=#{siteLatitude},site_name=#{siteName},site_address=#{siteAddress},
         site_night_delivery=#{siteNightDelivery},site_area=#{siteArea},site_type=#{siteType},car_num=#{carNum} ,large_carModle=#{largeCarModel},
-        max_operate_num=#{maxOperateNum},distrib_center=#{distribCenter} where id = #{id}
+        max_operate_num=#{maxOperateNum},distrib_center=#{distribCenter},total_vol=#{totalVol},full_time_staff1=#{fullTimeStaff1},
+        part_time_staff1=#{partTimeStaff1},full_time_staff2=#{fullTimeStaff2},part_time_staff2=#{partTimeStaff2} where id = #{id}
     </update>
 
     <delete id="delById">

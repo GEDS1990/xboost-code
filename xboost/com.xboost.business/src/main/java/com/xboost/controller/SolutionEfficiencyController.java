@@ -117,6 +117,7 @@ public class SolutionEfficiencyController {
                 param.put("curLoc",site);
                 param.put("min",min+(periodTime*j));
                 param.put("periodTime",periodTime);
+
                 leaveCarNum = solutionEfficiencyService.findLeaveCar(param);
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),leaveCarNum);
             }

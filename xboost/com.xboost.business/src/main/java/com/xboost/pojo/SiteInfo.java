@@ -27,7 +27,7 @@ public class SiteInfo implements Serializable {
     private String totalVol;
     private String fullTimeStaff1;
     private String partTimeStaff1;
-    private String fullTimeimeStaff2;
+    private String fullTimeStaff2;
     private String partTimeStaff2;
     private String str2;                    //预留字段
     private String str3;                  //预留字段
@@ -170,12 +170,12 @@ public class SiteInfo implements Serializable {
         this.partTimeStaff1 = partTimeStaff1;
     }
 
-    public String getFullTimeimeStaff2() {
-        return fullTimeimeStaff2;
+    public String getFullTimeStaff2() {
+        return fullTimeStaff2;
     }
 
-    public void setFullTimeimeStaff2(String fullTimeimeStaff2) {
-        this.fullTimeimeStaff2 = fullTimeimeStaff2;
+    public void setFullTimeStaff2(String fullTimeStaff2) {
+        this.fullTimeStaff2 = fullTimeStaff2;
     }
 
     public String getPartTimeStaff2() {
