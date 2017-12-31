@@ -87,14 +87,35 @@ public class SolutionDepotsController {
         List<Map<String,Object>> siteList = siteInfoService.findBySiteCode(param); //.findAll();
         Integer count = siteInfoService.findAllCountBySiteCode(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = siteInfoService.findCountBySiteCode(param);
-        List<Map<String,Object>> nextSiteList = siteInfoService.findNextSite(scenariosId,siteCode);
+    //    List<Map<String,Object>> nextSiteList = siteInfoService.findNextSite(scenariosId,siteCode);
+        Double sbVolSum;
+        Double unloadVolSum;
+        for(int i=0;i<siteList.size();i++)
+        {
+            Map<String,Object> site = siteList.get(i);
+            for(int j=0;j<siteList.size()&&j!=i;j++)
+            {
+                if(site.get("routeCount").equals(siteList.get(j).get("routeCount"))&&site.get("sequence").equals(siteList.get(j).get("sequence"))){
+                    sbVolSum = Double.parseDouble(site.get("sbVolSum").toString())
+                            +Double.parseDouble(siteList.get(j).get("sbVolSum").toString());
+                    unloadVolSum = Double.parseDouble(site.get("unloadVolSum").toString())
+                            +Double.parseDouble(siteList.get(j).get("unloadVolSum").toString());
 
+                    site.put("sbVolSum",sbVolSum);
+                    site.put("unloadVolSum",unloadVolSum);
+                    siteList.remove(j);
+                    count = count -1;
+                    filteredCount = filteredCount-1;
+                }
+
+            }
+        }
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",siteList);
-        result.put("nextSite",nextSiteList);
+ //       result.put("nextSite",nextSiteList);
         return result;
     }
 
