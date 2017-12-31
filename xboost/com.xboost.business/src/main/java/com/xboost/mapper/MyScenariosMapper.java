@@ -69,7 +69,7 @@ public interface MyScenariosMapper {
 
     void updateFinishTime(String finishTime, String scenariosId);
 
-    void updateStatus(String status, String scenariosId);
+    void updateStatus(@Param("status") String status,@Param("openScenariosId") String scenariosId);
 
 }
 

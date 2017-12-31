@@ -80,7 +80,7 @@
     </delete>
 
     <select id="findarrTime" resultType="map"  parameterType="String">
-        SELECT d.duration_end-s.arr_time as arr_time,s.vol as vol FROM t_demand_info d left join t_solution_route s on d.scenariosId=#{scenariosId}
+        SELECT d.duration_end-s.arr_time as arr_time,s.unload_vol_sum as vol FROM t_demand_info d left join t_solution_route s on d.scenariosId=#{scenariosId}
         and d.site_delivery=s.unload_loc
     </select>
 
