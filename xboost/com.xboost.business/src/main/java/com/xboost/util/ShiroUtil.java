@@ -158,4 +158,42 @@ public class ShiroUtil {
         String SimulateLog = session.getAttribute(User.SESSION_Simulate).toString();
         return SimulateLog;
     }
+
+    /**
+     * 将当前Validate日志设置到session中
+     * @return
+     */
+    public static String setValidateConsole(String Validate){
+        //获取认证主体
+        Subject subject = SecurityUtils.getSubject();
+        //将场景名称放入到Session中
+        Session session = subject.getSession();
+        session.setAttribute(User.SESSION_Validate,getValidateConsole()+"/n"+Validate);
+        return "success";
+    }
+
+    /**
+     * clear当前Validate日志
+     * @return
+     */
+    public static String clearValidateConsole(){
+        //获取认证主体
+        Subject subject = SecurityUtils.getSubject();
+        //将场景名称放入到Session中
+        Session session = subject.getSession();
+        session.setAttribute(User.SESSION_Validate,"");
+        return "success";
+    }
+
+    /**
+     * 从session中获取当前Validate日志
+     * @return
+     */
+    public static String getValidateConsole(){
+
+        org.apache.shiro.subject.Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        String Validate = session.getAttribute(User.SESSION_Validate).toString();
+        return Validate;
+    }
 }
