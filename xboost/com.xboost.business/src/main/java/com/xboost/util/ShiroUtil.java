@@ -135,6 +135,19 @@ public class ShiroUtil {
     }
 
     /**
+     * clear当前simulate日志
+     * @return
+     */
+    public static String clearSimulateConsole(){
+        //获取认证主体
+        Subject subject = SecurityUtils.getSubject();
+        //将场景名称放入到Session中
+        Session session = subject.getSession();
+        session.setAttribute(User.SESSION_Simulate,"");
+        return "success";
+    }
+
+    /**
      * 从session中获取当前simulate日志
      * @return
      */

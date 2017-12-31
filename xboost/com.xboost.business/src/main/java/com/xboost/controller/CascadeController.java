@@ -57,6 +57,7 @@ public class CascadeController {
     public Map<String,Object> docascade(String distMode,String loadTime,String loopLimit){
         solutionRouteService.updateScenariosModel(distMode);//更新模型参数
         myScenariosService.updateStatus("Silumate");
+        ShiroUtil.clearSimulateConsole();
         if("1".equals(distMode)){
             //查询Confiuration表数据
             Map<String, Object> param = new HashMap<String,Object>();
