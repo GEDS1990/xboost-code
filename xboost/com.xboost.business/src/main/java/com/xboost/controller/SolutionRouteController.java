@@ -90,6 +90,29 @@ public class SolutionRouteController {
         Integer filteredCount = solutionRouteService.findCountByRoute(param);
   //      String totalDistance = solutionRouteService.findTotalDistance(ShiroUtil.getOpenScenariosId(),searchValue);
 
+        Double sbVolSum;
+        Double unloadVolSum;
+        for(int i=0;i<routeList.size();i++)
+        {
+            Map<String,Object> route = routeList.get(i);
+            for(int j=0;j<routeList.size()&&j!=i;j++)
+            {
+                if(route.get("sequence").equals(routeList.get(j).get("sequence"))){
+                    sbVolSum = Double.parseDouble(route.get("sbVolSum").toString())
+                            +Double.parseDouble(routeList.get(j).get("sbVolSum").toString());
+                    unloadVolSum = Double.parseDouble(route.get("unloadVolSum").toString())
+                            +Double.parseDouble(routeList.get(j).get("unloadVolSum").toString());
+
+                    route.put("sbVolSum",sbVolSum);
+                    route.put("unloadVolSum",unloadVolSum);
+                    routeList.remove(j);
+                    count = count -1;
+                    filteredCount = filteredCount-1;
+                }
+
+            }
+        }
+
         List<String> usingCar = solutionRouteService.findUsingCar1(ShiroUtil.getOpenScenariosId());
         List<String> idleCar = solutionRouteService.findIdleCar1(ShiroUtil.getOpenScenariosId());
 

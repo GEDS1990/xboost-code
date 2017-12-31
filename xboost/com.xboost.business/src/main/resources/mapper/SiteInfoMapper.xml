@@ -135,10 +135,10 @@
         <result property="maxOperateNum" column="max_operate_num"/>
         <result property="distribCenter" column="distrib_center"/>
         <result property="totalVol" column="total_vol"/>
-        <result property="full_time_staff1" column="fullTimeStaff1"/>
-        <result property="part_time_staff1" column="partTimeStaff1"/>
-        <result property="fullTimeStaff2" column="fullTimeStaff2"/>
-        <result property="partTimeStaff2" column="partTimeStaff2"/>
+        <result property="fullTimeStaff1" column="full_time_staff1"/>
+        <result property="partTimeStaff1" column="part_time_staff1"/>
+        <result property="fullTimeStaff2" column="full_time_staff2"/>
+        <result property="partTimeStaff2" column="part_time_staff2"/>
     </resultMap>
 
     <resultMap id="modelRouteAndSite" type="map">
@@ -152,10 +152,12 @@
         <result property="type" column="type"/>
         <result property="sbLoc" column="sb_loc"/>
         <result property="sbVol" column="sb_vol"/>
+        <result property="sbVolSum" column="sb_vol_sum"/>
         <result property="arrTime" column="arr_time"/>
         <result property="endTime" column="end_time"/>
         <result property="unloadLoc" column="unload_loc"/>
         <result property="unloadVol" column="unload_vol"/>
+        <result property="unloadVolSum" column="unload_vol_sum"/>
         <result property="nextCurLoc" column="next_cur_loc"/>
         <result property="calcDis" column="calc_dis"/>
         <result property="carGoods" column="car_goods"/>
@@ -172,10 +174,10 @@
         <result property="maxOperateNum" column="max_operate_num"/>
         <result property="distribCenter" column="distrib_center"/>
         <result property="totalVol" column="total_vol"/>
-        <result property="full_time_staff1" column="fullTimeStaff1"/>
-        <result property="part_time_staff1" column="partTimeStaff1"/>
-        <result property="fullTimeStaff2" column="fullTimeStaff2"/>
-        <result property="partTimeStaff2" column="partTimeStaff2"/>
+        <result property="fullTimeStaff1" column="full_time_staff1"/>
+        <result property="partTimeStaff1" column="part_time_staff1"/>
+        <result property="fullTimeStaff2" column="full_time_staff2"/>
+        <result property="partTimeStaff2" column="part_time_staff2"/>
     </resultMap>
 
 
