@@ -19,6 +19,9 @@ $(function  () {
 					return false;
 				}else{
 					$('#sim-error-check').hide();
+					$('#timelimit').hide();
+					$('#loopslimit').hide();
+					$('#sim-error-run').hide();
 					//执行验证
 					if(typeof(WebSocket) == "undefined") {
 	                alert("您的浏览器不支持WebSocket");
@@ -39,9 +42,10 @@ $(function  () {
 		            };
 					
 					$.post("/simualte/Validate").done(function  (result) {
-					    socket.onclose();
-						//console.log(result);
+						console.log(result);
 						type = result;
+					    socket.onclose();
+					
 					}).fail(function  () {
 					    socket.onclose();
 						console.log("fail");
