@@ -99,17 +99,17 @@ public class SolutionDepotsController {
             {
                 if(site.get("curLoc").equals(siteList.get(j).get("curLoc"))&&site.get("arrTime").equals(siteList.get(j).get("arrTime"))
                         &&site.get("carType").equals(siteList.get(j).get("carType"))){
-                    sbVolSum = Double.parseDouble(site.get("sbVolSum").toString())
-                            +Double.parseDouble(siteList.get(j).get("sbVolSum").toString());
-                    unloadVolSum = Double.parseDouble(site.get("unloadVolSum").toString())
-                            +Double.parseDouble(siteList.get(j).get("unloadVolSum").toString());
+//                    sbVolSum = Double.parseDouble(site.get("sbVolSum").equals("0")?"":site.get("sbVolSum").toString())
+//                            +Double.parseDouble(siteList.get(j).get("sbVolSum").equals("0")?"":siteList.get(j).get("sbVolSum").toString());
+//                    unloadVolSum = Double.parseDouble(site.get("unloadVolSum").equals("0")?"":site.get("unloadVolSum").toString())
+//                            +Double.parseDouble(siteList.get(j).get("unloadVolSum").equals("0")?"":siteList.get(j).get("unloadVolSum").toString());
                     sbVol = (site.get("sbVol").equals("0")?"":site.get("sbVol").toString())
                             +(siteList.get(j).get("sbVol").equals("0")?"":siteList.get(j).get("sbVol").toString());
                     unloadVol = (site.get("unloadVol").equals("0")?"":site.get("unloadVol").toString())
                             +(siteList.get(j).get("unloadVol").equals("0")?"":(siteList.get(j).get("unloadVol").toString()));
-
-                    siteList.get(i).put("sbVolSum",sbVolSum);
-                    siteList.get(i).put("unloadVolSum",unloadVolSum);
+//
+//                    siteList.get(i).put("sbVolSum",sbVolSum);
+//                    siteList.get(i).put("unloadVolSum",unloadVolSum);
                     siteList.get(i).put("sbVol",sbVol);
                     siteList.get(i).put("unloadVol",unloadVol);
                     siteList.remove(j);

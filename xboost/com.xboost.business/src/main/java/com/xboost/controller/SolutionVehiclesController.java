@@ -100,17 +100,17 @@ public class SolutionVehiclesController {
                 for(int j=i+1;j<vehiclesList.size();j++)
                 {
                     if(vehicle.get("sequence").equals(vehiclesList.get(j).get("sequence"))){
-                        sbVolSum = Double.parseDouble(vehicle.get("sbVolSum").toString())
-                                +Double.parseDouble(vehiclesList.get(j).get("sbVolSum").toString());
-                        unloadVolSum = Double.parseDouble(vehicle.get("unloadVolSum").toString())
-                                +Double.parseDouble(vehiclesList.get(j).get("unloadVolSum").toString());
+//                        sbVolSum = Double.parseDouble(vehicle.get("sbVolSum").equals("0")?"":vehicle.get("sbVolSum").toString())
+//                                +Double.parseDouble(vehiclesList.get(j).get("sbVolSum").equals("0")?"":vehiclesList.get(j).get("sbVolSum").toString());
+//                        unloadVolSum = Double.parseDouble(vehicle.get("unloadVolSum").equals("0")?"":vehicle.get("unloadVolSum").toString())
+//                                +Double.parseDouble(vehiclesList.get(j).get("unloadVolSum").equals("0")?"":vehiclesList.get(j).get("unloadVolSum").toString());
                         sbVol = (vehicle.get("sbVol").equals("0")?"":vehicle.get("sbVol").toString())
                                 +(vehiclesList.get(j).get("sbVol").equals("0")?"":vehiclesList.get(j).get("sbVol").toString());
                         unloadVol = (vehicle.get("unloadVol").equals("0")?"":vehicle.get("unloadVol").toString())
                                 +(vehiclesList.get(j).get("unloadVol").equals("0")?"":(vehiclesList.get(j).get("unloadVol").toString()));
 
-                        vehiclesList.get(i).put("sbVolSum",sbVolSum);
-                        vehiclesList.get(i).put("unloadVolSum",unloadVolSum);
+//                        vehiclesList.get(i).put("sbVolSum",sbVolSum);
+//                        vehiclesList.get(i).put("unloadVolSum",unloadVolSum);
                         vehiclesList.get(i).put("sbVol",sbVol);
                         vehiclesList.get(i).put("unloadVol",unloadVol);
                         vehiclesList.remove(j);

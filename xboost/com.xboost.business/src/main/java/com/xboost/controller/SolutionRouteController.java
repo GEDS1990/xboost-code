@@ -104,17 +104,17 @@ public class SolutionRouteController {
                 for(int j=i+1;j<routeList.size();j++)
                 {
                     if(route.get("sequence").equals(routeList.get(j).get("sequence"))){
-                        sbVolSum = Double.parseDouble(route.get("sbVolSum").toString())
-                                +Double.parseDouble(routeList.get(j).get("sbVolSum").toString());
-                        unloadVolSum = Double.parseDouble(route.get("unloadVolSum").toString())
-                                +Double.parseDouble(routeList.get(j).get("unloadVolSum").toString());
+//                        sbVolSum = Double.parseDouble(route.get("sbVolSum").equals("0")?"":route.get("sbVolSum").toString())
+//                                +Double.parseDouble(routeList.get(j).get("sbVolSum").equals("0")?"":routeList.get(j).get("sbVolSum").toString());
+//                        unloadVolSum = Double.parseDouble(route.get("unloadVolSum").equals("0")?"":route.get("unloadVolSum").toString())
+//                                +Double.parseDouble(routeList.get(j).get("unloadVolSum").equals("0")?"":routeList.get(j).get("unloadVolSum").toString());
                         sbVol = (route.get("sbVol").equals("0")?"":route.get("sbVol").toString())
                                 +(routeList.get(j).get("sbVol").equals("0")?"":routeList.get(j).get("sbVol").toString());
                         unloadVol = (route.get("unloadVol").equals("0")?"":route.get("unloadVol").toString())
                                 +(routeList.get(j).get("unloadVol").equals("0")?"":(routeList.get(j).get("unloadVol").toString()));
 
-                        routeList.get(i).put("sbVolSum",sbVolSum);
-                        routeList.get(i).put("unloadVolSum",unloadVolSum);
+//                        routeList.get(i).put("sbVolSum",sbVolSum);
+//                        routeList.get(i).put("unloadVolSum",unloadVolSum);
                         routeList.get(i).put("sbVol",sbVol);
                         routeList.get(i).put("unloadVol",unloadVol);
                         routeList.remove(j);
