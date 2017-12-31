@@ -82,18 +82,18 @@ public class OutputPrinter implements IConstants {
 		printLine("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
 		printLine("|type\t\t|location\t|job ID\t\t\t|arr_time\t|end_timev\t| activity ID\t|\r\n");
 		printLine("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|Vechile Type\t|"+r.getC().getType()+"\t|Start Loc.\t|"+r.getC().getStartLocation()+"\t|\n"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("40%...."));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|  Route     \t|"+r.getId()+"\t|Vehicle\t|"+r.getC().getId()+"\t|\n"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("50%...."));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("| Total Dist.\t|"+rstat.getTotalDist()+"\t|Total Cost\t|"+rstat.getTotalCost()+"\t|\n"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("55%...."));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("60%...."));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("|type\t\t|location\t|job ID\t\t\t|arr_time\t|end_timev\t| activity ID\t|\r\n"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("70%...."));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+"));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("80%...."));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("|Vechile Type\t|"+r.getC().getType()+"\t|Start Loc.\t|"+r.getC().getStartLocation()+"\t|\n"));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("40%...."));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("|  Route     \t|"+r.getId()+"\t|Vehicle\t|"+r.getC().getId()+"\t|\n"));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("50%...."));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("| Total Dist.\t|"+rstat.getTotalDist()+"\t|Total Cost\t|"+rstat.getTotalCost()+"\t|\n"));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("55%...."));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+"));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("60%...."));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("|type\t\t|location\t|job ID\t\t\t|arr_time\t|end_timev\t| activity ID\t|\r\n"));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("70%...."));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+"));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("80%...."));
 		if(r.getActs().size() != 0){
 			Activity start = r.getActs().get(0);
 			Activity end = r.getActs().get(r.getActs().size()-1);
@@ -381,11 +381,11 @@ public class OutputPrinter implements IConstants {
 			printLine("route start time:"+route.getActs().get(1).getTw().getStart());
 			printLine("route trace:"+routeTracer.toString());
 			printLine("route max stops:"+maxStopsCur);
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("route id:"+route.getId()));
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("route start time:"+route.getActs().get(1).getTw().getStart()));
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("route trace:"+routeTracer.toString()));
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("route max stops:"+maxStopsCur));
+//			systemWebSocketHandler.sendMessageToUser( new TextMessage("+-----------------------------+"));
+//			systemWebSocketHandler.sendMessageToUser( new TextMessage("route id:"+route.getId()));
+//			systemWebSocketHandler.sendMessageToUser( new TextMessage("route start time:"+route.getActs().get(1).getTw().getStart()));
+//			systemWebSocketHandler.sendMessageToUser( new TextMessage("route trace:"+routeTracer.toString()));
+//			systemWebSocketHandler.sendMessageToUser( new TextMessage("route max stops:"+maxStopsCur));
 
 			if(maxStopsCur < minStops){
 				minStops = maxStopsCur;
