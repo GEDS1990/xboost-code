@@ -106,6 +106,7 @@
         <result property="scenariosOut" column="scenarios_out"/>
         <result property="scenariosStatus" column="scenarios_status"/>
         <result property="lastOpenTime" column="last_open_time"/>
+        <result property="simulateFinishTime" column="simulate_finish_time"/>
     </resultMap>
 
     <resultMap id="categoryMap" type="ScenariosCategory">

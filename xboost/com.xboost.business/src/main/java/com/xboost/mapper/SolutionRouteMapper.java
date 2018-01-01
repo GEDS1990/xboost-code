@@ -25,7 +25,10 @@ public interface SolutionRouteMapper {
     // 查询所有模型整体参数信息  @return
     List<Route> findAll(String scenariosId);
 
-    //查询所有模型整体参数信息总数
+    //查询路线数
+    Long findRouteNum(String scenariosId);
+
+    //查询所有路线信息总数
     Long findAllCount(String scenariosId);
 
     /**

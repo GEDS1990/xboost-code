@@ -58,14 +58,22 @@ public class SolutionRouteService {
     }
 
     /**
-     * 获取路线总数量
+     * 获取路线数量
+     * @return
+     */
+    public Integer findRouteNum(String scenariosId) {
+        return solutionRouteMapper.findRouteNum(scenariosId).intValue();
+    }
+
+    /**
+     * 获取路线信息总数量
      * @return
      */
     public Integer findAllCount(String scenariosId) {
         return solutionRouteMapper.findAllCount(scenariosId).intValue();
     }
 
-       /**
+    /**
      * 根据查询条件获取路线信息
      * param param
      * @return
