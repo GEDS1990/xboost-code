@@ -57,13 +57,28 @@ public class SolutionEfficiencyService {
     }
 
     //到达车辆
-    public Integer findArrCar(Map<String,Object> param) {
+    public List<Route> findArrCar(Map<String,Object> param) {
         return solutionEfficiencyMapper.findArrCar(param);
     }
 
     //发出车辆
-    public Integer findLeaveCar(Map<String,Object> param) {
+    public List<Route> findLeaveCar(Map<String,Object> param) {
         return solutionEfficiencyMapper.findLeaveCar(param);
+    }
+
+    //到达车辆数
+    public Integer findArrCarCount(Map<String,Object> param) {
+        return solutionEfficiencyMapper.findArrCarCount(param);
+    }
+
+    //发出车辆数
+    public Integer findLeaveCarCount(Map<String,Object> param) {
+        return solutionEfficiencyMapper.findLeaveCarCount(param);
+    }
+
+    //网点信息
+    public List<Map<String,Object>> findSiteInfo(String scenariosId) {
+        return solutionEfficiencyMapper.findSiteInfo(scenariosId);
     }
 
 

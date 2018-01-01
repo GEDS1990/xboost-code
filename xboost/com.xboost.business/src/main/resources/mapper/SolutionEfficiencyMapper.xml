@@ -17,17 +17,31 @@
         WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and arr_time &gt;= #{min} and arr_time &lt; #{min}+#{periodTime}
     </select>
 
-    <select id="findArrCar" parameterType="map" resultType="Integer">
+    <select id="findArrCar" parameterType="map" resultType="Route" resultMap="modelRoute">
+        SELECT * FROM t_solution_route
+        WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and arr_time &gt;= #{min} and arr_time &lt; #{min}+#{periodTime}
+    </select>
+
+    <select id="findArrCarCount" parameterType="map" resultType="Integer">
         SELECT count(*) FROM t_solution_route
         WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and arr_time &gt;= #{min} and arr_time &lt; #{min}+#{periodTime}
     </select>
 
-    <select id="findLeaveCar" parameterType="map" resultType="Integer">
+    <select id="findLeaveCar" parameterType="map" resultType="Route" resultMap="modelRoute">
+        SELECT * FROM t_solution_route
+        WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and end_time &gt;= #{min} and end_time &lt; #{min}+#{periodTime}
+    </select>
+
+    <select id="findLeaveCarCount" parameterType="map" resultType="Integer">
         SELECT count(*) FROM t_solution_route
         WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc} and end_time &gt;= #{min} and end_time &lt; #{min}+#{periodTime}
     </select>
 
-
+    <select id="findSiteInfo" parameterType="map" resultType="map">
+        SELECT DISTINCT(r.cur_loc),d.longitude,d.latitude,d.site_area,d.site_type,d.site_night_delivery,d.car_num,
+        d.large_carModle,d.max_operate_num FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
+    </select>
 
     <resultMap id="modelRoute" type="Route">
         <result property="id" column="id"/>

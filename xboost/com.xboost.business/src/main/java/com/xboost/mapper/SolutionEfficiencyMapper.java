@@ -20,9 +20,15 @@ public interface SolutionEfficiencyMapper {
 
     Integer findUnloadVol(Map<String, Object> param);
 
-    Integer findArrCar(Map<String, Object> param);
+    List<Route> findArrCar(Map<String, Object> param);
 
-    Integer findLeaveCar(Map<String, Object> param);
+    List<Route> findLeaveCar(Map<String, Object> param);
+
+    Integer findArrCarCount(Map<String, Object> param);
+
+    Integer findLeaveCarCount(Map<String, Object> param);
+
+    List<Map<String,Object>> findSiteInfo(String scenariosId);
 
 }
 

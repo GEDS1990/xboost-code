@@ -107,6 +107,7 @@ public class SolutionEfficiencyController {
         Map<String,Object> result = Maps.newHashMap();
         Map<String,Object> param = Maps.newHashMap();
         Integer leaveCarNum;
+        List<Route> carList;
 
         //发出车辆数
         for(int i=0;i<siteList.size();i++){
@@ -117,8 +118,20 @@ public class SolutionEfficiencyController {
                 param.put("curLoc",site);
                 param.put("min",min+(periodTime*j));
                 param.put("periodTime",periodTime);
+                carList = solutionEfficiencyService.findLeaveCar(param);
+                leaveCarNum = solutionEfficiencyService.findLeaveCarCount(param);
+                for(int x=0;x<carList.size();x++)
+                {
+                    Route car = carList.get(x);
+                    for(int y=x+1;y<carList.size();y++)
+                    {
+                        if(car.getRouteCount().equals(carList.get(y).getRouteCount())&&car.getCarType().equals(carList.get(y).getCarType())
+                                &&car.getSequence().equals(carList.get(y).getSequence())){
+                            leaveCarNum = leaveCarNum -1;
+                        }
 
-                leaveCarNum = solutionEfficiencyService.findLeaveCar(param);
+                    }
+                }
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),leaveCarNum);
             }
         }
@@ -138,6 +151,7 @@ public class SolutionEfficiencyController {
         Map<String,Object> result = Maps.newHashMap();
         Map<String,Object> param = Maps.newHashMap();
         Integer arrCarNum;
+        List<Route> carList;
 
         //到达车辆数
         for(int i=0;i<siteList.size();i++){
@@ -149,10 +163,34 @@ public class SolutionEfficiencyController {
                 param.put("min",min+(periodTime*j));
                 param.put("periodTime",periodTime);
 
-                arrCarNum = solutionEfficiencyService.findArrCar(param);
+                carList = solutionEfficiencyService.findArrCar(param);
+                arrCarNum = solutionEfficiencyService.findArrCarCount(param);
+                for(int x=0;x<carList.size();x++)
+                {
+                    Route car = carList.get(x);
+                    for(int y=x+1;y<carList.size();y++)
+                    {
+                        if(car.getRouteCount().equals(carList.get(y).getRouteCount())&&car.getSequence().equals(carList.get(y).getSequence())
+                                &&car.getCarType().equals(carList.get(y).getCarType())){
+                            arrCarNum = arrCarNum -1;
+                        }
+
+                    }
+                }
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),arrCarNum);
             }
         }
         return result;
+    }
+
+    //到达车辆数
+    @RequestMapping(value = "/siteInfo.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public List<Map<String,Object>> loadSiteInfo(HttpServletRequest request) {
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+
+        List<Map<String,Object>> siteList = solutionEfficiencyService.findSiteInfo(scenariosId);
+
+        return siteList;
     }
 }
