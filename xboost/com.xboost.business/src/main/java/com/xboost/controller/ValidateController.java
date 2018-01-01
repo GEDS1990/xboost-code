@@ -26,6 +26,7 @@ import sun.rmi.runtime.Log;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,6 +75,7 @@ public class ValidateController {
         List<DemandInfo> demandInfoList = demandInfoService.findAll(ShiroUtil.getOpenScenariosId());
         List<Car> transportationList = transportService.findAll(ShiroUtil.getOpenScenariosId());
         List<ModelArg> modelArgList = modelArgService.findAllModelArg(ShiroUtil.getOpenScenariosId());
+        String scenariosId = ShiroUtil.getOpenScenariosId();
         String result="";
         int flag=0;
         Logger logger = LoggerFactory.getLogger(ValidateController.class);
@@ -478,6 +480,14 @@ public class ValidateController {
             if(!siteIdList.contains(demandInfo.getSiteCodeDelivery())) {
                 flag = flag + 1;
                 result = demandInfoWrongLink+":stop depot is not exist.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            //判断网点的最大承载能力
+            int maxCollectNum = Integer.parseInt(siteInfoService.findSiteInfoBySiteCode(scenariosId, demandInfo.getSiteCodeCollect()).getMaxOperateNum());
+            int maxDeliveryNum = Integer.parseInt(siteInfoService.findSiteInfoBySiteCode(scenariosId, demandInfo.getSiteCodeDelivery()).getMaxOperateNum());
+            if(Integer.parseInt(demandInfo.getWeight()) > maxCollectNum || Integer.parseInt(demandInfo.getWeight()) > maxDeliveryNum) {
+                flag = flag + 1;
+                result = demandInfoWrongLink+":weight is overload.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
         }
