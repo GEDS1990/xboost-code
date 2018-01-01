@@ -25,6 +25,7 @@ import sun.rmi.runtime.Log;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,12 @@ public class ValidateController {
     private static Logger logger = LoggerFactory.getLogger(SiteInfoService.class);
 
     private static SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
+
+    public String wrongLink(String address, String name) {
+        String link = "<a href=\"/" + address + "\" style=\"color:red;\">" + name + "</a>";
+        return link;
+    }
+
     /**
      * 校验场景输入数据
      * @return
@@ -70,348 +77,436 @@ public class ValidateController {
         String result="";
         int flag=0;
         Logger logger = LoggerFactory.getLogger(ValidateController.class);
+
+
+        /**
+         * 校验车辆信息
+         */
+        result = "Validating vehicles...";
+        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+        int vehicles_flag = flag;
+        double longCarDistance = transportationList.get(0).getMaxDistance();
         for(int i=0;i<transportationList.size();i++){
             Car car = transportationList.get(i);
+            String vehiclesWrongLink = wrongLink("car", car.getName());
             if(Integer.parseInt(car.getMaxLoad())<1){
                 flag = flag + 1;
-                result = ":maximum load is must >1.\n";
+                result = vehiclesWrongLink + ":maximum load is must >1.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(car.getMaxLoad())>2000){
                 flag = flag + 1;
-                result = ":maximum load is must <2000.\n";
+                result = vehiclesWrongLink + ":maximum load is must <2000.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getVelocity()<5){
                 flag = flag + 1;
-                result = ":speed is must >5.\n";
+                result = vehiclesWrongLink + ":speed is must >5.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getVelocity()>80){
                 flag = flag + 1;
-                result = ":speed is must <80.\n";
+                result = vehiclesWrongLink + ":speed is must <80.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getMaxStop()<0){
                 flag = flag + 1;
-                result = ":maximum stop is must >0.\n";
+                result = vehiclesWrongLink + ":maximum stop is must >0.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getMaxStop()>99){
                 flag = flag + 1;
-                result = ":maximum stop is must <99.\n";
+                result = vehiclesWrongLink + ":maximum stop is must <99.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getMaxDistance()<0){
                 flag = flag + 1;
-                result = ":maximum distance is must >0.\n";
+                result = vehiclesWrongLink + ":maximum distance is must >0.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getType().equals("百度")&&car.getMaxDistance()>5){
                 flag = flag + 1;
-                result = ":百度 maximum distance is must <5.\n";
+                result = vehiclesWrongLink + ":百度 maximum distance is must <5.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(car.getMaxDistance()>999){
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":maximum distance is must <999.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getMaxRunningTime()<0){
                 flag = flag + 1;
-                result = ":maximum time is must >0.\n";
+                result = vehiclesWrongLink + ":maximum time is must >0.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(car.getMaxRunningTime()>999){
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":maximum time is must <999.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
 //            if(car.getType().equals("百度")&&car.getMaxRunningTime()>999){
 //                flag = flag + 1;
-//                result = ":maximum time is must <999.\n";
+//                result = vehiclesWrongLink + ":maximum time is must <999.\n";
 //                logger.info(result);
 //                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
 //            }
             if(car.getCostPerDistance()<1){
                 flag = flag + 1;
-                result = ":vehicle piece capacity (p) is must >1.\n";
+                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must >1.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(car.getCostPerDistance()>2000){
                 flag = flag + 1;
-                result = ":vehicle piece capacity (p) is must <2000.\n";
+                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must <2000.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
+            //获取车辆最远车程
+            longCarDistance = longCarDistance > car.getMaxDistance() ? longCarDistance :car.getMaxDistance();
         }
+        result = vehicles_flag == flag ? "vehicles passed" : wrongLink("car", "Vehicles") + " : is wrong";
+        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+
         //验证网点信息
         result = "Validating Depots Info......";
         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+        int depotsInfo_flag = flag;
+
+        //获取所有siteInfo的code编码
+        List<String> siteIdList = new ArrayList<>();
+        for(int i = 0; i<siteInfoList.size(); i++) {
+            siteIdList.add(siteInfoList.get(i).getSiteCode());
+        }
+
         for(int i=0;i<siteInfoList.size();i++){
             SiteInfo siteInfo = siteInfoList.get(i);
+            String siteInfoWrongLink = wrongLink("siteInfo", siteInfo.getSiteName());
             if(Strings.isEmpty(siteInfo.getSiteCode())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":ID is wrong. Because it's empty.\n";
+                result = siteInfoWrongLink+":ID is wrong. Because it's empty.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteLongitude())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":longitude is wrong. Because it's empty.\n";
+                result = siteInfoWrongLink+":longitude is wrong. Because it's empty.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteLatitude())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":latitude is wrong. Because it's empty.\n";
+                result = siteInfoWrongLink+":latitude is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteName())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":name is wrong. Because it's empty.\n";
+                result = siteInfoWrongLink+":name is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteAddress())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":address is wrong. Because it's empty.\n";
+                result = siteInfoWrongLink+":address is wrong. Because it's empty.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteArea())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":area is wrong. Because it's empty.\n";
+                result = siteInfoWrongLink+":area is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getSiteType())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":type is wrong. Because it's empty.\n";
+                result = siteInfoWrongLink+":type is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getDistribCenter())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":distrib.center is wrong. Because it's empty.\n";
+                result = siteInfoWrongLink+":distrib.center is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getCarNum())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":vehicle quantity limit is wrong. Because it's empty.\n";
+                result = siteInfoWrongLink+":vehicle quantity limit is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getLargeCarModel())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":vehicle weight limit  is wrong. Because it's empty.\n";
+                result = siteInfoWrongLink+":vehicle weight limit  is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getMaxOperateNum())){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":piece capacity is wrong. Because it's empty.\n";
+                result = siteInfoWrongLink+":piece capacity is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Double.parseDouble(siteInfo.getSiteArea())<0){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":depot area is must >0. \n";
+                result = siteInfoWrongLink+":depot area is must >0. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Double.parseDouble(siteInfo.getSiteArea())>3000){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":depot area is must <3000. \n";
+                result = siteInfoWrongLink+":depot area is must <3000. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(siteInfo.getCarNum())<0){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":vehicle quantity limit  is must >0. \n";
+                result = siteInfoWrongLink+":vehicle quantity limit  is must >0. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(siteInfo.getCarNum())>999){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":vehicle quantity limit  is must <999. \n";
+                result = siteInfoWrongLink+":vehicle quantity limit  is must <999. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(siteInfo.getLargeCarModel())<0){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":vehicle weight limit  is must >0. \n";
+                result = siteInfoWrongLink+":vehicle weight limit  is must >0. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(siteInfo.getLargeCarModel())>999){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":vehicle weight limit  is must <999. \n";
+                result = siteInfoWrongLink+":vehicle weight limit  is must <999. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(siteInfo.getMaxOperateNum())<0){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":piece capacity (p) is must >0. \n";
+                result = siteInfoWrongLink+":piece capacity (p) is must >0. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(siteInfo.getMaxOperateNum())>999){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":piece capacity (p)  is must <999. \n";
+                result = siteInfoWrongLink+":piece capacity (p)  is must <999. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Double.parseDouble(siteInfo.getSiteLatitude())<-90){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":latitude  is must >-90. \n";
+                result = siteInfoWrongLink+":latitude  is must >-90. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Double.parseDouble(siteInfo.getSiteLatitude())>90){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":latitude  is must <90. \n";
+                result = siteInfoWrongLink+":latitude  is must <90. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Double.parseDouble(siteInfo.getSiteLongitude())<-180){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":longitude  is must >-180. \n";
+                result = siteInfoWrongLink+":longitude  is must >-180. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Double.parseDouble(siteInfo.getSiteLongitude())>180){
                 flag = flag + 1;
-                result = siteInfo.getSiteCode()+":longitude  is must <180. \n";
+                result = siteInfoWrongLink+":longitude  is must <180. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-
+            //验证集散点是否在depot info中
+            if(!siteIdList.contains(siteInfo.getDistribCenter())) {
+                flag = flag + 1;
+                result = siteInfoWrongLink+":distrib.center is not in depot. \n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
         }
+        result = depotsInfo_flag == flag ? "Validating Depot Info passed" : wrongLink("siteInfo", "Depot Info") + " : is wrong";
+        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
 
         /**
          * 验证网点距离信息
          */
         result = "Validating Depots Distance......";
         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+        int depotsDistance_flag = flag;
+        float shortSiteDistance = siteDistList.get(0).getCarDistance();
         for(int i=0;i<siteDistList.size();i++){
             SiteDist siteDist = siteDistList.get(i);
+            String depotsDistanceWrongLink = wrongLink("siteDist", siteDist.getSiteCollect());
             if(Strings.isEmpty(siteDist.getSiteCollect())){
                 flag = flag + 1;
-                result = siteDist.getSiteCollect()+":pickup depot is wrong. Because it's empty.\n";
+                result = depotsDistanceWrongLink+":pickup depot is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteDist.getSiteDelivery())){
                 flag = flag + 1;
-                result = siteDist.getSiteCollect()+":delivery depot is wrong. Because it's empty.\n";
+                result = depotsDistanceWrongLink+":delivery depot is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if (Strings.isEmpty(siteDist.getCarDistance())) {
                 flag = flag + 1;
-                result = siteDist.getSiteCollect() + ":transportation distance(km) is wrong. Because it's empty.\n";
+                result = depotsDistanceWrongLink + ":transportation distance(km) is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteDist.getDurationNightDelivery())){
                 flag = flag + 1;
-                result = siteDist.getSiteCollect()+":night transportation time(min) is wrong. Because it's empty.\n";
+                result = depotsDistanceWrongLink+":night transportation time(min) is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(siteDist.getCarDistance().floatValue()<0){
                 flag = flag + 1;
-                result = siteDist.getSiteCollect()+":transportation distance is must >0. \n";
+                result = depotsDistanceWrongLink+":transportation distance is must >0. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(siteDist.getCarDistance().floatValue()>200){
                 flag = flag + 1;
-                result = siteDist.getSiteCollect()+":transportation distance is must <200. \n";
+                result = depotsDistanceWrongLink+":transportation distance is must <200. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
+            //判断收件网点是否存在
+            if(!siteIdList.contains(siteDist.getSiteCollect())) {
+                flag = flag + 1;
+                result = depotsDistanceWrongLink+":start depot is not exist. \n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            //判断派件网点是否存在
+            if(!siteIdList.contains(siteDist.getSiteDelivery())) {
+                flag = flag + 1;
+                result = depotsDistanceWrongLink+":end depot is not exist. \n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            //获取最短的网点距离
+            shortSiteDistance = shortSiteDistance < siteDist.getCarDistance() ? shortSiteDistance : siteDist.getCarDistance();
         }
+        if(shortSiteDistance > longCarDistance) {
+            flag = flag + 1;
+            result = "Validating Depots Distance is too long. \n";
+            systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+        }
+        result = depotsDistance_flag == flag ? "Validating Depots Distance passed.\n" : wrongLink("siteDist", "Depots Distance") + " : is wrong";
+        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
 
         /**
          * 验证需求信息
          */
         result = "Validating Demands......";
         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+        int demands_flag = flag;
         for(int i=0;i<demandInfoList.size();i++){
             DemandInfo demandInfo = demandInfoList.get(i);
+            String demandInfoWrongLink = wrongLink("demandInfo", "ID为："+demandInfo.getId()+"的demand");
             if(Strings.isEmpty(demandInfo.getDate())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+":Date is wrong. Because it's empty.\n";
+                result = demandInfoWrongLink+":Date is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getSiteCodeCollect())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+":pickup depot is wrong. Because it's empty.\n";
+                result = demandInfoWrongLink+":pickup depot is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if (Strings.isEmpty(demandInfo.getSiteCodeDelivery())) {
                 flag = flag + 1;
-                result = demandInfo.getDate() + ":delivery depot is wrong. Because it's empty.\n";
+                result = demandInfoWrongLink + ":delivery depot is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getProductType())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+":product type is wrong. Because it's empty.\n";
+                result = demandInfoWrongLink+":product type is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getDurationStart())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+":time start is wrong. Because it's empty.\n";
+                result = demandInfoWrongLink+":time start is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getDurationEnd())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+":time end is wrong. Because it's empty.\n";
+                result = demandInfoWrongLink+":time end is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getWeight())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+":weight is wrong. Because it's empty.\n";
+                result = demandInfoWrongLink+":weight is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getVotes())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+":piece is wrong. Because it's empty.\n";
+                result = demandInfoWrongLink+":piece is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(demandInfo.getAgeing())){
                 flag = flag + 1;
-                result = demandInfo.getDate()+":effectiveness is wrong. Because it's empty.\n";
+                result = demandInfoWrongLink+":effectiveness is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(demandInfo.getDurationStart())<0){
                 flag = flag + 1;
-                result = ":start time is must > 0.\n";
+                result = demandInfoWrongLink+":start time is must > 0.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(demandInfo.getDurationStart())>24){
+            if(Integer.parseInt(demandInfo.getDurationStart())>24*60){
                 flag = flag + 1;
-                result = ":start time is must < 24.\n";
+                result = demandInfoWrongLink+":start time is must < 24小时.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(demandInfo.getDurationEnd())<0){
                 flag = flag + 1;
-                result = ":effective end time is must > 0.\n";
+                result = demandInfoWrongLink+":effective end time is must > 0.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(demandInfo.getDurationEnd())>24){
+            if(Integer.parseInt(demandInfo.getDurationEnd())>24*60){
                 flag = flag + 1;
-                result = ":effective end time is must < 24.\n";
+                result = demandInfoWrongLink+":effective end time is must < 24小时.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(demandInfo.getVotes())<0){
                 flag = flag + 1;
-                result = ":piece (p) is must > 0.\n";
+                result = demandInfoWrongLink+":piece (p) is must > 0.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Integer.parseInt(demandInfo.getVotes())>2000){
                 flag = flag + 1;
-                result = ":piece (p) is must < 2000.\n";
+                result = demandInfoWrongLink+":piece (p) is must < 2000.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            //判断收件网点是否存在
+            if(!siteIdList.contains(demandInfo.getSiteCodeCollect())) {
+                flag = flag + 1;
+                result = demandInfoWrongLink+":start depot is not exist.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            //判断派件网点是否存在
+            if(!siteIdList.contains(demandInfo.getSiteCodeDelivery())) {
+                flag = flag + 1;
+                result = demandInfoWrongLink+":stop depot is not exist.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
         }
+
+        result = demands_flag == flag ? "Validating Demands passed.\n" : wrongLink("demandInfo", "Demands") + " : is wrong";
+        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
 
         /**
          * 验证整体模型参数
          */
         result = "Validating Parameters......";
         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+        int parameters_flag = flag;
         for(int i=0;i<modelArgList.size();i++){
             ModelArg modelArg = modelArgList.get(i);
+            String modelArgoWrongLink = wrongLink("modelArg", modelArg.getParameterName());
             if(Strings.isEmpty(modelArg.getParameterName())){
                 flag = flag + 1;
-                result = modelArg.getParameterName()+":parameter name is wrong. Because it's empty.\n";
+                result = modelArgoWrongLink+":parameter name is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(modelArg.getData())){
                 flag = flag + 1;
-                result = modelArg.getParameterName()+":data is wrong. Because it's empty.\n";
+                result = modelArgoWrongLink+":data is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
         }
+        result = parameters_flag == flag ? "Validating Parameters passed.\n" : wrongLink("modelArg", "Parameters") + " : is wrong";
+        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
 
 
         String success = "Validation is successful,and now you can run the simulation.";

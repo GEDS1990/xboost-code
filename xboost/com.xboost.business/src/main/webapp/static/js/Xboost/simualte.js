@@ -10,6 +10,8 @@ $(function  () {
 	 */
 	(function  () {
 		var simCheck = doc.getElementById("sim-check");
+		//标识是否验证成功
+		var isSuccess = false;
 		if (simCheck) {
 			//点击校验
 			$("#sim-check").click(function  () {
@@ -42,20 +44,28 @@ $(function  () {
 		            };
 					
 					$.post("/simualte/Validate").done(function  (result) {
+<<<<<<< Updated upstream
 						console.log(result);
 						type = result;
 					    socket.onclose();
 					
+=======
+					    ws.onclose();
+						console.log("success");
+						isSuccess = true;
+>>>>>>> Stashed changes
 					}).fail(function  () {
 					    socket.onclose();
 						console.log("fail");
+						isSuccess = false;
 					});
 					
 					function logg(messages) {
 			            var consoleBox = document.getElementById('sim-check-info');
 			            var p = document.createElement('p');
 			            p.style.wordWrap = 'break-word';
-			            p.appendChild(document.createTextNode(messages));
+			            // p.appendChild(document.createTextNode(messages));
+						p.innerHTML = messages;
 			            consoleBox.appendChild(p);
 			            consoleBox.scrollTop = consoleBox.scrollHeight;
 			        }
@@ -81,10 +91,14 @@ $(function  () {
 					$('#loopslimit').show();
 					$('#sim-run-count').focus();
 					return false;
+<<<<<<< Updated upstream
 				}
 				if (type == "" || type == "fail") {
 					$('#sim-error-run').show();
 				}else if (type == "success"){
+=======
+				}else if(isSuccess == true){ 
+>>>>>>> Stashed changes
 					$('#sim-error-check').hide();
 					$('#loopslimit').hide();
 					$('#timelimit').hide();
