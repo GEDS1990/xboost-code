@@ -422,7 +422,7 @@ function CategoryList () {
             else if(res.scenario.scenariosModel=="3"){
             $('#simulation-method').text("综合模型");
             }
-            $('#simulation-progress').text("100%");
+            $('#simulation-progress').text("--");
             $('#simulation-finished').text(res.scenario.simulateFinishTime);
         }).fail(function  (e) {
             console.log('fail');
