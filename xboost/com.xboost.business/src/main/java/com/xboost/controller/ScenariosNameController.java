@@ -28,6 +28,9 @@ public class ScenariosNameController {
     DemandInfoService demandInfoService;
     @Inject
     SolutionCostService solutionCostService;
+    @Inject
+    SolutionRouteService solutionRouteService;
+
 
     /**
      * 跳转ScenariosName页面
@@ -121,7 +124,7 @@ public class ScenariosNameController {
         }catch (Exception e){
 
         }
-        Integer carCount = transportService.findAllCount(ShiroUtil.getOpenScenariosId());
+        Integer carCount = solutionRouteService.findRouteNum(ShiroUtil.getOpenScenariosId());
 
         result.put("staffCount",staffCount);
         result.put("carCount",carCount);
