@@ -56,7 +56,7 @@ public class SolutionDistributionController {
         Map<String,Object> map = new HashMap<String,Object>();
         List<DemandInfo> demandInfoList = demandInfoService.findAll(ShiroUtil.getOpenScenariosId());
         List<Route> routeList = solutionRouteService.findAllRoute(ShiroUtil.getOpenScenariosId());
-        int totalAll = 0;
+        double totalAll = 0;
         double totalAllRoute = 0;
         for(DemandInfo demandInfo : demandInfoList){
             totalAll = totalAll + Integer.parseInt((demandInfo.getVotes()!=null)?demandInfo.getVotes():"0");
@@ -70,14 +70,14 @@ public class SolutionDistributionController {
         switch (type){
             case "0":
                 for(int i=0;i<(max-min)/jiange;i++){
-                    int total = 0;
+                    double total = 0;
                     for(DemandInfo demandInfo : demandInfoList){
-                        int res = Integer.parseInt(demandInfo.getDurationEnd()!=null?demandInfo.getDurationEnd():"0");
+                        double res = Integer.parseInt(demandInfo.getDurationEnd()!=null?demandInfo.getDurationEnd():"0");
                         if(res>(min+jiange*i) && res<=(min+jiange*(i+1))){
                             total = total + Integer.parseInt(demandInfo.getVotes()!=null?demandInfo.getVotes():"0");
                         }
                     }
-                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(total/totalAll*100));
+                    map.put(String.valueOf(min+(jiange*i))+"-"+String.valueOf(min+(jiange*(i+1))),String.valueOf(df.format(total/totalAll*100)));
                 }
                 break;
             case "1":
