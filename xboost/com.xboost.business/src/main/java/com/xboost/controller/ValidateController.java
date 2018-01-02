@@ -233,9 +233,14 @@ public class ValidateController {
                 result = siteInfoWrongLink+":type is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Strings.isEmpty(siteInfo.getDistribCenter())){
+           /* if(Strings.isEmpty(siteInfo.getDistribCenter())){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":distrib.center is wrong. Because it's empty.\n";
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }*/
+            if(Strings.isEmpty(siteInfo.getSiteNightDelivery())){
+                flag = flag + 1;
+                result = siteInfoWrongLink+":night delivery is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Strings.isEmpty(siteInfo.getCarNum())){
@@ -283,14 +288,14 @@ public class ValidateController {
                 result = siteInfoWrongLink+":vehicle weight limit  is must <999. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getMaxOperateNum())<0){
+            if(Integer.parseInt(siteInfo.getMaxOperateNum())<2000){
                 flag = flag + 1;
-                result = siteInfoWrongLink+":piece capacity (p) is must >0. \n";
+                result = siteInfoWrongLink+":piece capacity (p) is must >2000. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getMaxOperateNum())>999){
+            if(Integer.parseInt(siteInfo.getMaxOperateNum())>50000){
                 flag = flag + 1;
-                result = siteInfoWrongLink+":piece capacity (p)  is must <999. \n";
+                result = siteInfoWrongLink+":piece capacity (p)  is must <50000. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(Double.parseDouble(siteInfo.getSiteLatitude())<-90){
@@ -314,11 +319,11 @@ public class ValidateController {
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             //验证集散点是否在depot info中
-            if(!siteIdList.contains(siteInfo.getDistribCenter())) {
+           /* if(!siteIdList.contains(siteInfo.getDistribCenter())) {
                 flag = flag + 1;
                 result = siteInfoWrongLink+":distrib.center is not in depot. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
+            }*/
         }
         result = depotsInfo_flag == flag ? "Validating Depot Info passed" : wrongLink("siteInfo", "Depot Info") + " : is wrong";
         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
@@ -483,13 +488,13 @@ public class ValidateController {
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             //判断网点的最大承载能力
-            int maxCollectNum = Integer.parseInt(siteInfoService.findSiteInfoBySiteCode(scenariosId, demandInfo.getSiteCodeCollect()).getMaxOperateNum());
+            /*int maxCollectNum = Integer.parseInt(siteInfoService.findSiteInfoBySiteCode(scenariosId, demandInfo.getSiteCodeCollect()).getMaxOperateNum());
             int maxDeliveryNum = Integer.parseInt(siteInfoService.findSiteInfoBySiteCode(scenariosId, demandInfo.getSiteCodeDelivery()).getMaxOperateNum());
             if(Integer.parseInt(demandInfo.getWeight()) > maxCollectNum || Integer.parseInt(demandInfo.getWeight()) > maxDeliveryNum) {
                 flag = flag + 1;
                 result = demandInfoWrongLink+":weight is overload.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
+            }*/
         }
 
         result = demands_flag == flag ? "Validating Demands passed.\n" : wrongLink("demandInfo", "Demands") + " : is wrong";
