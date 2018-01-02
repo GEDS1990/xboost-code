@@ -1429,7 +1429,7 @@ $(function  () {
     	            ],
     	            "columnDefs":[ //具体列的定义
     	            	{
-    	                    "targets":[1,5,6],
+    	                    "targets":[0,1,5,6],
     	                    "visible":false
     	                },
     	                {
