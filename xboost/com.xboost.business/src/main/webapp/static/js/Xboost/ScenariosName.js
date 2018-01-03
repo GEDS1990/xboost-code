@@ -848,12 +848,12 @@ $(function  () {
 	                {"data":"dimensions","name":"dimensions"},
 	                
 	                {"data":function(res){
-	                if(res.max_distance > "998"){return "∞";}
+	                if(res.max_distance > 998 ){return "∞";}
 	                else{return res.max_distance;}
 	                },"name":"max_distance"},
 
 	                {"data":function(res){
-                    if(res.max_running_time > "998"){return "∞";}
+                    if(res.max_running_time > 998 ){return "∞";}
                     else{return res.max_running_time;}
                     },"name":"max_running_time"},
 
