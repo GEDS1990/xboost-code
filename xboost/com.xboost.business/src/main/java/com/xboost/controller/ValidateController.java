@@ -163,18 +163,18 @@ public class ValidateController {
 //                logger.info(result);
 //                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
 //            }
-            if(car.getCostPerDistance()<1){
-                flag = flag + 1;
-                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must >1.\n";
-                logger.info(result);
-                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
-            if(car.getCostPerDistance()>2000){
-                flag = flag + 1;
-                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must <2000.\n";
-                logger.info(result);
-                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
+//            if(car.getCostPerDistance()<1){
+//                flag = flag + 1;
+//                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must >1.\n";
+//                logger.info(result);
+//                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+//            }
+//            if(car.getCostPerDistance()>2000){
+//                flag = flag + 1;
+//                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must <2000.\n";
+//                logger.info(result);
+//                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+//            }
             //获取车辆最远车程
             longCarDistance = longCarDistance > car.getMaxDistance() ? longCarDistance :car.getMaxDistance();
         }
