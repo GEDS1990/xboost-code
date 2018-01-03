@@ -63,10 +63,6 @@ $(function (){
 						this.depotAllPeople	 = this.depotcount * val;
 						this.full_staff = this.depotAllPeople;
 						this.part_staff = 0;
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
 					},
 					full_staff:function  (val) {
 						if (val>this.depotAllPeople) {
@@ -78,10 +74,7 @@ $(function (){
 						}else{
 							this.part_staff = this.depotAllPeople-val;
 						}
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
+						
 						
 					},
 					part_staff:function (val){
@@ -94,38 +87,14 @@ $(function (){
 						}else{
 							this.full_staff = this.depotAllPeople-val;
 						}
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
-					},
-					full_salaty:function  () {
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
-					},
-					full_days:function  () {
-						this.sum1();
-						this.sumG();
-					},
-					part_wage:function (){
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
-					},
-					part_work:function (){
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
 					}
-					
 				},
 				computed:{
 					a:function (){
-						console.log(this.allcost);
+						this.sum1();
+						this.sumG();
+						this.sumI();
+						this.sumK();
 					}
 				}
 				
@@ -187,10 +156,6 @@ $(function (){
 						this.depotAllPeople	 = this.depotcount * val;
 						this.full_staff = this.depotAllPeople;
 						this.part_staff = 0;
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
 					},
 					full_staff:function  (val) {
 						if (val>this.depotAllPeople) {
@@ -202,10 +167,6 @@ $(function (){
 						}else{
 							this.part_staff = this.depotAllPeople-val;
 						}
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
 						
 					},
 					part_staff:function (val){
@@ -218,40 +179,15 @@ $(function (){
 						}else{
 							this.full_staff = this.depotAllPeople-val;
 						}
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
-					},
-					full_salaty:function  () {
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
-					},
-					full_days:function  () {
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
-					},
-					part_wage:function (){
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
-					},
-					part_work:function (){
-						this.sum1();
-						this.sumG();
-						this.sumI();
-						this.sumK();
 					}
 					
 				},
 				computed:{
-					allcost:function (){
-						console.log(this.allcost);
+					a:function (){
+						this.sum1();
+						this.sumG();
+						this.sumI();
+						this.sumK();
 					}
 				}
 			

@@ -94,7 +94,7 @@
 	    		</div>
 	    		<div id="costs" class="result-cost clearfix">
 	    			<div class="result-cost-item itemstyle" >
-	    				<form id="cost-form-a" v-show="cseen">
+	    				<form id="cost-form-a">
 	    					<input type="hidden" name="plan" value="A" />
 	    					<h1>Plan A</h1>
 		    				<div class="cost-item text-left">
@@ -107,7 +107,8 @@
 		    					</div>
 		    					<div class="item-box">
 		    						<h1>人员配备</h1>
-		    						<ul class="item-content">
+		    						
+		    						<ul class="item-content" v-show="cseen">
 		    							<li>支线depot&distrib.center数量: <span>{{depotcount}}</span></li>
 		    							<input type="hidden" name="siteCount" v-bind:value="depotcount" />
 		    							<li>每个支线depot/distrib.center的人数: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
@@ -144,9 +145,10 @@
 		    				</div>
 	    				</form>
 	    				
+	    				
 	    			</div>
 	    			<div class="result-cost-item" >
-	    				<form id="cost-form-b" v-show="cseen">
+	    				<form id="cost-form-b" >
 	    					<input type="hidden" name="plan" value="A" />
 	    					<h1>Plan B</h1>
 		    				<div class="cost-item text-left">
@@ -159,7 +161,8 @@
 		    					</div>
 		    					<div class="item-box">
 		    						<h1>人员配备</h1>
-		    						<ul class="item-content">
+		    						
+		    						<ul class="item-content" v-show="cseen">
 		    							<li>支线depot&distrib.center数量: <span>{{depotcount}}</span></li>
 		    							<input type="hidden" name="siteCount" v-bind:value="depotcount" />
 		    							<li>每个支线depot/distrib.center的人数: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
@@ -168,6 +171,8 @@
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
 		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
 		    						</ul>
+		    						
+		    						
 		    					</div>
 		    					<div class="item-box">
 		    						<h1>工资设定</h1>
@@ -191,6 +196,7 @@
 		    							<input type="hidden" name="totalCost" v-bind:value="allcost"/>
 		    						</ul>
 		    						<p>总成本: {{allcost}} <span> (per piece)</span></p>
+		    						<p>{{a}}</p>
 		    					</div>
 		    				</div>
 	    				</form>
