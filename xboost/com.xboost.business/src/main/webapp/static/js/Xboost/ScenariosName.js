@@ -40,6 +40,7 @@ $(function  () {
 			}
 		}
 		var form = new FormData(document.getElementById(formID));
+		$('.loading').show();
          $.ajax({
              url:urls,
              type:"post",
@@ -49,6 +50,7 @@ $(function  () {
              success:function(data){
                  //alert("Import information to complete!");
                  $(modId).modal("hide");
+                 $('.loading').hide();
                  window.location.reload(); 
              },
              error:function(e){
