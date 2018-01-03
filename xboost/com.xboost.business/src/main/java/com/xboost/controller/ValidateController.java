@@ -91,6 +91,48 @@ public class ValidateController {
         for(int i=0;i<transportationList.size();i++){
             Car car = transportationList.get(i);
             String vehiclesWrongLink = wrongLink("car", car.getName());
+            if(Strings.isEmpty(car.getName())) {
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":vehicles name is empty.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(Strings.isEmpty(car.getType())) {
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":vehicles weight limit is empty.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(Strings.isEmpty(car.getNum())) {
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":vehicles quantity is empty.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(Strings.isEmpty(car.getCarSource())) {
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":vehicles source is empty.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(Strings.isEmpty(car.getVelocity())) {
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":vehicles speed is empty.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(Strings.isEmpty(car.getMaxStop())) {
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":maximum time is empty.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(Strings.isEmpty(car.getCostPerDistance())) {
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":vehicle piece capacity (p) is empty.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser(new TextMessage(result));
+            }
             if(Integer.parseInt(car.getMaxLoad())<1){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":maximum load is must >1.\n";
@@ -163,18 +205,18 @@ public class ValidateController {
 //                logger.info(result);
 //                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
 //            }
-//            if(car.getCostPerDistance()<1){
-//                flag = flag + 1;
-//                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must >1.\n";
-//                logger.info(result);
-//                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-//            }
-//            if(car.getCostPerDistance()>2000){
-//                flag = flag + 1;
-//                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must <2000.\n";
-//                logger.info(result);
-//                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-//            }
+            if(Integer.parseInt(car.getMaxLoad())<1){
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must >1.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
+            if(Integer.parseInt(car.getMaxLoad())>2000){
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must <2000.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+            }
             //获取车辆最远车程
             longCarDistance = longCarDistance > car.getMaxDistance() ? longCarDistance :car.getMaxDistance();
         }
