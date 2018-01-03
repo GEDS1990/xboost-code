@@ -227,7 +227,7 @@ public class ValidateController {
         result = "Validating Depots Info......";
         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
         int depotsInfo_flag = flag;
-
+        float minWeight = Float.parseFloat(siteInfoList.get(0).getMaxOperateNum());
         //获取所有siteInfo的code编码
         List<String> siteIdList = new ArrayList<>();
         for(int i = 0; i<siteInfoList.size(); i++) {
@@ -366,6 +366,8 @@ public class ValidateController {
                 result = siteInfoWrongLink+":distrib.center is not in depot. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }*/
+            //获取所有网点最小承载量
+            minWeight = minWeight < Float.parseFloat(siteInfo.getMaxOperateNum()) ? minWeight : Float.parseFloat(siteInfo.getMaxOperateNum());
         }
         result = depotsInfo_flag == flag ? "Validating Depot Info passed" : wrongLink("siteInfo", "Depot Info") + " : is wrong";
         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
@@ -530,13 +532,15 @@ public class ValidateController {
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             //判断网点的最大承载能力
-            /*int maxCollectNum = Integer.parseInt(siteInfoService.findSiteInfoBySiteCode(scenariosId, demandInfo.getSiteCodeCollect()).getMaxOperateNum());
-            int maxDeliveryNum = Integer.parseInt(siteInfoService.findSiteInfoBySiteCode(scenariosId, demandInfo.getSiteCodeDelivery()).getMaxOperateNum());
-            if(Integer.parseInt(demandInfo.getWeight()) > maxCollectNum || Integer.parseInt(demandInfo.getWeight()) > maxDeliveryNum) {
-                flag = flag + 1;
-                result = demandInfoWrongLink+":weight is overload.\n";
-                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }*/
+            if(Float.parseFloat(demandInfo.getWeight()) > minWeight) {
+                int maxCollectNum = Integer.parseInt(siteInfoService.findSiteInfoBySiteCode(scenariosId, demandInfo.getSiteCodeCollect()).getMaxOperateNum());
+                int maxDeliveryNum = Integer.parseInt(siteInfoService.findSiteInfoBySiteCode(scenariosId, demandInfo.getSiteCodeDelivery()).getMaxOperateNum());
+                if(Integer.parseInt(demandInfo.getWeight()) > maxCollectNum || Integer.parseInt(demandInfo.getWeight()) > maxDeliveryNum) {
+                    flag = flag + 1;
+                    result = demandInfoWrongLink+":weight is overload.\n";
+                    systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+                }
+            }
         }
 
         result = demands_flag == flag ? "Validating Demands passed.\n" : wrongLink("demandInfo", "Demands") + " : is wrong";
