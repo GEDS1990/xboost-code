@@ -142,6 +142,30 @@
 					</div>
 	    		</div>
 	    		
+	    		<!--网点信息-->
+	    		<div style="padding: 10px;">
+	    			<div class="table-responsive active">
+						<table class="table table-hover efficiency">
+							<thead>
+								<tr>
+									<th>deport ID</th>
+									<th>longitude</th>
+									<th>latitude</th>
+									<th>depot area (m²)</th>
+									<th>depot type</th>
+									<th>night distrib</th>
+									<th>vehicle quantity limit</th>
+									<th>vehicle weight limit</th>
+									<th>piece capacity (p)</th>
+								</tr>
+							</thead>
+							<tbody id="depotinfo-tbody">
+								
+							</tbody>
+						</table>
+					</div>
+	    		</div>
+	    		
 	    	
 	    	
 	    	
