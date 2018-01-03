@@ -191,4 +191,18 @@ public class SolutionRouteService {
     public List<String> findIdleCar(String scenariosId,String routeCount){
         return solutionRouteMapper.findIdleCar(scenariosId,routeCount);
     }
+
+    //校验这段路线车上件量是否超出车的最大载件量
+    public String findCarLoad(String scenariosId,String routeCount){
+        List<Map<String,Object>> carList = solutionRouteMapper.findCarLoad(scenariosId,routeCount);
+
+
+        return "success";
+    }
+
+    //校验这一段路线是否超过车的最远距离
+
+    //车辆能否在预定时间到达该段路程的起点
+
+    //车辆能否在预定时间内跑完该段路程
 }

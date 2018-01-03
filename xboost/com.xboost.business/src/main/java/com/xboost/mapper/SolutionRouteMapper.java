@@ -81,5 +81,7 @@ public interface SolutionRouteMapper {
     //查询线路编号
     List<String> findRouteCount(String scenariosId);
 
+    List<Map<String,Object>> findCarLoad(@Param("scenariosId")String scenariosId,@Param("routeCount") String routeCount);
+
 }
 

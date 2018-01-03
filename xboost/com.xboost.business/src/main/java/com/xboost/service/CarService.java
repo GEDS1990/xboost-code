@@ -99,7 +99,7 @@ public class CarService {
 //                            transport.setFixedRound(Double.parseDouble((row[10].trim().equals(""))?"0":row[10].trim()));
 //                            transport.setFixedRoundFee(Double.parseDouble((row[11].trim().equals(""))?"0":row[11].trim()));
                             transport.setMaxLoad(row[3]);
-                            transport.setDimensions(row[3]);
+                            transport.setDimensions(row[11]);
                             transport.setMaxRunningTime(Double.parseDouble((row[10].trim().equals(""))?"0":row[10].trim()));
                             transport.setMaxStop(Integer.parseInt((row[8].trim().equals(""))?"0":row[8].trim()));
 //                            transport.setSkills(row[0]);

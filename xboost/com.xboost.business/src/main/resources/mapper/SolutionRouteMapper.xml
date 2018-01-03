@@ -150,6 +150,12 @@
         SELECT DISTINCT(route_count) FROM t_solution_route WHERE scenariosId=#{scenariosId}
     </select>
 
+    <select id="findCarLoad" resultType="String" parameterType="map" resultMap="modelRouteAndCar">
+        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_type = c.type
+        WHERE c.scenariosId=#{scenariosId} and r.scenariosId=#{scenariosId}
+        and r.route_count=#{routeCount} and c.busy_idle="0"
+    </select>
+
     <resultMap id="modelRoute" type="Route">
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
@@ -207,5 +213,51 @@
         <result property="maxOperateNum" column="max_operate_num"/>
         <result property="distribCenter" column="distrib_center"/>
     </resultMap>
+
+    <resultMap id="modelRouteAndCar" type="Route">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="routeCount" column="route_count"/>
+        <result property="carName" column="car_name"/>
+        <result property="carType" column="car_type"/>
+        <result property="location" column="location"/>
+        <result property="sequence" column="sequence"/>
+        <result property="curLoc" column="cur_loc"/>
+        <result property="type" column="type"/>
+        <result property="sbLoc" column="sb_loc"/>
+        <result property="sbVol" column="sb_vol"/>
+        <result property="sbVolSum" column="sb_vol_sum"/>
+        <result property="arrTime" column="arr_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="unloadLoc" column="unload_loc"/>
+        <result property="unloadVol" column="unload_vol"/>
+        <result property="unloadVolSum" column="unload_vol_sum"/>
+        <result property="nextCurLoc" column="next_cur_loc"/>
+        <result property="calcDis" column="calc_dis"/>
+        <result property="carGoods" column="car_goods"/>
+        <result property="maxStop" column="max_stop"/>
+        <result property="dimensions" column="dimensions"/>
+        <result property="fixedRound" column="fixed_round"/>
+        <result property="fixedRoundFee" column="fixed_round_fee"/>
+        <result property="startLocation" column="start_location"/>
+        <result property="endLocation" column="end_location"/>
+        <result property="maxDistance" column="max_distance"/>
+        <result property="maxRunningTime" column="max_running_time"/>
+        <result property="costPerDistance" column="cost_per_distance"/>
+        <result property="costPerTime" column="cost_per_time"/>
+        <result property="fixedCost" column="fixed_cost"/>
+        <result property="velocity" column="velocity"/>
+        <result property="velocity2" column="velocity2"/>
+        <result property="velocity3" column="velocity3"/>
+        <result property="carSource" column="car_source"/>
+        <result property="maxLoad" column="max_load"/>
+        <result property="durationUnloadFull" column="duration_unload_full"/>
+        <result property="type" column="type"/>
+        <result property="name" column="name"/>
+        <result property="num" column="num"/>
+        <result property="priceType" column="price_type"/>
+    </resultMap>
+
+
 
 </mapper>
