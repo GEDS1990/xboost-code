@@ -83,12 +83,20 @@ public class DemandInfoService {
                             //收件网点编码
                             demandInfo.setSiteCodeCollect(row[2]);
                             //时段（开始）
-                            d = Integer.parseInt(row[3].split(":")[0])*60+Integer.parseInt(row[3].split(":")[1]);
+                            try{
+                                d = Integer.parseInt(row[3].split(":")[0])*60+Integer.parseInt(row[3].split(":")[1]);
+                            }catch (java.lang.ArrayIndexOutOfBoundsException e){
+                                d =Integer.parseInt(row[3]);
+                            }
                             demandInfo.setDurationStart(String.valueOf(d));
                             //派件网点编码
                             demandInfo.setSiteCodeDelivery(row[4]);
                             //时段(结束）
-                            d = Integer.parseInt(row[5].split(":")[0])*60+Integer.parseInt(row[5].split(":")[1]);
+                            try{
+                                d = Integer.parseInt(row[5].split(":")[0])*60+Integer.parseInt(row[5].split(":")[1]);
+                            }catch (java.lang.ArrayIndexOutOfBoundsException e){
+                                d =Integer.parseInt(row[5]);
+                            }
                             demandInfo.setDurationEnd(String.valueOf(d));
                             //票数（票）
                             demandInfo.setVotes(row[6]);
