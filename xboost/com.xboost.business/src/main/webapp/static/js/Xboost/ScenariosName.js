@@ -137,12 +137,19 @@ $(function  () {
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
 	                {"data":"siteCode","name":"site_code"},
-	                {"data":"siteLongitude","name":"longitude"},
-	                {"data":"siteLatitude","name":"latitude"},
+	                {"data":function (res){
+	                	return Number(res.siteLongitude).toFixed(6);
+	                },"name":"longitude"},
+	                {"data":function (res){
+	                	return Number(res.siteLatitude).toFixed(6);
+	                },"name":"latitude"},
 	                {"data":"siteName","name":"site_name"},
 	                {"data":"siteAddress","name":"site_address"},
 	                {"data":function(res){
-	                return Math.round(res.siteArea);
+	                	if (res.siteArea == 0) {
+	                		return "-"
+	                	}
+	                	return Math.round(res.siteArea);
 	                }
 	                ,"name":"site_area"},
 	                {"data":"siteType","name":"site_type"},
