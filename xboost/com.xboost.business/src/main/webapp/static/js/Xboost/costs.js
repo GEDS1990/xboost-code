@@ -441,7 +441,7 @@ $(function (){
 				//console.log(res)
 				if (res) {
 					var list = efficList(res);
-					console.log(list);
+					//console.log(list);
 					//操作dom
 					var result = list[0].list;
 					//console.log(result)
@@ -604,6 +604,30 @@ $(function (){
 				}
 			}).fail(function (){
 				console.log("fail");
+			});
+			
+			
+			//网点信息
+			$.get("/efficiency/siteInfo.json").done(function (res){
+				//console.log(res);
+				var _len = res.length;
+				for (var i=0;i<_len;i++) {
+					var add="";
+					add += '<tr>';
+					add += '<td>'+res[i].cur_loc+'</td>';
+					add += '<td>'+Number(res[i].longitude).toFixed(6)+'</td>';
+					add += '<td>'+Number(res[i].latitude).toFixed(6)+'</td>';
+					add += '<td>'+(res[i].site_area==0?"-":Math.round(res[i].site_area) )+'</td>';
+					add += '<td>'+res[i].site_type+'</td>';
+					add += '<td>'+res[i].site_night_delivery+'</td>';
+					add += '<td>'+res[i].car_num+'</td>';
+					add += '<td>'+res[i].large_carModle+'</td>';
+					add += '<td>'+res[i].max_operate_num+'</td>';
+					add += '</tr>';
+					$('#depotinfo-tbody').append(add);
+				}
+			}).fail(function  () {
+				alert("fail");
 			});
 			
 			

@@ -323,9 +323,15 @@ $(function  () {
 	                {"data":"siteDelivery","name":"site_delivery"},
 	                {"data":function(res){return res.carDistance.toFixed(2)}
 	                ,"name":"car_distance"},
-	                {"data":"durationNightDelivery","name":"duration_night_delivery"},
-	                {"data":"durationNightDelivery2","name":"duration_night_delivery2"},
-	                {"data":"durationNightDelivery3","name":"duration_night_delivery3"},
+	                {"data":function (res){
+	                	return Number(res.durationNightDelivery).toFixed(2);
+	                },"name":"duration_night_delivery"},
+	                {"data":function (res){
+	                	return Number(res.durationNightDelivery2).toFixed(2);
+	                },"name":"duration_night_delivery2"},
+	                {"data":function (res){
+	                	return Number(res.durationNightDelivery3).toFixed(2);
+	                },"name":"duration_night_delivery3"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-dist' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dist' data-id='"+row.id+"'>Del</a>";
 	                }}
