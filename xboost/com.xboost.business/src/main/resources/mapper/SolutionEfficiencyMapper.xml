@@ -40,7 +40,7 @@
     <select id="findSiteInfo" parameterType="map" resultType="map">
         SELECT DISTINCT(r.cur_loc),d.longitude,d.latitude,d.site_area,d.site_type,d.site_night_delivery,d.car_num,
         d.large_carModle,d.max_operate_num FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
-        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
     </select>
 
     <resultMap id="modelRoute" type="Route">
