@@ -34,7 +34,7 @@ $(function (){
 					branch_cost:""
 				},
 				methods:{
-					sum1:function (){ //单日人工总成本
+					sum23:function (){ //单日人工总成本
 						var sum = (this.full_staff * this.full_salaty)/this.full_days + (this.part_staff*this.part_wage*this.part_work);
 						//console.log((this.full_staff))
 						var r = Math.round(sum);
@@ -91,7 +91,7 @@ $(function (){
 				},
 				computed:{
 					a:function (){
-						this.sum1();
+						this.sum23();
 						this.sumG();
 						this.sumI();
 						this.sumK();
@@ -126,7 +126,7 @@ $(function (){
 					branch_cost:""
 				},
 				methods:{
-					sum1:function (){ //单日人工总成本
+					sum23:function (){ //单日人工总成本
 						var sum = (this.full_staff * this.full_salaty)/this.full_days + (this.part_staff*this.part_wage*this.part_work);
 						//console.log((this.full_staff))
 						var r = Math.round(sum);
@@ -184,7 +184,7 @@ $(function (){
 				},
 				computed:{
 					a:function (){
-						this.sum1();
+						this.sum23();
 						this.sumG();
 						this.sumI();
 						this.sumK();
