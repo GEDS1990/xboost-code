@@ -42,13 +42,10 @@ $(function  () {
 		            };
 					
 					$.post("/simualte/Validate").done(function  (result) {
-                        ws.onclose();
-                        console.log("success");
 						console.log(result);
 						type = result;
 					    socket.onclose();
 					}).fail(function  () {
-						ws.onclose();
 					    socket.onclose();
 						console.log("fail");
 					});
