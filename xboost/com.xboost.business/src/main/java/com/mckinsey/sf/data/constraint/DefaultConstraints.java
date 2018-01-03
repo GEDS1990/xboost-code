@@ -652,15 +652,15 @@ public class DefaultConstraints implements IConstraint,IConstants,Serializable {
 //				total = 263;
 //			}
 //		}
-		if("百度".equalsIgnoreCase(r.getC().getType())){
+		if("baidu".equalsIgnoreCase(r.getC().getType())||"百度".equalsIgnoreCase(r.getC().getType())){
 			total = 11;
-		}else if("滴滴".equalsIgnoreCase(r.getC().getType())){
+		}else if("didi".equalsIgnoreCase(r.getC().getType())||"滴滴".equalsIgnoreCase(r.getC().getType())){
 			if(dist<=15){
 				total = 8+2*dist+0.55*time;
 			}else{
 				total = 8+2*dist+0.55*time+(dist-15)*1.5;
 			}
-		}else if("货车".equalsIgnoreCase(r.getC().getType())){
+		}else if("truck".equalsIgnoreCase(r.getC().getType())||"货车".equalsIgnoreCase(r.getC().getType())){
 			if(dist<=5){
 				total = 30;
 			}else{

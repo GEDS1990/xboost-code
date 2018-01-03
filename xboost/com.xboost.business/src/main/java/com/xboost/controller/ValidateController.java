@@ -133,9 +133,9 @@ public class ValidateController {
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getType().equals("百度")&&car.getMaxDistance()>5){
+            if(car.getType().equals("baidu")&&car.getMaxDistance()>5){
                 flag = flag + 1;
-                result = vehiclesWrongLink + ":百度 maximum distance is must <5.\n";
+                result = vehiclesWrongLink + ":baidu maximum distance is must <5.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
