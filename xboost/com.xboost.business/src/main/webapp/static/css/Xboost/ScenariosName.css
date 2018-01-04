@@ -208,9 +208,12 @@ table.dataTable thead>tr>td.sorting{
 	padding-left:0 ;
 	padding-right: 0;
 }
-.modal-dialog{
-	width: 800px;
+@media only screen and (min-width: 768px ) {
+	.modal-dialog{
+		width: 900px;
+	}
 }
+
 .modal-dialog.modal-del{
 	width: 500px;
 }
@@ -225,6 +228,10 @@ table.dataTable thead>tr>td.sorting{
 	width: 200px!important;
 }
 /**********Conditions model*********/
+.import-error{
+	display: none;
+	color: red;
+}
 .model-input-content{
 	padding: 25px 0;
 }

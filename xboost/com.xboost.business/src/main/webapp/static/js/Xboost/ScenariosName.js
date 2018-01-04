@@ -10,6 +10,7 @@ $(function  () {
 	 * 选择上传文件
 	 */
 	$("body").on("click",".cond-file-btn",function  () {
+		$('.import-error').text("").hide();
 		var _file = $(this).parent(".cond-file-box").prev();
 		var _nextP = $(this).next();
 		_file.trigger("click");
@@ -40,6 +41,11 @@ $(function  () {
 			}
 		}
 		var form = new FormData(document.getElementById(formID));
+		var _val = $('input[name="file"]').val();
+		if ( !Boolean(_val) ) {
+			return false;
+		}
+		$('.loading').show();
          $.ajax({
              url:urls,
              type:"post",
@@ -49,6 +55,7 @@ $(function  () {
              success:function(data){
                  //alert("Import information to complete!");
                  $(modId).modal("hide");
+                 $('.loading').hide();
                  window.location.reload(); 
              },
              error:function(e){
@@ -106,8 +113,9 @@ $(function  () {
 	    var _key = val.slice(_index);
 	    var _zeng = /^(\.xlsx)$/i;
 	    if (!_zeng.test(_key)) {
-	    	form.push(false)
-	    	alert("The file format of"+" "+fileName+" "+"is inconsistent  .xlsx")
+	    	form.push(false);
+	    	$('.import-error').text("The file format of"+" "+fileName+" "+"is inconsistent  .xlsx").show();
+	    	//alert("The file format of"+" "+fileName+" "+"is inconsistent  .xlsx")
 	    }else{
 	    	//将数据封装对象
 	    	form.push(true);
