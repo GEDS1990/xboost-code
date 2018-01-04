@@ -277,7 +277,7 @@
 	        		</div>
 	        	</div>
         	</div>
-  
+  			<p class="text-center import-error"></p>
         </form>
         <!--content e-->
 
