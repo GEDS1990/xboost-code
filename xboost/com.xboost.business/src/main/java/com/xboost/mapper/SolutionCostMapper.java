@@ -21,6 +21,7 @@ public interface SolutionCostMapper {
     // 查询所有Cost信息  @return
     List<Cost> findAll(String scenariosId);
 
+    String findBranchCost(String scenariosId);
 
     /**
      * 根据场景ID查询Cost信息

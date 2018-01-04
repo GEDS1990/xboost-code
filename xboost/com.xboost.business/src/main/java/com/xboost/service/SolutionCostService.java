@@ -60,6 +60,10 @@ public class SolutionCostService {
         return solutionCostMapper.findAll(scenariosId);
     }
 
+    public String findBranchCost(String scenariosId){
+        return solutionCostMapper.findBranchCost(scenariosId);
+    }
+
 
     /**
      * 根据参数查询成本信息
