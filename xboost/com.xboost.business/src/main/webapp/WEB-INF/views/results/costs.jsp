@@ -121,14 +121,14 @@
 		    					<div class="item-box">
 		    						<h1>工资设定</h1>
 		    						<ul class="item-content">
-		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>/month</span></li>
-		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>/month</span></li>
-		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>/hour</span></li>
-		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>/day</span></li>
+		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>(元)/month</span></li>
+		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>days/month</span></li>
+		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>(元)/hour</span></li>
+		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>hours/day</span></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
-		    						<h1>成本</h1>
+		    						<h1>成本:模型输出成本/总件量</h1>
 		    						<ul class="item-content">
 		    							<li>总件量:{{piece}}</li>
 		    							<li>支线depot&distrib.center单日人工成本: <span>{{day_p_cost}}</span></li>
@@ -177,14 +177,14 @@
 		    					<div class="item-box">
 		    						<h1>工资设定</h1>
 		    						<ul class="item-content">
-		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>/month</span></li>
-		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>/month</span></li>
-		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>/hour</span></li>
-		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>/day</span></li>
+		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>(元)/month</span></li>
+		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>days/month</span></li>
+		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>(元)/hour</span></li>
+		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>hours/day</span></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
-		    						<h1>成本</h1>
+		    						<h1>成本:模型输出成本/总件量</h1>
 		    						<ul class="item-content">
 		    							<li>总件量:{{piece}}</li>
 		    							<li>支线depot&distrib.center单日人工成本: <span>{{day_p_cost}}</span></li>

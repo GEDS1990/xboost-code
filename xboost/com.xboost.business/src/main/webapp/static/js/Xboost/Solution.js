@@ -288,10 +288,10 @@ $(function  () {
 				pointB = new BMap.Point(listPointY.lng,listPointY.lat);					
 			var sContentLine = "";
 			sContentLine +='<div class="clearfix">';
-			sContentLine +='<p style="float: left;">'+listPointX.curLoc+' to '+listPointY.curLoc+':</p>';
-			sContentLine +='<div style="float: left;">';
-			sContentLine +='<p>Arrival time: '+listPointX.arrTime+'</p>';
+			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+':</p>';
+			sContentLine +='<div>';
 			sContentLine +='<p>Departure time: '+listPointX.endTime+'</p>';
+			sContentLine +='<p>Arrival time: '+listPointY.arrTime+'</p>';
 			sContentLine +='<p>Goods: '+listPointX.carGoods+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
@@ -383,10 +383,10 @@ $(function  () {
 				pointB = new BMap.Point(listPointY.lng,listPointY.lat);					
 			var sContentLine = "";
 			sContentLine +='<div class="clearfix">';
-			sContentLine +='<p style="float: left;">'+listPointX.curLoc+' to '+listPointY.curLoc+':</p>';
-			sContentLine +='<div style="float: left;">';
-			sContentLine +='<p>Arrival time: '+listPointX.arrTime+'</p>';
+			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+':</p>';
+			sContentLine +='<div>';
 			sContentLine +='<p>Departure time: '+listPointX.endTime+'</p>';
+			sContentLine +='<p>Arrival time: '+listPointY.arrTime+'</p>';
 			sContentLine +='<p>Goods: '+listPointX.carGoods+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
@@ -848,8 +848,8 @@ $(function  () {
 			        if (_len != 0 && count != "") {
 			        	var res = Datas[0];
 						$('#depot').text("Depot "+res.siteCode);
-                        $('#east').text(res.siteLatitude);
-                        $('#north').text(res.siteLongitude);
+                        $('#east').text(Number(res.siteLatitude).toFixed(6));
+                        $('#north').text(Number(res.siteLongitude).toFixed(6));
                         $('#name').text(res.siteName);
                         $('#address').text(res.siteAddress);
                         $('#type').text(res.siteType);
