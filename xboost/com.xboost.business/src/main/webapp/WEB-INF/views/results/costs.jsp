@@ -128,7 +128,7 @@
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
-		    						<h1>成本</h1>
+		    						<h1>成本:模型输出成本/总件量</h1>
 		    						<ul class="item-content">
 		    							<li>总件量:{{piece}}</li>
 		    							<li>支线depot&distrib.center单日人工成本: <span>{{day_p_cost}}</span></li>
@@ -184,7 +184,7 @@
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
-		    						<h1>成本</h1>
+		    						<h1>成本:模型输出成本/总件量</h1>
 		    						<ul class="item-content">
 		    							<li>总件量:{{piece}}</li>
 		    							<li>支线depot&distrib.center单日人工成本: <span>{{day_p_cost}}</span></li>

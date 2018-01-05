@@ -848,8 +848,8 @@ $(function  () {
 			        if (_len != 0 && count != "") {
 			        	var res = Datas[0];
 						$('#depot').text("Depot "+res.siteCode);
-                        $('#east').text(res.siteLatitude);
-                        $('#north').text(res.siteLongitude);
+                        $('#east').text(Number(res.siteLatitude).toFixed(6));
+                        $('#north').text(Number(res.siteLongitude).toFixed(6));
                         $('#name').text(res.siteName);
                         $('#address').text(res.siteAddress);
                         $('#type').text(res.siteType);
