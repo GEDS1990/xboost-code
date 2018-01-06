@@ -158,7 +158,8 @@ public class CarService {
                             }
 
                             for(int k=1;k<num+1;k++){
-                                String name = type + k;
+                        //        String name = type + k;
+                                String name = Strings.getCarLicence("深");
                                 carLicence.setScenariosId(ShiroUtil.getOpenScenariosId());
                                 carLicence.setName(name);
                                 carLicence.setType(type);

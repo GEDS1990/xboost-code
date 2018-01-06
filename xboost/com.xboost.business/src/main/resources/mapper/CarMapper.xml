@@ -16,10 +16,6 @@
         #{createTime},#{updateTime})
     </insert>
 
-    <insert id="saveCarLincence" useGeneratedKeys="true" keyProperty="id">
-        INSERT into t_car_licence(scenariosId,name,type,busy_idle,str1,str2,str3,create_time,update_time)
-        VALUES (#{scenariosId},#{name},#{type},#{busyIdle},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
-    </insert>
 
     <update id="update">
         update t_car_info set scenariosId = #{scenariosId},name=#{name},type = #{type},num=#{num},dimensions = #{dimensions},skills = #{skills},
@@ -99,10 +95,6 @@
         DELETE FROM t_car_info WHERE scenariosId = #{scenariosId}
     </delete>
 
-    <delete id="delCarLincenceByScenariosId">
-        DELETE FROM t_car_licence WHERE scenariosId = #{scenariosId}
-    </delete>
-
     <delete id="delTimeWindow">
         DELETE FROM t_time_window WHERE carId = #{id}
     </delete>
@@ -115,6 +107,58 @@
     <!--<select id="findByScenariosId" resultType="com.xboost.pojo.Dimensions">
         SELECT dimensions FROM t_dimensions_info WHERE carId IN (SELECT id FROM t_car_info WHERE scenariosId = #{scenariosId})
     </select>-->
+
+    <insert id="saveCarLincence" useGeneratedKeys="true" keyProperty="id">
+        INSERT into t_car_licence(scenariosId,name,type,busy_idle,str1,str2,str3,create_time,update_time)
+        VALUES (#{scenariosId},#{name},#{type},#{busyIdle},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="editCarLincence">
+        UPDATE t_car_licence SET scenariosId = #{scenariosId},name=#{name},type = #{type},busy_idle=#{busyIdle}
+        where id = #{id}
+    </update>
+
+    <delete id="delCarLincenceByScenariosId">
+        DELETE FROM t_car_licence WHERE scenariosId = #{scenariosId}
+    </delete>
+
+    <select id="findAllCar" parameterType="map" resultMap="carMap">
+        SELECT * FROM t_car_licence where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findCarLicenceByParam" parameterType="map" resultMap="carMap">
+        SELECT * from t_car_licence
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and type LIKE #{keyword} or name like #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+    <select id="findAllCarCount" resultType="long">
+        SELECT COUNT(*) FROM t_car_licence where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findCarCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_car_licence
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                where type LIKE #{keyword} or name like #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="carMap" type="com.xboost.pojo.CarLicence">
+        <id property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="busyIdle" column="busy_idle"/>
+    </resultMap>
 
     <resultMap id="transportMap" type="com.mckinsey.sf.data.Car">
         <id property="id" column="id"/>
@@ -175,4 +219,4 @@
         </association>
     </resultMap>
 
-</mapper>
+   </mapper>
