@@ -71,6 +71,7 @@ public class PalnsThread extends Thread implements IConstants  {
 
 		com.xboost.pojo.Cost costPojo = new com.xboost.pojo.Cost();
 		double temperature = palns.getConfig().getW()*palns.getCurrent().cost()/Math.log(2);
+		solutionCostService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
 		for(int i =0 ;i < palns.getConfig().getNumIters() ; i++){
 			if(palns.isQuit())
 				return;
@@ -86,7 +87,6 @@ public class PalnsThread extends Thread implements IConstants  {
 		costPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
 		costPojo.setTotalCost(String.valueOf(((Solution)palns.getBest()).cost()));
 //		Cost costT = solutionCostService.findByScenariosId(ShiroUtil.getOpenScenariosId());
-		solutionCostService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
 //		if(null == costT){
 			solutionCostService.add(costPojo);
 //		}else{
