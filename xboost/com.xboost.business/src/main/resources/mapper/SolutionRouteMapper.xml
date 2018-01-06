@@ -19,6 +19,10 @@
         SELECT * FROM t_solution_route where scenariosId = #{scenariosId}
     </select>
 
+    <select id="findRouteCar" resultType="String">
+        SELECT distinct(car_name) FROM t_solution_route where scenariosId = #{scenariosId} and route_count=#{routeCount}
+    </select>
+
     <select id="findByParam" parameterType="map" resultType="Route" resultMap="modelRoute">
         SELECT * from t_solution_route
         <where>
