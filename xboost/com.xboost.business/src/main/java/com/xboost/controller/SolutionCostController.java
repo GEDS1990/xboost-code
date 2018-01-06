@@ -93,7 +93,7 @@ public class SolutionCostController {
         //网点
         List<Map<String,Object>> siteInfoList = siteInfoService.findAllBySiteCode(scenariosId);
         //支线总运输成本
-        Double branchTransportCost = solutionCostService.branchTransportCost();
+      //  Double branchTransportCost = solutionCostService.branchTransportCost();
      //   String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
 
         //总票数
@@ -107,7 +107,7 @@ public class SolutionCostController {
         result.put("totalPiece",totalPiece);
         result.put("siteInfoList",siteInfoList);
         result.put("totalVol",totalVol);
-        result.put("branchTransportCost",branchTransportCost);
+  //      result.put("branchTransportCost",branchTransportCost);
 
         return result;
     }
@@ -144,8 +144,8 @@ public class SolutionCostController {
         Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
 
         //支线总运输成本
-        Double branchTransportCost = solutionCostService.branchTransportCost();
-      //    String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
+      //  Double branchTransportCost = solutionCostService.branchTransportCost();
+          String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
 
         Map<String,Object> result = Maps.newHashMap();
         result.put("modelType",modelType);

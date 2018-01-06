@@ -1014,7 +1014,6 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data);
 	            	if (data.data.length != 0) {
 	            		listLen = '';
 	            		listLen = data.data.length;
@@ -1100,7 +1099,12 @@ $(function  () {
 	            				$.get("/route/totalDistance.json",{"routeCount":_val}).done(function (res){
 	            					//console.log(res)
 									if (res) {
-										$('#total-distance').text(res+" km");
+										$('#total-distance').text(res.totalDistance+" km");
+										if (Boolean(res.carName) ) {
+											$('#Chosen-Vehicle').text(res.carName);
+										}else{
+											$('#Chosen-Vehicle').text('--');
+										}
 									}
 								}).fail(function (){
 									alert("fail");
@@ -1172,7 +1176,7 @@ $(function  () {
 		            		var val = $('#route-route').val();
 	            			routeMapInit(listArry,val,listPoint);
 		            		
-		            		console.log(listPoint)
+		            		//console.log(listPoint)
 		            		
 	            		}).fail(function (){
 	            			console.log("fail");
@@ -1201,9 +1205,15 @@ $(function  () {
 	            $('#route-name').text(_text);
 				
 				$.get("/route/totalDistance.json",{"routeCount":val}).done(function (res){
-					
+					//console.log(res)
 					if (res) {
-						$('#total-distance').text(res+" km");
+						$('#total-distance').text(res.totalDistance+" km");
+						if (Boolean(res.carName) ) {
+							$('#Chosen-Vehicle').text(res.carName);
+						}else{
+							$('#Chosen-Vehicle').text('--');
+						}
+						
 					}
 				}).fail(function (){
 					console.log("fail")

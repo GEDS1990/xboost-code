@@ -128,17 +128,11 @@ public class SolutionRouteController {
         }
 
 
-        List<String> usingCar = solutionRouteService.findUsingCar1(ShiroUtil.getOpenScenariosId());
-        List<String> idleCar = solutionRouteService.findIdleCar1(ShiroUtil.getOpenScenariosId());
-
-
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",routeList);
-    //    result.put("totalDistance",totalDistance);
-        result.put("usingCar",usingCar);
-        result.put("idleCar",idleCar);
+
         return result;
     }
 
@@ -170,10 +164,15 @@ public class SolutionRouteController {
     //查询路线距离
     @RequestMapping(value = "/totalDistance.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String totalDistance(String routeCount) {
+    public Map<String,Object> totalDistance(String routeCount) {
         String totalDistance =solutionRouteService.findTotalDistance(ShiroUtil.getOpenScenariosId(),routeCount);
+        String carName = solutionRouteService.findRouteCar(ShiroUtil.getOpenScenariosId(),routeCount);
+        Map<String,Object> result = Maps.newHashMap();
 
-        return totalDistance;
+        result.put("totalDistance",totalDistance);
+        result.put("carName",carName);
+
+        return result;
     }
 
     /**排车更新route表carName
