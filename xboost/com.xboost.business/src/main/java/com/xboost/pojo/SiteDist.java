@@ -18,6 +18,7 @@ public class SiteDist implements Serializable {
     private String durationNightDelivery;             //夜配运行时长（分钟）货车
     private String durationNightDelivery2;           //百度
     private String durationNightDelivery3;          //滴滴
+    private String durationNightDelivery4;          //达达
     private String str1;                   //预留字段
     private String str2;                    //预留字段
     private String str3;                  //预留字段
@@ -94,6 +95,14 @@ public class SiteDist implements Serializable {
 
     public void setDurationNightDelivery3(String durationNightDelivery3) {
         this.durationNightDelivery3 = durationNightDelivery3;
+    }
+
+    public String getDurationNightDelivery4() {
+        return durationNightDelivery4;
+    }
+
+    public void setDurationNightDelivery4(String durationNightDelivery4) {
+        this.durationNightDelivery4 = durationNightDelivery4;
     }
 
     public String getStr1() {

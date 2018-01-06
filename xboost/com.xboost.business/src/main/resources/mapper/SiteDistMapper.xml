@@ -87,6 +87,7 @@
         <result property="durationNightDelivery" column="duration_night_delivery"/>
         <result property="durationNightDelivery2" column="duration_night_delivery2"/>
         <result property="durationNightDelivery3" column="duration_night_delivery3"/>
+        <result property="durationNightDelivery4" column="duration_night_delivery4"/>
 
     </resultMap>
 
