@@ -457,7 +457,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         int route_time_unit = 10;
         int[][] timebucket_num = new int[1][full_time/route_time_unit];
         for(int j=0;j<full_time/route_time_unit;j++){
-            timebucket_num[1][j] = j+1;
+            timebucket_num[0][j] = j+1;
         }
         Object route_two_point = null;
         Object route_three_point = null;
@@ -466,7 +466,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         int[][] site1 = new int[1][full_time/route_time_unit];
         int timebucket_site;
         for(int j=0;j<full_time/route_time_unit;j++){
-            site1[1][j] = j+1;
+            site1[0][j] = j+1;
             timebucket_site = j+1;
         }
         //route_temp
@@ -479,7 +479,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         List<Map> code1 = two_points_route_list;
         List<Map> route_temp_list = code1;
         for(int j=0;j<route_temp_list.size();j++){
-            route_temp_list.get(j).put("time_id1",site1[1][j]);
+            route_temp_list.get(j).put("time_id1",site1[0][j%20]);
         }
         for(int j=0;j<two_points_route_list.size();j++){
             two_points_route_list.get(j).put("timebucket_1",route_temp_list.get(j).get("connection1"));
@@ -554,7 +554,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         systemWebSocketHandler.sendMessageToUser( new TextMessage("90%"));
         site1 = new int[1][full_time/route_time_unit];
         for(int j=0;j<full_time/route_time_unit;j++){
-            site1[1][j] = j+1;
+            site1[0][j] = j+1;
             timebucket_site = j+1;
         }
         List<Map> route_four_point_list = tempService.findAll02(ShiroUtil.getOpenScenariosId());
@@ -651,8 +651,8 @@ public class RelayModeUtil extends Thread implements IConstants {
             double a = Integer.parseInt(connection_temp_list.get(c2).get("time_id").toString())-1;
             double b = Math.ceil((Integer.parseInt(connection_temp_list.get(c2).get("minutes").toString())-1)/route_time_unit);
             double c = 0;
-            for(int ij=0;ij<timebucket_num[1].length-1;ij++){
-                c = Math.min(timebucket_num[1][ij],timebucket_num[1][ij+1]);
+            for(int ij=0;ij<timebucket_num[0].length-1;ij++){
+                c = Math.min(timebucket_num[0][ij],timebucket_num[0][ij+1]);
             }
             double min;
             if (a < b && a < c) {

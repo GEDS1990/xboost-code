@@ -79,6 +79,7 @@ public class SiteDistService {
                                 siteDist.setDurationNightDelivery(row[5]);
                                 siteDist.setDurationNightDelivery2(row[6]);
                                 siteDist.setDurationNightDelivery3(row[7]);
+                                siteDist.setDurationNightDelivery4(row[8]);
                                 siteDist.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
                                 if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){
                                     //insert

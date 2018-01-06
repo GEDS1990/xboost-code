@@ -14,7 +14,7 @@ public interface SolutionCostMapper {
 
     //  添加Cost  @param cost
     void add(Cost cost);
-
+    void updateTotalCostByScenariosId(@Param("totalCost") String totalCost,@Param("scenariosId") Integer scenariosId);
     //scenariosId 删除   * @param scenariosId
     void delByScenariosId(Integer scenariosId);
 

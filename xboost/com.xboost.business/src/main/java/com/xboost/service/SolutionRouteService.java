@@ -4,6 +4,7 @@ import com.xboost.mapper.SolutionRouteMapper;
 import com.xboost.pojo.Activity;
 import com.xboost.pojo.Route;
 import com.xboost.util.ShiroUtil;
+import com.xboost.util.Strings;
 import org.apache.ibatis.annotations.Param;
 import org.joda.time.DateTime;
 import org.junit.runners.Parameterized;
@@ -190,6 +191,10 @@ public class SolutionRouteService {
 
     public List<String> findIdleCar(String scenariosId,String routeCount){
         return solutionRouteMapper.findIdleCar(scenariosId,routeCount);
+    }
+
+    public String findRouteCar(String scenariosId,String routeCount){
+        return solutionRouteMapper.findRouteCar(scenariosId,routeCount);
     }
 
     //校验这段路线车上件量是否超出车的最大载件量

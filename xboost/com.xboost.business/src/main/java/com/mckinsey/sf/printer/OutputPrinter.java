@@ -421,7 +421,7 @@ public class OutputPrinter implements IConstants {
 		systemWebSocketHandler.sendMessageToUser(new TextMessage("Delete Old Data..."));
 		solutionRouteService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));//删除该场景的旧数据
 		solutionRouteService.updateAllCarToIdle(ShiroUtil.getOpenScenariosId());//更新车辆为可用
-		solutionCostService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));//删除该场景的旧数据
+//		solutionCostService.delByScenariosId(Integer.parseInt(Sh////iroUtil.getOpenScenariosId()));//删除该场景的旧数据
 
 		solutionActivityService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
 		systemWebSocketHandler.sendMessageToUser(new TextMessage("Delete Old Data Success..."));

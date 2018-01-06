@@ -50,6 +50,11 @@
         where scenariosId = #{scenariosId} and site_code=#{siteCode}
     </update>
 
+    <update id="updateTotalCostByScenariosId">
+        UPDATE t_solution_cost SET total_cost=#{totalCost}
+        where scenariosId = #{scenariosId}
+    </update>
+
 	<select id="findTotalPiece" resultType="Integer">
         SELECT SUM(votes) FROM t_demand_info WHERE scenariosId = #{scenariosId}
     </select>
