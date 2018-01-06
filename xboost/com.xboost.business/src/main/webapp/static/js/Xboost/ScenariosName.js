@@ -355,6 +355,12 @@ $(function  () {
 	                {"data":function (res){
 	                	return Number(res.durationNightDelivery3).toFixed(2);
 	                },"name":"duration_night_delivery3"},
+	                {"data":function (res){
+	                	return Number(res.durationNightDelivery3).toFixed(2);
+	                },"name":"duration_night_delivery3"},
+	                {"data":function (res){
+	                	return Number(res.durationNightDelivery3).toFixed(2);
+	                },"name":"duration_night_delivery3"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-dist' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dist' data-id='"+row.id+"'>Del</a>";
 	                }}
@@ -365,7 +371,7 @@ $(function  () {
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[0,8],
+	                    "targets":[0,10],
 	                    "orderable":false
 	                }
 	            ],

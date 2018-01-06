@@ -854,9 +854,14 @@ $(function  () {
                         $('#address').text(res.siteAddress);
                         $('#type').text(res.siteType);
                         //$('#distrib-center').text(res.distribCenter);
-                        $('#area').text(Math.ceil(res.siteArea) + " m²");
-                        $('#vehicle-quantity-limit').text(res.carNum);
-                        $('#vehicle-weight-limit').text(res.largeCarModel);
+                        if (res.siteArea== 0) {
+                        	var _area = '--';
+                        }else{
+                        	var _area = Math.ceil(res.siteArea);
+                        }
+                        $('#area').text(_area + " m²");
+                        $('#vehicle-quantity-limit').text( (res.carNum >= 999?'∞':res.carNum) );
+                        $('#vehicle-weight-limit').text( (res.largeCarModel >= 999?'∞':res.largeCarModel) );
                         $('#piece-capacity').text(res.maxOperateNum);
 					}else if(_len == 0 || count == ""){
 						$('#depot').text("No Data");
@@ -1376,7 +1381,7 @@ $(function  () {
 			        	$('#veh-type').text(res.carType);
 			        	$('#veh-source').text(res.carSource);
 			        	$('#veh-limit').text(res.maxLoad);
-			        	$('#veh-piece').text(res.maxRunningTime);
+			        	$('#veh-piece').text( (res.maxRunningTime >= 999?'∞' : res.maxRunningTime));
 			        	$('#veh-unloadtime').text(res.durationUnloadFull);
 			        	$('#veh-speed').text(res.velocity+" km/h");
 			        	for (var f = 0;f<datas_len;f++) {
