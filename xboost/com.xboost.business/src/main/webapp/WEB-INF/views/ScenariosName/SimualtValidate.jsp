@@ -86,7 +86,7 @@
 	    				</div>
 	    				<div class="clearfix sim-input">
 		    				<p>Time Limit(min)(中间停靠时间)</p>
-		    				<input type="number" id="sim-run-time" value="10" />
+		    				<input type="number" id="sim-run-time" value="2" />
 		    				<p id="timelimit" class="sim-error">You must set the time limit</p>
 		    			</div>
 		    			<div class="clearfix sim-input">
