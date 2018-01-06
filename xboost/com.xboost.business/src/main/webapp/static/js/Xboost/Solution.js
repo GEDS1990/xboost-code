@@ -1014,7 +1014,6 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data);
 	            	if (data.data.length != 0) {
 	            		listLen = '';
 	            		listLen = data.data.length;
@@ -1172,7 +1171,7 @@ $(function  () {
 		            		var val = $('#route-route').val();
 	            			routeMapInit(listArry,val,listPoint);
 		            		
-		            		console.log(listPoint)
+		            		//console.log(listPoint)
 		            		
 	            		}).fail(function (){
 	            			console.log("fail");

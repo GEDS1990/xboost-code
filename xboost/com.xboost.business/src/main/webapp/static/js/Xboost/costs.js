@@ -203,7 +203,7 @@ $(function (){
 					if (data) {
 						$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
 							if (res.data.length == 0) {
-								var urlcost = "/costs/addCost";
+								var urlcost = "/costs/edit";
 								vmA.sitePeople = $res.sitePeopleWork;
 								vmA.collectPeople = $res.distribPeopleWork;
 								vmA.depotcount = $res.siteCount;
