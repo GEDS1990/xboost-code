@@ -684,11 +684,60 @@ $(function  () {
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
-	                {"data":"parameterName","name":"parameter_name"},
-	                {"data":"data","name":"data"},
-	                {"data":"note","name":"note"},
+	                {"data":function (row){
+	                	//console.log(row)
+	                	if (row.modelType == 1 || row.modelType == 2) {
+	                		if (row.parameterName == "支线高速耗时" || row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+		                		return "<span style='color:lightgrey;'>"+row.parameterName+"</span>";
+		                	}
+		                	return row.parameterName;
+	                	}else if (row.modelType == 3) {
+	                		if (row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+		                		return "<span style='color:lightgrey;'>"+row.parameterName+"</span>";
+		                	}
+		                	return row.parameterName;
+	                	}
+	                	
+	                },"name":"parameter_name"},
+	                {"data":function  (row) {
+	                	if (row.modelType == 1 || row.modelType == 2) {
+	                		if (row.parameterName == "支线高速耗时" || row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+		                		return "<span style='color:lightgrey;'>"+row.data+"</span>";
+		                	}
+		                	return row.data;
+	                	}else if (row.modelType == 3) {
+	                		if (row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+		                		return "<span style='color:lightgrey;'>"+row.data+"</span>";
+		                	}
+		                	return row.data;
+	                	}
+	                },"name":"data"},
+	                {"data":function (row){
+	                	if (row.modelType == 1 || row.modelType == 2) {
+	                		if (row.parameterName == "支线高速耗时" || row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+		                		return "<span style='color:lightgrey;'>"+row.note+"</span>";
+		                	}
+		                	return row.note;
+	                	}else if (row.modelType == 3) {
+	                		if (row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+		                		return "<span style='color:lightgrey;'>"+row.note+"</span>";
+		                	}
+		                	return row.note;
+	                	}
+	                },"name":"note"},
 	                {"data":function(row){
-	                    return "<a href='javascript:;' class='editLink-pata' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-pata' data-id='"+row.id+"'>Del</a>";
+	                	if (row.modelType == 1 || row.modelType == 2) {
+	                		if (row.parameterName == "支线高速耗时" || row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+		                		return "";
+		                	}
+		                	return "<a href='javascript:;' class='editLink-pata' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-pata' data-id='"+row.id+"'>Del</a>";
+	                	}else if (row.modelType == 3) {
+	                		if (row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+		                		return "";
+		                	}
+		                	return "<a href='javascript:;' class='editLink-pata' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-pata' data-id='"+row.id+"'>Del</a>";
+	                	}
+	                	
 	                }}
 	            ],
 	            "columnDefs":[ //具体列的定义
