@@ -185,16 +185,25 @@ public class SolutionRouteController {
         String routeCount = request.getParameter("routeCount");
         String carName = request.getParameter("carName");
         String scenariosId = ShiroUtil.getOpenScenariosId();
+        String oldCarName = solutionRouteService.findRouteCar(scenariosId,routeCount);
 
         Map<String,Object> param = Maps.newHashMap();
         param.put("routeCount",routeCount);
         param.put("carName",carName);
         param.put("scenariosId",scenariosId);
 
+        if(!Strings.isEmpty(oldCarName)){
+            solutionRouteService.updateCarToIdle(scenariosId,oldCarName);
+            solutionRouteService.updateCarName(param);
+            //把车的状态更新为busy
+            solutionRouteService.updateCarToBusy(scenariosId,carName);
+        }
+        else{
 
-        solutionRouteService.updateCarName(param);
-        //把车的状态更新为busy
-        solutionRouteService.updateCarToBusy(scenariosId,carName);
+            solutionRouteService.updateCarName(param);
+            //把车的状态更新为busy
+            solutionRouteService.updateCarToBusy(scenariosId,carName);
+        }
 
         return "success";
     }
