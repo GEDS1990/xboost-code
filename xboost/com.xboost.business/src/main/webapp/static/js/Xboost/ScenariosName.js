@@ -155,7 +155,7 @@ $(function  () {
 	                {"data":"siteAddress","name":"site_address"},
 	                {"data":function(res){
 	                	if (res.siteArea == 0) {
-	                		return "-"
+	                		return "--"
 	                	}
 	                	return Math.round(res.siteArea);
 	                }
@@ -163,13 +163,23 @@ $(function  () {
 	                {"data":"siteType","name":"site_type"},
 	                {"data":function (res){
 	                	if (res.distribCenter == "") {
-	                		return "-"
+	                		return "--"
 	                	}
 	                	return res.distribCenter;
 	                },"name":"distrib_center"},
 	                {"data":"siteNightDelivery","name":"site_night_delivery"},
-	                {"data":"carNum","name":"car_num"},
-	                {"data":"largeCarModel","name":"large_carModle"},
+	                {"data":function (res){
+	                	if (res.carNum >= 999 ) {
+	                		return "∞";
+	                	}
+	                	return res.carNum;
+	                },"name":"car_num"},
+	                {"data":function (res){
+	                	if (res.largeCarModel >= 999) {
+	                		return "∞";
+	                	}
+	                	return res.largeCarModel;
+	                },"name":"large_carModle"},
 	                {"data":"maxOperateNum","name":"max_operate_num"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink' data-id='"+row.id+"'>Del</a>";
@@ -907,7 +917,7 @@ $(function  () {
 	                {"data":"carSource","name":"car_source"},
 	                {"data":"num","name":"num"},
 	                {"data":function  (res) {
-	                	if (res.maxStop > 998) {
+	                	if (res.maxStop >= 99) {
 	                		return "∞";
 	                	}else{
 	                		return res.maxStop;
@@ -916,13 +926,16 @@ $(function  () {
 	                {"data":"dimensions","name":"dimensions"},
 	                
 	                {"data":function(res){
-	                if(res.max_distance > 998 ){return "∞";}
-	                else{return res.max_distance;}
-	                },"name":"max_distance"},
-
+		                if(res.max_distance > 998 ){
+		                	return "∞";
+		                }
+		                return res.max_distance;
+		            },"name":"max_distance"},
 	                {"data":function(res){
-                    if(res.max_running_time > 998 ){return "∞";}
-                    else{return res.max_running_time;}
+	                    if(res.max_running_time > 998 ){
+	                    	return "∞";
+	                    }
+	                    return res.max_running_time;
                     },"name":"max_running_time"},
 
 	                {"data":function(res){
