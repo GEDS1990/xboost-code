@@ -620,8 +620,8 @@ $(function (){
 					add += '<td>'+(res[i].site_area==0?"-":Math.round(res[i].site_area) )+'</td>';
 					add += '<td>'+res[i].site_type+'</td>';
 					add += '<td>'+res[i].site_night_delivery+'</td>';
-					add += '<td>'+res[i].car_num+'</td>';
-					add += '<td>'+res[i].large_carModle+'</td>';
+					add += '<td>'+(res[i].car_num >= 999?'∞':res[i].car_num)+'</td>';
+					add += '<td>'+(res[i].large_carModle >= 999?'∞':res[i].large_carModle)+'</td>';
 					add += '<td>'+res[i].max_operate_num+'</td>';
 					add += '</tr>';
 					$('#depotinfo-tbody').append(add);
