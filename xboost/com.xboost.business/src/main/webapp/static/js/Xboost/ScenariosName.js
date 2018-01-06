@@ -161,7 +161,12 @@ $(function  () {
 	                }
 	                ,"name":"site_area"},
 	                {"data":"siteType","name":"site_type"},
-	                {"data":"distribCenter","name":"distrib_center"},
+	                {"data":function (res){
+	                	if (res.distribCenter == "") {
+	                		return "-"
+	                	}
+	                	return res.distribCenter;
+	                },"name":"distrib_center"},
 	                {"data":"siteNightDelivery","name":"site_night_delivery"},
 	                {"data":"carNum","name":"car_num"},
 	                {"data":"largeCarModel","name":"large_carModle"},
