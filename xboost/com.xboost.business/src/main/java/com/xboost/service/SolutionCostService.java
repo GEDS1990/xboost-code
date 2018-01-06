@@ -49,6 +49,9 @@ public class SolutionCostService {
         cost.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
         solutionCostMapper.add(cost);
     }
+    public void updateTotalCostByScenariosId(String totalCost,Integer scenariosId) {
+        solutionCostMapper.updateTotalCostByScenariosId(totalCost,scenariosId);
+    }
 
 
     /**

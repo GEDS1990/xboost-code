@@ -7,6 +7,7 @@ import com.mckinsey.sf.data.solution.Solution;
 import com.mckinsey.sf.insertion.IInsertion;
 import com.mckinsey.sf.printer.OutputPrinter;
 import com.mckinsey.sf.removal.IRemoval;
+import com.xboost.pojo.Cost;
 import com.xboost.service.SolutionCostService;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.SpringBeanFactoryUtil;
@@ -48,7 +49,15 @@ public class PalnsThread extends Thread implements IConstants  {
 		this.palns = palns;
 	}
 
-	public PalnsThread(int workerid, PALNS palns,CountDownLatch count) {
+	public int getIntT() {
+		return intT;
+	}
+
+	public void setIntT(int intT) {
+		this.intT = intT;
+	}
+
+	public PalnsThread(int workerid, PALNS palns, CountDownLatch count) {
 		super();
 		this.workerid = workerid;
 		this.palns = palns;
@@ -75,12 +84,14 @@ public class PalnsThread extends Thread implements IConstants  {
 			temperature *= palns.getConfig().getAlpha();
 		}
 		costPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
-		costPojo.setCreateTime(String.valueOf(DateTimeUtils.currentTimeMillis()));
 		costPojo.setTotalCost(String.valueOf(((Solution)palns.getBest()).cost()));
-		if(intT==0){
+		Cost costT = solutionCostService.findByScenariosId(ShiroUtil.getOpenScenariosId());
+		solutionCostService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
+//		if(null == costT){
 			solutionCostService.add(costPojo);
-		}
-		intT++;
+//		}else{
+//			solutionCostService.updateTotalCostByScenariosId(String.valueOf(((Solution)palns.getBest()).cost()),Integer.parseInt(ShiroUtil.getOpenScenariosId()));
+//		}
 
 		this.count.countDown();
 	}
