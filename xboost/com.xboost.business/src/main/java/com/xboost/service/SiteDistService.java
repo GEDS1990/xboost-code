@@ -68,7 +68,9 @@ public class SiteDistService {
 //                        File fileTemp = (File) multipartFile;
                         ExcelUtil excelUtil = new ExcelUtil();
                             List<String> lineList = excelUtil.readExcel(fileTmp,2);
-                            for(int i=2;i<lineList.size();i++){
+//                        NumberFormat numberFormat = NumberFormat.getInstance();
+//                        numberFormat.setMaximumFractionDigits(2);
+                        for(int i=2;i<lineList.size();i++){
                                 String[] row = lineList.get(i).split("#");
                                 siteDist.setCarType(row[1]);
                                 siteDist.setSiteCollect(row[2]);
@@ -88,6 +90,7 @@ public class SiteDistService {
                                     siteDistMapper.update(siteDist);
                                     logger.info("insert into db:"+siteDist.getSiteCollect());
                                 }
+//                                session.setAttribute("progress",numberFormat.format((float) i / (float) lineList.size() * 100)+"%");
                             }
                         logger.info("insert into db complete");
                     } catch (Exception e) {
