@@ -220,7 +220,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                     temp.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
                     temp.put("connection2","");
                     temp.put("connection3","");
-                    temp.put("time1","");
+                    temp.put("time1","0");
                     temp.put("time2",0);
                     temp.put("time3",0);
                     temp.put("dist1","");

@@ -51,7 +51,7 @@
     </update>
 
     <update id="updateTotalCostByScenariosId">
-        UPDATE t_solution_cost SET total_cost=#{totalCost}
+        UPDATE t_solution_cost SET branch_transport_cost=#{branchTransportCost}
         where scenariosId = #{scenariosId}
     </update>
 
