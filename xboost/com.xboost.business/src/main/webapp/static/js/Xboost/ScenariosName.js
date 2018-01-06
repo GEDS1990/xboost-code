@@ -344,16 +344,38 @@ $(function  () {
 	                {"data":"carType","name":"car_type"},
 	                {"data":"siteCollect","name":"site_collect"},
 	                {"data":"siteDelivery","name":"site_delivery"},
-	                {"data":function(res){return res.carDistance.toFixed(2)}
-	                ,"name":"car_distance"},
+	                {"data":function(res){
+	                	return res.carDistance.toFixed(2)
+	                },"name":"car_distance"},
 	                {"data":function (res){
+	                	if ( !Boolean(res.durationNightDelivery) ) {
+	                		return "--"
+	                	}
 	                	return Number(res.durationNightDelivery).toFixed(2);
 	                },"name":"duration_night_delivery"},
 	                {"data":function (res){
+	                	if ( !Boolean(res.durationNightDelivery2) ) {
+	                		return "--"
+	                	}
 	                	return Number(res.durationNightDelivery2).toFixed(2);
 	                },"name":"duration_night_delivery2"},
 	                {"data":function (res){
+	                	if ( !Boolean(res.durationNightDelivery3) ) {
+	                		return "--"
+	                	}
 	                	return Number(res.durationNightDelivery3).toFixed(2);
+	                },"name":"duration_night_delivery3"},
+	                {"data":function (res){
+	                	if ( !Boolean(res.durationNightDelivery4) ) {
+	                		return "--"
+	                	}
+	                	return Number(res.durationNightDelivery4).toFixed(2);
+	                },"name":"duration_night_delivery3"},
+	                {"data":function (res){
+	                	if ( !Boolean(res.durationNightDelivery5) ) {
+	                		return "--"
+	                	}
+	                	return Number(res.durationNightDelivery5).toFixed(2);
 	                },"name":"duration_night_delivery3"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-dist' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dist' data-id='"+row.id+"'>Del</a>";
@@ -365,7 +387,7 @@ $(function  () {
 	                    "visible":false
 	                },
 	                {
-	                    "targets":[0,8],
+	                    "targets":[0,10],
 	                    "orderable":false
 	                }
 	            ],

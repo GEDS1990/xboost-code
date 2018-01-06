@@ -31,7 +31,7 @@ $(function  () {
 		map.centerAndZoom(point, 13);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
-		function addMarker(point,info,myIcon){
+		function addMarker(point,info,curLoc,myIcon){
 		  	
 		  	var marker = new BMap.Marker(point,{icon:myIcon});
 		  map.addOverlay(marker);
@@ -40,6 +40,14 @@ $(function  () {
 		  });
 		  marker.addEventListener("mouseout", function(){
 		  	this.closeInfoWindow();
+		  });
+		  marker.addEventListener("click", function(){
+		  	//console.log(curLoc)
+		  	$('#route-depot').val(curLoc);
+		  	count = curLoc;
+		  	depotMapInit(listPoint,curLoc);
+		  	var table = $('#SolutionDeport').DataTable();
+			table.search(curLoc).draw(false);
 		  });
 		}
 		function addpPyline (point,infoWindowLine,color) {
@@ -171,7 +179,7 @@ $(function  () {
 			sContent += '<p>Name: '+listPoint[j].siteName+'</p>';
 			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
 			//console.log(infoWindow)
-			addMarker(points,infoWindow,myIcon);
+			addMarker(points,infoWindow,listPoint[j].curLoc ,myIcon);
 			//addMarkers(pointss);
 		};
 		if (val == "") {
@@ -557,6 +565,12 @@ $(function  () {
 
 	}
 	
+	//depot search 
+	function depotSearch (val){
+		var table = $('#SolutionDeport').DataTable();
+		table.search(val).draw(false);
+	}
+	
 	
 	
 	//去除重复数组元素
@@ -730,7 +744,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data);
+	            	//console.log("i");
 	            	if (data.data.length !=0) {
 	            		$('#depots-map').show();
 	            		var result = data.data,
@@ -842,6 +856,7 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var Datas = api.rows( {page:'current'} ).data();
+			        //console.log("d")
 			        //console.log(Datas);
 			        var listPoint = [];
 			        var _len = Datas.length;
@@ -854,10 +869,18 @@ $(function  () {
                         $('#address').text(res.siteAddress);
                         $('#type').text(res.siteType);
                         //$('#distrib-center').text(res.distribCenter);
-                        $('#area').text(Math.ceil(res.siteArea) + " m²");
-                        $('#vehicle-quantity-limit').text(res.carNum);
-                        $('#vehicle-weight-limit').text(res.largeCarModel);
+                        if (res.siteArea== 0) {
+                        	var _area = '--';
+                        }else{
+                        	var _area = Math.ceil(res.siteArea);
+                        }
+                        $('#area').text(_area + " m²");
+                        $('#vehicle-quantity-limit').text( (res.carNum >= 999?'∞':res.carNum) );
+                        $('#vehicle-weight-limit').text( (res.largeCarModel >= 999?'∞':res.largeCarModel) );
                         $('#piece-capacity').text(res.maxOperateNum);
+                        
+//                      table.search(count).draw(false);
+//						depotMapInit(listArry,count);
 					}else if(_len == 0 || count == ""){
 						$('#depot').text("No Data");
                         $('#east').text("--");
@@ -870,6 +893,8 @@ $(function  () {
                         $('#vehicle-quantity-limit').text("--");
                         $('#vehicle-weight-limit').text("--");
                         $('#piece-capacity').text("--");
+//                      depotMapInit(listArry,"");
+//						table.search("").draw(false);
 					}
 
 	            }
@@ -879,12 +904,11 @@ $(function  () {
 	        var table = $('#SolutionDeport').DataTable();
 			$(document).on("change","#route-depot",function  () {
 				var val = $('#route-depot').val();
-				//console.log(listArry)
 				count = val;
 				if (val == 0) {
 					depotMapInit(listArry,"");
 					table.search("").draw(false);
-					console.log(1)
+					//console.log(1)
 					$('#depot').text("No Data");
                     $('#east').text("--");
                     $('#north').text("--");
@@ -1376,7 +1400,7 @@ $(function  () {
 			        	$('#veh-type').text(res.carType);
 			        	$('#veh-source').text(res.carSource);
 			        	$('#veh-limit').text(res.maxLoad);
-			        	$('#veh-piece').text(res.maxRunningTime);
+			        	$('#veh-piece').text( (res.maxRunningTime >= 999?'∞' : res.maxRunningTime));
 			        	$('#veh-unloadtime').text(res.durationUnloadFull);
 			        	$('#veh-speed').text(res.velocity+" km/h");
 			        	for (var f = 0;f<datas_len;f++) {
