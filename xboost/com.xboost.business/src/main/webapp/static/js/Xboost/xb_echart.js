@@ -8,6 +8,7 @@ var width;
 var height;  
 var branchChart;  
 var collectChart;
+var distributionEchart;
 
 (function (){
 	var collect_reserach_echarts = doc.getElementById('collect-reserach-echarts');
@@ -312,6 +313,7 @@ function add0(m){return m<10?'0'+m:m };
 (function  () {
 	var distribution_echarts = doc.getElementById('distribution-echarts');
 	if (distribution_echarts) {
+		$('.loading').show();
 		//自适应设置  
 	    width = $(window).width();  
 	    height = $(window).height();  
@@ -319,6 +321,7 @@ function add0(m){return m<10?'0'+m:m };
 	    var _val = $('#distribution-choose').val();
 	    $.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
 	    	//console.log(res);
+	    	$('.loading').hide();
 	    	var arr = [];
 	    	for (var i in res) {
 	    		var obj = {}
@@ -350,9 +353,11 @@ function add0(m){return m<10?'0'+m:m };
 	    	alert("fail");
 	    });
 	    $('#distribution-choose').change(function  () {
+	    	$('.loading').show();
 	    	var _val = $(this).val();
 	    	$.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
-		    	console.log(res);
+		    	//console.log(res);
+		    	$('.loading').hide();
 		    	if (_val == 0 || _val== 1) {
 		    		var arr = [];
 			    	for (var i in res) {
@@ -381,8 +386,19 @@ function add0(m){return m<10?'0'+m:m };
 				    }
 					distributionEcharts(data);
 		    	}else{
-		    		var xinfo = ['提早60','提早50','提早40','提早30','提早20','提早10','准时到'];
-		    		var seriesinfo = [res.tiqian60,res.tiqian50,res.tiqian40,res.tiqian30,res.tiqian20,res.tiqian10,res.zunshi];
+		    		var xinfo = ['提早60','提早50以上','提早40以上','提早30以上','提早20以上','提早10以上','准时到'];
+		    		var arr = [res.tiqian60,res.tiqian50,res.tiqian40,res.tiqian30,res.tiqian20,res.tiqian10,res.zunshi];
+		    		var arrlen = arr.length;
+		    		var seriesinfo = [];
+		    		for (var x=0;x<arrlen;x++) {
+		    			var sum = "";
+		    			for (var y=0;y<x+1;y++) {
+		    				sum = (Number(sum) + Number(arr[y])).toFixed(2);
+		    			}
+		    			seriesinfo.push(sum);
+		    		}
+		    		var slen = seriesinfo.length;
+		    		seriesinfo[slen-1] = (100 - seriesinfo[slen-2]).toFixed(2);
 		    		var data = {
 		    			"xinfo":xinfo,
 				    	"seriesinfo":seriesinfo
@@ -408,19 +424,9 @@ function distributionEcharts(datas){
     //自适应  
     window.onresize = distributionEchart.resize;  
     distributionEchart.setOption({ 
-//  	title : {
-//	        text: '收端到达集散点时间分布',
-//	        x:'center',
-//      	y:'top'
-//	    },
         tooltip : {
             trigger: 'axis'  
         },  
-//      legend: { 
-//      	x:'center',
-//      	y:'bottom',
-//          data:['1','2']  
-//      },  
         toolbox: {  
             show : true,  
             feature : {  
@@ -430,7 +436,7 @@ function distributionEcharts(datas){
                 restore : {show: true},  
                 saveAsImage : {show: true}  
             }  
-        },  
+        },
         calculable : true,  
         xAxis : [  
             {  

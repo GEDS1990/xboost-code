@@ -16,8 +16,6 @@ public interface CarMapper {
     //  添加运力信息  @param transport
     void save(Car car);
 
-    void saveCarLincence(CarLicence carLicence);
-
     //  update运力信息  @param transport
     void update(Car car);
 
@@ -50,7 +48,6 @@ public interface CarMapper {
      * @return
      */
     void delByScenariosId(String scenariosId);
-    void delCarLincenceByScenariosId(String scenariosId);
 
     // 根据id编辑运力信息  @param transport
     void editTransport(Car transport);
@@ -60,6 +57,21 @@ public interface CarMapper {
     void delById(Integer id);
     //根据运力信息id删除TimeWindow   * @param id
     void delTimeWindow(Integer id);
+
+
+    void saveCarLincence(CarLicence carLicence);
+
+    CarLicence findAllCar(String scenariosId);
+
+    Integer findAllCarCount(String scenariosId);
+
+    CarLicence findCarLincenceByParam(Map<String, Object> param);
+
+    Integer findCarLincenceCountByParam(Map<String, Object> param);
+
+    void editCarLincence(CarLicence carLicence);
+
+    void delCarLincenceByScenariosId(String scenariosId);
 
 
 }

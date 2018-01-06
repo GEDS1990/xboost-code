@@ -154,7 +154,7 @@
 <script src="/static/js/morris/raphael-min.js"></script>
 <script src="/static/js/morris/morris.min.js"></script>
 <%-- DataTables JS--%>
-<script src="/static/js/echarts.min.js"></script>
+<script src="/static/js/echarts.js"></script>
 <script src="/static/js/datatables/media/js/jquery.dataTables.js"></script>
 <script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
 <script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>

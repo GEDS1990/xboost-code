@@ -114,7 +114,7 @@
 	    				<h1 id="title">No Data</h1>
 	    				<ul class="scen-result">
 	    					<li>Simulation Method:<span id ="simulation-method">--</span></li>
-	    					<li>Simulation Progress:<span id ="simulation-progress">--</span></li>
+	    					<!--<li>Simulation Progress:<span id ="simulation-progress">--</span></li>-->
 	    					<li>Simulation Finished:<span id ="simulation-finished">--</span></li>
 	    				</ul>
 	    				<ul class="scen-cost">

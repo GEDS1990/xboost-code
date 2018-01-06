@@ -73,6 +73,12 @@ public class SiteDistController {
         return "redirect:/siteDist";
     }
 
+//    @RequestMapping(value = "/progress",method = RequestMethod.POST)
+//    @ResponseBody
+//    public String getProgress(HttpSession session){
+//        return (String)session.getAttribute("progress");
+//    }
+
     //查询网点信息
     @RequestMapping(value = "/siteDist.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
