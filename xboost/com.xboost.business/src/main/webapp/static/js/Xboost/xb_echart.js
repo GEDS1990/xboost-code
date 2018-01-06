@@ -313,6 +313,7 @@ function add0(m){return m<10?'0'+m:m };
 (function  () {
 	var distribution_echarts = doc.getElementById('distribution-echarts');
 	if (distribution_echarts) {
+		$('.loading').show();
 		//自适应设置  
 	    width = $(window).width();  
 	    height = $(window).height();  
@@ -320,6 +321,7 @@ function add0(m){return m<10?'0'+m:m };
 	    var _val = $('#distribution-choose').val();
 	    $.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
 	    	//console.log(res);
+	    	$('.loading').hide();
 	    	var arr = [];
 	    	for (var i in res) {
 	    		var obj = {}
@@ -351,9 +353,11 @@ function add0(m){return m<10?'0'+m:m };
 	    	alert("fail");
 	    });
 	    $('#distribution-choose').change(function  () {
+	    	$('.loading').show();
 	    	var _val = $(this).val();
 	    	$.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
-		    	console.log(res);
+		    	//console.log(res);
+		    	$('.loading').hide();
 		    	if (_val == 0 || _val== 1) {
 		    		var arr = [];
 			    	for (var i in res) {
@@ -382,7 +386,7 @@ function add0(m){return m<10?'0'+m:m };
 				    }
 					distributionEcharts(data);
 		    	}else{
-		    		var xinfo = ['提早60分钟','提早50分钟以上','提早40分钟以上','提早30分钟以上','提早20分钟以上','提早10分钟以上','准时到'];
+		    		var xinfo = ['提早60','提早50以上','提早40以上','提早30以上','提早20以上','提早10以上','准时到'];
 		    		var arr = [res.tiqian60,res.tiqian50,res.tiqian40,res.tiqian30,res.tiqian20,res.tiqian10,res.zunshi];
 		    		var arrlen = arr.length;
 		    		var seriesinfo = [];
