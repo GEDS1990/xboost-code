@@ -9,6 +9,7 @@ import com.xboost.service.DemandInfoService;
 import com.xboost.service.SiteDistService;
 import com.xboost.service.SiteInfoService;
 import com.xboost.service.jieli.TempService;
+import org.springframework.web.socket.TextMessage;
 import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.Matrix;
 import java.io.IOException;
@@ -32,6 +33,8 @@ public class RelayModeUtil extends Thread implements IConstants {
 
 
         //params
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("params:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("1%"));
         int TimeLimit = 6000;
         double MIPgap = 0.05;
         Configuration configuration = new Configuration();
@@ -85,6 +88,8 @@ public class RelayModeUtil extends Thread implements IConstants {
             OD_demand_list.add(OD_demand);
         }
         //distance_ref
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("distance_ref:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("10%"));
         List<SiteDist> siteDistList = siteDistService.findSiteDistByScenariosId(map);
         for(int j=0;j<siteDistList.size();j++){
             distance_ref.put("inbound_id",siteDistList.get(j).getSiteCollect());
@@ -102,12 +107,15 @@ public class RelayModeUtil extends Thread implements IConstants {
             distance_ref_list.add(distance_ref);
         }
         //two_points_route
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("two_points_route:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("20%"));
         for(int j=0;j<OD_demand_list.size();j++){
             for(int j2=0;j2<distance_ref_list.size();j2++){
                 boolean b = OD_demand_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
                 boolean b2 = OD_demand_list.get(j).get("outbound_id").equals(distance_ref_list.get(j2).get("outbound_id"));
                 if(b&&b2){
                     two_points_route.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
+                    two_points_route.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
                     two_points_route.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
                     two_points_route.put("distance",distance_ref_list.get(j2).get("km"));
                     two_points_route.put("time",distance_ref_list.get(j2).get("minutes"));
@@ -133,6 +141,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                     two_points_route_list.add(two_points_route);
                 }else{
                     two_points_route.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
+                    two_points_route.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
                     two_points_route.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
                     two_points_route.put("distance","");
                     two_points_route.put("time","");
@@ -160,19 +169,25 @@ public class RelayModeUtil extends Thread implements IConstants {
             }
         }
         //temp
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("temp:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("30%"));
         for(int j=0;j<OD_demand_list.size();j++){
             for(int j2=0;j2<distance_ref_list.size();j2++){
                 boolean b = two_points_route_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
                 if(b){
                     temp.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
+                    temp.put("minutes",OD_demand_list.get(j).get("minutes"));
                     temp.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
                     temp.put("distance",distance_ref_list.get(j2).get("km"));
+                    temp.put("km",distance_ref_list.get(j2).get("km"));
                     temp.put("time",distance_ref_list.get(j2).get("minutes"));
                     temp.put("demand",OD_demand_list.get(j).get("volume"));
                     temp.put("point1",OD_demand_list.get(j).get("inbound_id"));
                     temp.put("point2",0);
                     temp.put("point3",0);
                     temp.put("point4",OD_demand_list.get(j).get("outbound_id"));
+                    temp.put("outbound_id",OD_demand_list.get(j).get("outbound_id"));
+                    temp.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
                     temp.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
                     temp.put("connection2","");
                     temp.put("connection3","");
@@ -190,14 +205,18 @@ public class RelayModeUtil extends Thread implements IConstants {
                     temp_list.add(temp);
                 }else{
                     temp.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
+                    temp.put("minutes",OD_demand_list.get(j).get("minutes"));
                     temp.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
                     temp.put("distance","");
-                    temp.put("time","");
+                    temp.put("km","");
+                    temp.put("time","0");
                     temp.put("demand",OD_demand_list.get(j).get("volume"));
                     temp.put("point1",OD_demand_list.get(j).get("inbound_id"));
                     temp.put("point2",0);
                     temp.put("point3",0);
                     temp.put("point4",OD_demand_list.get(j).get("outbound_id"));
+                    temp.put("outbound_id",OD_demand_list.get(j).get("outbound_id"));
+                    temp.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
                     temp.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
                     temp.put("connection2","");
                     temp.put("connection3","");
@@ -218,7 +237,10 @@ public class RelayModeUtil extends Thread implements IConstants {
         }
 
         //three_points_route
-        for(int j=0;j<temp_list.size();j++){
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("three_points_route:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("35%"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("It may take some minutes , please waiting...."));
+        /*for(int j=0;j<temp_list.size();j++){
             for(int j2=0;j2<distance_ref_list.size();j2++){
                 boolean b = temp_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
                 boolean bwhere1 = !temp_list.get(j).get("point1").equals(temp_list.get(j).get("outbound_id"));
@@ -229,10 +251,8 @@ public class RelayModeUtil extends Thread implements IConstants {
                         Integer.parseInt(distance_ref_list.get(j2).get("minutes").toString())<=2*Integer.parseInt(temp_list.get(j2).get("time").toString());
                 if(!bwhere1&&bwhere2&&bwhere3&&bwhere4)
                     continue;
-                boolean bon1 = Integer.parseInt(temp_list.get(j).get("outbound_id").toString())==
-                        Integer.parseInt(distance_ref_list.get(j2).get("inbound_id").toString());
-                boolean bon2 = Integer.parseInt(temp_list.get(j).get("point4").toString())==
-                        Integer.parseInt(distance_ref_list.get(j2).get("outbound_id").toString());
+                boolean bon1 = temp_list.get(j).get("outbound_id").toString().equals(distance_ref_list.get(j2).get("inbound_id").toString());
+                boolean bon2 = temp_list.get(j).get("point4").toString().equals(distance_ref_list.get(j2).get("outbound_id").toString());
                 boolean bon = bon1&&bon2;
                 if(bon){
                     three_points_route.put("m_od_id",temp_list.get(j).get("OD_id"));
@@ -266,7 +286,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                     three_points_route.put("scenario_lim1",temp_list.get(j).get("scenario_lim1"));
                     three_points_route.put("scenario_lim2",temp_list.get(j).get("scenario_lim2"));
                     three_points_route.put("i_route_id",temp_list.get(j).get("point1")+"-"+temp_list.get(j).get("outbound_id")+"-"+temp_list.get(j).get("point4"));
-                    three_points_route.put("distance",Integer.parseInt(temp_list.get(j).get("km").toString()));
+                    three_points_route.put("distance",temp_list.get(j).get("km").toString());
                     three_points_route.put("time",Integer.parseInt(temp_list.get(j).get("minutes").toString()));
                     three_points_route.put("demand",temp_list.get(j).get("demand"));
                     three_points_route.put("point1",temp_list.get(j).get("point1"));
@@ -287,10 +307,12 @@ public class RelayModeUtil extends Thread implements IConstants {
                     three_points_route_list.add(three_points_route);
                 }
             }
-        }
+        }*/
 
         //temp2
-        for(int j=0;j<three_points_route_list.size();j++){
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("temp2:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("40%"));
+        /*for(int j=0;j<three_points_route_list.size();j++){
             for(int j2=0;j2<distance_ref_list.size();j2++){
                 boolean b = three_points_route_list.get(j).get("point2").equals(distance_ref_list.get(j2).get("point2"));
                 boolean b2 = three_points_route_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
@@ -346,9 +368,11 @@ public class RelayModeUtil extends Thread implements IConstants {
                     temp_list.add(temp);
                 }
             }
-        }
+        }*/
         //four_points_route
-        for(int j=0;j<temp_list.size();j++){
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("four_points_route:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("50%"));
+       /* for(int j=0;j<temp_list.size();j++){
             for(int j2=0;j2<distance_ref_list.size();j2++){
                 boolean b = temp_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
                 boolean bwhere1 = !temp_list.get(j).get("point1").equals(temp_list.get(j).get("outbound_id"));
@@ -424,9 +448,11 @@ public class RelayModeUtil extends Thread implements IConstants {
                     four_points_route_list.add(four_points_route);
                 }
             }
-        }
+        }*/
         //time buckets
         //real timebucket###
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("real timebucket###:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("60%"));
         int full_time = 210;
         int route_time_unit = 10;
         int[][] timebucket_num = new int[1][full_time/route_time_unit];
@@ -444,6 +470,8 @@ public class RelayModeUtil extends Thread implements IConstants {
             timebucket_site = j+1;
         }
         //route_temp
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("route_temp:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("70%"));
         for(int j=0;j<two_points_route_list.size();j++){
             two_points_route.put("timebucket_1",two_points_route_list.get(j).get("connection1"));
             two_points_route.put("timebucket_"+j+2,"");
@@ -477,6 +505,8 @@ public class RelayModeUtil extends Thread implements IConstants {
             }
         }
 //###three point route###
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("###three point route###:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("80%"));
         site1 = new int[2][full_time/route_time_unit];
         int[] numt1=new int [full_time/route_time_unit];
         int[] numt2=new int [full_time/route_time_unit];
@@ -520,6 +550,8 @@ public class RelayModeUtil extends Thread implements IConstants {
             }
         }
 //###four point route###
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("###four point route###:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("90%"));
         site1 = new int[1][full_time/route_time_unit];
         for(int j=0;j<full_time/route_time_unit;j++){
             site1[1][j] = j+1;
@@ -612,6 +644,8 @@ public class RelayModeUtil extends Thread implements IConstants {
         connection2_list = tempService.findAll05(ShiroUtil.getOpenScenariosId());
         connection2_list = tempService.findAll06(ShiroUtil.getOpenScenariosId());
 //## inflow:
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("#### inflow:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("95%"));
         Vector f2 = new Vector();
         for(int c2=0;c2<connection2_list.size();c2++){
             double a = Integer.parseInt(connection_temp_list.get(c2).get("time_id").toString())-1;
@@ -632,6 +666,8 @@ public class RelayModeUtil extends Thread implements IConstants {
         }
         Vector g2 = new Vector(1,J);
 //## all
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("#### all:"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("97%"));
         Vector ff = f1;
         for(int fi=0;fi<f2.size();fi++){
             ff.add(f2.indexOf(fi));
@@ -689,6 +725,8 @@ public class RelayModeUtil extends Thread implements IConstants {
             }
         }
 //########
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("//########"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("98%"));
         long consI = M11.getColumnCount()+M12.getColumnCount()+M13.getColumnCount()+M14.getColumnCount()+M15.getColumnCount();
         long consJ = M11.getRowCount()+M21.getRowCount()+M31.getRowCount()+M41.getRowCount()+M51.getRowCount();
         Matrix cons = DenseMatrix.Factory.zeros(consI, consJ);
@@ -775,6 +813,8 @@ public class RelayModeUtil extends Thread implements IConstants {
         Vector obj = new Vector();
 
         //根据场景ID查询SiteDist
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("根据场景ID查询SiteDist"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("99%"));
         List<SiteInfo> siteInfoList = siteInfoService.findByParam(map);
 
         double[] outflow_lim = new double[siteInfoList.size()];
@@ -864,10 +904,12 @@ public class RelayModeUtil extends Thread implements IConstants {
             model2.setObjective((GRBLinExpr)params, GRB.MAXIMIZE);
             // Optimize model
 
+            systemWebSocketHandler.sendMessageToUser( new TextMessage("optimize"));
             model2.optimize();
             // Dispose of model and environment
             model2.dispose();
             env.dispose();
+            systemWebSocketHandler.sendMessageToUser( new TextMessage("100%"));
         }catch (Exception e){
             e.printStackTrace();
         }

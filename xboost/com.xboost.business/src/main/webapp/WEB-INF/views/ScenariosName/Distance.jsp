@@ -75,21 +75,27 @@
 				                <th rowspan="3">vehicle name</th>
 				                <th rowspan="3">start depot</th>
 				                <th rowspan="3">end depot</th>
-				                <th colspan="4">be used to calculating the transportation time</th>
+				                <th colspan="6">be used to calculating the transportation time</th>
 				                <th rowspan="3">operation</th>
 				                <tr>
 				                	<th rowspan="2">transportation distance(km)</th>
-				                	<th colspan="3">transportation time(min) (higher priority)</th>
+				                	<th colspan="5">transportation time(min) (higher priority)</th>
 				                </tr>
 				                <tr>
 				                	<th>货车</th>
 				                	<th>百度</th>
 				                	<th>滴滴</th>
+				                	<th>达达</th>
+				                	<th>备用</th>
 				                </tr>
 			            	</tr>
 			            </thead>
 			            <tbody id="cond-tbody">
 			            	<tr>
+				                <td></td>
+				                <td></td>
+				                <td></td>
+				                <td></td>
 				                <td></td>
 				                <td></td>
 				                <td></td>

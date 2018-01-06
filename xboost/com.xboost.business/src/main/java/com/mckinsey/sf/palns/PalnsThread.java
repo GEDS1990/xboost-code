@@ -7,6 +7,10 @@ import com.mckinsey.sf.data.solution.Solution;
 import com.mckinsey.sf.insertion.IInsertion;
 import com.mckinsey.sf.printer.OutputPrinter;
 import com.mckinsey.sf.removal.IRemoval;
+import com.xboost.service.SolutionCostService;
+import com.xboost.util.ShiroUtil;
+import com.xboost.util.SpringBeanFactoryUtil;
+import org.joda.time.DateTimeUtils;
 import org.springframework.web.socket.TextMessage;
 
 import java.util.Random;
@@ -22,10 +26,11 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
 */
 public class PalnsThread extends Thread implements IConstants  {
 	
-	 private CountDownLatch count;  
+	 private CountDownLatch count;
 
 	private int workerid;
 	private PALNS palns;
+	private int intT;
 
 	public int getWorkerid() {
 		return workerid;
@@ -48,10 +53,14 @@ public class PalnsThread extends Thread implements IConstants  {
 		this.workerid = workerid;
 		this.palns = palns;
 		this.setCount(count);
+		this.intT = 0;
 	}
 
 //	@Override
 	public void run(){
+		SolutionCostService solutionCostService = (SolutionCostService) SpringBeanFactoryUtil.getBean("solutionCostService");
+
+		com.xboost.pojo.Cost costPojo = new com.xboost.pojo.Cost();
 		double temperature = palns.getConfig().getW()*palns.getCurrent().cost()/Math.log(2);
 		for(int i =0 ;i < palns.getConfig().getNumIters() ; i++){
 			if(palns.isQuit())
@@ -65,7 +74,14 @@ public class PalnsThread extends Thread implements IConstants  {
 			}
 			temperature *= palns.getConfig().getAlpha();
 		}
-		
+		costPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
+		costPojo.setCreateTime(String.valueOf(DateTimeUtils.currentTimeMillis()));
+		costPojo.setTotalCost(String.valueOf(((Solution)palns.getBest()).cost()));
+		if(intT==0){
+			solutionCostService.add(costPojo);
+		}
+		intT++;
+
 		this.count.countDown();
 	}
 	
