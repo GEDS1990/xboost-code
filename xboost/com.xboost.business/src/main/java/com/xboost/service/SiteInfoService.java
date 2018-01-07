@@ -381,7 +381,7 @@ public class SiteInfoService {
     /**
      * 导出settings_depots info excel
      */
-    public void exportExcel(String scenariosId,String[] titles, ServletOutputStream outputStream)
+    public void exportExcel(String scenariosId,String[] titles,String[] nextTitles,ServletOutputStream outputStream)
     {
         List<SiteInfo> list = siteInfoMapper.findAll(scenariosId);
         // 创建一个workbook 对应一个excel应用文件
@@ -394,20 +394,25 @@ public class SiteInfoService {
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
         // 构建表头
         XSSFRow headRow = sheet.createRow(0);
+        XSSFRow nextHeadRow = sheet.createRow(1);
         XSSFCell cell = null;
-        for (int i = 0; i < titles.length; i++)
-        {
+        for (int i = 0; i < titles.length; i++) {
             cell = headRow.createCell(i);
             cell.setCellValue(titles[i]);
             cell.setCellStyle(headStyle);
             System.out.println(titles[i]);
+            cell = nextHeadRow.createCell(i);
+            cell.setCellValue(nextTitles[i]);
+            cell.setCellStyle(headStyle);
+            System.out.println(nextTitles[i]);
         }
+
         // 构建表体数据
         if (list != null && list.size() > 0)
         {
             for (int j = 0; j < list.size(); j++)
             {
-                XSSFRow bodyRow = sheet.createRow(j + 1);
+                XSSFRow bodyRow = sheet.createRow(j + 2);
                 SiteInfo siteInfo = list.get(j);
 
                 cell = bodyRow.createCell(0);
