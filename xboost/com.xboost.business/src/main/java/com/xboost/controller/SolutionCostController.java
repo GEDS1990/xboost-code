@@ -135,9 +135,9 @@ public class SolutionCostController {
 
         //支线总运输成本
       //  Double branchTransportCost = solutionCostService.branchTransportCost();
-          String branchTransportCostSum = solutionCostService.findBranchCost(scenariosId);
+          String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
           //单件运输成本
-        Double branchTransportCost = Double.parseDouble(branchTransportCostSum)/totalPiece;
+      //  Double branchTransportCost = Double.parseDouble(branchTransportCostSum)/totalPiece;
 
         Map<String,Object> result = Maps.newHashMap();
         result.put("modelType",modelType);
