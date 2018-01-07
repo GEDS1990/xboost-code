@@ -48,7 +48,7 @@ $(function (){
 						this.day_allp_cost = (this.day_p_cost/this.piece).toFixed(2);
 					},
 					sumI:function (){
-						this.line_cost = (this.branch_cost/this.piece).toFixed(2);
+						this.line_cost = Number(this.branch_cost).toFixed(2);
 					},
 					sumK:function (){
 						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
@@ -141,7 +141,7 @@ $(function (){
 						this.day_allp_cost = (this.day_p_cost/this.piece).toFixed(2);
 					},
 					sumI:function (){
-						this.line_cost = (this.branch_cost/this.piece).toFixed(2);
+						this.line_cost = Number(this.branch_cost).toFixed(2);
 					},
 					sumK:function (){
 						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
