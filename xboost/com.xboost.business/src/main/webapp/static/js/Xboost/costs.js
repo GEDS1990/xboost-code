@@ -256,7 +256,7 @@ $(function (){
 								vmB.collectPeople = result.distribPeopleWork;
 								vmB.depotcount = result.siteCount;
 								vmB.piece = $res.totalPiece;
-								vmB.branch_cost = $res.branchTransportCost;
+								vmB.branch_cost = result.branchTransportCost;
 								vmB.depotPeoplecount = result.peopleNumPerSite;
 								vmB.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
 								setTimeout(function (){
