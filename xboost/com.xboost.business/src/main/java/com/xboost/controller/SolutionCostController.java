@@ -80,34 +80,24 @@ public class SolutionCostController {
 
         Map<String,Object> result = Maps.newHashMap();
         List<Cost> costList = solutionCostService.findByParam(param);
-//        Cost cost = solutionCostService.findByScenariosId(scenariosId);
 
-        //网点集散点人效
-        Integer sitePeopleWork = modelArgService.findSitePeopleWork(scenariosId,modelType);
-        //集配站集散点人效
-        Integer distribPeopleWork = modelArgService.findDistribPeopleWork(scenariosId,modelType);
-        //当前场景下网点总数
-        Integer siteCount = demandInfoService.siteCount();
         //总件量
         Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
         //网点
         List<Map<String,Object>> siteInfoList = siteInfoService.findAllBySiteCode(scenariosId);
         //支线总运输成本
       //  Double branchTransportCost = solutionCostService.branchTransportCost();
-     //   String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
+      //   String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
 
         //总票数
         String totalVol = "100";
 
         result.put("data",costList);
-//        result.put("sitePeopleWork",sitePeopleWork);
-//        result.put("distribPeopleWork",distribPeopleWork);
-//        result.put("siteCount",siteCount);
         result.put("modelType",modelType);
         result.put("totalPiece",totalPiece);
         result.put("siteInfoList",siteInfoList);
         result.put("totalVol",totalVol);
-  //      result.put("branchTransportCost",branchTransportCost);
+ //       result.put("branchTransportCost",branchTransportCost);
 
         return result;
     }
@@ -145,7 +135,9 @@ public class SolutionCostController {
 
         //支线总运输成本
       //  Double branchTransportCost = solutionCostService.branchTransportCost();
-          String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
+          String branchTransportCostSum = solutionCostService.findBranchCost(scenariosId);
+          //单件运输成本
+        Double branchTransportCost = Double.parseDouble(branchTransportCostSum)/totalPiece;
 
         Map<String,Object> result = Maps.newHashMap();
         result.put("modelType",modelType);

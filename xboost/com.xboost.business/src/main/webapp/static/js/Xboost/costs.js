@@ -48,7 +48,7 @@ $(function (){
 						this.day_allp_cost = (this.day_p_cost/this.piece).toFixed(2);
 					},
 					sumI:function (){
-						this.line_cost = (this.branch_cost/this.piece).toFixed(2);
+						this.line_cost = Number(this.branch_cost).toFixed(2);
 					},
 					sumK:function (){
 						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
@@ -141,7 +141,7 @@ $(function (){
 						this.day_allp_cost = (this.day_p_cost/this.piece).toFixed(2);
 					},
 					sumI:function (){
-						this.line_cost = (this.branch_cost/this.piece).toFixed(2);
+						this.line_cost = Number(this.branch_cost).toFixed(2);
 					},
 					sumK:function (){
 						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
@@ -202,6 +202,7 @@ $(function (){
 					$('#model-type').text("串点模型");
 					if (data) {
 						$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
+							console.log(res)
 							if (res.data.length == 0) {
 								var urlcost = "/costs/edit";
 								vmA.sitePeople = $res.sitePeopleWork;
@@ -233,7 +234,7 @@ $(function (){
 								vmA.collectPeople = result.distribPeopleWork;
 								vmA.depotcount = result.siteCount;
 								vmA.piece = $res.totalPiece;
-								vmA.branch_cost = $res.branchTransportCost;
+								vmA.branch_cost = result.branchTransportCost;
 								vmA.depotPeoplecount = result.peopleNumPerSite;
 								vmA.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
 								setTimeout(function (){
