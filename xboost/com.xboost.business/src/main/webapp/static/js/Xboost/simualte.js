@@ -166,6 +166,7 @@ $(function  () {
 	            //停止算法
 				$('#sim-stop').click(function  () {
 					$.post("/cascade/runSilumate").done(function (res){
+						console.log(res)
 						if (res == "Simulating") {
 							$('#modal-sim').find('.modal-body p').text("The Simulation is running and can not restart the Simulation");
 							$('#modal-sim').modal("show");
