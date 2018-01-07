@@ -11,6 +11,7 @@ import com.xboost.pojo.Cost;
 import com.xboost.service.SolutionCostService;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.SpringBeanFactoryUtil;
+import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.joda.time.DateTimeUtils;
 import org.springframework.web.socket.TextMessage;
 
@@ -86,7 +87,12 @@ public class PalnsThread extends Thread implements IConstants  {
 		}
 		costPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
 		costPojo.setBranchTransportCost(String.valueOf(((Solution)palns.getBest()).cost()));
-		Cost costT = solutionCostService.findByScenariosId(ShiroUtil.getOpenScenariosId());
+		Cost costT = null;
+		try{
+			costT = solutionCostService.findByScenariosId(ShiroUtil.getOpenScenariosId());
+		}catch (Exception e){
+			solutionCostService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
+		}
 		if(null == costT){
 			solutionCostService.add(costPojo);
 		}else{

@@ -28,6 +28,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         this.config = config;
         this.demandInfoService = demandInfoService;
         this.siteDistService = siteDistService;
+        this.tempService = tempService;
     }
     public void run(){
 
@@ -153,7 +154,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                     two_points_route.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
                     two_points_route.put("connection2","");
                     two_points_route.put("connection3","");
-                    two_points_route.put("time1","");
+                    two_points_route.put("time1","0");
                     two_points_route.put("time2",0);
                     two_points_route.put("time3",0);
                     two_points_route.put("dist1","");

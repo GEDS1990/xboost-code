@@ -393,46 +393,66 @@ function CategoryList () {
 		var scenId = $('#scenName').attr("data-id");
 		//获取场景信息
 		$.get("/MyScenarios/scen.json",{"id":scenId}).done(function  (res) {
-			$('#scen-cate').text(res.scenariosCategory);
-			$('#scen-desc').text(res.scenariosDesc);
-			$('#scenariosName').val(res.scenariosName);
-			$('#class-first').text(res.scenariosCategory);
-			$('#scenariosCategory').val(res.scenariosCategory);
-			$('textarea[name="scenariosDesc"]').val(res.scenariosDesc);
+			if (res) {
+				$('#scen-cate').text(res.scenariosCategory);
+				$('#scen-desc').text(res.scenariosDesc);
+				$('#scenariosName').val(res.scenariosName);
+				$('#class-first').text(res.scenariosCategory);
+				$('#scenariosCategory').val(res.scenariosCategory);
+				$('textarea[name="scenariosDesc"]').val(res.scenariosDesc);
+			}
+			
 		}).fail(function  () {
 			console.log('fail');
 		});
 		//获取overview
 		$.get("/ScenariosName/settingsOverview.json",{"id":scenId}).done(function  (res) {
-            $('#depot-quantity').text(res.siteCounter);
-            $('#vehicle-quantity').text(res.tranCounter);
-            $('#demand-quantity').text(res.demandsCounter);
-            $('#farthest-distance').text(Math.round(res.farthestDist * 100) / 100);
+			if (res) {
+				$('#depot-quantity').text(res.siteCounter);
+	            $('#vehicle-quantity').text(res.tranCounter);
+	            $('#demand-quantity').text(res.demandsCounter);
+	            $('#farthest-distance').text( (res.farthestDist == '--'?'--':Math.round(res.farthestDist * 100) / 100) );
+			}
+            
         }).fail(function  (e) {
             console.log('fail');
         });
 
         $.get("/ScenariosName/resultOverview1.json",{"id":scenId}).done(function  (res) {
-        console.log(res)
-            $('#title').text("Results Overview");
-            if(res.scenario.scenariosModel=="1"){
-            $('#simulation-method').text("串点模型");
-            }else if(res.scenario.scenariosModel=="2"){
-            $('#simulation-method').text("接力模型");}
-            else if(res.scenario.scenariosModel=="3"){
-            $('#simulation-method').text("综合模型");
-            }
-            $('#simulation-progress').text("--");
-            $('#simulation-finished').text(res.scenario.simulateFinishTime);
+        	//console.log(res)
+        	if (res) {
+        		$('#title').text("Results Overview");
+	            if(res.scenario.scenariosModel=="1"){
+	            	$('#simulation-method').text("串点模型");
+	            }
+	            else if(res.scenario.scenariosModel=="2"){
+	            	$('#simulation-method').text("接力模型");
+	            }
+	            else if(res.scenario.scenariosModel=="3"){
+	            	$('#simulation-method').text("综合模型");
+	            }
+	            $('#simulation-progress').text("--");
+	            if (res.scenario.simulateFinishTime == "" || res.scenario.simulateFinishTime == null) {
+	            	$('#simulation-finished').text('--');
+	            }else{
+	            	$('#simulation-finished').text(res.scenario.simulateFinishTime);
+	            }
+	            
+        	}
+            
         }).fail(function  (e) {
             console.log('fail');
         });
         $.get("/ScenariosName/resultOverview2.json",{"id":scenId}).done(function  (res) {
-            $('#staff-quantity').text(res.staffCount);
-            $('#staff-cost').text(res.cost.totalDailyLaborCost);
-            $('#vehicle-quantity1').text(res.carCount);
-            $('#vehicle-cost').text(res.cost.branchTransportCost);
-            $('#total-cost').text(res.cost.totalCost);
+        	console.log(res)
+        	if (res) {
+        		$('#staff-quantity').text( (res.staffCount == 0?'--':res.staffCount));
+	            $('#staff-cost').text( (res.cost.totalDailyLaborCost == null?'--':res.cost.totalDailyLaborCost) );
+	            $('#vehicle-quantity1').text(res.carCount);
+	            $('#vehicle-cost').text( Number(res.cost.branchTransportCost).toFixed(2) );
+	            $('#total-cost').text( (res.cost.totalCost == null?'--':res.cost.totalCost) );
+        	}
+            
         }).fail(function  (e) {
             console.log('fail');
         });
