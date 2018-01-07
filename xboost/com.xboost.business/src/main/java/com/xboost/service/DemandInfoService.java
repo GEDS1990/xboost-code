@@ -299,9 +299,9 @@ public class DemandInfoService {
                     cell.setCellValue(demandInfo.getProductType());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(9+i);
+                    /*cell = bodyRow.createCell(9+i);
                     cell.setCellValue(demandInfo.getAgeing());
-                    cell.setCellStyle(bodyStyle);
+                    cell.setCellStyle(bodyStyle);*/
                 }
             }
             catch (Exception e)
