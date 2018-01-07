@@ -88,7 +88,7 @@
                 <h4 class="modal-title">Restart Simulation</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure want to restart simulation</p>
+                <p>Are you sure want to restart simulation?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
