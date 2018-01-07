@@ -202,8 +202,8 @@ $(function (){
 					$('#model-type').text("串点模型");
 					if (data) {
 						$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
-							console.log(res)
-							if (res.data.length == 0) {
+							console.log(res.data)
+							if (res.data.fullTimeStaff == null) {
 								var urlcost = "/costs/edit";
 								vmA.sitePeople = $res.sitePeopleWork;
 								vmA.collectPeople = $res.distribPeopleWork;
