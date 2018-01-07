@@ -1583,16 +1583,12 @@ $(function  () {
                 });
                 //sendTo controller
     			$("body").on("click","#sendToBtn",function  () {
-                    debugger;
                     var userId = $("#userId").val();
                     var scenariosId = $("#scenariosId").val();
                     $.post("/MyScenarios/sendto",{"scenariosId":scenariosId,"userId":userId}).done(function(result){
-                    debugger;
                     window.location.href = "/MyScenarios/AllScenarios";
                     }).fail(function(e){
-debugger;
                     });
-debugger;
                     $("#sendToModal").modal('hide');
                 });
 
