@@ -133,6 +133,12 @@ public class ValidateController {
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser(new TextMessage(result));
             }
+            if(Strings.isEmpty(car.getMaxLoad())){
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":max load is empty.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser(new TextMessage(result));
+            }
             if(Integer.parseInt(car.getMaxLoad())<1){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":maximum load is must >1.\n";
@@ -169,31 +175,31 @@ public class ValidateController {
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getMaxDistance()<0){
+            if(!Strings.isEmpty(car.getMaxDistance()) && car.getMaxDistance()<0){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":maximum distance is must >0.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getType().equals("baidu")&&car.getMaxDistance()>5){
+            if(!Strings.isEmpty(car.getMaxDistance()) && car.getType().equals("baidu")&&car.getMaxDistance()>5){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":baidu maximum distance is must <5.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getMaxDistance()>999){
+            if(!Strings.isEmpty(car.getMaxDistance()) && car.getMaxDistance()>999){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":maximum distance is must <999.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getMaxRunningTime()<0){
+            if(!Strings.isEmpty(car.getMaxRunningTime()) && car.getMaxRunningTime()<0){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":maximum time is must >0.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getMaxRunningTime()>999){
+            if(!Strings.isEmpty(car.getMaxRunningTime()) && car.getMaxRunningTime()>999){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":maximum time is must <999.\n";
                 logger.info(result);
@@ -205,18 +211,6 @@ public class ValidateController {
 //                logger.info(result);
 //                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
 //            }
-            if(Integer.parseInt(car.getMaxLoad())<1){
-                flag = flag + 1;
-                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must >1.\n";
-                logger.info(result);
-                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
-            if(Integer.parseInt(car.getMaxLoad())>2000){
-                flag = flag + 1;
-                result = vehiclesWrongLink + ":vehicle piece capacity (p) is must <2000.\n";
-                logger.info(result);
-                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
             //获取车辆最远车程
             longCarDistance = longCarDistance > car.getMaxDistance() ? longCarDistance :car.getMaxDistance();
         }
@@ -484,27 +478,22 @@ public class ValidateController {
                 result = demandInfoWrongLink+":piece is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Strings.isEmpty(demandInfo.getAgeing())){
-                flag = flag + 1;
-                result = demandInfoWrongLink+":effectiveness is wrong. Because it's empty.\n";
-                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
             if(Integer.parseInt(demandInfo.getDurationStart())<0){
                 flag = flag + 1;
                 result = demandInfoWrongLink+":start time is must > 0.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(demandInfo.getDurationStart())>24*60){
+            if(Integer.parseInt(demandInfo.getDurationStart())>24){
                 flag = flag + 1;
                 result = demandInfoWrongLink+":start time is must < 24小时.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(demandInfo.getDurationEnd())<0){
+            if(!Strings.isEmpty(demandInfo.getAgeing()) && Integer.parseInt(demandInfo.getAgeing())<0){
                 flag = flag + 1;
                 result = demandInfoWrongLink+":effective end time is must > 0.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(demandInfo.getDurationEnd())>24*60){
+            if(!Strings.isEmpty(demandInfo.getAgeing()) && Integer.parseInt(demandInfo.getAgeing())>24){
                 flag = flag + 1;
                 result = demandInfoWrongLink+":effective end time is must < 24小时.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
