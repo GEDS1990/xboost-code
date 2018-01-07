@@ -202,6 +202,7 @@ $(function (){
 					$('#model-type').text("串点模型");
 					if (data) {
 						$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
+							console.log(res)
 							if (res.data.length == 0) {
 								var urlcost = "/costs/edit";
 								vmA.sitePeople = $res.sitePeopleWork;
@@ -233,7 +234,7 @@ $(function (){
 								vmA.collectPeople = result.distribPeopleWork;
 								vmA.depotcount = result.siteCount;
 								vmA.piece = $res.totalPiece;
-								vmA.branch_cost = $res.branchTransportCost;
+								vmA.branch_cost = result.branchTransportCost;
 								vmA.depotPeoplecount = result.peopleNumPerSite;
 								vmA.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
 								setTimeout(function (){
