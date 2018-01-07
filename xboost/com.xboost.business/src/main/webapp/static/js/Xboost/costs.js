@@ -203,7 +203,7 @@ $(function (){
 								vmA.depotcount = $res.siteCount;
 								vmA.depotPeoplecount = 1;
 								vmA.piece = $res.totalPiece;
-								vmA.branch_cost = $res.branchTransportCost;
+								vmA.line_cost = Number($res.branchTransportCost).toFixed(2);
 								vmA.full_salaty = 6000;
 								vmA.full_days = 30;
 								vmA.part_wage = 20;
@@ -213,7 +213,7 @@ $(function (){
 								vmB.depotcount = $res.siteCount;
 								vmB.depotPeoplecount = 1;
 								vmB.piece = $res.totalPiece;
-								vmB.branch_cost = $res.branchTransportCost;
+								vmB.line_cost = Number($res.branchTransportCost).toFixed(2);
 								vmB.full_salaty = 6000;
 								vmB.full_days = 30;
 								vmB.part_wage = 20;
