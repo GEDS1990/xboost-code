@@ -152,9 +152,11 @@ public class SiteController {
             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
             String scenariosId = ShiroUtil.getOpenScenariosId();
             String[] titles = { "ID","depot ID","longitude","latitude","depot name","depot address","depot area",
-                    "depot type","to distrib.center","night distrib","vehicle quantity limit",
-                    "vehicle weight limit","piece capacity (p)"};
-            siteInfoService.exportExcel(scenariosId,titles,outputStream);
+                    "depot type","to distrib.center","night distrib","one period of time : 10 (min)",
+                    "one period of time : 10 (min)","one period of time : 10 (min)"};
+            String[] nextTitles = {"","","","","","","", "","","","vehicle quantity limit *",
+                    "vehicle weight limit *","piece capacity (p) *"};
+            siteInfoService.exportExcel(scenariosId,titles,nextTitles,outputStream);
                    System.out.println("outputStream:"+outputStream);
         }
         catch (IOException e)
