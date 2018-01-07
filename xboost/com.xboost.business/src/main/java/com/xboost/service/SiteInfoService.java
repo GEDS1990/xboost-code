@@ -416,7 +416,7 @@ public class SiteInfoService {
                 SiteInfo siteInfo = list.get(j);
 
                 cell = bodyRow.createCell(0);
-                cell.setCellValue(siteInfo.getId());
+                cell.setCellValue("NA");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(1);
