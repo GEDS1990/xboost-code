@@ -239,9 +239,7 @@ $(function (){
 								vmA.part_work = result.partTimeWorkDay;
 								vmA.day_p_cost = result.sum2;
 								vmA.day_allp_cost = result.totalDailyLaborCost;
-								setTimeout(function (){
-									vmA.line_cost = result.branchTransportCost;
-								},200)
+								vmA.line_cost = result.branchTransportCost;
 								vmA.allcost = result.totalCost;
 								
 								
