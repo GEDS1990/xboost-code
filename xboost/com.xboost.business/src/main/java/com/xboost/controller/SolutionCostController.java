@@ -94,7 +94,7 @@ public class SolutionCostController {
         List<Map<String,Object>> siteInfoList = siteInfoService.findAllBySiteCode(scenariosId);
         //支线总运输成本
       //  Double branchTransportCost = solutionCostService.branchTransportCost();
-     //   String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
+        String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
 
         //总票数
         String totalVol = "100";
@@ -107,7 +107,7 @@ public class SolutionCostController {
         result.put("totalPiece",totalPiece);
         result.put("siteInfoList",siteInfoList);
         result.put("totalVol",totalVol);
-  //      result.put("branchTransportCost",branchTransportCost);
+        result.put("branchTransportCost",branchTransportCost);
 
         return result;
     }
