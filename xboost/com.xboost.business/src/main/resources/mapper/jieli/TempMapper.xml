@@ -9,7 +9,7 @@
         #{scenariosStatus},#{lastOpenTime},#{simulateFinishTime},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
-    <select id="findAll01" resultType="map">
+    <select id="findAll01" parameterType="String" resultType="map">
         select
             m_od_id, scenario, scenario_lim1, scenario_lim2, i_route_id, distance, time, demand, point1, point2,
             point3, point4, connection1, connection2, connection3, time1, time2, time3, dist1, dist2, dist3, timecost,

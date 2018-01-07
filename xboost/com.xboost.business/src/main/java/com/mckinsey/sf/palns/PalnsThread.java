@@ -88,6 +88,7 @@ public class PalnsThread extends Thread implements IConstants  {
 		costPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
 		costPojo.setBranchTransportCost(String.valueOf(((Solution)palns.getBest()).cost()));
 		Cost costT = null;
+		solutionCostService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
 		try{
 			costT = solutionCostService.findByScenariosId(ShiroUtil.getOpenScenariosId());
 		}catch (Exception e){
