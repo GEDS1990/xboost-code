@@ -263,7 +263,7 @@ public class DemandInfoService {
                     int i = 0;
 
                     cell = bodyRow.createCell(0+i);
-                    cell.setCellValue(demandInfo.getId());
+                    cell.setCellValue("NA");
                     cell.setCellStyle(bodyStyle);
 
                     cell = bodyRow.createCell(1+i);

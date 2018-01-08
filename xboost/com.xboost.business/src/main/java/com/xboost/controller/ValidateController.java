@@ -97,12 +97,12 @@ public class ValidateController {
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Strings.isEmpty(car.getType())) {
+            /*if(Strings.isEmpty(car.getType())) {
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":vehicles weight limit is empty.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
+            }*/
             if(Strings.isEmpty(car.getNum())) {
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":vehicles quantity is empty.\n";
@@ -115,6 +115,12 @@ public class ValidateController {
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
+            if(Strings.isEmpty(car.getMaxLoad())) {
+                flag = flag + 1;
+                result = vehiclesWrongLink + ":vehicle piece capacity (p) is empty.\n";
+                logger.info(result);
+                systemWebSocketHandler.sendMessageToUser(new TextMessage(result));
+            }
             if(Strings.isEmpty(car.getVelocity())) {
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":vehicles speed is empty.\n";
@@ -123,53 +129,41 @@ public class ValidateController {
             }
             if(Strings.isEmpty(car.getMaxStop())) {
                 flag = flag + 1;
-                result = vehiclesWrongLink + ":maximum time is empty.\n";
+                result = vehiclesWrongLink + ":maximum top is empty.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Strings.isEmpty(car.getCostPerDistance())) {
-                flag = flag + 1;
-                result = vehiclesWrongLink + ":vehicle piece capacity (p) is empty.\n";
-                logger.info(result);
-                systemWebSocketHandler.sendMessageToUser(new TextMessage(result));
-            }
-            if(Strings.isEmpty(car.getMaxLoad())){
-                flag = flag + 1;
-                result = vehiclesWrongLink + ":max load is empty.\n";
-                logger.info(result);
-                systemWebSocketHandler.sendMessageToUser(new TextMessage(result));
-            }
-            if(Integer.parseInt(car.getMaxLoad())<1){
+            if(!Strings.isEmpty(car.getMaxLoad()) && Integer.parseInt(car.getMaxLoad())<1){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":maximum load is must >1.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(car.getMaxLoad())>2000){
+            if(!Strings.isEmpty(car.getMaxLoad()) && Integer.parseInt(car.getMaxLoad())>2000){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":maximum load is must <2000.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getVelocity()<5){
+            if(!Strings.isEmpty(car.getVelocity()) && car.getVelocity()<5){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":speed is must >5.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getVelocity()>80){
+            if(!Strings.isEmpty(car.getVelocity()) && car.getVelocity()>80){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":speed is must <80.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getMaxStop()<0){
+            if(!Strings.isEmpty(car.getMaxStop()) && car.getMaxStop()<0){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":maximum stop is must >0.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(car.getMaxStop()>99){
+            if(!Strings.isEmpty(car.getMaxStop()) && car.getMaxStop()>99){
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":maximum stop is must <99.\n";
                 logger.info(result);
@@ -294,62 +288,62 @@ public class ValidateController {
                 result = siteInfoWrongLink+":piece capacity is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Double.parseDouble(siteInfo.getSiteArea())<0){
+            if(!Strings.isEmpty(siteInfo.getSiteArea()) && Double.parseDouble(siteInfo.getSiteArea())<0){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":depot area is must >0. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Double.parseDouble(siteInfo.getSiteArea())>3000){
+            if(!Strings.isEmpty(siteInfo.getSiteArea()) && Double.parseDouble(siteInfo.getSiteArea())>3000){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":depot area is must <3000. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getCarNum())<0){
+            if(!Strings.isEmpty(siteInfo.getCarNum()) && Integer.parseInt(siteInfo.getCarNum())<0){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":vehicle quantity limit  is must >0. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getCarNum())>999){
+            if(!Strings.isEmpty(siteInfo.getCarNum()) && Integer.parseInt(siteInfo.getCarNum())>999){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":vehicle quantity limit  is must <999. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getLargeCarModel())<0){
+            if(!Strings.isEmpty(siteInfo.getLargeCarModel()) && Integer.parseInt(siteInfo.getLargeCarModel())<0){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":vehicle weight limit  is must >0. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getLargeCarModel())>999){
+            if(!Strings.isEmpty(siteInfo.getLargeCarModel()) && Integer.parseInt(siteInfo.getLargeCarModel())>999){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":vehicle weight limit  is must <999. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getMaxOperateNum())<2000){
+            if(!Strings.isEmpty(siteInfo.getMaxOperateNum()) && Integer.parseInt(siteInfo.getMaxOperateNum())<2000){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":piece capacity (p) is must >2000. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(siteInfo.getMaxOperateNum())>50000){
+            if(!Strings.isEmpty(siteInfo.getMaxOperateNum()) && Integer.parseInt(siteInfo.getMaxOperateNum())>50000){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":piece capacity (p)  is must <50000. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Double.parseDouble(siteInfo.getSiteLatitude())<-90){
+            if(!Strings.isEmpty(siteInfo.getSiteLatitude()) && Double.parseDouble(siteInfo.getSiteLatitude())<-90){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":latitude  is must >-90. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Double.parseDouble(siteInfo.getSiteLatitude())>90){
+            if(!Strings.isEmpty(siteInfo.getSiteLatitude()) && Double.parseDouble(siteInfo.getSiteLatitude())>90){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":latitude  is must <90. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Double.parseDouble(siteInfo.getSiteLongitude())<-180){
+            if(!Strings.isEmpty(siteInfo.getSiteLongitude()) && Double.parseDouble(siteInfo.getSiteLongitude())<-180){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":longitude  is must >-180. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Double.parseDouble(siteInfo.getSiteLongitude())>180){
+            if(!Strings.isEmpty(siteInfo.getSiteLongitude()) && Double.parseDouble(siteInfo.getSiteLongitude())>180){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":longitude  is must <180. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
@@ -396,12 +390,12 @@ public class ValidateController {
                 result = depotsDistanceWrongLink+":night transportation time(min) is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(siteDist.getCarDistance().floatValue()<0){
+            if(!Strings.isEmpty(siteDist.getCarDistance()) && siteDist.getCarDistance().floatValue()<0){
                 flag = flag + 1;
                 result = depotsDistanceWrongLink+":transportation distance is must >0. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(siteDist.getCarDistance().floatValue()>200){
+            if(!Strings.isEmpty(siteDist.getCarDistance()) && siteDist.getCarDistance().floatValue()>200){
                 flag = flag + 1;
                 result = depotsDistanceWrongLink+":transportation distance is must <200. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
@@ -483,27 +477,27 @@ public class ValidateController {
                 result = demandInfoWrongLink+":start time is must > 0.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(demandInfo.getDurationStart())>24){
+            if(Integer.parseInt(demandInfo.getDurationStart())>24*60){
                 flag = flag + 1;
                 result = demandInfoWrongLink+":start time is must < 24小时.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(!Strings.isEmpty(demandInfo.getAgeing()) && Integer.parseInt(demandInfo.getAgeing())<0){
+            if(!Strings.isEmpty(demandInfo.getDurationEnd()) && Integer.parseInt(demandInfo.getDurationEnd())<0){
                 flag = flag + 1;
                 result = demandInfoWrongLink+":effective end time is must > 0.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(!Strings.isEmpty(demandInfo.getAgeing()) && Integer.parseInt(demandInfo.getAgeing())>24){
+            if(!Strings.isEmpty(demandInfo.getDurationEnd()) && Integer.parseInt(demandInfo.getDurationEnd())>24*60){
                 flag = flag + 1;
                 result = demandInfoWrongLink+":effective end time is must < 24小时.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(demandInfo.getVotes())<0){
+            if(!Strings.isEmpty(demandInfo.getVotes()) && Integer.parseInt(demandInfo.getVotes())<0){
                 flag = flag + 1;
                 result = demandInfoWrongLink+":piece (p) is must > 0.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Integer.parseInt(demandInfo.getVotes())>2000){
+            if(!Strings.isEmpty(demandInfo.getVotes()) && Integer.parseInt(demandInfo.getVotes())>2000){
                 flag = flag + 1;
                 result = demandInfoWrongLink+":piece (p) is must < 2000.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
