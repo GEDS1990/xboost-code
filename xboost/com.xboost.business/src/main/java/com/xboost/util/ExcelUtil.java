@@ -81,6 +81,7 @@ public class ExcelUtil {
 
             // 为跳过第一行目录设置count
             int count = 0;
+            Row row1 = sheet.getRow(1);
             for (int i = 0; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
                 if(row==null){
@@ -88,11 +89,11 @@ public class ExcelUtil {
                     continue;
                 }
                 String rowValue = "";
-                for (int r=0;r<row.getLastCellNum();r++) {
+                for (int r=0;r<row1.getLastCellNum();r++) {
                     Cell cell = row.getCell(r);
                     String cellValue = "";
                     if (cell== null) {
-                        rowValue +=  "#";;
+                        rowValue +=  " #";;
                         continue;
                     }
                     int cellType = cell.getCellType();
