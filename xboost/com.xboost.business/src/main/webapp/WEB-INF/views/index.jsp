@@ -75,7 +75,7 @@
 	                        </div>
 	                        
                             <!-- Change this to a button or input when using this as a form -->
-                            <button id="loginBtn" type="button" class="btn btn-lg btn-success btn-block">Login in</button>
+                            <button id="loginBtn" type="button" class="btn btn-lg btn-success btn-block">Login</button>
                             <%--<button id="registerBtn" type="button" class="btn btn-lg btn-register btn-block">注册账号</button>--%>
                         </fieldset>
                     </form>

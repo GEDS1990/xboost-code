@@ -7,7 +7,7 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav xb_alt" id="side-menu">
                 <li id="scen-info">
-                	<div class="nav_xban"><span class="icon icon-3d"></span>Xboots System</div>
+                	<div class="nav_xban"><span class="icon icon-3d"></span>Xboost System</div>
                 </li>
             	<li class="xb-hover" id="after-content">
             		<a href="/MyScenarios" id="nav-MyScenarios">
@@ -52,7 +52,7 @@
 		        <!-- /.dropdown-user -->
 		    </li>
 		    <li>
-            	<a class="xb-a" id="loginout" ><i class="fa fa-fw icon-power-off"></i>LoginOut</a>
+            	<a class="xb-a" id="loginout" ><i class="fa fa-fw icon-power-off"></i>LogOut</a>
             </li>
 		    <!-- /.dropdown -->
 		</ul>
