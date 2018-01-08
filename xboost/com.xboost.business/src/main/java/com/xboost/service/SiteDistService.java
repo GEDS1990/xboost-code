@@ -86,7 +86,7 @@ public class SiteDistService {
                                 if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){
                                     //insert
                                     siteDistMapper.save(siteDist);
-                                    logger.info("insert into db:"+siteDist.getSiteCollect());
+                                    logger.info("insert into db:"+i+siteDist.getSiteCollect());
                                 }else{
                                     siteDist.setId(Integer.parseInt(row[0]));
                                     //insert
