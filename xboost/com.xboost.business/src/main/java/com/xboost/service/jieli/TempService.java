@@ -24,6 +24,10 @@ public class TempService {
     public void saveTempInfo(Temp temp) {
         tempMapper.saveTemp(temp);
     }
+
+    public List<Map> findAllTwoPointsRoute(String scenariosId) {
+        return tempMapper.findAllTwoPointsRoute(scenariosId);
+    }
     /**
      * 查询所有运力信息
      * param

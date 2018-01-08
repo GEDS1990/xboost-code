@@ -110,133 +110,135 @@ public class RelayModeUtil extends Thread implements IConstants {
         //two_points_route
         systemWebSocketHandler.sendMessageToUser( new TextMessage("two_points_route:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("20%"));
-        for(int j=0;j<OD_demand_list.size();j++){
-            for(int j2=0;j2<distance_ref_list.size();j2++){
-                boolean b = OD_demand_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
-                boolean b2 = OD_demand_list.get(j).get("outbound_id").equals(distance_ref_list.get(j2).get("outbound_id"));
-                if(b&&b2){
-                    two_points_route.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
-                    two_points_route.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
-                    two_points_route.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
-                    two_points_route.put("distance",distance_ref_list.get(j2).get("km"));
-                    two_points_route.put("time",distance_ref_list.get(j2).get("minutes"));
-                    two_points_route.put("demand",OD_demand_list.get(j).get("volume"));
-                    two_points_route.put("point1",OD_demand_list.get(j).get("inbound_id"));
-                    two_points_route.put("point2",0);
-                    two_points_route.put("point3",0);
-                    two_points_route.put("point4",OD_demand_list.get(j).get("outbound_id"));
-                    two_points_route.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
-                    two_points_route.put("connection2","");
-                    two_points_route.put("connection3","");
-                    two_points_route.put("time1",distance_ref_list.get(j2).get("minutes"));
-                    two_points_route.put("time2",0);
-                    two_points_route.put("time3",0);
-                    two_points_route.put("dist1",distance_ref_list.get(j2).get("km"));
-                    two_points_route.put("dist2",0);
-                    two_points_route.put("dist3",0);
-                    two_points_route.put("timecost",-Integer.parseInt(distance_ref_list.get(j2).get("minutes").toString()));
-                    two_points_route.put("scenario",OD_demand_list.get(j).get("scenario"));
-                    two_points_route.put("scenario_lim1",OD_demand_list.get(j).get("scenario_lim1"));
-                    two_points_route.put("scenario_lim2",OD_demand_list.get(j).get("scenario_lim2"));
-                    two_points_route.put("wait_time",0);
-                    two_points_route_list.add(two_points_route);
-                }else{
-                    two_points_route.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
-                    two_points_route.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
-                    two_points_route.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
-                    two_points_route.put("distance","");
-                    two_points_route.put("time","");
-                    two_points_route.put("demand",OD_demand_list.get(j).get("volume"));
-                    two_points_route.put("point1",OD_demand_list.get(j).get("inbound_id"));
-                    two_points_route.put("point2",0);
-                    two_points_route.put("point3",0);
-                    two_points_route.put("point4",OD_demand_list.get(j).get("outbound_id"));
-                    two_points_route.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
-                    two_points_route.put("connection2","");
-                    two_points_route.put("connection3","");
-                    two_points_route.put("time1","0");
-                    two_points_route.put("time2",0);
-                    two_points_route.put("time3",0);
-                    two_points_route.put("dist1","");
-                    two_points_route.put("dist2",0);
-                    two_points_route.put("dist3",0);
-                    two_points_route.put("timecost","");
-                    two_points_route.put("scenario",OD_demand_list.get(j).get("scenario"));
-                    two_points_route.put("scenario_lim1",OD_demand_list.get(j).get("scenario_lim1"));
-                    two_points_route.put("scenario_lim2",OD_demand_list.get(j).get("scenario_lim2"));
-                    two_points_route.put("wait_time",0);
-                    two_points_route_list.add(two_points_route);
-                }
-            }
-        }
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting...."));
+//        for(int j=0;j<OD_demand_list.size();j++){
+//            for(int j2=0;j2<distance_ref_list.size();j2++){
+//                boolean b = OD_demand_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
+//                boolean b2 = OD_demand_list.get(j).get("outbound_id").equals(distance_ref_list.get(j2).get("outbound_id"));
+//                if(b&&b2){
+//                    two_points_route.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
+//                    two_points_route.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
+//                    two_points_route.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
+//                    two_points_route.put("distance",distance_ref_list.get(j2).get("km"));
+//                    two_points_route.put("time",distance_ref_list.get(j2).get("minutes"));
+//                    two_points_route.put("demand",OD_demand_list.get(j).get("volume"));
+//                    two_points_route.put("point1",OD_demand_list.get(j).get("inbound_id"));
+//                    two_points_route.put("point2",0);
+//                    two_points_route.put("point3",0);
+//                    two_points_route.put("point4",OD_demand_list.get(j).get("outbound_id"));
+//                    two_points_route.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
+//                    two_points_route.put("connection2","");
+//                    two_points_route.put("connection3","");
+//                    two_points_route.put("time1",distance_ref_list.get(j2).get("minutes"));
+//                    two_points_route.put("time2",0);
+//                    two_points_route.put("time3",0);
+//                    two_points_route.put("dist1",distance_ref_list.get(j2).get("km"));
+//                    two_points_route.put("dist2",0);
+//                    two_points_route.put("dist3",0);
+//                    two_points_route.put("timecost",-Integer.parseInt(distance_ref_list.get(j2).get("minutes").toString()));
+//                    two_points_route.put("scenario",OD_demand_list.get(j).get("scenario"));
+//                    two_points_route.put("scenario_lim1",OD_demand_list.get(j).get("scenario_lim1"));
+//                    two_points_route.put("scenario_lim2",OD_demand_list.get(j).get("scenario_lim2"));
+//                    two_points_route.put("wait_time",0);
+//                    two_points_route_list.add(two_points_route);
+//                }else{
+//                    two_points_route.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
+//                    two_points_route.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
+//                    two_points_route.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
+//                    two_points_route.put("distance","");
+//                    two_points_route.put("time","");
+//                    two_points_route.put("demand",OD_demand_list.get(j).get("volume"));
+//                    two_points_route.put("point1",OD_demand_list.get(j).get("inbound_id"));
+//                    two_points_route.put("point2",0);
+//                    two_points_route.put("point3",0);
+//                    two_points_route.put("point4",OD_demand_list.get(j).get("outbound_id"));
+//                    two_points_route.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
+//                    two_points_route.put("connection2","");
+//                    two_points_route.put("connection3","");
+//                    two_points_route.put("time1","0");
+//                    two_points_route.put("time2",0);
+//                    two_points_route.put("time3",0);
+//                    two_points_route.put("dist1","");
+//                    two_points_route.put("dist2",0);
+//                    two_points_route.put("dist3",0);
+//                    two_points_route.put("timecost","");
+//                    two_points_route.put("scenario",OD_demand_list.get(j).get("scenario"));
+//                    two_points_route.put("scenario_lim1",OD_demand_list.get(j).get("scenario_lim1"));
+//                    two_points_route.put("scenario_lim2",OD_demand_list.get(j).get("scenario_lim2"));
+//                    two_points_route.put("wait_time",0);
+//                    two_points_route_list.add(two_points_route);
+//                }
+//            }
+//        }
+        two_points_route_list = tempService.findAllTwoPointsRoute(ShiroUtil.getOpenScenariosId());
         //temp
         systemWebSocketHandler.sendMessageToUser( new TextMessage("temp:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("30%"));
-        for(int j=0;j<OD_demand_list.size();j++){
-            for(int j2=0;j2<distance_ref_list.size();j2++){
-                boolean b = two_points_route_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
-                if(b){
-                    temp.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
-                    temp.put("minutes",OD_demand_list.get(j).get("minutes"));
-                    temp.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
-                    temp.put("distance",distance_ref_list.get(j2).get("km"));
-                    temp.put("km",distance_ref_list.get(j2).get("km"));
-                    temp.put("time",distance_ref_list.get(j2).get("minutes"));
-                    temp.put("demand",OD_demand_list.get(j).get("volume"));
-                    temp.put("point1",OD_demand_list.get(j).get("inbound_id"));
-                    temp.put("point2",0);
-                    temp.put("point3",0);
-                    temp.put("point4",OD_demand_list.get(j).get("outbound_id"));
-                    temp.put("outbound_id",OD_demand_list.get(j).get("outbound_id"));
-                    temp.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
-                    temp.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
-                    temp.put("connection2","");
-                    temp.put("connection3","");
-                    temp.put("time1",distance_ref_list.get(j2).get("minutes"));
-                    temp.put("time2",0);
-                    temp.put("time3",0);
-                    temp.put("dist1",distance_ref_list.get(j2).get("km"));
-                    temp.put("dist2",0);
-                    temp.put("dist3",0);
-                    temp.put("timecost",-Integer.parseInt(distance_ref_list.get(j2).get("minutes").toString()));
-                    temp.put("scenario",OD_demand_list.get(j).get("scenario"));
-                    temp.put("scenario_lim1",OD_demand_list.get(j).get("scenario_lim1"));
-                    temp.put("scenario_lim2",OD_demand_list.get(j).get("scenario_lim2"));
-                    temp.put("wait_time",0);
-                    temp_list.add(temp);
-                }else{
-                    temp.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
-                    temp.put("minutes",OD_demand_list.get(j).get("minutes"));
-                    temp.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
-                    temp.put("distance","");
-                    temp.put("km","");
-                    temp.put("time","0");
-                    temp.put("demand",OD_demand_list.get(j).get("volume"));
-                    temp.put("point1",OD_demand_list.get(j).get("inbound_id"));
-                    temp.put("point2",0);
-                    temp.put("point3",0);
-                    temp.put("point4",OD_demand_list.get(j).get("outbound_id"));
-                    temp.put("outbound_id",OD_demand_list.get(j).get("outbound_id"));
-                    temp.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
-                    temp.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
-                    temp.put("connection2","");
-                    temp.put("connection3","");
-                    temp.put("time1","0");
-                    temp.put("time2",0);
-                    temp.put("time3",0);
-                    temp.put("dist1","");
-                    temp.put("dist2",0);
-                    temp.put("dist3",0);
-                    temp.put("timecost","");
-                    temp.put("scenario",OD_demand_list.get(j).get("scenario"));
-                    temp.put("scenario_lim1",OD_demand_list.get(j).get("scenario_lim1"));
-                    temp.put("scenario_lim2",OD_demand_list.get(j).get("scenario_lim2"));
-                    temp.put("wait_time",0);
-                    temp_list.add(temp);
-                }
-            }
-        }
-
+//        for(int j=0;j<OD_demand_list.size();j++){
+//            for(int j2=0;j2<distance_ref_list.size();j2++){
+//                boolean b = two_points_route_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
+//                if(b){
+//                    temp.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
+//                    temp.put("minutes",OD_demand_list.get(j).get("minutes"));
+//                    temp.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
+//                    temp.put("distance",distance_ref_list.get(j2).get("km"));
+//                    temp.put("km",distance_ref_list.get(j2).get("km"));
+//                    temp.put("time",distance_ref_list.get(j2).get("minutes"));
+//                    temp.put("demand",OD_demand_list.get(j).get("volume"));
+//                    temp.put("point1",OD_demand_list.get(j).get("inbound_id"));
+//                    temp.put("point2",0);
+//                    temp.put("point3",0);
+//                    temp.put("point4",OD_demand_list.get(j).get("outbound_id"));
+//                    temp.put("outbound_id",OD_demand_list.get(j).get("outbound_id"));
+//                    temp.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
+//                    temp.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
+//                    temp.put("connection2","");
+//                    temp.put("connection3","");
+//                    temp.put("time1",distance_ref_list.get(j2).get("minutes"));
+//                    temp.put("time2",0);
+//                    temp.put("time3",0);
+//                    temp.put("dist1",distance_ref_list.get(j2).get("km"));
+//                    temp.put("dist2",0);
+//                    temp.put("dist3",0);
+//                    temp.put("timecost",-Integer.parseInt(distance_ref_list.get(j2).get("minutes").toString()));
+//                    temp.put("scenario",OD_demand_list.get(j).get("scenario"));
+//                    temp.put("scenario_lim1",OD_demand_list.get(j).get("scenario_lim1"));
+//                    temp.put("scenario_lim2",OD_demand_list.get(j).get("scenario_lim2"));
+//                    temp.put("wait_time",0);
+//                    temp_list.add(temp);
+//                }else{
+//                    temp.put("m_od_id",OD_demand_list.get(j).get("OD_id"));
+//                    temp.put("minutes",OD_demand_list.get(j).get("minutes"));
+//                    temp.put("i_route_id",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
+//                    temp.put("distance","");
+//                    temp.put("km","");
+//                    temp.put("time","0");
+//                    temp.put("demand",OD_demand_list.get(j).get("volume"));
+//                    temp.put("point1",OD_demand_list.get(j).get("inbound_id"));
+//                    temp.put("point2",0);
+//                    temp.put("point3",0);
+//                    temp.put("point4",OD_demand_list.get(j).get("outbound_id"));
+//                    temp.put("outbound_id",OD_demand_list.get(j).get("outbound_id"));
+//                    temp.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
+//                    temp.put("connection1",OD_demand_list.get(j).get("inbound_id")+"-"+OD_demand_list.get(j).get("outbound_id"));
+//                    temp.put("connection2","");
+//                    temp.put("connection3","");
+//                    temp.put("time1","0");
+//                    temp.put("time2",0);
+//                    temp.put("time3",0);
+//                    temp.put("dist1","");
+//                    temp.put("dist2",0);
+//                    temp.put("dist3",0);
+//                    temp.put("timecost","");
+//                    temp.put("scenario",OD_demand_list.get(j).get("scenario"));
+//                    temp.put("scenario_lim1",OD_demand_list.get(j).get("scenario_lim1"));
+//                    temp.put("scenario_lim2",OD_demand_list.get(j).get("scenario_lim2"));
+//                    temp.put("wait_time",0);
+//                    temp_list.add(temp);
+//                }
+//            }
+//        }
+        temp_list = two_points_route_list;
         //three_points_route
         systemWebSocketHandler.sendMessageToUser( new TextMessage("three_points_route:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("35%"));
@@ -309,10 +311,11 @@ public class RelayModeUtil extends Thread implements IConstants {
                 }
             }
         }*/
-
+        three_points_route_list = temp_list;
         //temp2
         systemWebSocketHandler.sendMessageToUser( new TextMessage("temp2:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("40%"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting...."));
         /*for(int j=0;j<three_points_route_list.size();j++){
             for(int j2=0;j2<distance_ref_list.size();j2++){
                 boolean b = three_points_route_list.get(j).get("point2").equals(distance_ref_list.get(j2).get("point2"));
@@ -450,6 +453,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                 }
             }
         }*/
+       four_points_route_list = temp_list;
         //time buckets
         //real timebucket###
         systemWebSocketHandler.sendMessageToUser( new TextMessage("real timebucket###:"));
@@ -473,6 +477,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         //route_temp
         systemWebSocketHandler.sendMessageToUser( new TextMessage("route_temp:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("70%"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting...."));
         for(int j=0;j<two_points_route_list.size();j++){
             two_points_route.put("timebucket_1",two_points_route_list.get(j).get("connection1"));
             two_points_route.put("timebucket_"+j+2,"");
@@ -483,17 +488,22 @@ public class RelayModeUtil extends Thread implements IConstants {
             route_temp_list.get(j).put("time_id1",site1[0][j%20]);
         }
         for(int j=0;j<two_points_route_list.size();j++){
+//            System.out.println(Double.parseDouble(two_points_route_list.get(j).get("time1").toString()));
             two_points_route_list.get(j).put("timebucket_1",route_temp_list.get(j).get("connection1"));
             two_points_route_list.get(j).put("timebucket_"+j+2,route_temp_list.get(j).get("timebucket_"+j+2));
+//            two_points_route_list.get(j).put("ok",Integer.parseInt(two_points_route_list.get(j).get("scenario_lim2").toString())
+//                    *route_time_unit-((Integer.parseInt(two_points_route_list.get(j).get("time_id1").toString())-1)*route_time_unit)
+//                    +Double.parseDouble(two_points_route_list.get(j).get("time1").toString()));
             two_points_route_list.get(j).put("ok",Integer.parseInt(two_points_route_list.get(j).get("scenario_lim2").toString())
-                    *route_time_unit-((Integer.parseInt(two_points_route_list.get(j).get("time_id1").toString())-1)*route_time_unit)
-                    +Integer.parseInt(two_points_route_list.get(j).get("time1").toString()));
+                    *route_time_unit-((Integer.parseInt(two_points_route_list.get(j).get("time_id1").toString())-1)*route_time_unit));
         }
 
         for(int j=0;j<two_points_route_list.size();j++){
+//            Double ok = Integer.parseInt(two_points_route_list.get(j).get("scenario_lim2").toString())
+//                    *route_time_unit-((Integer.parseInt(two_points_route_list.get(j).get("time_id1").toString())-1)*route_time_unit)
+//                    +Double.parseDouble(two_points_route_list.get(j).get("time1").toString());
             int ok = Integer.parseInt(two_points_route_list.get(j).get("scenario_lim2").toString())
-                    *route_time_unit-((Integer.parseInt(two_points_route_list.get(j).get("time_id1").toString())-1)*route_time_unit)
-                    +Integer.parseInt(two_points_route_list.get(j).get("time1").toString());
+                    *route_time_unit-((Integer.parseInt(two_points_route_list.get(j).get("time_id1").toString())-1)*route_time_unit);
             if(ok<0){
                 two_points_route_list.remove(j);
             }
@@ -586,8 +596,8 @@ public class RelayModeUtil extends Thread implements IConstants {
             }
         }
 
-        List<Map> route_list=null;
-        route_list.addAll(two_points_route_list);
+        List<Map> route_list=two_points_route_list;
+//        route_list.addAll(two_points_route_list);
         route_list.addAll(route_three_point_list);
         route_list.addAll(route_four_point_list);
 

@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.mckinsey.sf.constants.IConstants.systemWebSocketHandler;
+
 /**
  * Created by Administrator on 2017/11/10 0010.
  */
@@ -90,6 +92,8 @@ public class CascadeController {
                 rm.run();
             } catch (Exception e) {
                 e.printStackTrace();
+                TextMessage message = new TextMessage(e.getMessage());
+                systemWebSocketHandler.sendMessageToUser(message);
             }
         }else if("3".equals(distMode)){
 
