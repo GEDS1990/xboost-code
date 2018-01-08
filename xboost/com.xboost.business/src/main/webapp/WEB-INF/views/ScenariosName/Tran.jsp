@@ -198,14 +198,14 @@
                         </div>
                         <label class="col-sm-2 control-label">maximum distance (km)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="max_distance" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <input type="text" class="form-control" name="maxDistance" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">max RunningTime</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="max_running_time" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <input type="text" class="form-control" name="maxRunningTime" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">(&lt;10km)speed (km/h)</label>
                         <div class="col-sm-4">
@@ -287,7 +287,7 @@
 											<span><label><input type="radio" data-name="costb1" value="/ride" />/ride</span></label>
 											<span><label><input type="radio" data-name="costb2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="costb3" min="0" /></span>
+											<span><input type="number" class="km-min" name="costb3" min="0" step="0.01"/></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -304,7 +304,7 @@
 											<span><label><input type="radio" data-name="costc1" value="/ride" />/ride</span></label>
 											<span><label><input type="radio" data-name="costc2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="costc3" min="0" /></span>
+											<span><input type="number" class="km-min" name="costc3" min="0" step="0.01"/></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -321,7 +321,7 @@
 											<span><label><input type="radio" data-name="costd1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="costd2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="costd3" min="0" /></span>
+											<span><input type="number" class="km-min" name="costd3" min="0" step="0.01"/></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -338,7 +338,7 @@
 											<span><label><input type="radio" data-name="coste1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="coste2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="coste3" min="0" /></span>
+											<span><input type="number" class="km-min" name="coste3" min="0" step="0.01"/></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -355,7 +355,7 @@
 											<span><label><input type="radio" data-name="costf1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="costf2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="costf3" min="0" /></span>
+											<span><input type="number" class="km-min" name="costf3" min="0" step="0.01"/></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -422,13 +422,13 @@
                         </div>
                         <label class="col-sm-2 control-label">maximum distance (km)</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="max_distance" id="max_distance" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <input type="text" class="form-control" name="maxDistance" id="max_distance" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">max RunningTime</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="max_running_time" id="max_running_time" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                            <input type="text" class="form-control" name="maxRunningTime" id="max_running_time" required="required" oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                         <label class="col-sm-2 control-label">(&lt;10km)speed (km/h)</label>
                         <div class="col-sm-4">
@@ -510,7 +510,7 @@
 											<span><label><input type="radio" data-name="costb1" value="/ride" />/ride</span></label>
 											<span><label><input type="radio" data-name="costb2" value="/km" />/km</span></label>
 											<span>+</span>
-											<span><input type="number" name="costb3" class="km-min" id="costb3" min="0" /></span>
+											<span><input type="number" name="costb3" class="km-min" id="costb3" min="0" step="0.01"/></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -527,7 +527,7 @@
 											<span><label><input type="radio" data-name="costc1" value="/ride" />/ride</span></label>
 											<span><label><input type="radio" data-name="costc2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" name="costc3" class="km-min" id="costc3" min="0" /></span>
+											<span><input type="number" name="costc3" class="km-min" id="costc3" min="0" step="0.01"/></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -544,7 +544,7 @@
 											<span><label><input type="radio" data-name="costd1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="costd2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" name="costd3" class="km-min" id="costd3" min="0" /></span>
+											<span><input type="number" name="costd3" class="km-min" id="costd3" min="0" step="0.01"/></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -561,7 +561,7 @@
 											<span><label><input type="radio" data-name="coste1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="coste2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" name="coste3" class="km-min" id="coste3" min="0" /></span>
+											<span><input type="number" name="coste3" class="km-min" id="coste3" min="0" step="0.01"/></span>
 											<span>/min</span>
 										</td>
 									</tr>
@@ -578,7 +578,7 @@
 											<span><label><input type="radio" data-name="costf1" value="/ride"/>/ride</span></label>
 											<span><label><input type="radio" data-name="costf2" value="/km"/>/km</span></label>
 											<span>+</span>
-											<span><input type="number" class="km-min" name="costf3" id="costf3" min="0" /></span>
+											<span><input type="number" class="km-min" name="costf3" id="costf3" min="0" step="0.01"/></span>
 											<span>/min</span>
 										</td>
 								</tbody>

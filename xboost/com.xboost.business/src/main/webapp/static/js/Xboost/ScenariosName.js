@@ -1126,7 +1126,7 @@ $(function  () {
 	        		$this.parents('tr').find("td:nth-child(2)").find('.km-min').removeAttr('required').removeAttr('oninvalid').removeAttr('oninput');
 	        		$this.parents('td').find(".km-min").attr("disabled","disabled").val("").addClass('active');
 	        	}else if(type == "/km"){
-	        		$this.parents('tr').find('input[type="number"]').attr({"required":"required","oninvalid":"setCustomValidity('Please enter information');","oninput":"setCustomValidity('0');"});
+	        		$this.parents('tr').find('input[type="number"]').attr({"required":"required","oninvalid":"setCustomValidity('Please enter information');","oninput":"setCustomValidity('');"});
 	        		$this.parents('tr').nextAll().find('input[type="number"]').removeAttr('required').removeAttr('oninvalid').removeAttr('oninput');
 	        		$this.parents('td').find(".km-min").removeAttr("disabled").removeClass('active');
 	        	}
@@ -1306,11 +1306,7 @@ $(function  () {
 	        });
 	
 	        $("#editBtn-tran").click(function(){
-//	        	var km = $('input[value="/km"]:checked');
-//	        	km.each(function  (){
-//	        		console.log($(this).val())
-//	        	});
-	        	//console.log(_val)
+	        	console.log($("#editUserForm-tran").serialize())
 	        		FormInput("editUserForm-tran",function (){
 		        		$.post("/car/edit",$("#editUserForm-tran").serialize()).done(function(result){
 			                if(result == "success") {
