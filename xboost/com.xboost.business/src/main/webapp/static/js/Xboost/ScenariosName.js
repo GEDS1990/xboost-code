@@ -937,7 +937,13 @@ $(function  () {
 	                {"data":"id","name":"id"},
 	                {"data":"type","name":"type"},
 	                {"data":"carSource","name":"car_source"},
-	                {"data":"num","name":"num"},
+	                {"data":function (res){
+	                	if (res.num >= 99) {
+	                		return "∞";
+	                	}else{
+	                		return res.num;
+	                	}
+	                },"name":"num"},
 	                {"data":function  (res) {
 	                	if (res.maxStop >= 99) {
 	                		return "∞";
@@ -969,9 +975,25 @@ $(function  () {
 	                {"data":function(res){
 	                	return res.velocity3;
 	                },"name":"velocity3"},
-	                {"data":"durationUnloadFull","name":"duration_unload_full"},
-	                {"data":"start_location","name":"start_location"},
-	                {"data":"end_location","name":"end_location"},
+	                {"data":function (res){
+	                	if (res.durationUnloadFull == null || res.durationUnloadFull == "" || res.durationUnloadFull == " ") {
+	                		return "--";
+	                	}
+	                	return res.durationUnloadFull;
+	                },"name":"duration_unload_full"},
+	                {"data":function (res){
+	                	console.log(res)
+	                	if (res.start_location == null || res.start_location == "" || res.start_location == " ") {
+	                		return "--";
+	                	}
+	                	return res.start_location;
+	                },"name":"start_location"},
+	                {"data":function (res){
+	                	if (res.end_location == null || res.end_location == "" || res.end_location == " ") {
+	                		return "--";
+	                	}
+	                	return res.start_location;
+	                },"name":"end_location"},
 	                {"data":"a1","name":"a1"},
 	                {"data":function  (res) {
 	                	if (res.a2 > 998) {
