@@ -51,8 +51,8 @@
 	        		<p><shiro:principal property="username"/>′s Scenarios</p>
 	        	</div>
 	        	<div class="xb-fr">
-	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Conditions</button>
-	        		<button id="addNewUser-scen" ><span class="icon-file-text-o"></span>Create Scenarios</button>
+	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Scenario</button>
+	        		<button id="addNewUser-scen" ><span class="icon-file-text-o"></span>Create Scenario</button>
 	        	</div>
 	        </div>
 	        <div style="position: relative;">
@@ -66,14 +66,14 @@
 				            	<tr>
 				            		<th>ID</th>
 				            		<th>useID</th>
-					                <th>Scenarios Name</th>
+					                <th>Scenario Name</th>
 					                <th>Category</th>
 					                <th>Description</th>
 					                <th>mode</th>
 					                <th>out</th>
 					                <th>Last Opened</th>
 					                <th>Current Status</th>
-					                <th>operation</th>
+					                <th>Operation</th>
 				            	</tr>
 				            </thead>
 				            <tbody id="scen-tbody">
