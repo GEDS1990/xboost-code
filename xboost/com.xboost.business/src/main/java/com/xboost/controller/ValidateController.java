@@ -90,7 +90,7 @@ public class ValidateController {
         double longCarDistance = transportationList.get(0).getMaxDistance();
         for(int i=0;i<transportationList.size();i++){
             Car car = transportationList.get(i);
-            String vehiclesWrongLink = wrongLink("car", car.getName());
+            String vehiclesWrongLink = wrongLink("car", car.getType());
             /*if(Strings.isEmpty(car.getName())) {
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":vehicles name is empty.\n";
