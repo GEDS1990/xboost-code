@@ -102,7 +102,7 @@
 	    				<h1 id="route-name">No Data</h1>
 	    				<ul class="scen-cost">
 	    					<li>total distance(km):<span id="total-distance"></span></li>
-	    					<li>vehicle load requirement:<span id="vehicle-load-requirement"></span></li>
+	    					<li>vehicle type requirement:<span id="vehicle-load-requirement"></span></li>
 	    					<li>vehicle piece capacity requirement:<span id="vehicle-piece-capacity"></span></li>
 	    					<li>speed requirement:<span id="speed-requirement"></span></li>
 	    					<li style="color: blue;">Chosen Vehicle:<span style="color: blue;font-weight: inherit;" id="Chosen-Vehicle">--</span></li>
@@ -135,10 +135,10 @@
 					    	<tr>
 					    		<th rowspan="1">id</th>
 					    		<th rowspan="1">Route ID</th>
-					    		<th rowspan="1">Deport Order</th>
-					    		<th rowspan="1">Deport ID</th>
-					    		<th rowspan="1">Deport Name</th>
-					    		<th rowspan="1">Deport Address</th>
+					    		<th rowspan="1">Depot Order</th>
+					    		<th rowspan="1">Depot ID</th>
+					    		<th rowspan="1">Depot Name</th>
+					    		<th rowspan="1">Depot Address</th>
 					    		<th rowspan="1">Arrival Time</th>
 					    		<th rowspan="1">Operation</th>
 					    		<th rowspan="1">Departure Time</th>

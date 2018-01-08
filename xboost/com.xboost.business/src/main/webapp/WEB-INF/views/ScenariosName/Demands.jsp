@@ -60,7 +60,7 @@
 	        		<li><a href="/siteInfo">Depots Info</a></li>
 	        		<li><a href="/siteDist">Depots Distance</a></li>
 	        		<li><a href="/car">Vehicles</a></li>
-	        		<li class="active"><a  class="active" href="/demandInfo">Demands</a></li>
+	        		<li class="active"><a  class="active" href="/demandInfo">Shipments</a></li>
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
 	        </div>
@@ -72,14 +72,14 @@
 			            <thead>
 			            	<tr>
 			            		<th>ID</th>
-				                <th>start depot</th>
-				                <th>start time</th>
-				                <th>end depot</th>
-				                <th>effective end time</th>
-				                <th>piece(p)</th>
-				                <th>weight(kg)</th>
-				                <th>product type</th>
-				                <th>operation</th>
+				                <th>Origination Depot</th>
+				                <th>Start Time</th>
+				                <th>Destiantion Depot</th>
+				                <th>Effective End Time</th>
+				                <th>Piece(p)</th>
+				                <th>Weight(kg)</th>
+				                <th>Product Type</th>
+				                <th>Operation</th>
 			            	</tr>
 			            </thead>
 			            <tbody>

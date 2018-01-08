@@ -60,7 +60,7 @@
 	        		<li><a href="/siteInfo">Depots Info</a></li>
 	        		<li class="active"><a  class="active" href="/siteDist">Depots Distance</a></li>
 	        		<li><a href="/car">Vehicles</a></li>
-	        		<li><a href="/demandInfo">Demands</a></li>
+	        		<li><a href="/demandInfo">Shipments</a></li>
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
 	        </div>
@@ -73,13 +73,13 @@
 			            	<tr>
 			            		<th rowspan="3">ID</th>
 				                <th rowspan="3">vehicle name</th>
-				                <th rowspan="3">start depot</th>
-				                <th rowspan="3">end depot</th>
-				                <th colspan="6">be used to calculating the transportation time</th>
+				                <th rowspan="3">Origination Depot</th>
+				                <th rowspan="3">Destination Depot</th>
+				                <th colspan="6"></th>
 				                <th rowspan="3">operation</th>
 				                <tr>
 				                	<th rowspan="2">transportation distance(km)</th>
-				                	<th colspan="5">transportation time(min) (higher priority)</th>
+				                	<th colspan="5">transportation time(min)</th>
 				                </tr>
 				                <tr>
 				                	<th>货车</th>

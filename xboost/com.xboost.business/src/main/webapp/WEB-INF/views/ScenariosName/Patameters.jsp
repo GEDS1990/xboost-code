@@ -60,7 +60,7 @@
 	        		<li><a href="/siteInfo">Depots Info</a></li>
 	        		<li><a href="/siteDist">Depots Distance</a></li>
 	        		<li><a href="/car">Vehicles</a></li>
-	        		<li><a href="/demandInfo">Demands</a></li>
+	        		<li><a href="/demandInfo">Shipments</a></li>
 	        		<li class="active"><a  class="active" href="/modelArg">Parameters</a></li>
 	        	</ul>
 	        </div>

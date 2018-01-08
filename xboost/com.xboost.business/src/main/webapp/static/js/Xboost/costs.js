@@ -191,7 +191,7 @@ $(function (){
 				console.log(data)
 				var $res=data;
 				if (data.modelType == 1) {
-					$('#model-type').text("串点模型");
+					$('#model-type').text("Serial Model");
 					if (data) {
 						$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
 							console.log(res.data)
