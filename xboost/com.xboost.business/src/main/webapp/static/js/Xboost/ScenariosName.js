@@ -557,8 +557,18 @@ $(function  () {
 	                	return operationTime(res.durationEnd);
 	                },"name":"duration_end"},
 	                {"data":"votes","name":"votes"},
-	                {"data":"weight","name":"weight"},
-	                {"data":"productType","name":"product_type"},
+	                {"data":function (res){
+	                	if (res.weight == null || res.weight == "" ||  res.weight == ' ' || res.weight == 0) {
+	                		return "-";
+	                	}
+	                	return res.weight;
+	                },"name":"weight"},
+	                {"data":function (res){
+	                	if (res.productType == null || res.productType == "" ||  res.productType == ' ' ||  res.productType == 0) {
+	                		return "-";
+	                	}
+	                	return res.productType;
+	                },"name":"product_type"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-dem' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dem' data-id='"+row.id+"'>Del</a>";
 	                }}
@@ -976,21 +986,20 @@ $(function  () {
 	                	return res.velocity3;
 	                },"name":"velocity3"},
 	                {"data":function (res){
-	                	if (res.durationUnloadFull == null || res.durationUnloadFull == "" || res.durationUnloadFull == " ") {
-	                		return "--";
+	                	if (res.durationUnloadFull == null || res.durationUnloadFull == "" || res.durationUnloadFull == " " || res.durationUnloadFull == 0) {
+	                		return "-";
 	                	}
 	                	return res.durationUnloadFull;
 	                },"name":"duration_unload_full"},
 	                {"data":function (res){
-	                	console.log(res)
-	                	if (res.start_location == null || res.start_location == "" || res.start_location == " ") {
-	                		return "--";
+	                	if (res.start_location == null || res.start_location == "" || res.start_location == " " || res.start_location == 0) {
+	                		return "-";
 	                	}
 	                	return res.start_location;
 	                },"name":"start_location"},
 	                {"data":function (res){
-	                	if (res.end_location == null || res.end_location == "" || res.end_location == " ") {
-	                		return "--";
+	                	if (res.end_location == null || res.end_location == "" || res.end_location == " " || res.end_location == 0) {
+	                		return "-";
 	                	}
 	                	return res.start_location;
 	                },"name":"end_location"},
