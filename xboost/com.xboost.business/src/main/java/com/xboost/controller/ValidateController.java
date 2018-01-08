@@ -91,18 +91,18 @@ public class ValidateController {
         for(int i=0;i<transportationList.size();i++){
             Car car = transportationList.get(i);
             String vehiclesWrongLink = wrongLink("car", car.getName());
-            if(Strings.isEmpty(car.getName())) {
+            /*if(Strings.isEmpty(car.getName())) {
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":vehicles name is empty.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
-            /*if(Strings.isEmpty(car.getType())) {
+            }*/
+            if(Strings.isEmpty(car.getType())) {
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":vehicles weight limit is empty.\n";
                 logger.info(result);
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }*/
+            }
             if(Strings.isEmpty(car.getNum())) {
                 flag = flag + 1;
                 result = vehiclesWrongLink + ":vehicles quantity is empty.\n";
