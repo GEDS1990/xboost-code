@@ -101,8 +101,8 @@
 		    					<div class="item-box">
 		    						<h1>人效</h1>
 		    						<ul class="item-content">
-		    							<li>网点集散点人效 (p): <input type="number" name="sitePeopleWork"  min="0" v-model="sitePeople"/></li>
-		    							<li>集配站集散点人效 (p): <input type="number" name="distribPeopleWork" min="0" v-model="collectPeople"/></li>
+		    							<li>Sorting Efficiency in Depot: <input type="number" name="sitePeopleWork"  min="0" v-model="sitePeople"/></li>
+		    							<li>Sorting Efficiency in Second Layer Hub: <input type="number" name="distribPeopleWork" min="0" v-model="collectPeople"/></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
