@@ -108,7 +108,7 @@
 	    				<ul class="scen-cost">
 	    					<li>depot type:<span id ="type">--</span></li>
 	    					<!--<li>to distrib.center:<span id="distrib-center">--</span></li>-->
-	    					<li>deport area:<span id="area">--</span></li>
+	    					<li>depot area:<span id="area">--</span></li>
 	    					<li>vehicle quantity limit:<span id="vehicle-quantity-limit">--</span><span>(per 10mins)</span></li>
 	    					<li>vehicle weight limit:<span id="vehicle-weight-limit">--</span><span>(per 10mins)</span></li>
 	    					<li>piece capacity:<span id="piece-capacity">--</span><span>(per 10mins)</span></li>
@@ -126,7 +126,7 @@
 					    		<th rowspan="1">id</th>
 					    		<th rowspan="1">Depot ID</th>
 					    		<th rowspan="1">Incoming Vehicle</th>
-					    		<th rowspan="1">Arriva Time</th>
+					    		<th rowspan="1">Arrival Time</th>
 					    		<th rowspan="1">Operation</th>
 					    		<th rowspan="1">Departure Time</th>
 					    		<!--<th rowspan="1">cur loc</th>
