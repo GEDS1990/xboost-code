@@ -56,7 +56,13 @@ public class CascadeController {
 
     @RequestMapping(value="/runSilumate",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> docascade(String distMode,String loadTime,String loopLimit){
+    public String docascade(String distMode,String loadTime,String loopLimit){
+        Integer scenariosId = Integer.parseInt(ShiroUtil.getOpenScenariosId());
+        String stauts = myScenariosService.findById(scenariosId).getScenariosStatus();
+        if(stauts.equals("Simulating"))
+        {
+            return "Simulating";
+        }
         solutionRouteService.updateScenariosModel(distMode);//更新模型参数
         myScenariosService.updateStatus("Simulating");
         ShiroUtil.clearSimulateConsole();

@@ -8,6 +8,7 @@ import com.xboost.util.ExcelUtil;
 import com.xboost.util.ExportUtil;
 import com.xboost.util.QiniuUtil;
 import com.xboost.util.ShiroUtil;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -186,7 +187,7 @@ public class SiteDistService {
     /**
      * 导出excel
      */
-    public void exportExcel(String scenariosId,String[] titles,ServletOutputStream outputStream)
+    public void exportExcel(String scenariosId,String[] titles,String[] nextTitles,ServletOutputStream outputStream)
     {
         List<SiteDist> list = siteDistMapper.findAll(scenariosId);
          // 创建一个workbook 对应一个excel应用文件
@@ -197,26 +198,55 @@ public class SiteDistService {
          ExportUtil exportUtil = new ExportUtil(workBook, sheet);
          XSSFCellStyle headStyle = exportUtil.getHeadStyle();
          XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
-         // 构建表头
-         XSSFRow headRow = sheet.createRow(0);
-         XSSFCell cell = null;
-         for (int i = 0; i < titles.length; i++)
-             {
-                 cell = headRow.createCell(i);
-                 cell.setCellValue(titles[i]);
-                 cell.setCellStyle(headStyle);
-                 System.out.println(titles[i]);
-             }
+
+        // 表头列名
+        XSSFRow headRow = sheet.createRow(0);
+        XSSFCell cell = null;
+        for (int i = 0; i < titles.length; i++) {
+            cell = headRow.createCell(i);
+            cell.setCellValue(titles[i]);
+            cell.setCellStyle(headStyle);
+        }
+
+        ////对应excel中的行和列，下表从0开始{"开始行,结束行,开始列,结束列"}
+        String[] headNum = { "0,1,0,0", "0,1,1,1", "0,1,2,2", "0,1,3,3", "0,0,4,8" };
+        String[] nextHeadNum = { "1,1,4,4", "1,1,5,5", "1,1,6,6", "1,1,7,7", "1,1,8,8" };
+
+        //动态合并单元格
+        for (int i = 0; i < headNum.length; i++) {
+            String[] temp = headNum[i].split(",");
+            Integer startrow = Integer.parseInt(temp[0]);
+            Integer overrow = Integer.parseInt(temp[1]);
+            Integer startcol = Integer.parseInt(temp[2]);
+            Integer overcol = Integer.parseInt(temp[3]);
+            sheet.addMergedRegion(new CellRangeAddress(startrow, overrow,
+                    startcol, overcol));
+        }
+
+        //设置合并单元格的参数并初始化
+        headRow = sheet.createRow(1);
+        for (int i = 0; i < titles.length; i++) {
+            cell = headRow.createCell(i);
+            cell.setCellStyle(headStyle);
+            if(i >= 4  && i <= 8) {
+                for (int j = 0; j < nextTitles.length; j++) {
+                    cell = headRow.createCell(j + 4);
+                    cell.setCellValue(nextTitles[j]);
+                    cell.setCellStyle(headStyle);
+                }
+            }
+        }
+
          // 构建表体数据
          if (list != null && list.size() > 0)
          {
              for (int j = 0; j < list.size(); j++)
              {
-                 XSSFRow bodyRow = sheet.createRow(j + 1);
+                 XSSFRow bodyRow = sheet.createRow(j + 2);
                  SiteDist siteDist = list.get(j);
 
                  cell = bodyRow.createCell(0);
-                 cell.setCellValue(siteDist.getId());
+                 cell.setCellValue("NA");
                  cell.setCellStyle(bodyStyle);
 
                  cell = bodyRow.createCell(1);
@@ -248,7 +278,9 @@ public class SiteDistService {
                  cell.setCellValue(siteDist.getDurationNightDelivery3());
                  cell.setCellStyle(bodyStyle);
 
-
+                 cell = bodyRow.createCell(8);
+                 cell.setCellValue(siteDist.getDurationNightDelivery4());
+                 cell.setCellStyle(bodyStyle);
              }
          }
          try

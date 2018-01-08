@@ -263,7 +263,7 @@ public class DemandInfoService {
                     int i = 0;
 
                     cell = bodyRow.createCell(0+i);
-                    cell.setCellValue(demandInfo.getId());
+                    cell.setCellValue("NA");
                     cell.setCellStyle(bodyStyle);
 
                     cell = bodyRow.createCell(1+i);
@@ -299,9 +299,9 @@ public class DemandInfoService {
                     cell.setCellValue(demandInfo.getProductType());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(9+i);
+                    /*cell = bodyRow.createCell(9+i);
                     cell.setCellValue(demandInfo.getAgeing());
-                    cell.setCellStyle(bodyStyle);
+                    cell.setCellStyle(bodyStyle);*/
                 }
             }
             catch (Exception e)

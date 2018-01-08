@@ -165,21 +165,37 @@ $(function  () {
 	            });
 	            //停止算法
 				$('#sim-stop').click(function  () {
-					$('#modal-sim').modal("show");
-					$('#modal-simdelBtn').click(function  () {
-						$.get("/cascade/restartSilumate").done(function (res){
-							if (res == "success") {
+					$.post("/cascade/runSilumate").done(function (res){
+						console.log(res)
+						if (res == "Simulating") {
+							$('#modal-sim').find('.modal-body p').text("The Simulation is running and can not restart the Simulation");
+							$('#modal-sim').modal("show");
+							$('#modal-simdelBtn').click(function(){
 								$('#modal-sim').modal("hide");
-							}else{
-								$('#modal-sim').modal("hide");
-								$('#modal-simfail').modal("show");
-							}
-						}).fail(function(){
-							$('#modal-sim').modal("hide");
-							$('#modal-simfail').modal("show");
-						});
-						
-					});
+							});
+						}else{
+							$('#modal-sim').find('.modal-body p').text("Are you sure want to restart simulation?");
+							$('#modal-sim').modal("show");
+							$('#modal-simdelBtn').click(function  () {
+								$.get("/cascade/restartSilumate").done(function (res){
+									if (res == "success") {
+										$('#modal-sim').modal("hide");
+									}else{
+										$('#modal-sim').modal("hide");
+										$('#modal-simfail').modal("show");
+									}
+								}).fail(function(){
+									$('#modal-sim').modal("hide");
+									$('#modal-simfail').modal("show");
+								});
+								
+							});
+						}
+					}).fail(function (){
+						$('#modal-sim').modal("hide");
+						$('#modal-simfail').modal("show");
+					})
+					
 					
 				});
 		        function log(messages) {

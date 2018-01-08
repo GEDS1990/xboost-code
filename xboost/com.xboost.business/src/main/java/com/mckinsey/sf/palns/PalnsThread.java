@@ -85,10 +85,12 @@ public class PalnsThread extends Thread implements IConstants  {
 			}
 			temperature *= palns.getConfig().getAlpha();
 		}
-		costPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
-		costPojo.setBranchTransportCost(String.valueOf(((Solution)palns.getBest()).cost()));
-		Cost costT = null;
 		solutionCostService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
+		costPojo.setScenariosId(ShiroUtil.getOpenScenariosId());
+		Integer totalPiece=solutionCostService.findTotalPiece(ShiroUtil.getOpenScenariosId());
+		Double branchCost = ((Solution)palns.getBest()).cost();
+		costPojo.setBranchTransportCost(String.valueOf(branchCost/totalPiece));
+		Cost costT = null;
 		try{
 			costT = solutionCostService.findByScenariosId(ShiroUtil.getOpenScenariosId());
 		}catch (Exception e){

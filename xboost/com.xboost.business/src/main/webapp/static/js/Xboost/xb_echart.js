@@ -313,7 +313,6 @@ function add0(m){return m<10?'0'+m:m };
 (function  () {
 	var distribution_echarts = doc.getElementById('distribution-echarts');
 	if (distribution_echarts) {
-		$('.loading').show();
 		//自适应设置  
 	    width = $(window).width();  
 	    height = $(window).height();  
@@ -321,7 +320,6 @@ function add0(m){return m<10?'0'+m:m };
 	    var _val = $('#distribution-choose').val();
 	    $.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
 	    	//console.log(res);
-	    	$('.loading').hide();
 	    	var arr = [];
 	    	for (var i in res) {
 	    		var obj = {}
@@ -353,11 +351,9 @@ function add0(m){return m<10?'0'+m:m };
 	    	alert("fail");
 	    });
 	    $('#distribution-choose').change(function  () {
-	    	$('.loading').show();
 	    	var _val = $(this).val();
 	    	$.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
 		    	//console.log(res);
-		    	$('.loading').hide();
 		    	if (_val == 0 || _val== 1) {
 		    		var arr = [];
 			    	for (var i in res) {

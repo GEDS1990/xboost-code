@@ -84,7 +84,7 @@
 	    				<div class="clearfix">
 	    					<p>Opetimaztion Finish Criteria :</p>
 	    				</div>
-	    				<div class="clearfix sim-input">
+	    				<div class="clearfix sim-input" style="display:none">
 		    				<p>Time Limit(min)(中间停靠时间)</p>
 		    				<input type="number" id="sim-run-time" value="2" />
 		    				<p id="timelimit" class="sim-error">You must set the time limit</p>

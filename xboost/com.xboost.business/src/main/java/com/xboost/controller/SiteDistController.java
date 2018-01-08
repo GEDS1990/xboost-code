@@ -160,8 +160,13 @@ public class SiteDistController {
              response.setCharacterEncoding("utf-8");
              response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
              String scenariosId = ShiroUtil.getOpenScenariosId();
-             String[] titles = { "ID","carType","pickup depot","delivery depot","transportation distance(km)","night transportation time(min)" };
-             siteDistService.exportExcel(scenariosId,titles,outputStream);
+             String[] titles = { "ID","vehicle type *","start depot *","end depot *","be used to calculating the transportation time",
+                     "be used to calculating the transportation time","be used to calculating the transportation time",
+                     "be used to calculating the transportation time","be used to calculating the transportation time"};
+             String[] nextTitles = { "transportation distance (km) *","transportation time (min) (higher priority)truck",
+                     "transportation time (min) (higher priority)didi","transportation time (min) (higher priority)baidu",
+                     "transportation time (min) (higher priority)dada"};
+             siteDistService.exportExcel(scenariosId,titles,nextTitles,outputStream);
       //       System.out.println("outputStream:"+outputStream);
              }
          catch (IOException e)

@@ -47,9 +47,6 @@ $(function (){
 					sumG:function (){
 						this.day_allp_cost = (this.day_p_cost/this.piece).toFixed(2);
 					},
-					sumI:function (){
-						this.line_cost = Number(this.branch_cost).toFixed(2);
-					},
 					sumK:function (){
 						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
 					}
@@ -93,7 +90,6 @@ $(function (){
 					a:function (){
 						this.sum23();
 						this.sumG();
-						this.sumI();
 						this.sumK();
 					}
 				}
@@ -140,9 +136,6 @@ $(function (){
 					sumG:function (){
 						this.day_allp_cost = (this.day_p_cost/this.piece).toFixed(2);
 					},
-					sumI:function (){
-						this.line_cost = Number(this.branch_cost).toFixed(2);
-					},
 					sumK:function (){
 						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
 					}
@@ -186,7 +179,6 @@ $(function (){
 					a:function (){
 						this.sum23();
 						this.sumG();
-						this.sumI();
 						this.sumK();
 					}
 				}
@@ -202,15 +194,16 @@ $(function (){
 					$('#model-type').text("串点模型");
 					if (data) {
 						$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
-							console.log(res)
-							if (res.data.length == 0) {
+							console.log(res.data)
+							if (res.data[0].distribPeopleWork == null) {
+								console.log(1)
 								var urlcost = "/costs/edit";
 								vmA.sitePeople = $res.sitePeopleWork;
 								vmA.collectPeople = $res.distribPeopleWork;
 								vmA.depotcount = $res.siteCount;
 								vmA.depotPeoplecount = 1;
 								vmA.piece = $res.totalPiece;
-								vmA.branch_cost = $res.branchTransportCost;
+								vmA.line_cost = Number($res.branchTransportCost).toFixed(2);
 								vmA.full_salaty = 6000;
 								vmA.full_days = 30;
 								vmA.part_wage = 20;
@@ -220,15 +213,14 @@ $(function (){
 								vmB.depotcount = $res.siteCount;
 								vmB.depotPeoplecount = 1;
 								vmB.piece = $res.totalPiece;
-								vmB.branch_cost = $res.branchTransportCost;
+								vmB.line_cost = Number($res.branchTransportCost).toFixed(2);
 								vmB.full_salaty = 6000;
 								vmB.full_days = 30;
 								vmB.part_wage = 20;
 								vmB.part_work = 2;
 							}else{
-								
 								var result = res.data[0];
-								//console.log(result)
+								console.log(result)
 								var urlcost = "/costs/edit"; 
 								vmA.sitePeople = result.sitePeopleWork;
 								vmA.collectPeople = result.distribPeopleWork;
@@ -256,7 +248,7 @@ $(function (){
 								vmB.collectPeople = result.distribPeopleWork;
 								vmB.depotcount = result.siteCount;
 								vmB.piece = $res.totalPiece;
-								vmB.branch_cost = $res.branchTransportCost;
+								vmB.branch_cost = result.branchTransportCost;
 								vmB.depotPeoplecount = result.peopleNumPerSite;
 								vmB.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
 								setTimeout(function (){
