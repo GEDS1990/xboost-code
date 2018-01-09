@@ -148,7 +148,7 @@
 						<table class="table table-hover efficiency">
 							<thead>
 								<tr>
-									<th>deport id</th>
+									<th>depot id</th>
 									<th>longitude</th>
 									<th>latitude</th>
 									<th>depot area (m²)</th>

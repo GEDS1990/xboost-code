@@ -54,7 +54,7 @@
 	        <div class="cond-top">
 	        	<ul class="cond-top-ul clearfix" id="sim-run-percent">
 	        		<li><a href="/simualte">Validate</a></li>
-	        		<li class="active"><a  class="active" href="/Simualte">Simualte{{percent}}</a></li>
+	        		<li class="active"><a  class="active" href="/Simualte">Simulate{{percent}}</a></li>
 	        	</ul>
 	        </div>
 	        
@@ -69,7 +69,7 @@
 	    			</div>
 	    			
 	    			<div class="form-group  clearfix">
-	    				<p class="sim-run-btn"><button id="sim-stop">Restart Simulation</button></p>
+	    				<p class="sim-run-btn"><button id="sim-stop">Stop Simulation</button></p>
 	    			</div>
 	    		</div>
 	    	</div>
