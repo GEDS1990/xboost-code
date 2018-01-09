@@ -48,7 +48,7 @@
 	    	<!--top-->
 	    	<div class="clearfix cond-wrap">
 	        	<div class="xb-fl">
-	        		<p>${sessionScope.openScenariosName}(Simualte)</p>
+	        		<p>${sessionScope.openScenariosName}(Simulate)</p>
 	        	</div>
 	        </div>
 	        <div class="cond-top">
