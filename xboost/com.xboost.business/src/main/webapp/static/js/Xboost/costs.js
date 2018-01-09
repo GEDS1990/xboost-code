@@ -191,7 +191,7 @@ $(function (){
 				console.log(data)
 				var $res=data;
 				if (data.modelType == 1) {
-					$('#model-type').text("串点模型");
+					$('#model-type').text("Serial Model");
 					if (data) {
 						$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
 							console.log(res.data)
@@ -455,14 +455,14 @@ $(function (){
 						$('#car-tbody').append(addtbody);
 					}
 					addthead+='<tr>';
-					addthead+='<th colspan='+(result.length+3)+'>发出车辆数</th>';
+					addthead+='<th colspan='+(result.length+3)+'>No. of Departing Vehicles</th>';
 					addthead+='<th>总车次</th>';
 					addthead+='</tr>';
 					addthead+='<tr>';
-					addthead+='<th>装车网点</th>';
-					addthead+='<th>峰值发出次数</th>';
+					addthead+='<th>Depot ID</th>';
+					addthead+='<th>Peak No. of Shipments</th>';
 					addthead+=addth(result);
-					addthead+='<th>总发出量</th>';
+					addthead+='<th>Total Delivery Shipments</th>';
 					addthead+='<th>'+allsum+'</th></tr>';
 					$('#car-thead').append(addthead);	
 					
@@ -498,14 +498,14 @@ $(function (){
 						$('#sbVol-tbody').append(addtbody);
 					}
 					addthead+='<tr>';
-					addthead+='<th colspan='+(result.length+3)+'>发出票数</th>';
-					addthead+='<th>总票数</th>';
+					addthead+='<th colspan='+(result.length+3)+'>No. of Delivery Shipments</th>';
+					addthead+='<th>Total Shipments</th>';
 					addthead+='</tr>';
 					addthead+='<tr>';
-					addthead+='<th>装车网点</th>';
-					addthead+='<th>峰值发出票数</th>';
+					addthead+='<th>Depot ID</th>';
+					addthead+='<th>Peak No. of Shipments</th>';
 					addthead+=addth(result);
-					addthead+='<th>总发出量</th>';
+					addthead+='<th>Total Delivery Shipments</th>';
 					addthead+='<th>'+allsum+'</th></tr>';
 					$('#sbVol-thead').append(addthead);	
 					
@@ -540,14 +540,14 @@ $(function (){
 						$('#arrcar-tbody').append(addtbody);
 					}
 					addthead+='<tr>';
-					addthead+='<th colspan='+(result.length+3)+'>到达车辆数</th>';
+					addthead+='<th colspan='+(result.length+3)+'>No. of Arraving vehicles</th>';
 					addthead+='<th>总车次</th>';
 					addthead+='</tr>';
 					addthead+='<tr>';
 					addthead+='<th>卸车网点</th>';
-					addthead+='<th>峰值到达车次</th>';
+					addthead+='<th>Peak No. of Shipments</th>';
 					addthead+=addth(result);
-					addthead+='<th>总到达量</th>';
+					addthead+='<th>Total Receiving Shipments</th>';
 					addthead+='<th>'+allsum+'</th></tr>';
 					$('#arrcar-thead').append(addthead);	
 					
@@ -583,14 +583,14 @@ $(function (){
 						$('#unloadVol-tbody').append(addtbody);
 					}
 					addthead+='<tr>';
-					addthead+='<th colspan='+(result.length+3)+'>到达票数</th>';
-					addthead+='<th>总票数</th>';
+					addthead+='<th colspan='+(result.length+3)+'>No. of Receiving Shipments</th>';
+					addthead+='<th>Total Shipments</th>';
 					addthead+='</tr>';
 					addthead+='<tr>';
 					addthead+='<th>卸车网点</th>';
-					addthead+='<th>峰值到达票数</th>';
+					addthead+='<th>Peak No. of Shipments</th>';
 					addthead+=addth(result);
-					addthead+='<th>总到达量</th>';
+					addthead+='<th>Total Receiving Shipments</th>';
 					addthead+='<th>'+allsum+'</th></tr>';
 					$('#unloadVol-thead').append(addthead);	
 					

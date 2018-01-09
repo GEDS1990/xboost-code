@@ -66,21 +66,21 @@
 	        
 	    	<div class="sim-content scen">
 	    		<header class="clearfix">
-	    			<p>Settings Overview</p>
+	    			<p>Input Overview</p>
 	    			<a href="/siteInfo">See details</a>
 	    		</header>
 	    		<div class="sim-box">
 	    			<ul id="scen-ul" class="clearfix">
 	    				<li>
-	    					<p>Depot Quantity:</p>
+	    					<p>No. of Depots:</p>
 	    					<p id="depot-quantity">--</p>
 	    				</li>
 	    				<li>
-	    					<p>Vehicle Quantity:</p>
+	    					<p>Vehicle Type:</p>
 	    					<p id="vehicle-quantity">--</p>
 	    				</li>
 	    				<li>
-	    					<p>Demand Quantity:</p>
+	    					<p>No. of Shipments:</p>
 	    					<p id="demand-quantity">--</p>
 	    				</li>
 	    				<li>
@@ -92,7 +92,7 @@
 	    	</div>
 	    	<div class="sim-content scen">
 	    		<header class="clearfix">
-	    			<p>Simulation & Results Overview</p>
+	    			<p>Output Overview</p>
 	    			<a>See details</a>
 	    		</header>
 	    		<table id="ScenariosNamet" style="display: none;">
@@ -118,10 +118,10 @@
 	    					<li>Simulation Finished:<span id ="simulation-finished">--</span></li>
 	    				</ul>
 	    				<ul class="scen-cost">
-	    					<li>Staff Quantity:<span id ="staff-quantity">--</span></li>
+	    					<li>No. of Staff:<span id ="staff-quantity">--</span></li>
 	    					<li>Staff Cost:<span id ="staff-cost">--</span></li>
-	    					<li>Vehicle Quantity:<span id ="vehicle-quantity1">--</span></li>
-	    					<li>Vehicle Cost:<span id ="vehicle-cost">--</span></li>
+	    					<li>No. of Vehicles:<span id ="vehicle-quantity1">--</span></li>
+	    					<li>Transportation Cost:<span id ="vehicle-cost">--</span></li>
 	    					<li class="totalcost">Total Cost:<span id="total-cost">--</span></li>
 	    				</ul>
 	    			</div>

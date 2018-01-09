@@ -82,15 +82,15 @@
 	    			</div>
 	    			<div class="sim-settings">
 	    				<div class="clearfix">
-	    					<p>Opetimaztion Finish Criteria :</p>
+	    					<p>Optimization Finish Criteria :</p>
 	    				</div>
 	    				<div class="clearfix sim-input" style="display:none">
-		    				<p>Time Limit(min)(中间停靠时间)</p>
+		    				<p>Time Limit(min)(模型运行时间)</p>
 		    				<input type="number" id="sim-run-time" value="2" />
 		    				<p id="timelimit" class="sim-error">You must set the time limit</p>
 		    			</div>
 		    			<div class="clearfix sim-input">
-		    				<p>Loops Limit（算法循环次数）</p>
+		    				<p>o. of Loops (Model Optimization Loops)</p>
 		    				<input type="number" id="sim-run-count" value="" />
 		    				<p id="loopslimit" class="sim-error">You must set the loops limit</p>
 		    			</div>

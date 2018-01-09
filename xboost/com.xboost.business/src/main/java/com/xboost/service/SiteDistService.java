@@ -77,15 +77,16 @@ public class SiteDistService {
                                 siteDist.setSiteCollect(row[2]);
                                 siteDist.setSiteDelivery(row[3]);
                                 siteDist.setCarDistance(Float.parseFloat(row[4]));
-                                siteDist.setDurationNightDelivery(row[5]);
-                                siteDist.setDurationNightDelivery2(row[6]);
-                                siteDist.setDurationNightDelivery3(row[7]);
-                                siteDist.setDurationNightDelivery4(row[8]);
+                                siteDist.setDurationNightDelivery(row[5].equals(" ")?null:row[5]);
+                                siteDist.setDurationNightDelivery2(row[6].equals(" ")?null:row[6]);
+                                siteDist.setDurationNightDelivery3(row[7].equals(" ")?null:row[7]);
+                                siteDist.setDurationNightDelivery4(row[8].equals(" ")?null:row[8]);
+                                siteDist.setDurationNightDelivery5(row[9].equals(" ")?null:row[9]);
                                 siteDist.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
                                 if(null==row[0] || ""==row[0] || " "==row[0] || "NA".equals(row[0]) ){
                                     //insert
                                     siteDistMapper.save(siteDist);
-                                    logger.info("insert into db:"+siteDist.getSiteCollect());
+                                    logger.info("insert into db:"+i+siteDist.getSiteCollect());
                                 }else{
                                     siteDist.setId(Integer.parseInt(row[0]));
                                     //insert

@@ -557,8 +557,18 @@ $(function  () {
 	                	return operationTime(res.durationEnd);
 	                },"name":"duration_end"},
 	                {"data":"votes","name":"votes"},
-	                {"data":"weight","name":"weight"},
-	                {"data":"productType","name":"product_type"},
+	                {"data":function (res){
+	                	if (res.weight == null || res.weight == "" ||  res.weight == ' ' || res.weight == 0) {
+	                		return "-";
+	                	}
+	                	return res.weight;
+	                },"name":"weight"},
+	                {"data":function (res){
+	                	if (res.productType == null || res.productType == "" ||  res.productType == ' ' ||  res.productType == 0) {
+	                		return "-";
+	                	}
+	                	return res.productType;
+	                },"name":"product_type"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-dem' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dem' data-id='"+row.id+"'>Del</a>";
 	                }}
@@ -719,12 +729,12 @@ $(function  () {
 	                {"data":function (row){
 	                	//console.log(row)
 	                	if (row.modelType == 1 || row.modelType == 2) {
-	                		if (row.parameterName == "支线高速耗时" || row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+	                		if (row.parameterCode == "duration_relay" || row.parameterCode == "duration_peak" || row.parameterCode == "tansit_site_peak" || row.parameterCode == "duration_collect" || row.parameterCode == "duration_siteEnd_sort") {
 		                		return "<span style='color:lightgrey;'>"+row.parameterName+"</span>";
 		                	}
 		                	return row.parameterName;
 	                	}else if (row.modelType == 3) {
-	                		if (row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+	                		if (row.parameterCode == "duration_peak" || row.parameterCode == "tansit_site_peak" || row.parameterCode == "duration_collect" || row.parameterCode == "duration_siteEnd_sort") {
 		                		return "<span style='color:lightgrey;'>"+row.parameterName+"</span>";
 		                	}
 		                	return row.parameterName;
@@ -733,12 +743,12 @@ $(function  () {
 	                },"name":"parameter_name"},
 	                {"data":function  (row) {
 	                	if (row.modelType == 1 || row.modelType == 2) {
-	                		if (row.parameterName == "支线高速耗时" || row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+	                		if (row.parameterCode == "duration_relay" || row.parameterCode == "duration_peak" || row.parameterCode == "tansit_site_peak" || row.parameterCode == "duration_collect" || row.parameterCode == "duration_siteEnd_sort") {
 		                		return "<span style='color:lightgrey;'>"+row.data+"</span>";
 		                	}
 		                	return row.data;
 	                	}else if (row.modelType == 3) {
-	                		if (row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+	                		if (row.parameterCode == "duration_peak" || row.parameterCode == "tansit_site_peak" || row.parameterCode == "duration_collect" || row.parameterCode == "duration_siteEnd_sort") {
 		                		return "<span style='color:lightgrey;'>"+row.data+"</span>";
 		                	}
 		                	return row.data;
@@ -746,12 +756,12 @@ $(function  () {
 	                },"name":"data"},
 	                {"data":function (row){
 	                	if (row.modelType == 1 || row.modelType == 2) {
-	                		if (row.parameterName == "支线高速耗时" || row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+	                		if (row.parameterCode == "duration_relay" || row.parameterCode == "duration_peak" || row.parameterCode == "tansit_site_peak" || row.parameterCode == "duration_collect" || row.parameterCode == "duration_siteEnd_sort") {
 		                		return "<span style='color:lightgrey;'>"+row.note+"</span>";
 		                	}
 		                	return row.note;
 	                	}else if (row.modelType == 3) {
-	                		if (row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+	                		if (row.parameterCode == "duration_peak" || row.parameterCode == "tansit_site_peak" || row.parameterCode == "duration_collect" || row.parameterCode == "duration_siteEnd_sort") {
 		                		return "<span style='color:lightgrey;'>"+row.note+"</span>";
 		                	}
 		                	return row.note;
@@ -759,12 +769,12 @@ $(function  () {
 	                },"name":"note"},
 	                {"data":function(row){
 	                	if (row.modelType == 1 || row.modelType == 2) {
-	                		if (row.parameterName == "支线高速耗时" || row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+	                		if (row.parameterCode == "duration_relay" || row.parameterCode == "duration_peak" || row.parameterCode == "tansit_site_peak" || row.parameterCode == "duration_collect" || row.parameterCode == "duration_siteEnd_sort") {
 		                		return "";
 		                	}
 		                	return "<a href='javascript:;' class='editLink-pata' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-pata' data-id='"+row.id+"'>Del</a>";
 	                	}else if (row.modelType == 3) {
-	                		if (row.parameterName == "网点高峰时间段" || row.parameterName == "中转场高峰时间段" || row.parameterName == "收件串连耗时" || row.parameterName == "目的地分拣耗时") {
+	                		if (row.parameterCode == "duration_peak" || row.parameterCode == "tansit_site_peak" || row.parameterCode == "duration_collect" || row.parameterCode == "duration_siteEnd_sort") {
 		                		return "";
 		                	}
 		                	return "<a href='javascript:;' class='editLink-pata' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-pata' data-id='"+row.id+"'>Del</a>";
@@ -937,7 +947,13 @@ $(function  () {
 	                {"data":"id","name":"id"},
 	                {"data":"type","name":"type"},
 	                {"data":"carSource","name":"car_source"},
-	                {"data":"num","name":"num"},
+	                {"data":function (res){
+	                	if (res.num >= 99) {
+	                		return "∞";
+	                	}else{
+	                		return res.num;
+	                	}
+	                },"name":"num"},
 	                {"data":function  (res) {
 	                	if (res.maxStop >= 99) {
 	                		return "∞";
@@ -969,9 +985,24 @@ $(function  () {
 	                {"data":function(res){
 	                	return res.velocity3;
 	                },"name":"velocity3"},
-	                {"data":"durationUnloadFull","name":"duration_unload_full"},
-	                {"data":"start_location","name":"start_location"},
-	                {"data":"end_location","name":"end_location"},
+	                {"data":function (res){
+	                	if (res.durationUnloadFull == null || res.durationUnloadFull == "" || res.durationUnloadFull == " " || res.durationUnloadFull == 0) {
+	                		return "-";
+	                	}
+	                	return res.durationUnloadFull;
+	                },"name":"duration_unload_full"},
+	                {"data":function (res){
+	                	if (res.start_location == null || res.start_location == "" || res.start_location == " " || res.start_location == 0) {
+	                		return "-";
+	                	}
+	                	return res.start_location;
+	                },"name":"start_location"},
+	                {"data":function (res){
+	                	if (res.end_location == null || res.end_location == "" || res.end_location == " " || res.end_location == 0) {
+	                		return "-";
+	                	}
+	                	return res.start_location;
+	                },"name":"end_location"},
 	                {"data":"a1","name":"a1"},
 	                {"data":function  (res) {
 	                	if (res.a2 > 998) {

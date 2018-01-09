@@ -80,9 +80,9 @@
 		    			<div class="select-depot">
 		    				<span class="glyphicon glyphicon-align-left"></span>
 		    				<select id="distribution-choose" class="route-select">
-		    					<option value="0">各个网点的截单时间分布</option>
-		    					<option value="1">各个网点的实际送达时间分布</option>
-		    					<option value="3">支线到达目的地集散点时间分布</option>
+		    					<option value="0">Cut-off Time per Depot</option>
+		    					<option value="1">Ontime Performance</option>
+		    					<option value="3">Accumulated Ontime performance</option>
 		    				</select>
 		    			</div>
 	    			</div>

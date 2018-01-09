@@ -48,7 +48,7 @@
 	    	<!--top-->
 	    	<div class="clearfix cond-wrap">
 	        	<div class="xb-fl">
-	        		<p>${sessionScope.openScenariosName}(Settings)</p>
+	        		<p>${sessionScope.openScenariosName}(Input)</p>
 	        	</div>
 	        	<div class="xb-fr">
 	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Settings</button>
@@ -60,7 +60,7 @@
 	        		<li><a href="/siteInfo">Depots Info</a></li>
 	        		<li><a href="/siteDist">Depots Distance</a></li>
 	        		<li class="active"><a  class="active" href="/car">Vehicles</a></li>
-	        		<li><a href="/demandInfo">Demands</a></li>
+	        		<li><a href="/demandInfo">Shipments</a></li>
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
 	        </div>
@@ -82,25 +82,25 @@
                         -->
 					    	<tr>
                                 <th rowspan="2">Id</th>
-                                <th rowspan="2">vehicle type</th>
-                                <th rowspan="2">vehicle source</th>
-                                <th rowspan="2">vehicle num</th>
-					    		<th rowspan="2">max<br />Stop</th>
-                                <th rowspan="2">maximum load(p)</th>
+                                <th rowspan="2">Vehicle Type</th>
+                                <th rowspan="2">Vehicle Ownership</th>
+                                <th rowspan="2">No. Of Vehicles</th>
+					    		<th rowspan="2">Max<br />Stop</th>
+                                <th rowspan="2">Capacity(piece)</th>
 					    		
-                                <th rowspan="2">maximum distance (km)</th>
-					    		<th rowspan="2">max<br />RunningTime</th>
-                                <th colspan="3">speed(km/h)</th>
-                                <th rowspan="2">unload time (min)</th>
-                                <th rowspan="2">start<br />Location</th>
-					    		<th rowspan="2">end<br />Location</th>
-                                <th colspan="5">distance interval 1</th>
-                                <th colspan="5">distance interval 2</th>
-                                <th colspan="5">distance interval 3</th>
-                                <th colspan="5">distance interval 4</th>
-                                <th colspan="5">distance interval 5</th>
-                                <th colspan="5">distance interval 6</th>
-                                <th rowspan="2">operation</th>
+                                <th rowspan="2">Maximum Distance (km)</th>
+					    		<th rowspan="2">Maximum<br />Transprtation Time</th>
+                                <th colspan="3">Speed(km/h)</th>
+                                <th rowspan="2">Loading Time</th>
+                                <th rowspan="2">Start<br />Location</th>
+					    		<th rowspan="2">End<br />Location</th>
+                                <th colspan="5">Distance Interval 1</th>
+                                <th colspan="5">Distance Interval 2</th>
+                                <th colspan="5">Distance Interval 3</th>
+                                <th colspan="5">Distance Interval 4</th>
+                                <th colspan="5">Distance Interval 5</th>
+                                <th colspan="5">Distance Interval 6</th>
+                                <th rowspan="2">Operation</th>
                                 <tr>
                                 	<th>&lt;10km(km/h)</th>
                                 	<th>10-30km(km/h)</th>

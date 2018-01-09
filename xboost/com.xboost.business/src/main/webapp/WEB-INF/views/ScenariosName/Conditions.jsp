@@ -48,7 +48,7 @@
 	    	<!--top-->
 	    	<div class="clearfix cond-wrap">
 	        	<div class="xb-fl">
-	        		<p>${sessionScope.openScenariosName}(Settings)</p>
+	        		<p>${sessionScope.openScenariosName}(Input)</p>
 	        	</div>
 	        	<div class="xb-fr">
 	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Settings</button>
@@ -60,7 +60,7 @@
 	        		<li class="active"><a class="active" href="/siteInfo">Depots Info</a></li>
 	        		<li><a href="/siteDist">Depots Distance</a></li>
 	        		<li><a href="/car">Vehicles</a></li>
-	        		<li><a href="/demandInfo">Demands</a></li>
+	        		<li><a href="/demandInfo">Shipments</a></li>
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
 	        </div>
@@ -79,13 +79,13 @@
 					    		<th rowspan="2">depot<br />address</th>
 					    		<th rowspan="2">depot<br />area(㎡)</th>
 					    		<th rowspan="2">depot<br />type</th>
-					    		<th rowspan="2">to distrib.<br />center</th>
-					    		<th rowspan="2">night<br />distrib</th>
-					    		<th colspan="3">one period of time 10 mins</th>
+					    		<th rowspan="2">Hub<br />Y/N</th>
+					    		<th rowspan="2">Night Operation<br />Y/N</th>
+					    		<th colspan="3">per 10 minutes</th>
                                 <th rowspan="2">operation</th>
                                 <tr>
-                                    <th>vehicle<br />quantity limit</th>
-                                    <th>vehicle<br />weight limit</th>
+                                    <th>No. of<br />Vehicles Limitation</th>
+                                    <th>Vehicle Type<br />Limitation</th>
                                     <th>piece<br />capacity(p)</th>
                                 </tr>
 
