@@ -41,7 +41,7 @@ public class CascadeController {
     DemandInfoService demandInfoService;
 
     @Inject
-	private SiteDistService siteDistService;
+    private SiteDistService siteDistService;
 
     @Inject
     private MyScenariosService myScenariosService;
@@ -84,8 +84,8 @@ public class CascadeController {
                 config.setCarTemplates(carlist);
             }
 //            try{
-                cmu = new CascadeModelUtil(config,demandInfoService,siteDistService);
-                cmu.run();
+            cmu = new CascadeModelUtil(config,demandInfoService,siteDistService);
+            cmu.run();
 //            }catch (NullPointerException e){
 //                SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
 //                TextMessage message = new TextMessage("NullPointerException");

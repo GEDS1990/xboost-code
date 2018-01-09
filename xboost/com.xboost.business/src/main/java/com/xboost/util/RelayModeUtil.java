@@ -32,7 +32,7 @@ public class RelayModeUtil extends Thread implements IConstants {
     }
     public void run(){
 
-
+        Matrix M1133 = DenseMatrix.Factory.zeros(3, 3);
         //params
         systemWebSocketHandler.sendMessageToUser( new TextMessage("params:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("1%"));
@@ -611,6 +611,8 @@ public class RelayModeUtil extends Thread implements IConstants {
         temp_list = tempService.findAll03(ShiroUtil.getOpenScenariosId());
         connection_temp_list = tempService.findAll04(ShiroUtil.getOpenScenariosId());
 
+        Matrix M1133333 = DenseMatrix.Factory.zeros(3, 3);
+        System.out.println(route_list.size()+":"+I);
         Matrix M11 = DenseMatrix.Factory.zeros(route_list.size(), I);
         Matrix M12 = DenseMatrix.Factory.zeros(route_list.size(), I);
         Matrix M13 = DenseMatrix.Factory.zeros(route_list.size(), I);
