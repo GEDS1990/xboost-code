@@ -55,7 +55,7 @@
 	        		<p>${sessionScope.openScenariosName}(Results)</p>
 	        	</div>
 	        	<div class="xb-fr">
-	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Expot Results</button>
+	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Export Results</button>
 	        	</div>
 	        </div>
 	        <div class="cond-top">

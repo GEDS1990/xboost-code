@@ -51,7 +51,7 @@
 	        		<p>${sessionScope.openScenariosName}(Results)</p>
 	        	</div>
 	        	<div class="xb-fr">
-	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Expot Results</button>
+	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Export Results</button>
 	        	</div>
 	        </div>
 	        <div class="cond-top">
@@ -148,7 +148,7 @@
 						<table class="table table-hover efficiency">
 							<thead>
 								<tr>
-									<th>deport ID</th>
+									<th>deport id</th>
 									<th>longitude</th>
 									<th>latitude</th>
 									<th>depot area (m²)</th>

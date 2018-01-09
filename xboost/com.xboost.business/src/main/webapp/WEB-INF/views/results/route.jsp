@@ -55,7 +55,7 @@
 	        		<p>${sessionScope.openScenariosName}(Results)</p>
 	        	</div>
 	        	<div class="xb-fr">
-	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Expot Results</button>
+	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Export Results</button>
 	        	</div>
 	        </div>
 	        <div class="cond-top">
@@ -142,7 +142,7 @@
 					    		<th rowspan="1">Arrival Time</th>
 					    		<th rowspan="1">Operation</th>
 					    		<th rowspan="1">Departure Time</th>
-					    		<th rowspan="1">Next Deport & Distance</th>
+					    		<th rowspan="1">Next Depot & Distance</th>
 					    	</tr>
 					    </thead>
 			            <tbody id="route-tbody">

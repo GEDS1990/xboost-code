@@ -177,10 +177,10 @@
 		    					<div class="item-box">
 		    						<h1>Salary</h1>
 		    						<ul class="item-content">
-		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>(元)/month</span></li>
-		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>days/month</span></li>
-		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>(元)/hour</span></li>
-		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>hours/day</span></li>
+		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>RMB/Month</span></li>
+		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>Days/Month</span></li>
+		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>RMB/Hour</span></li>
+		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>Hours/Day</span></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">

@@ -55,7 +55,7 @@
 	        		<p>${sessionScope.openScenariosName}(Results)</p>
 	        	</div>
 	        	<div class="xb-fr">
-	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Expot Results</button>
+	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Export Results</button>
 	        	</div>
 	        </div>
 	        <div class="cond-top">
@@ -120,14 +120,14 @@
 					    	<tr>
 					    		<th rowspan="1">id</th>
 					    		<th rowspan="1">Vehicle name</th>
-					    		<th rowspan="1">Deport Order</th>
-					    		<th rowspan="1">Deport ID</th>
-					    		<th rowspan="1">Deport Name</th>
-					    		<th rowspan="1">Deport Address</th>
+					    		<th rowspan="1">Depot Order</th>
+					    		<th rowspan="1">Depot ID</th>
+					    		<th rowspan="1">Depot Name</th>
+					    		<th rowspan="1">Depot Address</th>
 					    		<th rowspan="1">Arriva Time</th>
 					    		<th rowspan="1">Operation</th>
 					    		<th rowspan="1">Departure Time</th>
-					    		<th rowspan="1">Next Deport & Distance</th>
+					    		<th rowspan="1">Next Depot & Distance</th>
 					    	</tr>
 					    </thead>
 			            <tbody id="vehicle-tbody">
