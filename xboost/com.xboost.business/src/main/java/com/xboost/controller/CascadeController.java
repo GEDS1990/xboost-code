@@ -98,7 +98,7 @@ public class CascadeController {
                 rm.run();
             } catch (Exception e) {
                 e.printStackTrace();
-                TextMessage message = new TextMessage(e.getMessage());
+                TextMessage message = new TextMessage(e.toString());
                 systemWebSocketHandler.sendMessageToUser(message);
             }
         }else if("3".equals(distMode)){
@@ -111,8 +111,10 @@ public class CascadeController {
     @RequestMapping(value="/restartSilumate",method = RequestMethod.GET)
     @ResponseBody
     public String restartSilumate(){
+        myScenariosService.updateFinishTime();
+        myScenariosService.updateStatus("Editable");
         cmu.interrupt();
-        cmu.run();
+//        cmu.run();
         return "success";
     }
 }

@@ -9,14 +9,14 @@ import com.xboost.service.DemandInfoService;
 import com.xboost.service.SiteDistService;
 import com.xboost.service.SiteInfoService;
 import com.xboost.service.jieli.TempService;
+import org.joda.time.DateTimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.TextMessage;
-import org.ujmp.core.DenseMatrix;
-import org.ujmp.core.Matrix;
-import java.io.IOException;
 import java.util.*;
 import gurobi.*;
+import org.ujmp.core.DenseMatrix;
+import org.ujmp.core.Matrix;
 
 public class RelayModeUtil extends Thread implements IConstants {
 
@@ -35,7 +35,15 @@ public class RelayModeUtil extends Thread implements IConstants {
     }
     public void run(){
         logger.info("RelayMode init");
-        Matrix M1133 = DenseMatrix.Factory.zeros(3, 3);
+        double[] dddd = null;
+        logger.info("spark.Matrix");
+        org.apache.spark.mllib.linalg.Matrix mmm = new org.apache.spark.mllib.linalg.DenseMatrix(16333, 16333,dddd);
+        logger.info("spark.Matrix");
+
+        Matrix rrrr = DenseMatrix.Factory.zeros(12333, 12333);
+        logger.info("16333"+ DateTimeUtils.currentTimeMillis());
+        Matrix ww = DenseMatrix.Factory.zeros(16333, 16333);
+        logger.info("16333"+ DateTimeUtils.currentTimeMillis());
         //params
         systemWebSocketHandler.sendMessageToUser( new TextMessage("params:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("1%"));
@@ -624,15 +632,23 @@ public class RelayModeUtil extends Thread implements IConstants {
         logger.info("M11");
         Matrix M1133333 = DenseMatrix.Factory.zeros(3, 3);
         System.out.println(route_list.size()+":"+I);
+        int tagrelay = 0;
+        logger.info("tag:"+tagrelay++);
         Matrix M11 = DenseMatrix.Factory.zeros(route_list.size(), I);
+        logger.info("tag:"+tagrelay++);
         Matrix M12 = DenseMatrix.Factory.zeros(route_list.size(), I);
+        logger.info("tag:"+tagrelay++);
         Matrix M13 = DenseMatrix.Factory.zeros(route_list.size(), I);
+        logger.info("tag:"+tagrelay++);
         Matrix M14 = DenseMatrix.Factory.zeros(route_list.size(), I);
+        logger.info("tag:"+tagrelay++);
         Matrix M15 = DenseMatrix.Factory.zeros(route_list.size(), I);
+        logger.info("tag:"+tagrelay++);
         Vector v = new Vector();
         for(int mj=M;mj<J;mj++){
             v.add(mj,mj);
         }
+        logger.info("tag:"+tagrelay++);
         for(int m=0;m<route_list.size();m++){
             for(int mi=0;mi<I;mi++){
                 M11.setAsInt(v.indexOf(mi),m,mi);
@@ -642,6 +658,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                 M15.setAsInt(v.indexOf(mi),m,mi);
             }
         }
+        logger.info("tag:"+tagrelay++);
 
         logger.info("M21");
         Matrix M21 = DenseMatrix.Factory.zeros(route_list.size(), I);
