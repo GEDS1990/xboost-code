@@ -48,7 +48,7 @@
 	    	<!--top-->
 	    	<div class="clearfix cond-wrap">
 	        	<div class="xb-fl">
-	        		<p>${sessionScope.openScenariosName}(Simualte)</p>
+	        		<p>${sessionScope.openScenariosName}(Simulate)</p>
 	        	</div>
 	        </div>
 	        <div class="cond-top">
@@ -60,7 +60,7 @@
 	        
 	    	<div class="sim-content">
 	    		<header>
-	    			<p>This Scenario can's be modified while its simulation is running</p>
+	    			<p>This Scenario can't be modified while its simulation is running</p>
 	    		</header>
 	    		<div class="sim-box">
 	    			

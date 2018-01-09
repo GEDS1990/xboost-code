@@ -48,7 +48,7 @@
 	    	<!--top-->
 	    	<div class="clearfix cond-wrap">
 	        	<div class="xb-fl">
-	        		<p>${sessionScope.openScenariosName}(Simualte)</p>
+	        		<p>${sessionScope.openScenariosName}(Simulate)</p>
 	        	</div>
 	        </div>
 	        <div class="cond-top">
@@ -90,7 +90,7 @@
 		    				<p id="timelimit" class="sim-error">You must set the time limit</p>
 		    			</div>
 		    			<div class="clearfix sim-input">
-		    				<p>o. of Loops (Model Optimization Loops)</p>
+		    				<p>No. of Loops (Model Optimization Loops):</p>
 		    				<input type="number" id="sim-run-count" value="" />
 		    				<p id="loopslimit" class="sim-error">You must set the loops limit</p>
 		    			</div>

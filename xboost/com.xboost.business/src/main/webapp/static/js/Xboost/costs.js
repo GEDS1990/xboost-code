@@ -456,7 +456,7 @@ $(function (){
 					}
 					addthead+='<tr>';
 					addthead+='<th colspan='+(result.length+3)+'>No. of Departing Vehicles</th>';
-					addthead+='<th>总车次</th>';
+					addthead+='<th>Total Vehicles</th>';
 					addthead+='</tr>';
 					addthead+='<tr>';
 					addthead+='<th>Depot ID</th>';
@@ -541,10 +541,10 @@ $(function (){
 					}
 					addthead+='<tr>';
 					addthead+='<th colspan='+(result.length+3)+'>No. of Arraving vehicles</th>';
-					addthead+='<th>总车次</th>';
+					addthead+='<th>Total Vehicles</th>';
 					addthead+='</tr>';
 					addthead+='<tr>';
-					addthead+='<th>卸车网点</th>';
+					addthead+='<th>Depot ID</th>';
 					addthead+='<th>Peak No. of Shipments</th>';
 					addthead+=addth(result);
 					addthead+='<th>Total Receiving Shipments</th>';
@@ -587,7 +587,7 @@ $(function (){
 					addthead+='<th>Total Shipments</th>';
 					addthead+='</tr>';
 					addthead+='<tr>';
-					addthead+='<th>卸车网点</th>';
+					addthead+='<th>Depot ID</th>';
 					addthead+='<th>Peak No. of Shipments</th>';
 					addthead+=addth(result);
 					addthead+='<th>Total Receiving Shipments</th>';

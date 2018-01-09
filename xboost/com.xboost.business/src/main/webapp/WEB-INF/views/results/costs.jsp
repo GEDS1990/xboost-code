@@ -99,7 +99,7 @@
 	    					<h1>Plan A</h1>
 		    				<div class="cost-item text-left">
 		    					<div class="item-box">
-		    						<h1>人效</h1>
+		    						<h1>Sorting Efficiency</h1>
 		    						<ul class="item-content">
 		    							<li>Sorting Efficiency in Depot: <input type="number" name="sitePeopleWork"  min="0" v-model="sitePeople"/></li>
 		    							<li>Sorting Efficiency in Second Layer Hub: <input type="number" name="distribPeopleWork" min="0" v-model="collectPeople"/></li>
@@ -153,21 +153,21 @@
 	    					<h1>Plan B</h1>
 		    				<div class="cost-item text-left">
 		    					<div class="item-box">
-		    						<h1>人效</h1>
+		    						<h1>Sorting Efficiency</h1>
 		    						<ul class="item-content">
-		    							<li>网点集散点人效 (p): <input type="number" name="sitePeopleWork"  min="0" v-model="sitePeople"/></li>
-		    							<li>集配站集散点人效 (p): <input type="number" name="distribPeopleWork" min="0" v-model="collectPeople"/></li>
+		    							<li>Sorting Efficiency in Depot: <input type="number" name="sitePeopleWork"  min="0" v-model="sitePeople"/></li>
+		    							<li>Sorting Efficiency in Second Layer Hub: <input type="number" name="distribPeopleWork" min="0" v-model="collectPeople"/></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
-		    						<h1>人员配备</h1>
+		    						<h1>Staffing Arrangement</h1>
 		    						
 		    						<ul class="item-content" v-show="cseen">
-		    							<li>支线depot&distrib.center数量: <span>{{depotcount}}</span></li>
+		    							<li>No. of Dummy Hub: <span>{{depotcount}}</span></li>
 		    							<input type="hidden" name="siteCount" v-bind:value="depotcount" />
-		    							<li>每个支线depot/distrib.center的人数: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
+		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
-		    							<li>支线depot&distrib.center总人数: <span>{{depotAllPeople}}</span></li>
+		    							<li>Total Staff: <span>{{depotAllPeople}}</span></li>
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
 		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
 		    						</ul>
@@ -175,27 +175,27 @@
 		    						
 		    					</div>
 		    					<div class="item-box">
-		    						<h1>工资设定</h1>
+		    						<h1>Salary</h1>
 		    						<ul class="item-content">
-		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>(元)/month</span></li>
-		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>days/month</span></li>
-		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>(元)/hour</span></li>
-		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>hours/day</span></li>
+		    							<li>Full-time salary: <input type="number" name="fullTimeSalary" min="0" v-model="full_salaty" /> <span>RMB/Month</span></li>
+		    							<li>Full-time working days: <input type="number" name="fullTimeWorkDay"  min="0" max="30" v-model="full_days"/> <span>Days/Month</span></li>
+		    							<li>Part-time wage: <input type="number" min="0" name="partTimeSalary" max="24" v-model="part_wage"/> <span>RMB/Hour</span></li>
+		    							<li>Part-time working hours: <input type="number" name="partTimeWorkDay" min="0" v-model="part_work"/> <span>Hours/Day</span></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
-		    						<h1>成本:模型输出成本/总件量</h1>
+		    						<h1>Total Cost</h1>
 		    						<ul class="item-content">
-		    							<li>总件量:{{piece}}</li>
-		    							<li>支线depot&distrib.center单日人工成本: <span>{{day_p_cost}}</span></li>
-		    							<li>单日总体人工成本: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
-		    							<li>支线运输成本: <span>{{line_cost}}</span> <span> (per piece)</span></li>
+		    							<li>Total pieces:{{piece}}</li>
+		    							<li>Total Staffing Cost: <span>{{day_p_cost}}</span></li>
+		    							<li>Staffing Cost per piece: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
+		    							<li>Transportation Cost per piece: <span>{{line_cost}}</span> <span> (per piece)</span></li>
 		    							<input type="hidden" name="sum1" v-bind:value="day_p_cost"/>
 		    							<input type="hidden" name="totalDailyLaborCost" v-bind:value="day_allp_cost"/>
 		    							<input type="hidden" name="branchTransportCost" v-bind:value="line_cost"/>
 		    							<input type="hidden" name="totalCost" v-bind:value="allcost"/>
 		    						</ul>
-		    						<p>总成本: {{allcost}} <span> (per piece)</span></p>
+		    						<p>Total Cost per piece: {{allcost}} <span> (per piece)</span></p>
 		    						<p>{{a}}</p>
 		    					</div>
 		    				</div>

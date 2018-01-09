@@ -82,11 +82,11 @@
 				                	<th colspan="5">transportation time(min)</th>
 				                </tr>
 				                <tr>
-				                	<th>货车</th>
-				                	<th>百度</th>
-				                	<th>滴滴</th>
-				                	<th>达达</th>
-				                	<th>备用</th>
+				                	<th>trunk</th>
+				                	<th>baidu</th>
+				                	<th>didi</th>
+				                	<th>dada</th>
+				                	<th>reserve</th>
 				                </tr>
 			            	</tr>
 			            </thead>
