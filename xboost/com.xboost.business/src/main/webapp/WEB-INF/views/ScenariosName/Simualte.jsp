@@ -60,7 +60,7 @@
 	        
 	    	<div class="sim-content">
 	    		<header>
-	    			<p>This Scenario can's be modified while its simulation is running</p>
+	    			<p>This Scenario can't be modified while its simulation is running</p>
 	    		</header>
 	    		<div class="sim-box">
 	    			
