@@ -9,6 +9,8 @@ import com.xboost.service.DemandInfoService;
 import com.xboost.service.SiteDistService;
 import com.xboost.service.SiteInfoService;
 import com.xboost.service.jieli.TempService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.TextMessage;
 import org.ujmp.core.DenseMatrix;
 import org.ujmp.core.Matrix;
@@ -23,6 +25,7 @@ public class RelayModeUtil extends Thread implements IConstants {
     public SiteDistService siteDistService;
     public TempService tempService;
     public SiteInfoService siteInfoService;
+    private static Logger logger = LoggerFactory.getLogger(RelayModeUtil.class);
 
     public RelayModeUtil(TempService tempService, DemandInfoService demandInfoService, SiteDistService siteDistService, SiteInfoService siteInfoService){
         this.config = config;
@@ -31,7 +34,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         this.tempService = tempService;
     }
     public void run(){
-
+        logger.info("RelayMode init");
         Matrix M1133 = DenseMatrix.Factory.zeros(3, 3);
         //params
         systemWebSocketHandler.sendMessageToUser( new TextMessage("params:"));
@@ -43,6 +46,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("TimeLimit",6000);
         params.put("MIPgap",0.05);
+        logger.info("RelayMode params");
         //mip
 //        mip<-Rglpk_solve_LP(obj=obj,mat=cons,dir=sense,rhs=rhs,max=FALSE,types=types)
         //model
@@ -63,6 +67,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         Map<String,Object> three_points_route = new HashMap<String,Object>();
         Map<String,Object> four_points_route = new HashMap<String,Object>();
 
+        logger.info("demandInfoList");
         Map<String,Object> temp = new HashMap<String,Object>();
         List<Map> OD_demand_list= new ArrayList<Map>();
         List<Map> distance_ref_list= new ArrayList<Map>();
@@ -74,6 +79,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         List<Map> connection2_list= new ArrayList<Map>();
 
 
+        logger.info("OD_demand");
         int[] scenario_lim1 = {1,1,1,1,1};
         int[] scenario_lim2 = {9,12,15,18,21};
         for(int j=0;j<demandInfoList.size();j++){
@@ -92,6 +98,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         systemWebSocketHandler.sendMessageToUser( new TextMessage("distance_ref:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("10%"));
         List<SiteDist> siteDistList = siteDistService.findSiteDistByScenariosId(map);
+        logger.info("siteDistList");
         for(int j=0;j<siteDistList.size();j++){
             distance_ref.put("inbound_id",siteDistList.get(j).getSiteCollect());
             distance_ref.put("outbound_id",siteDistList.get(j).getSiteDelivery());
@@ -170,6 +177,7 @@ public class RelayModeUtil extends Thread implements IConstants {
 //                }
 //            }
 //        }
+        logger.info("two_points_route_list");
         two_points_route_list = tempService.findAllTwoPointsRoute(ShiroUtil.getOpenScenariosId());
         //temp
         systemWebSocketHandler.sendMessageToUser( new TextMessage("temp:"));
@@ -464,6 +472,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         for(int j=0;j<full_time/route_time_unit;j++){
             timebucket_num[0][j] = j+1;
         }
+        logger.info("timebucket_num");
         Object route_two_point = null;
         Object route_three_point = null;
         Object route_four_point = null;
@@ -487,6 +496,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         for(int j=0;j<route_temp_list.size();j++){
             route_temp_list.get(j).put("time_id1",site1[0][j%20]);
         }
+        logger.info("two_points_route_list");
         for(int j=0;j<two_points_route_list.size();j++){
 //            System.out.println(Double.parseDouble(two_points_route_list.get(j).get("time1").toString()));
             two_points_route_list.get(j).put("timebucket_1",route_temp_list.get(j).get("connection1"));
@@ -611,6 +621,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         temp_list = tempService.findAll03(ShiroUtil.getOpenScenariosId());
         connection_temp_list = tempService.findAll04(ShiroUtil.getOpenScenariosId());
 
+        logger.info("M11");
         Matrix M1133333 = DenseMatrix.Factory.zeros(3, 3);
         System.out.println(route_list.size()+":"+I);
         Matrix M11 = DenseMatrix.Factory.zeros(route_list.size(), I);
@@ -632,6 +643,7 @@ public class RelayModeUtil extends Thread implements IConstants {
             }
         }
 
+        logger.info("M21");
         Matrix M21 = DenseMatrix.Factory.zeros(route_list.size(), I);
         Matrix M22 = DenseMatrix.Factory.zeros(route_list.size(), I);
         Matrix M23 = DenseMatrix.Factory.zeros(route_list.size(), I);
@@ -691,6 +703,7 @@ public class RelayModeUtil extends Thread implements IConstants {
             ff.add(g2.indexOf(fi));
         }
 
+        logger.info("M31");
         Matrix M31 = DenseMatrix.Factory.zeros(route_list.size(), I);
         Matrix M32 = DenseMatrix.Factory.zeros(route_list.size(), I);
         Matrix M33 = DenseMatrix.Factory.zeros(route_list.size(), I);
@@ -717,6 +730,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         Matrix M44 = M32;
         Matrix M45 = M31;
 
+        logger.info("M41");
         Matrix M51 = DenseMatrix.Factory.zeros(route_list.size(), I);
         Matrix M52 = DenseMatrix.Factory.zeros(route_list.size(), I);
         Matrix M53 = DenseMatrix.Factory.zeros(route_list.size(), I);
@@ -794,6 +808,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                 cons.setAsInt(M15.getAsInt(m,mi),M15.getColumnCount()+m,M15.getRowCount()+mi);
             }
         }
+        logger.info("connection_temp_list");
         for(int ci=0;ci<connection_temp_list.size();ci++){
             connection_temp_list.get(ci).put("kmh_didi",Integer.parseInt(OD_demand_list.get(ci).get("km").toString())<=10?Integer.parseInt(OD_demand_list.get(ci).get("km").toString())*speed1:0+
                     Integer.parseInt(OD_demand_list.get(ci).get("km").toString())>10&&
@@ -890,6 +905,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         }
         sense[i+1] ="=";
 
+        logger.info("model");
         Map<String,Object> model = new HashMap<String,Object>();
         model.put("A",cons);
         model.put("obj",obj);
@@ -902,6 +918,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         //call gurobi
 //        mip<-gurobi(model,params)
 
+        logger.info("GRBEnv");
         try{
             GRBEnv    env   = new GRBEnv("mip1.log");
 //            GRBModel  model2 = new GRBModel(env);
@@ -918,10 +935,12 @@ public class RelayModeUtil extends Thread implements IConstants {
             // Optimize model
 
             systemWebSocketHandler.sendMessageToUser( new TextMessage("optimize"));
+            logger.info("optimize");
             model2.optimize();
             // Dispose of model and environment
             model2.dispose();
             env.dispose();
+            logger.info("dispose");
             systemWebSocketHandler.sendMessageToUser( new TextMessage("100%"));
         }catch (Exception e){
             e.printStackTrace();
