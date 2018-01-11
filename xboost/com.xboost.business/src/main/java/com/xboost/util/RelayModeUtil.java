@@ -9,14 +9,13 @@ import com.xboost.service.DemandInfoService;
 import com.xboost.service.SiteDistService;
 import com.xboost.service.SiteInfoService;
 import com.xboost.service.jieli.TempService;
-import org.joda.time.DateTimeUtils;
+import org.apache.spark.mllib.linalg.DenseMatrix;
+import org.apache.spark.mllib.linalg.Matrix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.TextMessage;
 import java.util.*;
 import gurobi.*;
-import org.ujmp.core.DenseMatrix;
-import org.ujmp.core.Matrix;
 
 public class RelayModeUtil extends Thread implements IConstants {
 
@@ -32,18 +31,19 @@ public class RelayModeUtil extends Thread implements IConstants {
         this.demandInfoService = demandInfoService;
         this.siteDistService = siteDistService;
         this.tempService = tempService;
+        this.siteInfoService = siteInfoService;
     }
     public void run(){
         logger.info("RelayMode init");
-        double[] dddd = null;
-        logger.info("spark.Matrix");
-        org.apache.spark.mllib.linalg.Matrix mmm = new org.apache.spark.mllib.linalg.DenseMatrix(16333, 16333,dddd);
-        logger.info("spark.Matrix");
+//        double[] dddd = {1.0,1.0,1.0};
+//        logger.info("spark.Matrix");
+//        org.apache.spark.mllib.linalg.Matrix mmm = new org.apache.spark.mllib.linalg.DenseMatrix(16333, 16333,dddd);
+//        logger.info("spark.Matrix");
 
-        Matrix rrrr = DenseMatrix.Factory.zeros(12333, 12333);
-        logger.info("16333"+ DateTimeUtils.currentTimeMillis());
-        Matrix ww = DenseMatrix.Factory.zeros(16333, 16333);
-        logger.info("16333"+ DateTimeUtils.currentTimeMillis());
+//        Matrix rrrr = DenseMatrix.Factory.zeros(12333, 12333);
+//        logger.info("16333"+ DateTimeUtils.currentTimeMillis());
+//        Matrix ww = DenseMatrix.Factory.zeros(16333, 16333);
+//        logger.info("16333"+ DateTimeUtils.currentTimeMillis());
         //params
         systemWebSocketHandler.sendMessageToUser( new TextMessage("params:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("1%"));
@@ -96,6 +96,7 @@ public class RelayModeUtil extends Thread implements IConstants {
             OD_demand.put("scenario_lim1",1);
             OD_demand.put("scenario_lim2",9);
             OD_demand.put("kmh",speed2);
+            OD_demand.put("km",speed2);
             OD_demand.put("minutes",Integer.parseInt(demandInfoList.get(j).getDurationEnd())-Integer.parseInt(demandInfoList.get(j).getDurationStart()));
             OD_demand_list.add(OD_demand);
         }
@@ -466,7 +467,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                 }
             }
         }*/
-       four_points_route_list = temp_list;
+        four_points_route_list = temp_list;
         //time buckets
         //real timebucket###
         systemWebSocketHandler.sendMessageToUser( new TextMessage("real timebucket###:"));
@@ -627,56 +628,90 @@ public class RelayModeUtil extends Thread implements IConstants {
         connection_temp_list = tempService.findAll04(ShiroUtil.getOpenScenariosId());
 
         logger.info("M11");
-        Matrix M1133333 = DenseMatrix.Factory.zeros(3, 3);
-        System.out.println(route_list.size()+":"+I);
+//        Matrix M1133333 = DenseMatrix.Factory.zeros(3, 3);
+//        System.out.println(route_list.size()+":"+I);
         int tagrelay = 0;
         logger.info("tag:"+tagrelay++);
-        Matrix M11 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        logger.info("tag:"+tagrelay++);
-        Matrix M12 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        logger.info("tag:"+tagrelay++);
-        Matrix M13 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        logger.info("tag:"+tagrelay++);
-        Matrix M14 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        logger.info("tag:"+tagrelay++);
-        Matrix M15 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        logger.info("tag:"+tagrelay++);
-        Vector v = new Vector();
+
+        logger.info("spark.Matrix");
+        double[] v222 = new double[route_list.size()*I];
+        Vector v2 = new Vector();
         for(int mj=M;mj<J;mj++){
-            v.add(mj,mj);
+            v2.add(mj,mj);
         }
-        logger.info("tag:"+tagrelay++);
         for(int m=0;m<route_list.size();m++){
             for(int mi=0;mi<I;mi++){
-                M11.setAsInt(v.indexOf(mi),m,mi);
-                M12.setAsInt(v.indexOf(mi),m,mi);
-                M13.setAsInt(v.indexOf(mi),m,mi);
-                M14.setAsInt(v.indexOf(mi),m,mi);
-                M15.setAsInt(v.indexOf(mi),m,mi);
+                v222[m+mi]=v2.indexOf(mi);
             }
         }
+        Matrix M11 = new DenseMatrix(route_list.size(), I,v222);
+        Matrix M12 = new DenseMatrix(route_list.size(), I,v222);
+        Matrix M13 = new DenseMatrix(route_list.size(), I,v222);
+        Matrix M14 = new DenseMatrix(route_list.size(), I,v222);
+        Matrix M15 = new DenseMatrix(route_list.size(), I,v222);
+        logger.info("spark.Matrix");
+
+
+//        Matrix M11 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        logger.info("tag:"+tagrelay++);
+//        Matrix M12 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        logger.info("tag:"+tagrelay++);
+//        Matrix M13 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        logger.info("tag:"+tagrelay++);
+//        Matrix M14 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        logger.info("tag:"+tagrelay++);
+//        Matrix M15 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        logger.info("tag:"+tagrelay++);
+//        Vector v = new Vector();
+//        for(int mj=M;mj<J;mj++){
+//            v.add(mj,mj);
+//        }
+//        logger.info("tag:"+tagrelay++);
+//        for(int m=0;m<route_list.size();m++){
+//            for(int mi=0;mi<I;mi++){
+//                M11.setAsInt(v.indexOf(mi),m,mi);
+//                M12.setAsInt(v.indexOf(mi),m,mi);
+//                M13.setAsInt(v.indexOf(mi),m,mi);
+//                M14.setAsInt(v.indexOf(mi),m,mi);
+//                M15.setAsInt(v.indexOf(mi),m,mi);
+//            }
+//        }
         logger.info("tag:"+tagrelay++);
 
         logger.info("M21");
-        Matrix M21 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M22 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M23 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M24 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M25 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M21 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M22 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M23 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M24 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M25 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        for(int m=0;m<J;m++){
+//            for(int mi=0;mi<J;mi++){
+//                M21.setAsInt(v.indexOf(mi),m,mi);
+//                M22.setAsInt(-truck_capacity,m,mi);
+//                M23.setAsInt(-truck_capacity2,m,mi);
+//                M24.setAsInt(-truck_capacity3,m,mi);
+//                M25.setAsInt(-truck_capacity4,m,mi);
+//            }
+//        }
+        double[] v23 = new double[J*I];
+        double[] v24 = new double[J*I];
         for(int m=0;m<J;m++){
-            for(int mi=0;mi<J;mi++){
-                M21.setAsInt(v.indexOf(mi),m,mi);
-                M22.setAsInt(-truck_capacity,m,mi);
-                M23.setAsInt(-truck_capacity2,m,mi);
-                M24.setAsInt(-truck_capacity3,m,mi);
-                M25.setAsInt(-truck_capacity4,m,mi);
+            for(int mi=0;mi<I;mi++){
+                v24[m+mi]=v2.indexOf(mi);
+                v23[m+mi]=-truck_capacity;
             }
         }
+        Matrix M21 = new DenseMatrix(J, I,v24);
+        Matrix M22 = new DenseMatrix(J, I,v23);
+        Matrix M23 = new DenseMatrix(J, I,v23);
+        Matrix M24 = new DenseMatrix(J, I,v23);
+        Matrix M25 = new DenseMatrix(J, I,v23);
+
         int f=0,g=0;
         Vector f1 = new Vector();
         for(int c2=0;c2<connection2_list.size();c2++){
             f1.add(Integer.parseInt(connection2_list.get(c2).get("dummy_in_id").toString())
-                +(Integer.parseInt(connection2_list.get(c2).get("time_id").toString())-1)*demandInfoList.size());
+                    +(Integer.parseInt(connection2_list.get(c2).get("time_id").toString())-1)*demandInfoList.size());
         }
         Vector g1 = new Vector(1,J);
 
@@ -718,25 +753,36 @@ public class RelayModeUtil extends Thread implements IConstants {
         }
 
         logger.info("M31");
-        Matrix M31 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M32 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M33 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M34 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M35 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M31 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M32 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M33 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M34 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M35 = DenseMatrix.Factory.zeros(route_list.size(), I);
         int max = 0;
         for(int iii=0;iii<timebucket_num[i].length;iii++){
             max = Math.max(timebucket_num[i][iii]*2,I);
         }
         Vector t = new Vector(N*max);
+//        for(int m=0;m<J;m++){
+//            for(int mi=0;mi<J;mi++){
+//                M31.setAsInt(v.indexOf(mi),m,mi);
+//                M32.setAsInt(v.indexOf(mi),m,mi);
+//                M33.setAsInt(v.indexOf(mi),m,mi);
+//                M34.setAsInt(v.indexOf(mi),m,mi);
+//                M35.setAsInt(v.indexOf(mi),m,mi);
+//            }
+//        }
+        double[] v33 = new double[J*J];
         for(int m=0;m<J;m++){
             for(int mi=0;mi<J;mi++){
-                M31.setAsInt(v.indexOf(mi),m,mi);
-                M32.setAsInt(v.indexOf(mi),m,mi);
-                M33.setAsInt(v.indexOf(mi),m,mi);
-                M34.setAsInt(v.indexOf(mi),m,mi);
-                M35.setAsInt(v.indexOf(mi),m,mi);
+                v33[m+mi]=t.indexOf(mi);
             }
         }
+        Matrix M31 = new DenseMatrix(J, J,v33);
+        Matrix M32 = new DenseMatrix(J, J,v33);
+        Matrix M33 = new DenseMatrix(J, J,v33);
+        Matrix M34 = new DenseMatrix(J, J,v33);
+        Matrix M35 = new DenseMatrix(J, J,v33);
 
         Matrix M41 = M31;
         Matrix M42 = M31;
@@ -745,83 +791,126 @@ public class RelayModeUtil extends Thread implements IConstants {
         Matrix M45 = M31;
 
         logger.info("M41");
-        Matrix M51 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M52 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M53 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M54 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M55 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        v = new Vector(1,I);
+//        Matrix M51 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M52 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M53 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M54 = DenseMatrix.Factory.zeros(route_list.size(), I);
+//        Matrix M55 = DenseMatrix.Factory.zeros(route_list.size(), I);
+        Vector v = new Vector(1,I);
         Vector vj = new Vector(1,I);
+//        for(int m=0;m<J;m++){
+//            for(int mi=0;mi<J;mi++){
+//                M51.setAsInt(v.indexOf(mi),m,mi);
+//                M52.setAsInt(vj.indexOf(mi),m,mi);
+//                M53.setAsInt(Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())>dist_limit_bike
+//                        ?Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())
+//                        :Integer.parseInt(connection_temp_list.get(mi).get("cross_river").toString()),m,mi);
+//                M54.setAsInt(v.indexOf(mi),m,mi);
+//                M55.setAsInt(Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())>dist_limit_dada
+//                        ?Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())
+//                        :Integer.parseInt(connection_temp_list.get(mi).get("cross_river").toString()),m,mi);
+//            }
+//        }
+        double[] v51 = new double[J*J];
+        double[] v52 = new double[J*J];
+        double[] v53 = new double[J*J];
+        double[] v54 = new double[J*J];
+        double[] v55 = new double[J*J];
         for(int m=0;m<J;m++){
             for(int mi=0;mi<J;mi++){
-                M51.setAsInt(v.indexOf(mi),m,mi);
-                M52.setAsInt(vj.indexOf(mi),m,mi);
-                M53.setAsInt(Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())>dist_limit_bike
-                        ?Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())
-                        :Integer.parseInt(connection_temp_list.get(mi).get("cross_river").toString()),m,mi);
-                M54.setAsInt(v.indexOf(mi),m,mi);
-                M55.setAsInt(Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())>dist_limit_dada
-                        ?Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())
-                        :Integer.parseInt(connection_temp_list.get(mi).get("cross_river").toString()),m,mi);
+                v51[m+mi]=v.indexOf(mi);
+                v52[m+mi]=vj.indexOf(mi);
+                v53[m+mi]=vj.indexOf(mi);
+                v54[m+mi]=vj.indexOf(mi);
+                v55[m+mi]=vj.indexOf(mi);
+//                v53[m+mi] = Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())>dist_limit_bike
+//                        ?Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())
+//                        :Integer.parseInt(connection_temp_list.get(mi).get("cross_river").toString());
+//                v54[m+mi]= v.indexOf(mi);
+//                v55[m+mi]=Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())>dist_limit_dada
+//                        ?Integer.parseInt(connection_temp_list.get(mi).get("distance").toString())
+//                        :Integer.parseInt(connection_temp_list.get(mi).get("cross_river").toString());
             }
         }
+        Matrix M51 = new DenseMatrix(J, J,v51);
+        Matrix M52 = new DenseMatrix(J, J,v52);
+        Matrix M53 = new DenseMatrix(J, J,v53);
+        Matrix M54 = new DenseMatrix(J, J,v54);
+        Matrix M55 = new DenseMatrix(J, J,v55);
+
 //########
         systemWebSocketHandler.sendMessageToUser( new TextMessage("//########"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("98%"));
-        long consI = M11.getColumnCount()+M12.getColumnCount()+M13.getColumnCount()+M14.getColumnCount()+M15.getColumnCount();
-        long consJ = M11.getRowCount()+M21.getRowCount()+M31.getRowCount()+M41.getRowCount()+M51.getRowCount();
-        Matrix cons = DenseMatrix.Factory.zeros(consI, consJ);
-        for(int m=0;m<M11.getColumnCount();m++){
-            for(int mi=0;mi<M11.getRowCount();mi++) {
-                cons.setAsInt(M11.getAsInt(m,mi),M11.getColumnCount()+m,M11.getRowCount()+mi);
+        long consI = M11.numCols()+M12.numCols()+M13.numCols()+M14.numCols()+M15.numCols();
+        long consJ = M11.numRows()+M21.numRows()+M31.numRows()+M41.numRows()+M51.numRows();
+//        Matrix cons = DenseMatrix.Factory.zeros(consI, consJ);
+        double[] vcons = new double[M11.numCols()*M11.numRows()];
+        for(int m=0;m<M11.numCols();m++){
+            for(int mi=0;mi<M11.numRows();mi++) {
+//                cons.setAsInt(M11.index(m,mi),M11.numCols()+m,M11.numRows()+mi);
+                vcons[m+mi] = M11.index(m,mi);
             }
         }
-        for(long m=M11.getColumnCount();m<M12.getColumnCount();m++){
-            for(long mi=0;mi<M12.getRowCount();mi++) {
-                cons.setAsInt(M12.getAsInt(m,mi),M12.getColumnCount()+m,M12.getRowCount()+mi);
-            }
-        }
-        for(long m=M12.getColumnCount();m<M13.getColumnCount();m++){
-            for(long mi=0;mi<M13.getRowCount();mi++) {
-                cons.setAsInt(M13.getAsInt(m,mi),M13.getColumnCount()+m,M13.getRowCount()+mi);
-            }
-        }
-        for(long m=M13.getColumnCount();m<M14.getColumnCount();m++){
-            for(long mi=0;mi<M14.getRowCount();mi++) {
-                cons.setAsInt(M14.getAsInt(m,mi),M14.getColumnCount()+m,M14.getRowCount()+mi);
-            }
-        }
-        for(long m=M14.getColumnCount();m<M15.getColumnCount();m++){
-            for(long mi=0;mi<M15.getRowCount();mi++) {
-                cons.setAsInt(M15.getAsInt(m,mi),M15.getColumnCount()+m,M15.getRowCount()+mi);
-            }
-        }
+        Matrix cons = new DenseMatrix(J, J,v51);
+//        for(int m=M11.numCols();m<M12.numCols();m++){
+//            for(int mi=0;mi<M12.numRows();mi++) {
+////                cons.setAsInt(M12.index(m,mi),M12.numCols()+m,M12.numRows()+mi);
+//                vcons[m+mi] = M12.index(m,mi);
+//            }
+//        }
+//        cons.multiply(new DenseMatrix(M12.numCols()-M11.numCols(), M12.numRows(),vcons));
+//        for(int m=M12.numCols();m<M13.numCols();m++){
+//            for(int mi=0;mi<M13.numRows();mi++) {
+////                cons.setAsInt(M13.index(m,mi),M13.numCols()+m,M13.numRows()+mi);
+//                vcons[m+mi] = M13.index(m,mi);
+//            }
+//        }
+//        cons.multiply(new DenseMatrix(M13.numCols()-M12.numCols(), M13.numRows(),vcons));
+//        for(int m=M13.numCols();m<M14.numCols();m++){
+//            for(int mi=0;mi<M14.numRows();mi++) {
+////                cons.setAsInt(M14.index(m,mi),M14.numCols()+m,M14.numRows()+mi);
+//                vcons[m+mi] = M14.index(m,mi);
+//            }
+//        }
+//        cons.multiply(new DenseMatrix(M14.numCols()-M13.numCols(), M14.numRows(),vcons));
+//        for(int m=M14.numCols();m<M15.numCols();m++){
+//            for(int mi=0;mi<M15.numRows();mi++) {
+////                cons.setAsInt(M15.index(m,mi),M15.numCols()+m,M15.numRows()+mi);
+//                vcons[m+mi] = M15.index(m,mi);
+//            }
+//        }
+//        cons.multiply(new DenseMatrix(M15.numCols()-M14.numCols(), M15.numRows(),vcons));
         ///////////////
-        for(int m=0;m<M11.getColumnCount();m++){
-            for(int mi=0;mi<M11.getRowCount();mi++) {
-                cons.setAsInt(M11.getAsInt(m,mi),M11.getColumnCount()+m,M11.getRowCount()+mi);
-            }
-        }
-        for(long m=0;m<M12.getColumnCount();m++){
-            for(long mi=M11.getRowCount();mi<M12.getRowCount();mi++) {
-                cons.setAsInt(M12.getAsInt(m,mi),M12.getColumnCount()+m,M12.getRowCount()+mi);
-            }
-        }
-        for(long m=0;m<M13.getColumnCount();m++){
-            for(long mi=M12.getRowCount();mi<M13.getRowCount();mi++) {
-                cons.setAsInt(M13.getAsInt(m,mi),M13.getColumnCount()+m,M13.getRowCount()+mi);
-            }
-        }
-        for(long m=0;m<M14.getColumnCount();m++){
-            for(long mi=M13.getRowCount();mi<M14.getRowCount();mi++) {
-                cons.setAsInt(M14.getAsInt(m,mi),M14.getColumnCount()+m,M14.getRowCount()+mi);
-            }
-        }
-        for(long m=0;m<M15.getColumnCount();m++){
-            for(long mi=M14.getRowCount();mi<M15.getRowCount();mi++) {
-                cons.setAsInt(M15.getAsInt(m,mi),M15.getColumnCount()+m,M15.getRowCount()+mi);
-            }
-        }
+//        for(int m=0;m<M11.numCols();m++){
+//            for(int mi=0;mi<M11.numRows();mi++) {
+////                cons.setAsInt(M11.index(m,mi),M11.numCols()+m,M11.numRows()+mi);
+//                vcons[m+mi] = M11.index(m,mi);
+//            }
+//        }
+//        for(int m=0;m<M12.numCols();m++){
+//            for(int mi=M11.numRows();mi<M12.numRows();mi++) {
+////                cons.setAsInt(M12.index(m,mi),M12.numCols()+m,M12.numRows()+mi);
+//                vcons[m+mi] = M11.index(m,mi);
+//            }
+//        }
+//        for(int m=0;m<M13.numCols();m++){
+//            for(int mi=M12.numRows();mi<M13.numRows();mi++) {
+////                cons.setAsInt(M13.index(m,mi),M13.numCols()+m,M13.numRows()+mi);
+//                vcons[m+mi] = M11.index(m,mi);
+//            }
+//        }
+//        for(int m=0;m<M14.numCols();m++){
+//            for(int mi=M13.numRows();mi<M14.numRows();mi++) {
+////                cons.setAsInt(M14.index(m,mi),M14.numCols()+m,M14.numRows()+mi);
+//                vcons[m+mi] = M11.index(m,mi);
+//            }
+//        }
+//        for(int m=0;m<M15.numCols();m++){
+//            for(int mi=M14.numRows();mi<M15.numRows();mi++) {
+////                cons.setAsInt(M15.index(m,mi),M15.numCols()+m,M15.numRows()+mi);
+//                vcons[m+mi] = M11.index(m,mi);
+//            }
+//        }
         logger.info("connection_temp_list");
         for(int ci=0;ci<connection_temp_list.size();ci++){
             connection_temp_list.get(ci).put("kmh_didi",Integer.parseInt(OD_demand_list.get(ci).get("km").toString())<=10?Integer.parseInt(OD_demand_list.get(ci).get("km").toString())*speed1:0+
@@ -857,7 +946,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         //根据场景ID查询SiteDist
         systemWebSocketHandler.sendMessageToUser( new TextMessage("根据场景ID查询SiteDist"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("99%"));
-        List<SiteInfo> siteInfoList = siteInfoService.findByParam(map);
+        List<SiteInfo> siteInfoList = siteInfoService.findAllSiteInfo(ShiroUtil.getOpenScenariosId());
 
         double[] outflow_lim = new double[siteInfoList.size()];
         for(int iii=0;iii<outflow_lim.length;iii++){
@@ -906,7 +995,7 @@ public class RelayModeUtil extends Thread implements IConstants {
 //            max_timebucket_num = timebucket_num[ii];
 //        }
         i = M + J + N*4*max_timebucket_num;
-        String[] sense = new String[i+1];
+        String[] sense = new String[i+10];
         for(int n=0;n<M;n++){
             sense[n] ="=";
         }

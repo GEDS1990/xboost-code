@@ -74,15 +74,15 @@ public class PalnsThread extends Thread implements IConstants  {
 		double temperature = palns.getConfig().getW()*palns.getCurrent().cost()/Math.log(2);
 //		solutionCostService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
 		for(int i =0 ;i < palns.getConfig().getNumIters() ; i++){
-			if(palns.isQuit())
-				return;
+//			if(palns.isQuit())
+//				return;
 			
 			IntPair pair = runImpl(temperature, workerid);
 			adapt(workerid, i, pair.getChoice(), pair.getScoreIndex());
-			if(i % 10 == 0){
+//			if(i % 10 == 0){
 				OutputPrinter.printLine("id: "+ workerid+ "\tbest: "+ ((Solution)palns.getBest()).cost()+"\t#"+ i/10);
 				systemWebSocketHandler.sendMessageToUser(new TextMessage("id: "+ workerid+ "\tbest: "+ ((Solution)palns.getBest()).cost()+"\t#"+ i/10));
-			}
+//			}
 			temperature *= palns.getConfig().getAlpha();
 		}
 		solutionCostService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));

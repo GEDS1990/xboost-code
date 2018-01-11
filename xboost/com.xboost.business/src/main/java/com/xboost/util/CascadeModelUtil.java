@@ -118,7 +118,7 @@ public class CascadeModelUtil extends Thread implements IConstants{
 //        systemWebSocketHandler.sendMessageToUser( new TextMessage("initSolution:"+initSolutionAfterPack.getRoutes().size()+" "+initSolutionAfterPack.getUnassigned().size()));
         for(Job j: initSolutionAfterPack.getUnassigned().values()){
             System.out.println(j.getId());
-//            systemWebSocketHandler.sendMessageToUser( new TextMessage(j.getId()));
+            systemWebSocketHandler.sendMessageToUser( new TextMessage(j.getId()));
         }
         List<IRemoval> rops = new ArrayList<IRemoval>();
         //add shawRemoval
