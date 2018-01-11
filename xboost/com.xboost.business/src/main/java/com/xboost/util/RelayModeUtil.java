@@ -51,10 +51,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         double MIPgap = 0.05;
         Configuration configuration = new Configuration();
         configuration.setOptimizeIterations(TimeLimit);
-        Map<String,Object> params = new HashMap<String,Object>();
-        params.put("TimeLimit",6000);
-        params.put("MIPgap",0.05);
-        logger.info("RelayMode params");
+
         //mip
 //        mip<-Rglpk_solve_LP(obj=obj,mat=cons,dir=sense,rhs=rhs,max=FALSE,types=types)
         //model
@@ -1012,46 +1009,248 @@ public class RelayModeUtil extends Thread implements IConstants {
         sense[i+1] ="=";
 
         logger.info("model");
-        Map<String,Object> model = new HashMap<String,Object>();
-        model.put("A",cons);
-        model.put("obj",obj);
-        model.put("sense",sense);
-        model.put("rhs",rhs);
-        model.put("vtypes",types);
-//        model.put("start",mip$x);
-        model.put("modelsense","min");
-
+//        Map<String,Object> model = new HashMap<String,Object>();
+//        model.put("A",cons);
+//        model.put("obj",obj);
+//        model.put("sense",sense);
+//        model.put("rhs",rhs);
+//        model.put("vtypes",types);
+//        model.put("modelsense","min");
         //call gurobi
 //        mip<-gurobi(model,params)
+
+//        logger.info("GRBEnv test();");
+//        test();
 
         logger.info("GRBEnv");
         try{
             GRBEnv    env   = new GRBEnv("mip1.log");
-//            GRBModel  model2 = new GRBModel(env);
-            GRBModel  model2 = (GRBModel)model;
+            GRBModel m = new GRBModel(env);
+//            m.set(GRB.StringParam.valueOf("A"), cons.toString());
+//            m.set(GRB.StringParam.valueOf("obj"), obj.toString());
+//            m.set(GRB.StringParam.valueOf("sense"), sense.toString());
+//            m.set(GRB.StringParam.valueOf("rhs"), rhs.toString());
+//            m.set(GRB.StringParam.valueOf("vtypes"), types.toString());
+//            m.set(GRB.StringParam.valueOf("modelsense"), "min");
 
-//            GRBVar x = model2.addVar(0.0, 1.0, 0.0, GRB.BINARY, "x");
-//            GRBVar y = model2.addVar(0.0, 1.0, 0.0, GRB.BINARY, "y");
-//            GRBVar z = model2.addVar(0.0, 1.0, 0.0, GRB.BINARY, "z");
+            // Budget
+            int Budget = 12;
+            GRBLinExpr vtypes2 = new GRBLinExpr();
+            GRBVar[] Elem1 = m.addVars(types.length, GRB.BINARY);
+            for (int e = 0; e < types.length; e++) {
+                String vname = types[e];
+                Elem1[e].set(GRB.StringAttr.VarName, vname);
+                vtypes2.addTerm(1.0, Elem1[e]);
+            }
+            m.addConstr(vtypes2, GRB.LESS_EQUAL, Budget, "Budget");
 
-//            GRBLinExpr expr = new GRBLinExpr();
-//            expr.addTerm(1.0, x); expr.addTerm(1.0, y); expr.addTerm(2.0, z);
-//            model2.setObjective(expr, GRB.MAXIMIZE);
-            model2.setObjective((GRBLinExpr)params, GRB.MAXIMIZE);
-            // Optimize model
+            GRBLinExpr rhs2 = new GRBLinExpr();
+            GRBVar[] Elem2 = m.addVars(types.length, GRB.BINARY);
+//            for (int e = 0; e < rhs.length; e++) {
+//                double vname = rhs[e];
+//                Elem1[e].set(GRB.DoubleAttr.RHS, vname);
+//                rhs2.addTerm(1.0, Elem1[e]);
+//            }
+//            m.addConstr(rhs2, GRB.LESS_EQUAL, Budget, "Budget");
 
-            systemWebSocketHandler.sendMessageToUser( new TextMessage("optimize"));
-            logger.info("optimize");
-            model2.optimize();
-            // Dispose of model and environment
-            model2.dispose();
-            env.dispose();
-            logger.info("dispose");
-            systemWebSocketHandler.sendMessageToUser( new TextMessage("100%"));
+            GRBLinExpr sense2 = new GRBLinExpr();
+            GRBVar[] Elem = m.addVars(sense.length, GRB.BINARY);
+            for (int e = 0; e < sense.length; e++) {
+                String vname = sense[e];
+                Elem[e].set(GRB.StringAttr.VarName, vname);
+                sense2.addTerm(1.0, Elem[e]);
+            }
+            m.addConstr(sense2, GRB.LESS_EQUAL, Budget, "Budget");
+
+            GRBLinExpr objn = new GRBLinExpr();
+            int    SetObjPriority[] = new int[] {3, 2, 2, 1};
+            double SetObjWeight[]   = new double[] {1.0, 0.25, 1.25, 1.0};
+            for (int e = 0; e < obj.size(); e++){
+                m.setObjectiveN(objn, i, SetObjPriority[i], SetObjWeight[i],
+                        1.0 + i, 0.01, obj.get(e).toString());
+            }
+            m.set(GRB.IntAttr.ModelSense, GRB.MINIMIZE);
+
+            // Populate A matrix
+            double lb[] = new double[] {0, 0, 0};
+            GRBVar[] vars = m.addVars(lb, null, null, null, null);
+            char sense3[] = new char[] {'>', '>'};
+            for (int ir = 0; ir < cons.numRows(); ir++) {
+                GRBLinExpr expr = new GRBLinExpr();
+                for (int j = 0; j < cons.numCols(); j++)
+//                    double[][] A = cons.index(ir,j);
+                    if (cons.index(ir,j) != 0)
+                        expr.addTerm(cons.index(ir,j), vars[j]);
+                m.addConstr(expr, sense3[i], rhs[i], "");
+            }
+//
+//            GRBModel  bestModel = new GRBModel(m);
+//
+//            logger.info("RelayMode params");
+//            bestModel.set(GRB.DoubleParam.TimeLimit, 6000);
+//            bestModel.set(GRB.DoubleParam.MIPGap, 0.05);
+//
+//            systemWebSocketHandler.sendMessageToUser( new TextMessage("optimize"));
+//            logger.info("optimize");
+//            bestModel.optimize();
+//            // Dispose of model and environment
+//            bestModel.dispose();
+//            env.dispose();
+//            logger.info("dispose");
+//            systemWebSocketHandler.sendMessageToUser( new TextMessage("100%"));
         }catch (Exception e){
             e.printStackTrace();
         }
 
+//        try {
+//            GRBEnv env2 = new GRBEnv();
+//            double c[] = cons;
+//            double Q[][] = cons;
+//            double A[][] = obj;
+//            char sense2[] = sense;
+//            double rhs2[] = rhs;
+//            double lb[] = types;
+//            boolean success;
+//            double sol[] = new double[3];
+//
+//
+//            success = dense_optimize(env2, 2, 3, c, Q, A, sense2, rhs2,
+//                    lb, null, null, sol);
+//
+//            if (success) {
+//                System.out.println("x: " + sol[0] + ", y: " + sol[1] + ", z: " + sol[2]);
+//            }
+//
+//            // Dispose of environment
+//            env2.dispose();
+//
+//        } catch (GRBException e) {
+//            System.out.println("Error code: " + e.getErrorCode() + ". " +
+//                    e.getMessage());
+//            e.printStackTrace();
+//        }
+    }
 
+    protected static boolean
+    dense_optimize(GRBEnv     env,
+                   int        rows,
+                   int        cols,
+                   double[]   c,      // linear portion of objective function
+                   double[][] Q,      // quadratic portion of objective function
+                   double[][] A,      // constraint matrix
+                   char[]     sense,  // constraint senses
+                   double[]   rhs,    // RHS vector
+                   double[]   lb,     // variable lower bounds
+                   double[]   ub,     // variable upper bounds
+                   char[]     vtype,  // variable types (continuous, binary, etc.)
+                   double[]   solution) {
+
+        boolean success = false;
+
+        try {
+            GRBModel model = new GRBModel(env);
+
+            // Add variables to the model
+
+            GRBVar[] vars = model.addVars(lb, ub, null, vtype, null);
+
+            // Populate A matrix
+
+            for (int i = 0; i < rows; i++) {
+                GRBLinExpr expr = new GRBLinExpr();
+                for (int j = 0; j < cols; j++)
+                    if (A[i][j] != 0)
+                        expr.addTerm(A[i][j], vars[j]);
+                model.addConstr(expr, sense[i], rhs[i], "");
+            }
+
+            // Populate objective
+
+            GRBQuadExpr obj = new GRBQuadExpr();
+            if (Q != null) {
+                for (int i = 0; i < cols; i++)
+                    for (int j = 0; j < cols; j++)
+                        if (Q[i][j] != 0)
+                            obj.addTerm(Q[i][j], vars[i], vars[j]);
+                for (int j = 0; j < cols; j++)
+                    if (c[j] != 0)
+                        obj.addTerm(c[j], vars[j]);
+                model.setObjective(obj);
+            }
+
+            // Solve model
+
+            model.optimize();
+
+            // Extract solution
+
+            if (model.get(GRB.IntAttr.Status) == GRB.Status.OPTIMAL) {
+                success = true;
+
+                for (int j = 0; j < cols; j++)
+                    solution[j] = vars[j].get(GRB.DoubleAttr.X);
+            }
+
+            model.dispose();
+
+        } catch (GRBException e) {
+            System.out.println("Error code: " + e.getErrorCode() + ". " +
+                    e.getMessage());
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+    public void test() {
+        try {
+            GRBEnv    env   = new GRBEnv("mip1.log");
+            GRBModel  model = new GRBModel(env);
+
+            // Create variables
+
+            GRBVar x = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "x");
+            GRBVar y = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "y");
+            GRBVar z = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "z");
+
+            // Set objective: maximize x + y + 2 z
+
+            GRBLinExpr expr = new GRBLinExpr();
+            expr.addTerm(1.0, x); expr.addTerm(1.0, y); expr.addTerm(2.0, z);
+            model.setObjective(expr, GRB.MAXIMIZE);
+
+            // Add constraint: x + 2 y + 3 z <= 4
+
+            expr = new GRBLinExpr();
+            expr.addTerm(1.0, x); expr.addTerm(2.0, y); expr.addTerm(3.0, z);
+            model.addConstr(expr, GRB.LESS_EQUAL, 4.0, "c0");
+
+            // Add constraint: x + y >= 1
+
+            expr = new GRBLinExpr();
+            expr.addTerm(1.0, x); expr.addTerm(1.0, y);
+            model.addConstr(expr, GRB.GREATER_EQUAL, 1.0, "c1");
+
+            // Optimize model
+
+            model.optimize();
+
+            System.out.println(x.get(GRB.StringAttr.VarName)
+                    + " " +x.get(GRB.DoubleAttr.X));
+            System.out.println(y.get(GRB.StringAttr.VarName)
+                    + " " +y.get(GRB.DoubleAttr.X));
+            System.out.println(z.get(GRB.StringAttr.VarName)
+                    + " " +z.get(GRB.DoubleAttr.X));
+
+            System.out.println("Obj: " + model.get(GRB.DoubleAttr.ObjVal));
+
+            // Dispose of model and environment
+
+            model.dispose();
+            env.dispose();
+
+        } catch (GRBException e) {
+            System.out.println("Error code: " + e.getErrorCode() + ". " +
+                    e.getMessage());
+        }
     }
 }
