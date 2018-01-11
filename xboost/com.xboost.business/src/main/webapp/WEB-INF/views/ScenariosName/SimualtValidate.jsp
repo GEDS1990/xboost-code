@@ -54,7 +54,7 @@
 	        <div class="cond-top">
 	        	<ul class="cond-top-ul clearfix">
 	        		<li class="active"><a class="active" href="/simualte">Validate</a></li>
-	        		<li><a href="/Simualte">Simualte</a></li>
+	        		<li><a href="/Simualte">Simulate</a></li>
 	        	</ul>
 	        </div>
 	        

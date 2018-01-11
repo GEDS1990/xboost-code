@@ -162,10 +162,11 @@ public class SiteDistController {
              String scenariosId = ShiroUtil.getOpenScenariosId();
              String[] titles = { "ID","vehicle type *","start depot *","end depot *","be used to calculating the transportation time",
                      "be used to calculating the transportation time","be used to calculating the transportation time",
-                     "be used to calculating the transportation time","be used to calculating the transportation time"};
+                     "be used to calculating the transportation time","be used to calculating the transportation time",
+                     "be used to calculating the transportation time"};
              String[] nextTitles = { "transportation distance (km) *","transportation time (min) (higher priority)truck",
                      "transportation time (min) (higher priority)didi","transportation time (min) (higher priority)baidu",
-                     "transportation time (min) (higher priority)dada"};
+                     "transportation time (min) (higher priority)dada","transportation time (min) (higher priority)reserve"};
              siteDistService.exportExcel(scenariosId,titles,nextTitles,outputStream);
       //       System.out.println("outputStream:"+outputStream);
              }
