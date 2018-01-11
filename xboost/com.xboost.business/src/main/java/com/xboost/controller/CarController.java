@@ -95,7 +95,7 @@ public class CarController {
         param.put("start",start);
         param.put("length",length);
         if(StringUtils.isNotEmpty(searchValue)) {
-            param.put("keyword", "%" + Strings.toUTF8(searchValue) + "%");
+            param.put("keyword", "%" + searchValue + "%");
         }
         param.put("orderColumn",orderColumnName);
         param.put("orderType",orderType);
