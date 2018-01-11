@@ -76,7 +76,7 @@ public class DemandInfoService {
                         ExcelUtil excelUtil = new ExcelUtil();
                         List<String> lineList = excelUtil.readExcel(fileTmp,1);
                         int d = 0;
-                        for(int i=1;i<lineList.size();i++){
+                        for(int i=2;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
                             //日期
                             demandInfo.setDate(row[1]);

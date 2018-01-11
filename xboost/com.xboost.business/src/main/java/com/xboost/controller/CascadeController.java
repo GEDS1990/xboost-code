@@ -97,8 +97,6 @@ public class CascadeController {
             try {
                 rm.run();
             } catch (Exception e) {
-                myScenariosService.updateFinishTime();
-                myScenariosService.updateStatus("Editable");
                 e.printStackTrace();
                 TextMessage message = new TextMessage(e.toString());
                 systemWebSocketHandler.sendMessageToUser(message);

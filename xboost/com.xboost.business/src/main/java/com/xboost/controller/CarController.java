@@ -95,7 +95,7 @@ public class CarController {
         param.put("start",start);
         param.put("length",length);
         if(StringUtils.isNotEmpty(searchValue)) {
-            param.put("keyword", "%" + Strings.toUTF8(searchValue) + "%");
+            param.put("keyword", "%" + searchValue + "%");
         }
         param.put("orderColumn",orderColumnName);
         param.put("orderType",orderType);
@@ -163,24 +163,11 @@ public class CarController {
             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
             //       response.setHeader("Content-disposition", "attachment; filename=distance.xlsx");
             String scenariosId = ShiroUtil.getOpenScenariosId();
-            String[] titles = { "ID","vehicle type *","vehicle quantity *","max Load *","vehicle source *","speed (km/h) *",
-                    "speed (km/h) *","speed (km/h) *", "maximum stop *","maximum distance (km)","maximum time (min)",
-                    "vehicle piece capacity (p) *", "unloading time (min) (非模型输入)","start location","end location",
-                    "distance interval 1", "distance interval 1", "distance interval 1", "distance interval 1", "distance interval 1",
-                    "distance interval 2", "distance interval 2", "distance interval 2", "distance interval 2", "distance interval 2",
-                    "distance interval 3", "distance interval 3", "distance interval 3", "distance interval 3", "distance interval 3",
-                    "distance interval 4", "distance interval 4", "distance interval 4", "distance interval 4", "distance interval 4",
-                    "distance interval 5", "distance interval 5", "distance interval 5", "distance interval 5", "distance interval 5",
-                    "distance interval 6", "distance interval 6", "distance interval 6", "distance interval 6", "distance interval 6",
-                    "price type *"};
-            String[] nextTitles = { "≤10km", ">10km,≤30km", ">30km",
-                                    "(0,a] km", "(0,a] km", "(price 1) /ride", "(price 1) /km", "(price T1) /min",
-                                    "(0,a] km", "(0,a] km", "(price 2) /ride", "(price 2) /km", "(price T2) /min",
-                                    "(0,a] km", "(0,a] km", "(price 3) /ride", "(price 3) /km", "(price T3) /min",
-                                    "(0,a] km", "(0,a] km", "(price 4) /ride", "(price 4) /km", "(price T4) /min",
-                                    "(0,a] km", "(0,a] km", "(price 5) /ride", "(price 5) /km", "(price T5) /min",
-                                    "(0,a] km", "(0,a] km", "(price 6) /ride", "(price 6) /km", "(price T6) /min" };
-            transportService.exportExcel(scenariosId,titles,nextTitles,outputStream);
+            String[] titles = { "type","dimensions","skills","start_location","end_location",
+                    "max_distance","max_running_time","cost_per_distance","cost_per_time",
+                    "fixed_cost","max_stop","velocity","fixed_round","fixed_round_fee","car_source"
+                    ,"max_load","duration_unload_full"};
+            transportService.exportExcel(scenariosId,titles,outputStream);
             //       System.out.println("outputStream:"+outputStream);
         }
         catch (IOException e)

@@ -6,7 +6,6 @@ import com.xboost.mapper.CarMapper;
 import com.xboost.pojo.CarLicence;
 import com.xboost.pojo.DemandInfo;
 import com.xboost.util.*;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -160,7 +159,7 @@ public class CarService {
 
                             for(int k=1;k<num+1;k++){
                         //        String name = type + k;
-                                String name = Strings.getCarLicence("Y");
+                                String name = Strings.getCarLicence("粤");
                                 carLicence.setScenariosId(ShiroUtil.getOpenScenariosId());
                                 carLicence.setName(name);
                                 carLicence.setType(type);
@@ -269,7 +268,7 @@ public class CarService {
     /**
      * 导出excel
      */
-    public void exportExcel(String scenariosId,String[] titles, String[] nextTitles, ServletOutputStream outputStream )
+    public void exportExcel(String scenariosId,String[] titles,ServletOutputStream outputStream )
     {
         List<Car> list = transportMapper.findAll(scenariosId);
         // 创建一个workbook 对应一个excel应用文件
@@ -280,46 +279,16 @@ public class CarService {
         ExportUtil exportUtil = new ExportUtil(workBook, sheet);
         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
-
+        // 构建表头
         XSSFRow headRow = sheet.createRow(0);
-        XSSFRow nextHeadRow = sheet.createRow(1);
-        String[] headNum = { "0,1,0,0", "0,1,1,1", "0,1,2,2", "0,1,3,3", "0,1,4,4",
-                "0,0,5,7", "0,1,8,8", "0,1,9,9", "0,1,10,10", "0,1,11,11", "0,1,12,12", "0,1,13,13", "0,1,14,14",
-                "0,0,15,19", "0,0,20,24", "0,0,25,29", "0,0,30,34", "0,0,35,39", "0,0,40,44", "0,1,45,45",
-                "1,1,15,16", "1,1,20,21", "1,1,25,26", "1,1,30,31", "1,1,40,41"};
-
-        //动态合并单元格
-        for (int i = 0; i < headNum.length; i++) {
-            String[] temp = headNum[i].split(",");
-            Integer startrow = Integer.parseInt(temp[0]);
-            Integer overrow = Integer.parseInt(temp[1]);
-            Integer startcol = Integer.parseInt(temp[2]);
-            Integer overcol = Integer.parseInt(temp[3]);
-            sheet.addMergedRegion(new CellRangeAddress(startrow, overrow,
-                    startcol, overcol));
-        }
-
-        // 表头列名
-
         XSSFCell cell = null;
-        for (int i = 0; i < titles.length; i++) {
+        for (int i = 0; i < titles.length; i++)
+        {
             cell = headRow.createCell(i);
             cell.setCellValue(titles[i]);
             cell.setCellStyle(headStyle);
+            //System.out.println(titles[i]);
         }
-
-        for (int j = 0; j < 3; j++) {
-            cell = nextHeadRow.createCell(j + 5);
-            cell.setCellValue(nextTitles[j]);
-            cell.setCellStyle(headStyle);
-        }
-
-        for (int j = 3; j < nextTitles.length; j++) {
-            cell = nextHeadRow.createCell(j + 12);
-            cell.setCellValue(nextTitles[j]);
-            cell.setCellStyle(headStyle);
-        }
-
         // 构建表体数据
         if (list != null && list.size() > 0)
         {
@@ -327,11 +296,11 @@ public class CarService {
 
                 for (int j = 0; j < list.size(); j++)
                 {
-                    XSSFRow bodyRow = sheet.createRow(j + 2);
+                    XSSFRow bodyRow = sheet.createRow(j + 1);
                     Car car = list.get(j);
                     int i = 1;
                     cell = bodyRow.createCell(0);
-                    cell.setCellValue("NA");
+                    cell.setCellValue(car.getId());
                     cell.setCellStyle(bodyStyle);
 
                     cell = bodyRow.createCell(0+i);
