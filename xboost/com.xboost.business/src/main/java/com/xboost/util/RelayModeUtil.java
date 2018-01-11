@@ -1080,7 +1080,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                 for (int j = 0; j < cons.numCols(); j++)
 //                    double[][] A = cons.index(ir,j);
                     if (cons.index(ir,j) != 0)
-                        expr.addTerm(cons.index(ir,j), vars[j]);
+                        expr.addTerm(cons.index(ir,j), null);
                 m.addConstr(expr, sense3[i], rhs[i], "");
             }
 //
