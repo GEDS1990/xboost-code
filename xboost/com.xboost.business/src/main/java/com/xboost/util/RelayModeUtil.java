@@ -1081,7 +1081,7 @@ public class RelayModeUtil extends Thread implements IConstants {
 //                    double[][] A = cons.index(ir,j);
                     if (cons.index(ir,j) != 0)
                         expr.addTerm(cons.index(ir,j), null);
-                m.addConstr(expr, sense3[i], rhs[i], "");
+                m.addConstr(expr, sense3[1], rhs[i], "");
             }
 //
 //            GRBModel  bestModel = new GRBModel(m);
