@@ -1046,12 +1046,12 @@ public class RelayModeUtil extends Thread implements IConstants {
 
             GRBLinExpr rhs2 = new GRBLinExpr();
             GRBVar[] Elem2 = m.addVars(types.length, GRB.BINARY);
-//            for (int e = 0; e < rhs.length; e++) {
-//                double vname = rhs[e];
-//                Elem1[e].set(GRB.DoubleAttr.RHS, vname);
-//                rhs2.addTerm(1.0, Elem1[e]);
-//            }
-//            m.addConstr(rhs2, GRB.LESS_EQUAL, Budget, "Budget");
+            for (int e = 0; e < rhs.length; e++) {
+                double vname = rhs[e];
+                Elem1[e].set(GRB.DoubleAttr.RHS, vname);
+                rhs2.addTerm(1.0, Elem1[e]);
+            }
+            m.addConstr(rhs2, GRB.LESS_EQUAL, Budget, "Budget");
 
             GRBLinExpr sense2 = new GRBLinExpr();
             GRBVar[] Elem = m.addVars(sense.length, GRB.BINARY);

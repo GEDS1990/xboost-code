@@ -32,10 +32,16 @@
     <scala.minor.version>2.10</scala.minor.version>
     <scala.complete.version>${scala.minor.version}.4</scala.complete.version>
     <spark.version>1.6.0</spark.version>
+    <ehcache-version>2.6.11</ehcache-version>
   </properties>
 
 
   <dependencies>
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache-core</artifactId>
+      <version>${ehcache-version}</version>
+    </dependency>
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>

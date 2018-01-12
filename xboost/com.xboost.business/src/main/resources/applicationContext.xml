@@ -57,6 +57,7 @@
         <property name="basePackage" value="com.xboost.mapper.**"/>
     </bean>
 
+
     <bean id="springBeanFactoryUtil" class="com.xboost.util.SpringBeanFactoryUtil"/>
 
 </beans>
