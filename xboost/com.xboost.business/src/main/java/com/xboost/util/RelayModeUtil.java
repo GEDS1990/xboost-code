@@ -33,7 +33,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         this.tempService = tempService;
         this.siteInfoService = siteInfoService;
     }
-    public void run(){
+    public void run() throws RuntimeException{
         logger.info("RelayMode init");
 //        double[] dddd = {1.0,1.0,1.0};
 //        logger.info("spark.Matrix");
@@ -844,13 +844,13 @@ public class RelayModeUtil extends Thread implements IConstants {
         long consI = M11.numCols()+M12.numCols()+M13.numCols()+M14.numCols()+M15.numCols();
         long consJ = M11.numRows()+M21.numRows()+M31.numRows()+M41.numRows()+M51.numRows();
 //        Matrix cons = DenseMatrix.Factory.zeros(consI, consJ);
-        double[] vcons = new double[M11.numCols()*M11.numRows()];
-        for(int m=0;m<M11.numCols();m++){
-            for(int mi=0;mi<M11.numRows();mi++) {
-//                cons.setAsInt(M11.index(m,mi),M11.numCols()+m,M11.numRows()+mi);
-                vcons[m+mi] = M11.index(m,mi);
-            }
-        }
+//        double[] vcons = new double[M11.numCols()*M11.numRows()];
+//        for(int m=0;m<M11.numCols();m++){
+//            for(int mi=0;mi<M11.numRows();mi++) {
+////                cons.setAsInt(M11.index(m,mi),M11.numCols()+m,M11.numRows()+mi);
+//                vcons[m+mi] = M11.index(m,mi);
+//            }
+//        }
         Matrix cons = new DenseMatrix(J, J,v51);
 //        for(int m=M11.numCols();m<M12.numCols();m++){
 //            for(int mi=0;mi<M12.numRows();mi++) {
@@ -979,12 +979,12 @@ public class RelayModeUtil extends Thread implements IConstants {
         rhs[M+J+outflow_lim.length+inflow_lim.length+didi_outflow_lim.length+1] = 0;
 
         i = I+J;
-        String[] types = new String[i];
+        char[] types = new char[i];
         for(int n=0;n<I;n++){
-            types[n] = "B";
-        }
+            types[n] = "B".toCharArray()[0];
+    }
         for(int n=0;n<J;n++){
-            types[I+n] = "I";
+            types[I+n] = "I".toCharArray()[0];
         }
 //        int full_time = 210;
 //        int route_time_unit = 10;
@@ -995,18 +995,18 @@ public class RelayModeUtil extends Thread implements IConstants {
 //            max_timebucket_num = timebucket_num[ii];
 //        }
         i = M + J + N*4*max_timebucket_num;
-        String[] sense = new String[i+10];
+        char[] sense = new char[i+10];
         for(int n=0;n<M;n++){
-            sense[n] ="=";
+            sense[n] ="=".toCharArray()[0];
         }
         for(int n=0;n<J;n++){
-            sense[M+n] ="<=";
+            sense[M+n] ="<=".toCharArray()[0];
         }
         int W = i-M-J;
         for(int n=0;n<W;n++){
-            sense[M+J+n] ="<=";
+            sense[M+J+n] ="<=".toCharArray()[0];
         }
-        sense[i+1] ="=";
+        sense[i+1] ="=".toCharArray()[0];
 
         logger.info("model");
 //        Map<String,Object> model = new HashMap<String,Object>();
@@ -1034,55 +1034,90 @@ public class RelayModeUtil extends Thread implements IConstants {
 //            m.set(GRB.StringParam.valueOf("modelsense"), "min");
 
             // Budget
-            int Budget = 12;
-            GRBLinExpr vtypes2 = new GRBLinExpr();
-            GRBVar[] Elem1 = m.addVars(types.length, GRB.BINARY);
-            for (int e = 0; e < types.length; e++) {
-                String vname = types[e];
-                Elem1[e].set(GRB.StringAttr.VarName, vname);
-                vtypes2.addTerm(1.0, Elem1[e]);
+//            int Budget = 12;
+//            GRBLinExpr vtypes2 = new GRBLinExpr();
+//            GRBVar[] Elem1 = m.addVars(types.length, GRB.BINARY);
+//            for (int e = 0; e < types.length; e++) {
+//                String vname = types[e];
+//                Elem1[e].set(GRB.StringAttr.VarName, vname);
+//                vtypes2.addTerm(1.0, Elem1[e]);
+//            }
+            double lb[] = new double[i];
+            for(int q=0;q<lb.length;q++){
+                lb[q]=0;
             }
-            m.addConstr(vtypes2, GRB.LESS_EQUAL, Budget, "Budget");
+            GRBVar[] vars = m.addVars(lb, null, null, types, null);
+//            m.addConstr(vtypes2, GRB.LESS_EQUAL, Budget, "Budget");
 
-            GRBLinExpr rhs2 = new GRBLinExpr();
-            GRBVar[] Elem2 = m.addVars(types.length, GRB.BINARY);
-            for (int e = 0; e < rhs.length; e++) {
-                double vname = rhs[e];
-                Elem1[e].set(GRB.DoubleAttr.RHS, vname);
-                rhs2.addTerm(1.0, Elem1[e]);
+//            GRBLinExpr rhs2 = new GRBLinExpr();
+//            GRBVar[] Elem2 = m.addVars(types.length, GRB.BINARY);
+//            for (int e = 0; e < rhs.length; e++) {
+//                double vname = rhs[e];
+//                Elem1[e].set(GRB.DoubleAttr.VarHintVal, vname);
+//                rhs2.addTerm(1.0, Elem1[e]);
+//            }
+//            m.addConstr(rhs2, GRB.LESS_EQUAL, Budget, "Budget");
+
+            for (int iw = 0; iw < cons.numRows(); iw++) {
+                GRBLinExpr expr = new GRBLinExpr();
+                for (int jw = 0; jw < cons.numCols(); jw++)
+                    if (cons.index(iw,jw) != 0) {
+                        expr.addTerm(cons.index(iw,jw), vars[jw]);
+                    }
+                m.addConstr(expr, sense[iw], rhs[iw], "");
             }
-            m.addConstr(rhs2, GRB.LESS_EQUAL, Budget, "Budget");
-
-            GRBLinExpr sense2 = new GRBLinExpr();
-            GRBVar[] Elem = m.addVars(sense.length, GRB.BINARY);
-            for (int e = 0; e < sense.length; e++) {
-                String vname = sense[e];
-                Elem[e].set(GRB.StringAttr.VarName, vname);
-                sense2.addTerm(1.0, Elem[e]);
-            }
-            m.addConstr(sense2, GRB.LESS_EQUAL, Budget, "Budget");
-
             GRBLinExpr objn = new GRBLinExpr();
-            int    SetObjPriority[] = new int[] {3, 2, 2, 1};
-            double SetObjWeight[]   = new double[] {1.0, 0.25, 1.25, 1.0};
             for (int e = 0; e < obj.size(); e++){
-                m.setObjectiveN(objn, i, SetObjPriority[i], SetObjWeight[i],
-                        1.0 + i, 0.01, obj.get(e).toString());
+                m.setObjective(objn);
             }
-            m.set(GRB.IntAttr.ModelSense, GRB.MINIMIZE);
+            // Solve model
+
+            m.optimize();
+            // Extract solution
+            boolean success = false;
+            double[]   solution = new double[cons.numCols()];
+            if (m.get(GRB.IntAttr.Status) == GRB.Status.OPTIMAL) {
+                success = true;
+                for (int j = 0; j < cons.numCols(); j++){
+                    solution[j] = vars[j].get(GRB.DoubleAttr.X);
+                    systemWebSocketHandler.sendMessageToUser(new TextMessage(String.valueOf(solution[j])));
+                }
+            }
+            m.dispose();
+            // Dispose of environment
+            env.dispose();
+
+//            GRBLinExpr sense2 = new GRBLinExpr();
+//            GRBVar[] Elem = m.addVars(sense.length, GRB.BINARY);
+//            for (int e = 0; e < sense.length; e++) {
+//                char vname = sense[e];
+//                Elem[e].set(GRB.StringAttr.VarName, vname);
+//                sense2.addTerm(1.0, Elem[e]);
+//            }
+//            m.addConstr(sense2, GRB.LESS_EQUAL, Budget, "Budget");
+
+//            GRBLinExpr objn = new GRBLinExpr();
+//            int    SetObjPriority[] = new int[] {3, 2, 2, 1};
+//            double SetObjWeight[]   = new double[] {1.0, 0.25, 1.25, 1.0};
+//            for (int e = 0; e < obj.size(); e++){
+//                m.setObjectiveN(objn, i, SetObjPriority[i], SetObjWeight[i],
+//                        1.0 + i, 0.01, obj.get(e).toString());
+//            }
+//            m.set(GRB.IntAttr.ModelSense, GRB.MINIMIZE);
+// Populate objective
 
             // Populate A matrix
-            double lb[] = new double[] {0, 0, 0};
-            GRBVar[] vars = m.addVars(lb, null, null, null, null);
-            char sense3[] = new char[] {'>', '>'};
-            for (int ir = 0; ir < cons.numRows(); ir++) {
-                GRBLinExpr expr = new GRBLinExpr();
-                for (int j = 0; j < cons.numCols(); j++)
-//                    double[][] A = cons.index(ir,j);
-                    if (cons.index(ir,j) != 0)
-                        expr.addTerm(cons.index(ir,j), null);
-                m.addConstr(expr, sense3[1], rhs[i], "");
-            }
+//            double lb[] = new double[] {0, 0, 0};
+//            GRBVar[] vars = m.addVars(lb, null, null, null, null);
+//            char sense3[] = new char[] {'>', '>'};
+//            for (int ir = 0; ir < cons.numRows(); ir++) {
+//                GRBLinExpr expr = new GRBLinExpr();
+//                for (int j = 0; j < cons.numCols(); j++)
+////                    double[][] A = cons.index(ir,j);
+//                    if (cons.index(ir,j) != 0)
+//                        expr.addTerm(cons.index(ir,j), null);
+//                m.addConstr(expr, sense3[1], rhs[i], "");
+//            }
 //
 //            GRBModel  bestModel = new GRBModel(m);
 //
@@ -1129,128 +1164,5 @@ public class RelayModeUtil extends Thread implements IConstants {
 //                    e.getMessage());
 //            e.printStackTrace();
 //        }
-    }
-
-    protected static boolean
-    dense_optimize(GRBEnv     env,
-                   int        rows,
-                   int        cols,
-                   double[]   c,      // linear portion of objective function
-                   double[][] Q,      // quadratic portion of objective function
-                   double[][] A,      // constraint matrix
-                   char[]     sense,  // constraint senses
-                   double[]   rhs,    // RHS vector
-                   double[]   lb,     // variable lower bounds
-                   double[]   ub,     // variable upper bounds
-                   char[]     vtype,  // variable types (continuous, binary, etc.)
-                   double[]   solution) {
-
-        boolean success = false;
-
-        try {
-            GRBModel model = new GRBModel(env);
-
-            // Add variables to the model
-
-            GRBVar[] vars = model.addVars(lb, ub, null, vtype, null);
-
-            // Populate A matrix
-
-            for (int i = 0; i < rows; i++) {
-                GRBLinExpr expr = new GRBLinExpr();
-                for (int j = 0; j < cols; j++)
-                    if (A[i][j] != 0)
-                        expr.addTerm(A[i][j], vars[j]);
-                model.addConstr(expr, sense[i], rhs[i], "");
-            }
-
-            // Populate objective
-
-            GRBQuadExpr obj = new GRBQuadExpr();
-            if (Q != null) {
-                for (int i = 0; i < cols; i++)
-                    for (int j = 0; j < cols; j++)
-                        if (Q[i][j] != 0)
-                            obj.addTerm(Q[i][j], vars[i], vars[j]);
-                for (int j = 0; j < cols; j++)
-                    if (c[j] != 0)
-                        obj.addTerm(c[j], vars[j]);
-                model.setObjective(obj);
-            }
-
-            // Solve model
-
-            model.optimize();
-
-            // Extract solution
-
-            if (model.get(GRB.IntAttr.Status) == GRB.Status.OPTIMAL) {
-                success = true;
-
-                for (int j = 0; j < cols; j++)
-                    solution[j] = vars[j].get(GRB.DoubleAttr.X);
-            }
-
-            model.dispose();
-
-        } catch (GRBException e) {
-            System.out.println("Error code: " + e.getErrorCode() + ". " +
-                    e.getMessage());
-            e.printStackTrace();
-        }
-
-        return success;
-    }
-    public void test() {
-        try {
-            GRBEnv    env   = new GRBEnv("mip1.log");
-            GRBModel  model = new GRBModel(env);
-
-            // Create variables
-
-            GRBVar x = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "x");
-            GRBVar y = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "y");
-            GRBVar z = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "z");
-
-            // Set objective: maximize x + y + 2 z
-
-            GRBLinExpr expr = new GRBLinExpr();
-            expr.addTerm(1.0, x); expr.addTerm(1.0, y); expr.addTerm(2.0, z);
-            model.setObjective(expr, GRB.MAXIMIZE);
-
-            // Add constraint: x + 2 y + 3 z <= 4
-
-            expr = new GRBLinExpr();
-            expr.addTerm(1.0, x); expr.addTerm(2.0, y); expr.addTerm(3.0, z);
-            model.addConstr(expr, GRB.LESS_EQUAL, 4.0, "c0");
-
-            // Add constraint: x + y >= 1
-
-            expr = new GRBLinExpr();
-            expr.addTerm(1.0, x); expr.addTerm(1.0, y);
-            model.addConstr(expr, GRB.GREATER_EQUAL, 1.0, "c1");
-
-            // Optimize model
-
-            model.optimize();
-
-            System.out.println(x.get(GRB.StringAttr.VarName)
-                    + " " +x.get(GRB.DoubleAttr.X));
-            System.out.println(y.get(GRB.StringAttr.VarName)
-                    + " " +y.get(GRB.DoubleAttr.X));
-            System.out.println(z.get(GRB.StringAttr.VarName)
-                    + " " +z.get(GRB.DoubleAttr.X));
-
-            System.out.println("Obj: " + model.get(GRB.DoubleAttr.ObjVal));
-
-            // Dispose of model and environment
-
-            model.dispose();
-            env.dispose();
-
-        } catch (GRBException e) {
-            System.out.println("Error code: " + e.getErrorCode() + ". " +
-                    e.getMessage());
-        }
     }
 }
