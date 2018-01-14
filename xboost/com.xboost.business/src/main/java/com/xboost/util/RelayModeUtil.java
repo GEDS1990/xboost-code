@@ -1131,11 +1131,45 @@ public class RelayModeUtil extends Thread implements IConstants {
                 System.out.println("x: " + sol2[0] + ", y: " + sol2[1] + ", z: " + sol2[2]);
                 double[] solution = sol2;
                 makeResults(solution);
-                double volume_to_ship = 0;
-                for(int e=0;e<OD_demand_list.size();e++){
-                    volume_to_ship += Double.parseDouble(OD_demand_list.get(e).get("volume").toString());
-                }
+//                double volume_to_ship = 0;
+//                for(int e=0;e<OD_demand_list.size();e++){
+//                    volume_to_ship += Double.parseDouble(OD_demand_list.get(e).get("volume").toString());
+//                }
                 List<Map> route_opt = route_list;
+                for(int e=0;e<I;e++){
+                    route_opt.get(e).put("route_open",solution[e]);
+                }
+                for(int e=0;e<I1;e++){
+                    route_opt.get(e).put("route_type",1);
+                }
+                for(int e=0;e<I2;e++){
+                    route_opt.get(e).put("route_type",2);
+                }
+                for(int e=0;e<I3;e++){
+                    route_opt.get(e).put("route_type",3);
+                }
+                route_opt = tempService.findAll07(ShiroUtil.getOpenScenariosId());
+                List<Map> connection_volume = tempService.findAll08(ShiroUtil.getOpenScenariosId());
+                List<Map> connection_opt = connection_temp_list;
+                connection_opt.addAll(connection_volume);
+                for(int e=0;e<J-1;e++){
+                    if(solution[1+I+e]>0)
+                    connection_opt.get(e).put("truck",solution[1+I+e]);
+                }
+                for(int e=0;e<J-1;e++){
+                    if(solution[1+I+J+e]>0)
+                    connection_opt.get(e).put("bike",solution[1+I+J+e]);
+                }
+                for(int e=0;e<J-1;e++){
+                    if(solution[1+I+J*2+e]>0)
+                    connection_opt.get(e).put("didi",solution[1+I+J*2+e]);
+                }
+                for(int e=0;e<J-1;e++){
+                    if(solution[1+I+J*3+e]>0)
+                    connection_opt.get(e).put("dada",solution[1+I+J*3+e]);
+                }
+//                summary(connection_opt)
+                List<Map> active_connection = connection_opt;
 
             }else{
                 logger.info("fail:");

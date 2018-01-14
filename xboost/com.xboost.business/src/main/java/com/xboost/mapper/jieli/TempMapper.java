@@ -24,5 +24,9 @@ public interface TempMapper {
     List<Map> findAll05(String scenariosId);
     //findAll
     List<Map> findAll06(String scenariosId);
+    //findAll
+    List<Map> findAll07(String scenariosId);
+    //findAll
+    List<Map> findAll08(String scenariosId);
 
 }

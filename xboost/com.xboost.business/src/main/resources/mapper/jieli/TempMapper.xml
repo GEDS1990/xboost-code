@@ -91,6 +91,136 @@
         on t1.outbound_id=t2.m_od_id
     </select>
 
+    <select id="findAll07" resultType="map">
+        select t1.*,
+        t2.网点名称 as point1_name,
+        t3.网点名称 as point2_name,
+        t4.网点名称 as point3_name,
+        t5.网点名称 as point4_name
+        from route_opt t1
+        left join jisan_candidates t2
+        on t1.point1=t2.depot_id
+        left join jisan_candidates t3
+        on t1.point2=t3.depot_id
+        left join jisan_candidates t4
+        on t1.point3=t4.depot_id
+        left join jisan_candidates t5
+        on t1.point4=t5.depot_id
+    </select>
+
+    <select id="findAll08" resultType="map">
+        select timebucket,sum(volume) as volume,
+        sum(route_cnt) as route_cnt
+        from (select timebucket_1 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_2 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_3 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_4 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_5 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_6 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_7 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_8 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_9 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_10 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_11 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_12 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_13 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_14 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_15 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_16 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_17 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_18 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_19 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_20 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_21 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        )
+        where timebucket !=''
+        group by 1
+    </select>
+
     <select id="findByParam" parameterType="map">
         SELECT * from t_jieli_temp
         <where>
