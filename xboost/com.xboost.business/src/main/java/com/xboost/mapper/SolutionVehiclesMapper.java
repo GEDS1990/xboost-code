@@ -22,5 +22,7 @@ public interface SolutionVehiclesMapper {
     // 查询已使用的车数
     Long findBusyCarCount(String scenariosId);
 
+    // 查询所有的车辆
+    List<Map<String,Object>> findAllByCar(String scenariosId);
 }
 
