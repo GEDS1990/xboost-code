@@ -51,18 +51,22 @@ public class Dense {
             // Populate objective
 
             GRBQuadExpr obj = new GRBQuadExpr();
-            if (Q != null) {
-                for (int i = 0; i < cols; i++)
-                    for (int j = 0; j < cols; j++)
-                        if (Q[i][j] != 0)
-                            obj.addTerm(Q[i][j], vars[i], vars[j]);
-                for (int j = 0; j < cols; j++)
-                    if (c[j] != 0)
-                        obj.addTerm(c[j], vars[j]);
-                model.setObjective(obj);
-            }
-
+//            if (Q != null) {
+//                for (int i = 0; i < cols; i++)
+//                    for (int j = 0; j < cols; j++)
+//                        if (Q[i][j] != 0)
+//                            obj.addTerm(Q[i][j], vars[i], vars[j]);
+//                for (int j = 0; j < cols; j++)
+//                    if (c[j] != 0)
+//                        obj.addTerm(c[j], vars[j]);
+//                model.setObjective(obj);
+//            }
+            for (int j = 0; j < cols; j++)
+                if (c[j] != 0)
+                    obj.addTerm(c[j], vars[j]);
+            model.setObjective(obj);
             // Solve model
+//            model.computeIIS();
 
             model.optimize();
 

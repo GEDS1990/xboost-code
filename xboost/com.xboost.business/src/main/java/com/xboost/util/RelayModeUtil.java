@@ -1008,7 +1008,8 @@ public class RelayModeUtil extends Thread implements IConstants {
 //        sense
         char[] sense = new char[i+10];
         for(int n=0;n<M;n++){
-            sense[n] ="=".toCharArray()[0];
+//            sense[n] ="=".toCharArray()[0];
+            sense[n] ="<".toCharArray()[0];
         }
         for(int n=0;n<J;n++){
             sense[M+n] ="<=".toCharArray()[0];
@@ -1022,57 +1023,69 @@ public class RelayModeUtil extends Thread implements IConstants {
         logger.info("model");
 
         logger.info("GRBEnv");
-        try{
-            GRBEnv    env   = new GRBEnv("mip1.log");
-            GRBModel m = new GRBModel(env);
-            double lb[] = new double[i];
-            for(int q=0;q<lb.length;q++){
-                lb[q]=0;
-            }
-            GRBVar[] vars = m.addVars(lb, null, null, types, null);
-//            cons
-            for (int iw = 0; iw < cons.numRows(); iw++) {
-                GRBLinExpr expr = new GRBLinExpr();
-                for (int jw = 0; jw < cons.numCols(); jw++)
-                    if (cons.index(iw,jw) != 0) {
-                        expr.addTerm(cons.index(iw,jw), vars[jw]);
-                    }
-                m.addConstr(expr, sense[iw], rhs[iw], "");
-            }
-//            objn
-            GRBLinExpr objn = new GRBLinExpr();
-            for (int e = 0; e < obj.length; e++){
-                objn.addConstant(obj[e]);
-            }
-            m.setObjective(objn);
-            // Solve model
-            m.optimize();
-            // Extract solution
-            boolean success = false;
-            double[]   solution = new double[cons.numCols()];
-            logger.info("result:"+":"+GRB.Status.OPTIMAL);
-            if (m.get(GRB.IntAttr.Status) == GRB.Status.OPTIMAL) {
-                success = true;
-                for (int j = 0; j < cons.numCols(); j++){
-                    solution[j] = vars[j].get(GRB.DoubleAttr.X);
-                    logger.info("solution[j]"+j+":"+String.valueOf(solution[j]));
-                    systemWebSocketHandler.sendMessageToUser(new TextMessage(String.valueOf(solution[j])));
-                }
-            }
-            m.dispose();
-            // Dispose of environment
-            env.dispose();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//        try{
+//            GRBEnv    env   = new GRBEnv("mip1.log");
+//            GRBModel m = new GRBModel(env);
+//            double lb[] = new double[i];
+//            for(int q=0;q<lb.length;q++){
+//                lb[q]=0;
+//            }
+//            GRBVar[] vars = m.addVars(lb, null, null, types, null);
+////            cons
+//            for (int iw = 0; iw < cons.numRows(); iw++) {
+//                GRBLinExpr expr = new GRBLinExpr();
+//                for (int jw = 0; jw < cons.numCols(); jw++)
+//                    if (cons.index(iw,jw) != 0) {
+//                        expr.addTerm(cons.index(iw,jw), vars[jw]);
+//                    }
+//                m.addConstr(expr, sense[iw], rhs[iw], "");
+//            }
+////            objn
+//            GRBLinExpr objn = new GRBLinExpr();
+//            for (int e = 0; e < obj.length; e++){
+//                objn.addConstant(obj[e]);
+//            }
+//            m.setObjective(objn);
+//            // Solve model
+//            m.optimize();
+//            // Extract solution
+//            boolean success = false;
+//            double[]   solution = new double[cons.numCols()];
+//            logger.info("result:"+":"+GRB.Status.OPTIMAL);
+//            if (m.get(GRB.IntAttr.Status) == GRB.Status.OPTIMAL) {
+//                success = true;
+//                for (int j = 0; j < cons.numCols(); j++){
+//                    solution[j] = vars[j].get(GRB.DoubleAttr.X);
+//                    logger.info("solution[j]"+j+":"+String.valueOf(solution[j]));
+//                    systemWebSocketHandler.sendMessageToUser(new TextMessage(String.valueOf(solution[j])));
+//                }
+//            }
+//            m.dispose();
+//            // Dispose of environment
+//            env.dispose();
+//            systemWebSocketHandler.sendMessageToUser( new TextMessage("100%"));
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
 //////////////////////////////////////////////////////////
-        logger.info("////////////////////////////////////////////////////////////////");
+        logger.info("/n ////////////////////////////////////////////////////////////////");
         try {
             GRBEnv env2 = new GRBEnv();
 
-            double c2[] = new double[] {1, 1, 0};
-            double Q2[][] = new double[][] {{1, 1, 0}, {0, 1, 1}, {0, 0, 1}};
+//            double c2[] = new double[] {1, 1, 0};
+            double c2[] = new double[cons.numCols()];
+//                        objn
+            for (int jw = 0; jw < cons.numCols(); jw++)
+                c2[jw] = obj[jw];
+//            double Q2[][] = new double[][] {{1, 1, 0}, {0, 1, 1}, {0, 0, 1}};
+            double Q2[][] = null;
+//            double Q2[][] = new double[cons.numRows()][cons.numCols()];
+//            logger.info("iw:"+cons.numRows()+";jw:"+cons.numCols());
+//            for (int iw = 0; iw < cons.numRows(); iw++) {
+//                for (int jw = 0; jw < cons.numCols(); jw++)
+//                    Q2[iw][jw] = cons.index(iw,jw);
+//            }
             ///////
 //            double A[][] = new double[][] {{1, 2, 3}, {1, 1, 0}};
             double A2[][] = new double[cons.numRows()][cons.numCols()];
@@ -1081,27 +1094,51 @@ public class RelayModeUtil extends Thread implements IConstants {
                 for (int jw = 0; jw < cons.numCols(); jw++)
                     A2[iw][jw] = cons.index(iw,jw);
             }
+//            double A2[][] = null;
 //            char sense2[] = new char[] {'>', '>'};
             logger.info("sense:"+sense.length);
-            char sense2[] = sense;
+            char sense2[] = new char[cons.numRows()];
+            for(int is=0;is<cons.numRows();is++){
+                sense2[is] = sense[is];
+            }
 //            double rhs2[] = new double[] {4, 1};
             logger.info("rhs:"+rhs.length);
-            double rhs2[] = rhs;
+            double rhs2[] = new double[cons.numRows()];
+            for(int is=0;is<cons.numRows();is++){
+                rhs2[is] = rhs[is];
+            }
 //            double lb2[] = new double[] {0, 0, 0};
             double lb2[] = new double[cons.numRows()];
             for(int q=0;q<lb2.length;q++){
                 lb2[q]=0;
             }
+//            double lb2[] = null;
+//            double ub2[] = new double[cons.numRows()];
+//            for(int q=0;q<ub2.length;q++){
+//                ub2[q]=0;
+//            }
+            double ub2[] = null;
             boolean success;
             double sol2[] = new double[cons.numCols()];
             logger.info("sol2:"+sol2.length);
 
             Dense dense = new Dense();
-            success = dense.dense_optimize(env2, 2, 3, c2, Q2, A2, sense2, rhs2,
-                    lb2, null, null, sol2);
+            success = dense.dense_optimize(env2, cons.numRows(), cons.numCols(), c2, Q2, A2, sense2, rhs2,
+                    lb2, ub2, types, sol2);
 
             if (success) {
+                logger.info("success:");
                 System.out.println("x: " + sol2[0] + ", y: " + sol2[1] + ", z: " + sol2[2]);
+                double[] solution = sol2;
+                makeResults(solution);
+                double volume_to_ship = 0;
+                for(int e=0;e<OD_demand_list.size();e++){
+                    volume_to_ship += Double.parseDouble(OD_demand_list.get(e).get("volume").toString());
+                }
+                List<Map> route_opt = route_list;
+
+            }else{
+                logger.info("fail:");
             }
 
             // Dispose of environment
@@ -1112,5 +1149,9 @@ public class RelayModeUtil extends Thread implements IConstants {
                     e.getMessage());
             e.printStackTrace();
         }
+    }
+    ////////////
+    protected void makeResults(double[] solution){
+
     }
 }
