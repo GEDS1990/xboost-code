@@ -11,6 +11,7 @@ import com.xboost.service.SiteInfoService;
 import com.xboost.service.jieli.TempService;
 import org.apache.spark.mllib.linalg.DenseMatrix;
 import org.apache.spark.mllib.linalg.Matrix;
+import org.joda.time.DateTimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.TextMessage;
@@ -47,6 +48,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         //params
         systemWebSocketHandler.sendMessageToUser( new TextMessage("params:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("1%"));
+        logger.info("TimeLimit = 600");
         int TimeLimit = 6000;
         double MIPgap = 0.05;
         Configuration configuration = new Configuration();
@@ -941,10 +943,25 @@ public class RelayModeUtil extends Thread implements IConstants {
                     Double.parseDouble(connection_temp_list.get(ci).get("distance").toString()):0)+10);
         }
 
-        Vector obj = new Vector();
+        double[] obj = new double[I+connection_temp_list.size()*4];
+        for(int e=0;e<I;e++){
+            obj[e]=0;
+        }
+        for(int e=I;e<I+connection_temp_list.size();e++){
+            obj[e]=Double.parseDouble(connection_temp_list.get(e-I).get("cost_truck").toString());
+        }
+        for(int e=I+connection_temp_list.size();e<I+connection_temp_list.size()*2;e++){
+            obj[e]=Double.parseDouble(connection_temp_list.get(e-I-connection_temp_list.size()).get("cost_bike").toString());
+        }
+        for(int e=I+connection_temp_list.size()*2;e<I+connection_temp_list.size()*3;e++){
+            obj[e]=Double.parseDouble(connection_temp_list.get(e-I-connection_temp_list.size()*2).get("cost_didi").toString());
+        }
+        for(int e=I+connection_temp_list.size()*3;e<I+connection_temp_list.size()*4;e++){
+            obj[e]=Double.parseDouble(connection_temp_list.get(e-I-connection_temp_list.size()*3).get("cost_data").toString());
+        }
 
         //根据场景ID查询SiteDist
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("根据场景ID查询SiteDist"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("SiteDist"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("99%"));
         List<SiteInfo> siteInfoList = siteInfoService.findAllSiteInfo(ShiroUtil.getOpenScenariosId());
 
@@ -986,15 +1003,9 @@ public class RelayModeUtil extends Thread implements IConstants {
         for(int n=0;n<J;n++){
             types[I+n] = "I".toCharArray()[0];
         }
-//        int full_time = 210;
-//        int route_time_unit = 10;
         int max_timebucket_num = 0;
-//        int[] timebucket_num = new int[full_time/route_time_unit];
-//        for(int ii=0;ii<full_time/route_time_unit;ii++){
-//            timebucket_num[ii] = ii;
-//            max_timebucket_num = timebucket_num[ii];
-//        }
         i = M + J + N*4*max_timebucket_num;
+//        sense
         char[] sense = new char[i+10];
         for(int n=0;n<M;n++){
             sense[n] ="=".toCharArray()[0];
@@ -1009,55 +1020,17 @@ public class RelayModeUtil extends Thread implements IConstants {
         sense[i+1] ="=".toCharArray()[0];
 
         logger.info("model");
-//        Map<String,Object> model = new HashMap<String,Object>();
-//        model.put("A",cons);
-//        model.put("obj",obj);
-//        model.put("sense",sense);
-//        model.put("rhs",rhs);
-//        model.put("vtypes",types);
-//        model.put("modelsense","min");
-        //call gurobi
-//        mip<-gurobi(model,params)
-
-//        logger.info("GRBEnv test();");
-//        test();
 
         logger.info("GRBEnv");
         try{
             GRBEnv    env   = new GRBEnv("mip1.log");
             GRBModel m = new GRBModel(env);
-//            m.set(GRB.StringParam.valueOf("A"), cons.toString());
-//            m.set(GRB.StringParam.valueOf("obj"), obj.toString());
-//            m.set(GRB.StringParam.valueOf("sense"), sense.toString());
-//            m.set(GRB.StringParam.valueOf("rhs"), rhs.toString());
-//            m.set(GRB.StringParam.valueOf("vtypes"), types.toString());
-//            m.set(GRB.StringParam.valueOf("modelsense"), "min");
-
-            // Budget
-//            int Budget = 12;
-//            GRBLinExpr vtypes2 = new GRBLinExpr();
-//            GRBVar[] Elem1 = m.addVars(types.length, GRB.BINARY);
-//            for (int e = 0; e < types.length; e++) {
-//                String vname = types[e];
-//                Elem1[e].set(GRB.StringAttr.VarName, vname);
-//                vtypes2.addTerm(1.0, Elem1[e]);
-//            }
             double lb[] = new double[i];
             for(int q=0;q<lb.length;q++){
                 lb[q]=0;
             }
             GRBVar[] vars = m.addVars(lb, null, null, types, null);
-//            m.addConstr(vtypes2, GRB.LESS_EQUAL, Budget, "Budget");
-
-//            GRBLinExpr rhs2 = new GRBLinExpr();
-//            GRBVar[] Elem2 = m.addVars(types.length, GRB.BINARY);
-//            for (int e = 0; e < rhs.length; e++) {
-//                double vname = rhs[e];
-//                Elem1[e].set(GRB.DoubleAttr.VarHintVal, vname);
-//                rhs2.addTerm(1.0, Elem1[e]);
-//            }
-//            m.addConstr(rhs2, GRB.LESS_EQUAL, Budget, "Budget");
-
+//            cons
             for (int iw = 0; iw < cons.numRows(); iw++) {
                 GRBLinExpr expr = new GRBLinExpr();
                 for (int jw = 0; jw < cons.numCols(); jw++)
@@ -1066,20 +1039,23 @@ public class RelayModeUtil extends Thread implements IConstants {
                     }
                 m.addConstr(expr, sense[iw], rhs[iw], "");
             }
+//            objn
             GRBLinExpr objn = new GRBLinExpr();
-            for (int e = 0; e < obj.size(); e++){
-                m.setObjective(objn);
+            for (int e = 0; e < obj.length; e++){
+                objn.addConstant(obj[e]);
             }
+            m.setObjective(objn);
             // Solve model
-
             m.optimize();
             // Extract solution
             boolean success = false;
             double[]   solution = new double[cons.numCols()];
+            logger.info("result:"+":"+GRB.Status.OPTIMAL);
             if (m.get(GRB.IntAttr.Status) == GRB.Status.OPTIMAL) {
                 success = true;
                 for (int j = 0; j < cons.numCols(); j++){
                     solution[j] = vars[j].get(GRB.DoubleAttr.X);
+                    logger.info("solution[j]"+j+":"+String.valueOf(solution[j]));
                     systemWebSocketHandler.sendMessageToUser(new TextMessage(String.valueOf(solution[j])));
                 }
             }
@@ -1087,82 +1063,54 @@ public class RelayModeUtil extends Thread implements IConstants {
             // Dispose of environment
             env.dispose();
 
-//            GRBLinExpr sense2 = new GRBLinExpr();
-//            GRBVar[] Elem = m.addVars(sense.length, GRB.BINARY);
-//            for (int e = 0; e < sense.length; e++) {
-//                char vname = sense[e];
-//                Elem[e].set(GRB.StringAttr.VarName, vname);
-//                sense2.addTerm(1.0, Elem[e]);
-//            }
-//            m.addConstr(sense2, GRB.LESS_EQUAL, Budget, "Budget");
-
-//            GRBLinExpr objn = new GRBLinExpr();
-//            int    SetObjPriority[] = new int[] {3, 2, 2, 1};
-//            double SetObjWeight[]   = new double[] {1.0, 0.25, 1.25, 1.0};
-//            for (int e = 0; e < obj.size(); e++){
-//                m.setObjectiveN(objn, i, SetObjPriority[i], SetObjWeight[i],
-//                        1.0 + i, 0.01, obj.get(e).toString());
-//            }
-//            m.set(GRB.IntAttr.ModelSense, GRB.MINIMIZE);
-// Populate objective
-
-            // Populate A matrix
-//            double lb[] = new double[] {0, 0, 0};
-//            GRBVar[] vars = m.addVars(lb, null, null, null, null);
-//            char sense3[] = new char[] {'>', '>'};
-//            for (int ir = 0; ir < cons.numRows(); ir++) {
-//                GRBLinExpr expr = new GRBLinExpr();
-//                for (int j = 0; j < cons.numCols(); j++)
-////                    double[][] A = cons.index(ir,j);
-//                    if (cons.index(ir,j) != 0)
-//                        expr.addTerm(cons.index(ir,j), null);
-//                m.addConstr(expr, sense3[1], rhs[i], "");
-//            }
-//
-//            GRBModel  bestModel = new GRBModel(m);
-//
-//            logger.info("RelayMode params");
-//            bestModel.set(GRB.DoubleParam.TimeLimit, 6000);
-//            bestModel.set(GRB.DoubleParam.MIPGap, 0.05);
-//
-//            systemWebSocketHandler.sendMessageToUser( new TextMessage("optimize"));
-//            logger.info("optimize");
-//            bestModel.optimize();
-//            // Dispose of model and environment
-//            bestModel.dispose();
-//            env.dispose();
-//            logger.info("dispose");
-//            systemWebSocketHandler.sendMessageToUser( new TextMessage("100%"));
         }catch (Exception e){
             e.printStackTrace();
         }
+//////////////////////////////////////////////////////////
+        logger.info("////////////////////////////////////////////////////////////////");
+        try {
+            GRBEnv env2 = new GRBEnv();
 
-//        try {
-//            GRBEnv env2 = new GRBEnv();
-//            double c[] = cons;
-//            double Q[][] = cons;
-//            double A[][] = obj;
-//            char sense2[] = sense;
-//            double rhs2[] = rhs;
-//            double lb[] = types;
-//            boolean success;
-//            double sol[] = new double[3];
-//
-//
-//            success = dense_optimize(env2, 2, 3, c, Q, A, sense2, rhs2,
-//                    lb, null, null, sol);
-//
-//            if (success) {
-//                System.out.println("x: " + sol[0] + ", y: " + sol[1] + ", z: " + sol[2]);
-//            }
-//
-//            // Dispose of environment
-//            env2.dispose();
-//
-//        } catch (GRBException e) {
-//            System.out.println("Error code: " + e.getErrorCode() + ". " +
-//                    e.getMessage());
-//            e.printStackTrace();
-//        }
+            double c2[] = new double[] {1, 1, 0};
+            double Q2[][] = new double[][] {{1, 1, 0}, {0, 1, 1}, {0, 0, 1}};
+            ///////
+//            double A[][] = new double[][] {{1, 2, 3}, {1, 1, 0}};
+            double A2[][] = new double[cons.numRows()][cons.numCols()];
+            logger.info("iw:"+cons.numRows()+";jw:"+cons.numCols());
+            for (int iw = 0; iw < cons.numRows(); iw++) {
+                for (int jw = 0; jw < cons.numCols(); jw++)
+                    A2[iw][jw] = cons.index(iw,jw);
+            }
+//            char sense2[] = new char[] {'>', '>'};
+            logger.info("sense:"+sense.length);
+            char sense2[] = sense;
+//            double rhs2[] = new double[] {4, 1};
+            logger.info("rhs:"+rhs.length);
+            double rhs2[] = rhs;
+//            double lb2[] = new double[] {0, 0, 0};
+            double lb2[] = new double[cons.numRows()];
+            for(int q=0;q<lb2.length;q++){
+                lb2[q]=0;
+            }
+            boolean success;
+            double sol2[] = new double[cons.numCols()];
+            logger.info("sol2:"+sol2.length);
+
+            Dense dense = new Dense();
+            success = dense.dense_optimize(env2, 2, 3, c2, Q2, A2, sense2, rhs2,
+                    lb2, null, null, sol2);
+
+            if (success) {
+                System.out.println("x: " + sol2[0] + ", y: " + sol2[1] + ", z: " + sol2[2]);
+            }
+
+            // Dispose of environment
+            env2.dispose();
+
+        } catch (GRBException e) {
+            System.out.println("Error code: " + e.getErrorCode() + ". " +
+                    e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
