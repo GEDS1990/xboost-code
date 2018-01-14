@@ -3,9 +3,11 @@ package com.xboost.service;
 import com.xboost.mapper.SolutionRouteMapper;
 import com.xboost.pojo.Activity;
 import com.xboost.pojo.Route;
+import com.xboost.util.ExportUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.ibatis.annotations.Param;
+import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
@@ -14,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -210,4 +214,115 @@ public class SolutionRouteService {
     //车辆能否在预定时间到达该段路程的起点
 
     //车辆能否在预定时间内跑完该段路程
+
+    /**
+     * 导出result_depots excel
+     */
+    public void exportResult(String scenariosId,String[] titles, ServletOutputStream outputStream) {
+        List<Map<String, Object>> list = solutionRouteMapper.findAllByRoute(scenariosId);
+        // 创建一个workbook 对应一个excel应用文件
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        // 在workbook中添加一个sheet,对应Excel文件中的sheet
+
+        XSSFSheet sheet = workBook.createSheet("Route");
+        ExportUtil exportUtil = new ExportUtil(workBook, sheet);
+        XSSFCellStyle headStyle = exportUtil.getHeadStyle();
+        XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
+        // 构建表头
+        XSSFRow headRow = sheet.createRow(0);
+        XSSFCell cell = null;
+
+        for (int i = 0; i < titles.length; i++) {
+            cell = headRow.createCell(i);
+            cell.setCellValue(titles[i]);
+            cell.setCellStyle(headStyle);
+        }
+        // 构建表体数据
+        if (list != null && list.size() > 0) {
+            for (int j = 0; j < list.size(); j++) {
+                XSSFRow bodyRow = sheet.createRow(j + 1);
+                Map<String,Object> route = list.get(j);
+
+                int i = 0;
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue("Route" + route.get("routeCount"));
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue(route.get("sequence").toString());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue(route.get("curLoc").toString());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue(route.get("siteName").toString());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue(route.get("siteAddress").toString());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue(route.get("arrTime").toString());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue("Upload");
+                cell.setCellStyle(bodyStyle);
+
+                if(route.get("unloadVol").toString()==null || route.get("unloadVol").toString()=="") {
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue("0");
+                    cell.setCellStyle(bodyStyle);
+                }else {
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("unloadVol").toString());
+                    cell.setCellStyle(bodyStyle);
+                }
+
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue("Load");
+                cell.setCellStyle(bodyStyle);
+
+                if(route.get("sbVol").toString()==null || route.get("sbVol").toString()=="") {
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue("0");
+                    cell.setCellStyle(bodyStyle);
+                }else {
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("sbVol").toString());
+                    cell.setCellStyle(bodyStyle);
+                }
+
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue(route.get("endTime").toString());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue(route.get("nextCurLoc").toString());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue(route.get("calcDis").toString());
+                cell.setCellStyle(bodyStyle);
+            }
+        }
+
+        try
+        {
+//            FileOutputStream fout = new FileOutputStream("E:/Depots_info.xlsx");
+//            workBook.write(fout);
+//            fout.flush();
+//            fout.close();
+            workBook.write(outputStream);
+            outputStream.flush();
+            outputStream.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
