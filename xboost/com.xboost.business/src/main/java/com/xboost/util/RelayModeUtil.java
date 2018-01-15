@@ -51,8 +51,8 @@ public class RelayModeUtil extends Thread implements IConstants {
         logger.info("TimeLimit = 600");
         int TimeLimit = 6000;
         double MIPgap = 0.05;
-        Configuration configuration = new Configuration();
-        configuration.setOptimizeIterations(TimeLimit);
+//        Configuration configuration = new Configuration();
+//        configuration.setOptimizeIterations(TimeLimit);
 
         //mip
 //        mip<-Rglpk_solve_LP(obj=obj,mat=cons,dir=sense,rhs=rhs,max=FALSE,types=types)
@@ -66,7 +66,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         Map map = new HashMap<String,Object>();
         map.put("scenariosId", ShiroUtil.getOpenScenariosId());
         //obj
-        List<DemandInfo> demandInfoList = demandInfoService.findByScenairoIdParam(map);
+        List<DemandInfo> flow_lim = demandInfoService.findByScenairoIdParam(map);
         Map<String,Object> connection = new HashMap<String,Object>();
         Map<String,Object> OD_demand = new HashMap<String,Object>();
         Map<String,Object> distance_ref = new HashMap<String,Object>();
@@ -74,7 +74,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         Map<String,Object> three_points_route = new HashMap<String,Object>();
         Map<String,Object> four_points_route = new HashMap<String,Object>();
 
-        logger.info("demandInfoList");
+        logger.info("flow_lim");
         Map<String,Object> temp = new HashMap<String,Object>();
         List<Map> OD_demand_list= new ArrayList<Map>();
         List<Map> distance_ref_list= new ArrayList<Map>();
@@ -89,17 +89,17 @@ public class RelayModeUtil extends Thread implements IConstants {
         logger.info("OD_demand");
         int[] scenario_lim1 = {1,1,1,1,1};
         int[] scenario_lim2 = {9,12,15,18,21};
-        for(int j=0;j<demandInfoList.size();j++){
+        for(int j=0;j<flow_lim.size();j++){
             OD_demand.put("OD_id",j+1);
-            OD_demand.put("volume",Double.parseDouble(demandInfoList.get(j).getVotes())/0.8511);
-            OD_demand.put("inbound_id",demandInfoList.get(j).getSiteCodeCollect());
-            OD_demand.put("outbound_id",demandInfoList.get(j).getSiteCodeDelivery());
+            OD_demand.put("volume",Double.parseDouble(flow_lim.get(j).getVotes())/0.8511);
+            OD_demand.put("inbound_id",flow_lim.get(j).getSiteCodeCollect());
+            OD_demand.put("outbound_id",flow_lim.get(j).getSiteCodeDelivery());
             OD_demand.put("scenario",1);
             OD_demand.put("scenario_lim1",1);
             OD_demand.put("scenario_lim2",9);
             OD_demand.put("kmh",speed2);
             OD_demand.put("km",speed2);
-            OD_demand.put("minutes",Integer.parseInt(demandInfoList.get(j).getDurationEnd())-Integer.parseInt(demandInfoList.get(j).getDurationStart()));
+            OD_demand.put("minutes",Integer.parseInt(flow_lim.get(j).getDurationEnd())-Integer.parseInt(flow_lim.get(j).getDurationStart()));
             OD_demand_list.add(OD_demand);
         }
         //distance_ref
@@ -619,7 +619,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         route_list.addAll(route_three_point_list);
         route_list.addAll(route_four_point_list);
 
-        N = demandInfoList.size();
+        N = flow_lim.size();
         M = two_points_route_list.size();
         int I1 = two_points_route_list.size();
         int I2 = route_three_point_list.size();
@@ -713,7 +713,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         Vector f1 = new Vector();
         for(int c2=0;c2<connection2_list.size();c2++){
             f1.add(Integer.parseInt(connection2_list.get(c2).get("dummy_in_id").toString())
-                    +(Integer.parseInt(connection2_list.get(c2).get("time_id").toString())-1)*demandInfoList.size());
+                    +(Integer.parseInt(connection2_list.get(c2).get("time_id").toString())-1)*flow_lim.size());
         }
         Vector g1 = new Vector(1,J);
 
@@ -738,7 +738,7 @@ public class RelayModeUtil extends Thread implements IConstants {
             } else{
                 min = b;
             }
-            f2.add(Integer.parseInt(connection2_list.get(c2).get("dummy_out_id").toString())+min*demandInfoList.size()+N*c);
+            f2.add(Integer.parseInt(connection2_list.get(c2).get("dummy_out_id").toString())+min*flow_lim.size()+N*c);
         }
         Vector g2 = new Vector(1,J);
 //## all
@@ -1009,7 +1009,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         char[] sense = new char[i+10];
         for(int n=0;n<M;n++){
 //            sense[n] ="=".toCharArray()[0];
-            sense[n] ="<".toCharArray()[0];
+            sense[n] =">".toCharArray()[0];
         }
         for(int n=0;n<J;n++){
             sense[M+n] ="<=".toCharArray()[0];
@@ -1069,7 +1069,7 @@ public class RelayModeUtil extends Thread implements IConstants {
 //            e.printStackTrace();
 //        }
 //////////////////////////////////////////////////////////
-        logger.info("/n ////////////////////////////////////////////////////////////////");
+        logger.info("////////////////////////////////////////////////////////////////");
         try {
             GRBEnv env2 = new GRBEnv();
 

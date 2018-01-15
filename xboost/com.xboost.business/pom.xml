@@ -22,6 +22,20 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/webapp/jar/gurobi.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>REngine</groupId>
+            <artifactId>REngine</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/webapp/jar/REngine.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>RserveEngine</groupId>
+            <artifactId>RserveEngine</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/webapp/jar/RserveEngine.jar</systemPath>
+        </dependency>
     </dependencies>
     <build>
         <finalName>xboost</finalName>

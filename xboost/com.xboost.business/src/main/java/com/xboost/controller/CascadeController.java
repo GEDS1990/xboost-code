@@ -5,10 +5,12 @@ import com.xboost.pojo.Configuration;
 import com.xboost.service.*;
 import com.xboost.service.jieli.TempService;
 import com.xboost.util.CascadeModelUtil;
+import com.xboost.util.RelayModeRUtil;
 import com.xboost.util.RelayModeUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.websocket.SystemWebSocketHandler;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +54,12 @@ public class CascadeController {
     @Inject
     private SiteInfoService siteInfoService;
 
+    @Value("${Rserver.ip}")
+    private String RserverIp;
+
+    @Value("${Rserver.RShellPath}")
+    private String RShellPath;
+
     CascadeModelUtil cmu;
 
     @RequestMapping(value="/runSilumate",method = RequestMethod.POST)
@@ -93,7 +101,8 @@ public class CascadeController {
 //            }
 //        LogFactory.getLog(AccountController.class).info("input:"+input);
         }else if("2".equals(distMode)){
-            RelayModeUtil rm = new RelayModeUtil(tempService,demandInfoService,siteDistService,siteInfoService);
+//            RelayModeUtil rm = new RelayModeUtil(tempService,demandInfoService,siteDistService,siteInfoService);
+            RelayModeRUtil rm = new RelayModeRUtil(RserverIp);
             try {
                 rm.run();
             } catch (Exception e) {
