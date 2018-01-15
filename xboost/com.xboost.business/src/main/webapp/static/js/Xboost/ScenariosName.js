@@ -316,6 +316,7 @@ $(function  () {
                 if (_xls) {
                     window.location.href='/siteInfo/exportExcel';
                 }
+                $(".modal-header span").trigger('click');
             });
 
 		}
@@ -513,6 +514,7 @@ $(function  () {
         	if (_xls) {
         	window.location.href='/siteDist/exportExcel';
         	}
+            $(".modal-header span").trigger('click');
         }); 
          
          
@@ -702,6 +704,7 @@ $(function  () {
              if (_xls) {
              window.location.href='/demandInfo/exportExcel';
              }
+             $(".modal-header span").trigger('click');
          });
 		}
 	})(),
@@ -920,6 +923,7 @@ $(function  () {
                 if (_xls) {
                 window.location.href='/modelArg/exportExcel';
                 }
+                 $(".modal-header span").trigger('click');
              });
 
 		}
@@ -1365,6 +1369,7 @@ $(function  () {
                 if (_xls) {
                 window.location.href='/car/exportExcel';
                 }
+                 $(".modal-header span").trigger('click');
              });
 		}
 	})(),

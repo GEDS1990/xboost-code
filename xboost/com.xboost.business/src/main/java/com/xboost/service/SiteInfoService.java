@@ -283,7 +283,7 @@ public class SiteInfoService {
                 }
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(3);
+                /*cell = bodyRow.createCell(3);
                 if(depots.get("unloadVol").toString()==null || depots.get("unloadVol").toString()=="")
                 {
                     cell.setCellValue("Unload 0,Load "+depots.get("sbVol").toString());
@@ -300,9 +300,65 @@ public class SiteInfoService {
                 {
                     cell.setCellValue("Unload "+depots.get("unloadVol").toString()+",Load "+depots.get("sbVol").toString());
                 }
-                cell.setCellStyle(bodyStyle);
+                cell.setCellStyle(bodyStyle);*/
 
-                cell = bodyRow.createCell(4);
+                if(depots.get("unloadVol").toString()==null || depots.get("unloadVol").toString()=="") {
+                    cell = bodyRow.createCell(3);
+                    cell.setCellValue("Unload");
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(4);
+                    cell.setCellValue("0");
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(5);
+                    cell.setCellValue("Load");
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(6);
+                    cell.setCellValue(depots.get("sbVol").toString());
+                    cell.setCellStyle(bodyStyle);
+                }else if(depots.get("sbVol").toString()==null || depots.get("sbVol").toString()=="") {
+                    cell = bodyRow.createCell(3);
+                    cell.setCellValue("Unload");
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(4);
+                    cell.setCellValue(depots.get("unloadVol").toString());
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(5);
+                    cell.setCellValue("Load");
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(6);
+                    cell.setCellValue("0");
+                    cell.setCellStyle(bodyStyle);
+                }else if(depots.get("unloadVol").toString()==null || depots.get("unloadVol").toString()==""||depots.get("sbVol").toString()==null || depots.get("sbVol").toString()=="") {
+                    cell.setCellValue("Unload 0,Load 0");
+                    cell = bodyRow.createCell(3);
+                    cell.setCellValue("Unload");
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(4);
+                    cell.setCellValue("0");
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(5);
+                    cell.setCellValue("Load");
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(6);
+                    cell.setCellValue("0");
+                    cell.setCellStyle(bodyStyle);
+                }else {
+                    cell.setCellValue("Unload "+depots.get("unloadVol").toString()+",Load "+depots.get("sbVol").toString());
+                    cell = bodyRow.createCell(3);
+                    cell.setCellValue("Unload");
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(4);
+                    cell.setCellValue(depots.get("unloadVol").toString());
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(5);
+                    cell.setCellValue("Load");
+                    cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(6);
+                    cell.setCellValue(depots.get("sbVol").toString());
+                    cell.setCellStyle(bodyStyle);
+                }
+
+                cell = bodyRow.createCell(7);
                 if(depots.get("endTime").toString()==null || depots.get("endTime").toString()=="")
                 {
                     cell.setCellValue("");

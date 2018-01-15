@@ -926,8 +926,16 @@ $(function  () {
 				}
 				
 			});
-	        
-	        
+
+            //导出excel表格
+            $('.export-btn').click(function  () {
+                var _xls = $(this).attr('data-xls');
+                if (_xls) {
+					window.location.href="/depots/exportResult";
+                }
+                $(".modal-header span").trigger('click');
+            });
+
 	        
 	        
 		}
@@ -1244,7 +1252,15 @@ $(function  () {
 					})
 				});
 			});
-			
+
+            //导出excel表格
+            $('.export-btn').click(function  () {
+                var _xls = $(this).attr('data-xls');
+                if (_xls) {
+                    window.location.href="/route/exportResult";
+                }
+                $(".modal-header span").trigger('click');
+            });
 		}
 		
 	}());
@@ -1456,6 +1472,14 @@ $(function  () {
 				vehiclesMapInit(listArry,this.value)
 			});
 
+            //导出excel表格
+            $('.export-btn').click(function  () {
+                var _xls = $(this).attr('data-xls');
+                if (_xls) {
+                    window.location.href="/vehicles/exportResult";
+                }
+                $(".modal-header span").trigger('click');
+            });
 		}
 		
 	}());
