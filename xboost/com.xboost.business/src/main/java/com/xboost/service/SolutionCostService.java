@@ -9,6 +9,7 @@ import com.xboost.util.ExcelUtil;
 import com.xboost.util.ExportUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -213,6 +214,329 @@ public class SolutionCostService {
         }
 
         return branchCost;
+    }
+
+    /**
+     *  导出excel
+     * @param scenariosId
+     * @return
+     */
+    public void exportResult(String scenariosId,String[] titles,ServletOutputStream outputStream ) {
+        List<Cost> list = solutionCostMapper.findAll(scenariosId);
+        // 创建一个workbook 对应一个excel应用文件
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        // 在workbook中添加一个sheet,对应Excel文件中的sheet
+
+        XSSFSheet sheet = workBook.createSheet("Costs");
+        ExportUtil exportUtil = new ExportUtil(workBook, sheet);
+        XSSFCellStyle headStyle = exportUtil.getHeadStyle();
+        XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
+
+        for (int i = 0; i < 35; i++) {
+            XSSFRow row = sheet.createRow(i);
+            XSSFCell cell = null;
+            for (int j = 0; j < 14; j++) {
+                cell = row.createCell(j);
+                cell.setCellValue("");
+                cell.setCellStyle(bodyStyle);
+            }
+        }
+
+        //对应excel中的行和列，下表从0开始{"开始行,结束行,开始列,结束列"}
+        String[] headNum = { "0,0,0,3", "0,0,5,8", "0,0,10,13",
+                            "1,1,0,1", "1,1,2,3", "1,1,5,6", "1,1,7,8", "1,1,10,11", "1,1,12,13",
+                            "2,2,0,1", "2,2,2,3", "2,2,5,6", "2,2,7,8", "2,2,10,11", "2,2,12,13",
+                            "3,3,0,1", "3,3,2,3", "3,3,5,6", "3,3,7,8", "3,3,10,11", "3,3,12,13",
+                            "6,6,0,1", "6,6,2,3", "6,6,5,6", "6,6,7,8", "6,6,10,11", "6,6,12,13",
+                            "7,7,0,1", "7,7,2,3", "7,7,5,6", "7,7,7,8", "7,7,10,11", "7,7,12,13",
+                            "13,13,0,1", "13,13,2,3", "14,14,0,1", "14,14,2,3",
+                            "19,19,0,1", "19,19,2,3", "20,20,0,1", "20,20,2,3",
+                            "12,12,5,6", "12,12,7,8", "14,14,5,6", "14,14,7,8",
+                            "15,15,5,6", "15,15,7,8", "20,20,5,6", "20,20,7,8", "21,21,5,6", "21,21,7,8",
+                            "13,13,10,11", "13,13,12,13", "18,18,10,11", "18,18,12,13",
+                            "20,20,10,11", "20,20,12,13", "26,26,10,11", "26,26,12,13", "27,27,10,11", "27,27,12,13"};
+
+        //动态合并单元格
+        for (int i = 0; i < headNum.length; i++) {
+            String[] temp = headNum[i].split(",");
+            Integer startrow = Integer.parseInt(temp[0]);
+            Integer overrow = Integer.parseInt(temp[1]);
+            Integer startcol = Integer.parseInt(temp[2]);
+            Integer overcol = Integer.parseInt(temp[3]);
+            sheet.addMergedRegion(new CellRangeAddress(startrow, overrow,
+                    startcol, overcol));
+        }
+
+
+
+        // 构建表头
+        XSSFRow headRow = sheet.createRow(0);
+        XSSFCell cell = null;
+        for (int i = 0; i < 14; i++) {
+            cell = headRow.createCell(i);
+            if(i == 4 || i == 9) {
+                cell.setCellStyle(headStyle);
+                continue;
+            }
+            if(i < 4) {
+                cell.setCellValue(titles[0]);
+            } else if(i < 9) {
+                cell.setCellValue(titles[1]);
+            } else {
+                cell.setCellValue(titles[2]);
+            }
+            cell.setCellStyle(headStyle);
+        }
+
+        String[] nextTitles = { "Plan A", "Plan B" };
+        XSSFRow nextHeadRow = sheet.createRow(1);
+        for (int i = 0; i < 14; i++) {
+            cell = nextHeadRow.createCell(i);
+            switch (i) {
+                case 0: cell.setCellValue(nextTitles[0]);
+                    break;
+                case 1: cell.setCellValue(nextTitles[0]);
+                    break;
+                case 2: cell.setCellValue(nextTitles[1]);
+                    break;
+                case 3: cell.setCellValue(nextTitles[1]);
+                    break;
+                case 4:
+                    break;
+                case 5: cell.setCellValue(nextTitles[0]);
+                    break;
+                case 6: cell.setCellValue(nextTitles[0]);
+                    break;
+                case 7: cell.setCellValue(nextTitles[1]);
+                    break;
+                case 8: cell.setCellValue(nextTitles[1]);
+                    break;
+                case 9:
+                    break;
+                case 10: cell.setCellValue(nextTitles[0]);
+                    break;
+                case 11: cell.setCellValue(nextTitles[0]);
+                    break;
+                case 12: cell.setCellValue(nextTitles[1]);
+                    break;
+                case 13: cell.setCellValue(nextTitles[1]);
+                    break;
+            }
+            cell.setCellStyle(headStyle);
+        }
+
+        // 串点模型
+        String[] column1 = { "人效", "depot人效 (p)", "distrib. center人效 (p)", "",
+                "人员配备", "收端派端depot&distrib. center数量", "每个收端派端depot/distrib. center的人数", "收端派端depot&distrib. center总人数",
+                " · Full-time Staff", " · Part-time Staff", "",
+                "工资设定", " · Full-time salary (/month)", " · Full-time working days (/month)", " · Part-time wage (/hour)", " · Part-time working hours (/day)", "",
+                "成本", "收端派端depot&distrib. center单日人工成本", "单日总体人工成本 (per piece)", "支线运输成本 (per piece)", "总成本 (per piece)"};
+
+        String[] column2 = { "人效", "depot人效 (p)", "distrib. center人效 (p)", "", "",
+                "支线  总票数", "支线  所需人数", " · Full-time Staff", " · Part-time Staff", "", "...", "",
+                "工资设定", " · Full-time salary (/month)", " · Full-time working days (/month)", " · Part-time wage (/hour)", " · Part-time working hours (/day)", "",
+                "成本", "支线depot单日人工成本", "支线distrib. center单日人工成本", "单日总体人工成本 (per piece)", "支线运输成本 (per piece)", "总成本 (per piece)" };
+
+        String[] column3 = { "人效", "depot人效 (p)", "distrib. center人效 (p)", "",
+                "人员配备", "收端派端depot&distrib. center数量", "每个收端派端depot/distrib. center的人数", "收端派端depot&distrib. center总人数",
+                " · Full-time Staff", " · Part-time Staff", "",
+                "支线  总票数", "支线  所需人数", " · Full-time Staff", " · Part-time Staff", "", "...", "","工资设定", " · Full-time salary (/month)", " · Full-time working days (/month)", " · Part-time wage (/hour)", " · Part-time working hours (/day)", "",
+                "成本", "收端派端depot&distrib. center单日人工成本", "支线depot单日人工成本", "支线distrib. center单日人工成本",
+                "单日总体人工成本 (per piece)", "收端运输成本 (per piece)", "支线运输成本 (per piece)", "派端运输成本 (per piece)", "总成本 (per piece)" };
+
+        Cost CDA = new Cost();
+        Cost CDB = new Cost();
+        Cost JLA = new Cost();
+        Cost JLB = new Cost();
+        Cost ZHA = new Cost();
+        Cost ZHB = new Cost();
+        //cost.getModelType().equals("串点模型")...等需要根据实际的值进行判断，后期改
+        for ( Cost cost : list ) {
+            if("串点模型".equals(cost.getModelType()) && cost.getPlan().equals("A")) {
+                CDA = cost;
+            }
+            if("串点模型".equals(cost.getModelType()) && cost.getPlan().equals("B")) {
+                CDB = cost;
+            }
+            if("接力模型".equals(cost.getModelType()) && cost.getPlan().equals("A")) {
+                JLA = cost;
+            }
+            if("接力模型".equals(cost.getModelType()) && cost.getPlan().equals("B")) {
+                JLB = cost;
+            }
+            if("综合模型".equals(cost.getModelType()) && cost.getPlan().equals("A")) {
+                ZHA = cost;
+            }
+            if("综合模型".equals(cost.getModelType()) && cost.getPlan().equals("B")) {
+                ZHB = cost;
+            }
+        }
+        // 构建表体结构
+        for (int i = 3; i < 24; i++) {
+            XSSFRow row = sheet.createRow(i);
+            if(i == 4) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getSitePeopleWork());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getSitePeopleWork());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 5) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getDistribPeopleWork());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getDistribPeopleWork());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 8) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getSiteCount());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getSiteCount());
+                cell.setCellStyle(bodyStyle);
+            } else if(i == 9) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getPeopleNumPerSite());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getPeopleNumPerSite());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 10) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getSiteCount());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getSiteCount());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 11) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getFullTimeStaff());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getFullTimeStaff());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 12) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getPartTimeStaff());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getPartTimeStaff());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 15) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getFullTimeSalary());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getFullTimeSalary());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 16) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getFullTimeWorkDay());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getFullTimeWorkDay());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 17) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getPartTimeSalary());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getPartTimeSalary());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 18) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getPartTimeWorkDay());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getPartTimeWorkDay());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 21) {
+                cell = row.createCell(1);
+                cell.setCellValue("");
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue("");
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 22) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getSum1());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getSum1());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 23) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getTotalDailyLaborCost());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getTotalDailyLaborCost());
+                cell.setCellStyle(bodyStyle);
+            } else if (i == 24) {
+                cell = row.createCell(1);
+                cell.setCellValue(list.get(0).getBranchTransportCost());
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(list.get(0).getBranchTransportCost());
+                cell.setCellStyle(bodyStyle);
+            }
+
+            cell = row.createCell(0);
+            cell.setCellValue(column1[i-3]);
+            cell.setCellStyle(bodyStyle);
+
+            cell = row.createCell(2);
+            cell.setCellValue(column1[i-3]);
+            cell.setCellStyle(bodyStyle);
+
+            cell = row.createCell(5);
+            cell.setCellValue(column2[i-3]);
+            cell.setCellStyle(bodyStyle);
+
+            cell = row.createCell(7);
+            cell.setCellValue(column2[i-3]);
+            cell.setCellStyle(bodyStyle);
+
+            cell = row.createCell(10);
+            cell.setCellValue(column3[i-3]);
+            cell.setCellStyle(bodyStyle);
+
+            cell = row.createCell(12);
+            cell.setCellValue(column3[i-3]);
+            cell.setCellStyle(bodyStyle);
+        }
+
+
+
+        try
+        {
+//            FileOutputStream fout = new FileOutputStream("E:/Depots_info.xlsx");
+//            workBook.write(fout);
+//            fout.flush();
+//            fout.close();
+            workBook.write(outputStream);
+            outputStream.flush();
+            outputStream.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
 }
