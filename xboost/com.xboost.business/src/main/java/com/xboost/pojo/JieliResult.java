@@ -1,4 +1,4 @@
-package com.xboost.pojo.jieli;
+package com.xboost.pojo;
 
 import java.io.Serializable;
 
@@ -19,7 +19,7 @@ public class JieliResult implements Serializable {
     private String jConnectionId;         //唯一ID标识符(件量id)
     private String kmhDidi;         //滴滴时速
     private String kmhTruck;         //货车时速
-    private String kmBike;         //百度时速
+    private String kmhBike;         //百度时速
     private String minDidi;          //滴滴时间
     private String costBike;         //百度成本
     private String costDidi;         //滴滴成本
@@ -141,12 +141,12 @@ public class JieliResult implements Serializable {
         this.kmhTruck = kmhTruck;
     }
 
-    public String getKmBike() {
-        return kmBike;
+    public String getKmhBike() {
+        return kmhBike;
     }
 
-    public void setKmBike(String kmBike) {
-        this.kmBike = kmBike;
+    public void setKmhBike(String kmhBike) {
+        this.kmhBike = kmhBike;
     }
 
     public String getMinDidi() {

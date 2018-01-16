@@ -1,7 +1,7 @@
-package com.xboost.mapper.jieli;
+package com.xboost.mapper;
 
 
-import com.xboost.pojo.jieli.JieliResult;
+import com.xboost.pojo.JieliResult;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +9,9 @@ public interface JieliResultMapper {
 
     void save(JieliResult jieliResult);
 
-    List<Map<String,Object>> findByParam(Map<String,Object> param);
+    List<JieliResult> findAll(String scenariosId);
+
+    List<JieliResult> findByParam(Map<String,Object> param);
 
     Integer findAllCount(String scenariosId);
 

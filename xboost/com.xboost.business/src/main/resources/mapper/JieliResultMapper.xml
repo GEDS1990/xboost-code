@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xboost.mapper.jieli.JieliResultMapper">
+<mapper namespace="com.xboost.mapper.JieliResultMapper">
 
     <insert id="save" >
         INSERT into t_jieli_result(scenariosId,timebucket,connection,inbound_id,outbound_id,distance,cross_river,minutes,
@@ -19,6 +19,10 @@
         cost_truck = #{costTruck},cost_data = #{costDada},volume = #{volume},route_cnt = #{routeCnt},truck = #{truckNum},
         bike = #{bikeNum},didi = #{didiNum},dada = #{dadaNum} where id = #{id}
     </update>
+
+    <select id="findAll" resultType="JieliResult" resultMap="resultMap">
+        SELECT * FROM t_jieli_result where scenariosId=#{scenariosId}
+    </select>
 
     <select id="findByParam" parameterType="map" resultType="map" resultMap="resultMap">
         SELECT * from t_jieli_result
@@ -54,28 +58,28 @@
     <resultMap id="resultMap" type="JieliResult">
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
-        <result property="timebucket" column="timeBucket"/>
+        <result property="timeBucket" column="timebucket"/>
         <result property="connection" column="connection"/>
-        <result property="inbound_id" column="inboundId"/>
-        <result property="outbound_id" column="outboundId"/>
+        <result property="inboundId" column="inbound_id"/>
+        <result property="outboundId" column="outbound_id"/>
         <result property="distance" column="distance"/>
-        <result property="cross_river" column="crossRiver"/>
+        <result property="crossRiver" column="cross_river"/>
         <result property="minutes" column="minutes"/>
-        <result property="time_id" column="timeId"/>
-        <result property="j_connection_id" column="jConnectionId"/>
-        <result property="kmh_didi" column="kmhDidi"/>
-        <result property="kmh_truck" column="kmhTruck"/>
-        <result property="kmh_bike" column="kmhBike"/>
-        <result property="min_didi" column="minDidi"/>
-        <result property="cost_bike" column="costBike"/>
-        <result property="cost_didi" column="costDidi"/>
-        <result property="cost_truck" column="costTruck"/>
-        <result property="cost_dada" column="costDada"/>
+        <result property="timeId" column="time_id"/>
+        <result property="jConnectionId" column="j_connection_id"/>
+        <result property="kmhDidi" column="kmh_didi"/>
+        <result property="kmhTruck" column="kmh_truck"/>
+        <result property="kmhBike" column="kmh_bike"/>
+        <result property="minDidi" column="min_didi"/>
+        <result property="costBike" column="cost_bike"/>
+        <result property="costDidi" column="cost_didi"/>
+        <result property="costTruck" column="cost_truck"/>
+        <result property="costDada" column="cost_dada"/>
         <result property="volume" column="volume"/>
-        <result property="route_cnt" column="routeCnt"/>
-        <result property="truck" column="truckNum"/>
-        <result property="bike" column="bikeNum"/>
-        <result property="didi" column="didiNum"/>
-        <result property="dada" column="dadaNum"/>
+        <result property="routeCnt" column="route_cnt"/>
+        <result property="truckNum" column="truck"/>
+        <result property="bikeNum" column="bike"/>
+        <result property="didiNum" column="didi"/>
+        <result property="dadaNum" column="dada"/>
     </resultMap>
 </mapper>
