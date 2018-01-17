@@ -49,6 +49,8 @@ public interface SiteInfoMapper {
      */
     SiteInfo findSiteInfoById(Integer id);
 
+    String findSiteCodeById(Integer id);
+
 
     // 根据id编辑网点信息  @param siteInfo
     void editSiteInfo(SiteInfo siteInfo);

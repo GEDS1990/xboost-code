@@ -180,6 +180,10 @@ public class SiteInfoService {
         return siteInfoMapper.findSiteInfoById(id);
     }
 
+    public String findSiteCodeById(Integer id) {
+        return siteInfoMapper.findSiteCodeById(id);
+    }
+
 
     /**
      * 编辑网点信息

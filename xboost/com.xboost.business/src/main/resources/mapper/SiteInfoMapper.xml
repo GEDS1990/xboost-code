@@ -64,6 +64,10 @@
         SELECT * FROM t_site_info where id = #{id}
     </select>
 
+    <select id="findSiteCodeById" resultType="String">
+        SELECT site_code FROM t_site_info where id = #{id}
+    </select>
+
     <update id="editSiteInfo">
         UPDATE t_site_info SET scenariosId = #{scenariosId},site_code = #{siteCode},longitude = #{siteLongitude},latitude=#{siteLatitude},site_name=#{siteName},site_address=#{siteAddress},
         site_night_delivery=#{siteNightDelivery},site_area=#{siteArea},site_type=#{siteType},car_num=#{carNum} ,large_carModle=#{largeCarModel},

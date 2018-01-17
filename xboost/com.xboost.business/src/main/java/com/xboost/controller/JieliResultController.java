@@ -2,9 +2,11 @@ package com.xboost.controller;
 
 import com.xboost.pojo.Route;
 import com.xboost.pojo.JieliResult;
+import com.xboost.service.SiteInfoService;
 import com.xboost.service.SolutionRouteService;
 import com.xboost.service.JieliResultService;
 import com.xboost.util.ShiroUtil;
+import org.apache.spark.sql.catalyst.expressions.In;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +26,8 @@ public class JieliResultController {
     private SolutionRouteService solutionRouteService;
     @Inject
     private JieliResultService jieliResultService;
+    @Inject
+    private SiteInfoService siteInfoService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -45,16 +49,19 @@ public class JieliResultController {
     @RequestMapping(value = "/saveJieliToRoute",method = RequestMethod.GET)
     @ResponseBody
     public String save(Route route) {
+        solutionRouteService.delByScenariosId(90);
         List<JieliResult> jieliResults=jieliResultService.findAll("90");
         JieliResult jieliResult;
+        String siteCode="";
         for(int i=0;i<jieliResults.size();i++){
             jieliResult=jieliResults.get(i);
             route.setScenariosId("90");
             route.setRouteCount(String.valueOf(i+1));
             route.setCarType(jieliResult.getStr1());
-            route.setLocation(jieliResult.getConnection());
+            route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
+                    +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setSequence(String.valueOf(1));
-            route.setCurLoc(jieliResult.getInboundId());
+            route.setCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId())));
             route.setType("PICKUP");
             route.setSbVol(jieliResult.getVolume());
             route.setSbVolSum(jieliResult.getVolume());
@@ -63,7 +70,7 @@ public class JieliResultController {
             route.setUnloadLoc("0");
             route.setUnloadVol("0");
             route.setUnloadVolSum("0");
-            route.setNextCurLoc(jieliResult.getOutboundId());
+            route.setNextCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setCalcDis(jieliResult.getDistance());
             route.setStr1(jieliResult.getStr2());
             solutionRouteService.addRoute(route);
@@ -71,15 +78,16 @@ public class JieliResultController {
             route.setScenariosId("90");
             route.setRouteCount(String.valueOf(i+1));
             route.setCarType(jieliResult.getStr1());
-            route.setLocation(jieliResult.getConnection());
+            route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
+                    +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setSequence(String.valueOf(2));
-            route.setCurLoc(jieliResult.getOutboundId());
+            route.setCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setType("DELIVER");
             route.setSbVol("0");
             route.setSbVolSum("0");
             route.setArrTime(jieliResult.getTimeId());
             route.setEndTime(jieliResult.getTimeId());
-            route.setUnloadLoc("0");
+            route.setUnloadLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setUnloadVol(jieliResult.getVolume());
             route.setUnloadVolSum(jieliResult.getVolume());
             route.setNextCurLoc("");
