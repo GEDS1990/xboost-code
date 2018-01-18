@@ -97,7 +97,7 @@ public class SolutionVehiclesService {
 
                 int i = 0;
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("carType")+"");
+                cell.setCellValue(vehicle.get("carName")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
@@ -123,32 +123,23 @@ public class SolutionVehiclesService {
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue("Upload");
-                cell.setCellStyle(bodyStyle);
-
-                if(vehicle.get("unloadVol")==null || vehicle.get("unloadVol")=="") {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue("0");
-                    cell.setCellStyle(bodyStyle);
-                }else {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(vehicle.get("unloadVol")+"");
-                    cell.setCellStyle(bodyStyle);
+                if(vehicle.get("unloadVol").toString()==null || vehicle.get("unloadVol").toString()=="")
+                {
+                    cell.setCellValue("Unload 0,Load "+vehicle.get("sbVol").toString());
                 }
-
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue("Load");
-                cell.setCellStyle(bodyStyle);
-
-                if(vehicle.get("sbVol")==null || vehicle.get("sbVol")=="") {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue("0");
-                    cell.setCellStyle(bodyStyle);
-                }else {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(vehicle.get("sbVol")+"");
-                    cell.setCellStyle(bodyStyle);
+                else if(vehicle.get("sbVol").toString()==null || vehicle.get("sbVol").toString()=="")
+                {
+                    cell.setCellValue("Unload "+vehicle.get("unloadVol")+",Load 0");
                 }
+                else if(vehicle.get("unloadVol").toString()==null || vehicle.get("unloadVol").toString()==""||vehicle.get("sbVol").toString()==null || vehicle.get("sbVol").toString()=="")
+                {
+                    cell.setCellValue("Unload 0,Load 0");
+                }
+                else
+                {
+                    cell.setCellValue("Unload "+vehicle.get("unloadVol").toString()+",Load "+vehicle.get("sbVol").toString());
+                }
+                cell.setCellStyle(bodyStyle);
 
                 String endTime = (String)vehicle.get("endTime");
                 String end = endTime.substring(0, endTime.indexOf('.'));
@@ -161,7 +152,7 @@ public class SolutionVehiclesService {
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("calcDis")+"");
+                cell.setCellValue(vehicle.get("calcDis")+"km");
                 cell.setCellStyle(bodyStyle);
             }
         }

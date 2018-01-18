@@ -18,6 +18,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -219,7 +221,14 @@ public class SolutionRouteService {
      * 导出result_depots excel
      */
     public void exportResult(String scenariosId,String[] titles, ServletOutputStream outputStream) {
-        List<Map<String, Object>> list = solutionRouteMapper.findAllByRoute(scenariosId);
+        List<Map<String, Object>> list = new ArrayList<>();
+        list.sort(new Comparator<Map<String, Object>>() {
+            @Override
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                return ((String)o1.get("routeCount")).compareTo((String)o1.get("routeCount"));
+            }
+        });
+        list = solutionRouteMapper.findAllByRoute(scenariosId);
         // 创建一个workbook 对应一个excel应用文件
         XSSFWorkbook workBook = new XSSFWorkbook();
         // 在workbook中添加一个sheet,对应Excel文件中的sheet
@@ -271,32 +280,23 @@ public class SolutionRouteService {
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue("Upload");
-                cell.setCellStyle(bodyStyle);
-
-                if(route.get("unloadVol").toString()==null || route.get("unloadVol").toString()=="") {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue("0");
-                    cell.setCellStyle(bodyStyle);
-                }else {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("unloadVol").toString());
-                    cell.setCellStyle(bodyStyle);
+                if(route.get("unloadVol").toString()==null || route.get("unloadVol").toString()=="")
+                {
+                    cell.setCellValue("Unload 0,Load "+route.get("sbVol").toString());
                 }
-
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue("Load");
-                cell.setCellStyle(bodyStyle);
-
-                if(route.get("sbVol").toString()==null || route.get("sbVol").toString()=="") {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue("0");
-                    cell.setCellStyle(bodyStyle);
-                }else {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("sbVol").toString());
-                    cell.setCellStyle(bodyStyle);
+                else if(route.get("sbVol").toString()==null || route.get("sbVol").toString()=="")
+                {
+                    cell.setCellValue("Unload "+route.get("unloadVol")+",Load 0");
                 }
+                else if(route.get("unloadVol").toString()==null || route.get("unloadVol").toString()==""||route.get("sbVol").toString()==null || route.get("sbVol").toString()=="")
+                {
+                    cell.setCellValue("Unload 0,Load 0");
+                }
+                else
+                {
+                    cell.setCellValue("Unload "+route.get("unloadVol").toString()+",Load "+route.get("sbVol").toString());
+                }
+                cell.setCellStyle(bodyStyle);
 
                 String endTime = (String)route.get("endTime");
                 String end = endTime.substring(0, endTime.indexOf('.'));
@@ -309,7 +309,7 @@ public class SolutionRouteService {
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(route.get("calcDis").toString());
+                cell.setCellValue(route.get("calcDis").toString()+"km");
                 cell.setCellStyle(bodyStyle);
             }
         }
