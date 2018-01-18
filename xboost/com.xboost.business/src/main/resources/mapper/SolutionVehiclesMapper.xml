@@ -6,7 +6,7 @@
 
     <select id="findAllByCar" resultType="map" resultMap="modelCar">
         SELECT * FROM t_solution_route r INNER join t_car_licence c on r.car_name = c.name
-        inner join t_car_info t on c.type= t.type INNER join t_car_info d on r.car_name = c.name
+        inner join t_car_info t on c.type= t.type LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
         where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and
         c.scenariosId = #{scenariosId} and t.scenariosId = #{scenariosId}
         order by r.arr_time

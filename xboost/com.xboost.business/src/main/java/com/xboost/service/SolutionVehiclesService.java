@@ -97,7 +97,7 @@ public class SolutionVehiclesService {
 
                 int i = 0;
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue("carType");
+                cell.setCellValue(vehicle.get("carType")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
@@ -116,8 +116,11 @@ public class SolutionVehiclesService {
                 cell.setCellValue(vehicle.get("siteAddress")+"");
                 cell.setCellStyle(bodyStyle);
 
+                String arrTime = (String)vehicle.get("arrTime");
+                String arr = arrTime.substring(0, arrTime.indexOf('.'));
+
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("arrTime")+"");
+                cell.setCellValue(Integer.parseInt(arr)/60+":"+Integer.parseInt(arr)%60);
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
@@ -148,8 +151,10 @@ public class SolutionVehiclesService {
                     cell.setCellStyle(bodyStyle);
                 }
 
+                String endTime = (String)vehicle.get("endTime");
+                String end = endTime.substring(0, endTime.indexOf('.'));
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("endTime")+"");
+                cell.setCellValue(Integer.parseInt(end)/60+":"+Integer.parseInt(end)%60);
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
