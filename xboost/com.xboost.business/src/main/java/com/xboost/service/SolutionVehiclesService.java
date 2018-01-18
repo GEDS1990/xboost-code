@@ -101,36 +101,36 @@ public class SolutionVehiclesService {
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("sequence").toString());
+                cell.setCellValue(vehicle.get("sequence")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("curLoc").toString());
+                cell.setCellValue(vehicle.get("curLoc")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("siteName").toString());
+                cell.setCellValue(vehicle.get("siteName")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("siteAddress").toString());
+                cell.setCellValue(vehicle.get("siteAddress")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("arrTime").toString());
+                cell.setCellValue(vehicle.get("arrTime")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
                 cell.setCellValue("Upload");
                 cell.setCellStyle(bodyStyle);
 
-                if(vehicle.get("unloadVol").toString()==null || vehicle.get("unloadVol").toString()=="") {
+                if(vehicle.get("unloadVol")==null || vehicle.get("unloadVol")=="") {
                     cell = bodyRow.createCell(i++);
                     cell.setCellValue("0");
                     cell.setCellStyle(bodyStyle);
                 }else {
                     cell = bodyRow.createCell(i++);
-                    cell.setCellValue(vehicle.get("unloadVol").toString());
+                    cell.setCellValue(vehicle.get("unloadVol")+"");
                     cell.setCellStyle(bodyStyle);
                 }
 
@@ -138,26 +138,26 @@ public class SolutionVehiclesService {
                 cell.setCellValue("Load");
                 cell.setCellStyle(bodyStyle);
 
-                if(vehicle.get("sbVol").toString()==null || vehicle.get("sbVol").toString()=="") {
+                if(vehicle.get("sbVol")==null || vehicle.get("sbVol")=="") {
                     cell = bodyRow.createCell(i++);
                     cell.setCellValue("0");
                     cell.setCellStyle(bodyStyle);
                 }else {
                     cell = bodyRow.createCell(i++);
-                    cell.setCellValue(vehicle.get("sbVol").toString());
+                    cell.setCellValue(vehicle.get("sbVol")+"");
                     cell.setCellStyle(bodyStyle);
                 }
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("endTime").toString());
+                cell.setCellValue(vehicle.get("endTime")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("nextCurLoc").toString());
+                cell.setCellValue(vehicle.get("nextCurLoc")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("calcDis").toString());
+                cell.setCellValue(vehicle.get("calcDis")+"");
                 cell.setCellStyle(bodyStyle);
             }
         }
