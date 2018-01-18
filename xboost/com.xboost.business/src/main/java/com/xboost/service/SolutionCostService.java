@@ -241,16 +241,6 @@ public class SolutionCostService {
         sheet.setDefaultRowHeight((short)15);
         bodyStyle.setAlignment(HorizontalAlignment.LEFT);
 
-        for (int i = 0; i < 35; i++) {
-            XSSFRow row = sheet.createRow(i);
-            XSSFCell cell = null;
-            for (int j = 0; j < 14; j++) {
-                cell = row.createCell(j);
-                cell.setCellValue("");
-                cell.setCellStyle(bodyStyle);
-            }
-        }
-
         //对应excel中的行和列，下表从0开始{"开始行,结束行,开始列,结束列"}
         String[] headNum = { "0,0,0,3", "0,0,5,8", "0,0,10,13",
                             "1,1,0,1", "1,1,2,3", "1,1,5,6", "1,1,7,8", "1,1,10,11", "1,1,12,13",
@@ -275,8 +265,6 @@ public class SolutionCostService {
             sheet.addMergedRegion(new CellRangeAddress(startrow, overrow,
                     startcol, overcol));
         }
-
-
 
         // 构建表头
         XSSFRow headRow = sheet.createRow(0);
