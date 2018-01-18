@@ -118,7 +118,6 @@ public class SolutionVehiclesService {
 
                 String arrTime = (String)vehicle.get("arrTime");
                 String arr = arrTime.substring(0, arrTime.indexOf('.'));
-
                 cell = bodyRow.createCell(i++);
                 cell.setCellValue(Integer.parseInt(arr)/60+":"+Integer.parseInt(arr)%60);
                 cell.setCellStyle(bodyStyle);

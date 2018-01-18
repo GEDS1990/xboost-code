@@ -264,8 +264,10 @@ public class SolutionRouteService {
                 cell.setCellValue(route.get("siteAddress").toString());
                 cell.setCellStyle(bodyStyle);
 
+                String arrTime = (String)route.get("arrTime");
+                String arr = arrTime.substring(0, arrTime.indexOf('.'));
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(route.get("arrTime").toString());
+                cell.setCellValue(Integer.parseInt(arr)/60+":"+Integer.parseInt(arr)%60);
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
@@ -296,8 +298,10 @@ public class SolutionRouteService {
                     cell.setCellStyle(bodyStyle);
                 }
 
+                String endTime = (String)route.get("endTime");
+                String end = endTime.substring(0, endTime.indexOf('.'));
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(route.get("endTime").toString());
+                cell.setCellValue(Integer.parseInt(end)/60+":"+Integer.parseInt(end)%60);
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
