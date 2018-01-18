@@ -102,7 +102,7 @@ public class CarService {
                             transport.setMaxLoad(row[3]);
                             transport.setDimensions(row[11]);
                             transport.setMaxRunningTime(Double.parseDouble((row[10].trim().equals(""))?"0":row[10].trim()));
-                            transport.setMaxStop(Integer.parseInt((row[8].trim().equals(""))?"0":row[8].trim()));
+                            transport.setMaxStop(Integer.parseInt((row[8].trim().equals(""))?"0":""+(int)Float.parseFloat(row[8].trim())));
 //                            transport.setSkills(row[0]);
                             transport.setStartLocation(row[13]);
                             transport.setEndLocation(row[14]);
