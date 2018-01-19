@@ -60,8 +60,8 @@
     </select>
 
     <select id="findTotalVol" resultType="String">
-        SELECT cur_loc,GREATEST(MAX(sb_vol_sum),MAX(unload_vol_sum)) as totalVol FROM t_solution_route
-        WHERE scenariosId = #{scenariosId} AND cur_loc = #{curLoc}
+        SELECT GREATEST(MAX(sb_vol_sum),MAX(unload_vol_sum)) as totalVol FROM t_solution_route
+        WHERE scenariosId = #{scenariosId} AND cur_loc = #{siteCode}
     </select>
 
     <delete id="delByScenariosId">

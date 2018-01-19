@@ -3,6 +3,7 @@ package com.xboost.controller;
 import com.google.common.collect.Maps;
 import com.xboost.pojo.Cost;
 import com.xboost.pojo.ModelArg;
+import com.xboost.pojo.SiteInfo;
 import com.xboost.service.*;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
@@ -17,6 +18,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +41,8 @@ public class SolutionCostController {
     private SolutionRouteService solutionRouteService;
     @Inject
     private DemandInfoService demandInfoService;
+    @Inject
+    private SolutionEfficiencyService solutionEfficiencyService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -87,19 +91,27 @@ public class SolutionCostController {
         //总件量
         Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
         //网点
-        List<Map<String,Object>> siteInfoList = siteInfoService.findAllBySiteCode(scenariosId);
+        List<String> siteCodeList=solutionEfficiencyService.findAllSite(scenariosId);
+        Map<String,Object> totalVolList=Maps.newHashMap();
+        Map<String,Object> siteInfoList=Maps.newHashMap();
+        for(int i=0;i<siteCodeList.size();i++){
+            SiteInfo siteInfo = siteInfoService.findSiteInfoBySiteCode(scenariosId, siteCodeList.get(i));
+            String totalVol= solutionCostService.findTotalVol(scenariosId,siteCodeList.get(i));
+            siteInfoList.put(siteCodeList.get(i),siteInfo);
+            totalVolList.put(siteCodeList.get(i),totalVol);
+        }
         //支线总运输成本
       //  Double branchTransportCost = solutionCostService.branchTransportCost();
       //   String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
 
         //总票数
-        String totalVol = "100";
+      //  List<String> totalVolList = solutionCostService.findTotalVol(scenariosId,siteCode);
 
         result.put("data",costList);
         result.put("modelType",modelType);
         result.put("totalPiece",totalPiece);
         result.put("siteInfoList",siteInfoList);
-        result.put("totalVol",totalVol);
+        result.put("totalVolList",totalVolList);
  //       result.put("branchTransportCost",branchTransportCost);
 
         return result;

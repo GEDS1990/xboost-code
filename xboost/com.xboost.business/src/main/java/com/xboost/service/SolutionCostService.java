@@ -105,6 +105,11 @@ public class SolutionCostService {
         solutionCostMapper.editSiteInfo(scenariosId,siteCode);
     }
 
+    //查询网点总票数
+    public String findTotalVol(String scenariosId,String siteCode){
+        return solutionCostMapper.findTotalVol(scenariosId,siteCode);
+    }
+
     //查询总件量
     public Integer findTotalPiece(String scenariosId){
         return solutionCostMapper.findTotalPiece(scenariosId);

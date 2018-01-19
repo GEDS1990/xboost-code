@@ -40,7 +40,7 @@ public interface SolutionCostMapper {
     void editSiteInfo(@Param("scenariosId")String scenariosId,@Param("siteCode")String siteCode);
 
     //查询网点类型，网点编码，最大票数
-    List<Map<String,Object>> findTotalVol(@Param("scenariosId")String scenariosId,@Param("siteCode")String siteCode);
+    String findTotalVol(@Param("scenariosId")String scenariosId,@Param("siteCode")String siteCode);
 
 
     Integer findTotalPiece(String scenariosId);
