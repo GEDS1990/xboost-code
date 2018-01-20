@@ -166,7 +166,7 @@ public class SolutionVehiclesController {
             //       response.setHeader("Content-disposition", "attachment; filename=distance.xlsx");
             String scenariosId = ShiroUtil.getOpenScenariosId();
             String[] titles = { "Vehicle ID","Depot Order","Depot ID","Depot Name","Depot Address",
-                    "Arrival Time","Unload What","Unload Quantity","Load What","Load Quantity","Departure Time","Next Depot","Next Depot Distance" };
+                    "Arrival Time","Operation","Departure Time","Next Depot","Next Depot Distance" };
             solutionVehiclesService.exportResult(scenariosId,titles,outputStream);
             //       System.out.println("outputStream:"+outputStream);
         }

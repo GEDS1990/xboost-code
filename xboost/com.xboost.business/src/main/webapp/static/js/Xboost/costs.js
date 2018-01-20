@@ -319,9 +319,15 @@ $(function (){
 				console.log("fail");
 			});
 			
-			
-			//
-	
+
+            //导出excel表格
+            $('.export-btn').click(function  () {
+                var _xls = $(this).attr('data-xls');
+                if (_xls) {
+                    window.location.href="/costs/exportResult";
+                }
+                $(".modal-header span").trigger('click');
+            });
 		}
 	}());
 	
@@ -622,8 +628,15 @@ $(function (){
 			}).fail(function  () {
 				alert("fail");
 			});
-			
-			
+
+            //导出excel表格
+            $('.export-btn').click(function  () {
+                var _xls = $(this).attr('data-xls');
+                if (_xls) {
+                    window.location.href="/efficiency/exportResult";
+                }
+                $(".modal-header span").trigger('click');
+            });
 			
 			
 			
@@ -632,14 +645,7 @@ $(function (){
 		}
 	}());
 
-    //导出excel表格
-    $('.export-btn').click(function  () {
-        var _xls = $(this).attr('data-xls');
-        if (_xls) {
-            window.location.href="/costs/exportResult";
-        }
-        $(".modal-header span").trigger('click');
-    });
+
 	
 	
 	

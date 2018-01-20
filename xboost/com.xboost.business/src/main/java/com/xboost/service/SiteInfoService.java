@@ -287,7 +287,7 @@ public class SiteInfoService {
                 }
                 cell.setCellStyle(bodyStyle);
 
-                /*cell = bodyRow.createCell(3);
+                cell = bodyRow.createCell(3);
                 if(depots.get("unloadVol").toString()==null || depots.get("unloadVol").toString()=="")
                 {
                     cell.setCellValue("Unload 0,Load "+depots.get("sbVol").toString());
@@ -304,9 +304,9 @@ public class SiteInfoService {
                 {
                     cell.setCellValue("Unload "+depots.get("unloadVol").toString()+",Load "+depots.get("sbVol").toString());
                 }
-                cell.setCellStyle(bodyStyle);*/
+                cell.setCellStyle(bodyStyle);
 
-                if(depots.get("unloadVol").toString()==null || depots.get("unloadVol").toString()=="") {
+                /*if(depots.get("unloadVol").toString()==null || depots.get("unloadVol").toString()=="") {
                     cell = bodyRow.createCell(3);
                     cell.setCellValue("Unload");
                     cell.setCellStyle(bodyStyle);
@@ -360,9 +360,9 @@ public class SiteInfoService {
                     cell = bodyRow.createCell(6);
                     cell.setCellValue(depots.get("sbVol").toString());
                     cell.setCellStyle(bodyStyle);
-                }
+                }*/
 
-                cell = bodyRow.createCell(7);
+                cell = bodyRow.createCell(4);
                 if(depots.get("endTime").toString()==null || depots.get("endTime").toString()=="")
                 {
                     cell.setCellValue("");

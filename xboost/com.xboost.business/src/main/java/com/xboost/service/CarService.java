@@ -6,6 +6,7 @@ import com.xboost.mapper.CarMapper;
 import com.xboost.pojo.CarLicence;
 import com.xboost.pojo.DemandInfo;
 import com.xboost.util.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -101,7 +102,7 @@ public class CarService {
                             transport.setMaxLoad(row[3]);
                             transport.setDimensions(row[11]);
                             transport.setMaxRunningTime(Double.parseDouble((row[10].trim().equals(""))?"0":row[10].trim()));
-                            transport.setMaxStop(Integer.parseInt((row[8].trim().equals(""))?"0":row[8].trim()));
+                            transport.setMaxStop(Integer.parseInt((row[8].trim().equals(""))?"0":""+(int)Float.parseFloat(row[8].trim())));
 //                            transport.setSkills(row[0]);
                             transport.setStartLocation(row[13]);
                             transport.setEndLocation(row[14]);
@@ -268,7 +269,7 @@ public class CarService {
     /**
      * 导出excel
      */
-    public void exportExcel(String scenariosId,String[] titles,ServletOutputStream outputStream )
+    public void exportExcel(String scenariosId,String[] titles, String[] nextTitles, ServletOutputStream outputStream )
     {
         List<Car> list = transportMapper.findAll(scenariosId);
         // 创建一个workbook 对应一个excel应用文件
@@ -279,16 +280,46 @@ public class CarService {
         ExportUtil exportUtil = new ExportUtil(workBook, sheet);
         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
-        // 构建表头
+
         XSSFRow headRow = sheet.createRow(0);
+        XSSFRow nextHeadRow = sheet.createRow(1);
+        String[] headNum = { "0,1,0,0", "0,1,1,1", "0,1,2,2", "0,1,3,3", "0,1,4,4",
+                "0,0,5,7", "0,1,8,8", "0,1,9,9", "0,1,10,10", "0,1,11,11", "0,1,12,12", "0,1,13,13", "0,1,14,14",
+                "0,0,15,19", "0,0,20,24", "0,0,25,29", "0,0,30,34", "0,0,35,39", "0,0,40,44", "0,1,45,45",
+                "1,1,15,16", "1,1,20,21", "1,1,25,26", "1,1,30,31", "1,1,40,41"};
+
+        //动态合并单元格
+        for (int i = 0; i < headNum.length; i++) {
+            String[] temp = headNum[i].split(",");
+            Integer startrow = Integer.parseInt(temp[0]);
+            Integer overrow = Integer.parseInt(temp[1]);
+            Integer startcol = Integer.parseInt(temp[2]);
+            Integer overcol = Integer.parseInt(temp[3]);
+            sheet.addMergedRegion(new CellRangeAddress(startrow, overrow,
+                    startcol, overcol));
+        }
+
+        // 表头列名
+
         XSSFCell cell = null;
-        for (int i = 0; i < titles.length; i++)
-        {
+        for (int i = 0; i < titles.length; i++) {
             cell = headRow.createCell(i);
             cell.setCellValue(titles[i]);
             cell.setCellStyle(headStyle);
-            //System.out.println(titles[i]);
         }
+
+        for (int j = 0; j < 3; j++) {
+            cell = nextHeadRow.createCell(j + 5);
+            cell.setCellValue(nextTitles[j]);
+            cell.setCellStyle(headStyle);
+        }
+
+        for (int j = 3; j < nextTitles.length; j++) {
+            cell = nextHeadRow.createCell(j + 12);
+            cell.setCellValue(nextTitles[j]);
+            cell.setCellStyle(headStyle);
+        }
+
         // 构建表体数据
         if (list != null && list.size() > 0)
         {
@@ -296,76 +327,193 @@ public class CarService {
 
                 for (int j = 0; j < list.size(); j++)
                 {
-                    XSSFRow bodyRow = sheet.createRow(j + 1);
+                    XSSFRow bodyRow = sheet.createRow(j + 2);
                     Car car = list.get(j);
-                    int i = 1;
-                    cell = bodyRow.createCell(0);
-                    cell.setCellValue(car.getId());
+                    int i = 0;
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue("NA");
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(0+i);
+                    cell = bodyRow.createCell(i++);
                     cell.setCellValue(car.getType());
                     cell.setCellStyle(bodyStyle);
 
 
-                    cell = bodyRow.createCell(1+i);
-                    cell.setCellValue(car.getDimensions());
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getNum());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(2+i);
-                    cell.setCellValue(Strings.isEmpty(car.getSkills().toString())?" ":car.getSkills().toString());
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getMaxLoad());
+//                    cell.setCellValue(Strings.isEmpty(car.getSkills().toString())?" ":car.getSkills().toString());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(3+i);
-                    cell.setCellValue(car.getStartLocation());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(4+i);
-                    cell.setCellValue(car.getEndLocation());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(5+i);
-                    cell.setCellValue(car.getMaxDistance());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(6+i);
-                    cell.setCellValue(car.getMaxRunningTime());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(7+i);
-                    cell.setCellValue(car.getCostPerDistance());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(8+i);
-                    cell.setCellValue(car.getFixedCost());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(9+i);
-                    cell.setCellValue(car.getMaxStop());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(10+i);
-                    cell.setCellValue(car.getVelocity());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(11+i);
-                    cell.setCellValue(car.getFixedRound());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(12+i);
-                    cell.setCellValue(car.getFixedRoundFee());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(13+i);
+                    cell = bodyRow.createCell(i++);
                     cell.setCellValue(car.getCarSource());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(14+i);
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getVelocity());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getVelocity2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getVelocity3());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getMaxStop());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getMaxDistance());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getMaxRunningTime());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
                     cell.setCellValue(car.getMaxLoad());
                     cell.setCellStyle(bodyStyle);
 
-                    cell = bodyRow.createCell(15+i);
-                    cell.setCellValue(car.getDurationUnloadFull());
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getUpdateTime());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getStartLocation());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getEndLocation());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getA1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getA2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCosta1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCosta2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCosta3());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getB1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getB2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostb1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostb2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostb3());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getC1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getC2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostc1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostc2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostc3());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getD1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getD2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostd1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostd2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostd3());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getE1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getE2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCoste1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCoste2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCoste3());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getF1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getF2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostf1());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostf2());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(car.getCostf3());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue("NA");
                     cell.setCellStyle(bodyStyle);
                 }
             }

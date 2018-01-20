@@ -158,7 +158,7 @@ public class SolutionDepotsController {
             response.setCharacterEncoding("utf-8");
             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
             String scenariosId = ShiroUtil.getOpenScenariosId();
-            String[] titles = { "Depot ID","Incoming Vehicle","Arrival Time","Unload What","Unload Quantity","Load What","Load Quantity","Departure Time" };
+            String[] titles = { "Depot ID","Incoming Vehicle","Arrival Time","Operation","Departure Time" };
             siteInfoService.exportResult(scenariosId,titles,outputStream);
             System.out.println("outputStream:"+outputStream);
         }

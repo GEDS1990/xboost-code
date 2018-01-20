@@ -97,67 +97,62 @@ public class SolutionVehiclesService {
 
                 int i = 0;
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue("carType");
+                cell.setCellValue(vehicle.get("carName")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("sequence").toString());
+                cell.setCellValue(vehicle.get("sequence")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("curLoc").toString());
+                cell.setCellValue(vehicle.get("curLoc")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("siteName").toString());
+                cell.setCellValue(vehicle.get("siteName")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("siteAddress").toString());
+                cell.setCellValue(vehicle.get("siteAddress")+"");
+                cell.setCellStyle(bodyStyle);
+
+                String arrTime = (String)vehicle.get("arrTime");
+                String arr = arrTime.substring(0, arrTime.indexOf('.'));
+                cell = bodyRow.createCell(i++);
+                cell.setCellValue(Integer.parseInt(arr)/60+":"+Integer.parseInt(arr)%60);
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("arrTime").toString());
-                cell.setCellStyle(bodyStyle);
-
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue("Upload");
-                cell.setCellStyle(bodyStyle);
-
-                if(vehicle.get("unloadVol").toString()==null || vehicle.get("unloadVol").toString()=="") {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue("0");
-                    cell.setCellStyle(bodyStyle);
-                }else {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(vehicle.get("unloadVol").toString());
-                    cell.setCellStyle(bodyStyle);
+                if(vehicle.get("unloadVol").toString()==null || vehicle.get("unloadVol").toString()=="")
+                {
+                    cell.setCellValue("Unload 0,Load "+vehicle.get("sbVol").toString());
                 }
-
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue("Load");
-                cell.setCellStyle(bodyStyle);
-
-                if(vehicle.get("sbVol").toString()==null || vehicle.get("sbVol").toString()=="") {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue("0");
-                    cell.setCellStyle(bodyStyle);
-                }else {
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(vehicle.get("sbVol").toString());
-                    cell.setCellStyle(bodyStyle);
+                else if(vehicle.get("sbVol").toString()==null || vehicle.get("sbVol").toString()=="")
+                {
+                    cell.setCellValue("Unload "+vehicle.get("unloadVol")+",Load 0");
                 }
+                else if(vehicle.get("unloadVol").toString()==null || vehicle.get("unloadVol").toString()==""||vehicle.get("sbVol").toString()==null || vehicle.get("sbVol").toString()=="")
+                {
+                    cell.setCellValue("Unload 0,Load 0");
+                }
+                else
+                {
+                    cell.setCellValue("Unload "+vehicle.get("unloadVol").toString()+",Load "+vehicle.get("sbVol").toString());
+                }
+                cell.setCellStyle(bodyStyle);
 
+                String endTime = (String)vehicle.get("endTime");
+                String end = endTime.substring(0, endTime.indexOf('.'));
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("endTime").toString());
+                cell.setCellValue(Integer.parseInt(end)/60+":"+Integer.parseInt(end)%60);
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("nextCurLoc").toString());
+                cell.setCellValue(vehicle.get("nextCurLoc")+"");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("calcDis").toString());
+                cell.setCellValue(vehicle.get("calcDis")+"km");
                 cell.setCellStyle(bodyStyle);
             }
         }

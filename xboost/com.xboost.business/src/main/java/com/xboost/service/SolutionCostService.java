@@ -9,6 +9,7 @@ import com.xboost.util.ExcelUtil;
 import com.xboost.util.ExportUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
@@ -102,6 +103,11 @@ public class SolutionCostService {
      */
     public void editSiteInfo(String scenariosId,String siteCode) {
         solutionCostMapper.editSiteInfo(scenariosId,siteCode);
+    }
+
+    //查询网点总票数
+    public String findTotalVol(String scenariosId,String siteCode){
+        return solutionCostMapper.findTotalVol(scenariosId,siteCode);
     }
 
     //查询总件量
@@ -231,16 +237,14 @@ public class SolutionCostService {
         ExportUtil exportUtil = new ExportUtil(workBook, sheet);
         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
-
-        for (int i = 0; i < 35; i++) {
-            XSSFRow row = sheet.createRow(i);
-            XSSFCell cell = null;
-            for (int j = 0; j < 14; j++) {
-                cell = row.createCell(j);
-                cell.setCellValue("");
-                cell.setCellStyle(bodyStyle);
-            }
-        }
+        sheet.setColumnWidth(0,47*250);
+        sheet.setColumnWidth(2,47*250);
+        sheet.setColumnWidth(5,47*250);
+        sheet.setColumnWidth(7,47*250);
+        sheet.setColumnWidth(10,47*250);
+        sheet.setColumnWidth(12,47*250);
+        sheet.setDefaultRowHeight((short)15);
+        bodyStyle.setAlignment(HorizontalAlignment.LEFT);
 
         //对应excel中的行和列，下表从0开始{"开始行,结束行,开始列,结束列"}
         String[] headNum = { "0,0,0,3", "0,0,5,8", "0,0,10,13",
@@ -266,8 +270,6 @@ public class SolutionCostService {
             sheet.addMergedRegion(new CellRangeAddress(startrow, overrow,
                     startcol, overcol));
         }
-
-
 
         // 构建表头
         XSSFRow headRow = sheet.createRow(0);
@@ -330,12 +332,14 @@ public class SolutionCostService {
                 "人员配备", "收端派端depot&distrib. center数量", "每个收端派端depot/distrib. center的人数", "收端派端depot&distrib. center总人数",
                 " · Full-time Staff", " · Part-time Staff", "",
                 "工资设定", " · Full-time salary (/month)", " · Full-time working days (/month)", " · Part-time wage (/hour)", " · Part-time working hours (/day)", "",
-                "成本", "收端派端depot&distrib. center单日人工成本", "单日总体人工成本 (per piece)", "支线运输成本 (per piece)", "总成本 (per piece)"};
+                "成本", "收端派端depot&distrib. center单日人工成本", "单日总体人工成本 (per piece)", "支线运输成本 (per piece)", "总成本 (per piece)",
+                "", "", "", "", "", "", "", "", "","", ""};
 
         String[] column2 = { "人效", "depot人效 (p)", "distrib. center人效 (p)", "", "",
                 "支线  总票数", "支线  所需人数", " · Full-time Staff", " · Part-time Staff", "", "...", "",
                 "工资设定", " · Full-time salary (/month)", " · Full-time working days (/month)", " · Part-time wage (/hour)", " · Part-time working hours (/day)", "",
-                "成本", "支线depot单日人工成本", "支线distrib. center单日人工成本", "单日总体人工成本 (per piece)", "支线运输成本 (per piece)", "总成本 (per piece)" };
+                "成本", "支线depot单日人工成本", "支线distrib. center单日人工成本", "单日总体人工成本 (per piece)", "支线运输成本 (per piece)", "总成本 (per piece)",
+                "", "", "", "", "", "", "", "", "" };
 
         String[] column3 = { "人效", "depot人效 (p)", "distrib. center人效 (p)", "",
                 "人员配备", "收端派端depot&distrib. center数量", "每个收端派端depot/distrib. center的人数", "收端派端depot&distrib. center总人数",
@@ -372,8 +376,13 @@ public class SolutionCostService {
             }
         }
         // 构建表体结构
-        for (int i = 3; i < 24; i++) {
+        for (int i = 3; i < 36; i++) {
             XSSFRow row = sheet.createRow(i);
+            for(int j = 0; j < 14; j++) {
+                cell = row.createCell(j);
+                cell.setCellValue("");
+                cell.setCellStyle(bodyStyle);
+            }
             if(i == 4) {
                 cell = row.createCell(1);
                 cell.setCellValue(list.get(0).getSitePeopleWork());
