@@ -4,6 +4,7 @@ import com.mckinsey.sf.data.solution.ArrInfo;
 import com.xboost.mapper.ArrInfoMapper;
 import com.xboost.mapper.jieli.TempMapper;
 import com.xboost.pojo.jieli.Temp;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -25,6 +26,7 @@ public class TempService {
         tempMapper.saveTemp(temp);
     }
 
+    @Cacheable
     public List<Map> findAllTwoPointsRoute(String scenariosId) {
         return tempMapper.findAllTwoPointsRoute(scenariosId);
     }
@@ -33,6 +35,7 @@ public class TempService {
      * param
      * @return
      */
+    @Cacheable
     public List<Map> findAll01(String scenariosId) {
         return tempMapper.findAll01(scenariosId);
     }
@@ -41,6 +44,7 @@ public class TempService {
      * param
      * @return
      */
+    @Cacheable
     public List<Map> findAll02(String scenariosId) {
         return tempMapper.findAll02(scenariosId);
     }
@@ -49,6 +53,7 @@ public class TempService {
      * param
      * @return
      */
+    @Cacheable
     public List<Map> findAll03(String scenariosId) {
         return tempMapper.findAll03(scenariosId);
     }
@@ -57,6 +62,7 @@ public class TempService {
      * param
      * @return
      */
+    @Cacheable
     public List<Map> findAll04(String scenariosId) {
         return tempMapper.findAll04(scenariosId);
     }
@@ -65,6 +71,7 @@ public class TempService {
      * param
      * @return
      */
+    @Cacheable
     public List<Map> findAll05(String scenariosId) {
         return tempMapper.findAll05(scenariosId);
     }
@@ -73,6 +80,7 @@ public class TempService {
      * param
      * @return
      */
+    @Cacheable
     public List<Map> findAll06(String scenariosId) {
         return tempMapper.findAll06(scenariosId);
     }
@@ -81,6 +89,7 @@ public class TempService {
      * param
      * @return
      */
+    @Cacheable
     public List<Map> findAll07(String scenariosId) {
         return tempMapper.findAll07(scenariosId);
     }
@@ -89,6 +98,7 @@ public class TempService {
      * param
      * @return
      */
+    @Cacheable
     public List<Map> findAll08(String scenariosId) {
         return tempMapper.findAll08(scenariosId);
     }

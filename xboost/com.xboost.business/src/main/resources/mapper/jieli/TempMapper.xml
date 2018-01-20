@@ -54,11 +54,14 @@
 
     <select id="findAllTwoPointsRoute" resultType="map">
         select
+            t1.id as m_od_id,
             t1.site_collect||'-'||t1.site_delivery as i_route_id,
             t2.car_distance as distance,
             t2.duration_night_delivery as time,
             t1.votes as demand,
             t1.site_collect as point1,
+            t1.site_collect as inbound_id,
+            t1.site_delivery as outbound_id,
             0 as point2,
             0 as point3,
             t1.site_delivery as point4,

@@ -13,7 +13,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 public class SystemWebSocketHandler implements WebSocketHandler {
 
-    private Logger log = LoggerFactory.getLogger(SystemWebSocketHandler.class);
+    private Logger logger = LoggerFactory.getLogger(SystemWebSocketHandler.class);
 
     private static final ArrayList<WebSocketSession> users = new ArrayList<WebSocketSession>();;
 
@@ -71,6 +71,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
                     if (user.isOpen()) {
                         user.sendMessage(message);
                         ShiroUtil.setSimulateConsole(message.getPayload());
+                        logger.info(message.getPayload());
                     }
                 } catch (IOException e) {
 //                    e.printStackTrace();
