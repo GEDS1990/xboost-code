@@ -22,7 +22,7 @@ var distributionEchart;
 	    $("#branch-reserach-echarts").css("height",height-40);
 	    
 	}
-	 
+
 }());
 
 (function  () {
@@ -489,9 +489,16 @@ function distributionEcharts(datas){
             }
         ]  
     });  
-}  		
-	
-	
+}
+
+//导出excel表格
+    $('.export-btn').click(function  () {
+        var _xls = $(this).attr('data-xls');
+        if (_xls) {
+            window.location.href="/distribution/exportResult";
+        }
+        $(".modal-header span").trigger('click');
+    });
 	
 	
 	
