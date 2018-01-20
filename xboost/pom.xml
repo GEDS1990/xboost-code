@@ -10,6 +10,7 @@
     <module>com.xboost.business</module>
     <module>com.xboost.cascade</module>
     <module>com.xboost.relay</module>
+    <module>com.xboost.dynamic</module>
   </modules>
 
   <properties>

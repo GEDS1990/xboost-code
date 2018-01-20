@@ -18,3 +18,8 @@
 /xboost/com.xboost.relay/target/maven-status/maven-compiler-plugin/compile/default-compile
 /xboost/com.xboost.relay/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile
 /xboost/com.xboost.relay/target
+/xboost/com.xboost.dynamic/target/classes/com/mckinsey/ckc/sf/utils/*.class
+/xboost/com.xboost.dynamic/target/classes/com/mckinsey/ckc/sf/data/*.class
+/xboost/com.xboost.dynamic/target/classes/com/mckinsey/ckc/sf/main
+*.class
+target
