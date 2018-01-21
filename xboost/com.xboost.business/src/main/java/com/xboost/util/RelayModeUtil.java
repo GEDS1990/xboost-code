@@ -22,6 +22,7 @@ import java.util.*;
 import gurobi.*;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.SparseMatrix;
+import org.ujmp.core.calculation.Calculation;
 
 public class RelayModeUtil extends Thread implements IConstants {
 
@@ -42,9 +43,10 @@ public class RelayModeUtil extends Thread implements IConstants {
         this.OpenScenariosId = ShiroUtil.getOpenScenariosId();
     }
     public void run() throws RuntimeException{
-        logger.info("RelayMode init");
-        double[][] A2sss = new double[27216][];
-        logger.info("RelayMode init"+A2sss);
+        long starttime = DateTimeUtils.currentTimeMillis();
+        logger.info("RelayMode init starttime:"+starttime);
+//        double[][] A2sss = new double[27216][];
+//        logger.info("RelayMode init"+A2sss);
 //        double[] dddd = {1.0,1.0,1.0};
 //        logger.info("spark.Matrix");
 //        org.apache.spark.mllib.linalg.Matrix mmm = new org.apache.spark.mllib.linalg.DenseMatrix(16333, 16333,dddd);
@@ -113,7 +115,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         logger.info("siteDistList");
         for(int j=0;j<siteDistList.size();j++){
             Map<String,Object> distance_ref = new HashMap<String,Object>();
-            logger.info("inbound_id："+siteDistList.get(j).getSiteCollect());
+//            logger.info("inbound_id："+siteDistList.get(j).getSiteCollect());
             distance_ref.put("inbound_id",siteDistList.get(j).getSiteCollect());
             distance_ref.put("outbound_id",siteDistList.get(j).getSiteDelivery());
             distance_ref.put("km",siteDistList.get(j).getCarDistance());
@@ -838,16 +840,61 @@ public class RelayModeUtil extends Thread implements IConstants {
 //            }
 //        }
 //        Matrix cons = new DenseMatrix(J, J,v51);
-        Matrix cons = SparseMatrix.Factory.zeros(J, J);
+        Matrix cons1 = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount());
+        Matrix cons2 = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount());
+        Matrix cons3 = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount());
+        Matrix cons4 = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount());
+        Matrix cons5 = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount());
+        Matrix cons = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount()*5);
         for(int m=0;m<route_list.size();m++){
             M31.setAsDouble(v51[m],m,m);
-        }
-//        for(int m=M11.getColumnCount();m<M12.getColumnCount();m++){
-//            for(int mi=0;mi<M12.getRowCount();mi++) {
-////                cons.setAsInt(M12.index(m,mi),M12.getColumnCount()+m,M12.getRowCount()+mi);
-//                vcons[m+mi] = M12.index(m,mi);
+        }//        }
+        Calculation.Ret ret = Calculation.Ret.LINK;
+//        cons1 = M11.appendVertically(ret,M12 ,M13 ,M14 ,M15);
+//        cons2 = M21.appendVertically(ret,M22 ,M23 ,M24 ,M25);
+//        cons3 = M31.appendVertically(ret,M32 ,M33 ,M34 ,M35);
+//        cons4 = M41.appendVertically(ret,M42 ,M43 ,M44 ,M45);
+//        cons5 = M51.appendVertically(ret,M52 ,M53 ,M54 ,M55);
+//        cons = cons1.appendHorizontally(ret,cons2,cons3,cons4,cons5);
+
+        cons1 = M11.appendVertically(ret,M12);
+        cons2 = M21.appendVertically(ret,M22);
+        cons = cons1.appendHorizontally(ret,cons2);
+        //cols
+//        for(long m=0;m<M11.getColumnCount();m++){
+//            for(long mi=0;mi<M12.getRowCount();mi++) {
+//                cons.setAsDouble(M11.getAsDouble(m,mi),m,mi);
 //            }
 //        }
+//        for(long m=0;m<M11.getColumnCount();m++){
+//            for(long mi=M11.getRowCount();mi<M12.getRowCount();mi++) {
+//                cons.setAsDouble(M12.getAsDouble(m,mi),m,mi+M11.getColumnCount());
+//            }
+//        }
+//        for(long m=0;m<M11.getColumnCount();m++){
+//            for(long mi=M11.getRowCount();mi<M12.getRowCount();mi++) {
+//                cons.setAsDouble(M13.getAsDouble(m,mi),m,mi+M11.getColumnCount()*2);
+//            }
+//        }
+//        for(long m=0;m<M11.getColumnCount();m++){
+//            for(long mi=M11.getRowCount();mi<M12.getRowCount();mi++) {
+//                cons.setAsDouble(M14.getAsDouble(m,mi),m,mi+M11.getColumnCount()*3);
+//            }
+//        }
+//        for(long m=0;m<M11.getColumnCount();m++){
+//            for(long mi=M11.getRowCount();mi<M12.getRowCount();mi++) {
+//                cons.setAsDouble(M15.getAsDouble(m,mi),m,mi+M11.getColumnCount()*4);
+//            }
+//        }
+//
+//        for(long m=0;m<cons.getColumnCount();m++){
+//            for(long mi=0;mi<cons.getRowCount();mi++) {
+//                if(m<5&&mi<5)
+//                    cons.setAsDouble(M11.getAsDouble(m,mi),m,mi);
+//                if(m>=5&&m<10&&mi>=5&&mi<10)
+//                    cons.setAsDouble(M11.getAsDouble(m,mi),m,mi);
+//            }
+
 //        cons.multiply(new DenseMatrix(M12.getColumnCount()-M11.getColumnCount(), M12.getRowCount(),vcons));
 //        for(int m=M12.getColumnCount();m<M13.getColumnCount();m++){
 //            for(int mi=0;mi<M13.getRowCount();mi++) {
@@ -1078,6 +1125,8 @@ int tag = 0;
 //        }
 //////////////////////////////////////////////////////////
         logger.info("////////////////////////////////////////////////////////////////");
+        logger.info("/////////////user time :"+(DateTimeUtils.currentTimeMillis()-starttime)+"////////////////////////////////////////////");
+
         try {
             logger.info("trag:"+tag++);
             GRBEnv env2 = new GRBEnv();
@@ -1104,15 +1153,16 @@ int tag = 0;
             logger.info("cons.getColumnCount():"+cons.getColumnCount());
             logger.info("(int)cons.getRowCount():"+(int)cons.getRowCount());
             logger.info("(int)cons.getColumnCount():"+(int)cons.getColumnCount());
-            double[][] A2 = new double[(int)cons.getRowCount()][];
+            double A222[][] = new double[10][10];
+            logger.info("new double[10][10]:");
+            int A2333[][] = new int[(int)cons.getRowCount()][];
+            logger.info("new int[10][10]:");
+            double A2[][] = new double[(int)cons.getRowCount()][];
             logger.info("iw:"+cons.getRowCount()+";jw:"+cons.getColumnCount());
             for (int iw = 0; iw < cons.getRowCount(); iw++) {
                 for (int jw = 0; jw < cons.getColumnCount(); jw++){
-                    logger.info("jw:"+jw);
-                    logger.info("jw:"+iw);
-                    logger.info("A2[iw][jw]:"+A2[iw][jw]);
-                    logger.info("cons.getAsDouble(iw,jw):"+cons.getAsDouble(iw,jw));
                     A2[iw][jw] = cons.getAsDouble(iw,jw);
+                    logger.info("A2[iw][jw]:"+A2[iw][jw]);
                 }
             }
             logger.info("trag:"+tag++);
@@ -1210,6 +1260,7 @@ int tag = 0;
 
             // Dispose of environment
             env2.dispose();
+            logger.info("/////////////total user time :"+(DateTimeUtils.currentTimeMillis()-starttime)+"////////////////////////////////////////////");
 
         } catch (GRBException e) {
             System.out.println("Error code: " + e.getErrorCode() + ". " +

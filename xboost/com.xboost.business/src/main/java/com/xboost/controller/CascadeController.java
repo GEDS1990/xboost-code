@@ -10,6 +10,8 @@ import com.xboost.util.RelayModeUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.websocket.SystemWebSocketHandler;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +63,7 @@ public class CascadeController {
     private String RShellPath;
 
     CascadeModelUtil cmu;
+    private static Logger logger = LoggerFactory.getLogger(CascadeController.class);
 
     @RequestMapping(value="/runSilumate",method = RequestMethod.POST)
     @ResponseBody
@@ -74,6 +77,7 @@ public class CascadeController {
         solutionRouteService.updateScenariosModel(distMode);//更新模型参数
         myScenariosService.updateStatus("Simulating");
         ShiroUtil.clearSimulateConsole();
+        logger.info("distMode:"+distMode);
         if("1".equals(distMode)){
             //查询Confiuration表数据
             Map<String, Object> param = new HashMap<String,Object>();
@@ -101,8 +105,8 @@ public class CascadeController {
 //            }
 //        LogFactory.getLog(AccountController.class).info("input:"+input);
         }else if("2".equals(distMode)){
-//            RelayModeUtil rm = new RelayModeUtil(tempService,demandInfoService,siteDistService,siteInfoService);
-            RelayModeRUtil rm = new RelayModeRUtil(RserverIp);
+            RelayModeUtil rm = new RelayModeUtil(tempService,demandInfoService,siteDistService,siteInfoService);
+//            RelayModeRUtil rm = new RelayModeRUtil(RserverIp);
             try {
                 rm.run();
             } catch (Exception e) {

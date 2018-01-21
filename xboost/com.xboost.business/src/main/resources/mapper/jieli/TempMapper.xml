@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xboost.mapper.jieli.TempMapper">
-
+    <cache/>
     <insert id="save" >
         INSERT into t_jieli_temp(scenarios_name,scenarios_category,scenarios_desc,scenarios_model,scenarios_out,
         scenarios_status,last_open_time,simulate_finish_time,str1,str2,str3,createtime,updatetime)

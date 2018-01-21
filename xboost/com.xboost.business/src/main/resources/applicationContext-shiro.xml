@@ -5,10 +5,10 @@
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!-- 注册一个缓存管理器 -->
-    <!--<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>-->
-    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
-    </bean>
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+    <!--<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
+        <!--<property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>-->
+    <!--</bean>-->
     <!-- 定义安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <!-- 注入realm -->
