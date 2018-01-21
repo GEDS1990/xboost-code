@@ -850,104 +850,14 @@ public class RelayModeUtil extends Thread implements IConstants {
             M31.setAsDouble(v51[m],m,m);
         }//        }
         Calculation.Ret ret = Calculation.Ret.LINK;
-//        cons1 = M11.appendVertically(ret,M12 ,M13 ,M14 ,M15);
-//        cons2 = M21.appendVertically(ret,M22 ,M23 ,M24 ,M25);
-//        cons3 = M31.appendVertically(ret,M32 ,M33 ,M34 ,M35);
-//        cons4 = M41.appendVertically(ret,M42 ,M43 ,M44 ,M45);
-//        cons5 = M51.appendVertically(ret,M52 ,M53 ,M54 ,M55);
-//        cons = cons1.appendHorizontally(ret,cons2,cons3,cons4,cons5);
+        cons1 = M11.appendVertically(ret,M12 ,M13 ,M14 ,M15);
+        cons2 = M21.appendVertically(ret,M22 ,M23 ,M24 ,M25);
+        cons3 = M31.appendVertically(ret,M32 ,M33 ,M34 ,M35);
+        cons4 = M41.appendVertically(ret,M42 ,M43 ,M44 ,M45);
+        cons5 = M51.appendVertically(ret,M52 ,M53 ,M54 ,M55);
+        cons = cons1.appendHorizontally(ret,cons2,cons3,cons4,cons5);
 
-        cons1 = M11.appendVertically(ret,M12);
-        cons2 = M21.appendVertically(ret,M22);
-        cons = cons1.appendHorizontally(ret,cons2);
-        //cols
-//        for(long m=0;m<M11.getColumnCount();m++){
-//            for(long mi=0;mi<M12.getRowCount();mi++) {
-//                cons.setAsDouble(M11.getAsDouble(m,mi),m,mi);
-//            }
-//        }
-//        for(long m=0;m<M11.getColumnCount();m++){
-//            for(long mi=M11.getRowCount();mi<M12.getRowCount();mi++) {
-//                cons.setAsDouble(M12.getAsDouble(m,mi),m,mi+M11.getColumnCount());
-//            }
-//        }
-//        for(long m=0;m<M11.getColumnCount();m++){
-//            for(long mi=M11.getRowCount();mi<M12.getRowCount();mi++) {
-//                cons.setAsDouble(M13.getAsDouble(m,mi),m,mi+M11.getColumnCount()*2);
-//            }
-//        }
-//        for(long m=0;m<M11.getColumnCount();m++){
-//            for(long mi=M11.getRowCount();mi<M12.getRowCount();mi++) {
-//                cons.setAsDouble(M14.getAsDouble(m,mi),m,mi+M11.getColumnCount()*3);
-//            }
-//        }
-//        for(long m=0;m<M11.getColumnCount();m++){
-//            for(long mi=M11.getRowCount();mi<M12.getRowCount();mi++) {
-//                cons.setAsDouble(M15.getAsDouble(m,mi),m,mi+M11.getColumnCount()*4);
-//            }
-//        }
-//
-//        for(long m=0;m<cons.getColumnCount();m++){
-//            for(long mi=0;mi<cons.getRowCount();mi++) {
-//                if(m<5&&mi<5)
-//                    cons.setAsDouble(M11.getAsDouble(m,mi),m,mi);
-//                if(m>=5&&m<10&&mi>=5&&mi<10)
-//                    cons.setAsDouble(M11.getAsDouble(m,mi),m,mi);
-//            }
-
-//        cons.multiply(new DenseMatrix(M12.getColumnCount()-M11.getColumnCount(), M12.getRowCount(),vcons));
-//        for(int m=M12.getColumnCount();m<M13.getColumnCount();m++){
-//            for(int mi=0;mi<M13.getRowCount();mi++) {
-////                cons.setAsInt(M13.index(m,mi),M13.getColumnCount()+m,M13.getRowCount()+mi);
-//                vcons[m+mi] = M13.index(m,mi);
-//            }
-//        }
-//        cons.multiply(new DenseMatrix(M13.getColumnCount()-M12.getColumnCount(), M13.getRowCount(),vcons));
-//        for(int m=M13.getColumnCount();m<M14.getColumnCount();m++){
-//            for(int mi=0;mi<M14.getRowCount();mi++) {
-////                cons.setAsInt(M14.index(m,mi),M14.getColumnCount()+m,M14.getRowCount()+mi);
-//                vcons[m+mi] = M14.index(m,mi);
-//            }
-//        }
-//        cons.multiply(new DenseMatrix(M14.getColumnCount()-M13.getColumnCount(), M14.getRowCount(),vcons));
-//        for(int m=M14.getColumnCount();m<M15.getColumnCount();m++){
-//            for(int mi=0;mi<M15.getRowCount();mi++) {
-////                cons.setAsInt(M15.index(m,mi),M15.getColumnCount()+m,M15.getRowCount()+mi);
-//                vcons[m+mi] = M15.index(m,mi);
-//            }
-//        }
-//        cons.multiply(new DenseMatrix(M15.getColumnCount()-M14.getColumnCount(), M15.getRowCount(),vcons));
-        ///////////////
-//        for(int m=0;m<M11.getColumnCount();m++){
-//            for(int mi=0;mi<M11.getRowCount();mi++) {
-////                cons.setAsInt(M11.index(m,mi),M11.getColumnCount()+m,M11.getRowCount()+mi);
-//                vcons[m+mi] = M11.index(m,mi);
-//            }
-//        }
-//        for(int m=0;m<M12.getColumnCount();m++){
-//            for(int mi=M11.getRowCount();mi<M12.getRowCount();mi++) {
-////                cons.setAsInt(M12.index(m,mi),M12.getColumnCount()+m,M12.getRowCount()+mi);
-//                vcons[m+mi] = M11.index(m,mi);
-//            }
-//        }
-//        for(int m=0;m<M13.getColumnCount();m++){
-//            for(int mi=M12.getRowCount();mi<M13.getRowCount();mi++) {
-////                cons.setAsInt(M13.index(m,mi),M13.getColumnCount()+m,M13.getRowCount()+mi);
-//                vcons[m+mi] = M11.index(m,mi);
-//            }
-//        }
-//        for(int m=0;m<M14.getColumnCount();m++){
-//            for(int mi=M13.getRowCount();mi<M14.getRowCount();mi++) {
-////                cons.setAsInt(M14.index(m,mi),M14.getColumnCount()+m,M14.getRowCount()+mi);
-//                vcons[m+mi] = M11.index(m,mi);
-//            }
-//        }
-//        for(int m=0;m<M15.getColumnCount();m++){
-//            for(int mi=M14.getRowCount();mi<M15.getRowCount();mi++) {
-////                cons.setAsInt(M15.index(m,mi),M15.getColumnCount()+m,M15.getRowCount()+mi);
-//                vcons[m+mi] = M11.index(m,mi);
-//            }
-//        }
+//        cons = M11;
         logger.info("connection_temp_list");
         for(int ci=0;ci<(connection_temp_list.size()<OD_demand_list.size()?connection_temp_list.size():OD_demand_list.size());ci++){
             connection_temp_list.get(ci).put("kmh_didi",Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=10?Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed1:0+
@@ -1127,6 +1037,13 @@ int tag = 0;
         logger.info("////////////////////////////////////////////////////////////////");
         logger.info("/////////////user time :"+(DateTimeUtils.currentTimeMillis()-starttime)+"////////////////////////////////////////////");
 
+//        double A222[][] = new double[(int)cons.getRowCount()][(int)cons.getRowCount()];
+//        for (int iw = 0; iw < cons.getRowCount(); iw++) {
+//            for (int jw = 0; jw < cons.getColumnCount(); jw++){
+//                A222[iw][jw] = cons.getAsDouble(iw,jw);
+//            }
+//        }
+
         try {
             logger.info("trag:"+tag++);
             GRBEnv env2 = new GRBEnv();
@@ -1151,21 +1068,20 @@ int tag = 0;
 //            double A[][] = new double[][] {{1, 2, 3}, {1, 1, 0}};
             logger.info("cons.getRowCount():"+cons.getRowCount());
             logger.info("cons.getColumnCount():"+cons.getColumnCount());
-            logger.info("(int)cons.getRowCount():"+(int)cons.getRowCount());
-            logger.info("(int)cons.getColumnCount():"+(int)cons.getColumnCount());
-            double A222[][] = new double[10][10];
-            logger.info("new double[10][10]:");
-            int A2333[][] = new int[(int)cons.getRowCount()][];
-            logger.info("new int[10][10]:");
-            double A2[][] = new double[(int)cons.getRowCount()][];
+            double A2[][] = new double[(int)cons.getRowCount()][(int)cons.getRowCount()];
+//            double A2[][] = new double[1065][1065];
             logger.info("iw:"+cons.getRowCount()+";jw:"+cons.getColumnCount());
-            for (int iw = 0; iw < cons.getRowCount(); iw++) {
-                for (int jw = 0; jw < cons.getColumnCount(); jw++){
+//            for (int iw = 0; iw < cons.getRowCount(); iw++) {
+//                for (int jw = 0; jw < cons.getColumnCount(); jw++){
+//                    A2[iw][jw] = cons.getAsDouble(iw,jw);
+//                }
+//            }
+            for (int iw = 0; iw < 1; iw++) {
+                for (int jw = 0; jw < cons.getRowCount(); jw++){
                     A2[iw][jw] = cons.getAsDouble(iw,jw);
-                    logger.info("A2[iw][jw]:"+A2[iw][jw]);
                 }
             }
-            logger.info("trag:"+tag++);
+            logger.info("-------trag:"+tag++);
 //            double A2[][] = null;
 //            char sense2[] = new char[] {'>', '>'};
             logger.info("sense:"+sense.length);

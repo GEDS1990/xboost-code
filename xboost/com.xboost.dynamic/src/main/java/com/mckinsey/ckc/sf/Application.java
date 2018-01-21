@@ -1,21 +1,16 @@
-package com.mckinsey.ckc.sf.main;
+package com.mckinsey.ckc.sf;
 
-import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicLong;
-
+import com.mckinsey.ckc.sf.main.Main;
+import com.mckinsey.ckc.sf.restful.data.Greeting;
+import com.mckinsey.ckc.sf.restful.data.MoveRequest;
+import com.mckinsey.ckc.sf.restful.data.MoveResponse;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.mckinsey.ckc.sf.restful.data.Greeting;
-import com.mckinsey.ckc.sf.restful.data.MoveRequest;
-import com.mckinsey.ckc.sf.restful.data.MoveResponse;
+import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @EnableAutoConfiguration

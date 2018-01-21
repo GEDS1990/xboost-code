@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xboost.mapper.SiteDistMapper">
 
-
+    <cache/>
     <insert id="save">
         INSERT INTO t_site_distance(scenariosId,car_type,site_collect,site_delivery,car_distance,duration_night_delivery,
         duration_night_delivery2,duration_night_delivery3,duration_night_delivery4,duration_night_delivery5,createtime)

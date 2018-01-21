@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xboost.mapper.DemandInfoMapper">
 
-
+    <cache/>
     <insert id="add">
         INSERT into t_demand_info(scenariosId,date,site_collect,site_delivery,product_type,duration_start,duration_end,
         weight,votes,ageing,str1,str2,str3,createtime,updatetime)
