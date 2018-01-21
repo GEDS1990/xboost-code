@@ -18,10 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/11/5 0005.
@@ -37,6 +34,7 @@ public class SolutionRouteService {
 
     /**
      * 新增route信息
+     *
      * @param route
      */
     public void addRoute(Route route) {
@@ -48,6 +46,7 @@ public class SolutionRouteService {
 
     /**
      * update route信息
+     *
      * @param route
      */
     public void updateRouteByTemp(Route route) {
@@ -58,6 +57,7 @@ public class SolutionRouteService {
     /**
      * 根据场景id查询所有路线信息
      * param
+     *
      * @return
      */
     public List<Route> findAllRoute(String scenariosId) {
@@ -66,6 +66,7 @@ public class SolutionRouteService {
 
     /**
      * 获取路线数量
+     *
      * @return
      */
     public Integer findRouteNum(String scenariosId) {
@@ -74,6 +75,7 @@ public class SolutionRouteService {
 
     /**
      * 获取路线信息总数量
+     *
      * @return
      */
     public Integer findAllCount(String scenariosId) {
@@ -83,6 +85,7 @@ public class SolutionRouteService {
     /**
      * 根据查询条件获取路线信息
      * param param
+     *
      * @return
      */
     public List<Route> findByParam(Map<String, Object> param) {
@@ -92,6 +95,7 @@ public class SolutionRouteService {
 
     /**
      * 根据查询条件获取模型整体参数信息的路线数量
+     *
      * @param param
      * @return
      */
@@ -107,6 +111,7 @@ public class SolutionRouteService {
     /**
      * 根据路线id获取线路信息
      * param param
+     *
      * @return
      */
     public List<Map<String, Object>> findByRoute(Map<String, Object> param) {
@@ -115,6 +120,7 @@ public class SolutionRouteService {
 
     /**
      * 根据路线id获取线路数量
+     *
      * @param param
      * @return
      */
@@ -125,6 +131,7 @@ public class SolutionRouteService {
     /**
      * 根据场景id查询全部线路信息
      * param param
+     *
      * @return
      */
     public List<Map<String, Object>> findAllByRoute(String scenariosId) {
@@ -133,6 +140,7 @@ public class SolutionRouteService {
 
     /**
      * 根据场景id查询全部线路数量
+     *
      * @param scenariosId
      * @return
      */
@@ -143,6 +151,7 @@ public class SolutionRouteService {
 
     /**
      * 根据用户的ID查询路线信息
+     *
      * @param id 用户ID
      * @return
      */
@@ -152,6 +161,7 @@ public class SolutionRouteService {
 
     /**
      * 根据id删除模型整体参数信息
+     *
      * @param scenariosId
      */
     public void delByScenariosId(Integer scenariosId) {
@@ -160,52 +170,54 @@ public class SolutionRouteService {
     }
 
     //查询路线总路程
-    public String findTotalDistance(String scenariosId,String routeCount) {
-        return solutionRouteMapper.findTotalDistance(scenariosId,routeCount);
+    public String findTotalDistance(String scenariosId, String routeCount) {
+        return solutionRouteMapper.findTotalDistance(scenariosId, routeCount);
     }
 
     //把排车的车名更新到route表
-    public void updateCarName(Map<String, Object> param){
+    public void updateCarName(Map<String, Object> param) {
         solutionRouteMapper.updateCarName(param);
     }
 
-    public void updateCarToBusy(String scenariosId,String carName){
-        solutionRouteMapper.updateCarToBusy(scenariosId,carName);
+    public void updateCarToBusy(String scenariosId, String carName) {
+        solutionRouteMapper.updateCarToBusy(scenariosId, carName);
     }
 
-    public void updateCarToIdle(String scenariosId,String carName){
-        solutionRouteMapper.updateCarToIdle(scenariosId,carName);
+    public void updateCarToIdle(String scenariosId, String carName) {
+        solutionRouteMapper.updateCarToIdle(scenariosId, carName);
     }
 
-    public void updateAllCarToIdle(String scenariosId){
+    public void updateAllCarToIdle(String scenariosId) {
         solutionRouteMapper.updateAllCarToIdle(scenariosId);
     }
-    public void updateScenariosModel(String scenariosModel){
+
+    public void updateScenariosModel(String scenariosModel) {
         solutionRouteMapper.updateScenariosModel(scenariosModel, ShiroUtil.getOpenScenariosId());
     }
 
-    public List<String> findUsingCar(String scenariosId,String routeCount){
-        return solutionRouteMapper.findUsingCar(scenariosId,routeCount);
+    public List<String> findUsingCar(String scenariosId, String routeCount) {
+        return solutionRouteMapper.findUsingCar(scenariosId, routeCount);
     }
 
-    public List<String> findUsingCar1(String scenariosId){
+    public List<String> findUsingCar1(String scenariosId) {
         return solutionRouteMapper.findUsingCar1(scenariosId);
     }
-    public List<String> findIdleCar1(String scenariosId){
+
+    public List<String> findIdleCar1(String scenariosId) {
         return solutionRouteMapper.findIdleCar1(scenariosId);
     }
 
-    public List<String> findIdleCar(String scenariosId,String routeCount){
-        return solutionRouteMapper.findIdleCar(scenariosId,routeCount);
+    public List<String> findIdleCar(String scenariosId, String routeCount) {
+        return solutionRouteMapper.findIdleCar(scenariosId, routeCount);
     }
 
-    public String findRouteCar(String scenariosId,String routeCount){
-        return solutionRouteMapper.findRouteCar(scenariosId,routeCount);
+    public String findRouteCar(String scenariosId, String routeCount) {
+        return solutionRouteMapper.findRouteCar(scenariosId, routeCount);
     }
 
     //校验这段路线车上件量是否超出车的最大载件量
-    public String findCarLoad(String scenariosId,String routeCount){
-        List<Map<String,Object>> carList = solutionRouteMapper.findCarLoad(scenariosId,routeCount);
+    public String findCarLoad(String scenariosId, String routeCount) {
+        List<Map<String, Object>> carList = solutionRouteMapper.findCarLoad(scenariosId, routeCount);
 
 
         return "success";
@@ -220,15 +232,15 @@ public class SolutionRouteService {
     /**
      * 导出result_depots excel
      */
-    public void exportResult(String scenariosId,String[] titles, ServletOutputStream outputStream) {
-        List<Map<String, Object>> list = new ArrayList<>();
-        list.sort(new Comparator<Map<String, Object>>() {
-            @Override
+    public void exportResult(String scenariosId, String[] titles, ServletOutputStream outputStream) {
+        List<Map<String, Object>> list = solutionRouteMapper.findAllByRoute(scenariosId);
+        Collections.sort(list, new Comparator<Map<String, Object>>() {
             public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-                return ((String)o1.get("routeCount")).compareTo((String)o1.get("routeCount"));
+                Integer name1 = Integer.valueOf(o1.get("routeCount").toString()) ;//name1是从你list里面拿出来的一个
+                Integer name2 = Integer.valueOf(o2.get("routeCount").toString()) ; //name1是从你list里面拿出来的第二个name
+                return name1.compareTo(name2);
             }
         });
-        list = solutionRouteMapper.findAllByRoute(scenariosId);
         // 创建一个workbook 对应一个excel应用文件
         XSSFWorkbook workBook = new XSSFWorkbook();
         // 在workbook中添加一个sheet,对应Excel文件中的sheet
@@ -250,7 +262,7 @@ public class SolutionRouteService {
         if (list != null && list.size() > 0) {
             for (int j = 0; j < list.size(); j++) {
                 XSSFRow bodyRow = sheet.createRow(j + 1);
-                Map<String,Object> route = list.get(j);
+                Map<String, Object> route = list.get(j);
 
                 int i = 0;
                 cell = bodyRow.createCell(i++);
@@ -273,35 +285,28 @@ public class SolutionRouteService {
                 cell.setCellValue(route.get("siteAddress").toString());
                 cell.setCellStyle(bodyStyle);
 
-                String arrTime = (String)route.get("arrTime");
+                String arrTime = (String) route.get("arrTime");
                 String arr = arrTime.substring(0, arrTime.indexOf('.'));
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(Integer.parseInt(arr)/60+":"+Integer.parseInt(arr)%60);
+                cell.setCellValue(Integer.parseInt(arr) / 60 + ":" + Integer.parseInt(arr) % 60);
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                if(route.get("unloadVol").toString()==null || route.get("unloadVol").toString()=="")
-                {
-                    cell.setCellValue("Unload 0,Load "+route.get("sbVol").toString());
-                }
-                else if(route.get("sbVol").toString()==null || route.get("sbVol").toString()=="")
-                {
-                    cell.setCellValue("Unload "+route.get("unloadVol")+",Load 0");
-                }
-                else if(route.get("unloadVol").toString()==null || route.get("unloadVol").toString()==""||route.get("sbVol").toString()==null || route.get("sbVol").toString()=="")
-                {
+                if (route.get("unloadVol").toString() == null || route.get("unloadVol").toString() == "") {
+                    cell.setCellValue("Unload 0,Load " + route.get("sbVol").toString());
+                } else if (route.get("sbVol").toString() == null || route.get("sbVol").toString() == "") {
+                    cell.setCellValue("Unload " + route.get("unloadVol") + ",Load 0");
+                } else if (route.get("unloadVol").toString() == null || route.get("unloadVol").toString() == "" || route.get("sbVol").toString() == null || route.get("sbVol").toString() == "") {
                     cell.setCellValue("Unload 0,Load 0");
-                }
-                else
-                {
-                    cell.setCellValue("Unload "+route.get("unloadVol").toString()+",Load "+route.get("sbVol").toString());
+                } else {
+                    cell.setCellValue("Unload " + route.get("unloadVol").toString() + ",Load " + route.get("sbVol").toString());
                 }
                 cell.setCellStyle(bodyStyle);
 
-                String endTime = (String)route.get("endTime");
+                String endTime = (String) route.get("endTime");
                 String end = endTime.substring(0, endTime.indexOf('.'));
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(Integer.parseInt(end)/60+":"+Integer.parseInt(end)%60);
+                cell.setCellValue(Integer.parseInt(end) / 60 + ":" + Integer.parseInt(end) % 60);
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
@@ -309,13 +314,12 @@ public class SolutionRouteService {
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(route.get("calcDis").toString()+"km");
+                cell.setCellValue(route.get("calcDis").toString() + "km");
                 cell.setCellStyle(bodyStyle);
             }
         }
 
-        try
-        {
+        try {
 //            FileOutputStream fout = new FileOutputStream("E:/Depots_info.xlsx");
 //            workBook.write(fout);
 //            fout.flush();
@@ -323,9 +327,7 @@ public class SolutionRouteService {
             workBook.write(outputStream);
             outputStream.flush();
             outputStream.close();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

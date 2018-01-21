@@ -63,14 +63,32 @@ public class SolutionCostController {
      */
     @RequestMapping(value = "/addCost",method = RequestMethod.POST)
     @ResponseBody
-    public String addCost(HttpServletRequest request,Cost cost) { ;
+    public String addCost(HttpServletRequest request,Cost cost,List<SiteInfo> siteInfoList) { ;
         cost.setScenariosId(ShiroUtil.getOpenScenariosId().toString());
     //    cost.setModelType(request.getParameter("modelType"));
    //     cost.setModelType(request.getParameter("plan"));
         solutionCostService.add(cost);
+        for(int i=0;i<siteInfoList.size();i++){
+            solutionCostService.editSiteInfo(ShiroUtil.getOpenScenariosId(),siteInfoList.get(i).getSiteCode());
+        }
         return "success";
     }
 
+
+    /**
+     * 编辑成本信息
+     * @return
+     */
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @ResponseBody
+    public String edit(HttpServletRequest request,Cost cost,List<SiteInfo> siteInfoList) {
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        solutionCostService.editCost(scenariosId,cost);
+        for(int i=0;i<siteInfoList.size();i++){
+            solutionCostService.editSiteInfo(ShiroUtil.getOpenScenariosId(),siteInfoList.get(i).getSiteCode());
+        }
+        return "success";
+    }
 
     //查询成本信息
     @RequestMapping(value = "/cost.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
@@ -104,8 +122,6 @@ public class SolutionCostController {
       //  Double branchTransportCost = solutionCostService.branchTransportCost();
       //   String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
 
-        //总票数
-      //  List<String> totalVolList = solutionCostService.findTotalVol(scenariosId,siteCode);
 
         result.put("data",costList);
         result.put("modelType",modelType);
@@ -118,19 +134,6 @@ public class SolutionCostController {
     }
 
 
-    /**
-     * 编辑成本信息
-     * @return
-     */
-    @RequestMapping(value = "/edit",method = RequestMethod.POST)
-    @ResponseBody
-    public String edit(HttpServletRequest request,Cost cost) {
-        String scenariosId = ShiroUtil.getOpenScenariosId();
-        String siteCode = "";
-        solutionCostService.editCost(scenariosId,cost);
-   //     solutionCostService.editSiteInfo(scenariosId,siteCode);
-        return "success";
-    }
 
     //查询初始化成本信息
     @RequestMapping(value = "/costInitData.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
@@ -148,6 +151,17 @@ public class SolutionCostController {
         //总件量
         Integer totalPiece = solutionCostService.findTotalPiece(scenariosId);
 
+        //网点
+        List<String> siteCodeList=solutionEfficiencyService.findAllSite(scenariosId);
+        Map<String,Object> totalVolList=Maps.newHashMap();
+        Map<String,Object> siteInfoList=Maps.newHashMap();
+        for(int i=0;i<siteCodeList.size();i++){
+            SiteInfo siteInfo = siteInfoService.findSiteInfoBySiteCode(scenariosId, siteCodeList.get(i));
+            String totalVol= solutionCostService.findTotalVol(scenariosId,siteCodeList.get(i));
+            siteInfoList.put(siteCodeList.get(i),siteInfo);
+            totalVolList.put(siteCodeList.get(i),totalVol);
+        }
+
         //支线总运输成本
       //  Double branchTransportCost = solutionCostService.branchTransportCost();
           String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
@@ -161,6 +175,8 @@ public class SolutionCostController {
         result.put("siteCount",siteCount);
         result.put("totalPiece",totalPiece);
         result.put("branchTransportCost",branchTransportCost);
+        result.put("siteInfoList",siteInfoList);
+        result.put("totalVolList",totalVolList);
 
         return result;
     }
