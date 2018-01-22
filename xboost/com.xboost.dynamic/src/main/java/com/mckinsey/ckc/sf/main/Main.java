@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import com.google.common.collect.Maps;
 import com.mckinsey.ckc.sf.connection.JDBCConnection;
 import com.mckinsey.ckc.sf.constants.IConstants;
 import com.mckinsey.ckc.sf.data.Carrier;
@@ -524,21 +525,53 @@ public class Main implements IConstants {
 
 	}
 
+	public static Map<String,Object> main() {
+		Main main = new Main();
+		main.calculate();
+
+		Map<String,Object> result = Maps.newHashMap();
+		Map<String,Object> included = Maps.newHashMap();
+
+		// open for services
+		for(Map.Entry<Integer, HashMap<Integer, MoveResponse>> response
+				:responseList.entrySet()){
+			System.out.println("timeId: "+response.getKey());
+			result.put("timeId"+response.getKey(),response.getKey());
+			result.put("carrier"+response.getKey(),included);
+
+			HashMap<Integer,MoveResponse> temp = response.getValue();
+			for(Map.Entry<Integer, MoveResponse> item : temp.entrySet()){
+				System.out.println("carrierID: "+item.getKey());
+				MoveResponse mv = item.getValue();
+				System.out.println(mv.getNextLat()+"-"+mv.getNextLong());
+				included.put("carrierID"+item.getKey(),mv.getNextLat()+"-"+mv.getNextLong());
+			}
+		}
+		try {
+			JDBCConnection.getConnection().close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+
+	}
+
 //	public static void main(String[] args) {
 //		Main main = new Main();
 //		main.calculate();
 //
 //		// open for services
-//		// for(Entry<Integer, HashMap<Integer, MoveResponse>> response
-//		// :responseList.entrySet()){
-//		// System.out.println("timeId: "+response.getKey());
-//		// HashMap<Integer,MoveResponse> temp = response.getValue();
-//		// for(Entry<Integer, MoveResponse> item : temp.entrySet()){
-//		// System.out.println("carrierID: "+item.getKey());
-//		// MoveResponse mv = item.getValue();
-//		// System.out.println(mv.getNextLat()+"-"+mv.getNextLong());
-//		// }
-//		// }
+//		 for(Map.Entry<Integer, HashMap<Integer, MoveResponse>> response
+//		 :responseList.entrySet()){
+//		 System.out.println("timeId: "+response.getKey());
+//		 HashMap<Integer,MoveResponse> temp = response.getValue();
+//		 for(Map.Entry<Integer, MoveResponse> item : temp.entrySet()){
+//		 System.out.println("carrierID: "+item.getKey());
+//		 MoveResponse mv = item.getValue();
+//		 System.out.println(mv.getNextLat()+"-"+mv.getNextLong());
+//		 }
+//		 }
 //		try {
 //			JDBCConnection.getConnection().close();
 //		} catch (SQLException e) {
