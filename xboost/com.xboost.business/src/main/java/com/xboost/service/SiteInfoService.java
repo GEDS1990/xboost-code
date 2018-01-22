@@ -84,11 +84,15 @@ public class SiteInfoService {
                             //网点类型
                             siteInfo.setSiteType(row[7]);
                             //停货车数(辆)(10分钟停靠能力)
-                            siteInfo.setCarNum(row[10]);
+                            siteInfo.setNoOfTruckLimitation(row[10]);
+                            siteInfo.setNoOfBaiduLimitation(row[11]);
+                            siteInfo.setNoOfDidiLimitation(row[12]);
+                            siteInfo.setNoOfDadaLimitation(row[13]);
+                            siteInfo.setReserve(row[14]);
                             //进出最大车型(10分钟停靠能力)
-                            siteInfo.setLargeCarModel(row[11]);
+                            siteInfo.setLargeCarModel(row[15]);
                             //单一批量操作处理量上限(以一个班次操作为单位)
-                            siteInfo.setMaxOperateNum(row[12]);
+                            siteInfo.setMaxOperateNum(row[16]);
                             siteInfo.setDistribCenter(row[8]);
                             siteInfo.setCreateTime(DateTime.now().toString("yyyy-MM-dd HH:mm"));
 
@@ -517,14 +521,30 @@ public class SiteInfoService {
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(10);
-                cell.setCellValue(siteInfo.getCarNum());
+                cell.setCellValue(siteInfo.getNoOfTruckLimitation());
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(11);
-                cell.setCellValue(siteInfo.getLargeCarModel());
+                cell.setCellValue(siteInfo.getNoOfBaiduLimitation());
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(12);
+                cell.setCellValue(siteInfo.getNoOfDidiLimitation());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(13);
+                cell.setCellValue(siteInfo.getNoOfDadaLimitation());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(14);
+                cell.setCellValue(siteInfo.getReserve());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(15);
+                cell.setCellValue(siteInfo.getLargeCarModel());
+                cell.setCellStyle(bodyStyle);
+
+                cell = bodyRow.createCell(16);
                 cell.setCellValue(siteInfo.getMaxOperateNum());
                 cell.setCellStyle(bodyStyle);
             }
