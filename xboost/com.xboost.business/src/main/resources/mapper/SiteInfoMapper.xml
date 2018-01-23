@@ -4,23 +4,20 @@
 
     <cache/>
     <insert id="save">
-        INSERT into t_site_info(scenariosId,site_code,longitude,latitude,site_name,site_address,site_night_delivery,site_area,site_type,
+        INSERT into t_site_info(scenariosId,site_code,longitude,latitude,site_name,site_address,site_night_delivery,site_area,site_type,car_num,
         large_carModle,max_operate_num,distrib_center,total_vol,full_time_staff1,part_time_staff1,full_time_staff2,
-        part_time_staff2,str2,str3,createtime,updatetime,no_of_truck_limitation,no_of_baidu_limitation,no_of_didi_limitation,no_of_dada_limitation,reserve)
+        part_time_staff2,str2,str3,createtime,updatetime)
         VALUES (#{scenariosId},#{siteCode},#{siteLongitude},#{siteLatitude},#{siteName},#{siteAddress},#{siteNightDelivery},#{siteArea},#{siteType},
-        #{largeCarModel},#{maxOperateNum},#{distribCenter},#{totalVol},#{fullTimeStaff1},#{partTimeStaff1},
-        #{fullTimeStaff2},#{partTimeStaff2},#{str2},#{str3},#{createTime},#{updateTime},#{noOfTruckLimitation},#{noOfBaiduLimitation},
-        #{noOfDidiLimitation},#{noOfDidiLimitation},#{reserve})
+        #{carNum},#{largeCarModel},#{maxOperateNum},#{distribCenter},#{totalVol},#{fullTimeStaff1},#{partTimeStaff1},
+        #{fullTimeStaff2},#{partTimeStaff2},#{str2},#{str3},#{createTime},#{updateTime})
     </insert>
 
     <update id="update">
         update t_site_info set scenariosId = #{scenariosId},site_code = #{siteCode},longitude = #{siteLongitude},
         latitude = #{siteLatitude},site_name= #{siteName},site_address = #{siteAddress},site_night_delivery = #{siteNightDelivery},
-        site_area = #{siteArea},site_type = #{siteType},large_carModle = #{largeCarModel},
+        site_area = #{siteArea},site_type = #{siteType},car_num = #{carNum},large_carModle = #{largeCarModel},
         max_operate_num = #{maxOperateNum},distrib_center = #{distribCenter},total_vol=#{totalVol},full_time_staff1=#{fullTimeStaff1},
-        part_time_staff1=#{partTimeStaff1},full_time_staff2=#{fullTimeStaff2},part_time_staff2=#{partTimeStaff2},
-        no_of_truck_limitation=#{noOfTruckLimitation}, no_of_baidu_limitation=#{noOfBaiduLimitation}, no_of_didi_limitation=#{noOfDidiLimitation},
-        no_of_dada_limitation=#{noOfDadaLimitation},reserve=#{reserve}
+        part_time_staff1=#{partTimeStaff1},full_time_staff2=#{fullTimeStaff2},part_time_staff2=#{partTimeStaff2}
         where id = #{id}
     </update>
 
@@ -73,12 +70,9 @@
 
     <update id="editSiteInfo">
         UPDATE t_site_info SET scenariosId = #{scenariosId},site_code = #{siteCode},longitude = #{siteLongitude},latitude=#{siteLatitude},site_name=#{siteName},site_address=#{siteAddress},
-        site_night_delivery=#{siteNightDelivery},site_area=#{siteArea},site_type=#{siteType},large_carModle=#{largeCarModel},
+        site_night_delivery=#{siteNightDelivery},site_area=#{siteArea},site_type=#{siteType},car_num=#{carNum} ,large_carModle=#{largeCarModel},
         max_operate_num=#{maxOperateNum},distrib_center=#{distribCenter},total_vol=#{totalVol},full_time_staff1=#{fullTimeStaff1},
-        part_time_staff1=#{partTimeStaff1},full_time_staff2=#{fullTimeStaff2},part_time_staff2=#{partTimeStaff2},
-        no_of_truck_limitation=#{noOfTruckLimitation}, no_of_baidu_limitation=#{noOfBaiduLimitation}, no_of_didi_limitation=#{noOfDidiLimitation},
-        no_of_dada_limitation=#{noOfDadaLimitation},reserve=#{reserve}
-        where id = #{id}
+        part_time_staff1=#{partTimeStaff1},full_time_staff2=#{fullTimeStaff2},part_time_staff2=#{partTimeStaff2} where id = #{id}
     </update>
 
     <delete id="delById">
@@ -142,6 +136,7 @@
         <result property="siteNightDelivery" column="site_night_delivery"/>
         <result property="siteArea" column="site_area"/>
         <result property="siteType" column="site_type"/>
+        <result property="carNum" column="car_num"/>
         <result property="largeCarModel" column="large_carModle"/>
         <result property="maxOperateNum" column="max_operate_num"/>
         <result property="distribCenter" column="distrib_center"/>
@@ -150,11 +145,6 @@
         <result property="partTimeStaff1" column="part_time_staff1"/>
         <result property="fullTimeStaff2" column="full_time_staff2"/>
         <result property="partTimeStaff2" column="part_time_staff2"/>
-        <result property="noOfTruckLimitation" column="no_of_truck_limitation"/>
-        <result property="noOfBaiduLimitation" column="no_of_baidu_limitation"/>
-        <result property="noOfDidiLimitation" column="no_of_didi_limitation"/>
-        <result property="noOfDadaLimitation" column="no_of_dada_limitation"/>
-        <result property="reserve" column="reserve"/>
     </resultMap>
 
     <resultMap id="modelRouteAndSite" type="map">
@@ -185,6 +175,7 @@
         <result property="siteNightDelivery" column="site_night_delivery"/>
         <result property="siteArea" column="site_area"/>
         <result property="siteType" column="site_type"/>
+        <result property="carNum" column="car_num"/>
         <result property="largeCarModel" column="large_carModle"/>
         <result property="maxOperateNum" column="max_operate_num"/>
         <result property="distribCenter" column="distrib_center"/>
@@ -193,11 +184,6 @@
         <result property="partTimeStaff1" column="part_time_staff1"/>
         <result property="fullTimeStaff2" column="full_time_staff2"/>
         <result property="partTimeStaff2" column="part_time_staff2"/>
-        <result property="noOfTruckLimitation" column="no_of_truck_limitation"/>
-        <result property="noOfBaiduLimitation" column="no_of_baidu_limitation"/>
-        <result property="noOfDidiLimitation" column="no_of_didi_limitation"/>
-        <result property="noOfDadaLimitation" column="no_of_dada_limitation"/>
-        <result property="reserve" column="reserve"/>
     </resultMap>
 
 

@@ -9,7 +9,6 @@ import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -185,45 +183,8 @@ public class SolutionCostController {
 
     @RequestMapping(value = "/exportResult",method = RequestMethod.GET,produces = {"application/vnd.ms-excel;charset=UTF-8"})
     @ResponseBody
-    public String exportResult(HttpServletResponse response,HttpServletRequest request) {
-        Map<String, Object> planA = new HashMap<>();
-        planA.put("plan", request.getParameter("plan"));
-        planA.put("sitePeopleWork", request.getParameter("sitePeopleWork"));
-        planA.put("distribPeopleWork", request.getParameter("distribPeopleWork"));
-        planA.put("siteCount", request.getParameter("siteCount"));
-        planA.put("peopleNumPerSite", request.getParameter("peopleNumPerSite"));
-        planA.put("totalStaff", request.getParameter("siteCount"));
-        planA.put("fullTimeStaff", request.getParameter("fullTimeStaff"));
-        planA.put("partTimeStaff", request.getParameter("partTimeStaff"));
-        planA.put("fullTimeSalary", request.getParameter("fullTimeSalary"));
-        planA.put("fullTimeWorkDay", request.getParameter("fullTimeWorkDay"));
-        planA.put("partTimeSalary", request.getParameter("partTimeSalary"));
-        planA.put("partTimeWorkDay", request.getParameter("partTimeWorkDay"));
-        planA.put("piece", request.getParameter("piece"));
-        planA.put("sum1", request.getParameter("sum1"));
-        planA.put("totalDailyLaborCost", request.getParameter("totalDailyLaborCost"));
-        planA.put("branchTransportCost", request.getParameter("branchTransportCost"));
-        planA.put("totalCost", request.getParameter("totalCost"));
-
-        Map<String, Object> planB = new HashMap<>();
-        planB.put("plan", request.getParameter("planB"));
-        planB.put("sitePeopleWork", request.getParameter("sitePeopleWorkB"));
-        planB.put("distribPeopleWork", request.getParameter("distribPeopleWorkB"));
-        planB.put("siteCount", request.getParameter("siteCountB"));
-        planB.put("peopleNumPerSite", request.getParameter("peopleNumPerSiteB"));
-        planB.put("totalStaff", request.getParameter("siteCountB"));
-        planB.put("fullTimeStaff", request.getParameter("fullTimeStaffB"));
-        planB.put("partTimeStaff", request.getParameter("partTimeStaffB"));
-        planB.put("fullTimeSalary", request.getParameter("fullTimeSalaryB"));
-        planB.put("fullTimeWorkDay", request.getParameter("fullTimeWorkDayB"));
-        planB.put("partTimeSalary", request.getParameter("partTimeSalaryB"));
-        planB.put("partTimeWorkDay", request.getParameter("partTimeWorkDayB"));
-        planB.put("piece", request.getParameter("pieceB"));
-        planB.put("sum1", request.getParameter("sum1B"));
-        planB.put("totalDailyLaborCost", request.getParameter("totalDailyLaborCostB"));
-        planB.put("branchTransportCost", request.getParameter("branchTransportCostB"));
-        planB.put("totalCost", request.getParameter("totalCostB"));
-
+    public String exportResult(HttpServletResponse response)
+    {
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         try {
             ServletOutputStream outputStream = response.getOutputStream();
@@ -231,9 +192,8 @@ public class SolutionCostController {
             response.setCharacterEncoding("utf-8");
             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
             String scenariosId = ShiroUtil.getOpenScenariosId();
-            String modelType = myScenariosService.findById(Integer.parseInt(scenariosId)).getScenariosModel();
             String[] titles = { "串点模型", "接力模型", "综合模型" };
-            solutionCostService.exportResult(scenariosId,titles,outputStream,modelType,planA,planB);
+            solutionCostService.exportResult(scenariosId,titles,outputStream);
             System.out.println("outputStream:"+outputStream);
         }
         catch (IOException e) {

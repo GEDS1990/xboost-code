@@ -1,10 +1,8 @@
 package com.mckinsey.ckc.sf.main;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.mckinsey.ckc.sf.data.Result;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -43,7 +41,7 @@ public class Application {
 		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
 
-	@RequestMapping(value = "/move",method = RequestMethod.GET)
+	@RequestMapping(value = "/move", method = RequestMethod.POST)
 	public ResponseEntity<MoveResponse> move(@RequestBody MoveRequest request) {
 		MoveResponse response = new MoveResponse();
 		if (request != null) {
@@ -58,15 +56,6 @@ public class Application {
 		// TODO: call persistence layer to update
 		return new ResponseEntity<MoveResponse>(response, HttpStatus.OK);
 	}
-
-	@RequestMapping("/main")
-	public Map<String,Object> getMainResult() {
-	//	Main main = new Main();
-		Map<String,Object> result=Main.main();
-		return result;
-	}
-
-
 
 	public static void main(String[] args) throws Exception {
 

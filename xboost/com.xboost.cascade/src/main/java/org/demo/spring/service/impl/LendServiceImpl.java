@@ -21,7 +21,7 @@ public class LendServiceImpl implements LendService {
 
     @Override
     public List<Lend> queryLends(String lendName) {
-        return lendDao.queryLends(lendName);
+        return null;
     }
 
     @Override

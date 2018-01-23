@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>dynamic</groupId>
-	<artifactId>dynamic</artifactId>
+	<groupId>DynamicNetwork</groupId>
+	<artifactId>DynamicNetwork</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<parent>
@@ -73,12 +73,7 @@
 			<artifactId>cglib</artifactId>
 			<version>2.2</version>
 		</dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-        <!-- Hibernate library dependecy end -->
+		<!-- Hibernate library dependecy end -->
 	</dependencies>
 
 	<properties>

@@ -17,7 +17,7 @@ public class RestController {
     @Autowired
     private LendService lendService;
     /*@20170629*/
-    @RequestMapping(value = "/restControl/queryLends", method = RequestMethod.GET)
+    @RequestMapping(value = "/restControl/queryLends", method = RequestMethod.POST)
     public List<Lend> queryLends(String lendName) {
         return lendService.queryLends(lendName);
     }
