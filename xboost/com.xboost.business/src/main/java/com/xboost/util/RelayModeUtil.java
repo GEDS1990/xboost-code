@@ -856,6 +856,11 @@ public class RelayModeUtil extends Thread implements IConstants {
         cons4 = M41.appendVertically(ret,M42 ,M43 ,M44 ,M45);
         cons5 = M51.appendVertically(ret,M52 ,M53 ,M54 ,M55);
         cons = cons1.appendHorizontally(ret,cons2,cons3,cons4,cons5);
+        cons1 = M11.appendVertically(ret,M12 ,M13 ,M14);
+        cons2 = M21.appendVertically(ret,M22 ,M23 ,M24);
+        cons3 = M31.appendVertically(ret,M32 ,M33 ,M34);
+        cons4 = M41.appendVertically(ret,M42 ,M43 ,M44);
+        cons = cons1.appendHorizontally(ret,cons2,cons3,cons4);
 
 //        cons = M11;
         logger.info("connection_temp_list");
@@ -1046,7 +1051,6 @@ int tag = 0;
 
         try {
             logger.info("trag:"+tag++);
-            GRBEnv env2 = new GRBEnv();
 
             logger.info("trag:"+tag++);
 //            double c2[] = new double[] {1, 1, 0};
@@ -1076,9 +1080,10 @@ int tag = 0;
 //                    A2[iw][jw] = cons.getAsDouble(iw,jw);
 //                }
 //            }
-            for (int iw = 0; iw < 1; iw++) {
+            for (int iw = 0; iw < cons.getRowCount(); iw++) {
                 for (int jw = 0; jw < cons.getRowCount(); jw++){
                     A2[iw][jw] = cons.getAsDouble(iw,jw);
+                    logger.info("trag:"+tag+++"-------A2[iw][jw]:"+A2[iw][jw]);
                 }
             }
             logger.info("-------trag:"+tag++);
@@ -1116,6 +1121,7 @@ int tag = 0;
 
             logger.info("trag:"+tag++);
             Dense dense = new Dense();
+            GRBEnv env2 = new GRBEnv();
             success = dense.dense_optimize(env2, (int)cons.getRowCount(), (int)cons.getColumnCount(), c2, Q2, A2, sense2, rhs2,
                     lb2, ub2, types, sol2);
 

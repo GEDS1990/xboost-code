@@ -80,10 +80,11 @@
             '1' as scenario_lim1,
             '9' as scenario_lim2,
             0 as wait_time
-        from t_demand_info t1
-        left join t_site_distance t2
-            on t1.site_collect=t2.site_collect
-            and t1.site_delivery=t2.site_delivery
+        from t_demand_info t1 ,t_site_distance t2
+            where 1=1
+        and t1.scenariosId = #{OpenScenariosId}
+        and t1.site_collect=t2.site_collect
+        and t1.site_delivery=t2.site_delivery
     </select>
 
     <select id="findAll06" resultType="map">
