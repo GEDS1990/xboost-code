@@ -169,10 +169,10 @@ $(function  () {
 	                },"name":"distrib_center"},
 	                {"data":"siteNightDelivery","name":"site_night_delivery"},
 	                {"data":function (res){
-	                	if (res.carNum >= 999 ) {
+	                	if (res.noOfTruckLimitation >= 999 ) {
 	                		return "∞";
 	                	}
-	                	return res.carNum;
+	                	return res.noOfTruckLimitation;
 	                },"name":"car_num"},
 	                {"data":function (res){
 	                	if (res.largeCarModel >= 999) {
