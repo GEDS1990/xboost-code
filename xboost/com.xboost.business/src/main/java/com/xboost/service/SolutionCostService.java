@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
+import org.omg.CORBA.ObjectHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -230,8 +231,7 @@ public class SolutionCostService {
      * @param scenariosId
      * @return
      */
-    public void exportResult(String scenariosId, String[] titles, ServletOutputStream outputStream) {
-        List<Cost> list = solutionCostMapper.findAll(scenariosId);
+    public void exportResult(String scenariosId, String[] titles, ServletOutputStream outputStream, String modelType, Map<String, Object> planA, Map<String, Object> planB) {
         // 创建一个workbook 对应一个excel应用文件
         XSSFWorkbook workBook = new XSSFWorkbook();
         // 在workbook中添加一个sheet,对应Excel文件中的sheet
@@ -265,7 +265,7 @@ public class SolutionCostService {
                 "单日总体人工成本 (per piece)", "收端运输成本 (per piece)", "支线运输成本 (per piece)", "派端运输成本 (per piece)", "总成本 (per piece)"};
 
         // 串点模型 null需要根据数据库的值重新设置
-        if (list.get(0).getModelType() == null) {
+        if ("1".equals(modelType)) {
             String[] grid = {"0,0,0,3", "1,1,0,1", "1,1,2,3", "2,2,0,1", "2,2,2,3", "3,3,0,1", "3,3,2,3", "6,6,0,1", "6,6,2,3", "7,7,0,1", "7,7,2,3",
                     "13,13,0,1", "13,13,2,3", "14,14,0,1", "14,14,2,3", "19,19,0,1", "19,19,2,3", "20,20,0,1", "20,20,2,3",};
 
@@ -325,130 +325,130 @@ public class SolutionCostService {
 
                 if(i == 4) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getSitePeopleWork());
+                    cell.setCellValue(planA.get("sitePeopleWork")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getSitePeopleWork());
+                    cell.setCellValue(planB.get("sitePeopleWork")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 5) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getDistribPeopleWork());
+                    cell.setCellValue(planA.get("distribPeopleWork")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getDistribPeopleWork());
+                    cell.setCellValue(planB.get("distribPeopleWork")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 8) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getSiteCount());
+                    cell.setCellValue(planA.get("siteCount")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getSiteCount());
+                    cell.setCellValue(planB.get("siteCount")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if(i == 9) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getPeopleNumPerSite());
+                    cell.setCellValue(planA.get("peopleNumPerSite")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getPeopleNumPerSite());
+                    cell.setCellValue(planB.get("peopleNumPerSite")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 10) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getSiteCount());
+                    cell.setCellValue(planA.get("totalStaff")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getSiteCount());
+                    cell.setCellValue(planB.get("totalStaff")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 11) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getFullTimeStaff());
+                    cell.setCellValue(planA.get("fullTimeStaff")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getFullTimeStaff());
+                    cell.setCellValue(planB.get("fullTimeStaff")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 12) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getPartTimeStaff());
+                    cell.setCellValue(planA.get("partTimeStaff")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getPartTimeStaff());
+                    cell.setCellValue(planB.get("partTimeStaff")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 15) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getFullTimeSalary());
+                    cell.setCellValue(planA.get("fullTimeSalary")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getFullTimeSalary());
+                    cell.setCellValue(planB.get("fullTimeSalary")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 16) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getFullTimeWorkDay());
+                    cell.setCellValue(planA.get("fullTimeWorkDay")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getFullTimeWorkDay());
+                    cell.setCellValue(planB.get("fullTimeWorkDay")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 17) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getPartTimeSalary());
+                    cell.setCellValue(planA.get("partTimeSalary")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getPartTimeSalary());
+                    cell.setCellValue(planB.get("partTimeSalary")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 18) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getPartTimeWorkDay());
+                    cell.setCellValue(planA.get("partTimeWorkDay")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getPartTimeWorkDay());
+                    cell.setCellValue(planB.get("partTimeWorkDay")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 21) {
                     cell = row.createCell(1);
-                    cell.setCellValue("");
+                    cell.setCellValue(planA.get("piece")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue("");
+                    cell.setCellValue(planB.get("piece")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 22) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getSum1());
+                    cell.setCellValue(planA.get("sum1")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getSum1());
+                    cell.setCellValue(planB.get("sum1")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 23) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getTotalDailyLaborCost());
+                    cell.setCellValue(planA.get("totalDailyLaborCost")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getTotalDailyLaborCost());
+                    cell.setCellValue(planB.get("totalDailyLaborCost")+"");
                     cell.setCellStyle(bodyStyle);
                 } else if (i == 24) {
                     cell = row.createCell(1);
-                    cell.setCellValue(list.get(0).getBranchTransportCost().substring(0,list.get(0).getBranchTransportCost().indexOf(".")+3));
+                    cell.setCellValue(planA.get("branchTransportCost")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = row.createCell(3);
-                    cell.setCellValue(list.get(0).getBranchTransportCost().substring(0,list.get(0).getBranchTransportCost().indexOf(".")+3));
+                    cell.setCellValue(planB.get("branchTransportCost")+"");
                     cell.setCellStyle(bodyStyle);
                 }
             }
         }
 
-        // 接力模型  null需要根据数据库的值重新设置
-        /*if (list.get(0).getModelType() == null) {
+        // 接力模型
+        if ("2".equals(modelType)) {
             String[] grid = {"0,0,0,3", "1,1,0,1", "1,1,2,3", "2,2,0,1", "2,2,2,3", "3,3,0,1", "3,3,2,3", "6,6,0,1", "6,6,2,3", "7,7,0,1", "7,7,2,3",
                     "12,12,0,1", "12,12,2,3", "14,14,0,1", "14,14,2,3", "15,15,0,1", "15,15,2,3", "20,20,0,1", "20,20,2,3", "21,21,0,1", "21,21,2,3"};
 
@@ -507,10 +507,10 @@ public class SolutionCostService {
                 cell.setCellStyle(bodyStyle);
 
             }
-        }*/
+        }
 
-        // 综合模型  null需要根据数据库的值重新设置
-        /*if (list.get(0).getModelType() == null) {
+        // 综合模型
+        if ("3".equals(modelType)) {
             String[] grid = {"0,0,0,3", "1,1,0,1", "1,1,2,3", "2,2,0,1", "2,2,2,3", "3,3,0,1", "3,3,2,3", "6,6,0,1", "6,6,2,3", "7,7,0,1", "7,7,2,3",
                     "13,13,0,1", "13,13,2,3", "18,18,0,1", "18,18,2,3", "20,20,0,1", "20,20,2,3", "21,21,0,1", "21,21,2,3", "26,26,0,1", "26,26,2,3",
                     "27,27,0,1", "27,27,2,3"};
@@ -569,7 +569,7 @@ public class SolutionCostService {
                 cell.setCellValue(column3[i-3]);
                 cell.setCellStyle(bodyStyle);
             }
-        }*/
+        }
 
         try {
 //            FileOutputStream fout = new FileOutputStream("E:/Depots_info.xlsx");

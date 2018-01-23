@@ -353,7 +353,7 @@ function add0(m){return m<10?'0'+m:m };
 	    $('#distribution-choose').change(function  () {
 	    	var _val = $(this).val();
 	    	$.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
-		    	console.log(res);
+		    	//console.log(res);
 		    	if (_val == 0 || _val== 1) {
 		    		var arr = [];
 			    	for (var i in res) {

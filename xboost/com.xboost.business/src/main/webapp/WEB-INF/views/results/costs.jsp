@@ -107,8 +107,8 @@
 		    					</div>
 		    					<div class="item-box">
 		    						<h1>Staffing Arrangement</h1>
-		    						<!--serial-->
-		    						<ul class="item-content" v-show="serialSeen">
+		    						
+		    						<ul class="item-content" v-show="cseen">
 		    							<li>No. of Dummy Hub: <span>{{depotcount}}</span></li>
 		    							<input type="hidden" name="siteCount" v-bind:value="depotcount" />
 		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
@@ -117,35 +117,7 @@
 										<input type="hidden" name="siteCount" v-bind:value="depotAllPeople" />
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
 		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
-		    							<p>{{a}}</p>
 		    						</ul>
-		    						<!--relay-->
-		    						<ul class="item-content" v-show="relaySeen" v-for="site in sitelist">
-		    							<li>No. of Dummy Hub: <span>{{site.siteCode}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Votes: <span>{{site.totalVol}}</span></li>
-		    							<template v-if="site.siteType=='depot'">
-		    								<li>No. of Staff per Dummy Hub: <span>{{site.totalVol}}</span> ÷ <span>{{sitePeople}}</span> ≈ <span>{{site.perMan}}</span>
-		    							</template>
-		    							<template v-else>
-		    								<li>No. of Staff per Dummy Hub Center: <span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}</span> ≈ <span>{{site.perMan}}</span>
-		    							</template>
-		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
-		    							<li>Total Staff: <span>{{site.perMan}}</span></li>
-		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="site.full"/></li>
-		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="site.part"/></li>
-		    							<p>{{b}}</p>
-		    						</ul>
-		    						<!--mixed-->
-		    						<!--<ul class="item-content" v-show="mixedSeen">
-		    							<li>No. of Dummy Hub: <span>{{depotcount}}</span></li>
-		    							<input type="hidden" name="siteCount" v-bind:value="depotcount" />
-		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
-		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
-		    							<li>Total Staff: <span>{{depotAllPeople}}</span></li>
-		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
-		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
-		    						</ul>-->
-		    						
-		    						
 		    					</div>
 		    					<div class="item-box">
 		    						<h1>Salary</h1>
@@ -161,17 +133,16 @@
 		    						<ul class="item-content">
 		    							<li>Total pieces:{{piece}}</li>
 		    							<li>Total Staffing Cost: <span>{{day_p_cost}}</span></li>
-		    							<template v-show="relaySeen">
-		    								<li>distrib.Total Staffing Cost: <span>{{day_p_dis_cost}}</span></li>
-		    							</template>
 		    							<li>Staffing Cost per piece: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>Transportation Cost per piece: <span>{{line_cost}}</span> <span> (per piece)</span></li>
-		    							<input type="hidden" name="sum2" v-bind:value="day_p_cost"/>
+		    							<input type="hidden" name="piece" v-bind:value="piece"/>
+		    							<input type="hidden" name="sum1" v-bind:value="day_p_cost"/>
 		    							<input type="hidden" name="totalDailyLaborCost" v-bind:value="day_allp_cost"/>
 		    							<input type="hidden" name="branchTransportCost" v-bind:value="line_cost"/>
 		    							<input type="hidden" name="totalCost" v-bind:value="allcost"/>
 		    						</ul>
 		    						<p>Total Cost per piece: {{allcost}} <span> (per piece)</span></p>
+		    						<p>{{a}}</p>
 		    					</div>
 		    				</div>
 	    				</form>
@@ -193,8 +164,7 @@
 		    					<div class="item-box">
 		    						<h1>Staffing Arrangement</h1>
 		    						
-		    						<!--serial-->
-		    						<ul class="item-content" v-show="serialSeen">
+		    						<ul class="item-content" v-show="cseen">
 		    							<li>No. of Dummy Hub: <span>{{depotcount}}</span></li>
 		    							<input type="hidden" name="siteCount" v-bind:value="depotcount" />
 		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
@@ -203,22 +173,6 @@
 										<input type="hidden" name="siteCount" v-bind:value="depotAllPeople" />
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
 		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
-		    							<p>{{a}}</p>
-		    						</ul>
-		    						<!--relay-->
-		    						<ul class="item-content" v-show="relaySeen" v-for="site in sitelist">
-		    							<li>No. of Dummy Hub: <span>{{site.siteCode}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Votes: <span>{{site.totalVol}}</span></li>
-		    							<template v-if="site.siteType=='depot'">
-		    								<li>No. of Staff per Dummy Hub: <span>{{site.totalVol}}</span> ÷ <span>{{sitePeople}}</span> ≈ <span>{{site.perMan}}</span>
-		    							</template>
-		    							<template v-else>
-		    								<li>No. of Staff per Dummy Hub Center: <span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}</span> ≈ <span>{{site.perMan}}</span>
-		    							</template>
-		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
-		    							<li>Total Staff: <span>{{site.perMan}}</span></li>
-		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="site.full"/></li>
-		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="site.part"/></li>
-		    							<p>{{b}}</p>
 		    						</ul>
 		    						
 		    						
@@ -237,9 +191,6 @@
 		    						<ul class="item-content">
 		    							<li>Total pieces:{{piece}}</li>
 		    							<li>Total Staffing Cost: <span>{{day_p_cost}}</span></li>
-		    							<template v-show="relaySeen">
-		    								<li>distrib.Total Staffing Cost: <span>{{day_p_dis_cost}}</span></li>
-		    							</template>
 		    							<li>Staffing Cost per piece: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>Transportation Cost per piece: <span>{{line_cost}}</span> <span> (per piece)</span></li>
 										<input type="hidden" name="piece" v-bind:value="piece"/>
@@ -249,6 +200,7 @@
 		    							<input type="hidden" name="totalCost" v-bind:value="allcost"/>
 		    						</ul>
 		    						<p>Total Cost per piece: {{allcost}} <span> (per piece)</span></p>
+		    						<p>{{a}}</p>
 		    					</div>
 		    				</div>
 	    				</form>

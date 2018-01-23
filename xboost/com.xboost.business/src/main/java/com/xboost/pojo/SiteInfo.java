@@ -20,7 +20,6 @@ public class SiteInfo implements Serializable {
     private String siteNightDelivery;      //是否可以做夜配集散点
     private String siteArea;               //场地运营面积(平方米)
     private String siteType;            //网点类型
-    private String carNum;                //停货车数(辆)
     private String largeCarModel;          //进出最大车型（T）
     private String maxOperateNum;        //单一批量操作处理量上限(票)
     private String distribCenter;                   //预留字段(指定集散点)
@@ -33,6 +32,11 @@ public class SiteInfo implements Serializable {
     private String str3;                  //预留字段
     private String createTime;
     private String updateTime;
+    private String noOfTruckLimitation;
+    private String noOfBaiduLimitation;
+    private String noOfDidiLimitation;
+    private String noOfDadaLimitation;
+    private String reserve;
 
     public Integer getId() {
         return id;
@@ -112,14 +116,6 @@ public class SiteInfo implements Serializable {
 
     public void setSiteType(String siteType) {
         this.siteType = siteType;
-    }
-
-    public String getCarNum() {
-        return carNum;
-    }
-
-    public void setCarNum(String carNum) {
-        this.carNum = carNum;
     }
 
     public String getLargeCarModel() {
@@ -216,5 +212,45 @@ public class SiteInfo implements Serializable {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getNoOfTruckLimitation() {
+        return noOfTruckLimitation;
+    }
+
+    public void setNoOfTruckLimitation(String noOfTruckLimitation) {
+        this.noOfTruckLimitation = noOfTruckLimitation;
+    }
+
+    public String getNoOfBaiduLimitation() {
+        return noOfBaiduLimitation;
+    }
+
+    public void setNoOfBaiduLimitation(String noOfBaiduLimitation) {
+        this.noOfBaiduLimitation = noOfBaiduLimitation;
+    }
+
+    public String getNoOfDidiLimitation() {
+        return noOfDidiLimitation;
+    }
+
+    public void setNoOfDidiLimitation(String noOfDidiLimitation) {
+        this.noOfDidiLimitation = noOfDidiLimitation;
+    }
+
+    public String getNoOfDadaLimitation() {
+        return noOfDadaLimitation;
+    }
+
+    public void setNoOfDadaLimitation(String noOfDadaLimitation) {
+        this.noOfDadaLimitation = noOfDadaLimitation;
+    }
+
+    public String getReserve() {
+        return reserve;
+    }
+
+    public void setReserve(String reserve) {
+        this.reserve = reserve;
     }
 }

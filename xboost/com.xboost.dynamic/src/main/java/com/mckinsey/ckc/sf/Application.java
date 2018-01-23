@@ -52,8 +52,8 @@ public class Application {
 		return new ResponseEntity<MoveResponse>(response, HttpStatus.OK);
 	}
 
-//	public static void main(String[] args) throws Exception {
-//
+	public static void main(String[] args) throws Exception {
+
 //		double A2[][] = new double[96820][9682];
 //		double A12[] = new double[1200000];
 //		for (int iw = 0; iw < 12000; iw++) {
@@ -63,6 +63,6 @@ public class Application {
 //		}
 //		Main main = new Main();
 //		main.calculate();
-//		SpringApplication.run(Application.class, args);
-//	}
+		SpringApplication.run(Application.class, args);
+	}
 }
