@@ -537,7 +537,6 @@ public class Main implements IConstants {
 				:responseList.entrySet()){
 			System.out.println("timeId: "+response.getKey());
 			result.put("timeId"+response.getKey(),response.getKey());
-			result.put("carrier"+response.getKey(),included);
 
 			HashMap<Integer,MoveResponse> temp = response.getValue();
 			for(Map.Entry<Integer, MoveResponse> item : temp.entrySet()){
@@ -546,6 +545,7 @@ public class Main implements IConstants {
 				System.out.println(mv.getNextLat()+"-"+mv.getNextLong());
 				included.put("carrierID"+item.getKey(),mv.getNextLat()+"-"+mv.getNextLong());
 			}
+			result.put("carrier"+response.getKey(),included);
 		}
 		try {
 			JDBCConnection.getConnection().close();
