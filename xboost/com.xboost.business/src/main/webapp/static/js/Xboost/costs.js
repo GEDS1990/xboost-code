@@ -259,6 +259,29 @@ $(function (){
 					},
 					sumK:function (){
 						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
+					},
+					changStaff:function () {
+						var list = this.sitelist;
+						var len = list.length;
+						for (var i=0;i<len;i++) {
+							if (list[i].full > list[i].perMan) {
+								list[i].full = list[i].perMan;
+								list[i].part = list[i].perMan - list[i].full;
+							}else if (list[i].full < 0) {
+								list[i].full = 0;
+								list[i].part = list[i].perMan - list[i].full;
+							}else if (list[i].part > list[i].perMan) {
+								list[i].part = list[i].perMan;
+								list[i].full = list[i].perMan - list[i].part;
+							}else if (list[i].part < 0) {
+								list[i].part = 0;
+								list[i].full = list[i].perMan - list[i].part;
+							}else{
+								list[i].full = list[i].perMan - list[i].part;
+								list[i].part = list[i].perMan - list[i].full;
+							}
+						}
+						this.sitelist = list;
 					}
 					
 				},
@@ -420,6 +443,7 @@ $(function (){
 					}
 				}else if (data.modelType == 2) {
 					vmA.relaySeen = true;
+					vmB.relaySeen = true;
 					$('#model-type').text("Relay Model");
 					$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
 						if (res.data[0].distribPeopleWork == null) {
@@ -450,6 +474,17 @@ $(function (){
 							vmA.part_wage = 20;
 							vmA.part_work = 2;
 							vmA.sitelist = _list;
+							
+							vmB.sitePeople = $res.sitePeopleWork;
+							vmB.collectPeople = $res.distribPeopleWork;
+							vmB.piece = $res.totalPiece;
+							vmB.line_cost = Number($res.branchTransportCost).toFixed(2);
+							vmB.full_salaty = 6000;
+							vmB.full_days = 30;
+							vmB.part_wage = 20;
+							vmB.part_work = 2;
+							vmB.sitelist = _list;
+							
 						}else{
 							var urlcost = "/costs/edit";
 							var _list =  relaylist($res.siteInfoList);
@@ -511,8 +546,30 @@ $(function (){
             //导出excel表格
             $('.export-btn').click(function  () {
                 var _xls = $(this).attr('data-xls');
+                var planA = $("#cost-form-a").serialize();
+                var dataA = planA;
+
+                var planB = $("#cost-form-b").serializeArray();
+                var dataB = "";
+                $.each(planB,function(idx,obj) {
+                	console.log(obj.name);
+                	console.log(obj.value);
+                	dataB += obj.name + "B=" + obj.value +"&";
+                });
+
+                console.log(dataB+dataA);
                 if (_xls) {
-                    window.location.href="/costs/exportResult";
+                    window.location.href="/costs/exportResult?"+dataB+dataA;
+                    // $.ajax({
+						// type: "GET",
+						// url: "/costs/exportResult",
+						// contentType: "text",
+                    //     data: planA,
+                    //     async: false,
+                    //     success:function(data){
+                    //
+                    //     },
+                    // })
                 }
                 $(".modal-header span").trigger('click');
             });

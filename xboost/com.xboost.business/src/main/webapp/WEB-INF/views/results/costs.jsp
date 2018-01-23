@@ -114,6 +114,7 @@
 		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
 		    							<li>Total Staff: <span>{{depotAllPeople}}</span></li>
+										<input type="hidden" name="siteCount" v-bind:value="depotAllPeople" />
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
 		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
 		    							<p>{{a}}</p>
@@ -199,6 +200,7 @@
 		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
 		    							<li>Total Staff: <span>{{depotAllPeople}}</span></li>
+										<input type="hidden" name="siteCount" v-bind:value="depotAllPeople" />
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
 		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
 		    							<p>{{a}}</p>
@@ -240,6 +242,7 @@
 		    							</template>
 		    							<li>Staffing Cost per piece: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>Transportation Cost per piece: <span>{{line_cost}}</span> <span> (per piece)</span></li>
+										<input type="hidden" name="piece" v-bind:value="piece"/>
 		    							<input type="hidden" name="sum1" v-bind:value="day_p_cost"/>
 		    							<input type="hidden" name="totalDailyLaborCost" v-bind:value="day_allp_cost"/>
 		    							<input type="hidden" name="branchTransportCost" v-bind:value="line_cost"/>
