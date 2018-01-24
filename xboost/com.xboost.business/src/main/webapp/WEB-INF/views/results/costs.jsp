@@ -94,7 +94,7 @@
 	    		</div>
 	    		<div id="costs" class="result-cost clearfix">
 	    			<div class="result-cost-item itemstyle" >
-	    				<form id="cost-form-a">
+	    				<form id="cost-form-a1">
 	    					<input type="hidden" name="plan" value="A" />
 	    					<h1>Plan A</h1>
 		    				<div class="cost-item text-left">
@@ -132,7 +132,6 @@
 		    							<li>Total Staff: <span>{{site.perMan}}</span></li>
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="site.full"/></li>
 		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="site.part"/></li>
-		    							<p>{{b}}</p>
 		    						</ul>
 		    						<!--mixed-->
 		    						<!--<ul class="item-content" v-show="mixedSeen">
@@ -217,7 +216,6 @@
 		    							<li>Total Staff: <span>{{site.perMan}}</span></li>
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="site.full"/></li>
 		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="site.part"/></li>
-		    							<p>{{b}}</p>
 		    						</ul>
 		    						
 		    						

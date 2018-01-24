@@ -74,7 +74,7 @@ $(function (){
 		var costs = doc.getElementById('costs');
 		if (costs) {
 			var vmA = new Vue({
-				el:'#cost-form-a',
+				el:'#cost-form-a1',
 				data:{
 					serialSeen:false,//显示串点
 					relaySeen:false,//显示接力
@@ -448,23 +448,37 @@ $(function (){
 					$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
 						if (res.data[0].distribPeopleWork == null) {
 							var urlcost = "/costs/edit";
-							var _list =  relaylistInit($res.siteInfoList,$res.totalVolList);
-							var len = _list.length;
+							var _lista =  relaylistInit($res.siteInfoList,$res.totalVolList);
+							var _listb =  relaylistInit($res.siteInfoList,$res.totalVolList);
+							var len = _lista.length;
 							var count_s = $res.sitePeopleWork;
 							var count_d = $res.distribPeopleWork;
 							vmA.sitePeople = $res.sitePeopleWork;
 							vmA.collectPeople = $res.distribPeopleWork;
 							for (var i=0;i<len;i++) {
-								if (_list[i].siteType == "depot") {
-									var num = Number(_list[i].totalVol)/Number(count_s);
-									_list[i].perMan = Math.ceil(num);
-									_list[i].full = Math.ceil(num);
-									_list[i].part = 0;
+								if (_lista[i].siteType == "depot") {
+									var num = Number(_lista[i].totalVol)/Number(count_s);
+									_lista[i].perMan = Math.ceil(num);
+									_lista[i].full = Math.ceil(num);
+									_lista[i].part = 0;
 								}else{
-									var num = Number(_list[i].totalVol)/Number(count_d);
-									_list[i].perMan = Math.ceil(num);
-									_list[i].full = Math.ceil(num);
-									_list[i].part = 0;
+									var num = Number(_lista[i].totalVol)/Number(count_d);
+									_lista[i].perMan = Math.ceil(num);
+									_lista[i].full = Math.ceil(num);
+									_lista[i].part = 0;
+								}
+							}
+							for (var i=0;i<len;i++) {
+								if (_listb[i].siteType == "depot") {
+									var num = Number(_listb[i].totalVol)/Number(count_s);
+									_listb[i].perMan = Math.ceil(num);
+									_listb[i].full = Math.ceil(num);
+									_listb[i].part = 0;
+								}else{
+									var num = Number(_listb[i].totalVol)/Number(count_d);
+									_listb[i].perMan = Math.ceil(num);
+									_listb[i].full = Math.ceil(num);
+									_listb[i].part = 0;
 								}
 							}
 							vmA.piece = $res.totalPiece;
@@ -473,7 +487,7 @@ $(function (){
 							vmA.full_days = 30;
 							vmA.part_wage = 20;
 							vmA.part_work = 2;
-							vmA.sitelist = _list;
+							vmA.sitelist = _lista;
 							
 							vmB.sitePeople = $res.sitePeopleWork;
 							vmB.collectPeople = $res.distribPeopleWork;
@@ -483,7 +497,7 @@ $(function (){
 							vmB.full_days = 30;
 							vmB.part_wage = 20;
 							vmB.part_work = 2;
-							vmB.sitelist = _list;
+							vmB.sitelist = _listb;
 							
 						}else{
 							var urlcost = "/costs/edit";
