@@ -273,11 +273,6 @@ public class ValidateController {
                 result = siteInfoWrongLink+":night delivery is wrong. Because it's empty.\n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
-            if(Strings.isEmpty(siteInfo.getCarNum())){
-                flag = flag + 1;
-                result = siteInfoWrongLink+":vehicle quantity limit is wrong. Because it's empty.\n";
-                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
             if(Strings.isEmpty(siteInfo.getLargeCarModel())){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":vehicle weight limit  is wrong. Because it's empty.\n";
@@ -296,16 +291,6 @@ public class ValidateController {
             if(!Strings.isEmpty(siteInfo.getSiteArea()) && Double.parseDouble(siteInfo.getSiteArea())>3000){
                 flag = flag + 1;
                 result = siteInfoWrongLink+":depot area is must <3000. \n";
-                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
-            if(!Strings.isEmpty(siteInfo.getCarNum()) && Integer.parseInt(siteInfo.getCarNum())<0){
-                flag = flag + 1;
-                result = siteInfoWrongLink+":vehicle quantity limit  is must >0. \n";
-                systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
-            }
-            if(!Strings.isEmpty(siteInfo.getCarNum()) && Integer.parseInt(siteInfo.getCarNum())>999){
-                flag = flag + 1;
-                result = siteInfoWrongLink+":vehicle quantity limit  is must <999. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
             if(!Strings.isEmpty(siteInfo.getLargeCarModel()) && Integer.parseInt(siteInfo.getLargeCarModel())<0){

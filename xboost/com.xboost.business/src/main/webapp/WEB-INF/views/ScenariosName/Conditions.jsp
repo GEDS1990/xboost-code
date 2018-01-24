@@ -81,10 +81,14 @@
 					    		<th rowspan="2">depot<br />type</th>
 					    		<th rowspan="2">Hub<br />Y/N</th>
 					    		<th rowspan="2">Night Operation<br />Y/N</th>
-					    		<th colspan="3">per 10 minutes</th>
+					    		<th colspan="7">per 10 minutes</th>
                                 <th rowspan="2">operation</th>
                                 <tr>
-                                    <th>No. of<br />Vehicles Limitation</th>
+                                    <th>No. of<br />Truck Limitation</th>
+                                    <th>No. of<br />Baidu Limitation</th>
+                                    <th>No. of<br />DiDi Limitation</th>
+                                    <th>No. of<br />DaDa Limitation</th>
+                                    <th>Reserve</th>
                                     <th>Vehicle Type<br />Limitation</th>
                                     <th>piece<br />capacity(p)</th>
                                 </tr>

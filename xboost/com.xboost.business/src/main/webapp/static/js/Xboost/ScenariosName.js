@@ -169,11 +169,35 @@ $(function  () {
 	                },"name":"distrib_center"},
 	                {"data":"siteNightDelivery","name":"site_night_delivery"},
 	                {"data":function (res){
-	                	if (res.carNum >= 999 ) {
+	                	if (res.noOfTruckLimitation >= 999 ) {
 	                		return "∞";
 	                	}
-	                	return res.carNum;
-	                },"name":"car_num"},
+	                	return res.noOfTruckLimitation;
+	                },"name":"no_of_truck_limitation"},
+                    {"data":function (res){
+                        if (res.noOfBaiduLimitation >= 999 ) {
+                            return "∞";
+                        }
+                        return res.noOfBaiduLimitation;
+                    },"name":"no_of_baidu_limitation"},
+                    {"data":function (res){
+                        if (res.noOfDidiLimitation >= 999 ) {
+                            return "∞";
+                        }
+                        return res.noOfDidiLimitation;
+                    },"name":"no_of_didi_limitation"},
+                    {"data":function (res){
+                        if (res.noOfDadaLimitation >= 999 ) {
+                            return "∞";
+                        }
+                        return res.noOfDadaLimitation;
+                    },"name":"no_of_dada_limitation"},
+                    {"data":function (res){
+                        if (res.reserve >= 999 ) {
+                            return "∞";
+                        }
+                        return res.reserve;
+                    },"name":"reserve"},
 	                {"data":function (res){
 	                	if (res.largeCarModel >= 999) {
 	                		return "∞";
