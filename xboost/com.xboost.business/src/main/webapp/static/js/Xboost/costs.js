@@ -8,30 +8,95 @@ $(function (){
 	 * costs.jsp == SolutionCostController
 	 * 
 	 */
+	//接力函数封装
+	function totalVol (totalVolList) {
+		var list = [];
+		for (var i in totalVolList) {
+			var item = {};
+			item.siteCode = i;
+			item.totalVol = totalVolList[i];
+			list.push(item);
+		}
+		return list;
+	};
+	function siteinfo (siteInfoList) {
+		var list = [];
+		for (var i in siteInfoList) {
+			list.push(siteInfoList[i]);
+		}
+		return list;
+	};
+	function relaylistInit (siteInfoList,totalVolList) {
+		var slist = siteinfo(siteInfoList);
+		var tlist = totalVol(totalVolList);
+		var len = slist.length;
+		var len_t = tlist.length;
+		var list = [];
+		if (len !=0) {
+			for (var i=0;i<len;i++) {
+				for (var j=0;j<len_t;j++) {
+					var code_i = slist[i].siteCode;
+					var code_j = tlist[j].siteCode;
+					if (code_i == code_j) {
+						var item = {};
+						item.siteCode = slist[i].siteCode;
+						item.siteType = slist[i].siteType;
+						item.full = slist[i].fullTimeStaff1;
+						item.part = slist[i].partTimeStaff1;
+						item.perMan = 0;
+						item.totalVol = tlist[j].totalVol*100;
+						list.push(item);
+					}
+				}
+				
+			}
+		}
+		return list;
+		
+	};
+	function relaylist (siteInfoList) {
+		var slist = siteinfo(siteInfoList);
+		var len = slist.length;
+		var list = [];
+		for (var i=0;i<len;i++) {
+			var item = {};
+			item.siteCode = slist[i].siteCode;
+			item.siteType = slist[i].siteType;
+			item.full = slist[i].fullTimeStaff1;
+			item.part = slist[i].partTimeStaff1;
+			item.perMan = 0;
+			item.totalVol = slist[j].totalVol;
+			list.push(item);
+		}
+		return list;
+	};
 	(function  () {
 		var costs = doc.getElementById('costs');
 		if (costs) {
 			var vmA = new Vue({
 				el:'#cost-form-a',
 				data:{
-					cseen:true,
-					sitePeople:'',
-					collectPeople:'',
-					depotcount:'',
-					depotPeoplecount:'',
-					depotAllPeople:'',
-					full_salaty:'',
-					full_days:'',
-					part_wage:'',
-					part_work:'',
-					day_p_cost:'',
-					day_allp_cost:'',
-					line_cost:'',
-					allcost:'',
-					full_staff:'',
-					part_staff:'',
+					serialSeen:false,//显示串点
+					relaySeen:false,//显示接力
+					mixedSeen:false,//显示综合
+					sitePeople:'',//网点 人效
+					collectPeople:'',//集散点人效
+					depotcount:'',//支线总数量
+					depotPeoplecount:'',//每条支线人数
+					depotAllPeople:'',//支线总人数
+					full_salaty:'',//月工资
+					full_days:'',//全职天数
+					part_wage:'',//兼职小时费用
+					part_work:'',//兼职时间
+					day_p_cost:'',//单日网点人工成本
+					day_p_dis_cost:'',//单日集散点人工成本
+					day_allp_cost:'',//单日每件人工成本
+					line_cost:'',//支线运输成本每件
+					allcost:'',//总成本每件
+					full_staff:'',//全职人数
+					part_staff:'',//兼职人数
 					piece:'',//总件数
-					branch_cost:""
+					sitelist:[]
 				},
 				methods:{
 					sum23:function (){ //单日人工总成本
@@ -49,6 +114,32 @@ $(function (){
 					},
 					sumK:function (){
 						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
+					},
+					sum1:function (){
+						
+					},
+					changStaff:function () {
+						var list = this.sitelist;
+						var len = list.length;
+						for (var i=0;i<len;i++) {
+							if (list[i].full > list[i].perMan) {
+								list[i].full = list[i].perMan;
+								list[i].part = list[i].perMan - list[i].full;
+							}else if (list[i].full < 0) {
+								list[i].full = 0;
+								list[i].part = list[i].perMan - list[i].full;
+							}else if (list[i].part > list[i].perMan) {
+								list[i].part = list[i].perMan;
+								list[i].full = list[i].perMan - list[i].part;
+							}else if (list[i].part < 0) {
+								list[i].part = 0;
+								list[i].full = list[i].perMan - list[i].part;
+							}else{
+								list[i].full = list[i].perMan - list[i].part;
+								list[i].part = list[i].perMan - list[i].full;
+							}
+						}
+						this.sitelist = list;
 					}
 					
 				},
@@ -84,6 +175,30 @@ $(function (){
 						}else{
 							this.full_staff = this.depotAllPeople-val;
 						}
+					},
+					sitePeople:function  (val) {
+						var list = this.sitelist;
+						var len = list.length;
+						for (var i=0;i<len;i++) {
+							if (list[i].siteType == "depot") {
+								list[i].perMan =Math.ceil(Number(list[i].totalVol)/Number(val)) ;
+								list[i].full = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
+								list[i].part = 0;
+							}
+						}
+						this.sitelist = list;
+					},
+					collectPeople:function  (val) {
+						var list = this.sitelist;
+						var len = list.length;
+						for (var i=0;i<len;i++) {
+							if (list[i].siteType != "depot") {
+								list[i].perMan = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
+								list[i].full = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
+								list[i].part = 0;
+							}
+						}
+						this.sitelist = list;
 					}
 				},
 				computed:{
@@ -91,6 +206,9 @@ $(function (){
 						this.sum23();
 						this.sumG();
 						this.sumK();
+					},
+					b:function  () {
+						this.changStaff();
 					}
 				}
 				
@@ -102,24 +220,27 @@ $(function (){
 			var vmB = new Vue({
 				el:'#cost-form-b',
 				data:{
-					cseen:true,
-					sitePeople:'',
-					collectPeople:'',
-					depotcount:'',
-					depotPeoplecount:'',
-					depotAllPeople:'',
-					full_salaty:'',
-					full_days:'',
-					part_wage:'',
-					part_work:'',
-					day_p_cost:'',
-					day_allp_cost:'',
-					line_cost:'',
-					allcost:'',
-					full_staff:'',
-					part_staff:'',
+					serialSeen:false,//显示串点
+					relaySeen:false,//显示接力
+					mixedSeen:false,//显示综合
+					sitePeople:'',//网点 人效
+					collectPeople:'',//集散点人效
+					depotcount:'',//支线总数量
+					depotPeoplecount:'',//每条支线人数
+					depotAllPeople:'',//支线总人数
+					full_salaty:'',//月工资
+					full_days:'',//全职天数
+					part_wage:'',//兼职小时费用
+					part_work:'',//兼职时间
+					day_p_cost:'',//单日网点人工成本
+					day_p_dis_cost:'',//单日集散点人工成本
+					day_allp_cost:'',//单日每件人工成本
+					line_cost:'',//支线运输成本每件
+					allcost:'',//总成本每件
+					full_staff:'',//全职人数
+					part_staff:'',//兼职人数
 					piece:'',//总件数
-					branch_cost:""
+					sitelist:[]
 				},
 				methods:{
 					sum23:function (){ //单日人工总成本
@@ -138,6 +259,29 @@ $(function (){
 					},
 					sumK:function (){
 						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
+					},
+					changStaff:function () {
+						var list = this.sitelist;
+						var len = list.length;
+						for (var i=0;i<len;i++) {
+							if (list[i].full > list[i].perMan) {
+								list[i].full = list[i].perMan;
+								list[i].part = list[i].perMan - list[i].full;
+							}else if (list[i].full < 0) {
+								list[i].full = 0;
+								list[i].part = list[i].perMan - list[i].full;
+							}else if (list[i].part > list[i].perMan) {
+								list[i].part = list[i].perMan;
+								list[i].full = list[i].perMan - list[i].part;
+							}else if (list[i].part < 0) {
+								list[i].part = 0;
+								list[i].full = list[i].perMan - list[i].part;
+							}else{
+								list[i].full = list[i].perMan - list[i].part;
+								list[i].part = list[i].perMan - list[i].full;
+							}
+						}
+						this.sitelist = list;
 					}
 					
 				},
@@ -172,6 +316,30 @@ $(function (){
 						}else{
 							this.full_staff = this.depotAllPeople-val;
 						}
+					},
+					sitePeople:function  (val) {
+						var list = this.sitelist;
+						var len = list.length;
+						for (var i=0;i<len;i++) {
+							if (list[i].siteType == "depot") {
+								list[i].perMan =Math.ceil(Number(list[i].totalVol)/Number(val)) ;
+								list[i].full = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
+								list[i].part = 0;
+							}
+						}
+						this.sitelist = list;
+					},
+					collectPeople:function  (val) {
+						var list = this.sitelist;
+						var len = list.length;
+						for (var i=0;i<len;i++) {
+							if (list[i].siteType != "depot") {
+								list[i].perMan = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
+								list[i].full = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
+								list[i].part = 0;
+							}
+						}
+						this.sitelist = list;
 					}
 					
 				},
@@ -180,7 +348,11 @@ $(function (){
 						this.sum23();
 						this.sumG();
 						this.sumK();
+					},
+					b:function  () {
+						this.changStaff();
 					}
+					
 				}
 			
 			});
@@ -191,12 +363,13 @@ $(function (){
 				console.log(data)
 				var $res=data;
 				if (data.modelType == 1) {
+					vmA.serialSeen = true;
+					vmB.serialSeen = true;
 					$('#model-type').text("Serial Model");
 					if (data) {
 						$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
 							console.log(res.data)
 							if (res.data[0].distribPeopleWork == null) {
-								console.log(1)
 								var urlcost = "/costs/edit";
 								vmA.sitePeople = $res.sitePeopleWork;
 								vmA.collectPeople = $res.distribPeopleWork;
@@ -226,7 +399,6 @@ $(function (){
 								vmA.collectPeople = result.distribPeopleWork;
 								vmA.depotcount = result.siteCount;
 								vmA.piece = $res.totalPiece;
-								vmA.branch_cost = result.branchTransportCost;
 								vmA.depotPeoplecount = result.peopleNumPerSite;
 								vmA.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
 								setTimeout(function (){
@@ -248,7 +420,6 @@ $(function (){
 								vmB.collectPeople = result.distribPeopleWork;
 								vmB.depotcount = result.siteCount;
 								vmB.piece = $res.totalPiece;
-								vmB.branch_cost = result.branchTransportCost;
 								vmB.depotPeoplecount = result.peopleNumPerSite;
 								vmB.depotAllPeople = Number(result.peopleNumPerSite)*Number(result.siteCount);
 								setTimeout(function (){
@@ -265,52 +436,104 @@ $(function (){
 								vmB.allcost = result.totalCost;
 								
 							}
-							
-							
-							
-							//点击保存或者跟新数据  上
-							$('.cost-btn').click(function (){
-								var _val = $('#costs-choose').val();
-								//console.log(_val)
-								if (_val == "a") {
-									var data = $("#cost-form-a").serialize();
-								}else if(_val == "b"){
-									var data = $("#cost-form-b").serialize();
-								}
-								$.post(urlcost,data).done(function (res){
-									console.log(res);
-									if (res == "success") {
-										window.location.reload();
-									}
-								}).fail(function  () {
-									console.log("fail")
-								});
-							});
-							//点击保存或者跟新数据 下
-							$('.costs-btn').click(function (){
-								var _val = $('#costss-choose').val();
-								//console.log(_val)
-								if (_val == "a") {
-									var data = $("#cost-form-a").serialize();
-								}else if(_val == "b"){
-									var data = $("#cost-form-b").serialize();
-								}
-								$.post(urlcost,data).done(function (res){
-									console.log(res);
-									if (res == "success") {
-										window.location.reload();
-									}
-								}).fail(function  () {
-									console.log("fail")
-								});
-							});
-							
 						}).fail(function (){
 							console.log("fail");
 						})
 						
 					}
+				}else if (data.modelType == 2) {
+					vmA.relaySeen = true;
+					vmB.relaySeen = true;
+					$('#model-type').text("Relay Model");
+					$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
+						if (res.data[0].distribPeopleWork == null) {
+							var urlcost = "/costs/edit";
+							var _list =  relaylistInit($res.siteInfoList,$res.totalVolList);
+							var len = _list.length;
+							var count_s = $res.sitePeopleWork;
+							var count_d = $res.distribPeopleWork;
+							vmA.sitePeople = $res.sitePeopleWork;
+							vmA.collectPeople = $res.distribPeopleWork;
+							for (var i=0;i<len;i++) {
+								if (_list[i].siteType == "depot") {
+									var num = Number(_list[i].totalVol)/Number(count_s);
+									_list[i].perMan = Math.ceil(num);
+									_list[i].full = Math.ceil(num);
+									_list[i].part = 0;
+								}else{
+									var num = Number(_list[i].totalVol)/Number(count_d);
+									_list[i].perMan = Math.ceil(num);
+									_list[i].full = Math.ceil(num);
+									_list[i].part = 0;
+								}
+							}
+							vmA.piece = $res.totalPiece;
+							vmA.line_cost = Number($res.branchTransportCost).toFixed(2);
+							vmA.full_salaty = 6000;
+							vmA.full_days = 30;
+							vmA.part_wage = 20;
+							vmA.part_work = 2;
+							vmA.sitelist = _list;
+							
+							vmB.sitePeople = $res.sitePeopleWork;
+							vmB.collectPeople = $res.distribPeopleWork;
+							vmB.piece = $res.totalPiece;
+							vmB.line_cost = Number($res.branchTransportCost).toFixed(2);
+							vmB.full_salaty = 6000;
+							vmB.full_days = 30;
+							vmB.part_wage = 20;
+							vmB.part_work = 2;
+							vmB.sitelist = _list;
+							
+						}else{
+							var urlcost = "/costs/edit";
+							var _list =  relaylist($res.siteInfoList);
+							
+						}
+								
+							
+					}).fail(function  () {
+						console.log("fail");
+					});
 				}
+				
+				//点击保存或者跟新数据  上
+				$('.cost-btn').click(function (){
+					var _val = $('#costs-choose').val();
+					//console.log(_val)
+					if (_val == "a") {
+						var data = $("#cost-form-a").serialize();
+					}else if(_val == "b"){
+						var data = $("#cost-form-b").serialize();
+					}
+					$.post("/costs/edit",data).done(function (res){
+						console.log(res);
+						if (res == "success") {
+							window.location.reload();
+						}
+					}).fail(function  () {
+						console.log("fail")
+					});
+				});
+				//点击保存或者跟新数据 下
+				$('.costs-btn').click(function (){
+					var _val = $('#costss-choose').val();
+					//console.log(_val)
+					if (_val == "a") {
+						var data = $("#cost-form-a").serialize();
+					}else if(_val == "b"){
+						var data = $("#cost-form-b").serialize();
+					}
+					$.post("/costs/edit",data).done(function (res){
+						console.log(res);
+						if (res == "success") {
+							window.location.reload();
+						}
+					}).fail(function  () {
+						console.log("fail")
+					});
+				});
+				
 
 				
 				
