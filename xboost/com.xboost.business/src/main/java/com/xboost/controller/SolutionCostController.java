@@ -83,7 +83,19 @@ public class SolutionCostController {
      */
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
-    public String edit(HttpServletRequest request,Cost cost,List<SiteInfo> siteInfoList) {
+    public String edit(HttpServletRequest request,Cost cost) {
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        solutionCostService.editCost(scenariosId,cost);
+        return "success";
+    }
+
+    /**
+     * 编辑成本信息
+     * @return
+     */
+    @RequestMapping(value = "/editRelay ",method = RequestMethod.POST)
+    @ResponseBody
+    public String editRelay (HttpServletRequest request,Cost cost,List<SiteInfo> siteInfoList) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
         solutionCostService.editCost(scenariosId,cost);
         for(int i=0;i<siteInfoList.size();i++){
