@@ -45,34 +45,12 @@ public class RelayModeUtil extends Thread implements IConstants {
     public void run() throws RuntimeException{
         long starttime = DateTimeUtils.currentTimeMillis();
         logger.info("RelayMode init starttime:"+starttime);
-//        double[][] A2sss = new double[27216][];
-//        logger.info("RelayMode init"+A2sss);
-//        double[] dddd = {1.0,1.0,1.0};
-//        logger.info("spark.Matrix");
-//        org.apache.spark.mllib.linalg.Matrix mmm = new org.apache.spark.mllib.linalg.DenseMatrix(16333, 16333,dddd);
-//        logger.info("spark.Matrix");
-
-//        Matrix rrrr = DenseMatrix.Factory.zeros(12333, 12333);
-//        logger.info("16333"+ DateTimeUtils.currentTimeMillis());
-//        Matrix ww = DenseMatrix.Factory.zeros(16333, 16333);
-//        logger.info("16333"+ DateTimeUtils.currentTimeMillis());
         //params
         systemWebSocketHandler.sendMessageToUser( new TextMessage("params:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("1%"));
         logger.info("TimeLimit = 600");
         int TimeLimit = 6000;
         double MIPgap = 0.05;
-//        Configuration configuration = new Configuration();
-//        configuration.setOptimizeIterations(TimeLimit);
-
-        //mip
-//        mip<-Rglpk_solve_LP(obj=obj,mat=cons,dir=sense,rhs=rhs,max=FALSE,types=types)
-        //model
-//        cons = rbind(cbind(M11,M12,M13,M14,M15),cbind(M21,M22,M23,M24,M25),cbind(M31,M32,M33,M34,M35),cbind(M41,M42,M43,M44,M45),cbind(M51,M52,M53,M54,M55));
-//        obj<-c(rep(0,I), connection$cost_truck, connection$cost_bike,connection$cost_didi,connection$cost_data)
-//        rhs = c(rep(1,M),rep(0,J),outflow_lim,inflow_lim,didi_outflow_lim,didi_inflow_lim,0);
-//        types<-c(rep("B",I),rep("I",J*4))
-//        sense = c(rep("=",M),rep("<=",J),rep("<=",N*4*max(timebucket_num)),"=");
         int i=0,I=0,J=0,M=0,N=0;
         Map map = new HashMap<String,Object>();
         map.put("scenariosId", OpenScenariosId);
@@ -986,72 +964,16 @@ public class RelayModeUtil extends Thread implements IConstants {
             sense[M+J+n] ="<=".toCharArray()[0];
         }
         sense[i+1] ="=".toCharArray()[0];
-int tag = 0;
+        int tag = 0;
         logger.info("trag:"+tag++);
         logger.info("model");
-        logger.info("trag:"+tag++);
-
         logger.info("GRBEnv");
         logger.info("trag:"+tag++);
-//        try{
-//            GRBEnv    env   = new GRBEnv("mip1.log");
-//            GRBModel m = new GRBModel(env);
-//            double lb[] = new double[i];
-//            for(int q=0;q<lb.length;q++){
-//                lb[q]=0;
-//            }
-//            GRBVar[] vars = m.addVars(lb, null, null, types, null);
-////            cons
-//            for (int iw = 0; iw < cons.getRowCount(); iw++) {
-//                GRBLinExpr expr = new GRBLinExpr();
-//                for (int jw = 0; jw < cons.getColumnCount(); jw++)
-//                    if (cons.index(iw,jw) != 0) {
-//                        expr.addTerm(cons.index(iw,jw), vars[jw]);
-//                    }
-//                m.addConstr(expr, sense[iw], rhs[iw], "");
-//            }
-////            objn
-//            GRBLinExpr objn = new GRBLinExpr();
-//            for (int e = 0; e < obj.length; e++){
-//                objn.addConstant(obj[e]);
-//            }
-//            m.setObjective(objn);
-//            // Solve model
-//            m.optimize();
-//            // Extract solution
-//            boolean success = false;
-//            double[]   solution = new double[cons.getColumnCount()];
-//            logger.info("result:"+":"+GRB.Status.OPTIMAL);
-//            if (m.get(GRB.IntAttr.Status) == GRB.Status.OPTIMAL) {
-//                success = true;
-//                for (int j = 0; j < cons.getColumnCount(); j++){
-//                    solution[j] = vars[j].get(GRB.DoubleAttr.X);
-//                    logger.info("solution[j]"+j+":"+String.valueOf(solution[j]));
-//                    systemWebSocketHandler.sendMessageToUser(new TextMessage(String.valueOf(solution[j])));
-//                }
-//            }
-//            m.dispose();
-//            // Dispose of environment
-//            env.dispose();
-//            systemWebSocketHandler.sendMessageToUser( new TextMessage("100%"));
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
 //////////////////////////////////////////////////////////
         logger.info("////////////////////////////////////////////////////////////////");
-        logger.info("/////////////user time :"+(DateTimeUtils.currentTimeMillis()-starttime)+"////////////////////////////////////////////");
-
-//        double A222[][] = new double[(int)cons.getRowCount()][(int)cons.getRowCount()];
-//        for (int iw = 0; iw < cons.getRowCount(); iw++) {
-//            for (int jw = 0; jw < cons.getColumnCount(); jw++){
-//                A222[iw][jw] = cons.getAsDouble(iw,jw);
-//            }
-//        }
+        logger.info("/////////////user time :"+(DateTimeUtils.currentTimeMillis()-starttime)+"/////////////////////");
 
         try {
-            logger.info("trag:"+tag++);
-
             logger.info("trag:"+tag++);
 //            double c2[] = new double[] {1, 1, 0};
             double c2[] = new double[(int)cons.getColumnCount()];
@@ -1062,28 +984,15 @@ int tag = 0;
 //            double Q2[][] = new double[][] {{1, 1, 0}, {0, 1, 1}, {0, 0, 1}};
             double Q2[][] = null;
             logger.info("trag:"+tag++);
-//            double Q2[][] = new double[cons.getRowCount()][cons.getColumnCount()];
-//            logger.info("iw:"+cons.getRowCount()+";jw:"+cons.numCols());
-//            for (int iw = 0; iw < cons.getRowCount(); iw++) {
-//                for (int jw = 0; jw < cons.getColumnCount(); jw++)
-//                    Q2[iw][jw] = cons.index(iw,jw);
-//            }
-            ///////
 //            double A[][] = new double[][] {{1, 2, 3}, {1, 1, 0}};
             logger.info("cons.getRowCount():"+cons.getRowCount());
             logger.info("cons.getColumnCount():"+cons.getColumnCount());
             double A2[][] = new double[(int)cons.getRowCount()][(int)cons.getRowCount()];
-//            double A2[][] = new double[1065][1065];
             logger.info("iw:"+cons.getRowCount()+";jw:"+cons.getColumnCount());
-//            for (int iw = 0; iw < cons.getRowCount(); iw++) {
-//                for (int jw = 0; jw < cons.getColumnCount(); jw++){
-//                    A2[iw][jw] = cons.getAsDouble(iw,jw);
-//                }
-//            }
             for (int iw = 0; iw < cons.getRowCount(); iw++) {
                 for (int jw = 0; jw < cons.getRowCount(); jw++){
                     A2[iw][jw] = cons.getAsDouble(iw,jw);
-                    logger.info("trag:"+tag+++"-------A2[iw][jw]:"+A2[iw][jw]);
+//                    logger.info("trag:"+tag+++"-------A2[iw][jw]:"+A2[iw][jw]);
                 }
             }
             logger.info("-------trag:"+tag++);
@@ -1109,11 +1018,6 @@ int tag = 0;
                 lb2[q]=0;
             }
             logger.info("trag:"+tag++);
-//            double lb2[] = null;
-//            double ub2[] = new double[cons.getRowCount()];
-//            for(int q=0;q<ub2.length;q++){
-//                ub2[q]=0;
-//            }
             double ub2[] = null;
             boolean success;
             double sol2[] = new double[(int)cons.getColumnCount()];
@@ -1124,18 +1028,14 @@ int tag = 0;
             GRBEnv env2 = new GRBEnv();
             success = dense.dense_optimize(env2, (int)cons.getRowCount(), (int)cons.getColumnCount(), c2, Q2, A2, sense2, rhs2,
                     lb2, ub2, types, sol2);
-
             logger.info("trag:"+tag++);
             if (success) {
                 logger.info("success:");
                 System.out.println("x: " + sol2[0] + ", y: " + sol2[1] + ", z: " + sol2[2]);
                 double[] solution = sol2;
-                logger.info("trag:"+tag++);
+                for(int e=0;e<solution.length;e++)
+                    logger.info("solution:"+solution[e]);
                 makeResults(solution);
-//                double volume_to_ship = 0;
-//                for(int e=0;e<OD_demand_list.size();e++){
-//                    volume_to_ship += Double.parseDouble(OD_demand_list.get(e).get("volume").toString());
-//                }
                 logger.info("trag:"+tag++);
                 List<Map> route_opt = route_list;
                 for(int e=0;e<I;e++){
