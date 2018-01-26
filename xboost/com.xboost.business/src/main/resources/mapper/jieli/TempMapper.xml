@@ -97,19 +97,19 @@
 
     <select id="findAll07" resultType="map">
         select t1.*,
-        t2.网点名称 as point1_name,
-        t3.网点名称 as point2_name,
-        t4.网点名称 as point3_name,
-        t5.网点名称 as point4_name
+        t2.site_code as point1_name,
+        t3.site_code as point2_name,
+        t4.site_code as point3_name,
+        t5.site_code as point4_name
         from route_opt t1
-        left join jisan_candidates t2
-        on t1.point1=t2.depot_id
-        left join jisan_candidates t3
-        on t1.point2=t3.depot_id
-        left join jisan_candidates t4
-        on t1.point3=t4.depot_id
-        left join jisan_candidates t5
-        on t1.point4=t5.depot_id
+        left join t_site_info t2
+        on t1.point1=t2.site_code
+        left join t_site_info t3
+        on t1.point2=t3.site_code
+        left join t_site_info t4
+        on t1.point3=t4.site_code
+        left join t_site_info t5
+        on t1.point4=t5.site_code
     </select>
 
     <select id="findAll08" resultType="map">

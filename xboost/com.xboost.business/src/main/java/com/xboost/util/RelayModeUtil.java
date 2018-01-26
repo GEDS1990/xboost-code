@@ -170,6 +170,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                 temp_list.remove(e);
             }
         }
+
 //        temp_list = two_points_route_list;
         //three_points_route
         systemWebSocketHandler.sendMessageToUser( new TextMessage("three_points_route:"));
@@ -910,6 +911,14 @@ public class RelayModeUtil extends Thread implements IConstants {
         systemWebSocketHandler.sendMessageToUser( new TextMessage("99%"));
         List<SiteInfo> siteInfoList = siteInfoService.findAllSiteInfo(OpenScenariosId);
 
+
+//        # ### load jisan candidates ###
+//        colclass<-c("character","character","character","numeric","numeric","character","character","numeric","numeric","numeric","numeric")
+//        jisan_candidates<-read.xlsx("input/外环内资源点最新.xlsx",
+//                sheetIndex=2,encoding="UTF-8",colClasses=colclass)
+//        jisan_candidates<-jisan_candidates[1:78,]
+//        jisan_candidates$depot_id<-1:nrow(jisan_candidates)
+        List<SiteInfo> jisan_candidates = siteInfoList;
         double[] outflow_lim = new double[siteInfoList.size()];
         for(int iii=0;iii<outflow_lim.length;iii++){
             outflow_lim[iii] = Double.parseDouble(siteInfoList.get(iii).getMaxOperateNum());
