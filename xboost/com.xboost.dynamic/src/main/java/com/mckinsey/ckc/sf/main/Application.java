@@ -1,6 +1,7 @@
 package com.mckinsey.ckc.sf.main;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -60,9 +61,10 @@ public class Application {
 	}
 
 	@RequestMapping("/main")
-	public Map<String,Object> getMainResult() {
+	public List<Map<String,Object>> getMainResult() {
 	//	Main main = new Main();
-		Map<String,Object> result=Main.main();
+		List<Map<String,Object>> result=Main.main();
+	//	Map<String,Object> result=Main.main();
 		return result;
 	}
 
