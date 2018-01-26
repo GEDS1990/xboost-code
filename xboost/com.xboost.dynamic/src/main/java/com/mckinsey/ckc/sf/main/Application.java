@@ -61,10 +61,10 @@ public class Application {
 	}
 
 	@RequestMapping("/main")
-	public List<Map<String,Object>> getMainResult() {
+	public Map<String,Object> getMainResult() {
 	//	Main main = new Main();
-		List<Map<String,Object>> result=Main.main();
-	//	Map<String,Object> result=Main.main();
+	//	List<Map<String,Object>> result=Main.main();
+		Map<String,Object> result=Main.main();
 		return result;
 	}
 
