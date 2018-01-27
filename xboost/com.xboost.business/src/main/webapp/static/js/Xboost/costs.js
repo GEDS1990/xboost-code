@@ -560,7 +560,7 @@ $(function (){
             //导出excel表格
             $('.export-btn').click(function  () {
                 var _xls = $(this).attr('data-xls');
-                var planA = $("#cost-form-a").serialize();
+                var planA = $("#cost-form-a1").serialize();
                 var dataA = planA;
 
                 var planB = $("#cost-form-b").serializeArray();
@@ -574,16 +574,6 @@ $(function (){
                 console.log(dataB+dataA);
                 if (_xls) {
                     window.location.href="/costs/exportResult?"+dataB+dataA;
-                    // $.ajax({
-						// type: "GET",
-						// url: "/costs/exportResult",
-						// contentType: "text",
-                    //     data: planA,
-                    //     async: false,
-                    //     success:function(data){
-                    //
-                    //     },
-                    // })
                 }
                 $(".modal-header span").trigger('click');
             });
