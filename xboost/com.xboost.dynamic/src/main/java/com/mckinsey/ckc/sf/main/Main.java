@@ -606,47 +606,53 @@ public class Main implements IConstants {
 		}
 		return ResList1;
 	}
-	public static Map<String,Object> main() {
+	public static Map<String,Object> mainCalculate() {
 		Main main = new Main();
 		String[] tables = main.calculate();
-		List<Map> parcelList = queryParcel(tables[0]);
-		List<Map> carrierList = queryCarrier(tables[1]);
+		List<Map> carrierList = queryCarrier(tables[0]);
+		List<Map> parcelList = queryParcel(tables[1]);
 		Map<String,Object> result= Maps.newHashMap();
 		result.put("parcelList",parcelList);
 		result.put("carrierList",carrierList);
 
-
-//		Map<String,Object> result = Maps.newHashMap();
-//		Map<String,Object> resultMap = Maps.newHashMap();
-//		List<Map<String,Object>> resultList= new ArrayList<Map<String,Object>>();
-//
-//		// open for services
-//		for(Map.Entry<Integer, HashMap<Integer, MoveResponse>> response
-//				:responseList.entrySet()){
-//			int i=0;
-//			Map<String,Object> result = Maps.newHashMap();
-//			System.out.println("timeId: "+response.getKey());
-//			result.put("timeId",response.getKey());
-//
-//			HashMap<Integer,MoveResponse> temp = response.getValue();
-//			for(Map.Entry<Integer, MoveResponse> item : temp.entrySet()){
-//				System.out.println("carrierID: "+item.getKey());
-//				MoveResponse mv = item.getValue();
-//				System.out.println(mv.getNextLat()+"-"+mv.getNextLong());
-//				result.put("carrierID",item.getKey());
-//				result.put("point",mv.getNextLat()+"-"+mv.getNextLong());
-//			}
-//	//		resultMap.put(String.valueOf(i),result);
-//			resultList.add(result);
-//			i++;
-//		}
-//		try {
-//			JDBCConnection.getConnection().close();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-
 		return result;
+
+	}
+
+	public static List<Map<String,Object>> main() {
+		Main main = new Main();
+		main.calculate();
+
+		Map<String,Object> resultMap = Maps.newHashMap();
+		List<Map<String,Object>> resultList= new ArrayList<Map<String,Object>>();
+
+		// open for services
+		for(Map.Entry<Integer, HashMap<Integer, MoveResponse>> response
+				:responseList.entrySet()){
+			int i=0;
+			Map<String,Object> result = Maps.newHashMap();
+			System.out.println("timeId: "+response.getKey());
+			result.put("timeId",response.getKey());
+
+			HashMap<Integer,MoveResponse> temp = response.getValue();
+			for(Map.Entry<Integer, MoveResponse> item : temp.entrySet()){
+				System.out.println("carrierID: "+item.getKey());
+				MoveResponse mv = item.getValue();
+				System.out.println(mv.getNextLat()+"-"+mv.getNextLong());
+				result.put("carrierID",item.getKey());
+				result.put("point",mv.getNextLat()+"-"+mv.getNextLong());
+			}
+	//		resultMap.put(String.valueOf(i),result);
+			resultList.add(result);
+			i++;
+		}
+		try {
+			JDBCConnection.getConnection().close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return resultList;
 
 	}
 
