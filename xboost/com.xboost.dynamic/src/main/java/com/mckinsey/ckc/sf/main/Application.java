@@ -60,7 +60,7 @@ public class Application {
 		return new ResponseEntity<MoveResponse>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping("/mainCalculate")
+	@RequestMapping("/dynamic")
 	public Map<String,Object> getCalculateResult() {
 	//	Main main = new Main();
 	//	List<Map<String,Object>> result=Main.main();
