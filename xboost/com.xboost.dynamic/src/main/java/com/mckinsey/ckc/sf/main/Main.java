@@ -519,7 +519,7 @@ public class Main implements IConstants {
 		String sdt = df.format(new Date(System.currentTimeMillis()));
 		String tableName1 = db.insertDynamicOutputCarrierRecordToDB(recordsList,sdt);
 		String tableName2 = db.insertDynamicOutputParcelsToDB(sdt);
-		System.out.println("carriers table name" + tableName2);
+		System.out.println("carriers table name" + tableName1);
 		System.out.println("parcels table name" + tableName2);
 		return new String[]{tableName1,tableName2};
 	}
@@ -529,27 +529,28 @@ public class Main implements IConstants {
 	try {
 		Statement stmt = JDBCConnection.getConnection().createStatement();
 		String sql = "select * from "+tableName;
-
+		System.out.println(sql);
 		ResultSet rs = stmt.executeQuery(sql);
+		System.out.println("rs= "+rs);
 		while (rs.next()) {
 			Map m = new HashMap<String,String>();
 			m.put("parcelID",rs.getInt("parcelID"));
 			m.put("currentCarrierID",rs.getInt("currentCarrierID"));
-			m.put("parcelVolumn",rs.getInt("parcelVolumn"));
-			m.put("minTimeToDest",rs.getInt("minTimeToDest"));
+			m.put("parcelVolumn",rs.getDouble("parcelVolumn"));
+			m.put("minTimeToDest",rs.getDouble("minTimeToDest"));
 			m.put("timeId",rs.getInt("timeId"));
 			m.put("parcelDeliverStatus",rs.getInt("parcelDeliverStatus"));
 			m.put("deadline",rs.getInt("deadline"));
 			m.put("deliverTime",rs.getInt("deliverTime"));
 			m.put("pickupTime",rs.getInt("pickupTime"));
 			m.put("groupID",rs.getInt("groupID"));
-			m.put("parcelTheta",rs.getInt("parcelTheta"));
-			m.put("origLong",rs.getInt("origLong"));
-			m.put("origLat",rs.getInt("origLat"));
-			m.put("currentLong",rs.getInt("currentLong"));
-			m.put("currentLat",rs.getInt("currentLat"));
-			m.put("destLong",rs.getInt("destLong"));
-			m.put("destLat",rs.getInt("destLat"));
+			m.put("parcelTheta",rs.getDouble("parcelTheta"));
+			m.put("origLong",rs.getDouble("origLong"));
+			m.put("origLat",rs.getDouble("origLat"));
+			m.put("currentLong",rs.getDouble("currentLong"));
+			m.put("currentLat",rs.getDouble("currentLat"));
+			m.put("destLong",rs.getDouble("destLong"));
+			m.put("destLat",rs.getDouble("destLat"));
 
 			ResList1.add(m);
 		}
@@ -573,15 +574,28 @@ public class Main implements IConstants {
 				m.put("timeID",rs.getInt("timeID"));
 				m.put("carrierID",rs.getInt("carrierID"));
 				m.put("groupID",rs.getInt("groupID"));
-				m.put("distanceTraveled",rs.getInt("distanceTraveled"));
+				m.put("distanceTraveled",rs.getDouble("distanceTraveled"));
 				m.put("parcelType",rs.getInt("parcelType"));
-				m.put("parcelVolume",rs.getInt("parcelVolume"));
+				m.put("parcelVolume",rs.getDouble("parcelVolume"));
 				m.put("pickupCount",rs.getInt("pickupCount"));
 				m.put("dropoffCount",rs.getInt("dropoffCount"));
-				m.put("currentLong",rs.getInt("currentLong"));
-				m.put("currentLat",rs.getInt("currentLat"));
-				m.put("destLong",rs.getInt("destLong"));
-				m.put("destLat",rs.getInt("destLat"));
+				m.put("currentLong",rs.getDouble("currentLong"));
+				m.put("currentLat",rs.getDouble("currentLat"));
+				m.put("destLong",rs.getDouble("destLong"));
+				m.put("destLat",rs.getDouble("destLat"));
+
+//				m.put("timeID",rs.getInt("timeID"));
+//				m.put("carrierID",rs.getInt("carrierID"));
+//				m.put("groupID",rs.getInt("groupID"));
+//				m.put("distanceTraveled",rs.getDouble("distanceTraveled"));
+//				m.put("parcelType",rs.getInt("parcelType"));
+//				m.put("parcelVolume",rs.getDouble("parcelVolume"));
+//				m.put("pickupCount",rs.getInt("pickupCount"));
+//				m.put("dropoffCount",rs.getInt("dropoffCount"));
+//				m.put("currentLong",rs.getDouble("currentLong"));
+//				m.put("currentLat",rs.getDouble("currentLat"));
+//				m.put("destLong",rs.getDouble("destLong"));
+//				m.put("destLat",rs.getDouble("destLat"));
 
 				ResList1.add(m);
 			}
