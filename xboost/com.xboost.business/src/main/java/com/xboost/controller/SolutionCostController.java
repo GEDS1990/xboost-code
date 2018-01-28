@@ -3,6 +3,7 @@ package com.xboost.controller;
 import com.google.common.collect.Maps;
 import com.xboost.pojo.Cost;
 import com.xboost.pojo.ModelArg;
+import com.xboost.pojo.Route;
 import com.xboost.pojo.SiteInfo;
 import com.xboost.service.*;
 import com.xboost.util.ShiroUtil;
@@ -126,15 +127,52 @@ public class SolutionCostController {
         List<String> siteCodeList=solutionEfficiencyService.findAllSite(scenariosId);
         Map<String,Object> totalVolList=Maps.newHashMap();
         Map<String,Object> siteInfoList=Maps.newHashMap();
-        for(int i=0;i<siteCodeList.size();i++){
+        /*for(int i=0;i<siteCodeList.size();i++){
             SiteInfo siteInfo = siteInfoService.findSiteInfoBySiteCode(scenariosId, siteCodeList.get(i));
             String totalVol= solutionCostService.findTotalVol(scenariosId,siteCodeList.get(i));
             siteInfoList.put(siteCodeList.get(i),siteInfo);
             totalVolList.put(siteCodeList.get(i),totalVol);
-        }
+        }*/
         //支线总运输成本
       //  Double branchTransportCost = solutionCostService.branchTransportCost();
       //   String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
+
+        int periodTime = modelType.equals("1") ? 10 : 20;
+        int min = Integer.parseInt(demandInfoService.findMin(scenariosId));
+        int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
+        List<String> siteList = solutionEfficiencyService.findAllSite(scenariosId);
+
+        Map<String,Object> param2 = Maps.newHashMap();
+
+        List<Route> carList;
+
+        Integer sbVol;
+
+        Integer unloadVol;
+
+        for(int i=0;i<siteList.size();i++){
+            String site = siteList.get(i);
+            int deliverMaxNum = 0;
+            int receivingMaxNum = 0;
+            int maxNum = 0;
+
+            for(int j=0;j<(max-min)/periodTime;j++) {
+                param2.put("scenariosId",scenariosId);
+                param2.put("curLoc",site);
+                param2.put("min",min+(periodTime*j));
+                param2.put("periodTime",periodTime);
+
+                //发出票数
+                sbVol = (null == solutionEfficiencyService.findSbVol(param2)?0:solutionEfficiencyService.findSbVol(param2));
+                deliverMaxNum = deliverMaxNum > sbVol ? deliverMaxNum : sbVol;
+
+                //到达票数
+                unloadVol = (null == solutionEfficiencyService.findUnloadVol(param2)?0:solutionEfficiencyService.findUnloadVol(param2));
+                receivingMaxNum = receivingMaxNum > unloadVol ? receivingMaxNum : unloadVol;
+            }
+            maxNum = deliverMaxNum > receivingMaxNum ? deliverMaxNum : receivingMaxNum;
+            totalVolList.put(site, maxNum);
+        }
 
 
         result.put("data",costList);
@@ -212,7 +250,7 @@ public class SolutionCostController {
         planA.put("partTimeSalary", request.getParameter("partTimeSalary"));
         planA.put("partTimeWorkDay", request.getParameter("partTimeWorkDay"));
         planA.put("piece", request.getParameter("piece"));
-        planA.put("sum1", request.getParameter("sum1"));
+        planA.put("sum1", request.getParameter("sum2"));
         planA.put("totalDailyLaborCost", request.getParameter("totalDailyLaborCost"));
         planA.put("branchTransportCost", request.getParameter("branchTransportCost"));
         planA.put("totalCost", request.getParameter("totalCost"));
