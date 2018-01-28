@@ -99,7 +99,7 @@ public class SolutionCostController {
     public String editRelay (HttpServletRequest request,Cost cost,List<SiteInfo> siteInfoList) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
         solutionCostService.editCost(scenariosId,cost);
-        for(int i=0;i<siteInfoList.size();i++){
+        for(int i=0;i<siteInfoList.size();i++) {
             solutionCostService.editSiteInfo(ShiroUtil.getOpenScenariosId(),siteInfoList.get(i).getSiteCode());
         }
         return "success";
