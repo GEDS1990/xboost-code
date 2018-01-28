@@ -44,7 +44,7 @@ $(function (){
 						item.full = slist[i].fullTimeStaff1;
 						item.part = slist[i].partTimeStaff1;
 						item.perMan = 0;
-						item.totalVol = tlist[j].totalVol;
+						item.totalVol = Math.ceil(tlist[j].totalVol);
 						list.push(item);
 					}
 				}
