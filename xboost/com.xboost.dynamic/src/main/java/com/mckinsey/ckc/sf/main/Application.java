@@ -1,6 +1,7 @@
 package com.mckinsey.ckc.sf.main;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -59,12 +60,23 @@ public class Application {
 		return new ResponseEntity<MoveResponse>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping("/main")
-	public Map<String,Object> getMainResult() {
+	@RequestMapping("/main/dynamic")
+	public Map<String,Object> getCalculateResult() {
 	//	Main main = new Main();
-		Map<String,Object> result=Main.main();
+	//	List<Map<String,Object>> result=Main.main();
+		Map<String,Object> result=Main.mainCalculate();
 		return result;
 	}
+
+
+	@RequestMapping("/main")
+	public List<Map<String,Object>> getMainResult() {
+		//	Main main = new Main();
+		//	List<Map<String,Object>> result=Main.main();
+		List<Map<String,Object>> result=Main.main();
+		return result;
+	}
+
 
 
 

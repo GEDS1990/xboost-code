@@ -549,11 +549,11 @@ public class DataPreparation implements IConstants {
 	 * @param carrierRecordLists
 	 *            carrier record
 	 */
-	public void insertDynamicOutputCarrierRecordToDB(List<CarrierRecords> carrierRecordLists,String sdt) {
+	public String insertDynamicOutputCarrierRecordToDB(List<CarrierRecords> carrierRecordLists,String sdt) {
+		String tableName = "carrier_capacity_" + CARRIER_CAPACITY + "_N_carrier_" + N_CARRIER_RANGE + "_carrier_records_" + sdt;
 		try {
 			Statement stmt = JDBCConnection.getConnection().createStatement();
 
-			String tableName = "carrier_capacity_" + CARRIER_CAPACITY + "_N_carrier_" + N_CARRIER_RANGE + "_carrier_records_" + sdt;
 			String sql = "CREATE TABLE " + tableName + " " + "(timeID INTEGER, " + " carrierID INTEGER, " + " groupID INTEGER, " + " distanceTraveled DOUBLE, "
 			        + " parcelType INTEGER," + " parcelVolume DOUBLE, " + " pickupCount INTEGER," + " dropoffCount INTEGER," + " currentLong DOUBLE, " + " currentLat DOUBLE, "
 			        + " destLong DOUBLE, " + " destLat DOUBLE " + ")";
@@ -584,17 +584,19 @@ public class DataPreparation implements IConstants {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return tableName;
 	}
 	
 	
 	
-	public void insertDynamicOutputParcelsToDB(String sdt) {
+	public String insertDynamicOutputParcelsToDB(String sdt) {
+
+		String tableName = "carrier_capacity_" + CARRIER_CAPACITY + "_N_carrier_" + N_CARRIER_RANGE + "_parcel_records_" + sdt;
 		try {
 			Statement stmt = JDBCConnection.getConnection().createStatement();
 
 			// create a new table with current date time
-			String tableName = "carrier_capacity_" + CARRIER_CAPACITY + "_N_carrier_" + N_CARRIER_RANGE + "_parcel_records_" + sdt;
-				
+
 //			//for hub mode
 //			private int parcel_group_id ;
 //			private int origin_center_id ;
@@ -647,6 +649,7 @@ public class DataPreparation implements IConstants {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return tableName;
 	}
 
 //	public static void main(String args[]) {

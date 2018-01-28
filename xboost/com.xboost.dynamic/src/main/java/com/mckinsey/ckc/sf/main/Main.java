@@ -1,6 +1,8 @@
 package com.mckinsey.ckc.sf.main;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,12 +18,7 @@ import java.util.Set;
 import com.google.common.collect.Maps;
 import com.mckinsey.ckc.sf.connection.JDBCConnection;
 import com.mckinsey.ckc.sf.constants.IConstants;
-import com.mckinsey.ckc.sf.data.Carrier;
-import com.mckinsey.ckc.sf.data.CarrierRecords;
-import com.mckinsey.ckc.sf.data.Opportunity;
-import com.mckinsey.ckc.sf.data.Parcel;
-import com.mckinsey.ckc.sf.data.Points;
-import com.mckinsey.ckc.sf.data.Result;
+import com.mckinsey.ckc.sf.data.*;
 import com.mckinsey.ckc.sf.preparation.DataPreparation;
 import com.mckinsey.ckc.sf.restful.data.MoveResponse;
 import com.mckinsey.ckc.sf.utils.Tools;
@@ -36,7 +33,7 @@ public class Main implements IConstants {
 	public static double totalVolume = 0;
 	public static int MAX_ANGLE0 = 60;
 
-	public void calculate() {
+	public String[] calculate() {
 		// set seed for Java
 		Random rand = new Random();
 //		rand.setSeed(N_CARRIER_RANGE);
@@ -520,32 +517,134 @@ public class Main implements IConstants {
 		// create a new table with current date time
 		DateFormat df = new SimpleDateFormat("yyyyMMdd_HH_mm");
 		String sdt = df.format(new Date(System.currentTimeMillis()));
-		db.insertDynamicOutputCarrierRecordToDB(recordsList,sdt);
-		db.insertDynamicOutputParcelsToDB(sdt);
+		String tableName1 = db.insertDynamicOutputCarrierRecordToDB(recordsList,sdt);
+		String tableName2 = db.insertDynamicOutputParcelsToDB(sdt);
+		System.out.println("carriers table name" + tableName1);
+		System.out.println("parcels table name" + tableName2);
+		return new String[]{tableName1,tableName2};
+	}
+
+	public static List<Map> queryParcel(String tableName){
+	List<Map> ResList1= new ArrayList<Map>();
+	try {
+		Statement stmt = JDBCConnection.getConnection().createStatement();
+		String sql = "select * from "+tableName;
+		System.out.println(sql);
+		ResultSet rs = stmt.executeQuery(sql);
+		System.out.println("rs= "+rs);
+		while (rs.next()) {
+			Map m = new HashMap<String,String>();
+			m.put("parcelID",rs.getInt("parcelID"));
+			m.put("currentCarrierID",rs.getInt("currentCarrierID"));
+			m.put("parcelVolumn",rs.getDouble("parcelVolumn"));
+			m.put("minTimeToDest",rs.getDouble("minTimeToDest"));
+			m.put("timeId",rs.getInt("timeId"));
+			m.put("parcelDeliverStatus",rs.getInt("parcelDeliverStatus"));
+			m.put("deadline",rs.getInt("deadline"));
+			m.put("deliverTime",rs.getInt("deliverTime"));
+			m.put("pickupTime",rs.getInt("pickupTime"));
+			m.put("groupID",rs.getInt("groupID"));
+			m.put("parcelTheta",rs.getDouble("parcelTheta"));
+			m.put("origLong",rs.getDouble("origLong"));
+			m.put("origLat",rs.getDouble("origLat"));
+			m.put("currentLong",rs.getDouble("currentLong"));
+			m.put("currentLat",rs.getDouble("currentLat"));
+			m.put("destLong",rs.getDouble("destLong"));
+			m.put("destLat",rs.getDouble("destLat"));
+
+			ResList1.add(m);
+		}
+		rs.close();
+		stmt.close();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return ResList1;
+}
+
+	public static List<Map> queryCarrier(String tableName){
+		List<Map> ResList1= new ArrayList<Map>();
+		try {
+			Statement stmt = JDBCConnection.getConnection().createStatement();
+			String sql = "select * from "+tableName;
+
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Map m = new HashMap<String,String>();
+				m.put("timeID",rs.getInt("timeID"));
+				m.put("carrierID",rs.getInt("carrierID"));
+				m.put("groupID",rs.getInt("groupID"));
+				m.put("distanceTraveled",rs.getDouble("distanceTraveled"));
+				m.put("parcelType",rs.getInt("parcelType"));
+				m.put("parcelVolume",rs.getDouble("parcelVolume"));
+				m.put("pickupCount",rs.getInt("pickupCount"));
+				m.put("dropoffCount",rs.getInt("dropoffCount"));
+				m.put("currentLong",rs.getDouble("currentLong"));
+				m.put("currentLat",rs.getDouble("currentLat"));
+				m.put("destLong",rs.getDouble("destLong"));
+				m.put("destLat",rs.getDouble("destLat"));
+
+//				m.put("timeID",rs.getInt("timeID"));
+//				m.put("carrierID",rs.getInt("carrierID"));
+//				m.put("groupID",rs.getInt("groupID"));
+//				m.put("distanceTraveled",rs.getDouble("distanceTraveled"));
+//				m.put("parcelType",rs.getInt("parcelType"));
+//				m.put("parcelVolume",rs.getDouble("parcelVolume"));
+//				m.put("pickupCount",rs.getInt("pickupCount"));
+//				m.put("dropoffCount",rs.getInt("dropoffCount"));
+//				m.put("currentLong",rs.getDouble("currentLong"));
+//				m.put("currentLat",rs.getDouble("currentLat"));
+//				m.put("destLong",rs.getDouble("destLong"));
+//				m.put("destLat",rs.getDouble("destLat"));
+
+				ResList1.add(m);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ResList1;
+	}
+	public static Map<String,Object> mainCalculate() {
+		Main main = new Main();
+		String[] tables = main.calculate();
+		List<Map> carrierList = queryCarrier(tables[0]);
+		List<Map> parcelList = queryParcel(tables[1]);
+		Map<String,Object> result= Maps.newHashMap();
+		result.put("parcelList",parcelList);
+		result.put("carrierList",carrierList);
+
+		return result;
 
 	}
 
-	public static Map<String,Object> main() {
+	public static List<Map<String,Object>> main() {
 		Main main = new Main();
 		main.calculate();
 
-		Map<String,Object> result = Maps.newHashMap();
-		Map<String,Object> included = Maps.newHashMap();
+		Map<String,Object> resultMap = Maps.newHashMap();
+		List<Map<String,Object>> resultList= new ArrayList<Map<String,Object>>();
 
 		// open for services
 		for(Map.Entry<Integer, HashMap<Integer, MoveResponse>> response
 				:responseList.entrySet()){
+			int i=0;
+			Map<String,Object> result = Maps.newHashMap();
 			System.out.println("timeId: "+response.getKey());
-			result.put("timeId"+response.getKey(),response.getKey());
+			result.put("timeId",response.getKey());
 
 			HashMap<Integer,MoveResponse> temp = response.getValue();
 			for(Map.Entry<Integer, MoveResponse> item : temp.entrySet()){
 				System.out.println("carrierID: "+item.getKey());
 				MoveResponse mv = item.getValue();
 				System.out.println(mv.getNextLat()+"-"+mv.getNextLong());
-				included.put("carrierID"+item.getKey(),mv.getNextLat()+"-"+mv.getNextLong());
+				result.put("carrierID",item.getKey());
+				result.put("point",mv.getNextLat()+"-"+mv.getNextLong());
 			}
-			result.put("carrier"+response.getKey(),included);
+	//		resultMap.put(String.valueOf(i),result);
+			resultList.add(result);
+			i++;
 		}
 		try {
 			JDBCConnection.getConnection().close();
@@ -553,7 +652,7 @@ public class Main implements IConstants {
 			e.printStackTrace();
 		}
 
-		return result;
+		return resultList;
 
 	}
 
