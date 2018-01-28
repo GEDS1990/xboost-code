@@ -26,6 +26,42 @@ public class TempService {
         tempMapper.saveTemp(temp);
     }
 
+    public void saveRouteOpt(Map ro) {
+        tempMapper.saveRouteOpt(ro);
+    }
+
+    public void saveOD_demand(Map od) {
+        tempMapper.saveOD_demand(od);
+    }
+
+    public void savedistance_ref(Map dr) {
+        tempMapper.savedistance_ref(dr);
+    }
+
+    public void savetemp_list(Map tp) {
+        tempMapper.savetemp_list(tp);
+    }
+
+
+    public void delAllOD_demandByScenariosId(String OpenScenariosId) {
+        tempMapper.delAllOD_demandByScenariosId(OpenScenariosId);
+    }
+
+    public void delAlltemp_listByScenariosId(String OpenScenariosId) {
+        tempMapper.delAlltemp_listByScenariosId(OpenScenariosId);
+    }
+
+    public void delAlldistance_refByScenariosId(String OpenScenariosId) {
+        tempMapper.delAlldistance_refByScenariosId(OpenScenariosId);
+    }
+
+
+
+    @Cacheable
+    public List<Map> findthree_points_route(String scenariosId) {
+        return tempMapper.findthree_points_route(scenariosId);
+    }
+
     @Cacheable
     public List<Map> findAllTwoPointsRoute(String scenariosId) {
         return tempMapper.findAllTwoPointsRoute(scenariosId);

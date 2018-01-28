@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.TextMessage;
 
 import java.io.File;
+import java.sql.Statement;
 import java.util.*;
 import gurobi.*;
 import org.ujmp.core.Matrix;
@@ -54,81 +55,123 @@ public class RelayModeUtil extends Thread implements IConstants {
         int i=0,I=0,J=0,M=0,N=0;
         Map map = new HashMap<String,Object>();
         map.put("scenariosId", OpenScenariosId);
-        //obj
-        List<DemandInfo> flow_lim = demandInfoService.findByScenairoIdParam(map);
-        Map<String,Object> connection = new HashMap<String,Object>();
-
         logger.info("flow_lim");
         List<Map> distance_ref_list= new ArrayList<Map>();
         List<Map> two_points_route_list= new ArrayList<Map>();
+        List<DemandInfo> OD_demand_list_temp= new ArrayList<DemandInfo>();
         List<Map> OD_demand_list= new ArrayList<Map>();
         List<Map> three_points_route_list= new ArrayList<Map>();
         List<Map> four_points_route_list= new ArrayList<Map>();
         List<Map> temp_list= new ArrayList<Map>();
         List<Map> connection_temp_list= new ArrayList<Map>();
         List<Map> connection2_list= new ArrayList<Map>();
+        Map<String,Object> connection = new HashMap<String,Object>();
 
+        //obj
+//        List<DemandInfo> flow_lim = demandInfoService.findByScenairoIdParam(map);
+        List<SiteInfo> flow_lim = siteInfoService.findAllSiteInfo(OpenScenariosId);
+        double[] outflow_lim = new double[flow_lim.size()];
+        for(int e=0;e<flow_lim.size();e++){
+            outflow_lim[e]=5;
+        }
+        List<SiteInfo> didi_flow_lim = flow_lim;
+        double[] didi_outflow_lim = outflow_lim;
 
         logger.info("OD_demand");
         int[] scenario_lim1 = {1,1,1,1,1};
         int[] scenario_lim2 = {9,12,15,18,21};
-        for(int j=0;j<flow_lim.size();j++){
+
+        OD_demand_list_temp = demandInfoService.findByScenairoIdParam(map);
+        List<SiteDist> siteDistList = siteDistService.findSiteDistByScenariosId(map);
+        for(int j=0;j<OD_demand_list_temp.size();j++){
             Map<String,Object> OD_demand = new HashMap<String,Object>();
+            OD_demand.put("scenariosId",OpenScenariosId);
             OD_demand.put("OD_id",j+1);
-            OD_demand.put("volume",Double.parseDouble(flow_lim.get(j).getVotes())/0.8511);
-            OD_demand.put("inbound_id",flow_lim.get(j).getSiteCodeCollect());
-            OD_demand.put("outbound_id",flow_lim.get(j).getSiteCodeDelivery());
-            OD_demand.put("scenario",1);
-            OD_demand.put("scenario_lim1",1);
-            OD_demand.put("scenario_lim2",9);
-            OD_demand.put("kmh",speed2);
-            OD_demand.put("km",speed2);
-            OD_demand.put("minutes",Integer.parseInt(flow_lim.get(j).getDurationEnd())-Integer.parseInt(flow_lim.get(j).getDurationStart()));
-            OD_demand_list.add(OD_demand);
+            OD_demand.put("volume",Double.parseDouble(OD_demand_list_temp.get(j).getVotes())/0.8511);
+            for(int e=0;e<flow_lim.size();e++){
+                if(flow_lim.get(e).getSiteCode() .equals(OD_demand_list_temp.get(j).getSiteCodeCollect())){
+                    OD_demand.put("inbound_id",e+1);
+                    continue;
+                }
+                if(flow_lim.get(e).getSiteCode() .equals(OD_demand_list_temp.get(j).getSiteCodeDelivery())){
+                    OD_demand.put("outbound_id",e+1);
+                    continue;
+                }
+            }
+            for(int e=0;e<siteDistList.size();e++){
+                if(siteDistList.get(e).getSiteCollect() .equals(OD_demand_list_temp.get(j).getSiteCodeCollect())&&siteDistList.get(e).getSiteDelivery() .equals(OD_demand_list_temp.get(j).getSiteCodeDelivery())) {
+                    OD_demand.put("km",siteDistList.get(e).getCarDistance());
+                    int sce = 0;
+                    double dis = siteDistList.get(e).getCarDistance();
+                    if(dis<10){
+                        sce = 1;
+                    }else if(dis>=10&&dis<15){
+                        sce = 2;
+                    }else if(dis>=15&&dis<20){
+                        sce = 3;
+                    }else if(dis>=20&&dis<30){
+                        sce = 4;
+                    }else if(dis>=30){
+                        sce = 5;
+                    }
+                    OD_demand.put("scenario",sce);
+                    OD_demand.put("scenario_lim1",scenario_lim1[sce-1]);
+                    OD_demand.put("scenario_lim2",scenario_lim2[sce-1]);
+                    if(dis<=10){
+                        OD_demand.put("kmh",speed2);
+                    }else if(dis>10&&dis<=30){
+                        OD_demand.put("kmh",speed3);
+                    }else if(dis>30){
+                        OD_demand.put("kmh",speed4);
+                    }
+                    OD_demand.put("minutes",(Double.parseDouble(OD_demand.get("km").toString())/Double.parseDouble(OD_demand.get("kmh").toString()))*60);
+                }
+            }
+            OD_demand.put("minutes",Integer.parseInt(OD_demand_list_temp.get(j).getDurationEnd())-Integer.parseInt(OD_demand_list_temp.get(j).getDurationStart()));
+            if(!(Double.parseDouble(OD_demand.get("km").toString()) ==0.0)&&!OD_demand.get("inbound_id").equals(OD_demand.get("outbound_id")))
+                OD_demand_list.add(OD_demand);
         }
         //distance_ref
         systemWebSocketHandler.sendMessageToUser( new TextMessage("distance_ref:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("10%"));
-        List<SiteDist> siteDistList = siteDistService.findSiteDistByScenariosId(map);
         logger.info("siteDistList");
-        for(int j=0;j<siteDistList.size();j++){
+        for(int j=0;j<OD_demand_list.size();j++){
             Map<String,Object> distance_ref = new HashMap<String,Object>();
-//            logger.info("inbound_id："+siteDistList.get(j).getSiteCollect());
-            distance_ref.put("inbound_id",siteDistList.get(j).getSiteCollect());
-            distance_ref.put("outbound_id",siteDistList.get(j).getSiteDelivery());
-            distance_ref.put("km",siteDistList.get(j).getCarDistance());
-            distance_ref.put("minutes",siteDistList.get(j).getDurationNightDelivery());
-            distance_ref.put("time",siteDistList.get(j).getDurationNightDelivery());
+            distance_ref.put("scenariosId",OpenScenariosId);
+            distance_ref.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
+            distance_ref.put("outbound_id",OD_demand_list.get(j).get("outbound_id"));
+            distance_ref.put("km",OD_demand_list.get(j).get("km"));
+            distance_ref.put("minutes",OD_demand_list.get(j).get("minutes"));
             distance_ref.put("cross_river",0);
-            for(int j2=0;j2<OD_demand_list.size();j2++){
-                if(OD_demand_list.get(j2).get("inbound_id").equals(distance_ref.get("inbound_id"))&&OD_demand_list.get(j2).get("outbound_id").equals(distance_ref.get("outbound_id"))){
-                    distance_ref.put("OD_id",OD_demand_list.get(j2).get("OD_id"));
-                }else{
-                    distance_ref.put("OD_id",0);
-                }
-            }
+            distance_ref.put("OD_id",OD_demand_list.get(j).get("OD_id"));
             distance_ref_list.add(distance_ref);
         }
-//        for(int e=0;e<distance_ref_list.size();e++){
-//            logger.info(distance_ref_list.get(e).get("inbound_id").toString());
-//        }
+//        clean & save data
+        tempService.delAllOD_demandByScenariosId(OpenScenariosId);
+        tempService.delAlldistance_refByScenariosId(OpenScenariosId);
+        for(int e=0;e<OD_demand_list.size();e++){
+            tempService.saveOD_demand(OD_demand_list.get(e));
+        }
+        for(int e=0;e<distance_ref_list.size();e++){
+            tempService.savedistance_ref(distance_ref_list.get(e));
+        }
+
         //two_points_route
         systemWebSocketHandler.sendMessageToUser( new TextMessage("two_points_route:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("20%"));
 
         logger.info("two_points_route_list");
-        two_points_route_list = tempService.findAllTwoPointsRoute(OpenScenariosId);//size =8085
+        two_points_route_list = tempService.findAllTwoPointsRoute(OpenScenariosId);
         //temp
         systemWebSocketHandler.sendMessageToUser( new TextMessage("temp:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("30%"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting...."));
         for(int j=0;j<two_points_route_list.size();j++){
             for(int j2=0;j2<distance_ref_list.size();j2++){
-//                logger.info(j+":"+two_points_route_list.get(j).get("inbound_id")+":"+j2+":"+distance_ref_list.get(j2).get("inbound_id"));
-                boolean b = two_points_route_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
-                boolean b2 = two_points_route_list.get(j).get("inbound_id") == distance_ref_list.get(j2).get("inbound_id");
-                if(b||b2){
+                boolean b = two_points_route_list.get(j).get("point1").toString().equals(distance_ref_list.get(j2).get("inbound_id").toString());
+                if(b){
                     Map<String,Object> temp = new HashMap<String,Object>();
+                    temp.put("scenariosId",OpenScenariosId);
                     temp.put("m_od_id",two_points_route_list.get(j).get("m_od_id"));
                     temp.put("minutes",two_points_route_list.get(j).get("time"));
                     temp.put("i_route_id",two_points_route_list.get(j).get("inbound_id")+"-"+two_points_route_list.get(j).get("outbound_id"));
@@ -157,81 +200,119 @@ public class RelayModeUtil extends Thread implements IConstants {
                     temp.put("scenario_lim2",two_points_route_list.get(j).get("scenario_lim2"));
                     temp.put("wait_time",0);
                     temp_list.add(temp);
+                }else{
+                    Map<String,Object> temp = new HashMap<String,Object>();
+                    temp.put("scenariosId",OpenScenariosId);
+                    temp.put("m_od_id",two_points_route_list.get(j).get("m_od_id"));
+                    temp.put("minutes",two_points_route_list.get(j).get("time"));
+                    temp.put("i_route_id",two_points_route_list.get(j).get("inbound_id")+"-"+two_points_route_list.get(j).get("outbound_id"));
+                    temp.put("distance","");
+                    temp.put("km","");
+                    temp.put("time","");
+                    temp.put("demand",two_points_route_list.get(j).get("volume"));
+                    temp.put("point1",two_points_route_list.get(j).get("inbound_id"));
+                    temp.put("point2",0);
+                    temp.put("point3",0);
+                    temp.put("point4",two_points_route_list.get(j).get("outbound_id"));
+                    temp.put("outbound_id",two_points_route_list.get(j).get("outbound_id"));
+                    temp.put("inbound_id",two_points_route_list.get(j).get("inbound_id"));
+                    temp.put("connection1",two_points_route_list.get(j).get("inbound_id")+"-"+two_points_route_list.get(j).get("outbound_id"));
+                    temp.put("connection2","");
+                    temp.put("connection3","");
+                    temp.put("time1","");
+                    temp.put("time2",0);
+                    temp.put("time3",0);
+                    temp.put("dist1","");
+                    temp.put("dist2",0);
+                    temp.put("dist3",0);
+                    temp.put("timecost","");
+                    temp.put("scenario",two_points_route_list.get(j).get("scenario"));
+                    temp.put("scenario_lim1",two_points_route_list.get(j).get("scenario_lim1"));
+                    temp.put("scenario_lim2",two_points_route_list.get(j).get("scenario_lim2"));
+                    temp.put("wait_time",0);
+                    temp_list.add(temp);
                 }
             }
         }
-        try {
-            listSort(temp_list,"distance");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //        clean & save data
+        tempService.delAlltemp_listByScenariosId(OpenScenariosId);
         for(int e=0;e<temp_list.size();e++){
-            if(e>=5){
-                temp_list.remove(e);
-            }
+            tempService.savetemp_list(temp_list.get(e));
         }
+        three_points_route_list = tempService.findthree_points_route(OpenScenariosId);
+
+//        try {
+//            listSort(temp_list,"distance");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        for(int e=0;e<temp_list.size();e++){
+//            if(e>=5){
+//                temp_list.remove(e);
+//            }
+//        }
 
 //        temp_list = two_points_route_list;
         //three_points_route
         systemWebSocketHandler.sendMessageToUser( new TextMessage("three_points_route:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("35%"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("It may take some minutes , please waiting...."));
-        for(int j=0;j<temp_list.size();j++){
-            for(int j2=0;j2<distance_ref_list.size();j2++){
-                boolean b = temp_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
-                boolean bwhere1 = !temp_list.get(j).get("point1").equals(temp_list.get(j).get("outbound_id"));
-                boolean bwhere2 = !temp_list.get(j).get("point4").equals(temp_list.get(j).get("outbound_id"));
-                boolean bwhere3 = (Double.parseDouble(temp_list.get(j).get("minutes").toString())+
-                        Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString())<=190);
-                boolean bwhere4 = Double.parseDouble(temp_list.get(j).get("minutes").toString())+
-                        Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString())<=2*Double.parseDouble(temp_list.get(j2).get("time").toString());
-                if(!bwhere1&&bwhere2&&bwhere3&&bwhere4)
-                    continue;
-                boolean bon1 = temp_list.get(j).get("outbound_id").toString().equals(distance_ref_list.get(j2).get("inbound_id").toString());
-                boolean bon2 = temp_list.get(j).get("point4").toString().equals(distance_ref_list.get(j2).get("outbound_id").toString());
-                boolean bon = bon1&&bon2;
-                if(bon){
-                    Map<String,Object> three_points_route = new HashMap<String,Object>();
-                    three_points_route.put("m_od_id",temp_list.get(j).get("OD_id"));
-                    three_points_route.put("scenario",temp_list.get(j).get("scenario"));
-                    three_points_route.put("scenario_lim1",temp_list.get(j).get("scenario_lim1"));
-                    three_points_route.put("scenario_lim2",temp_list.get(j).get("scenario_lim2"));
-                    three_points_route.put("i_route_id",temp_list.get(j).get("point1")+"-"+temp_list.get(j).get("outbound_id")+"-"+temp_list.get(j).get("point4"));
-                    three_points_route.put("distance",Double.parseDouble(temp_list.get(j).get("km").toString())+Double.parseDouble(distance_ref_list.get(j2).get("km").toString()));
-                    three_points_route.put("time",Double.parseDouble(temp_list.get(j).get("minutes").toString())+Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString()));
-                    three_points_route.put("demand",temp_list.get(j).get("demand"));
-                    three_points_route.put("point1",temp_list.get(j).get("point1"));
-                    three_points_route.put("point2",temp_list.get(j).get("outbound_id"));
-                    three_points_route.put("point3",0);
-                    three_points_route.put("point4",temp_list.get(j).get("point4"));
-                    three_points_route.put("connection1",temp_list.get(j).get("point1")+"-"+temp_list.get(j).get("outbound_id"));
-                    three_points_route.put("connection2",temp_list.get(j).get("outbound_id")+"-"+temp_list.get(j).get("point4"));
-                    three_points_route.put("connection3","");
-                    three_points_route.put("time1",temp_list.get(j).get("minutes"));
-                    three_points_route.put("time2",distance_ref_list.get(j2).get("minutes"));
-                    three_points_route.put("time3",0);
-                    three_points_route.put("dist1",temp_list.get(j).get("km"));
-                    three_points_route.put("dist2",distance_ref_list.get(j2).get("km"));
-                    three_points_route.put("dist3",0);
-                    three_points_route.put("inbound_id",temp_list.get(j).get("inbound_id"));
-                    three_points_route.put("timecost",-Double.parseDouble(temp_list.get(j).get("minutes").toString())-
-                            Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString())-20);
-                    three_points_route.put("wait_time",20);
-                    three_points_route_list.add(three_points_route);
-                }
-            }
-        }
+//        for(int j=0;j<temp_list.size();j++){
+//            for(int j2=0;j2<distance_ref_list.size();j2++){
+//                boolean b = temp_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
+//                boolean bwhere1 = !temp_list.get(j).get("point1").equals(temp_list.get(j).get("outbound_id"));
+//                boolean bwhere2 = !temp_list.get(j).get("point4").equals(temp_list.get(j).get("outbound_id"));
+//                boolean bwhere3 = (Double.parseDouble(temp_list.get(j).get("minutes").toString())+
+//                        Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString())<=190);
+//                boolean bwhere4 = Double.parseDouble(temp_list.get(j).get("minutes").toString())+
+//                        Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString())<=2*Double.parseDouble(temp_list.get(j2).get("time").toString());
+//                if(!bwhere1&&bwhere2&&bwhere3&&bwhere4)
+//                    continue;
+//                boolean bon1 = temp_list.get(j).get("outbound_id").toString().equals(distance_ref_list.get(j2).get("inbound_id").toString());
+//                boolean bon2 = temp_list.get(j).get("point4").toString().equals(distance_ref_list.get(j2).get("outbound_id").toString());
+//                boolean bon = bon1&&bon2;
+//                if(bon){
+//                    Map<String,Object> three_points_route = new HashMap<String,Object>();
+//                    three_points_route.put("m_od_id",temp_list.get(j).get("OD_id"));
+//                    three_points_route.put("scenario",temp_list.get(j).get("scenario"));
+//                    three_points_route.put("scenario_lim1",temp_list.get(j).get("scenario_lim1"));
+//                    three_points_route.put("scenario_lim2",temp_list.get(j).get("scenario_lim2"));
+//                    three_points_route.put("i_route_id",temp_list.get(j).get("point1")+"-"+temp_list.get(j).get("outbound_id")+"-"+temp_list.get(j).get("point4"));
+//                    three_points_route.put("distance",Double.parseDouble(temp_list.get(j).get("km").toString())+Double.parseDouble(distance_ref_list.get(j2).get("km").toString()));
+//                    three_points_route.put("time",Double.parseDouble(temp_list.get(j).get("minutes").toString())+Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString()));
+//                    three_points_route.put("demand",temp_list.get(j).get("demand"));
+//                    three_points_route.put("point1",temp_list.get(j).get("point1"));
+//                    three_points_route.put("point2",temp_list.get(j).get("outbound_id"));
+//                    three_points_route.put("point3",0);
+//                    three_points_route.put("point4",temp_list.get(j).get("point4"));
+//                    three_points_route.put("connection1",temp_list.get(j).get("point1")+"-"+temp_list.get(j).get("outbound_id"));
+//                    three_points_route.put("connection2",temp_list.get(j).get("outbound_id")+"-"+temp_list.get(j).get("point4"));
+//                    three_points_route.put("connection3","");
+//                    three_points_route.put("time1",temp_list.get(j).get("minutes"));
+//                    three_points_route.put("time2",distance_ref_list.get(j2).get("minutes"));
+//                    three_points_route.put("time3",0);
+//                    three_points_route.put("dist1",temp_list.get(j).get("km"));
+//                    three_points_route.put("dist2",distance_ref_list.get(j2).get("km"));
+//                    three_points_route.put("dist3",0);
+//                    three_points_route.put("inbound_id",temp_list.get(j).get("inbound_id"));
+//                    three_points_route.put("timecost",-Double.parseDouble(temp_list.get(j).get("minutes").toString())-
+//                            Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString())-20);
+//                    three_points_route.put("wait_time",20);
+//                    three_points_route_list.add(three_points_route);
+//                }
+//            }
+//        }
 //        three_points_route_list = temp_list;
-        try {
-            listSort(three_points_route_list,"distance");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        for(int e=0;e<three_points_route_list.size();e++){
-            if(e>=5){
-                three_points_route_list.remove(e);
-            }
-        }
+//        try {
+//            listSort(three_points_route_list,"distance");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        for(int e=0;e<three_points_route_list.size();e++){
+//            if(e>=5){
+//                three_points_route_list.remove(e);
+//            }
+//        }
         //temp2
         systemWebSocketHandler.sendMessageToUser( new TextMessage("temp2:"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("40%"));
@@ -844,19 +925,19 @@ public class RelayModeUtil extends Thread implements IConstants {
 //        cons = M11;
         logger.info("connection_temp_list");
         for(int ci=0;ci<(connection_temp_list.size()<OD_demand_list.size()?connection_temp_list.size():OD_demand_list.size());ci++){
-            connection_temp_list.get(ci).put("kmh_didi",Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=10?Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed1:0+
-                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>10&&
-                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=30?
-                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed3:0+
-                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>=30?
-                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed4:0);
-            connection_temp_list.get(ci).put("kmh_truck",Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=10?Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed1:0+
-                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>10&&
-                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=30?
-                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed3:0+
-                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>=30?
-                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed4:0);
-            connection_temp_list.get(ci).put("kmh_bike",Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=10?Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed1:0);
+//            connection_temp_list.get(ci).put("kmh_didi",Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=10?Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed1:0+
+//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>10&&
+//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=30?
+//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed3:0+
+//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>=30?
+//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed4:0);
+//            connection_temp_list.get(ci).put("kmh_truck",Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=10?Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed1:0+
+//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>10&&
+//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=30?
+//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed3:0+
+//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>=30?
+//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed4:0);
+//            connection_temp_list.get(ci).put("kmh_bike",Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=10?Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed1:0);
             double min_didi_t = 0;
             min_didi_t = Double.parseDouble(connection_temp_list.get(ci).get("distance").toString())/
                     Double.parseDouble(connection_temp_list.get(ci).get("kmh_didi").toString())*60;
@@ -919,13 +1000,13 @@ public class RelayModeUtil extends Thread implements IConstants {
 //        jisan_candidates<-jisan_candidates[1:78,]
 //        jisan_candidates$depot_id<-1:nrow(jisan_candidates)
         List<SiteInfo> jisan_candidates = siteInfoList;
-        double[] outflow_lim = new double[siteInfoList.size()];
+//        double[] outflow_lim = new double[siteInfoList.size()];
         for(int iii=0;iii<outflow_lim.length;iii++){
             outflow_lim[iii] = Double.parseDouble(siteInfoList.get(iii).getMaxOperateNum());
         }
 //        double[] outflow_lim = res[1];;
         double[] inflow_lim = outflow_lim;
-        double[] didi_outflow_lim = outflow_lim;
+//        double[] didi_outflow_lim = outflow_lim;
         double[] didi_inflow_lim = didi_outflow_lim;
 
         double[] rhs = new double[M+J+1+outflow_lim.length*4];
@@ -1058,6 +1139,9 @@ public class RelayModeUtil extends Thread implements IConstants {
                 }
                 for(int e=0;e<I3;e++){
                     route_opt.get(e).put("route_type",3);
+                }
+                for(Map ro:route_opt){
+                    tempService.saveRouteOpt(ro);
                 }
                 logger.info("trag:"+tag++);
                 route_opt = tempService.findAll07(OpenScenariosId);
