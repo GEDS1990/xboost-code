@@ -89,10 +89,20 @@
 		    				<input type="number" id="sim-run-time" value="2" />
 		    				<p id="timelimit" class="sim-error">You must set the time limit</p>
 		    			</div>
-		    			<div class="clearfix sim-input">
+		    			<div class="clearfix sim-input sim-v-serial">
 		    				<p>No. of Loops (Model Optimization Loops):</p>
 		    				<input type="number" id="sim-run-count" value="" />
 		    				<p id="loopslimit" class="sim-error">You must set the loops limit</p>
+		    			</div>
+		    			<div class="clearfix sim-input sim-v-relay">
+		    				<p>No. of Time (Model Optimization Time):</p>
+		    				<input type="number" id="sim-run-t-limit" value="" /><span>(s)</span>
+		    				<p id="tlimit" class="sim-error">You must set the Time limit</p>
+		    			</div>
+		    			<div class="clearfix sim-input sim-v-relay">
+		    				<p>No. of Optimization (Model Optimization Percentage):</p>
+		    				<input type="number" id="sim-run-opt-limit" value="" /><span>(%)</span>
+		    				<p id="olimit" class="sim-error">You must set the Optimization limit</p>
 		    			</div>
 	    			</div>
 	    			

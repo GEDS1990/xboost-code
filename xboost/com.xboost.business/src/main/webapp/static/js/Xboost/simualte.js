@@ -11,16 +11,35 @@ $(function  () {
 	(function  () {
 		var simCheck = doc.getElementById("sim-check");
 		if (simCheck) {
+			//点击下来框确定模型需要什么参数
+			$("#sim-model").change(function  () {
+				var val = $(this).val();
+				if (val == 2) 
+				{
+					$('.sim-v-serial').hide();
+					$('.sim-v-relay').show();
+				}
+				else
+				{
+					$('.sim-v-serial').show();
+					$('.sim-v-relay').hide();
+				}
+			});
 			//点击校验
 			$("#sim-check").click(function  () {
 				var _val = $('#sim-model').val();
-				if (_val == 0) {
+				if (_val == 0) 
+				{
 					$('#sim-error-check').show();
 					return false;
-				}else{
+				}
+				else
+				{
 					$('#sim-error-check').hide();
 					$('#timelimit').hide();
 					$('#loopslimit').hide();
+					$('#tlimit').hide();
+					$('#olimit').hide();
 					$('#sim-error-run').hide();
 					//执行验证
 					if(typeof(WebSocket) == "undefined") {
@@ -67,30 +86,69 @@ $(function  () {
 				var runTime = $('#sim-run-time').val();
 				var runCount = $('#sim-run-count').val();
 				var runModel = $('#sim-model').val();
-				if (runModel == 0) {
+				var run_t_limit = $('#sim-run-t-limit').val();
+				var run_opt_limit = $("#sim-run-opt-limit").val();
+				if (runModel == 0) 
+				{
 					$('#sim-error-check').show();
 					$('#sim-model').focus();
 					return false;
 				}
-				if (runTime == "") {
-					$('#timelimit').show();
-					$('#sim-run-time').focus();
-					return false;
+				if (runModel == 1) 
+				{
+					if (runTime == "") 
+					{
+						$('#timelimit').show();
+						$('#sim-run-time').focus();
+						return false;
+					}
+					if (runCount == "") 
+					{
+						$('#loopslimit').show();
+						$('#sim-run-count').focus();
+						return false;
+					}
+					if (type == "" || type == "fail") 
+					{
+						$('#sim-error-run').show();
+					}
+					else if (type == "success")
+					{
+						$('#sim-error-check').hide();
+						$('#loopslimit').hide();
+						$('#timelimit').hide();
+						$('#sim-error-run').hide();
+						window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+runTime+"&loopLimit="+runCount;
+					}
 				}
-				if (runCount == "") {
-					$('#loopslimit').show();
-					$('#sim-run-count').focus();
-					return false;
-				}else{
-				}
-				if (type == "" || type == "fail") {
-					$('#sim-error-run').show();
-				}else if (type == "success"){
-					$('#sim-error-check').hide();
-					$('#loopslimit').hide();
-					$('#timelimit').hide();
-					$('#sim-error-run').hide();
-					window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+runTime+"&loopLimit="+runCount;
+				else if (runModel == 2)
+				{
+					if (run_t_limit == "") 
+					{
+						$('#tlimit').show();
+						$('#sim-run-t-limit').focus();
+						return false;
+					}
+					if (run_opt_limit == "") 
+					{
+						$('#olimit').show();
+						$('#sim-run-opt-limit').focus();
+						return false;
+					}
+					if (type == "" || type == "fail") 
+					{
+						$('#sim-error-run').show();
+					}
+					else if (type == "success")
+					{
+						$('#sim-error-check').hide();
+						$('#timelimit').hide();
+						$('#loopslimit').hide();
+						$('#tlimit').hide();
+						$('#olimit').hide();
+						$('#sim-error-run').hide();
+						window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+run_t_limit+"&loopLimit="+run_opt_limit;
+					}
 				}
 				
 			});
