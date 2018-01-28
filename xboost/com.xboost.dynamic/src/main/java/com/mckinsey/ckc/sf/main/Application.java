@@ -60,11 +60,18 @@ public class Application {
 		return new ResponseEntity<MoveResponse>(response, HttpStatus.OK);
 	}
 
+	@RequestMapping("/main/calculate")
+	public void calculate() {
+			Main main = new Main();
+		//	List<Map<String,Object>> result=Main.main();
+		main.calculate();
+	}
+
 	@RequestMapping("/main/dynamic")
 	public Map<String,Object> getCalculateResult() {
 	//	Main main = new Main();
 	//	List<Map<String,Object>> result=Main.main();
-		Map<String,Object> result=Main.mainCalculate();
+		Map<String,Object> result=Main.query();
 		return result;
 	}
 

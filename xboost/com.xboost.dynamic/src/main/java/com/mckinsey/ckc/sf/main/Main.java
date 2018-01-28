@@ -33,7 +33,7 @@ public class Main implements IConstants {
 	public static double totalVolume = 0;
 	public static int MAX_ANGLE0 = 60;
 
-	public String[] calculate() {
+	public void calculate() {
 		// set seed for Java
 		Random rand = new Random();
 //		rand.setSeed(N_CARRIER_RANGE);
@@ -521,7 +521,8 @@ public class Main implements IConstants {
 		String tableName2 = db.insertDynamicOutputParcelsToDB(sdt);
 		System.out.println("carriers table name" + tableName1);
 		System.out.println("parcels table name" + tableName2);
-		return new String[]{tableName1,tableName2};
+		db.saveTableName(tableName1,tableName2);
+;
 	}
 
 	public static List<Map> queryParcel(String tableName){
@@ -562,40 +563,27 @@ public class Main implements IConstants {
 	return ResList1;
 }
 
-	public static List<Map> queryCarrier(String tableName){
-		List<Map> ResList1= new ArrayList<Map>();
+	public static List<Map> queryCarrier(String tableName) {
+		List<Map> ResList1 = new ArrayList<Map>();
 		try {
 			Statement stmt = JDBCConnection.getConnection().createStatement();
-			String sql = "select * from "+tableName;
+			String sql = "select * from " + tableName;
 
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				Map m = new HashMap<String,String>();
-				m.put("timeID",rs.getInt("timeID"));
-				m.put("carrierID",rs.getInt("carrierID"));
-				m.put("groupID",rs.getInt("groupID"));
-				m.put("distanceTraveled",rs.getDouble("distanceTraveled"));
-				m.put("parcelType",rs.getInt("parcelType"));
-				m.put("parcelVolume",rs.getDouble("parcelVolume"));
-				m.put("pickupCount",rs.getInt("pickupCount"));
-				m.put("dropoffCount",rs.getInt("dropoffCount"));
-				m.put("currentLong",rs.getDouble("currentLong"));
-				m.put("currentLat",rs.getDouble("currentLat"));
-				m.put("destLong",rs.getDouble("destLong"));
-				m.put("destLat",rs.getDouble("destLat"));
-
-//				m.put("timeID",rs.getInt("timeID"));
-//				m.put("carrierID",rs.getInt("carrierID"));
-//				m.put("groupID",rs.getInt("groupID"));
-//				m.put("distanceTraveled",rs.getDouble("distanceTraveled"));
-//				m.put("parcelType",rs.getInt("parcelType"));
-//				m.put("parcelVolume",rs.getDouble("parcelVolume"));
-//				m.put("pickupCount",rs.getInt("pickupCount"));
-//				m.put("dropoffCount",rs.getInt("dropoffCount"));
-//				m.put("currentLong",rs.getDouble("currentLong"));
-//				m.put("currentLat",rs.getDouble("currentLat"));
-//				m.put("destLong",rs.getDouble("destLong"));
-//				m.put("destLat",rs.getDouble("destLat"));
+				Map m = new HashMap<String, String>();
+				m.put("timeID", rs.getInt("timeID"));
+				m.put("carrierID", rs.getInt("carrierID"));
+				m.put("groupID", rs.getInt("groupID"));
+				m.put("distanceTraveled", rs.getDouble("distanceTraveled"));
+				m.put("parcelType", rs.getInt("parcelType"));
+				m.put("parcelVolume", rs.getDouble("parcelVolume"));
+				m.put("pickupCount", rs.getInt("pickupCount"));
+				m.put("dropoffCount", rs.getInt("dropoffCount"));
+				m.put("currentLong", rs.getDouble("currentLong"));
+				m.put("currentLat", rs.getDouble("currentLat"));
+				m.put("destLong", rs.getDouble("destLong"));
+				m.put("destLat", rs.getDouble("destLat"));
 
 				ResList1.add(m);
 			}
@@ -606,9 +594,32 @@ public class Main implements IConstants {
 		}
 		return ResList1;
 	}
-	public static Map<String,Object> mainCalculate() {
+	public String[] queryTableName(){
+		List<Map> nameList1= new ArrayList<Map>();
+		String tableName1="";
+		String tableName2="";
+		try {
+			Statement stmt = JDBCConnection.getConnection().createStatement();
+			String sql = "select carrier_name,parcel_name from dynamic_table_name order by id desc limit 1";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Map m = new HashMap<String,String>();
+				tableName1=rs.getString("carrier_name");
+				tableName2=rs.getString("parcel_name");
+
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new String[]{tableName1,tableName2};
+	}
+
+	public static Map<String,Object> query() {
 		Main main = new Main();
-		String[] tables = main.calculate();
+		String[] tables = main.queryTableName();
 		List<Map> carrierList = queryCarrier(tables[0]);
 		List<Map> parcelList = queryParcel(tables[1]);
 		Map<String,Object> result= Maps.newHashMap();

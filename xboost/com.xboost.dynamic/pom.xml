@@ -121,7 +121,12 @@
 			<artifactId>guava</artifactId>
 			<version>RELEASE</version>
 		</dependency>
-		<!-- Hibernate library dependecy end -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+        <!-- Hibernate library dependecy end -->
 	</dependencies>
 
 	<build>
