@@ -74,7 +74,7 @@ $(function (){
 		var costs = doc.getElementById('costs');
 		if (costs) {
 			var vmA = new Vue({
-				el:'#cost-form-a1',
+				el:'#cost-form-a',
 				data:{
 					serialSeen:false,//显示串点
 					relaySeen:false,//显示接力
@@ -627,17 +627,20 @@ $(function (){
 				
 				//点击保存或者跟新数据  上
 				$('.cost-btn').click(function (){
-					console.log(vmA.sitelist)
 					var _val = $('#costs-choose').val();
 					if ($res.modelType == 1)
 					{
-						if (_val == "a") {
+						if (_val == "a") 
+						{
 							var data = $("#cost-form-a").serialize();
-						}else if(_val == "b"){
+							//console.log(data)
+						}
+						else if(_val == "b")
+						{
 							var data = $("#cost-form-b").serialize();
 						}
 						$.post("/costs/edit",data).done(function (res){
-							console.log(res);
+							//console.log(res);
 							if (res == "success") {
 								window.location.reload();
 							}
