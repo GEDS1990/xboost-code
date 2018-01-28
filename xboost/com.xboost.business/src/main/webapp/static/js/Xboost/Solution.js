@@ -259,7 +259,7 @@ $(function  () {
 			var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
 		}
 		
-		map.centerAndZoom(point, 14);
+		map.centerAndZoom(point, 13);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
@@ -354,7 +354,7 @@ $(function  () {
 			var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
 		}
 		
-		map.centerAndZoom(point, 14);
+		map.centerAndZoom(point, 13);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){

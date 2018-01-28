@@ -93,7 +93,7 @@ public class SolutionCostController {
      * 编辑成本信息
      * @return
      */
-    @RequestMapping(value = "/editRelay ",method = RequestMethod.POST)
+    @RequestMapping(value = "/editRelay",method = RequestMethod.POST)
     @ResponseBody
     public String editRelay (HttpServletRequest request,Cost cost,List<SiteInfo> siteInfoList) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
