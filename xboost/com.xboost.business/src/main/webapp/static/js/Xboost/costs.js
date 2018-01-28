@@ -44,7 +44,7 @@ $(function (){
 						item.full = slist[i].fullTimeStaff1;
 						item.part = slist[i].partTimeStaff1;
 						item.perMan = 0;
-						item.totalVol = tlist[j].totalVol*100;
+						item.totalVol = tlist[j].totalVol;
 						list.push(item);
 					}
 				}
@@ -273,7 +273,7 @@ $(function (){
 					full_days:'',//全职天数
 					part_wage:'',//兼职小时费用
 					part_work:'',//兼职时间
-					day_p_cost:'',//单日网点人工成本
+					day_p_cost:'',//支线depot单日人工成本
 					day_p_dis_cost:'',//单日集散点人工成本
 					day_allp_cost:'',//单日每件人工成本
 					line_cost:'',//支线运输成本每件
@@ -281,6 +281,7 @@ $(function (){
 					full_staff:'',//全职人数
 					part_staff:'',//兼职人数
 					piece:'',//总件数
+					sum3:"",//支线distrib.center单日人工成本
 					sitelist:[]
 				},
 				methods:{
@@ -293,16 +294,76 @@ $(function (){
 							r=0
 						}
 						this.day_p_cost = r;
-						
 					},
 					sumG:function (){
 						this.day_allp_cost = (this.day_p_cost/this.piece).toFixed(2);
 					},
 					sumK:function (){
 						this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
+					},
+					input_full:function  (e) {
+						var sum = e.perMan - e.full;
+						if (sum < 0) 
+						{
+							e.full = e.perMan;
+							e.part = 0;
+						}
+						else
+						{
+							e.part = sum;
+						}
+					},
+					input_part:function  (e) {
+						var sum = e.perMan - e.part;
+						if (sum < 0) 
+						{
+							e.part = e.perMan;
+							e.full = 0;
+						}
+						else
+						{
+							e.full = sum;
+						}
+					},
+					relaySum:function  () {
+						var list = this.sitelist,
+							len = list.length,
+							sum22 = "",
+							sum33 = "";
+						if (len != 0) {
+							for (var i=0;i<len;i++) {
+								var type = list[i].siteType;
+								if (type == "depot") 
+								{
+									var price_full = Math.round((list[i].full * this.full_salaty)/this.full_days);
+									var price_part = Math.round((list[i].part*this.part_wage*this.part_work));
+									sum22 =  Math.round(sum22)+Math.round(price_full + price_part) ;
+								}
+
+								else
+								{
+									var price_full = Math.round((list[i].full * this.full_salaty)/this.full_days);
+									var price_part = Math.round((list[i].part*this.part_wage*this.part_work));
+									sum33 =  Math.round(sum33)+Math.round(price_full + price_part) ;
+								}
+							}
+							console.log(sum22)
+							console.log(sum33)
+							this.day_p_cost = sum22;
+							sum33==""?this.sum3=0:this.sum3=sum33;
+							this.day_allp_cost = ((Number(this.day_p_cost)+Number(this.sum3))/this.piece).toFixed(2);
+							this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
+						}
+						
 					}
 					
 				},
+//				updated:function (){
+//					var self = this;
+//					this.$nextTick(function  () {
+//						self.relaySum();
+//					});
+//				},
 				watch:{
 					depotPeoplecount:function  (val) {
 						if (val == 0) {
@@ -322,6 +383,7 @@ $(function (){
 						}else{
 							this.part_staff = this.depotAllPeople-val;
 						}
+						
 						
 					},
 					part_staff:function (val){
@@ -359,18 +421,21 @@ $(function (){
 						}
 						this.sitelist = list;
 					}
-					
 				},
 				computed:{
 					a:function (){
-						this.sum23();
-						this.sumG();
-						this.sumK();
-					},
-					b:function  () {
-						this.changStaff();
+						if (this.serialSeen == true) 
+						{
+							this.sum23();
+							this.sumG();
+							this.sumK();
+						}
+						if (this.relaySeen == true)
+						{
+							this.relaySum();
+						}
+						
 					}
-					
 				}
 			
 			});
