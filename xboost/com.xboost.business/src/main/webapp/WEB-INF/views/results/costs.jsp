@@ -94,7 +94,7 @@
 	    		</div>
 	    		<div id="costs" class="result-cost clearfix">
 	    			<div class="result-cost-item itemstyle" >
-	    				<form id="cost-form-a1">
+	    				<form id="cost-form-a">
 	    					<input type="hidden" name="plan" value="A" />
 	    					<h1>Plan A</h1>
 		    				<div class="cost-item text-left">
@@ -114,7 +114,7 @@
 		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
 		    							<li>Total Staff: <span>{{depotAllPeople}}</span></li>
-										<input type="hidden" name="siteCount" v-bind:value="depotAllPeople" />
+										<input type="hidden"  v-bind:value="depotAllPeople" />
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
 		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
 		    						</ul>
@@ -127,7 +127,6 @@
 		    							<template v-else>
 		    								<li>No. of Staff per Dummy Hub Center: <span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}</span> ≈ <span>{{site.perMan}}</span>
 		    							</template>
-		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
 		    							<li>Total Staff: <span>{{site.perMan}}</span></li>
 		    							<li>Full-time Staff: <input type="number" data-name="fullTimeStaff" min="0" v-bind:data-total="site.perMan" v-model="site.full"  v-on:input="input_full(site)"/></li>
 		    							<li>Part-time Staff: <input type="number" data-name="partTimeStaff" min="0" v-bind:data-total="site.perMan" v-model="site.part"  v-on:input="input_part(site)"/></li>
@@ -163,7 +162,6 @@
 		    							<li>Staffing Cost per piece: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>Transportation Cost per piece: <span>{{line_cost}}</span> <span> (per piece)</span></li>
 		    							<input type="hidden" name="sum2" v-bind:value="day_p_cost"/>
-		    							<input type="hidden" name="piece" v-bind:value="piece"/>
 		    							<input type="hidden" name="totalDailyLaborCost" v-bind:value="day_allp_cost"/>
 		    							<input type="hidden" name="branchTransportCost" v-bind:value="line_cost"/>
 		    							<input type="hidden" name="totalCost" v-bind:value="allcost"/>
@@ -197,7 +195,7 @@
 		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
 		    							<li>Total Staff: <span>{{depotAllPeople}}</span></li>
-										<input type="hidden" name="siteCount" v-bind:value="depotAllPeople" />
+										<input type="hidden"  v-bind:value="depotAllPeople" />
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
 		    							<li>Part-time Staff: <input type="number" name="partTimeStaff" min="0" v-model="part_staff"/></li>
 		    						</ul>
@@ -210,7 +208,6 @@
 		    							<template v-else>
 		    								<li>No. of Staff per Dummy Hub Center: <span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}</span> ≈ <span>{{site.perMan}}</span>
 		    							</template>
-		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
 		    							<li>Total Staff: <span>{{site.perMan}}</span></li>
 		    							<li>Full-time Staff: <input type="number" data-name="fullTimeStaff" min="0" v-bind:data-total="site.perMan" v-model="site.full"  v-on:input="input_full(site)"/></li>
 		    							<li>Part-time Staff: <input type="number" data-name="partTimeStaff" min="0" v-bind:data-total="site.perMan" v-model="site.part"  v-on:input="input_part(site)"/></li>
@@ -246,7 +243,6 @@
 		    							<li>Staffing Cost per piece: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>Transportation Cost per piece: <span>{{line_cost}}</span> <span> (per piece)</span></li>
 		    							<input type="hidden" name="sum2" v-bind:value="day_p_cost"/>
-		    							<input type="hidden" name="piece" v-bind:value="piece"/>
 		    							<input type="hidden" name="totalDailyLaborCost" v-bind:value="day_allp_cost"/>
 		    							<input type="hidden" name="branchTransportCost" v-bind:value="line_cost"/>
 		    							<input type="hidden" name="totalCost" v-bind:value="allcost"/>
