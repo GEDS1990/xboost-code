@@ -662,7 +662,7 @@ public class DataPreparation implements IConstants {
 			String query = "insert into dynamic_table_name  (carrier_name,parcel_name,create_time)values('"
 					+ tableName1 + "','"
 					+ tableName2 + "','"
-					+ DateTime.now().toString("yyyy-MM-dd HH:mm") + "','"
+					+ DateTime.now().toString("yyyy-MM-dd HH:mm")
 					+ "')";
 			stmt.addBatch(query);
 			stmt.executeBatch();

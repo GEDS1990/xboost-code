@@ -61,10 +61,11 @@ public class Application {
 	}
 
 	@RequestMapping("/main/calculate")
-	public void calculate() {
-			Main main = new Main();
+	public String calculate() {
+		Main main = new Main();
 		//	List<Map<String,Object>> result=Main.main();
 		main.calculate();
+		return "calculate completed.";
 	}
 
 	@RequestMapping("/main/dynamic")

@@ -522,6 +522,7 @@ public class Main implements IConstants {
 		System.out.println("carriers table name" + tableName1);
 		System.out.println("parcels table name" + tableName2);
 		db.saveTableName(tableName1,tableName2);
+		System.out.println("calculate completed.");
 ;
 	}
 
@@ -623,8 +624,11 @@ public class Main implements IConstants {
 		List<Map> carrierList = queryCarrier(tables[0]);
 		List<Map> parcelList = queryParcel(tables[1]);
 		Map<String,Object> result= Maps.newHashMap();
+		System.out.println("query parcel data ....");
 		result.put("parcelList",parcelList);
+		System.out.println("query carrier data ....");
 		result.put("carrierList",carrierList);
+		System.out.println("query completed");
 
 		return result;
 
