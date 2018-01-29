@@ -60,18 +60,16 @@ public class Application {
 		return new ResponseEntity<MoveResponse>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping("/main/calculate")
+	@RequestMapping(value="/main/calculate",method = RequestMethod.POST)
 	public String calculate() {
 		Main main = new Main();
-		//	List<Map<String,Object>> result=Main.main();
-		main.calculate();
-		return "calculate completed.";
+		//main.calculate();
+		main.start();
+		return "success";
 	}
 
-	@RequestMapping("/main/dynamic")
+	@RequestMapping(value="/main/dynamic",method = RequestMethod.POST)
 	public Map<String,Object> getCalculateResult() {
-	//	Main main = new Main();
-	//	List<Map<String,Object>> result=Main.main();
 		Map<String,Object> result=Main.query();
 		return result;
 	}

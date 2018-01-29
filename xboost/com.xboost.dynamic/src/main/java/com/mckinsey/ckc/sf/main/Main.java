@@ -22,8 +22,9 @@ import com.mckinsey.ckc.sf.data.*;
 import com.mckinsey.ckc.sf.preparation.DataPreparation;
 import com.mckinsey.ckc.sf.restful.data.MoveResponse;
 import com.mckinsey.ckc.sf.utils.Tools;
+import org.apache.poi.ss.formula.functions.T;
 
-public class Main implements IConstants {
+public class Main extends Thread implements IConstants {
 
 	public static HashMap<Integer, Parcel> parcelMap = new HashMap<Integer, Parcel>();;
 	public static List<Parcel> deliverParcelMap;
@@ -32,6 +33,7 @@ public class Main implements IConstants {
 	public static HashMap<Integer, HashMap<Integer, MoveResponse>> responseList = new HashMap<Integer, HashMap<Integer, MoveResponse>>();
 	public static double totalVolume = 0;
 	public static int MAX_ANGLE0 = 60;
+
 
 	public void calculate() {
 		// set seed for Java
@@ -669,6 +671,11 @@ public class Main implements IConstants {
 
 		return resultList;
 
+	}
+
+	public void run(){
+		Main main =new Main();
+		main.calculate();
 	}
 
 //	public static void main(String[] args) {
