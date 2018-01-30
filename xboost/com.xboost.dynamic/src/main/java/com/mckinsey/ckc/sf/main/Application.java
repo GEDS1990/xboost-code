@@ -60,7 +60,7 @@ public class Application {
 		return new ResponseEntity<MoveResponse>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/main/calculate",method = RequestMethod.POST)
+	@RequestMapping(value="/main/calculate")
 	public String calculate() {
 		Main main = new Main();
 		//main.calculate();
@@ -68,9 +68,9 @@ public class Application {
 		return "success";
 	}
 
-	@RequestMapping(value="/main/dynamic",method = RequestMethod.POST)
-	public Map<String,Object> getCalculateResult() {
-		Map<String,Object> result=Main.query();
+	@RequestMapping(value="/main/dynamic")
+	public Map<String,Object> getCalculateResult(Integer timeId) {
+		Map<String,Object> result=Main.query(timeId);
 		return result;
 	}
 

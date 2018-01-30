@@ -528,11 +528,12 @@ public class Main extends Thread implements IConstants {
 ;
 	}
 
-	public static List<Map> queryParcel(String tableName){
+	public static List<Map> queryParcel(String tableName,Integer timeId){
 	List<Map> ResList1= new ArrayList<Map>();
 	try {
 		Statement stmt = JDBCConnection.getConnection().createStatement();
-		String sql = "select * from "+tableName;
+//		String timeIdInit="select min(timeId) from "+tableName;
+		String sql = "select * from "+tableName + " where timeId ="+timeId;
 		System.out.println(sql);
 		ResultSet rs = stmt.executeQuery(sql);
 		System.out.println("rs= "+rs);
@@ -566,11 +567,11 @@ public class Main extends Thread implements IConstants {
 	return ResList1;
 }
 
-	public static List<Map> queryCarrier(String tableName) {
+	public static List<Map> queryCarrier(String tableName,Integer timeId) {
 		List<Map> ResList1 = new ArrayList<Map>();
 		try {
 			Statement stmt = JDBCConnection.getConnection().createStatement();
-			String sql = "select * from " + tableName;
+			String sql = "select * from " + tableName +" where timeId =" +timeId;
 
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -620,11 +621,11 @@ public class Main extends Thread implements IConstants {
 		return new String[]{tableName1,tableName2};
 	}
 
-	public static Map<String,Object> query() {
+	public static Map<String,Object> query(Integer timeId) {
 		Main main = new Main();
 		String[] tables = main.queryTableName();
-		List<Map> carrierList = queryCarrier(tables[0]);
-		List<Map> parcelList = queryParcel(tables[1]);
+		List<Map> carrierList = queryCarrier(tables[0],timeId);
+		List<Map> parcelList = queryParcel(tables[1],timeId);
 		Map<String,Object> result= Maps.newHashMap();
 		System.out.println("query parcel data ....");
 		result.put("parcelList",parcelList);
