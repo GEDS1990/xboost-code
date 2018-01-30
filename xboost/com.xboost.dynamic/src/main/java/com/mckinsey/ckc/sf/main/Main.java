@@ -5,15 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import com.google.common.collect.Maps;
 import com.mckinsey.ckc.sf.connection.JDBCConnection;
@@ -676,9 +668,23 @@ public class Main extends Thread implements IConstants {
 
 	}
 
+
 	public void run(){
 		Main main =new Main();
 		main.calculate();
+	}
+
+	public void calculateTimer(){
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				System.out.println(new Date());
+				System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"：开始运行算法。。。。。");
+			//	Main main =new Main();
+			//	main.calculate();
+				System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"：算法运行结束！");
+			}
+		},30,10000);
 	}
 
 //	public static void main(String[] args) {
