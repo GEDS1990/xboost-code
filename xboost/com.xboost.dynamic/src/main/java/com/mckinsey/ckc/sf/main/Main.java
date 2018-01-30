@@ -536,7 +536,6 @@ public class Main extends Thread implements IConstants {
 		String sql = "select * from "+tableName + " where timeId ="+timeId;
 		System.out.println(sql);
 		ResultSet rs = stmt.executeQuery(sql);
-		System.out.println("rs= "+rs);
 		while (rs.next()) {
 			Map m = new HashMap<String,String>();
 			m.put("parcelID",rs.getInt("parcelID"));
@@ -572,6 +571,7 @@ public class Main extends Thread implements IConstants {
 		try {
 			Statement stmt = JDBCConnection.getConnection().createStatement();
 			String sql = "select * from " + tableName +" where timeId =" +timeId;
+			System.out.println(sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -624,6 +624,8 @@ public class Main extends Thread implements IConstants {
 	public static Map<String,Object> query(Integer timeId) {
 		Main main = new Main();
 		String[] tables = main.queryTableName();
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		System.out.println("timeId : "+timeId);
 		List<Map> carrierList = queryCarrier(tables[0],timeId);
 		List<Map> parcelList = queryParcel(tables[1],timeId);
 		Map<String,Object> result= Maps.newHashMap();
