@@ -34,7 +34,6 @@ public class RelayModeUtil extends Thread implements IConstants {
     public SiteInfoService siteInfoService;
     public String OpenScenariosId;
     private static Logger logger = LoggerFactory.getLogger(RelayModeUtil.class);
-
     public RelayModeUtil(TempService tempService, DemandInfoService demandInfoService, SiteDistService siteDistService, SiteInfoService siteInfoService){
         this.config = config;
         this.demandInfoService = demandInfoService;
@@ -43,1169 +42,1142 @@ public class RelayModeUtil extends Thread implements IConstants {
         this.siteInfoService = siteInfoService;
         this.OpenScenariosId = ShiroUtil.getOpenScenariosId();
     }
-    public void run() throws RuntimeException{
-        long starttime = DateTimeUtils.currentTimeMillis();
-        logger.info("RelayMode init starttime:"+starttime);
-        //params
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("params:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("1%"));
-        logger.info("TimeLimit = 600");
-        int TimeLimit = 6000;
-        double MIPgap = 0.05;
-        int i=0,I=0,J=0,M=0,N=0;
-        Map map = new HashMap<String,Object>();
-        map.put("scenariosId", OpenScenariosId);
-        logger.info("flow_lim");
-        List<Map> distance_ref_list= new ArrayList<Map>();
-        List<Map> two_points_route_list= new ArrayList<Map>();
-        List<DemandInfo> OD_demand_list_temp= new ArrayList<DemandInfo>();
-        List<Map> OD_demand_list= new ArrayList<Map>();
-        List<Map> three_points_route_list= new ArrayList<Map>();
-        List<Map> four_points_route_list= new ArrayList<Map>();
-        List<Map> temp_list= new ArrayList<Map>();
-        List<Map> connection_temp_list= new ArrayList<Map>();
-        List<Map> connection2_list= new ArrayList<Map>();
-        Map<String,Object> connection = new HashMap<String,Object>();
 
-        //obj
-//        List<DemandInfo> flow_lim = demandInfoService.findByScenairoIdParam(map);
-        List<SiteInfo> flow_lim = siteInfoService.findAllSiteInfo(OpenScenariosId);
-        double[] outflow_lim = new double[flow_lim.size()];
+    //global variables
+    List<Map> flow_lim;
+    List<SiteInfo> didi_flow_lim;
+    List<Map> OD_demand_list = new ArrayList<Map>();
+    List<Map> distance_ref_list = new ArrayList<Map>();
+    List<Map> jisan_candidates = new ArrayList<Map>();
+    List<Map> connection_volume = new ArrayList<Map>();
+    double[] outflow_lim;
+    double[] didi_outflow_lim;
+
+
+    List<Map> two_points_route_list = new ArrayList<Map>();
+    List<Map> three_points_route_list = new ArrayList<Map>();
+    List<Map> four_points_route_list = new ArrayList<Map>();
+    List<Map> route_four_point_list = new ArrayList<Map>();
+
+    List<Map> route_two_point_list = new ArrayList<Map>();
+    List<Map> route_three_point_list = new ArrayList<Map>();
+    int full_time = 210;
+    int route_time_unit = 10;
+    int[] timebucket_num;
+
+    List<Map> route_list = new ArrayList<>();
+    List<Map> connection_list = new ArrayList<>();
+
+    Matrix M11;
+    Matrix M12;
+    Matrix M13;
+    Matrix M14;
+    Matrix M15;
+
+    Matrix M21;
+    Matrix M22;
+    Matrix M23;
+    Matrix M24;
+    Matrix M25;
+
+    Matrix M31;
+    Matrix M32;
+    Matrix M33;
+    Matrix M34;
+    Matrix M35;
+
+    Matrix M41;
+    Matrix M42;
+    Matrix M43;
+    Matrix M44;
+    Matrix M45;
+
+    Matrix M51;
+    Matrix M52;
+    Matrix M53;
+    Matrix M54;
+    Matrix M55;
+
+    double truck_capacity = 400;
+    double dist_limit_bike = 5;
+    double dist_limit_dada = 10;
+    //init data
+    private void InitData(){
+        List<SiteInfo> SiteInfoAll = siteInfoService.findAllSiteInfo(OpenScenariosId);
+        flow_lim = tempService.findAllFlowLim(OpenScenariosId);
         for(int e=0;e<flow_lim.size();e++){
-            outflow_lim[e]=5;
+            String siteCode1 = flow_lim.get(e).get("网点ID").toString();
+            for(int s=0;s<SiteInfoAll.size();s++){
+                String siteCode2 = SiteInfoAll.get(s).getSiteCode();
+                if(siteCode1.equals(siteCode2)){
+                    flow_lim.get(e).put("集散点ID",s+1);
+                }
+            }
         }
-        List<SiteInfo> didi_flow_lim = flow_lim;
-        double[] didi_outflow_lim = outflow_lim;
-
-        logger.info("OD_demand");
-        int[] scenario_lim1 = {1,1,1,1,1};
-        int[] scenario_lim2 = {9,12,15,18,21};
-
-        OD_demand_list_temp = demandInfoService.findByScenairoIdParam(map);
-        List<SiteDist> siteDistList = siteDistService.findSiteDistByScenariosId(map);
-        for(int j=0;j<OD_demand_list_temp.size();j++){
-            Map<String,Object> OD_demand = new HashMap<String,Object>();
-            OD_demand.put("scenariosId",OpenScenariosId);
-            OD_demand.put("OD_id",j+1);
-            OD_demand.put("volume",Double.parseDouble(OD_demand_list_temp.get(j).getVotes())/0.8511);
+        List<Integer> outflow_lim = new ArrayList<Integer>();
+        for(int n=2;n<=22;n++){
             for(int e=0;e<flow_lim.size();e++){
-                if(flow_lim.get(e).getSiteCode() .equals(OD_demand_list_temp.get(j).getSiteCodeCollect())){
-                    OD_demand.put("inbound_id",e+1);
+                outflow_lim.add(Integer.parseInt(flow_lim.get(e).get("c"+n).toString()));
+            }
+        }
+
+/////////////// begin : jisan_candidates    SiteInfoAll
+
+        int siz = 1;
+        for(SiteInfo siteInfo:SiteInfoAll){
+            if(siz<79){
+                Map siteMap = new HashMap();
+                siteMap.put("类型",siteInfo.getSiteType());
+                siteMap.put("网点",siteInfo.getSiteCode());
+                siteMap.put("行政区","");
+                siteMap.put("经度",siteInfo.getSiteLongitude());
+                siteMap.put("纬度",siteInfo.getSiteLatitude());
+                siteMap.put("线环","");
+                siteMap.put("网点名称",siteInfo.getSiteName());
+                siteMap.put("四轮车流入上限",siteInfo.getNoOfTruckLimitation());
+                siteMap.put("两轮车流出上限",siteInfo.getNoOfBaiduLimitation());
+                siteMap.put("浦西","0");
+                siteMap.put("depot_id",siz);
+                jisan_candidates.add(siteMap);
+            }
+            siz++;
+
+        }
+
+        /////////////// end : jisan_candidates
+        ///
+        /////////////// begin : od_demand_list
+        Map dbmap = new HashMap<String, Object>();
+        dbmap.put("scenariosId", OpenScenariosId);
+
+        List<DemandInfo> OD_demand_list_temp = new ArrayList<DemandInfo>();
+        OD_demand_list_temp = demandInfoService.findByScenairoIdParam(dbmap);
+
+        List<SiteDist> siteDistList = siteDistService.findSiteDistByScenariosId(dbmap);
+
+        int idemand = 0;
+        int[] scenario_lim1 = {1, 1, 1, 1, 1};
+        int[] scenario_lim2 = {9, 12, 15, 18, 21};
+        for (DemandInfo dinfo:OD_demand_list_temp)
+        {
+            Map<String, Object> OD_demand = new HashMap<String, Object>();
+            OD_demand.put("scenariosId", OpenScenariosId);
+            OD_demand.put("OD_id", idemand + 1);
+            OD_demand.put("volume", Double.parseDouble(dinfo.getVotes()) / 0.8511);
+
+            for (int e = 0; e < SiteInfoAll.size(); e++) {
+                if (SiteInfoAll.get(e).getSiteCode().toString().equals(dinfo.getSiteCodeCollect().toString())) {
+                    OD_demand.put("inbound_id", e + 1);
                     continue;
                 }
-                if(flow_lim.get(e).getSiteCode() .equals(OD_demand_list_temp.get(j).getSiteCodeDelivery())){
-                    OD_demand.put("outbound_id",e+1);
+                if (SiteInfoAll.get(e).getSiteCode().toString().equals(dinfo.getSiteCodeDelivery().toString())) {
+                    OD_demand.put("outbound_id", e + 1);
                     continue;
                 }
             }
-            for(int e=0;e<siteDistList.size();e++){
-                if(siteDistList.get(e).getSiteCollect() .equals(OD_demand_list_temp.get(j).getSiteCodeCollect())&&siteDistList.get(e).getSiteDelivery() .equals(OD_demand_list_temp.get(j).getSiteCodeDelivery())) {
-                    OD_demand.put("km",siteDistList.get(e).getCarDistance());
+
+            for (int e = 0; e < siteDistList.size(); e++) {
+                if (siteDistList.get(e).getSiteCollect().toString().equals(dinfo.getSiteCodeCollect().toString()) &&
+                        siteDistList.get(e).getSiteDelivery().toString().equals(dinfo.getSiteCodeDelivery().toString())) {
+                    OD_demand.put("km", siteDistList.get(e).getCarDistance());
                     int sce = 0;
                     double dis = siteDistList.get(e).getCarDistance();
-                    if(dis<10){
+                    if (dis < 10) {
                         sce = 1;
-                    }else if(dis>=10&&dis<15){
+                    } else if (dis >= 10 && dis < 15) {
                         sce = 2;
-                    }else if(dis>=15&&dis<20){
+                    } else if (dis >= 15 && dis < 20) {
                         sce = 3;
-                    }else if(dis>=20&&dis<30){
+                    } else if (dis >= 20 && dis < 30) {
                         sce = 4;
-                    }else if(dis>=30){
+                    } else if (dis >= 30) {
                         sce = 5;
                     }
-                    OD_demand.put("scenario",sce);
-                    OD_demand.put("scenario_lim1",scenario_lim1[sce-1]);
-                    OD_demand.put("scenario_lim2",scenario_lim2[sce-1]);
-                    if(dis<=10){
-                        OD_demand.put("kmh",speed2);
-                    }else if(dis>10&&dis<=30){
-                        OD_demand.put("kmh",speed3);
-                    }else if(dis>30){
-                        OD_demand.put("kmh",speed4);
+                    OD_demand.put("scenario", sce);
+                    OD_demand.put("scenario_lim1", scenario_lim1[sce - 1]);
+                    OD_demand.put("scenario_lim2", scenario_lim2[sce - 1]);
+                    if (dis <= 10) {
+                        OD_demand.put("kmh", speed2);
+                    } else if (dis > 10 && dis <= 30) {
+                        OD_demand.put("kmh", speed3);
+                    } else if (dis > 30) {
+                        OD_demand.put("kmh", speed4);
                     }
-                    OD_demand.put("minutes",(Double.parseDouble(OD_demand.get("km").toString())/Double.parseDouble(OD_demand.get("kmh").toString()))*60);
+                    OD_demand.put("minutes", (Double.parseDouble(OD_demand.get("km").toString()) / Double.parseDouble(OD_demand.get("kmh").toString())) * 60);
                 }
             }
-            OD_demand.put("minutes",Integer.parseInt(OD_demand_list_temp.get(j).getDurationEnd())-Integer.parseInt(OD_demand_list_temp.get(j).getDurationStart()));
-            if(!(Double.parseDouble(OD_demand.get("km").toString()) ==0.0)&&!OD_demand.get("inbound_id").equals(OD_demand.get("outbound_id")))
+            if (!(Double.parseDouble(OD_demand.get("km").toString()) == 0.0) && !OD_demand.get("inbound_id").equals(OD_demand.get("outbound_id")))
+            {
                 OD_demand_list.add(OD_demand);
+                idemand++;
+            }
         }
-        //distance_ref
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("distance_ref:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("10%"));
-        logger.info("siteDistList");
-        for(int j=0;j<OD_demand_list.size();j++){
-            Map<String,Object> distance_ref = new HashMap<String,Object>();
-            distance_ref.put("scenariosId",OpenScenariosId);
-            distance_ref.put("inbound_id",OD_demand_list.get(j).get("inbound_id"));
-            distance_ref.put("outbound_id",OD_demand_list.get(j).get("outbound_id"));
-            distance_ref.put("km",OD_demand_list.get(j).get("km"));
-            distance_ref.put("minutes",OD_demand_list.get(j).get("minutes"));
-            distance_ref.put("cross_river",0);
-            distance_ref.put("OD_id",OD_demand_list.get(j).get("OD_id"));
+
+        //////////////////end : od_demand_list
+        for (int j = 0; j < OD_demand_list.size(); j++) {
+            Map<String, Object> distance_ref = new HashMap<String, Object>();
+            distance_ref.put("scenariosId", OpenScenariosId);
+            distance_ref.put("inbound_id", OD_demand_list.get(j).get("inbound_id"));
+            distance_ref.put("outbound_id", OD_demand_list.get(j).get("outbound_id"));
+            distance_ref.put("km", OD_demand_list.get(j).get("km"));
+            distance_ref.put("minutes", OD_demand_list.get(j).get("minutes"));
+            distance_ref.put("cross_river", 0);
+            distance_ref.put("OD_id", OD_demand_list.get(j).get("OD_id"));
             distance_ref_list.add(distance_ref);
         }
-//        clean & save data
-        tempService.delAllOD_demandByScenariosId(OpenScenariosId);
-        tempService.delAlldistance_refByScenariosId(OpenScenariosId);
-        for(int e=0;e<OD_demand_list.size();e++){
-            tempService.saveOD_demand(OD_demand_list.get(e));
-        }
-        for(int e=0;e<distance_ref_list.size();e++){
-            tempService.savedistance_ref(distance_ref_list.get(e));
-        }
 
-        //two_points_route
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("two_points_route:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("20%"));
+    }
 
-        logger.info("two_points_route_list");
-        two_points_route_list = tempService.findAllTwoPointsRoute(OpenScenariosId);
-        //temp
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("temp:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("30%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting...."));
-        for(int j=0;j<two_points_route_list.size();j++){
-            for(int j2=0;j2<distance_ref_list.size();j2++){
+    private void getTwoPointsRoute(){
+        for (int iDemand=0;iDemand<OD_demand_list.size();iDemand++)
+        {
+            Map OD_demand = OD_demand_list.get(iDemand);
+            for (int iDis=0;iDis<distance_ref_list.size();iDis++)
+            {
+
+                Map distance_ref = distance_ref_list.get(iDis);
+                if (OD_demand.get("inbound_id").toString().equals(distance_ref.get("inbound_id").toString()) &&
+                        OD_demand.get("outbound_id").toString().equals(distance_ref.get("outbound_id").toString()))
+                {
+                    Map<String,Object> newTPR = new HashMap<>();
+                    newTPR.put("m_od_id",OD_demand.get("OD_id"));
+                    newTPR.put("i_route_id",OD_demand.get("inbound_id").toString()+"-"+OD_demand.get("outbound_id").toString());
+                    newTPR.put("distance",distance_ref.get("km"));
+                    newTPR.put("time",distance_ref.get("minutes"));
+                    newTPR.put("demand",OD_demand.get("volume"));
+                    newTPR.put("point1",OD_demand.get("inbound_id"));
+                    newTPR.put("point2","0");
+                    newTPR.put("point3","0");
+                    newTPR.put("point4",OD_demand.get("outbound_id"));
+                    newTPR.put("connection1",OD_demand.get("inbound_id").toString()+"-"+OD_demand.get("outbound_id").toString());
+                    newTPR.put("connection2","");
+                    newTPR.put("connection3","");
+                    newTPR.put("time1",distance_ref.get("minutes"));
+                    newTPR.put("time2","0");
+                    newTPR.put("time3","0");
+                    newTPR.put("dist1",distance_ref.get("km"));
+                    newTPR.put("dist2","0");
+                    newTPR.put("dist2","0");
+                    newTPR.put("timecost","-"+distance_ref.get("minutes").toString());
+                    newTPR.put("scenario",OD_demand.get("scenario"));
+                    newTPR.put("scenario_lim1",OD_demand.get("scenario_lim1"));
+                    newTPR.put("scenario_lim2",OD_demand.get("scenario_lim2"));
+                    newTPR.put("wait_time","0");
+                    two_points_route_list.add(newTPR);
+                }
+            }
+
+        }
+    }
+
+    private void getThreePointsRoute(){
+        List<Map> temp_list = new ArrayList<Map>();
+        //merge temp_list
+        for (int j = 0; j < two_points_route_list.size(); j++) {
+            boolean exist = false;
+            for (int j2 = 0; j2 < distance_ref_list.size(); j2++) {
+
                 boolean b = two_points_route_list.get(j).get("point1").toString().equals(distance_ref_list.get(j2).get("inbound_id").toString());
-                if(b){
-                    Map<String,Object> temp = new HashMap<String,Object>();
-                    temp.put("scenariosId",OpenScenariosId);
-                    temp.put("m_od_id",two_points_route_list.get(j).get("m_od_id"));
-                    temp.put("minutes",two_points_route_list.get(j).get("time"));
-                    temp.put("i_route_id",two_points_route_list.get(j).get("inbound_id")+"-"+two_points_route_list.get(j).get("outbound_id"));
-                    temp.put("distance",distance_ref_list.get(j2).get("km"));
+                if (b) {
+                    exist = true;
+                    Map<String, Object> temp = new HashMap<String, Object>(two_points_route_list.get(j));
+                    temp.put("inbound_id", distance_ref_list.get(j2).get("inbound_id"));
+                    temp.put("outbound_id", distance_ref_list.get(j2).get("outbound_id"));
+                    temp.put("km", distance_ref_list.get(j2).get("km"));
+                    temp.put("minutes", distance_ref_list.get(j2).get("minutes"));
+                    temp.put("OD_id", distance_ref_list.get(j2).get("OD_id"));
+                    temp.put("cross_river", distance_ref_list.get(j2).get("cross_river"));
+
+                    temp_list.add(temp);
+                }
+            }
+            if (!exist) {
+                Map<String, Object> temp = new HashMap<String, Object>(two_points_route_list.get(j));
+                temp.put("inbound_id", "");
+                temp.put("outbound_id", "");
+                temp.put("km", "");
+                temp.put("minutes", "");
+                temp.put("OD_id", "");
+                temp.put("cross_river", "");
+                temp_list.add(temp);
+            }
+        }
+
+
+        for (int iDemand=0;iDemand<temp_list.size();iDemand++) {
+            Map OD_demand = temp_list.get(iDemand);
+            for (int iDis = 0; iDis < distance_ref_list.size(); iDis++) {
+
+                Map distance_ref = distance_ref_list.get(iDis);
+
+                if (OD_demand.get("outbound_id").toString().equals(distance_ref.get("inbound_id").toString()) &&
+                        OD_demand.get("point4").toString().equals(distance_ref.get("outbound_id").toString()) ) {
+                    double min1 = Double.parseDouble(OD_demand.get("minutes").toString());
+                    double min2 = Double.parseDouble(distance_ref.get("minutes").toString());
+                    double time1 = Double.parseDouble(OD_demand.get("time").toString());
+                    if ( (!OD_demand.get("point1").toString().equals(OD_demand.get("outbound_id").toString())) &&
+                            (!OD_demand.get("point4").toString().equals(OD_demand.get("outbound_id").toString())) &&
+                            min1+min2<=190 && min1+min2<=2*time1)
+                    {
+                        Map<String,Object> newTPR = new HashMap<>();
+                        newTPR.put("m_od_id",OD_demand.get("m_od_id"));
+                        newTPR.put("scenario",OD_demand.get("scenario"));
+                        newTPR.put("scenario_lim1",OD_demand.get("scenario_lim1"));
+                        newTPR.put("scenario_lim2",OD_demand.get("scenario_lim2"));
+                        newTPR.put("i_route_id",OD_demand.get("point1").toString()+"-"+OD_demand.get("outbound_id").toString()
+                                +"-"+OD_demand.get("point4").toString());
+
+                        double km1 = Double.parseDouble(OD_demand.get("km").toString());
+                        double km2 = Double.parseDouble(distance_ref.get("km").toString());
+
+                        newTPR.put("distance",km1+km2);
+
+                        newTPR.put("time",min1+min2);
+
+                        newTPR.put("demand",OD_demand.get("demand"));
+
+                        newTPR.put("point1",OD_demand.get("point1"));
+                        newTPR.put("point2",OD_demand.get("outbound_id"));
+                        newTPR.put("point3","0");
+                        newTPR.put("point4",OD_demand.get("point4"));
+
+                        newTPR.put("connection1",newTPR.get("point1").toString()+"-"+newTPR.get("point2").toString());
+                        newTPR.put("connection2",newTPR.get("point2").toString()+"-"+newTPR.get("point4").toString());
+                        newTPR.put("connection3","");
+
+                        newTPR.put("time1",OD_demand.get("minutes"));
+                        newTPR.put("time2",(int)Double.parseDouble(distance_ref.get("minutes").toString()));
+                        newTPR.put("time3",0);
+
+                        newTPR.put("dist1",OD_demand.get("km"));
+                        newTPR.put("dist2",(int)Double.parseDouble(distance_ref.get("km").toString()));
+                        newTPR.put("dist3",0);
+
+                        newTPR.put("timecost",-min1-min2-20);
+
+                        newTPR.put("wait_time","20");
+
+                        three_points_route_list.add(newTPR);
+
+                    }
+
+                }
+            }
+        }
+        three_points_route_list = getTopFiveByParamter(three_points_route_list,"distance");
+
+    }
+
+    private void getFourPointsRoute() {
+        List<Map> temp_list = new ArrayList<Map>();
+        //merge temp_list
+        for (int j = 0; j < three_points_route_list.size(); j++) {
+            boolean exist = false;
+            for (int j2 = 0; j2 < distance_ref_list.size(); j2++) {
+
+                boolean b = three_points_route_list.get(j).get("point2").toString().equals(distance_ref_list.get(j2).get("inbound_id").toString());
+                if (b) {
+                    exist = true;
+                    Map<String, Object> temp = new HashMap<String, Object>(three_points_route_list.get(j));
+                    temp.put("inbound_id",distance_ref_list.get(j2).get("inbound_id"));
+                    temp.put("outbound_id",distance_ref_list.get(j2).get("outbound_id"));
                     temp.put("km",distance_ref_list.get(j2).get("km"));
-                    temp.put("time",distance_ref_list.get(j2).get("minutes"));
-                    temp.put("demand",two_points_route_list.get(j).get("volume"));
-                    temp.put("point1",two_points_route_list.get(j).get("inbound_id"));
-                    temp.put("point2",0);
-                    temp.put("point3",0);
-                    temp.put("point4",two_points_route_list.get(j).get("outbound_id"));
-                    temp.put("outbound_id",two_points_route_list.get(j).get("outbound_id"));
-                    temp.put("inbound_id",two_points_route_list.get(j).get("inbound_id"));
-                    temp.put("connection1",two_points_route_list.get(j).get("inbound_id")+"-"+two_points_route_list.get(j).get("outbound_id"));
-                    temp.put("connection2","");
-                    temp.put("connection3","");
-                    temp.put("time1",distance_ref_list.get(j2).get("minutes"));
-                    temp.put("time2",0);
-                    temp.put("time3",0);
-                    temp.put("dist1",distance_ref_list.get(j2).get("km"));
-                    temp.put("dist2",0);
-                    temp.put("dist3",0);
-                    temp.put("timecost",-Integer.parseInt(distance_ref_list.get(j2).get("minutes").toString()));
-                    temp.put("scenario",two_points_route_list.get(j).get("scenario"));
-                    temp.put("scenario_lim1",two_points_route_list.get(j).get("scenario_lim1"));
-                    temp.put("scenario_lim2",two_points_route_list.get(j).get("scenario_lim2"));
-                    temp.put("wait_time",0);
-                    temp_list.add(temp);
-                }else{
-                    Map<String,Object> temp = new HashMap<String,Object>();
-                    temp.put("scenariosId",OpenScenariosId);
-                    temp.put("m_od_id",two_points_route_list.get(j).get("m_od_id"));
-                    temp.put("minutes",two_points_route_list.get(j).get("time"));
-                    temp.put("i_route_id",two_points_route_list.get(j).get("inbound_id")+"-"+two_points_route_list.get(j).get("outbound_id"));
-                    temp.put("distance","");
-                    temp.put("km","");
-                    temp.put("time","");
-                    temp.put("demand",two_points_route_list.get(j).get("volume"));
-                    temp.put("point1",two_points_route_list.get(j).get("inbound_id"));
-                    temp.put("point2",0);
-                    temp.put("point3",0);
-                    temp.put("point4",two_points_route_list.get(j).get("outbound_id"));
-                    temp.put("outbound_id",two_points_route_list.get(j).get("outbound_id"));
-                    temp.put("inbound_id",two_points_route_list.get(j).get("inbound_id"));
-                    temp.put("connection1",two_points_route_list.get(j).get("inbound_id")+"-"+two_points_route_list.get(j).get("outbound_id"));
-                    temp.put("connection2","");
-                    temp.put("connection3","");
-                    temp.put("time1","");
-                    temp.put("time2",0);
-                    temp.put("time3",0);
-                    temp.put("dist1","");
-                    temp.put("dist2",0);
-                    temp.put("dist3",0);
-                    temp.put("timecost","");
-                    temp.put("scenario",two_points_route_list.get(j).get("scenario"));
-                    temp.put("scenario_lim1",two_points_route_list.get(j).get("scenario_lim1"));
-                    temp.put("scenario_lim2",two_points_route_list.get(j).get("scenario_lim2"));
-                    temp.put("wait_time",0);
-                    temp_list.add(temp);
-                }
-            }
-        }
-        //        clean & save data
-        tempService.delAlltemp_listByScenariosId(OpenScenariosId);
-        for(int e=0;e<temp_list.size();e++){
-            tempService.savetemp_list(temp_list.get(e));
-        }
-        three_points_route_list = tempService.findthree_points_route(OpenScenariosId);
-
-//        try {
-//            listSort(temp_list,"distance");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        for(int e=0;e<temp_list.size();e++){
-//            if(e>=5){
-//                temp_list.remove(e);
-//            }
-//        }
-
-//        temp_list = two_points_route_list;
-        //three_points_route
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("three_points_route:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("35%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("It may take some minutes , please waiting...."));
-//        for(int j=0;j<temp_list.size();j++){
-//            for(int j2=0;j2<distance_ref_list.size();j2++){
-//                boolean b = temp_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
-//                boolean bwhere1 = !temp_list.get(j).get("point1").equals(temp_list.get(j).get("outbound_id"));
-//                boolean bwhere2 = !temp_list.get(j).get("point4").equals(temp_list.get(j).get("outbound_id"));
-//                boolean bwhere3 = (Double.parseDouble(temp_list.get(j).get("minutes").toString())+
-//                        Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString())<=190);
-//                boolean bwhere4 = Double.parseDouble(temp_list.get(j).get("minutes").toString())+
-//                        Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString())<=2*Double.parseDouble(temp_list.get(j2).get("time").toString());
-//                if(!bwhere1&&bwhere2&&bwhere3&&bwhere4)
-//                    continue;
-//                boolean bon1 = temp_list.get(j).get("outbound_id").toString().equals(distance_ref_list.get(j2).get("inbound_id").toString());
-//                boolean bon2 = temp_list.get(j).get("point4").toString().equals(distance_ref_list.get(j2).get("outbound_id").toString());
-//                boolean bon = bon1&&bon2;
-//                if(bon){
-//                    Map<String,Object> three_points_route = new HashMap<String,Object>();
-//                    three_points_route.put("m_od_id",temp_list.get(j).get("OD_id"));
-//                    three_points_route.put("scenario",temp_list.get(j).get("scenario"));
-//                    three_points_route.put("scenario_lim1",temp_list.get(j).get("scenario_lim1"));
-//                    three_points_route.put("scenario_lim2",temp_list.get(j).get("scenario_lim2"));
-//                    three_points_route.put("i_route_id",temp_list.get(j).get("point1")+"-"+temp_list.get(j).get("outbound_id")+"-"+temp_list.get(j).get("point4"));
-//                    three_points_route.put("distance",Double.parseDouble(temp_list.get(j).get("km").toString())+Double.parseDouble(distance_ref_list.get(j2).get("km").toString()));
-//                    three_points_route.put("time",Double.parseDouble(temp_list.get(j).get("minutes").toString())+Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString()));
-//                    three_points_route.put("demand",temp_list.get(j).get("demand"));
-//                    three_points_route.put("point1",temp_list.get(j).get("point1"));
-//                    three_points_route.put("point2",temp_list.get(j).get("outbound_id"));
-//                    three_points_route.put("point3",0);
-//                    three_points_route.put("point4",temp_list.get(j).get("point4"));
-//                    three_points_route.put("connection1",temp_list.get(j).get("point1")+"-"+temp_list.get(j).get("outbound_id"));
-//                    three_points_route.put("connection2",temp_list.get(j).get("outbound_id")+"-"+temp_list.get(j).get("point4"));
-//                    three_points_route.put("connection3","");
-//                    three_points_route.put("time1",temp_list.get(j).get("minutes"));
-//                    three_points_route.put("time2",distance_ref_list.get(j2).get("minutes"));
-//                    three_points_route.put("time3",0);
-//                    three_points_route.put("dist1",temp_list.get(j).get("km"));
-//                    three_points_route.put("dist2",distance_ref_list.get(j2).get("km"));
-//                    three_points_route.put("dist3",0);
-//                    three_points_route.put("inbound_id",temp_list.get(j).get("inbound_id"));
-//                    three_points_route.put("timecost",-Double.parseDouble(temp_list.get(j).get("minutes").toString())-
-//                            Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString())-20);
-//                    three_points_route.put("wait_time",20);
-//                    three_points_route_list.add(three_points_route);
-//                }
-//            }
-//        }
-//        three_points_route_list = temp_list;
-//        try {
-//            listSort(three_points_route_list,"distance");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        for(int e=0;e<three_points_route_list.size();e++){
-//            if(e>=5){
-//                three_points_route_list.remove(e);
-//            }
-//        }
-        //temp2
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("temp2:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("40%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting...."));
-        for(int j=0;j<three_points_route_list.size();j++){
-            for(int j2=0;j2<distance_ref_list.size();j2++){
-                boolean b = three_points_route_list.get(j).get("point2").equals(distance_ref_list.get(j2).get("point2"));
-                boolean b2 = three_points_route_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
-                if(b){
-                    Map<String,Object> temp = new HashMap<String,Object>();
-                    temp.put("m_od_id",three_points_route_list.get(j).get("OD_id"));
-                    temp.put("i_route_id",three_points_route_list.get(j).get("inbound_id")+"-"+three_points_route_list.get(j).get("outbound_id"));
-                    temp.put("distance",distance_ref_list.get(j2).get("km"));
-                    temp.put("time",distance_ref_list.get(j2).get("minutes"));
                     temp.put("minutes",distance_ref_list.get(j2).get("minutes"));
-                    temp.put("demand",three_points_route_list.get(j).get("volume"));
-                    temp.put("point1",three_points_route_list.get(j).get("inbound_id"));
-                    temp.put("point2",0);
-                    temp.put("point3",0);
-                    temp.put("point4",three_points_route_list.get(j).get("outbound_id"));
-                    temp.put("connection1",three_points_route_list.get(j).get("inbound_id")+"-"+three_points_route_list.get(j).get("outbound_id"));
-                    temp.put("connection2","");
-                    temp.put("connection3","");
-                    temp.put("time1",distance_ref_list.get(j2).get("minutes"));
-                    temp.put("time2",0);
-                    temp.put("time3",0);
-                    temp.put("dist1",distance_ref_list.get(j2).get("km"));
-                    temp.put("dist2",0);
-                    temp.put("dist3",0);
-                    temp.put("timecost",-Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString()));
-                    temp.put("scenario",three_points_route_list.get(j).get("scenario"));
-                    temp.put("scenario_lim1",three_points_route_list.get(j).get("scenario_lim1"));
-                    temp.put("scenario_lim2",three_points_route_list.get(j).get("scenario_lim2"));
-                    temp.put("wait_time",0);
+                    temp.put("OD_id",distance_ref_list.get(j2).get("OD_id"));
+                    temp.put("cross_river",distance_ref_list.get(j2).get("cross_river"));
+
                     temp_list.add(temp);
                 }
             }
+            if (!exist) {
+                Map<String, Object> temp = new HashMap<String, Object>(three_points_route_list.get(j));
+                temp.put("inbound_id","");
+                temp.put("outbound_id","");
+                temp.put("km","");
+                temp.put("minutes","");
+                temp.put("OD_id","");
+                temp.put("cross_river","");
+                temp_list.add(temp);
+            }
         }
-        //four_points_route
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("four_points_route:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("50%"));
-        for(int j=0;j<temp_list.size();j++){
-            for(int j2=0;j2<distance_ref_list.size();j2++){
-                boolean b = temp_list.get(j).get("inbound_id").equals(distance_ref_list.get(j2).get("inbound_id"));
-                boolean bwhere1 = !temp_list.get(j).get("point1").equals(temp_list.get(j).get("outbound_id"));
-                boolean bwhere11 = !temp_list.get(j).get("point2").equals(temp_list.get(j).get("outbound_id"));
-                boolean bwhere2 = !temp_list.get(j).get("point4").equals(temp_list.get(j).get("outbound_id"));
-                boolean bwhere3 = (Double.parseDouble(temp_list.get(j).get("time1").toString())+
-                        Double.parseDouble(temp_list.get(j).get("minutes").toString())+
-                        Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString())<=170);
-                boolean bwhere4 = Double.parseDouble(temp_list.get(j).get("time1").toString())+
-                        Double.parseDouble(temp_list.get(j).get("minutes").toString())+
-                        Double.parseDouble(distance_ref_list.get(j2).get("minutes").toString())<=2*Double.parseDouble(distance_ref_list.get(j2).get("time").toString());
-                if(!bwhere1&&bwhere11&&bwhere2&&bwhere3&&bwhere4)
-                    continue;
-                boolean bon1 = temp_list.get(j).get("outbound_id").toString()==
-                        distance_ref_list.get(j2).get("inbound_id").toString();
-                boolean bon2 = temp_list.get(j).get("point4").toString()==
-                        distance_ref_list.get(j2).get("outbound_id").toString();
-                boolean bon = bon1&&bon2;
-                if(bon){
-                    Map<String,Object> four_points_route = new HashMap<String,Object>();
-                    four_points_route.put("m_od_id",temp_list.get(j).get("OD_id"));
-                    four_points_route.put("scenario",temp_list.get(j).get("scenario"));
-                    four_points_route.put("scenario_lim1",temp_list.get(j).get("scenario_lim1"));
-                    four_points_route.put("scenario_lim2",temp_list.get(j).get("scenario_lim2"));
-                    four_points_route.put("i_route_id",temp_list.get(j).get("point1")+"-"+temp_list.get(j).get("point2")+"-"
-                            +temp_list.get(j).get("outbound_id")+"-"+temp_list.get(j).get("point4"));
-                    four_points_route.put("distance",Double.parseDouble(temp_list.get(j).get("dist1").toString())+Double.parseDouble(temp_list.get(j).get("km").toString())+
-                            Double.parseDouble(distance_ref_list.get(j).get("km").toString()));
-                    four_points_route.put("time",Double.parseDouble(temp_list.get(j).get("time1").toString())+Double.parseDouble(temp_list.get(j).get("minutes").toString())+
-                            Double.parseDouble(distance_ref_list.get(j).get("minutes").toString()));
-                    four_points_route.put("demand",temp_list.get(j).get("demand"));
-                    four_points_route.put("point1",temp_list.get(j).get("point1"));
-                    four_points_route.put("point2",temp_list.get(j).get("point2"));
-                    four_points_route.put("point3",temp_list.get(j).get("outbound_id"));
-                    four_points_route.put("point4",temp_list.get(j).get("point4"));
-                    four_points_route.put("connection1",temp_list.get(j).get("point1")+"-"+temp_list.get(j).get("point2"));
-                    four_points_route.put("connection2",temp_list.get(j).get("point2")+"-"+temp_list.get(j).get("outbound_id"));
-                    four_points_route.put("connection3",temp_list.get(j).get("outbound_id")+"-"+temp_list.get(j).get("point4"));
-                    four_points_route.put("time1",temp_list.get(j).get("time1"));
-                    four_points_route.put("time2",temp_list.get(j).get("minutes"));
-                    four_points_route.put("time3",distance_ref_list.get(j).get("minutes"));
-                    four_points_route.put("dist1",temp_list.get(j).get("dist1"));
-                    four_points_route.put("dist2",temp_list.get(j).get("km"));
-                    four_points_route.put("dist3",distance_ref_list.get(j).get("km"));
-                    four_points_route.put("timecost",-Double.parseDouble(temp_list.get(j).get("time1").toString())-
-                            Double.parseDouble(temp_list.get(j).get("minutes").toString())-
-                            Double.parseDouble(distance_ref_list.get(j).get("minutes").toString())-40);
-                    four_points_route.put("wait_time",40);
-                    four_points_route_list.add(four_points_route);
+
+
+        for (int iDemand=0;iDemand<temp_list.size();iDemand++) {
+            Map OD_demand = temp_list.get(iDemand);
+            for (int iDis = 0; iDis < distance_ref_list.size(); iDis++) {
+
+                Map distance_ref = distance_ref_list.get(iDis);
+
+                if (OD_demand.get("outbound_id").toString().equals(distance_ref.get("inbound_id").toString()) &&
+                        OD_demand.get("point4").toString().equals(distance_ref.get("outbound_id").toString()) ) {
+                    double min1 = Double.parseDouble(OD_demand.get("minutes").toString());
+                    double min2 = Double.parseDouble(distance_ref.get("minutes").toString());
+                    double time1 = Double.parseDouble(OD_demand.get("time1").toString());
+                    double time = Double.parseDouble(OD_demand.get("time").toString());
+                    if ( (!OD_demand.get("point1").toString().equals(OD_demand.get("outbound_id").toString())) &&
+                            (!OD_demand.get("point2").toString().equals(OD_demand.get("outbound_id").toString()))&&
+                            (!OD_demand.get("point4").toString().equals(OD_demand.get("outbound_id").toString())) &&
+                            time1+min1+min2<=170 && time1+min1+min2<=2*time)
+                    {
+                        Map<String,Object> newTPR = new HashMap<>();
+                        newTPR.put("m_od_id",OD_demand.get("m_od_id"));
+                        newTPR.put("scenario",OD_demand.get("scenario"));
+                        newTPR.put("scenario_lim1",OD_demand.get("scenario_lim1"));
+                        newTPR.put("scenario_lim2",OD_demand.get("scenario_lim2"));
+                        newTPR.put("i_route_id",OD_demand.get("point1").toString()+"-"+OD_demand.get("point2").toString()+"-"+
+                                OD_demand.get("outbound_id").toString()
+                                +"-"+OD_demand.get("point4").toString());
+
+                        double km1 = Double.parseDouble(OD_demand.get("km").toString());
+                        double km2 = Double.parseDouble(distance_ref.get("km").toString());
+                        double dist1 = Double.parseDouble(OD_demand.get("dist1").toString());
+
+                        newTPR.put("distance",km1+km2+dist1);
+
+                        newTPR.put("time",min1+min2+time1);
+
+                        newTPR.put("demand",OD_demand.get("demand"));
+
+                        newTPR.put("point1",OD_demand.get("point1"));
+                        newTPR.put("point2",OD_demand.get("point2"));
+                        newTPR.put("point3",OD_demand.get("outbound_id"));
+                        newTPR.put("point4",OD_demand.get("point4"));
+
+                        newTPR.put("connection1",newTPR.get("point1").toString()+"-"+newTPR.get("point2").toString());
+                        newTPR.put("connection2",newTPR.get("point2").toString()+"-"+newTPR.get("point3").toString());
+                        newTPR.put("connection3",newTPR.get("point3").toString()+"-"+newTPR.get("point4").toString());
+
+                        newTPR.put("time1",OD_demand.get("time1"));
+                        newTPR.put("time2",(int)Double.parseDouble(OD_demand.get("minutes").toString()));
+                        newTPR.put("time3",(int)Double.parseDouble(distance_ref.get("minutes").toString()));
+
+                        newTPR.put("dist1",OD_demand.get("dist1"));
+                        newTPR.put("dist2",(int)Double.parseDouble(OD_demand.get("km").toString()));
+                        newTPR.put("dist3",(int)Double.parseDouble(distance_ref.get("km").toString()));
+
+                        newTPR.put("timecost",-time1-min1-min2-40);
+
+                        newTPR.put("wait_time","40");
+
+                        four_points_route_list.add(newTPR);
+
+                    }
+
                 }
             }
         }
-//        four_points_route_list = temp_list;
+        four_points_route_list = getTopFiveByParamter(four_points_route_list,"distance");
+    }
+
+    private void getRouteTwoPoint()
+    {
+        int[] site1 = new int[full_time/route_time_unit];
+        timebucket_num = new int[full_time/route_time_unit];
+
+        for(int j=0;j<full_time/route_time_unit;j++){
+            site1[j] = j+1;
+            timebucket_num[j] = j+1;
+        }
+
+        for(int isite = 0;isite<site1.length;isite++)
+        {
+            for(int itpr=0;itpr<two_points_route_list.size();itpr++)
+            {
+                Map newRTP = new HashMap(two_points_route_list.get(itpr));
+                newRTP.put("time_id1",site1[isite]);
+                newRTP.put("timebucket_"+site1[isite],newRTP.get("connection1").toString()+"-t"+site1[isite]);
+                for(int ibucket = 0;ibucket<timebucket_num.length;ibucket++){
+                    if (timebucket_num[ibucket]!=site1[isite])
+                    {
+                        newRTP.put("timebucket_"+timebucket_num[ibucket],"");
+                    }
+                }
+                route_two_point_list.add(newRTP);
+            }
+        }
+//        route_two_point$ok<-route_two_point$scenario_lim2*route_time_unit-((route_two_point$time_id1-1)*route_time_unit+route_two_point$time1)
+//        route_two_point<-route_two_point[route_two_point$ok>=0,]
+        for(int e=0;e<route_two_point_list.size();e++){
+            Map crtp = route_two_point_list.get(e);
+            double okTemp = Double.parseDouble(crtp.get("scenario_lim2").toString())*route_time_unit
+                    -((Double.parseDouble(crtp.get("time_id1").toString())-1)*route_time_unit
+                    +Double.parseDouble(crtp.get("time1").toString()));
+
+            if (okTemp<0)
+            {
+                route_two_point_list.remove(e);
+                e--;
+            }
+            else
+            {
+                double val = Double.parseDouble(crtp.get("time_id1").toString()) - Double.parseDouble(crtp.get("scenario_lim1").toString());
+                if (val<0)
+                {
+                    route_two_point_list.remove(e);
+                    e--;
+                }
+                else
+                {
+                    crtp.remove("time_id1");
+                }
+            }
+
+        }
+    }
+
+    private void getRouteThreePoint()
+    {
+
+        int timeslots = full_time/route_time_unit;
+        int [][] site2 = new int[2][timeslots*(timeslots-1)/2];
+
+        int timeidx = 0;
+        for (int itime1=0;itime1<timeslots;itime1++)
+        {
+            for(int itime2 = itime1+1;itime2<timeslots;itime2++)
+            {
+                site2[0][timeidx] = itime1+1;
+                site2[1][timeidx] = itime2+1;
+                timeidx++;
+            }
+        }
+        //
+        for (int isite=0;isite<site2[0].length;isite++)
+        {
+            for (int itpr=0;itpr<three_points_route_list.size();itpr++)
+            {
+                Map newRTP = new HashMap(three_points_route_list.get(itpr));
+                newRTP.put("time_id1",site2[0][isite]);
+                newRTP.put("time_id2",site2[1][isite]);
+                for (int itime=0;itime<timeslots;itime++)
+                {
+                    newRTP.put("timebucket_"+(itime+1),"");
+                }
+                newRTP.put("timebucket_"+site2[0][isite],newRTP.get("connection1").toString()+"-t"+site2[0][isite]);
+                newRTP.put("timebucket_"+site2[1][isite],newRTP.get("connection2").toString()+"-t"+site2[1][isite]);
+                route_three_point_list.add(newRTP);
+            }
+        }
+        for (int irtp=0;irtp<route_three_point_list.size();irtp++)
+        {
+            Map rtp = route_three_point_list.get(irtp);
+            double value = Double.parseDouble(rtp.get("scenario_lim2").toString())*route_time_unit-
+                    ((Double.parseDouble(rtp.get("time_id2").toString())-1)*route_time_unit+Double.parseDouble(rtp.get("time2").toString()));
+
+            if (value<0)
+            {
+
+                route_three_point_list.remove(irtp);
+                irtp--;
+            }
+            else
+            {
+                value =Double.parseDouble(rtp.get("time_id1").toString())-Double.parseDouble(rtp.get("scenario_lim1").toString());
+                if (value<0)
+                {
+
+                    route_three_point_list.remove(irtp);
+                    irtp--;
+                }
+                else
+                {
+                    value = (Double.parseDouble(rtp.get("time_id2").toString()) - Double.parseDouble(rtp.get("time_id1").toString()))*
+                            route_time_unit - (Double.parseDouble(rtp.get("time1").toString())+20);
+                    if(value<0)
+                    {
+                        route_three_point_list.remove(irtp);
+                        irtp--;
+                    }
+                    else
+                    {
+                        rtp.remove("time_id1");
+                        rtp.remove("time_id2");
+                    }
+                }
+            }
+        }
+    }
+
+    private void getRouteFourPoint()
+    {
+        int timeslots = full_time/route_time_unit;
+        int [][] site3 = new int[3][timeslots*(timeslots-1)*(timeslots-2)/(2*3)];
+        int timeidx = 0;
+        for (int itime1=0;itime1<timeslots;itime1++)
+        {
+            for(int itime2 = itime1+1;itime2<timeslots;itime2++)
+            {
+                for(int itime3=itime2+1;itime3<timeslots;itime3++)
+                {
+                    site3[0][timeidx] = itime1+1;
+                    site3[1][timeidx] = itime2+1;
+                    site3[2][timeidx] = itime3+1;
+                    timeidx++;
+                }
+            }
+        }
+        int count1=0,count2=0,count3=0,count4=0;
+        for (int isite=0;isite<site3[0].length;isite++)
+        {
+            for (int ifpr=0;ifpr<four_points_route_list.size();ifpr++)
+            {
+                Map newRFP = new HashMap(four_points_route_list.get(ifpr));
+
+                newRFP.put("time_id1",site3[0][isite]);
+                newRFP.put("time_id2",site3[1][isite]);
+                newRFP.put("time_id3",site3[2][isite]);
+
+                for (int itime=0;itime<timeslots;itime++)
+                {
+                    newRFP.put("timebucket_"+(itime+1),"");
+                }
+                newRFP.put("timebucket_"+site3[0][isite],newRFP.get("connection1").toString()+"-t"+site3[0][isite]);
+                newRFP.put("timebucket_"+site3[1][isite],newRFP.get("connection2").toString()+"-t"+site3[1][isite]);
+                newRFP.put("timebucket_"+site3[2][isite],newRFP.get("connection3").toString()+"-t"+site3[2][isite]);
+
+                Map rfp = newRFP;
+                double value = Double.parseDouble(rfp.get("scenario_lim2").toString())*route_time_unit-
+                        ((Double.parseDouble(rfp.get("time_id3").toString())-1)*route_time_unit+Double.parseDouble(rfp.get("time3").toString()));
+                if(value>=0)
+                {
+                    value = Double.parseDouble(rfp.get("time_id1").toString())-Double.parseDouble(rfp.get("scenario_lim1").toString());
+                    count1++;
+                    if(value>=0)
+                    {
+                        value = (Double.parseDouble(rfp.get("time_id2").toString())-Double.parseDouble(rfp.get("time_id1").toString()))*
+                                route_time_unit-(Double.parseDouble(rfp.get("time1").toString())+20);
+                        count2++;
+                        if(value>=0)
+                        {
+                            value = (Double.parseDouble(rfp.get("time_id3").toString())-Double.parseDouble(rfp.get("time_id2").toString()))*
+                                    route_time_unit-(Double.parseDouble(rfp.get("time2").toString())+20);
+                            count3++;
+                            if(value>=0)
+                            {
+                                count4++;
+                                newRFP.remove("time_id1");
+                                newRFP.remove("time_id2");
+                                newRFP.remove("time_id3");
+                                route_four_point_list.add(newRFP);
+                            }
+                        }
+
+                    }
+                }
+
+
+            }
+        }
+
+    }
+
+    private void getConneciton()
+    {
+        for (int itime=0;itime<timebucket_num.length;itime++)
+        {
+            for (int idis=0;idis<distance_ref_list.size();idis++)
+            {
+                HashMap conn = new HashMap();
+                conn.put("time_id",timebucket_num[itime]);
+                conn.put("inbound_id",distance_ref_list.get(idis).get("inbound_id"));
+                conn.put("outbound_id",distance_ref_list.get(idis).get("outbound_id"));
+                conn.put("distance",distance_ref_list.get(idis).get("km"));
+                conn.put("cross_river",distance_ref_list.get(idis).get("cross_river"));
+                conn.put("minutes",distance_ref_list.get(idis).get("minutes"));
+                conn.put("connection",distance_ref_list.get(idis).get("inbound_id").toString()+"-"+
+                        distance_ref_list.get(idis).get("outbound_id").toString());
+
+                conn.put("timebucket",conn.get("connection").toString()+"-t"+
+                        timebucket_num[itime]);
+                conn.put("j_connection_id",connection_list.size());
+                connection_list.add(conn);
+            }
+        }
+    }
+    private void getM1X()
+    {
+        int M = two_points_route_list.size();
+        int J = distance_ref_list.size()*full_time/route_time_unit;
+
+        M11 = SparseMatrix.Factory.zeros(M, route_list.size());
+        M12 = SparseMatrix.Factory.zeros(M, J);
+        M13 = SparseMatrix.Factory.zeros(M, J);
+        M14 = SparseMatrix.Factory.zeros(M, J);
+        M15 = SparseMatrix.Factory.zeros(M, J);
+
+        for (int ir = 0;ir<route_list.size();ir++)
+        {
+            int ix = Integer.parseInt(route_list.get(ir).get("m_od_id").toString());
+            int iy = ir;
+            M11.setAsInt(1, ix, iy);
+        }
+    }
+
+    private void getM2X()
+    {
+        List<Integer> p = new ArrayList<Integer>();
+        List<Integer> q = new ArrayList<Integer>();
+        List<Double> v = new ArrayList<Double>();
+
+        for (int iroute=0;iroute<route_list.size();iroute++)
+        {
+            Map route = route_list.get(iroute);
+            List<Integer> ind = new ArrayList<>();
+
+            for (int icon=0;icon<connection_list.size();icon++)
+            {
+                String connection_timebucket = connection_list.get(icon).get("timebucket").toString();
+                for (int it=0;it<timebucket_num.length;it++)
+                {
+                    if (connection_timebucket.equals(route.get("timebucket_"+timebucket_num[it])))
+                    {
+                        //findidx.add(icon);
+                        ind.add(Integer.parseInt(connection_list.get(icon).get("j_connection_id").toString()));
+                        break;
+                    }
+                }
+            }
+
+            p.addAll(ind);
+            for (int iq=0;iq<ind.size();iq++)
+            {
+                q.add(iroute);
+                v.add(Double.parseDouble(route.get("demand").toString()));
+            }
+
+        }
+
+        int J = distance_ref_list.size()*full_time/route_time_unit;
+        int I = route_list.size();
+        M21 = SparseMatrix.Factory.zeros(J, I);
+
+        for (int ip = 0;ip<p.size();ip++)
+        {
+            int ix = p.get(ip);
+            int iy = q.get(ip);
+            M11.setAsDouble(v.get(ip), ix, iy);
+        }
+
+        M22 = SparseMatrix.Factory.zeros(J, J);
+        M23 = SparseMatrix.Factory.zeros(J, J);
+        M24 = SparseMatrix.Factory.zeros(J, J);
+        M25 = SparseMatrix.Factory.zeros(J, J);
+        for (int ij=0;ij<J;ij++)
+        {
+            M22.setAsDouble(-truck_capacity,ij,ij);
+            M23.setAsDouble(-truck_capacity,ij,ij);
+            M24.setAsDouble(-truck_capacity,ij,ij);
+            M25.setAsDouble(-truck_capacity,ij,ij);
+        }
+
+        logger.info("m2x");
+    }
+
+    private void getM3X()
+    {
+        List<Map> connection_list2 = new ArrayList<>();
+        for (int i=0;i<connection_list.size();i++)
+        {
+            Map nCon = new HashMap<>(connection_list.get(i));
+            for (int j=0;j<flow_lim.size();j++)
+            {
+                String in_id = nCon.get("inbound_id").toString();
+                String out_id = nCon.get("outbound_id").toString();
+
+                if (in_id.equals(flow_lim.get(j).get("集散点ID").toString()))
+                {
+                    nCon.put("dummy_in_id",j);
+                }
+                if (out_id.equals(flow_lim.get(j).get("集散点ID").toString()))
+                {
+                    nCon.put("dummy_out_id",j);
+                }
+
+
+            }
+            connection_list2.add(nCon);
+        }
+
+        //
+        List<Integer> f1 = new ArrayList<>();
+        List<Integer> f2 = new ArrayList<>();
+        List<Integer> f = new ArrayList<>();
+        for (int i=0;i<connection_list2.size();i++)
+        {
+            int val = Integer.parseInt(connection_list2.get(i).get("dummy_in_id").toString()) +
+                    (Integer.parseInt(connection_list.get(i).get("time_id").toString())-1)*flow_lim.size();
+            f1.add(val);
+
+
+            //(connection$time_id-1+ceiling(connection$minutes/route_time_unit))
+            int vv1 = Integer.parseInt(connection_list.get(i).get("time_id").toString())-1+
+                    (int)Math.ceil(Double.parseDouble(connection_list.get(i).get("minutes").toString())/route_time_unit);
+            int vv2 = (timebucket_num[timebucket_num.length-1]-1)*flow_lim.size()+ flow_lim.size() * timebucket_num[timebucket_num.length-1];
+
+            int val2 = Integer.parseInt(connection_list2.get(i).get("dummy_out_id").toString())+Math.min(vv1,vv2);
+            f2.add(val2);
+        }
+        f.addAll(f1);
+        f.addAll(f2);
+        int J = distance_ref_list.size()*full_time/route_time_unit;
+        List<Integer> g = new ArrayList<>();
+        for (int i=0;i<J;i++)
+        {
+            g.add(i);
+        }
+        for (int i=0;i<J;i++)
+        {
+            g.add(i);
+        }
+
+        int I = route_list.size();
+
+        int dimx = flow_lim.size()*timebucket_num[timebucket_num.length-1]*2;
+        M31 = SparseMatrix.Factory.zeros(dimx, I);
+        M33 = SparseMatrix.Factory.zeros(dimx, J);
+        M34 = SparseMatrix.Factory.zeros(dimx, J);
+        M35 = SparseMatrix.Factory.zeros(dimx, J);
+
+        M32 = SparseMatrix.Factory.zeros(dimx, J);
+        for (int i=0;i<f.size();i++)
+        {
+            M32.setAsInt(1,f.get(i),g.get(i));
+        }
+
+
+        logger.info("m3x");
+    }
+
+    private void getM4X()
+    {
+        int dimx = flow_lim.size()*timebucket_num[timebucket_num.length-1]*2;
+        int I = route_list.size();
+        int J = distance_ref_list.size()*full_time/route_time_unit;
+
+        M41 = SparseMatrix.Factory.zeros(dimx, I);
+        M42 = SparseMatrix.Factory.zeros(dimx, J);
+        M43 = SparseMatrix.Factory.zeros(dimx, J);
+        M45 = SparseMatrix.Factory.zeros(dimx, J);
+
+        M44 = M32.clone();
+
+        logger.info("m4x");
+    }
+
+    private void getM5X()
+    {
+        int I = route_list.size();
+        int J = distance_ref_list.size()*full_time/route_time_unit;
+        M51 = SparseMatrix.Factory.zeros(1, I);
+        M52 = SparseMatrix.Factory.zeros(1, J);
+        M53 = SparseMatrix.Factory.zeros(1, J);
+        for (int i=0;i<J;i++)
+        {
+            double val = 0;
+            boolean b1 = Double.parseDouble(connection_list.get(i).get("distance").toString())>dist_limit_bike;
+            boolean b2 = connection_list.get(i).get("cross_river").toString().equals("1");
+            if (b1|b2){
+                val = 1;
+            }
+            M53.setAsDouble(val, 1, i);
+        }
+        M54 = SparseMatrix.Factory.zeros(1, J);
+        M55 = SparseMatrix.Factory.zeros(1, J);
+        for (int i=0;i<J;i++)
+        {
+            double val = 0;
+            boolean b1 = Double.parseDouble(connection_list.get(i).get("distance").toString())>dist_limit_dada;
+            boolean b2 = connection_list.get(i).get("cross_river").toString().equals("1");
+            if (b1|b2){
+                val = 1;
+            }
+            M55.setAsDouble(val, 1, i);
+        }
+
+        logger.info("m5x");
+    }
+    private void InvokeGurobi(int consx,int consy,double[] c2,double[][] Q2,double[][] A2,char[] sense2,
+                              double[] rhs2,double[] lb2,double[] ub2,char[] types,double[] sol2)
+    {
+        Dense dense = new Dense();
+        GRBEnv env2 = null;
         try {
-            listSort(four_points_route_list,"distance");
-        } catch (Exception e) {
+            env2 = new GRBEnv();
+        } catch (GRBException e) {
             e.printStackTrace();
         }
-        for(int e=0;e<four_points_route_list.size();e++){
-            if(e>=5){
-                four_points_route_list.remove(e);
-            }
-        }
-        //time buckets
-        //real timebucket###
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("real timebucket###:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("60%"));
-        int full_time = 210;
-        int route_time_unit = 10;
-        int[][] timebucket_num = new int[1][full_time/route_time_unit];
-        for(int j=0;j<full_time/route_time_unit;j++){
-            timebucket_num[0][j] = j+1;
-        }
-        logger.info("timebucket_num");
-        Object route_two_point = null;
-        Object route_three_point = null;
-        Object route_four_point = null;
-//        ###two point route###
-        int[][] site1 = new int[1][full_time/route_time_unit];
-        int timebucket_site;
-        for(int j=0;j<full_time/route_time_unit;j++){
-            site1[0][j] = j+1;
-            timebucket_site = j+1;
-        }
-        //route_temp
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("route_temp:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("70%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting...."));
-        for(int j=0;j<two_points_route_list.size();j++){
-            Map<String,Object> two_points_route = new HashMap<String,Object>();
-            two_points_route.put("timebucket_1",two_points_route_list.get(j).get("connection1"));
-            two_points_route.put("timebucket_"+j+2,"");
-        }
-        List<Map> code1 = two_points_route_list;
-        List<Map> route_temp_list = code1;
-        for(int j=0;j<route_temp_list.size();j++){
-            route_temp_list.get(j).put("time_id1",site1[0][j%20]);
-        }
-        logger.info("two_points_route_list");
-        for(int j=0;j<two_points_route_list.size();j++){
-//            System.out.println(Double.parseDouble(two_points_route_list.get(j).get("time1").toString()));
-            two_points_route_list.get(j).put("timebucket_1",route_temp_list.get(j).get("connection1"));
-            two_points_route_list.get(j).put("timebucket_"+j+2,route_temp_list.get(j).get("timebucket_"+j+2));
-//            two_points_route_list.get(j).put("ok",Double.parseDouble(two_points_route_list.get(j).get("scenario_lim2").toString())
-//                    *route_time_unit-((Double.parseDouble(two_points_route_list.get(j).get("time_id1").toString())-1)*route_time_unit)
-//                    +Double.parseDouble(two_points_route_list.get(j).get("time1").toString()));
-            two_points_route_list.get(j).put("ok",Double.parseDouble(two_points_route_list.get(j).get("scenario_lim2").toString())
-                    *route_time_unit-((Double.parseDouble(two_points_route_list.get(j).get("time_id1").toString())-1)*route_time_unit));
-        }
-
-        for(int j=0;j<two_points_route_list.size();j++){
-//            Double ok = Double.parseDouble(two_points_route_list.get(j).get("scenario_lim2").toString())
-//                    *route_time_unit-((Double.parseDouble(two_points_route_list.get(j).get("time_id1").toString())-1)*route_time_unit)
-//                    +Double.parseDouble(two_points_route_list.get(j).get("time1").toString());
-            int ok = (int)(Double.parseDouble(two_points_route_list.get(j).get("scenario_lim2").toString())
-                    *route_time_unit-((Double.parseDouble(two_points_route_list.get(j).get("time_id1").toString())-1)*route_time_unit));
-            if(ok<0){
-                two_points_route_list.remove(j);
-            }
-        }
-
-        for(int j=0;j<two_points_route_list.size();j++){
-            int which1 = (int)(Double.parseDouble(two_points_route_list.get(j).get("time_id1").toString())-((Double.parseDouble(two_points_route_list.get(j).get("scenario_lim1").toString()))));
-            if(which1<0){
-                two_points_route_list.remove(j);
-            }
-        }
-//###three point route###
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("###three point route###:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("80%"));
-        site1 = new int[2][full_time/route_time_unit];
-        int[] numt1=new int [full_time/route_time_unit];
-        int[] numt2=new int [full_time/route_time_unit];
-        for(int j=0;j<full_time/route_time_unit;j++){
-            numt1[j] = full_time/route_time_unit+1;
-        }
-        numt2 = numt1;
-        for(int j=0;j<numt1.length;j++){
-            for(int j2=0;j2<numt2.length-j;j2++) {
-                site1[0][j] = numt1[j];
-                site1[1][j] = numt1[j2];
-            }
-        }
-//20171226
-        //String code1 = "";
-        List<Map> route_three_point_list = tempService.findAll01(OpenScenariosId);
-        for(Map m:route_three_point_list){
-            m.put("ok",Double.parseDouble(m.get("scenario_lim2").toString())*
-                    Double.parseDouble(m.get("*route_time_unit").toString())-
-                    (Double.parseDouble(m.get("*time_id2").toString())-1)*route_time_unit
-                    +Double.parseDouble(m.get("*time2").toString())
-            );
-            if(Double.parseDouble(m.get("ok").toString())<0){
-                route_three_point_list.remove(m);
-            }else{
-                m.put("ok",0);
-            }
-            if((Double.parseDouble(m.get("time_id1").toString())-Double.parseDouble(m.get("scenario_lim1").toString()))>=0){
-
-            }else{
-                route_three_point_list.remove(m);
-            }
-            m.put("ok",Double.parseDouble(m.get("time_id2").toString())-
-                    Double.parseDouble(m.get("*time_id1").toString())*route_time_unit-
-                    (Double.parseDouble(m.get("*time1").toString()))*20
-            );
-            if(Double.parseDouble(m.get("ok").toString())<0){
-                route_three_point_list.remove(m);
-            }else{
-                m.put("ok",0);
-            }
-        }
-//###four point route###
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("###four point route###:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("90%"));
-        site1 = new int[1][full_time/route_time_unit];
-        for(int j=0;j<full_time/route_time_unit;j++){
-            site1[0][j] = j+1;
-            timebucket_site = j+1;
-        }
-        List<Map> route_four_point_list = tempService.findAll02(OpenScenariosId);
-        for(Map m:route_three_point_list){
-            m.put("ok",Double.parseDouble(m.get("scenario_lim2").toString())*
-                    Double.parseDouble(m.get("*route_time_unit").toString())-
-                    (Double.parseDouble(m.get("*time_id2").toString())-1)*route_time_unit
-                    +Double.parseDouble(m.get("*time2").toString())
-            );
-            if(Double.parseDouble(m.get("ok").toString())<0){
-                route_three_point_list.remove(m);
-            }else{
-                m.put("ok",0);
-            }
-            if((Double.parseDouble(m.get("time_id1").toString())-Double.parseDouble(m.get("scenario_lim1").toString()))>=0){
-
-            }else{
-                route_three_point_list.remove(m);
-            }
-            m.put("ok",Double.parseDouble(m.get("time_id2").toString())-
-                    Double.parseDouble(m.get("*time_id1").toString())*route_time_unit-
-                    (Double.parseDouble(m.get("*time1").toString()))*20
-            );
-            if(Double.parseDouble(m.get("ok").toString())<0){
-                route_three_point_list.remove(m);
-            }else{
-                m.put("ok",0);
-            }
-        }
-
-        List<Map> route_list=two_points_route_list;
-//        route_list.addAll(two_points_route_list);
-        route_list.addAll(route_three_point_list);
-        route_list.addAll(route_four_point_list);
-
-        N = flow_lim.size();
-        M = two_points_route_list.size();
-        int I1 = two_points_route_list.size();
-        int I2 = route_three_point_list.size();
-        int I3 = route_four_point_list.size();
-        I = I1+I2+I3;
-        J = distance_ref_list.size()*full_time/route_time_unit;
-//        geds TODO
-//        temp_list = tempService.findAll03(OpenScenariosId);//size = 6065
-//        connection_temp_list = tempService.findAll04(OpenScenariosId); //size = 1
-        connection_temp_list = temp_list;
-
-        logger.info("M11");
-//        Matrix M1133333 = DenseMatrix.Factory.zeros(3, 3);
-//        System.out.println(route_list.size()+":"+I);
-        int tagrelay = 0;
-        logger.info("tag:"+tagrelay++);
-
-        logger.info("spark.Matrix");
-        double[] v222 = new double[route_list.size()];
-        double[] v223 = new double[route_list.size()];
-        int[] a1 = new int[route_list.size()+1];
-        int[] a2 = new int[route_list.size()];
-        int[] a3 = new int[route_list.size()];
-        int[] a4 = new int[route_list.size()];
-        a1[0]=0;
-        for(int e = 0; e<route_list.size() ;e++){
-            a1[e]=e+1;
-        }
-        for(int e = 0; e<route_list.size() ;e++){
-            a2[e]=1;
-        }
-        Vector v2 = new Vector();
-        for(int mj=0;mj<I;mj++){
-            v2.add(mj,mj);
-        }
-        for(int m=0;m<route_list.size();m++){
-            v222[m]=1;
-        }
-//        Matrix M11 = new DenseMatrix(route_list.size(), I,v222);
-//        Matrix M11 = new SparseMatrix(route_list.size(), I,a1,a2,v222);
-//        Matrix M12 = new SparseMatrix(route_list.size(), I,a3,a4,v223);
-//        Matrix M13 = new SparseMatrix(route_list.size(), I,a3,a4,v223);
-//        Matrix M14 = new SparseMatrix(route_list.size(), I,a3,a4,v223);
-//        Matrix M15 = new SparseMatrix(route_list.size(), I,a3,a4,v223);
-        logger.info("spark.Matrix");
-        Matrix M11 = SparseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M12 = SparseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M13 = SparseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M14 = SparseMatrix.Factory.zeros(route_list.size(), I);
-        Matrix M15 = SparseMatrix.Factory.zeros(route_list.size(), I);
-
-        for(int m=0;m<route_list.size();m++){
-                M11.setAsDouble(v222[m],m,m);
-        }
-
-
-//        Matrix M11 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        logger.info("tag:"+tagrelay++);
-//        Matrix M12 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        logger.info("tag:"+tagrelay++);
-//        Matrix M13 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        logger.info("tag:"+tagrelay++);
-//        Matrix M14 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        logger.info("tag:"+tagrelay++);
-//        Matrix M15 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        logger.info("tag:"+tagrelay++);
-//        Vector v = new Vector();
-//        for(int mj=M;mj<J;mj++){
-//            v.add(mj,mj);
-//        }
-//        logger.info("tag:"+tagrelay++);
-//        for(int m=0;m<route_list.size();m++){
-//            for(int mi=0;mi<I;mi++){
-//                M11.setAsInt(v.indexOf(mi),m,mi);
-//                M12.setAsInt(v.indexOf(mi),m,mi);
-//                M13.setAsInt(v.indexOf(mi),m,mi);
-//                M14.setAsInt(v.indexOf(mi),m,mi);
-//                M15.setAsInt(v.indexOf(mi),m,mi);
-//            }
-//        }
-        logger.info("tag:"+tagrelay++);
-
-        logger.info("M21");
-//        Matrix M21 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M22 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M23 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M24 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M25 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        for(int m=0;m<J;m++){
-//            for(int mi=0;mi<J;mi++){
-//                M21.setAsInt(v.indexOf(mi),m,mi);
-//                M22.setAsInt(-truck_capacity,m,mi);
-//                M23.setAsInt(-truck_capacity2,m,mi);
-//                M24.setAsInt(-truck_capacity3,m,mi);
-//                M25.setAsInt(-truck_capacity4,m,mi);
-//            }
-//        }
-//        double[] v23 = new double[J*I];
-//        double[] v24 = new double[J*I];
-//        for(int m=0;m<J;m++){
-//            for(int mi=0;mi<I;mi++){
-//                v24[m+mi]=v2.indexOf(mi);
-//                v23[m+mi]=-truck_capacity;
-//            }
-//        }
-        double[] v23 = new double[I];
-        double[] v24 = new double[I];
-        for(int mi=0;mi<I;mi++){
-            v24[mi]=v2.indexOf(mi);
-            v23[mi]=-truck_capacity;
-        }
-//        Matrix M21 = new DenseMatrix(J, I,v24);
-//        Matrix M22 = new DenseMatrix(J, I,v23);
-//        Matrix M23 = new DenseMatrix(J, I,v23);
-//        Matrix M24 = new DenseMatrix(J, I,v23);
-//        Matrix M25 = new DenseMatrix(J, I,v23);
-        Matrix M21 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M22 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M23 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M24 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M25 = SparseMatrix.Factory.zeros(I, I);
-
-        for(int m=0;m<route_list.size();m++){
-            M21.setAsDouble(v24[m],m,m);
-            M22.setAsDouble(v23[m],m,m);
-            M23.setAsDouble(v23[m],m,m);
-            M24.setAsDouble(v23[m],m,m);
-            M25.setAsDouble(v23[m],m,m);
-        }
-
-        int f=0,g=0;
-        Vector f1 = new Vector();
-        for(int c2=0;c2<connection2_list.size();c2++){
-            f1.add(Double.parseDouble(connection2_list.get(c2).get("dummy_in_id").toString())
-                    +(Double.parseDouble(connection2_list.get(c2).get("time_id").toString())-1)*flow_lim.size());
-        }
-        Vector g1 = new Vector(1,J);
-
-        connection2_list = tempService.findAll05(OpenScenariosId);
-        connection2_list = tempService.findAll06(OpenScenariosId);
-//## inflow:
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("#### inflow:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("95%"));
-        Vector f2 = new Vector();
-        for(int c2=0;c2<connection2_list.size();c2++){
-            double a = Double.parseDouble(connection_temp_list.get(c2).get("time_id").toString())-1;
-            double b = Math.ceil((Double.parseDouble(connection_temp_list.get(c2).get("minutes").toString())-1)/route_time_unit);
-            double c = 0;
-            for(int ij=0;ij<timebucket_num[0].length-1;ij++){
-                c = Math.min(timebucket_num[0][ij],timebucket_num[0][ij+1]);
-            }
-            double min;
-            if (a < b && a < c) {
-                min = a;
-            } else if (c < a && c < b) {
-                min = c;
-            } else{
-                min = b;
-            }
-            f2.add(Double.parseDouble(connection2_list.get(c2).get("dummy_out_id").toString())+min*flow_lim.size()+N*c);
-        }
-        Vector g2 = new Vector(1,J);
-//## all
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("#### all:"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("97%"));
-        Vector ff = f1;
-        for(int fi=0;fi<f2.size();fi++){
-            ff.add(f2.indexOf(fi));
-        }
-
-        Vector gg = g1;
-        for(int fi=0;fi<g2.size();fi++){
-            ff.add(g2.indexOf(fi));
-        }
-
-        logger.info("M31");
-//        Matrix M31 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M32 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M33 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M34 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M35 = DenseMatrix.Factory.zeros(route_list.size(), I);
-        int max = 0;
-        for(int iii=0;iii<timebucket_num[i].length;iii++){
-            max = Math.max(timebucket_num[i][iii]*2,I);
-        }
-        Vector t = new Vector(N*max);
-//        for(int m=0;m<J;m++){
-//            for(int mi=0;mi<J;mi++){
-//                M31.setAsInt(v.indexOf(mi),m,mi);
-//                M32.setAsInt(v.indexOf(mi),m,mi);
-//                M33.setAsInt(v.indexOf(mi),m,mi);
-//                M34.setAsInt(v.indexOf(mi),m,mi);
-//                M35.setAsInt(v.indexOf(mi),m,mi);
-//            }
-//        }
-//        double[] v33 = new double[J*J];
-//        for(int m=0;m<J;m++){
-//            for(int mi=0;mi<J;mi++){
-//                v33[m+mi]=t.indexOf(mi);
-//            }
-//        }
-        double[] v33 = new double[I];
-        for(int mi=0;mi<I;mi++){
-            v33[mi]=t.indexOf(mi);
-        }
-//        Matrix M31 = new DenseMatrix(J, J,v33);
-//        Matrix M32 = new DenseMatrix(J, J,v33);
-//        Matrix M33 = new DenseMatrix(J, J,v33);
-//        Matrix M34 = new DenseMatrix(J, J,v33);
-//        Matrix M35 = new DenseMatrix(J, J,v33);
-//        Matrix M31 = SparseMatrix.Factory.zeros(J, J);
-//        Matrix M32 = SparseMatrix.Factory.zeros(J, J);
-//        Matrix M33 = SparseMatrix.Factory.zeros(J, J);
-//        Matrix M34 = SparseMatrix.Factory.zeros(J, J);
-//        Matrix M35 = SparseMatrix.Factory.zeros(J, J);
-
-        Matrix M31 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M32 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M33 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M34 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M35 = SparseMatrix.Factory.zeros(I, I);
-        for(int m=0;m<route_list.size();m++){
-//            logger.info(String.valueOf(m));
-//            logger.info(String.valueOf(v33[m]));
-            M31.setAsDouble(v33[m],m,m);
-            M32.setAsDouble(v33[m],m,m);
-            M33.setAsDouble(v33[m],m,m);
-            M34.setAsDouble(v33[m],m,m);
-            M35.setAsDouble(v33[m],m,m);
-        }
-        Matrix M41 = M31;
-        Matrix M42 = M31;
-        Matrix M43 = M31;
-        Matrix M44 = M32;
-        Matrix M45 = M31;
-
-        logger.info("M41");
-//        Matrix M51 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M52 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M53 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M54 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Matrix M55 = DenseMatrix.Factory.zeros(route_list.size(), I);
-//        Vector v = new Vector(1,I);
-//        Vector vj = new Vector(1,I);
-        double[] v = new double[I];
-        double[] vj = new double[I];
-        for(int e=0;e<I;e++){
-            v[e] = 1;
-            vj[e] = 1;
-        }
-//        for(int m=0;m<J;m++){
-//            for(int mi=0;mi<J;mi++){
-//                M51.setAsInt(v.indexOf(mi),m,mi);
-//                M52.setAsInt(vj.indexOf(mi),m,mi);
-//                M53.setAsInt(Double.parseDouble(connection_temp_list.get(mi).get("distance").toString())>dist_limit_bike
-//                        ?Double.parseDouble(connection_temp_list.get(mi).get("distance").toString())
-//                        :Double.parseDouble(connection_temp_list.get(mi).get("cross_river").toString()),m,mi);
-//                M54.setAsInt(v.indexOf(mi),m,mi);
-//                M55.setAsInt(Double.parseDouble(connection_temp_list.get(mi).get("distance").toString())>dist_limit_dada
-//                        ?Double.parseDouble(connection_temp_list.get(mi).get("distance").toString())
-//                        :Double.parseDouble(connection_temp_list.get(mi).get("cross_river").toString()),m,mi);
-//            }
-//        }
-//        double[] v51 = new double[J*J];
-//        double[] v52 = new double[J*J];
-//        double[] v53 = new double[J*J];
-//        double[] v54 = new double[J*J];
-//        double[] v55 = new double[I*I];
-
-        double[] v51 = new double[I];
-        double[] v52 = new double[I];
-        double[] v53 = new double[I];
-        double[] v54 = new double[I];
-        double[] v55 = new double[I];
-        for(int mi=0;mi<I;mi++){
-//            v51[mi]=v.indexOf(mi);
-//            v52[mi]=vj.indexOf(mi);
-//            v53[mi]=vj.indexOf(mi);
-//            v54[mi]=vj.indexOf(mi);
-//            v55[mi]=vj.indexOf(mi);
-
-            v51[mi]=v[mi];
-            v52[mi]=vj[mi];
-            v53[mi]=vj[mi];
-            v54[mi]=vj[mi];
-            v55[mi]=vj[mi];
-//                v53[m+mi] = Double.parseDouble(connection_temp_list.get(mi).get("distance").toString())>dist_limit_bike
-//                        ?Double.parseDouble(connection_temp_list.get(mi).get("distance").toString())
-//                        :Double.parseDouble(connection_temp_list.get(mi).get("cross_river").toString());
-//                v54[m+mi]= v.indexOf(mi);
-//                v55[m+mi]=Double.parseDouble(connection_temp_list.get(mi).get("distance").toString())>dist_limit_dada
-//                        ?Double.parseDouble(connection_temp_list.get(mi).get("distance").toString())
-//                        :Double.parseDouble(connection_temp_list.get(mi).get("cross_river").toString());
-        }
-//        Matrix M51 = new DenseMatrix(J, J,v51);
-//        Matrix M52 = new DenseMatrix(J, J,v52);
-//        Matrix M53 = new DenseMatrix(J, J,v53);
-//        Matrix M54 = new DenseMatrix(J, J,v54);
-//        Matrix M55 = new DenseMatrix(J, J,v55);
-//        Matrix M51 = SparseMatrix.Factory.zeros(J, J);
-//        Matrix M52 = SparseMatrix.Factory.zeros(J, J);
-//        Matrix M53 = SparseMatrix.Factory.zeros(J, J);
-//        Matrix M54 = SparseMatrix.Factory.zeros(J, J);
-//        Matrix M55 = SparseMatrix.Factory.zeros(J, J);
-        Matrix M51 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M52 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M53 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M54 = SparseMatrix.Factory.zeros(I, I);
-        Matrix M55 = SparseMatrix.Factory.zeros(I, I);
-        for(int m=0;m<route_list.size();m++){
-            M31.setAsDouble(v51[m],m,m);
-            M32.setAsDouble(v52[m],m,m);
-            M33.setAsDouble(v53[m],m,m);
-            M34.setAsDouble(v54[m],m,m);
-            M35.setAsDouble(v55[m],m,m);
-        }
-
-//########
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("//########"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("98%"));
-        long consI = M11.getColumnCount()+M12.getColumnCount()+M13.getColumnCount()+M14.getColumnCount()+M15.getColumnCount();
-        long consJ = M11.getRowCount()+M21.getRowCount()+M31.getRowCount()+M41.getRowCount()+M51.getRowCount();
-//        Matrix cons = DenseMatrix.Factory.zeros(consI, consJ);
-//        double[] vcons = new double[M11.getColumnCount()*M11.getRowCount()];
-//        for(int m=0;m<M11.getColumnCount();m++){
-//            for(int mi=0;mi<M11.getRowCount();mi++) {
-////                cons.setAsInt(M11.index(m,mi),M11.getColumnCount()+m,M11.getRowCount()+mi);
-//                vcons[m+mi] = M11.index(m,mi);
-//            }
-//        }
-//        Matrix cons = new DenseMatrix(J, J,v51);
-        Matrix cons1 = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount());
-        Matrix cons2 = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount());
-        Matrix cons3 = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount());
-        Matrix cons4 = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount());
-        Matrix cons5 = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount());
-        Matrix cons = SparseMatrix.Factory.zeros(M11.getRowCount()*5, M11.getColumnCount()*5);
-        for(int m=0;m<route_list.size();m++){
-            M31.setAsDouble(v51[m],m,m);
-        }//        }
-        Calculation.Ret ret = Calculation.Ret.LINK;
-        cons1 = M11.appendVertically(ret,M12 ,M13 ,M14 ,M15);
-        cons2 = M21.appendVertically(ret,M22 ,M23 ,M24 ,M25);
-        cons3 = M31.appendVertically(ret,M32 ,M33 ,M34 ,M35);
-        cons4 = M41.appendVertically(ret,M42 ,M43 ,M44 ,M45);
-        cons5 = M51.appendVertically(ret,M52 ,M53 ,M54 ,M55);
-        cons = cons1.appendHorizontally(ret,cons2,cons3,cons4,cons5);
-        cons1 = M11.appendVertically(ret,M12 ,M13 ,M14);
-        cons2 = M21.appendVertically(ret,M22 ,M23 ,M24);
-        cons3 = M31.appendVertically(ret,M32 ,M33 ,M34);
-        cons4 = M41.appendVertically(ret,M42 ,M43 ,M44);
-        cons = cons1.appendHorizontally(ret,cons2,cons3,cons4);
-
-//        cons = M11;
-        logger.info("connection_temp_list");
-        for(int ci=0;ci<(connection_temp_list.size()<OD_demand_list.size()?connection_temp_list.size():OD_demand_list.size());ci++){
-//            connection_temp_list.get(ci).put("kmh_didi",Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=10?Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed1:0+
-//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>10&&
-//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=30?
-//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed3:0+
-//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>=30?
-//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed4:0);
-//            connection_temp_list.get(ci).put("kmh_truck",Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=10?Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed1:0+
-//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>10&&
-//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=30?
-//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed3:0+
-//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())>=30?
-//                    Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed4:0);
-//            connection_temp_list.get(ci).put("kmh_bike",Double.parseDouble(OD_demand_list.get(ci).get("km").toString())<=10?Double.parseDouble(OD_demand_list.get(ci).get("km").toString())*speed1:0);
-            double min_didi_t = 0;
-            min_didi_t = Double.parseDouble(connection_temp_list.get(ci).get("distance").toString())/
-                    Double.parseDouble(connection_temp_list.get(ci).get("kmh_didi").toString())*60;
-            connection_temp_list.get(ci).put("min_didi",min_didi_t);
-            connection_temp_list.get(ci).put("cost_bike",11);
-            double di = Double.parseDouble(connection_temp_list.get(ci).get("distance").toString());
-            double didi = Double.parseDouble(connection_temp_list.get(ci).get("min_didi").toString());
-            double d = Math.max((di>12?di:0)*(di-12)+di*2.4+didi*0.4,13);
-            connection_temp_list.get(ci).put("cost_didi",d);
-            connection_temp_list.get(ci).put("cost_truck", di);
-            connection_temp_list.get(ci).put("cost_data",(Double.parseDouble(connection_temp_list.get(ci).get("distance").toString())-2)
-                    *2*(Double.parseDouble(connection_temp_list.get(ci).get("distance").toString())>2?
-                    Double.parseDouble(connection_temp_list.get(ci).get("distance").toString()):0)+10);
-        }
-
-        double[] obj = new double[I+connection_temp_list.size()*4];
-        for(int e=0;e<I;e++){
-            obj[e]=0;
-        }
-        for(int e=I;e<I+connection_temp_list.size();e++){
-//                    logger.info(e-I+":"+connection_temp_list.get(e-I).get("cost_truck").toString());
-            try{
-                    obj[e]=Double.parseDouble(connection_temp_list.get(e-I).get("cost_truck").toString());
-                }catch (NullPointerException ex){
-                    continue;
-                }
-        }
-        for(int e=I+connection_temp_list.size();e<I+connection_temp_list.size()*2;e++){
-            try{
-                obj[e]=Double.parseDouble(connection_temp_list.get(e-I-connection_temp_list.size()).get("cost_bike").toString());
-            }catch (NullPointerException ex){
-                continue;
-            }
-        }
-        for(int e=I+connection_temp_list.size()*2;e<I+connection_temp_list.size()*3;e++){
-            try{
-                obj[e]=Double.parseDouble(connection_temp_list.get(e-I-connection_temp_list.size()*2).get("cost_didi").toString());
-            }catch (NullPointerException ex){
-                continue;
-            }
-        }
-        for(int e=I+connection_temp_list.size()*3;e<I+connection_temp_list.size()*4;e++){
-            try{
-                obj[e]=Double.parseDouble(connection_temp_list.get(e-I-connection_temp_list.size()*3).get("cost_data").toString());
-            }catch (NullPointerException ex){
-                continue;
-            }
-        }
-
-        //根据场景ID查询SiteDist
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("SiteDist"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("99%"));
-        List<SiteInfo> siteInfoList = siteInfoService.findAllSiteInfo(OpenScenariosId);
-
-
-//        # ### load jisan candidates ###
-//        colclass<-c("character","character","character","numeric","numeric","character","character","numeric","numeric","numeric","numeric")
-//        jisan_candidates<-read.xlsx("input/外环内资源点最新.xlsx",
-//                sheetIndex=2,encoding="UTF-8",colClasses=colclass)
-//        jisan_candidates<-jisan_candidates[1:78,]
-//        jisan_candidates$depot_id<-1:nrow(jisan_candidates)
-        List<SiteInfo> jisan_candidates = siteInfoList;
-//        double[] outflow_lim = new double[siteInfoList.size()];
-        for(int iii=0;iii<outflow_lim.length;iii++){
-            outflow_lim[iii] = Double.parseDouble(siteInfoList.get(iii).getMaxOperateNum());
-        }
-//        double[] outflow_lim = res[1];;
-        double[] inflow_lim = outflow_lim;
-//        double[] didi_outflow_lim = outflow_lim;
-        double[] didi_inflow_lim = didi_outflow_lim;
-
-        double[] rhs = new double[M+J+1+outflow_lim.length*4];
-        for(int iii=0;iii<M;iii++){
-            rhs[iii] = 1;
-        }
-        for(int iii=0;iii<J;iii++){
-            rhs[M+iii] = 0;
-        }
-        for(int iii=0;iii<outflow_lim.length;iii++){
-            rhs[M+J+iii] = outflow_lim[iii];
-        }
-        for(int iii=0;iii<inflow_lim.length;iii++){
-            rhs[M+J+outflow_lim.length+iii] = inflow_lim[iii];
-        }
-        for(int iii=0;iii<didi_outflow_lim.length;iii++){
-            rhs[M+J+outflow_lim.length+inflow_lim.length+iii] = didi_outflow_lim[iii];
-        }
-        for(int iii=0;iii<didi_inflow_lim.length;iii++){
-            rhs[M+J+outflow_lim.length+inflow_lim.length+didi_outflow_lim.length+iii] = didi_inflow_lim[iii];
-        }
-        rhs[M+J+outflow_lim.length+inflow_lim.length+didi_outflow_lim.length+1] = 0;
-
-        i = I+J;
-        char[] types = new char[i];
-        for(int n=0;n<I;n++){
-            types[n] = "B".toCharArray()[0];
-    }
-        for(int n=0;n<J;n++){
-            types[I+n] = "I".toCharArray()[0];
-        }
-        int max_timebucket_num = 0;
-        i = M + J + N*4*max_timebucket_num;
-//        sense
-        char[] sense = new char[i+10];
-        for(int n=0;n<M;n++){
-//            sense[n] ="=".toCharArray()[0];
-            sense[n] =">".toCharArray()[0];
-        }
-        for(int n=0;n<J;n++){
-            sense[M+n] ="<=".toCharArray()[0];
-        }
-        int W = i-M-J;
-        for(int n=0;n<W;n++){
-            sense[M+J+n] ="<=".toCharArray()[0];
-        }
-        sense[i+1] ="=".toCharArray()[0];
-        int tag = 0;
-        logger.info("trag:"+tag++);
-        logger.info("model");
-        logger.info("GRBEnv");
-        logger.info("trag:"+tag++);
-//////////////////////////////////////////////////////////
-        logger.info("////////////////////////////////////////////////////////////////");
-        logger.info("/////////////user time :"+(DateTimeUtils.currentTimeMillis()-starttime)+"/////////////////////");
-
-        try {
-            logger.info("trag:"+tag++);
-//            double c2[] = new double[] {1, 1, 0};
-            double c2[] = new double[(int)cons.getColumnCount()];
-//                        objn
-            logger.info("trag:"+tag++);
-            for (int jw = 0; jw < cons.getColumnCount(); jw++)
-                c2[jw] = obj[jw];
-//            double Q2[][] = new double[][] {{1, 1, 0}, {0, 1, 1}, {0, 0, 1}};
-            double Q2[][] = null;
-            logger.info("trag:"+tag++);
-//            double A[][] = new double[][] {{1, 2, 3}, {1, 1, 0}};
-            logger.info("cons.getRowCount():"+cons.getRowCount());
-            logger.info("cons.getColumnCount():"+cons.getColumnCount());
-            double A2[][] = new double[(int)cons.getRowCount()][(int)cons.getRowCount()];
-            logger.info("iw:"+cons.getRowCount()+";jw:"+cons.getColumnCount());
-            for (int iw = 0; iw < cons.getRowCount(); iw++) {
-                for (int jw = 0; jw < cons.getRowCount(); jw++){
-                    A2[iw][jw] = cons.getAsDouble(iw,jw);
-//                    logger.info("trag:"+tag+++"-------A2[iw][jw]:"+A2[iw][jw]);
-                }
-            }
-            logger.info("-------trag:"+tag++);
-//            double A2[][] = null;
-//            char sense2[] = new char[] {'>', '>'};
-            logger.info("sense:"+sense.length);
-            char sense2[] = new char[(int)cons.getRowCount()];
-            for(int is=0;is<cons.getRowCount();is++){
-                sense2[is] = sense[is];
-            }
-            logger.info("trag:"+tag++);
-//            double rhs2[] = new double[] {4, 1};
-            logger.info("rhs:"+rhs.length);
-            logger.info("trag:"+tag++);
-            double rhs2[] = new double[(int)cons.getRowCount()];
-            for(int is=0;is<cons.getRowCount();is++){
-                rhs2[is] = rhs[is];
-            }
-            logger.info("trag:"+tag++);
-//            double lb2[] = new double[] {0, 0, 0};
-            double lb2[] = new double[(int)cons.getRowCount()];
-            for(int q=0;q<lb2.length;q++){
-                lb2[q]=0;
-            }
-            logger.info("trag:"+tag++);
-            double ub2[] = null;
-            boolean success;
-            double sol2[] = new double[(int)cons.getColumnCount()];
-            logger.info("sol2:"+sol2.length);
-
-            logger.info("trag:"+tag++);
-            Dense dense = new Dense();
-            GRBEnv env2 = new GRBEnv();
-            success = dense.dense_optimize(env2, (int)cons.getRowCount(), (int)cons.getColumnCount(), c2, Q2, A2, sense2, rhs2,
+        boolean success = dense.dense_optimize(env2, consx, consy, c2, Q2, A2, sense2, rhs2,
                     lb2, ub2, types, sol2);
-            logger.info("trag:"+tag++);
             if (success) {
-                logger.info("success:");
-                System.out.println("x: " + sol2[0] + ", y: " + sol2[1] + ", z: " + sol2[2]);
+//                System.out.println("x: " + sol2[0] + ", y: " + sol2[1] + ", z: " + sol2[2]);
                 double[] solution = sol2;
                 for(int e=0;e<solution.length;e++)
                     logger.info("solution:"+solution[e]);
                 makeResults(solution);
-                logger.info("trag:"+tag++);
-                List<Map> route_opt = route_list;
-                for(int e=0;e<I;e++){
-                    route_opt.get(e).put("route_open",solution[e]);
-                }
-                for(int e=0;e<I1;e++){
-                    route_opt.get(e).put("route_type",1);
-                }
-                for(int e=0;e<I2;e++){
-                    route_opt.get(e).put("route_type",2);
-                }
-                for(int e=0;e<I3;e++){
-                    route_opt.get(e).put("route_type",3);
-                }
-                for(Map ro:route_opt){
-                    tempService.saveRouteOpt(ro);
-                }
-                logger.info("trag:"+tag++);
-                route_opt = tempService.findAll07(OpenScenariosId);
-                List<Map> connection_volume = tempService.findAll08(OpenScenariosId);
-                List<Map> connection_opt = connection_temp_list;
-                connection_opt.addAll(connection_volume);
-                for(int e=0;e<J-1;e++){
-                    if(solution[1+I+e]>0)
-                    connection_opt.get(e).put("truck",solution[1+I+e]);
-                }
-                logger.info("trag:"+tag++);
-                for(int e=0;e<J-1;e++){
-                    if(solution[1+I+J+e]>0)
-                    connection_opt.get(e).put("bike",solution[1+I+J+e]);
-                }
-                for(int e=0;e<J-1;e++){
-                    if(solution[1+I+J*2+e]>0)
-                    connection_opt.get(e).put("didi",solution[1+I+J*2+e]);
-                }
-                for(int e=0;e<J-1;e++){
-                    if(solution[1+I+J*3+e]>0)
-                    connection_opt.get(e).put("dada",solution[1+I+J*3+e]);
-                }
-//                summary(connection_opt)
-                List<Map> active_connection = connection_opt;
-
-                logger.info("trag:"+tag++);
-            }else{
-                logger.info("fail:");
             }
 
-            // Dispose of environment
-            env2.dispose();
-            logger.info("/////////////total user time :"+(DateTimeUtils.currentTimeMillis()-starttime)+"////////////////////////////////////////////");
+    }
+    public void run() throws RuntimeException {
 
-        } catch (GRBException e) {
-            System.out.println("Error code: " + e.getErrorCode() + ". " +
-                    e.getMessage());
-            e.printStackTrace();
-        }
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("params:"));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("1%"));
+
+        InitData();
+
+        getTwoPointsRoute();
+        getThreePointsRoute();
+        getFourPointsRoute();
+
+        getRouteTwoPoint();
+        getRouteThreePoint();
+        getRouteFourPoint();
+
+/////////////end four point route
+        route_list.addAll(route_two_point_list);
+        route_list.addAll(route_three_point_list);
+        route_list.addAll(route_four_point_list);
+
+        getConneciton();
+
+        getM1X();
+        getM2X();
+        getM3X();
+        getM4X();
+        getM5X();
+
+//        InvokeGurobi();
+        logger.info("p");
+
     }
     ////////////
     protected void makeResults(double[] solution){
+//                route_opt start
+        List<Map> route_opt = route_list;
+        int I = route_list.size();
+        int J = distance_ref_list.size()*full_time/route_time_unit;
+        int I1 = route_two_point_list.size();
+        int I2 = route_three_point_list.size();
+        int I3 = route_four_point_list.size();
+//                route_opt$route_open<-solution[1:I]
+        for(int e=0;e<I;e++){
+            route_opt.get(e).put("route_open",solution[e]);
+        }
+//                route_opt$route_type<-c(rep(1,I1),rep(2,I2),rep(3,I3))
+        for(int e=0;e<I1;e++){
+            route_opt.get(e).put("route_type",1);
+        }
+        for(int e=0;e<I2;e++){
+            route_opt.get(e).put("route_type",2);
+        }
+        for(int e=0;e<I3;e++){
+            route_opt.get(e).put("route_type",3);
+        }
+//        ////////////////////////
+        List<Map> rout_opt_temp = new ArrayList<Map>();
+        for(Map rp : route_opt){
+            String point1 = rp.get("point1").toString();
+            Map rot = new HashMap();
+            rot = rp;
+            for(Map jsc1 : jisan_candidates){
+                String depot_id1 = jsc1.get("depot_id").toString();
+                if(point1.equals(depot_id1)){
+                    rot.put("point1_name",jsc1.get("网点名称"));
+                }
+                for(Map jsc2 : jisan_candidates){
+                    String depot_id2 = jsc2.get("depot_id").toString();
+                    if(point1.equals(depot_id2)){
+                        rot.put("point2_name",jsc2.get("网点名称"));
+                    }
+                    for(Map jsc3 : jisan_candidates){
+                        String depot_id3 = jsc3.get("depot_id").toString();
+                        if(point1.equals(depot_id3)){
+                            rot.put("point3_name",jsc3.get("网点名称"));
+                        }
+                        for(Map jsc4 : jisan_candidates){
+                            String depot_id4 = jsc4.get("depot_id").toString();
+                            if(point1.equals(depot_id4)){
+                                rot.put("point4_name",jsc4.get("网点名称"));
+                            }
 
-    }
-    public void listSort(List<Map> resultList,String sequence) throws Exception{
-        // resultList是需要排序的list，其内放的是Map
-        // 返回的结果集
-        Collections.sort(resultList,new Comparator<Map>() {
-
-            public int compare(Map o1,Map o2) {
-                //o1，o2是list中的Map，可以在其内取得值，按其排序，此例为升序，s1和s2是排序字段值
-                double d1 = Double.valueOf(o1.get(sequence).toString());
-                double d2 = Double.valueOf(o2.get(sequence).toString());
-                Integer s1 = (int) d1;
-                Integer s2 = (int) d2;
-                return s1.compareTo(s2);
-//                if(s1<s2) {
-//                    return -1;
-//                }else {
-//                    return 1;
-//                }
+                        }
+                    }
+                }
             }
-        });
+            rout_opt_temp.add(rp);
+        }
+        route_opt=rout_opt_temp;
+//                route_opt end
 
+//                List<Map> connection_volume = tempService.findAll08(OpenScenariosId);
+//connection_volume end
+        List<Map> connection_volume_temp = new ArrayList<Map>();
+        double sumVolume = 0.0;
+        for(Map rp:route_opt){
+            Map cvt = new HashMap();
+            int route_open = Integer.parseInt(rp.get("route_open").toString());
+            if(route_open == 1){
+                for(int n=1;n<=21;n++){
+                    double volume = Double.parseDouble(rp.get("demand").toString());
+                    String timebucket = rp.get("timebucket_"+n).toString();
+                    sumVolume = sumVolume+volume;
+                    cvt.put("volume",volume);
+                    cvt.put("timebucket",timebucket);
+                    cvt.put("route_cnt",rp.size());
+                    connection_volume_temp.add(cvt);
+                }
+
+            }
+        }
+        for(Map cv:connection_volume_temp){
+            String timebucket = cv.get("timebucket").toString();
+            double volumeSum = 0.0;
+            double route_cntSum = 0.0;
+            for(Map cvtemp:connection_volume_temp) {
+                volumeSum = volumeSum  + Double.parseDouble(cvtemp.get("volume").toString());
+                route_cntSum = route_cntSum  + Double.parseDouble(cvtemp.get("route_cnt").toString());
+            }
+            if(""!=timebucket||" "!=timebucket){
+                Map rt = new HashMap();
+                rt.put("timebucket",timebucket);
+                rt.put("volume",volumeSum);
+                rt.put("route_cnt",route_cntSum);
+                connection_volume.add(rt);
+            }
+        }
+        //connection_volume end
+        //        #connection plan start
+        List<Map> connection_opt = megerConnectionOpt();
+        connection_opt = orderByParameter(connection_opt,"j_connection_id","asc");
+//        connection_opt$truck<-solution[(1+I):(I+J)]
+//        connection_opt$bike<-solution[(1+I+J):(I+J*2)]
+//        connection_opt$didi<-solution[(1+I+J*2):(I+J*3)]
+//        connection_opt$dada<-solution[(1+I+J*3):(I+J*4)]
+        for(int e=0;e<J;e++){
+            connection_opt.get(e).put("truck",solution[1+I+e]);
+            connection_opt.get(e).put("bike",solution[1+I+J+e]);
+            connection_opt.get(e).put("didi",solution[1+I+J*2+e]);
+            connection_opt.get(e).put("dada",solution[1+I+J*3+e]);
+        }
+//        summary(connection_opt)
+        List<Map> active_connection_trucks = new ArrayList<Map>();
+        List<Map> active_connection = new ArrayList<Map>();
+        for(Map co:connection_opt){
+            double truck = Double.parseDouble(co.get("truck").toString());
+            double bike = Double.parseDouble(co.get("bike").toString());
+            double didi = Double.parseDouble(co.get("didi").toString());
+            double dada = Double.parseDouble(co.get("dada").toString());
+            if(truck>0){
+                active_connection_trucks.add(co);
+            }
+            if(truck>0||bike>0||didi>0||dada>0){
+                active_connection.add(co);
+            }
+        }
+        //        #connection plan start
+    }
+
+    protected List<Map> getTopFiveByParamter(List<Map> listMap, String parameter){
+        List<Map> list_result = new ArrayList<Map>();
+
+        List<Integer> odid = new ArrayList<Integer>();
+
+        for(int e=0;e< listMap.size();e++) {
+            Integer currentodid = Integer.parseInt(listMap.get(e).get("m_od_id").toString());
+            if (!odid.contains(currentodid)) {
+                List<Map> list_temp = new ArrayList<Map>();
+                for (int k = 0; k < listMap.size(); k++) {
+                    Integer iterodid = Integer.parseInt(listMap.get(k).get("m_od_id").toString());
+                    if (iterodid.equals(currentodid)) {
+                        list_temp.add(listMap.get(k));
+                    }
+                }
+                odid.add(currentodid);
+
+                //same odid is added to temp
+                //get top 5
+                int loop = 0;
+                while(list_temp.size()>0 && loop < 5)
+                {
+                    double mindistance = 100000000;
+                    int minidx = -1;
+                    for(int ll=0;ll< list_temp.size();ll++)
+                    {
+                        double dist = Double.parseDouble(list_temp.get(ll).get("distance").toString());
+                        if(dist < mindistance) {
+                            mindistance = dist;
+                            minidx = ll;
+                        }
+                    }
+                    list_result.add(list_temp.get(minidx));
+                    list_temp.remove(minidx);
+                    loop++;
+                }
+
+            }
+        }
+
+        return list_result;
+    }
+    public List<Map> megerConnectionOpt(){
+        List<Map> connOpt = new ArrayList<Map>();
+        //merge ConnectionOpt
+        for (int j = 0; j < connection_list.size(); j++) {
+            boolean exist = false;
+            for (int j2 = 0; j2 < connection_volume.size(); j2++) {
+
+                boolean b = two_points_route_list.get(j).get("point1").toString().equals(distance_ref_list.get(j2).get("inbound_id").toString());
+                if (b) {
+                    exist = true;
+                    Map<String, Object> temp = new HashMap<String, Object>(two_points_route_list.get(j));
+                    temp.put("inbound_id", distance_ref_list.get(j2).get("inbound_id"));
+                    temp.put("outbound_id", distance_ref_list.get(j2).get("outbound_id"));
+                    temp.put("km", distance_ref_list.get(j2).get("km"));
+                    temp.put("minutes", distance_ref_list.get(j2).get("minutes"));
+                    temp.put("OD_id", distance_ref_list.get(j2).get("OD_id"));
+                    temp.put("cross_river", distance_ref_list.get(j2).get("cross_river"));
+
+                    connOpt.add(temp);
+                }
+            }
+            if (!exist) {
+                Map<String, Object> temp = new HashMap<String, Object>(two_points_route_list.get(j));
+                temp.put("inbound_id", "");
+                temp.put("outbound_id", "");
+                temp.put("km", "");
+                temp.put("minutes", "");
+                temp.put("OD_id", "");
+                temp.put("cross_river", "");
+                connOpt.add(temp);
+            }
+        }
+        return connOpt;
+    }
+    public List<Map> orderByParameter(List<Map> list_temp,String orderParameter,String orderType){
+        //order list<Map>
+        int loop = 0;
+        List<Map> list_result = new ArrayList<Map>();
+        while(list_temp.size()>0 && loop < list_temp.size())
+        {
+            double mindistance = 100000000;
+            int minidx = -1;
+            for(int ll=0;ll< list_temp.size();ll++)
+            {
+                double dist = Double.parseDouble(list_temp.get(ll).get(orderParameter).toString());
+                if(orderType.equals("asc")){
+                    if(dist < mindistance) {
+                        mindistance = dist;
+                    }
+                }else{
+                    if(dist > mindistance) {
+                        mindistance = dist;
+                    }
+                }
+                minidx = ll;
+            }
+            list_result.add(list_temp.get(minidx));
+            list_temp.remove(minidx);
+            loop++;
+        }
+        return list_result;
     }
 }

@@ -27,9 +27,14 @@ public interface TempMapper {
 
     List<Map> findthree_points_route(String scenariosId);
 
+    List<Map> findfour_points_route(String scenariosId);
+
     List<Map> findAllTwoPointsRoute(String scenariosId);
     //findAll
     List<Map> findAll01(String scenariosId);
+
+    //findRouteTempBycode1
+    List<Map> findRouteTempBycode1(String route_temp_sql);
 
     //findAll
     List<Map> findAll02(String scenariosId);
@@ -45,5 +50,9 @@ public interface TempMapper {
     List<Map> findAll07(String scenariosId);
     //findAll
     List<Map> findAll08(String scenariosId);
+
+    //findAllFlowLim
+    List<Map> findAllFlowLim(String scenariosId);
+
 
 }

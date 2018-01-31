@@ -61,11 +61,21 @@ public class TempService {
     public List<Map> findthree_points_route(String scenariosId) {
         return tempMapper.findthree_points_route(scenariosId);
     }
+    @Cacheable
+    public List<Map> findfour_points_route(String scenariosId) {
+        return tempMapper.findfour_points_route(scenariosId);
+    }
 
     @Cacheable
     public List<Map> findAllTwoPointsRoute(String scenariosId) {
         return tempMapper.findAllTwoPointsRoute(scenariosId);
     }
+
+    @Cacheable
+    public List<Map> findRouteTempBycode1(String route_temp_sql) {
+        return tempMapper.findRouteTempBycode1(route_temp_sql);
+    }
+
     /**
      * 查询所有运力信息
      * param
@@ -75,6 +85,18 @@ public class TempService {
     public List<Map> findAll01(String scenariosId) {
         return tempMapper.findAll01(scenariosId);
     }
+
+
+    /**
+     * 查询所有运力信息
+     * param
+     * @return
+     */
+    @Cacheable
+    public List<Map> findAllFlowLim(String scenariosId) {
+        return tempMapper.findAllFlowLim(scenariosId);
+    }
+
     /**
      * 查询所有运力信息
      * param
