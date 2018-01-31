@@ -404,7 +404,7 @@ table.table-bordered.dataTable td:last-child {
 .sim-input>p{
 	line-height: 33px;
 	float: left;
-	width: 23%;
+	width: 27%;
 }
 .sim-box>.form-group.sim-ground.alt-sims{
 	height: 3rem;
@@ -421,7 +421,16 @@ table.table-bordered.dataTable td:last-child {
 .sim-run-btn>button{
 	width: auto;
 }
-
+.sim-v-relay {
+	display: none;
+}
+.sim-v-relay span {
+	display: inline-block;
+	float: left;
+	padding-left: 10px;
+	vertical-align: middle;
+	line-height: 28px;
+}
 /******************tran****************************/
 .tran-add-frspan{
 	display: inline-block;

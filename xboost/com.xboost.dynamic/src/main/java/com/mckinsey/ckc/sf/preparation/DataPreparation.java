@@ -22,6 +22,7 @@ import com.mckinsey.ckc.sf.data.Parcel;
 import com.mckinsey.ckc.sf.data.Points;
 import com.mckinsey.ckc.sf.main.Main;
 import com.mckinsey.ckc.sf.utils.Grouping;
+import org.joda.time.DateTime;
 
 public class DataPreparation implements IConstants {
 
@@ -652,6 +653,42 @@ public class DataPreparation implements IConstants {
 		return tableName;
 	}
 
+	public void saveTableName(String tableName1,String tableName2) {
+
+		try {
+			Statement stmt = JDBCConnection.getConnection().createStatement();
+
+			// save table name
+			String query = "insert into dynamic_table_name  (carrier_name,parcel_name,create_time)values('"
+					+ tableName1 + "','"
+					+ tableName2 + "','"
+					+ DateTime.now().toString("yyyy-MM-dd HH:mm")
+					+ "')";
+			stmt.addBatch(query);
+			stmt.executeBatch();
+			stmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+//
+//	public void dropHisData() {
+//		String tableName = "carrier_capacity_" + CARRIER_CAPACITY + "_N_carrier_" + N_CARRIER_RANGE
+//		DateFormat df = new SimpleDateFormat("yyyyMMdd_HH_mm");
+//		String sdt = df.format(new Date(System.currentTimeMillis()));
+//
+//		try {
+//			Statement stmt = JDBCConnection.getConnection().createStatement();
+//
+//			// save table name
+//			String sql = "select concat('drop table',table_name,';') from xboost2.tables where table_name like "+tableName+sdt;
+//			stmt.addBatch(query);
+//			stmt.executeBatch();
+//			stmt.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 //	public static void main(String args[]) {
 //		DateFormat df = new SimpleDateFormat("yyyyMMdd_HH_mm");
 //		String sdt = df.format(new Date(System.currentTimeMillis()));
