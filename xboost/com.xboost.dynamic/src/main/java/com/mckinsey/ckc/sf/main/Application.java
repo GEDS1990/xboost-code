@@ -1,8 +1,7 @@
 package com.mckinsey.ckc.sf.main;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.mckinsey.ckc.sf.data.Result;
@@ -10,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,7 @@ import com.mckinsey.ckc.sf.restful.data.MoveResponse;
 
 @RestController
 @EnableAutoConfiguration
+@EnableScheduling
 public class Application {
 
 	private static final String template = "Hello, %s!";
@@ -66,6 +68,29 @@ public class Application {
 		//main.calculate();
 		main.start();
 		return "success";
+	}
+//
+//	@RequestMapping(value="/main/calculateTimer")
+//	public void calculateTimer(){
+//		new Timer().schedule(new TimerTask() {
+//			@Override
+//			public void run() {
+//				System.out.println(new Date());
+//				System.out.println(Calendar.getInstance().getTime());
+//				System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"：开始运行算法。。。。。");
+//				//	Main main =new Main();
+//				//	main.calculate();
+//				System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"：算法运行结束！");
+//			}
+//		},3000,10*1000);
+//	}
+
+	@Scheduled(cron="0 0 1 * * ?") //每天1点执行
+	public void calculateTimer1() {
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"：开始运行算法。。。。。");
+		Main main =new Main();
+		main.calculate();
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"：算法运行结束！");
 	}
 
 	@RequestMapping(value="/main/dynamic")

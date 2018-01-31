@@ -674,18 +674,7 @@ public class Main extends Thread implements IConstants {
 		main.calculate();
 	}
 
-	public void calculateTimer(){
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				System.out.println(new Date());
-				System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"：开始运行算法。。。。。");
-			//	Main main =new Main();
-			//	main.calculate();
-				System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"：算法运行结束！");
-			}
-		},30,10000);
-	}
+
 
 //	public static void main(String[] args) {
 //		Main main = new Main();
