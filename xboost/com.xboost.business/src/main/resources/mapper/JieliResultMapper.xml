@@ -5,10 +5,10 @@
     <insert id="save" >
         INSERT into t_jieli_result(scenariosId,timebucket,connection,inbound_id,outbound_id,distance,cross_river,minutes,
         time_id,j_connection_id,kmh_didi,kmh_truck,kmh_bike,min_didi,cost_bike,cost_didi,cost_truck,cost_data,
-        volume,route_cnt,truck,bike,didi,dada,str1,str2,str3,createtime,updatetime)
+        volume,route_cnt,truck,bike,didi,dada,car_type,car_num,str3,createtime,updatetime)
         VALUES (#{scenariosId},#{timeBucket},#{connection},#{inboundId},#{outboundId},#{distance},#{crossRiver},#{minutes},
         #{timeId},#{jConnectionId},#{kmhDidi},#{kmhTruck},#{kmhBike},#{minDidi},#{costBike},#{costDidi},#{costTruck},#{costDada},
-        #{volume},#{routeCnt},#{truckNum},#{bikeNum},#{didiNum},#{dadaNum},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+        #{volume},#{routeCnt},#{truckNum},#{bikeNum},#{didiNum},#{dadaNum},#{carType},#{carNum},#{str3},#{createTime},#{updateTime})
     </insert>
 
     <update id="update">
@@ -17,7 +17,7 @@
         minutes = #{minutes},time_id = #{timeId},j_connection_id = #{jConnectionId},kmh_didi = #{kmhDidi},
         kmh_truck = #{kmhTruck},kmh_bike = #{kmhBike},min_didi = #{minDidi},cost_bike = #{costBike},cost_didi = #{costDidi},
         cost_truck = #{costTruck},cost_data = #{costDada},volume = #{volume},route_cnt = #{routeCnt},truck = #{truckNum},
-        bike = #{bikeNum},didi = #{didiNum},dada = #{dadaNum} where id = #{id}
+        bike = #{bikeNum},didi = #{didiNum},dada = #{dadaNum},car_type=#{carType},car_num=#{carNum} where id = #{id}
     </update>
 
     <select id="findAll" resultType="JieliResult" resultMap="resultMap">
@@ -81,5 +81,7 @@
         <result property="bikeNum" column="bike"/>
         <result property="didiNum" column="didi"/>
         <result property="dadaNum" column="dada"/>
+        <result property="carType" column="car_type"/>
+        <result property="dadaNum" column="car_num"/>
     </resultMap>
 </mapper>

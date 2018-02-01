@@ -539,4 +539,15 @@ public class CarService {
 
     }
 
+    public List<CarLicence> findAllCar(String scenariosId) {
+        return (List<CarLicence>) transportMapper.findAllCar(scenariosId);
+    }
+
+    public void updateCarLincence(Map<String, Object> param) {
+        transportMapper.updateCarLincence(param);
+    }
+
+    public CarLicence findCarLincence(Map<String, Object> param) {
+        return transportMapper.findCarLincence(param);
+    }
 }

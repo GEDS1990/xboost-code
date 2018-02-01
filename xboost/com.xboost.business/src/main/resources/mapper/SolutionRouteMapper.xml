@@ -160,6 +160,10 @@
         and r.route_count=#{routeCount} and c.busy_idle="0"
     </select>
 
+    <select id="findRouteByRouteCount" resultMap="modelRoute">
+        SELECT * FROM t_solution_route WHERE scenariosId=#{scenariosId} AND route_count=#{routeCount}
+    </select>
+
     <resultMap id="modelRoute" type="Route">
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
@@ -216,6 +220,7 @@
         <result property="largeCarModel" column="large_carModle"/>
         <result property="maxOperateNum" column="max_operate_num"/>
         <result property="distribCenter" column="distrib_center"/>
+        <result property="busyIdle" column="busy_idle"/>
     </resultMap>
 
     <resultMap id="modelRouteAndCar" type="Route">

@@ -331,4 +331,9 @@ public class SolutionRouteService {
             e.printStackTrace();
         }
     }
+
+    //根据route_count查询route
+    public List<Route> findRouteByRouteCount(String scenariosId, String routeCount) {
+        return solutionRouteMapper.findRouteByRouteCount(scenariosId, routeCount);
+    }
 }
