@@ -841,10 +841,10 @@ $(function (){
 			$.get("/efficiency/leaveCarNum.json").done(function (res){
 				//console.log(res)
 				if (res) {
-					var list = efficList(res);
+					var lists = efficList(res);
 					//console.log(list);
 					//操作dom
-					var result = list[0].list;
+					var result = lists[0].list;
 					//console.log(result)
 					var allsum = "";
 					var addthead="";
@@ -884,10 +884,10 @@ $(function (){
 			$.get("/efficiency/sbVol.json").done(function (res){
 				//console.log(res);
 				if (res) {
-					var list = efficList(res);
+					var lists = efficList(res);
 					//console.log(list);
 					//操作dom
-					var result = list[0].list;
+					var result = lists[0].list;
 					//console.log(result)
 					var allsum = "";
 					var addthead="";
@@ -926,10 +926,10 @@ $(function (){
 			$.get("/efficiency/arrCarNum.json").done(function (res){
 				//console.log(res);
 				if (res) {
-					var list = efficList(res);
+					var lists = efficList(res);
 					//console.log(list);
 					//操作dom
-					var result = list[0].list;
+					var result = lists[0].list;
 					//console.log(result)
 					var allsum = "";
 					var addthead="";
@@ -969,10 +969,10 @@ $(function (){
 			$.get("/efficiency/unloadVol.json").done(function (res){
 				//console.log(res);
 				if (res) {
-					var list = efficList(res);
+					var lists = efficList(res);
 					//console.log(list);
 					//操作dom
-					var result = list[0].list;
+					var result = lists[0].list;
 					//console.log(result)
 					var allsum = "";
 					var addthead="";
