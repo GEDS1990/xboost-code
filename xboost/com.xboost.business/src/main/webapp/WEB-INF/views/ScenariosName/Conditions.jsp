@@ -79,7 +79,7 @@
 					    		<th rowspan="2">depot<br />address</th>
 					    		<th rowspan="2">depot<br />area(㎡)</th>
 					    		<th rowspan="2">depot<br />type</th>
-					    		<th rowspan="2">Hub<br />Y/N</th>
+					    		<th rowspan="2">To Dummy Hub</th>
 					    		<th rowspan="2">Night Operation<br />Y/N</th>
 					    		<th colspan="7">per 10 minutes</th>
                                 <th rowspan="2">operation</th>
