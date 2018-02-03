@@ -161,6 +161,7 @@
 	    								<li v-show="relaySeen">distrib.Total Staffing Cost: <span>{{sum3}}</span></li>
 		    							<li>Staffing Cost per piece: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>Transportation Cost per piece: <span>{{line_cost}}</span> <span> (per piece)</span></li>
+										<input type="hidden" name="piece" v-bind:value="piece"/>
 		    							<input type="hidden" name="sum2" v-bind:value="day_p_cost"/>
 		    							<input type="hidden" name="totalDailyLaborCost" v-bind:value="day_allp_cost"/>
 		    							<input type="hidden" name="branchTransportCost" v-bind:value="line_cost"/>
@@ -242,6 +243,7 @@
 	    								<li v-show="relaySeen">distrib.Total Staffing Cost: <span>{{sum3}}</span></li>
 		    							<li>Staffing Cost per piece: <span>{{day_allp_cost}}</span> <span> (per piece)</span></li>
 		    							<li>Transportation Cost per piece: <span>{{line_cost}}</span> <span> (per piece)</span></li>
+		    							<input type="hidden" name="piece" v-bind:value="piece"/>
 		    							<input type="hidden" name="sum2" v-bind:value="day_p_cost"/>
 		    							<input type="hidden" name="totalDailyLaborCost" v-bind:value="day_allp_cost"/>
 		    							<input type="hidden" name="branchTransportCost" v-bind:value="line_cost"/>
