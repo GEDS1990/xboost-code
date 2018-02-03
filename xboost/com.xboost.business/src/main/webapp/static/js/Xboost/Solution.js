@@ -1253,11 +1253,21 @@ $(function  () {
 				});
 			});
 
-            //导出excel表格
+            //导出excel表格进行排车
             $('.export-btn').click(function  () {
                 var _xls = $(this).attr('data-xls');
                 if (_xls) {
                     window.location.href="/route/exportResult";
+                }
+                $(".modal-header span").trigger('click');
+            });
+
+            //导入excel表格更新排车信息
+            $('.btn-input').click(function  () {
+                var _xls = $(this).attr('data-xls');
+                if (_xls) {
+                    // window.location.href="/route/exportResult";
+					alert("000");
                 }
                 $(".modal-header span").trigger('click');
             });

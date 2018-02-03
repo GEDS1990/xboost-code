@@ -54,9 +54,10 @@
 	        	<div class="xb-fl">
 	        		<p>${sessionScope.openScenariosName}(Results)</p>
 	        	</div>
-	        	<div class="xb-fr">
-	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Export Results</button>
-	        	</div>
+				<div class="xb-fr">
+					<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Settings</button>
+					<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Export Settings</button>
+				</div>
 	        </div>
 	        <div class="cond-top">
 	        	<ul class="cond-top-ul clearfix">
