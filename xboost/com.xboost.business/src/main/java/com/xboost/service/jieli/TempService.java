@@ -83,19 +83,19 @@ public class TempService {
 
             Route route = new Route();
 
-            if(Integer.parseInt(jieliResult.getDidiNum())!=0){
+            if(Double.parseDouble(jieliResult.getDidiNum())>0){
                 route.setCarType("didi");
                 route.setStr1(jieliResult.getDidiNum());
             }
-            if(Integer.parseInt(jieliResult.getDadaNum())!=0){
+            if(Double.parseDouble(jieliResult.getDadaNum())>0){
                 route.setCarType(" dada");
                 route.setStr1(" "+jieliResult.getDidiNum());
             }
-            if(Integer.parseInt(jieliResult.getBikeNum())!=0){
+            if(Double.parseDouble(jieliResult.getBikeNum())>0){
                 route.setCarType(" baidu");
                 route.setStr1(" "+jieliResult.getDidiNum());
             }
-            if(Integer.parseInt(jieliResult.getTruckNum())!=0){
+            if(Double.parseDouble(jieliResult.getTruckNum())>0){
                 route.setCarType(" truck");
                 route.setStr1(" "+jieliResult.getDidiNum());
             }
@@ -145,6 +145,7 @@ public class TempService {
 
         ///cost
         Cost cost = new Cost();
+        solutionCostService.delByScenariosId(Integer.parseInt(openScenariosId));
         cost.setScenariosId(openScenariosId);
         cost.setTotalCost(String.valueOf(gurobyCost));
         solutionCostService.add(cost);
