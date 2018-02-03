@@ -86,15 +86,15 @@ public class TempService {
             }
             else if(Math.abs(Double.parseDouble(jieliResult.getDadaNum()))>0){
                 route.setCarType("dada");
-                route.setStr1(jieliResult.getDidiNum());
+                route.setStr1(jieliResult.getDadaNum());
             }
             else if(Math.abs(Double.parseDouble(jieliResult.getBikeNum()))>0){
                 route.setCarType("baidu");
-                route.setStr1(jieliResult.getDidiNum());
+                route.setStr1(jieliResult.getBikeNum());
             }
             else if(Math.abs(Double.parseDouble(jieliResult.getTruckNum()))>0){
                 route.setCarType("truck");
-                route.setStr1(jieliResult.getDidiNum());
+                route.setStr1(jieliResult.getTruckNum());
             }
 
             route.setScenariosId(openScenariosId);
