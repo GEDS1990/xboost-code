@@ -31,6 +31,8 @@ public class SolutionRouteService {
 
     @Inject
     private SolutionRouteMapper solutionRouteMapper;
+    @Inject
+    private MyScenariosService myScenariosService;
 
     /**
      * 新增route信息
@@ -115,7 +117,23 @@ public class SolutionRouteService {
      * @return
      */
     public List<Map<String, Object>> findByRoute(Map<String, Object> param) {
-        return solutionRouteMapper.findByRoute(param);
+        List<Map<String, Object>> mapList = solutionRouteMapper.findByRoute(param);
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+        if ("1".equals(modelType))
+            return mapList;
+        for (Map map : mapList) {
+            System.out.println(map.get("sbVol"));
+            System.out.println(map.get("sbVolSum"));
+            double sbVol = Math.floor(Double.parseDouble(map.get("sbVol") + ""));
+            double sbVolSum = Math.floor(Double.parseDouble(map.get("sbVolSum") + ""));
+            double unloadVol = Math.floor(Double.parseDouble(map.get("unloadVol") + ""));
+            double unloadVolSum = Math.floor(Double.parseDouble(map.get("unloadVolSum") + ""));
+            map.put("sbVol", sbVol);
+            map.put("sbVolSum", sbVolSum);
+            map.put("unloadVol", unloadVol);
+            map.put("unloadVolSum", unloadVolSum);
+        }
+        return mapList;
     }
 
     /**
