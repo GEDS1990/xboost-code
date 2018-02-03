@@ -3,6 +3,7 @@ package com.xboost.service;
 import com.xboost.mapper.SolutionRouteMapper;
 import com.xboost.pojo.Activity;
 import com.xboost.pojo.Route;
+import com.xboost.util.ExcelUtil;
 import com.xboost.util.ExportUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
@@ -13,10 +14,12 @@ import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -447,6 +450,10 @@ public class SolutionRouteService {
                         cell.setCellValue(route.get("calcDis").toString() + "km");
                     }
                     cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("carType").toString());
+                    cell.setCellStyle(bodyStyle);
                 }
             }
         }
@@ -467,5 +474,37 @@ public class SolutionRouteService {
     //根据route_count查询route
     public List<Route> findRouteByRouteCount(String scenariosId, String routeCount) {
         return solutionRouteMapper.findRouteByRouteCount(scenariosId, routeCount);
+    }
+
+    public void updateRouteByExcel(Route route, MultipartFile[] file){
+        //判断文件集合是否有文件
+        if(file != null && file.length > 0) {
+            for(MultipartFile multipartFile : file) {
+                if(!multipartFile.isEmpty()) {
+                    //解析文件并存储到数据库
+                    File fileTmp = null;
+                    long tempTime = System.currentTimeMillis();
+                    try {
+                        fileTmp=new File(System.getProperty("user.dir")+"/temp/"+tempTime+ ".xlsx");
+                        if (!fileTmp.exists()) fileTmp.mkdirs();
+                        multipartFile.transferTo(fileTmp);
+//                      File fileTemp = (File) multipartFile;
+                        ExcelUtil excelUtil = new ExcelUtil();
+                        List<String> lineList = excelUtil.readExcel(fileTmp,1);
+                        int d = 0;
+                        for(int i=2;i<lineList.size();i++){
+                            String[] row = lineList.get(i).split("#");
+
+
+
+                        }
+                        logger.info("insert into db complete");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
     }
 }

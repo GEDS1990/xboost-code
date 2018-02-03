@@ -1253,6 +1253,67 @@ $(function  () {
 				});
 			});
 
+            /*
+			 * 选择上传文件
+			 */
+            $("body").on("click",".cond-file-btn",function  () {
+                $('.import-error').text("").hide();
+                var _file = $(this).parent(".cond-file-box").prev();
+                var _nextP = $(this).next();
+                _file.trigger("click");
+                _file.change(function  () {
+                    var _index = _file.val().lastIndexOf("\\")+1;
+                    var _key = _file.val().slice(_index);
+                    _nextP.text(_key);
+                });
+            });
+
+            /*
+			 *上传文件 函数
+			 * formId 表单id ,
+			 * inpClass 对应的文件的input类名,
+			 * url 请求地址，
+			 * modId ,模态框id
+			 * */
+            function UploadFile (formID,inpClass,urls,modId) {
+                var doc = document;
+                var form = [];//创建对象储存文件信息
+                var inp_class = doc.getElementById(formID).getElementsByClassName(inpClass);
+                var len = inp_class.length;
+                for (var i=0;i<len;i++) {
+                    FileTest(inp_class[i],form);
+                }
+                for (var j=0,_len=form.length;j<_len;j++) {
+                    if (form[j] == false) {
+                        return false;
+                    }
+                }
+                var form = new FormData(document.getElementById(formID));
+                var _val = $('input[name="file"]').val();
+                if ( !Boolean(_val) ) {
+                    return false;
+                }
+                $('.loading').show();
+                $.ajax({
+                    url:urls,
+                    type:"post",
+                    data:form,
+                    processData:false,
+                    contentType:false,
+                    success:function(data){
+                        //alert("Import information to complete!");
+                        $(modId).modal("hide");
+                        $('.loading').hide();
+                        window.location.reload();
+                    },
+                    error:function(e){
+                        //alert("Mistake!!");
+                        window.clearInterval(timer);
+                    }
+                });
+                //此处为上传文件的进度条get();
+            }
+
             //导出excel表格进行排车
             $('.export-btn').click(function  () {
                 var _xls = $(this).attr('data-xls');
@@ -1262,14 +1323,9 @@ $(function  () {
                 $(".modal-header span").trigger('click');
             });
 
-            //导入excel表格更新排车信息
-            $('.btn-input').click(function  () {
-                var _xls = $(this).attr('data-xls');
-                if (_xls) {
-                    // window.location.href="/route/exportResult";
-					alert("000");
-                }
-                $(".modal-header span").trigger('click');
+            //导入excel 表格
+            $('#cond-file-upload-info').click(function  () {
+                UploadFile("cond-input-form-info","cond_file","/siteInfo/addByExcel",'.bs-example-modal-input')
             });
 		}
 		
