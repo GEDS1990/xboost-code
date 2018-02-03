@@ -49,9 +49,8 @@ public class RelayModeUtil extends Thread implements IConstants {
     List<Map> OD_demand_list = new ArrayList<Map>();
     List<Map> distance_ref_list = new ArrayList<Map>();
     List<Map> jisan_candidates = new ArrayList<Map>();
-    List<Map> connection_volume = new ArrayList<Map>();
-    double[] outflow_lim;
-    double[] didi_outflow_lim;
+    //double[] outflow_lim;
+    //double[] didi_outflow_lim;
 
 
     List<Map> two_points_route_list = new ArrayList<Map>();
@@ -67,6 +66,7 @@ public class RelayModeUtil extends Thread implements IConstants {
 
     List<Map> route_list = new ArrayList<>();
     List<Map> connection_list = new ArrayList<>();
+    List<Map> connection_opt_list = new ArrayList<>();
 
     Matrix M11;
     Matrix M12;
@@ -101,6 +101,20 @@ public class RelayModeUtil extends Thread implements IConstants {
     double truck_capacity = 400;
     double dist_limit_bike = 5;
     double dist_limit_dada = 10;
+
+    double speed1 = 15;
+    double speed2 = 12;
+    double speed3 = 20;
+    double speed4 = 30;
+
+
+    GRBEnv env;
+    GRBModel model;
+
+    List<Integer> outflow_lim;
+
+    double gurobyCost;
+    double[] gurobyResult;
     //init data
     private void InitData(){
         List<SiteInfo> SiteInfoAll = siteInfoService.findAllSiteInfo(OpenScenariosId);
@@ -114,12 +128,14 @@ public class RelayModeUtil extends Thread implements IConstants {
                 }
             }
         }
-        List<Integer> outflow_lim = new ArrayList<Integer>();
+        outflow_lim = new ArrayList<Integer>();
         for(int n=2;n<=22;n++){
             for(int e=0;e<flow_lim.size();e++){
                 outflow_lim.add(Integer.parseInt(flow_lim.get(e).get("c"+n).toString()));
             }
         }
+        //didi_flow_lim = flow_lim;
+        //didi_outflow_lim = outflow_lim;
 
 /////////////// begin : jisan_candidates    SiteInfoAll
 
@@ -162,7 +178,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         {
             Map<String, Object> OD_demand = new HashMap<String, Object>();
             OD_demand.put("scenariosId", OpenScenariosId);
-            OD_demand.put("OD_id", idemand + 1);
+            OD_demand.put("OD_id", idemand);
             OD_demand.put("volume", Double.parseDouble(dinfo.getVotes()) / 0.8511);
 
             for (int e = 0; e < SiteInfoAll.size(); e++) {
@@ -211,6 +227,8 @@ public class RelayModeUtil extends Thread implements IConstants {
                 OD_demand_list.add(OD_demand);
                 idemand++;
             }
+
+
         }
 
         //////////////////end : od_demand_list
@@ -699,6 +717,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         int M = two_points_route_list.size();
         int J = distance_ref_list.size()*full_time/route_time_unit;
 
+
         M11 = SparseMatrix.Factory.zeros(M, route_list.size());
         M12 = SparseMatrix.Factory.zeros(M, J);
         M13 = SparseMatrix.Factory.zeros(M, J);
@@ -755,7 +774,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         {
             int ix = p.get(ip);
             int iy = q.get(ip);
-            M11.setAsDouble(v.get(ip), ix, iy);
+            M21.setAsDouble(v.get(ip), ix, iy);
         }
 
         M22 = SparseMatrix.Factory.zeros(J, J);
@@ -812,9 +831,11 @@ public class RelayModeUtil extends Thread implements IConstants {
             //(connection$time_id-1+ceiling(connection$minutes/route_time_unit))
             int vv1 = Integer.parseInt(connection_list.get(i).get("time_id").toString())-1+
                     (int)Math.ceil(Double.parseDouble(connection_list.get(i).get("minutes").toString())/route_time_unit);
-            int vv2 = (timebucket_num[timebucket_num.length-1]-1)*flow_lim.size()+ flow_lim.size() * timebucket_num[timebucket_num.length-1];
+            int vv2 = (timebucket_num[timebucket_num.length-1]-1);
 
-            int val2 = Integer.parseInt(connection_list2.get(i).get("dummy_out_id").toString())+Math.min(vv1,vv2);
+            int val2 = Integer.parseInt(connection_list2.get(i).get("dummy_out_id").toString())+Math.min(vv1,vv2)*
+                    flow_lim.size()+ flow_lim.size() * timebucket_num[timebucket_num.length-1];
+
             f2.add(val2);
         }
         f.addAll(f1);
@@ -879,7 +900,7 @@ public class RelayModeUtil extends Thread implements IConstants {
             if (b1|b2){
                 val = 1;
             }
-            M53.setAsDouble(val, 1, i);
+            M53.setAsDouble(val, 0, i);
         }
         M54 = SparseMatrix.Factory.zeros(1, J);
         M55 = SparseMatrix.Factory.zeros(1, J);
@@ -891,38 +912,222 @@ public class RelayModeUtil extends Thread implements IConstants {
             if (b1|b2){
                 val = 1;
             }
-            M55.setAsDouble(val, 1, i);
+            M55.setAsDouble(val, 0, i);
         }
 
         logger.info("m5x");
     }
-    private void InvokeGurobi(int consx,int consy,double[] c2,double[][] Q2,double[][] A2,char[] sense2,
-                              double[] rhs2,double[] lb2,double[] ub2,char[] types,double[] sol2)
+    private void InvokeGurobi()
     {
-        Dense dense = new Dense();
-        GRBEnv env2 = null;
-        try {
-            env2 = new GRBEnv();
-        } catch (GRBException e) {
-            e.printStackTrace();
-        }
-        boolean success = dense.dense_optimize(env2, consx, consy, c2, Q2, A2, sense2, rhs2,
-                    lb2, ub2, types, sol2);
-            if (success) {
-//                System.out.println("x: " + sol2[0] + ", y: " + sol2[1] + ", z: " + sol2[2]);
-                double[] solution = sol2;
-                for(int e=0;e<solution.length;e++)
-                    logger.info("solution:"+solution[e]);
-                makeResults(solution);
+        int I =  route_list.size();
+        int J =  distance_ref_list.size()*full_time/route_time_unit;
+
+        try
+        {
+            env = new GRBEnv();
+            model = new GRBModel(env);
+
+            GRBVar[] x_var = model.addVars(I, GRB.BINARY);
+            GRBVar[] i_var = model.addVars(J*4, GRB.INTEGER);
+
+            //object
+            GRBLinExpr exprObj = new GRBLinExpr();
+            for (int iVar=0;iVar<J;iVar++)
+            {
+                double cost_truck=0.0,cost_bike=11.0,cost_didi=0.0,cost_dada=0.0;
+                double distance =  Double.parseDouble(connection_list.get(iVar).get("distance").toString());
+                cost_truck =distance*10;
+                if (distance<2)
+                {
+                    cost_dada = 10;
+                }
+                else
+                {
+                    cost_dada = (distance-2)*2+10;
+                }
+                double didispeed = 0;
+
+                if(distance<=10)
+                {
+                    didispeed = speed1;
+                }
+                else if(distance<=30)
+                {
+                    didispeed = speed3;
+                }
+                else
+                {
+                    didispeed = speed4;
+                }
+                cost_didi = distance/didispeed*60*0.4+distance*2.4;
+                if (distance>12)
+                {
+                    cost_didi += distance-12;
+                }
+                if(cost_didi<13)
+                {
+                    cost_didi = 13;
+                }
+
+
+                exprObj.addTerm(cost_truck, i_var[iVar]);
+                exprObj.addTerm(cost_bike, i_var[iVar+J]);
+                exprObj.addTerm(cost_didi, i_var[iVar+J*2]);
+                exprObj.addTerm(cost_dada, i_var[iVar+J*3]);
+            }
+            model.setObjective(exprObj, GRB.MINIMIZE);
+
+            //M11
+            //int nonzero1 = 0;
+            for (int iRow=0;iRow<M11.getRowCount();iRow++)
+            {
+                GRBLinExpr expr = new GRBLinExpr();
+                for (int iCol=0;iCol<M11.getColumnCount();iCol++)
+                {
+                    if(M11.getAsDouble(iRow,iCol)> 0.00001)
+                    {
+                        //logger.info("p");
+                        //nonzero1++;
+                        expr.addTerm(M11.getAsDouble(iRow,iCol), x_var[iCol]);
+                    }
+
+                }
+                model.addConstr(expr,GRB.EQUAL,1.0,"m1_"+iRow);
             }
 
+            //M22-M25
+            //int nonzero2 = 0;
+            for (int iRow=0;iRow<M21.getRowCount();iRow++)
+            {
+                GRBLinExpr expr = new GRBLinExpr();
+                for (int iCol=0;iCol<M21.getColumnCount();iCol++) {
+                    if (M21.getAsDouble(iRow, iCol) > 0.00001) {
+                        //logger.info("p");
+                        //nonzero2++;
+                        expr.addTerm(M21.getAsDouble(iRow, iCol), x_var[iCol]);
+                    }
+                }
+                for (int iCol=0;iCol<M22.getColumnCount();iCol++) {
+                    if (M22.getAsDouble(iRow, iCol) <-0.00001) {
+                        //nonzero2++;
+                        expr.addTerm(M22.getAsDouble(iRow, iCol), i_var[iCol]);
+                    }
+                }
+                for (int iCol=0;iCol<M23.getColumnCount();iCol++) {
+                    if (M23.getAsDouble(iRow, iCol) <- 0.00001) {
+                        //nonzero2++;
+                        expr.addTerm(M23.getAsDouble(iRow, iCol), i_var[iCol + J]);
+                    }
+                }
+                for (int iCol=0;iCol<M24.getColumnCount();iCol++) {
+                    if (M24.getAsDouble(iRow, iCol) <- 0.00001) {
+                        //nonzero2++;
+                        expr.addTerm(M24.getAsDouble(iRow, iCol), i_var[iCol + J * 2]);
+                    }
+                }
+                for (int iCol=0;iCol<M25.getColumnCount();iCol++)
+                {
+                    if(M25.getAsDouble(iRow,iCol)<-0.00001)
+                    {
+                        //nonzero2++;
+                        expr.addTerm(M25.getAsDouble(iRow,iCol), i_var[iCol+J*3]);
+                    }
+                }
+
+                model.addConstr(expr,GRB.LESS_EQUAL,0.0,"m2_"+iRow);
+            }
+
+            //M32
+            //int nonzero3=0;
+            for (int iRow=0;iRow<M32.getRowCount();iRow++)
+            {
+                GRBLinExpr expr = new GRBLinExpr();
+                for (int iCol=0;iCol<M32.getColumnCount();iCol++)
+                {
+                    if(M32.getAsDouble(iRow,iCol)> 0.00001)
+                    {
+                        //logger.info("p");
+                        //nonzero3++;
+                        expr.addTerm(M32.getAsDouble(iRow,iCol), i_var[iCol]);
+                    }
+                }
+                model.addConstr(expr,GRB.LESS_EQUAL,5.0,"m3_"+iRow); //todo : set 5 as outflow limit
+            }
+            //M44
+            //int nonzero4=0;
+            for (int iRow=0;iRow<M44.getRowCount();iRow++)
+            {
+                GRBLinExpr expr = new GRBLinExpr();
+                for (int iCol=0;iCol<M44.getColumnCount();iCol++)
+                {
+                    if(M44.getAsDouble(iRow,iCol)> 0.00001)
+                    {
+                        //nonzero4++;
+                        expr.addTerm(M44.getAsDouble(iRow,iCol), i_var[iCol+J*2]);
+                    }
+                }
+                model.addConstr(expr,GRB.LESS_EQUAL,5.0,"m4_"+iRow); //todo : set 5 as outflow limit
+            }
+
+            //M53,M55
+            //int nonzero5=0;
+            for (int iRow=0;iRow<M53.getRowCount();iRow++)
+            {
+                GRBLinExpr expr = new GRBLinExpr();
+                for (int iCol=0;iCol<M53.getColumnCount();iCol++)
+                {
+                    if(M53.getAsDouble(iRow,iCol)> 0.00001)
+                    {
+                        //nonzero5++;
+                        expr.addTerm(M53.getAsDouble(iRow,iCol), i_var[iCol+J]);
+                    }
+                }
+                for (int iCol=0;iCol<M55.getColumnCount();iCol++)
+                {
+                    if(M55.getAsDouble(iRow,iCol)> 0.00001)
+                    {
+                        //nonzero5++;
+                        expr.addTerm(M55.getAsDouble(iRow,iCol), i_var[iCol+J*3]);
+                    }
+                }
+                model.addConstr(expr,GRB.EQUAL,0.0,"m5_"+iRow); //
+            }
+            model.set("MIPgap","0.05");
+            model.set("TimeLimit","3600");
+
+            //invoke
+            model.optimize();
+
+            gurobyCost =  model.get(GRB.DoubleAttr.ObjVal);
+            gurobyResult = new double[I+J*4];
+            for (int i=0;i<I;i++)
+            {
+                gurobyResult[i] =x_var[i].get(GRB.DoubleAttr.X);
+            }
+            for (int i=0;i<J*4;i++)
+            {
+                gurobyResult[i+I] =i_var[i].get(GRB.DoubleAttr.X);
+
+            }
+
+        }
+        catch (Exception e) {
+
+        }
+        //M11.
     }
     public void run() throws RuntimeException {
+
+
+
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("params:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("1%"));
 
         InitData();
+
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("Get Route:"));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("10%"));
 
         getTwoPointsRoute();
         getThreePointsRoute();
@@ -932,7 +1137,10 @@ public class RelayModeUtil extends Thread implements IConstants {
         getRouteThreePoint();
         getRouteFourPoint();
 
-/////////////end four point route
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("Calculate Constraint matrix"));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("20%"));
+
+
         route_list.addAll(route_two_point_list);
         route_list.addAll(route_three_point_list);
         route_list.addAll(route_four_point_list);
@@ -945,24 +1153,36 @@ public class RelayModeUtil extends Thread implements IConstants {
         getM4X();
         getM5X();
 
-//        InvokeGurobi();
-        logger.info("p");
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("Start Invoke Gurobi:"));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("50%"));
+
+        InvokeGurobi();
+
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("Gurobi Optim Finished:"));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("Start Insert Result Data:"));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("90%"));
+
+        makeResults(gurobyResult);
+
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("Finished."));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("100%"));
+
 
     }
     ////////////
     protected void makeResults(double[] solution){
 //                route_opt start
-        List<Map> route_opt = route_list;
         int I = route_list.size();
         int J = distance_ref_list.size()*full_time/route_time_unit;
         int I1 = route_two_point_list.size();
         int I2 = route_three_point_list.size();
         int I3 = route_four_point_list.size();
-//                route_opt$route_open<-solution[1:I]
+        List<Map> route_opt = route_list;
+
+        //make route_opt
         for(int e=0;e<I;e++){
             route_opt.get(e).put("route_open",solution[e]);
         }
-//                route_opt$route_type<-c(rep(1,I1),rep(2,I2),rep(3,I3))
         for(int e=0;e<I1;e++){
             route_opt.get(e).put("route_type",1);
         }
@@ -972,108 +1192,90 @@ public class RelayModeUtil extends Thread implements IConstants {
         for(int e=0;e<I3;e++){
             route_opt.get(e).put("route_type",3);
         }
-//        ////////////////////////
-        List<Map> rout_opt_temp = new ArrayList<Map>();
-        for(Map rp : route_opt){
-            String point1 = rp.get("point1").toString();
-            Map rot = new HashMap();
-            rot = rp;
-            for(Map jsc1 : jisan_candidates){
-                String depot_id1 = jsc1.get("depot_id").toString();
-                if(point1.equals(depot_id1)){
-                    rot.put("point1_name",jsc1.get("网点名称"));
-                }
-                for(Map jsc2 : jisan_candidates){
-                    String depot_id2 = jsc2.get("depot_id").toString();
-                    if(point1.equals(depot_id2)){
-                        rot.put("point2_name",jsc2.get("网点名称"));
-                    }
-                    for(Map jsc3 : jisan_candidates){
-                        String depot_id3 = jsc3.get("depot_id").toString();
-                        if(point1.equals(depot_id3)){
-                            rot.put("point3_name",jsc3.get("网点名称"));
+
+
+        //
+        List<Map> connection_volume_list = new ArrayList<Map>();
+        Map<String,Map> timebucketMap = new HashMap<>();
+
+        for (Map ropt:route_opt)
+        {
+            for(int n=0;n<timebucket_num.length;n++) {
+                String openstr = ropt.get("route_open").toString();
+                if (((int)Double.parseDouble(openstr))==1)
+                {
+                    String timebucket = ropt.get("timebucket_"+timebucket_num[n]).toString();
+                    if (timebucket.length()>1) //not empty
+                    {
+                        if(timebucketMap.containsKey(timebucket))
+                        {
+
+                            Map c_volume = timebucketMap.get(timebucket);
+                            double vol = Double.parseDouble(c_volume.get("volume").toString());
+                            int r_count = Integer.parseInt(c_volume.get("route_cnt").toString());
+                            c_volume.put("volume",vol+Double.parseDouble(ropt.get("demand").toString()));
+                            c_volume.put("route_cnt",r_count+1);
                         }
-                        for(Map jsc4 : jisan_candidates){
-                            String depot_id4 = jsc4.get("depot_id").toString();
-                            if(point1.equals(depot_id4)){
-                                rot.put("point4_name",jsc4.get("网点名称"));
-                            }
-
+                        else {
+                            HashMap n_volume = new HashMap();
+                            n_volume.put("timebucket",timebucket);
+                            n_volume.put("volume",ropt.get("demand").toString());
+                            n_volume.put("route_cnt",1);
+                            connection_volume_list.add(n_volume);
+                            timebucketMap.put(timebucket,n_volume);
                         }
                     }
-                }
-            }
-            rout_opt_temp.add(rp);
-        }
-        route_opt=rout_opt_temp;
-//                route_opt end
 
-//                List<Map> connection_volume = tempService.findAll08(OpenScenariosId);
-//connection_volume end
-        List<Map> connection_volume_temp = new ArrayList<Map>();
-        double sumVolume = 0.0;
-        for(Map rp:route_opt){
-            Map cvt = new HashMap();
-            int route_open = Integer.parseInt(rp.get("route_open").toString());
-            if(route_open == 1){
-                for(int n=1;n<=21;n++){
-                    double volume = Double.parseDouble(rp.get("demand").toString());
-                    String timebucket = rp.get("timebucket_"+n).toString();
-                    sumVolume = sumVolume+volume;
-                    cvt.put("volume",volume);
-                    cvt.put("timebucket",timebucket);
-                    cvt.put("route_cnt",rp.size());
-                    connection_volume_temp.add(cvt);
                 }
 
             }
         }
-        for(Map cv:connection_volume_temp){
-            String timebucket = cv.get("timebucket").toString();
-            double volumeSum = 0.0;
-            double route_cntSum = 0.0;
-            for(Map cvtemp:connection_volume_temp) {
-                volumeSum = volumeSum  + Double.parseDouble(cvtemp.get("volume").toString());
-                route_cntSum = route_cntSum  + Double.parseDouble(cvtemp.get("route_cnt").toString());
+
+        //connection_opt_list
+
+        for (int ic = 0;ic< connection_list.size();ic++)
+        {
+            Map conn = connection_list.get(ic);
+            Map con_opt = new HashMap<>(conn);
+
+            for (int icv=0;icv<connection_volume_list.size();icv++)
+            {
+                Map conv = connection_volume_list.get(icv);
+                if (conn.get("timebucket").toString().equals(conv.get("timebucket").toString()))
+                {
+                    con_opt.put("volume",conv.get("volume"));
+                    con_opt.put("route_cnt",conv.get("route_cnt"));
+                }
             }
-            if(""!=timebucket||" "!=timebucket){
-                Map rt = new HashMap();
-                rt.put("timebucket",timebucket);
-                rt.put("volume",volumeSum);
-                rt.put("route_cnt",route_cntSum);
-                connection_volume.add(rt);
-            }
+            connection_opt_list.add(con_opt);
         }
-        //connection_volume end
-        //        #connection plan start
-        List<Map> connection_opt = megerConnectionOpt();
-        connection_opt = orderByParameter(connection_opt,"j_connection_id","asc");
-//        connection_opt$truck<-solution[(1+I):(I+J)]
-//        connection_opt$bike<-solution[(1+I+J):(I+J*2)]
-//        connection_opt$didi<-solution[(1+I+J*2):(I+J*3)]
-//        connection_opt$dada<-solution[(1+I+J*3):(I+J*4)]
+
+        //order connection_opt_list accroding j_connection_id
+        connection_opt_list = orderByParameter(connection_opt_list,"j_connection_id");
+
         for(int e=0;e<J;e++){
-            connection_opt.get(e).put("truck",solution[1+I+e]);
-            connection_opt.get(e).put("bike",solution[1+I+J+e]);
-            connection_opt.get(e).put("didi",solution[1+I+J*2+e]);
-            connection_opt.get(e).put("dada",solution[1+I+J*3+e]);
+            connection_opt_list.get(e).put("truck",solution[I+e]);
+            connection_opt_list.get(e).put("bike",solution[I+J+e]);
+            connection_opt_list.get(e).put("didi",solution[I+J*2+e]);
+            connection_opt_list.get(e).put("dada",solution[I+J*3+e]);
         }
-//        summary(connection_opt)
-        List<Map> active_connection_trucks = new ArrayList<Map>();
-        List<Map> active_connection = new ArrayList<Map>();
-        for(Map co:connection_opt){
-            double truck = Double.parseDouble(co.get("truck").toString());
-            double bike = Double.parseDouble(co.get("bike").toString());
-            double didi = Double.parseDouble(co.get("didi").toString());
-            double dada = Double.parseDouble(co.get("dada").toString());
-            if(truck>0){
-                active_connection_trucks.add(co);
-            }
-            if(truck>0||bike>0||didi>0||dada>0){
-                active_connection.add(co);
+
+        for (int ic =0;ic<connection_opt_list.size();ic++)
+        {
+            double double1 = Double.parseDouble(connection_opt_list.get(ic).get("truck").toString());
+            double double2 = Double.parseDouble(connection_opt_list.get(ic).get("bike").toString());
+            double double3 = Double.parseDouble(connection_opt_list.get(ic).get("didi").toString());
+            double double4 = Double.parseDouble(connection_opt_list.get(ic).get("dada").toString());
+
+            if (double1<0.1&& double2<0.1&& double3<0.1 && double4<0.1)
+            {
+                connection_opt_list.remove(ic);
+                ic--;
             }
         }
-        //        #connection plan start
+
+        logger.info("insert");
+
     }
 
     protected List<Map> getTopFiveByParamter(List<Map> listMap, String parameter){
@@ -1118,66 +1320,28 @@ public class RelayModeUtil extends Thread implements IConstants {
 
         return list_result;
     }
-    public List<Map> megerConnectionOpt(){
-        List<Map> connOpt = new ArrayList<Map>();
-        //merge ConnectionOpt
-        for (int j = 0; j < connection_list.size(); j++) {
-            boolean exist = false;
-            for (int j2 = 0; j2 < connection_volume.size(); j2++) {
 
-                boolean b = two_points_route_list.get(j).get("point1").toString().equals(distance_ref_list.get(j2).get("inbound_id").toString());
-                if (b) {
-                    exist = true;
-                    Map<String, Object> temp = new HashMap<String, Object>(two_points_route_list.get(j));
-                    temp.put("inbound_id", distance_ref_list.get(j2).get("inbound_id"));
-                    temp.put("outbound_id", distance_ref_list.get(j2).get("outbound_id"));
-                    temp.put("km", distance_ref_list.get(j2).get("km"));
-                    temp.put("minutes", distance_ref_list.get(j2).get("minutes"));
-                    temp.put("OD_id", distance_ref_list.get(j2).get("OD_id"));
-                    temp.put("cross_river", distance_ref_list.get(j2).get("cross_river"));
+    public List<Map> orderByParameter(List<Map> list_temp,String orderParameter){
+        List<Map> resultList = new ArrayList<>();
 
-                    connOpt.add(temp);
-                }
-            }
-            if (!exist) {
-                Map<String, Object> temp = new HashMap<String, Object>(two_points_route_list.get(j));
-                temp.put("inbound_id", "");
-                temp.put("outbound_id", "");
-                temp.put("km", "");
-                temp.put("minutes", "");
-                temp.put("OD_id", "");
-                temp.put("cross_river", "");
-                connOpt.add(temp);
-            }
-        }
-        return connOpt;
-    }
-    public List<Map> orderByParameter(List<Map> list_temp,String orderParameter,String orderType){
-        //order list<Map>
-        int loop = 0;
-        List<Map> list_result = new ArrayList<Map>();
-        while(list_temp.size()>0 && loop < list_temp.size())
+        while (!list_temp.isEmpty())
         {
-            double mindistance = 100000000;
-            int minidx = -1;
-            for(int ll=0;ll< list_temp.size();ll++)
+            double minValue = 1000000000;
+            int minIdx= -1;
+            for (int il = 0;il<list_temp.size();il++)
             {
-                double dist = Double.parseDouble(list_temp.get(ll).get(orderParameter).toString());
-                if(orderType.equals("asc")){
-                    if(dist < mindistance) {
-                        mindistance = dist;
-                    }
-                }else{
-                    if(dist > mindistance) {
-                        mindistance = dist;
-                    }
+                Double dvalue = Double.parseDouble(list_temp.get(il).get(orderParameter).toString());
+                if (dvalue<minValue)
+                {
+                    minValue = dvalue;
+                    minIdx = il;
                 }
-                minidx = ll;
             }
-            list_result.add(list_temp.get(minidx));
-            list_temp.remove(minidx);
-            loop++;
+            resultList.add(list_temp.get(minIdx));
+            list_temp.remove(minIdx);
         }
-        return list_result;
+
+        return resultList;
     }
+
 }
