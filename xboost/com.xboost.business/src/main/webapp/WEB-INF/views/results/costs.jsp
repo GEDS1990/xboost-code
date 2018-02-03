@@ -122,10 +122,10 @@
 		    						<ul class="item-content" v-show="relaySeen" v-for="site in sitelist">
 		    							<li>No. of Dummy Hub: <span>{{site.siteCode}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Votes: <span>{{site.totalVol}}</span></li>
 		    							<template v-if="site.siteType=='depot'">
-		    								<li>No. of Staff per Dummy Hub: <span>{{site.totalVol}}</span> ÷ <span>{{sitePeople}}</span> ≈ <span>{{site.perMan}}</span>
+		    								<li>No. of Staff per Dummy Hub: <!--<span>{{site.totalVol}}</span> ÷ <span>{{sitePeople}}</span> ≈ --><span>{{site.perMan}}</span>
 		    							</template>
 		    							<template v-else>
-		    								<li>No. of Staff per Dummy Hub Center: <span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}</span> ≈ <span>{{site.perMan}}</span>
+		    								<li>No. of Staff per Dummy Hub Center: <!--<span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}</span> ≈ --><span>{{site.perMan}}</span>
 		    							</template>
 		    							<li>Total Staff: <span>{{site.perMan}}</span></li>
 		    							<li>Full-time Staff: <input type="number" data-name="fullTimeStaff" min="0" v-bind:data-total="site.perMan" v-model="site.full"  v-on:input="input_full(site)"/></li>
@@ -204,10 +204,10 @@
 		    						<ul class="item-content" v-show="relaySeen" v-for="site in sitelist">
 		    							<li>No. of Dummy Hub: <span>{{site.siteCode}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Votes: <span>{{site.totalVol}}</span></li>
 		    							<template v-if="site.siteType=='depot'">
-		    								<li>No. of Staff per Dummy Hub: <span>{{site.totalVol}}</span> ÷ <span>{{sitePeople}}</span> ≈ <span>{{site.perMan}}</span>
+		    								<li>No. of Staff per Dummy Hub: <!--<span>{{site.totalVol}}</span> ÷ <span>{{sitePeople}}</span> ≈ --><span>{{site.perMan}}</span>
 		    							</template>
 		    							<template v-else>
-		    								<li>No. of Staff per Dummy Hub Center: <span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}</span> ≈ <span>{{site.perMan}}</span>
+		    								<li>No. of Staff per Dummy Hub Center: <!--<span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}</span> ≈ --><span>{{site.perMan}}</span>
 		    							</template>
 		    							<li>Total Staff: <span>{{site.perMan}}</span></li>
 		    							<li>Full-time Staff: <input type="number" data-name="fullTimeStaff" min="0" v-bind:data-total="site.perMan" v-model="site.full"  v-on:input="input_full(site)"/></li>

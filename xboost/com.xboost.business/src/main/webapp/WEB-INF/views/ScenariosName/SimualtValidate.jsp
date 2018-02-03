@@ -96,7 +96,8 @@
 		    			</div>
 		    			<div class="notes">
 		    			    <p>Notes: This is model simulation loops, larger number means
-                               longer time to run model and get better result.</p>
+                               longer time to run model and get better result.
+		    			    </p>
 		    			</div>
 		    			<div class="clearfix sim-input sim-v-relay">
 		    				<p>No. of Time (Model Optimization Time):</p>

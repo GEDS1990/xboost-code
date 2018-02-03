@@ -542,6 +542,21 @@ body{
 
 
 /****************result****************/
+/*depot*/
+.depotline {
+	display: inline-block;
+	width: 50px;
+	height: 2px;
+}
+.depotline.alt_last {
+	background-color: black;
+}
+.depotline.alt_next {
+	background-color: blue;
+}
+.depotline.alt_each {
+	background-color: red;
+}
 /***costs***/
 .result-cost-item{
 	float: left;
