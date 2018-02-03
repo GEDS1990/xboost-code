@@ -7,10 +7,7 @@ import com.xboost.pojo.Cost;
 import com.xboost.pojo.JieliResult;
 import com.xboost.pojo.Route;
 import com.xboost.pojo.jieli.Temp;
-import com.xboost.service.JieliResultService;
-import com.xboost.service.SiteInfoService;
-import com.xboost.service.SolutionCostService;
-import com.xboost.service.SolutionRouteService;
+import com.xboost.service.*;
 import com.xboost.util.ShiroUtil;
 import org.apache.spark.sql.sources.In;
 import org.springframework.cache.annotation.Cacheable;
@@ -88,21 +85,21 @@ public class TempService {
                 route.setStr1(jieliResult.getDidiNum());
             }
             else if(Double.parseDouble(jieliResult.getDadaNum())>0){
-                route.setCarType(" dada");
-                route.setStr1(" "+jieliResult.getDidiNum());
+                route.setCarType("dada");
+                route.setStr1(jieliResult.getDadaNum());
             }
             else if(Double.parseDouble(jieliResult.getBikeNum())>0){
-                route.setCarType(" baidu");
-                route.setStr1(" "+jieliResult.getDidiNum());
+                route.setCarType("baidu");
+                route.setStr1(jieliResult.getBikeNum());
             }
             else if(Double.parseDouble(jieliResult.getTruckNum())>0){
-                route.setCarType(" truck");
-                route.setStr1(" "+jieliResult.getDidiNum());
+                route.setCarType("truck");
+                route.setStr1(jieliResult.getTruckNum());
             }
 
             route.setScenariosId(openScenariosId);
             route.setRouteCount(String.valueOf(i+1));
-            route.setCarType(jieliResult.getCarType());
+//            route.setCarType(jieliResult.getCarType());
             route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
                     +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setSequence(String.valueOf(1));
@@ -117,12 +114,12 @@ public class TempService {
             route.setUnloadVolSum("0");
             route.setNextCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setCalcDis(jieliResult.getDistance());
-            route.setStr1(jieliResult.getCarNum());
+//            route.setStr1(jieliResult.getCarNum());
             solutionRouteService.addRoute(route);
 
             route.setScenariosId(openScenariosId);
             route.setRouteCount(String.valueOf(i+1));
-            route.setCarType(jieliResult.getCarType());
+//            route.setCarType(jieliResult.getCarType());
             route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
                     +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setSequence(String.valueOf(2));
@@ -137,7 +134,7 @@ public class TempService {
             route.setUnloadVolSum(jieliResult.getVolume());
             route.setNextCurLoc("");
             route.setCalcDis("0.00");
-            route.setStr1(jieliResult.getCarNum());
+//            route.setStr1(jieliResult.getCarNum());
             solutionRouteService.addRoute(route);
 
         }
@@ -147,7 +144,8 @@ public class TempService {
         Cost cost = new Cost();
         solutionCostService.delByScenariosId(Integer.parseInt(openScenariosId));
         cost.setScenariosId(openScenariosId);
-        cost.setTotalCost(String.valueOf(gurobyCost));
+        double totalPiece = solutionCostService.findTotalPiece(openScenariosId);
+        cost.setBranchTransportCost(String.valueOf(gurobyCost/totalPiece));
         solutionCostService.add(cost);
 
 //        solutionRouteService.addRoute(route);
