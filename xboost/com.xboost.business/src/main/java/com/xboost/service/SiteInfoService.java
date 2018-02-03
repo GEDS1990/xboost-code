@@ -6,6 +6,7 @@ import com.xboost.mapper.SiteInfoMapper;
 import com.xboost.pojo.SiteInfo;
 
 import com.xboost.util.ExportUtil;
+import com.xboost.util.ShiroUtil;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -37,6 +38,8 @@ public class SiteInfoService {
 
     @Inject
     private SiteInfoMapper siteInfoMapper;
+    @Inject
+    private MyScenariosService myScenariosService;
 
     /**
      * 保存新网点基础信息
@@ -402,7 +405,23 @@ public class SiteInfoService {
      * @return
      */
     public List<Map<String, Object>> findBySiteCode(Map<String, Object> param) {
-        return siteInfoMapper.findBySiteCode(param);
+        List<Map<String, Object>> mapList = siteInfoMapper.findBySiteCode(param);
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+        if ("1".equals(modelType))
+            return mapList;
+        for (Map map : mapList) {
+            System.out.println(map.get("sbVol"));
+            System.out.println(map.get("sbVolSum"));
+            double sbVol = Math.floor(Double.parseDouble(map.get("sbVol") + ""));
+            double sbVolSum = Math.floor(Double.parseDouble(map.get("sbVolSum") + ""));
+            double unloadVol = Math.floor(Double.parseDouble(map.get("unloadVol") + ""));
+            double unloadVolSum = Math.floor(Double.parseDouble(map.get("unloadVolSum") + ""));
+            map.put("sbVol", sbVol);
+            map.put("sbVolSum", sbVolSum);
+            map.put("unloadVol", unloadVol);
+            map.put("unloadVolSum", unloadVolSum);
+        }
+        return mapList;
     }
 
     /**

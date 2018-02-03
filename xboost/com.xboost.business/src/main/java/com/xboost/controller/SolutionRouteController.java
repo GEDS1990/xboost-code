@@ -370,8 +370,9 @@ public class SolutionRouteController {
             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
             String scenariosId = ShiroUtil.getOpenScenariosId();
             String[] titles = { "Route ID","Depot Order","Depot ID","Depot Name","Depot Address","Arrival Time",
-                                "Operation","Departure Time","Next Depot","Next Depot Distance" };
-            solutionRouteService.exportResult(scenariosId,titles,outputStream);
+                                "Operation","Departure Time","Next Depot","Next Depot Distance","Car Name" };
+            String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+            solutionRouteService.exportResult(scenariosId,titles,outputStream,modelType);
             System.out.println("outputStream:"+outputStream);
         }
         catch (IOException e)

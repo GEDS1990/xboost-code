@@ -31,6 +31,8 @@ public class SolutionRouteService {
 
     @Inject
     private SolutionRouteMapper solutionRouteMapper;
+    @Inject
+    private MyScenariosService myScenariosService;
 
     /**
      * 新增route信息
@@ -115,7 +117,23 @@ public class SolutionRouteService {
      * @return
      */
     public List<Map<String, Object>> findByRoute(Map<String, Object> param) {
-        return solutionRouteMapper.findByRoute(param);
+        List<Map<String, Object>> mapList = solutionRouteMapper.findByRoute(param);
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+        if ("1".equals(modelType))
+            return mapList;
+        for (Map map : mapList) {
+            System.out.println(map.get("sbVol"));
+            System.out.println(map.get("sbVolSum"));
+            double sbVol = Math.floor(Double.parseDouble(map.get("sbVol") + ""));
+            double sbVolSum = Math.floor(Double.parseDouble(map.get("sbVolSum") + ""));
+            double unloadVol = Math.floor(Double.parseDouble(map.get("unloadVol") + ""));
+            double unloadVolSum = Math.floor(Double.parseDouble(map.get("unloadVolSum") + ""));
+            map.put("sbVol", sbVol);
+            map.put("sbVolSum", sbVolSum);
+            map.put("unloadVol", unloadVol);
+            map.put("unloadVolSum", unloadVolSum);
+        }
+        return mapList;
     }
 
     /**
@@ -232,7 +250,7 @@ public class SolutionRouteService {
     /**
      * 导出result_depots excel
      */
-    public void exportResult(String scenariosId, String[] titles, ServletOutputStream outputStream) {
+    public void exportResult(String scenariosId, String[] titles, ServletOutputStream outputStream, String modelType) {
         List<Map<String, Object>> list = solutionRouteMapper.findAllByRoute(scenariosId);
         Collections.sort(list, new Comparator<Map<String, Object>>() {
             public int compare(Map<String, Object> o1, Map<String, Object> o2) {
@@ -258,64 +276,178 @@ public class SolutionRouteService {
             cell.setCellValue(titles[i]);
             cell.setCellStyle(headStyle);
         }
-        // 构建表体数据
-        if (list != null && list.size() > 0) {
-            for (int j = 0; j < list.size(); j++) {
-                XSSFRow bodyRow = sheet.createRow(j + 1);
-                Map<String, Object> route = list.get(j);
 
-                int i = 0;
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue("Route" + route.get("routeCount"));
-                cell.setCellStyle(bodyStyle);
+        if ("1".equals(modelType)) {
+            // 构建表体数据
+            if (list != null && list.size() > 0) {
+                for (int j = 0; j < list.size(); j++) {
+                    XSSFRow bodyRow = sheet.createRow(j + 1);
+                    Map<String, Object> route = list.get(j);
 
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(route.get("sequence").toString());
-                cell.setCellStyle(bodyStyle);
+                    int i = 0;
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue("Route" + route.get("routeCount"));
+                    cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(route.get("curLoc").toString());
-                cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("sequence").toString());
+                    cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(route.get("siteName").toString());
-                cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("curLoc").toString());
+                    cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(route.get("siteAddress").toString());
-                cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("siteName").toString());
+                    cell.setCellStyle(bodyStyle);
 
-                String arrTime = (String) route.get("arrTime");
-                String arr = arrTime.substring(0, arrTime.indexOf('.'));
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(Integer.parseInt(arr) / 60 + ":" + Integer.parseInt(arr) % 60);
-                cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("siteAddress").toString());
+                    cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(i++);
-                if (route.get("unloadVol").toString() == null || route.get("unloadVol").toString() == "") {
-                    cell.setCellValue("Unload 0,Load " + route.get("sbVol").toString());
-                } else if (route.get("sbVol").toString() == null || route.get("sbVol").toString() == "") {
-                    cell.setCellValue("Unload " + route.get("unloadVol") + ",Load 0");
-                } else if (route.get("unloadVol").toString() == null || route.get("unloadVol").toString() == "" || route.get("sbVol").toString() == null || route.get("sbVol").toString() == "") {
-                    cell.setCellValue("Unload 0,Load 0");
-                } else {
-                    cell.setCellValue("Unload " + route.get("unloadVol").toString() + ",Load " + route.get("sbVol").toString());
+                    String arrTime = (String) route.get("arrTime");
+                    int arr = Math.round(Float.parseFloat(arrTime));
+                    int arrHour = arr / 60;
+                    int arrMinute = arr % 60;
+                    String arrFormatTime = "";
+                    if(arrMinute >= 0 && arrMinute <= 9) {
+                        arrFormatTime = arrHour + ":0" + arrMinute;
+                    }else {
+                        arrFormatTime = arrHour + ":" + arrMinute;
+                    }
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(arrFormatTime);
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    if (route.get("unloadVol").toString() == null || route.get("unloadVol").toString() == "") {
+                        cell.setCellValue("Unload 0,Load " + route.get("sbVol").toString());
+                    } else if (route.get("sbVol").toString() == null || route.get("sbVol").toString() == "") {
+                        cell.setCellValue("Unload " + route.get("unloadVol") + ",Load 0");
+                    } else if (route.get("unloadVol").toString() == null || route.get("unloadVol").toString() == "" || route.get("sbVol").toString() == null || route.get("sbVol").toString() == "") {
+                        cell.setCellValue("Unload 0,Load 0");
+                    } else {
+                        cell.setCellValue("Unload " + route.get("unloadVol").toString() + ",Load " + route.get("sbVol").toString());
+                    }
+                    cell.setCellStyle(bodyStyle);
+
+                    String endTime = (String) route.get("endTime");
+                    int end = Math.round(Float.parseFloat(endTime));
+                    int endHour = end / 60;
+                    int endMinute = end % 60;
+                    String endFormatTime = "";
+                    if(endMinute >= 0 && endMinute <= 9) {
+                        endFormatTime = endHour + ":0" + endMinute;
+                    }else {
+                        endFormatTime = endHour + ":" + endMinute;
+                    }
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(endFormatTime);
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("nextCurLoc").toString());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("calcDis").toString() + "km");
+                    cell.setCellStyle(bodyStyle);
                 }
-                cell.setCellStyle(bodyStyle);
+            }
+        }
 
-                String endTime = (String) route.get("endTime");
-                String end = endTime.substring(0, endTime.indexOf('.'));
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(Integer.parseInt(end) / 60 + ":" + Integer.parseInt(end) % 60);
-                cell.setCellStyle(bodyStyle);
+        if ("2".equals(modelType)) {
+            // 构建表体数据
+            if (list != null && list.size() > 0) {
+                for (int j = 0; j < list.size(); j++) {
+                    XSSFRow bodyRow = sheet.createRow(j + 1);
+                    Map<String, Object> route = list.get(j);
 
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(route.get("nextCurLoc").toString());
-                cell.setCellStyle(bodyStyle);
+                    int i = 0;
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue("Route" + route.get("routeCount"));
+                    cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(route.get("calcDis").toString() + "km");
-                cell.setCellStyle(bodyStyle);
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("sequence").toString());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("curLoc").toString());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("siteName").toString());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("siteAddress").toString());
+                    cell.setCellStyle(bodyStyle);
+
+                    String arrTime = (String) route.get("arrTime");
+                    int arr = Math.round(Float.parseFloat(arrTime));
+                    int arrHour = arr / 60;
+                    int arrMinute = arr % 60;
+                    String arrFormatTime = "";
+                    if(arrMinute >= 0 && arrMinute <= 9) {
+                        arrFormatTime = arrHour + ":0" + arrMinute;
+                    }else {
+                        arrFormatTime = arrHour + ":" + arrMinute;
+                    }
+                    cell = bodyRow.createCell(i++);
+                    if("1".equals(route.get("sequence"))) {
+                        cell.setCellValue("--");
+                    }else {
+                        cell.setCellValue(arrFormatTime);
+                    }
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    if (route.get("unloadVol").toString() == null || route.get("unloadVol").toString() == "") {
+                        cell.setCellValue("Unload 0,Load " + route.get("sbVol").toString());
+                    } else if (route.get("sbVol").toString() == null || route.get("sbVol").toString() == "") {
+                        cell.setCellValue("Unload " + route.get("unloadVol") + ",Load 0");
+                    } else if (route.get("unloadVol").toString() == null || route.get("unloadVol").toString() == "" || route.get("sbVol").toString() == null || route.get("sbVol").toString() == "") {
+                        cell.setCellValue("Unload 0,Load 0");
+                    } else {
+                        cell.setCellValue("Unload " + route.get("unloadVol").toString() + ",Load " + route.get("sbVol").toString());
+                    }
+                    cell.setCellStyle(bodyStyle);
+
+                    String endTime = (String) route.get("endTime");
+                    int end = Math.round(Float.parseFloat(endTime));
+                    int endHour = end / 60;
+                    int endMinute = end % 60;
+                    String endFormatTime = "";
+                    if(endMinute >= 0 && endMinute <= 9) {
+                        endFormatTime = endHour + " : 0" + endMinute;
+                    }else {
+                        endFormatTime = endHour + " : " + endMinute;
+                    }
+                    cell = bodyRow.createCell(i++);
+                    if("2".equals(route.get("sequence"))) {
+                        cell.setCellValue("--");
+                    }else {
+                        cell.setCellValue(endFormatTime);
+                    }
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    if("2".equals(route.get("sequence"))) {
+                        cell.setCellValue("--");
+                    }else {
+                        cell.setCellValue(route.get("nextCurLoc").toString());
+                    }
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    if("2".equals(route.get("sequence"))) {
+                        cell.setCellValue("--");
+                    }else {
+                        cell.setCellValue(route.get("calcDis").toString() + "km");
+                    }
+                    cell.setCellStyle(bodyStyle);
+                }
             }
         }
 
