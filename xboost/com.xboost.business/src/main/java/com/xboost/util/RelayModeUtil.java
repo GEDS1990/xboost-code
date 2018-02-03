@@ -1275,7 +1275,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         }
 
         logger.info("insert");
-        tempService.saveConnectionOpt(connection_opt_list);
+        tempService.saveConnectionOpt(connection_opt_list,OpenScenariosId);
 
     }
 

@@ -60,8 +60,8 @@ public class TempService {
         tempMapper.savedistance_ref(dr);
     }
 
-    public void saveConnectionOpt(List<Map> jieliResults) {
-        solutionRouteService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
+    public void saveConnectionOpt(List<Map> jieliResults, String openScenariosId) {
+        solutionRouteService.delByScenariosId(Integer.parseInt(openScenariosId));
         String siteCode="";
         for(int i=0;i<jieliResults.size();i++){
             jieliResult.setTimeId(jieliResults.get(i).get("time_id").toString());
@@ -80,7 +80,7 @@ public class TempService {
             jieliResult.setConnection(jieliResults.get(i).get("connection").toString());
             jieliResult.setTimeBucket(jieliResults.get(i).get("timebucket").toString());
 
-            route.setScenariosId(ShiroUtil.getOpenScenariosId());
+            route.setScenariosId(openScenariosId);
             route.setRouteCount(String.valueOf(i+1));
             route.setCarType(jieliResult.getCarType());
             route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
@@ -100,7 +100,7 @@ public class TempService {
             route.setStr1(jieliResult.getCarNum());
             solutionRouteService.addRoute(route);
 
-            route.setScenariosId(ShiroUtil.getOpenScenariosId());
+            route.setScenariosId(openScenariosId);
             route.setRouteCount(String.valueOf(i+1));
             route.setCarType(jieliResult.getCarType());
             route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
