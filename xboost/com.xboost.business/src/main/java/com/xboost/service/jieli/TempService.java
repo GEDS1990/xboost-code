@@ -7,10 +7,7 @@ import com.xboost.pojo.Cost;
 import com.xboost.pojo.JieliResult;
 import com.xboost.pojo.Route;
 import com.xboost.pojo.jieli.Temp;
-import com.xboost.service.JieliResultService;
-import com.xboost.service.SiteInfoService;
-import com.xboost.service.SolutionCostService;
-import com.xboost.service.SolutionRouteService;
+import com.xboost.service.*;
 import com.xboost.util.ShiroUtil;
 import org.apache.spark.sql.sources.In;
 import org.springframework.cache.annotation.Cacheable;
@@ -83,21 +80,21 @@ public class TempService {
 
             Route route = new Route();
 
-            if(Double.parseDouble(jieliResult.getDidiNum())>0){
+            if(Math.abs(Double.parseDouble(jieliResult.getDidiNum()))>0){
                 route.setCarType("didi");
                 route.setStr1(jieliResult.getDidiNum());
             }
-            else if(Double.parseDouble(jieliResult.getDadaNum())>0){
-                route.setCarType(" dada");
-                route.setStr1(" "+jieliResult.getDidiNum());
+            else if(Math.abs(Double.parseDouble(jieliResult.getDadaNum()))>0){
+                route.setCarType("dada");
+                route.setStr1(jieliResult.getDidiNum());
             }
-            else if(Double.parseDouble(jieliResult.getBikeNum())>0){
-                route.setCarType(" baidu");
-                route.setStr1(" "+jieliResult.getDidiNum());
+            else if(Math.abs(Double.parseDouble(jieliResult.getBikeNum()))>0){
+                route.setCarType("baidu");
+                route.setStr1(jieliResult.getDidiNum());
             }
-            else if(Double.parseDouble(jieliResult.getTruckNum())>0){
-                route.setCarType(" truck");
-                route.setStr1(" "+jieliResult.getDidiNum());
+            else if(Math.abs(Double.parseDouble(jieliResult.getTruckNum()))>0){
+                route.setCarType("truck");
+                route.setStr1(jieliResult.getDidiNum());
             }
 
             route.setScenariosId(openScenariosId);
@@ -147,7 +144,8 @@ public class TempService {
         Cost cost = new Cost();
         solutionCostService.delByScenariosId(Integer.parseInt(openScenariosId));
         cost.setScenariosId(openScenariosId);
-        cost.setTotalCost(String.valueOf(gurobyCost));
+        double totalPiece = solutionCostService.findTotalPiece(openScenariosId);
+        cost.setBranchTransportCost(String.valueOf(gurobyCost/totalPiece));
         solutionCostService.add(cost);
 
 //        solutionRouteService.addRoute(route);
