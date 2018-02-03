@@ -154,7 +154,7 @@ $(function  () {
 	                {"data":"siteName","name":"site_name"},
 	                {"data":"siteAddress","name":"site_address"},
 	                {"data":function(res){
-	                	if (res.siteArea == 0) {
+	                	if (res.siteArea == 0 || res.siteArea == "999") {
 	                		return "--"
 	                	}
 	                	return Math.round(res.siteArea);
