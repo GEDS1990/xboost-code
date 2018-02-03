@@ -210,7 +210,7 @@ public class SiteDistService {
         }
 
         ////对应excel中的行和列，下表从0开始{"开始行,结束行,开始列,结束列"}
-        String[] headNum = { "0,1,0,0", "0,1,1,1", "0,1,2,2", "0,1,3,3", "0,0,4,8" };
+        String[] headNum = { "0,1,0,0", "0,1,1,1", "0,1,2,2", "0,1,3,3", "0,0,4,9" };
         String[] nextHeadNum = { "1,1,4,4", "1,1,5,5", "1,1,6,6", "1,1,7,7", "1,1,8,8" };
 
         //动态合并单元格
@@ -229,7 +229,7 @@ public class SiteDistService {
         for (int i = 0; i < titles.length; i++) {
             cell = headRow.createCell(i);
             cell.setCellStyle(headStyle);
-            if(i >= 4  && i <= 8) {
+            if(i >= 4  && i <= 9) {
                 for (int j = 0; j < nextTitles.length; j++) {
                     cell = headRow.createCell(j + 4);
                     cell.setCellValue(nextTitles[j]);
@@ -281,6 +281,10 @@ public class SiteDistService {
 
                  cell = bodyRow.createCell(8);
                  cell.setCellValue(siteDist.getDurationNightDelivery4());
+                 cell.setCellStyle(bodyStyle);
+
+                 cell = bodyRow.createCell(9);
+                 cell.setCellValue(siteDist.getDurationNightDelivery5());
                  cell.setCellStyle(bodyStyle);
              }
          }
