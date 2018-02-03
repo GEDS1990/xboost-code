@@ -91,8 +91,12 @@
 		    			</div>
 		    			<div class="clearfix sim-input sim-v-serial">
 		    				<p>No. of Loops (Model Optimization Loops):</p>
-		    				<input type="number" id="sim-run-count" value="" />
+		    				<input type="number" id="sim-run-count" value="100" />
 		    				<p id="loopslimit" class="sim-error">You must set the loops limit</p>
+		    			</div>
+		    			<div class="notes">
+		    			    <p>Notes: This is model simulation loops, larger number means
+                               longer time to run model and get better result.</p>
 		    			</div>
 		    			<div class="clearfix sim-input sim-v-relay">
 		    				<p>No. of Time (Model Optimization Time):</p>

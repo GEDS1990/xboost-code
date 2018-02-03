@@ -68,7 +68,7 @@
 	    				${sessionScope.SimulateLog}
 	    			</div>
 	    			
-	    			<div class="form-group  clearfix">
+	    			<div class="form-group  clearfix" style="display:none">
 	    				<p class="sim-run-btn"><button id="sim-stop">Stop Simulation</button></p>
 	    			</div>
 	    		</div>
