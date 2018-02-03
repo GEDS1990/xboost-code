@@ -87,15 +87,15 @@ public class TempService {
                 route.setCarType("didi");
                 route.setStr1(jieliResult.getDidiNum());
             }
-            if(Double.parseDouble(jieliResult.getDadaNum())>0){
+            else if(Double.parseDouble(jieliResult.getDadaNum())>0){
                 route.setCarType(" dada");
                 route.setStr1(" "+jieliResult.getDidiNum());
             }
-            if(Double.parseDouble(jieliResult.getBikeNum())>0){
+            else if(Double.parseDouble(jieliResult.getBikeNum())>0){
                 route.setCarType(" baidu");
                 route.setStr1(" "+jieliResult.getDidiNum());
             }
-            if(Double.parseDouble(jieliResult.getTruckNum())>0){
+            else if(Double.parseDouble(jieliResult.getTruckNum())>0){
                 route.setCarType(" truck");
                 route.setStr1(" "+jieliResult.getDidiNum());
             }

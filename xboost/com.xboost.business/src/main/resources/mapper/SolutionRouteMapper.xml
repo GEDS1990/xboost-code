@@ -5,10 +5,10 @@
     <insert id="addRoute">
         INSERT into t_solution_route(scenariosId ,userId,route_count,car_type,car_name,location,sequence,cur_loc,
         type,sb_loc,sb_vol,sb_vol_sum,arr_time,end_time,unload_loc,unload_vol,unload_vol_sum,next_cur_loc,calc_dis,
-        car_goods,createtime)
+        car_goods,str1,createtime)
         VALUES (#{scenariosId},#{userId},#{routeCount},#{carType},#{carName},#{location},#{sequence},#{curLoc},
         #{type},#{sbLoc},#{sbVol},#{sbVolSum},#{arrTime},#{endTime},#{unloadLoc},#{unloadVol},#{unloadVolSum},#{nextCurLoc},#{calcDis},
-        #{carGoods},#{createTime})
+        #{carGoods},#{str1},#{createTime})
     </insert>
 
     <delete id="delByScenariosId">
