@@ -1,24 +1,28 @@
 package com.xboost.controller;
 
 import com.google.common.collect.Maps;
+import com.mckinsey.sf.data.Car;
+import com.xboost.pojo.CarLicence;
+import com.xboost.pojo.DemandInfo;
 import com.xboost.pojo.Route;
 import com.xboost.pojo.SiteInfo;
-import com.xboost.service.SolutionRouteService;
+import com.xboost.service.*;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/11/5 0005.
@@ -29,6 +33,12 @@ import java.util.Map;
 public class SolutionRouteController {
     @Inject
     private SolutionRouteService solutionRouteService;
+    @Inject
+    private DemandInfoService demandInfoService;
+    @Inject
+    private CarService carService;
+    @Inject
+    private MyScenariosService myScenariosService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -127,15 +137,24 @@ public class SolutionRouteController {
 
                 }
             }
-
         }
 
+        Collections.sort(routeList, new Comparator<Map<String, Object>>() {
+            @Override
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                String s1 = (String) o1.get("sequence");
+                String s2 = (String) o2.get("sequence");
+                return s1.compareTo(s2);
+            }
+        });
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",routeList);
 
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+        result.put("modelType", modelType);
         return result;
     }
 
@@ -147,6 +166,49 @@ public class SolutionRouteController {
         List<String> idleCar = solutionRouteService.findIdleCar(ShiroUtil.getOpenScenariosId(),routeCount);
         List<String> usingCar = solutionRouteService.findUsingCar1(ShiroUtil.getOpenScenariosId());
 
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+        result.put("modelType", modelType);
+        result.put("usingCar",usingCar);
+        result.put("idleCar",idleCar);
+        return result;
+    }
+
+    //根据所有可选择的车
+    @RequestMapping(value = "/planCarRelay.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String,Object> findIdleCarRelay(String routeCount) {
+        Map<String,Object> result = Maps.newHashMap();
+
+        List<Route> routes = solutionRouteService.findRouteByRouteCount(ShiroUtil.getOpenScenariosId(), routeCount);
+        String arrTime = routes.get(0).getArrTime();
+
+        int min = Integer.parseInt(demandInfoService.findMin(ShiroUtil.getOpenScenariosId()));
+        int max = Integer.parseInt(demandInfoService.findMax(ShiroUtil.getOpenScenariosId()));
+        String openScenariosId = ShiroUtil.getOpenScenariosId();
+        int timeNodeNum = (max - min) / 20 == 0 ? (max - min) / 20 : ((max - min) / 20) + 1;
+
+        // 从0开始，起始为min
+        int timeId = (Integer.parseInt(arrTime) - 840)/20;
+        Set<String> idleCar = new HashSet<>();
+        Set<String> usingCar = new HashSet<>();
+
+        List<CarLicence> carList = carService.findAllCar(ShiroUtil.getOpenScenariosId());
+        for (CarLicence car : carList) {
+            String busyIdle = car.getBusyIdle();
+            String name = car.getName();
+            System.out.println(busyIdle+""+name);
+            char[] chars = new char[timeNodeNum];
+            if (busyIdle != null && !"0".equals(busyIdle+"")) {
+                chars = busyIdle.toCharArray();
+            }
+
+            if(busyIdle == null || "0".equals(busyIdle+"")) {
+                idleCar.add(car.getName());
+            }else if("0".equals(""+chars[timeId])){
+                idleCar.add(car.getName());
+                usingCar.add(car.getName());
+            }
+        }
         result.put("usingCar",usingCar);
         result.put("idleCar",idleCar);
         return result;
@@ -210,6 +272,76 @@ public class SolutionRouteController {
         return "success";
     }
 
+    /**Relay
+     * 排车更新route表carName
+     * @return
+     */
+    @RequestMapping(value = "/updateCarNameRelay",method = RequestMethod.POST)
+    @ResponseBody
+    public String updateCarNameRelay(HttpServletRequest request) {
+        String routeCount = request.getParameter("routeCount");
+        String carName = request.getParameter("carName");
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        String oldCarName = solutionRouteService.findRouteCar(scenariosId,routeCount);
+
+        int min = Integer.parseInt(demandInfoService.findMin(ShiroUtil.getOpenScenariosId()));
+        int max = Integer.parseInt(demandInfoService.findMax(ShiroUtil.getOpenScenariosId()));
+        int timeNodeNum = (max - min) / 20 == 0 ? (max - min) / 20 : ((max - min) / 20) + 1;
+
+        List<Route> routes = solutionRouteService.findRouteByRouteCount(ShiroUtil.getOpenScenariosId(), routeCount);
+        String arrTime = routes.get(0).getArrTime();
+        // 从0开始，起始为min
+        int timeId = (Integer.parseInt(arrTime) - 840)/20;
+
+        Map<String,Object> param = Maps.newHashMap();
+        param.put("routeCount",routeCount);
+        param.put("name",carName);
+        param.put("carName",carName);
+        param.put("scenariosId",scenariosId);
+
+        CarLicence carLincence = carService.findCarLincence(param);
+        String busyIdle = carLincence.getBusyIdle();
+        if (busyIdle == null || "0".equals(busyIdle)) {
+            StringBuilder idle = new StringBuilder();
+            for (int i = 0; i < timeNodeNum; i++) {
+                if (i == timeId) {
+                    idle.append("1");
+                    continue;
+                }
+                idle.append("0");
+            }
+            busyIdle = idle.toString();
+        }else {
+            char[] idles = busyIdle.toCharArray();
+            for (int i = 0; i < idles.length; i++) {
+                if (i == timeId) {
+                    idles[i] = '1';
+                }
+            }
+            busyIdle = String.valueOf(idles);
+        }
+
+        param.put("busyIdle", busyIdle);
+        carService.updateCarLincence(param);
+
+        solutionRouteService.updateCarName(param);
+
+//        if(!Strings.isEmpty(oldCarName)){
+//            solutionRouteService.updateCarToIdle(scenariosId,oldCarName);
+//            solutionRouteService.updateCarName(param);
+//            //把车的状态更新为busy
+//            solutionRouteService.updateCarToBusy(scenariosId,carName);
+//        }
+//        else{
+//
+//            solutionRouteService.updateCarName(param);
+//            //把车的状态更新为busy
+//            solutionRouteService.updateCarToBusy(scenariosId,carName);
+//        }
+
+        return "success";
+    }
+
     /**把车的状态更新为busy
      * @return
      */
@@ -241,8 +373,9 @@ public class SolutionRouteController {
             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
             String scenariosId = ShiroUtil.getOpenScenariosId();
             String[] titles = { "Route ID","Depot Order","Depot ID","Depot Name","Depot Address","Arrival Time",
-                                "Operation","Departure Time","Next Depot","Next Depot Distance" };
-            solutionRouteService.exportResult(scenariosId,titles,outputStream);
+                                "Operation","Departure Time","Next Depot","Next Depot Distance","Car Type","Car Name" };
+            String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+            solutionRouteService.exportResult(scenariosId,titles,outputStream,modelType);
             System.out.println("outputStream:"+outputStream);
         }
         catch (IOException e)
@@ -253,5 +386,12 @@ public class SolutionRouteController {
         return null;
     }
 
-
+    @RequestMapping(value="/inputRoutesExcel", method = RequestMethod.POST)
+    @ResponseBody
+    public String AddDemandInfoByExcel(Route route, @RequestParam MultipartFile[] file) {
+        //设置场景Id
+        route.setScenariosId(ShiroUtil.getOpenScenariosId());
+        solutionRouteService.updateRouteByExcel(route, file);
+        return "redirect:/siteInfo";
+    }
 }

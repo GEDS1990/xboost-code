@@ -57,7 +57,7 @@ public class JieliResultController {
             jieliResult=jieliResults.get(i);
             route.setScenariosId("90");
             route.setRouteCount(String.valueOf(i+1));
-            route.setCarType(jieliResult.getStr1());
+            route.setCarType(jieliResult.getCarType());
             route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
                     +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setSequence(String.valueOf(1));
@@ -65,19 +65,19 @@ public class JieliResultController {
             route.setType("PICKUP");
             route.setSbVol(jieliResult.getVolume());
             route.setSbVolSum(jieliResult.getVolume());
-            route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*20 + 840 +"");
-            route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*20 + 840 +"");
+            route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
+            route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
             route.setUnloadLoc("0");
             route.setUnloadVol("0");
             route.setUnloadVolSum("0");
             route.setNextCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setCalcDis(jieliResult.getDistance());
-            route.setStr1(jieliResult.getStr2());
+            route.setStr1(jieliResult.getCarNum());
             solutionRouteService.addRoute(route);
 
             route.setScenariosId("90");
             route.setRouteCount(String.valueOf(i+1));
-            route.setCarType(jieliResult.getStr1());
+            route.setCarType(jieliResult.getCarType());
             route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
                     +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setSequence(String.valueOf(2));
@@ -85,14 +85,14 @@ public class JieliResultController {
             route.setType("DELIVER");
             route.setSbVol("0");
             route.setSbVolSum("0");
-            route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*20 + 840 +"");
-            route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*20 + 840 +"");
+            route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
+            route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
             route.setUnloadLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setUnloadVol(jieliResult.getVolume());
             route.setUnloadVolSum(jieliResult.getVolume());
             route.setNextCurLoc("");
             route.setCalcDis("0.00");
-            route.setStr1(jieliResult.getStr2());
+            route.setStr1(jieliResult.getCarNum());
             solutionRouteService.addRoute(route);
 
         }

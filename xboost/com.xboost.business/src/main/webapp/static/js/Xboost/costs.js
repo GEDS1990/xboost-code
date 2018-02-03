@@ -713,7 +713,7 @@ $(function (){
             //导出excel表格
             $('.export-btn').click(function  () {
                 var _xls = $(this).attr('data-xls');
-                var planA = $("#cost-form-a1").serialize();
+                var planA = $("#cost-form-a").serialize();
                 var dataA = planA;
 
                 var planB = $("#cost-form-b").serializeArray();

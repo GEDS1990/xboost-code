@@ -31,8 +31,8 @@ public class JieliResult implements Serializable {
     private String bikeNum;         //百度数量
     private String didiNum;         //滴滴数量
     private String dadaNum;         //达达数量
-    private String str1;                   //预留字段
-    private String str2;                    //预留字段
+    private String carType;                   //车型
+    private String carNum;                    //车量
     private String str3;                  //预留字段
     private String createTime;
     private String updateTime;
@@ -238,20 +238,20 @@ public class JieliResult implements Serializable {
         this.dadaNum = dadaNum;
     }
 
-    public String getStr1() {
-        return str1;
+    public String getCarType() {
+        return carType;
     }
 
-    public void setStr1(String str1) {
-        this.str1 = str1;
+    public void setCarType(String carType) {
+        this.carType = carType;
     }
 
-    public String getStr2() {
-        return str2;
+    public String getCarNum() {
+        return carNum;
     }
 
-    public void setStr2(String str2) {
-        this.str2 = str2;
+    public void setCarNum(String carNum) {
+        this.carNum = carNum;
     }
 
     public String getStr3() {

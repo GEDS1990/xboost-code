@@ -61,7 +61,7 @@ public interface CarMapper {
 
     void saveCarLincence(CarLicence carLicence);
 
-    CarLicence findAllCar(String scenariosId);
+    List<CarLicence> findAllCar(String scenariosId);
 
     Integer findAllCarCount(String scenariosId);
 
@@ -73,6 +73,8 @@ public interface CarMapper {
 
     void delCarLincenceByScenariosId(String scenariosId);
 
+    void updateCarLincence(Map<String, Object> param);
 
+    CarLicence findCarLincence(Map<String, Object> param);
 }
 

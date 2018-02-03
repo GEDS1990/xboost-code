@@ -135,7 +135,7 @@ public class SolutionCostController {
         }*/
         //支线总运输成本
       //  Double branchTransportCost = solutionCostService.branchTransportCost();
-      //   String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
+         String branchTransportCost = solutionCostService.findBranchCost(scenariosId);
 
         int periodTime = modelType.equals("1") ? 10 : 20;
         int min = Integer.parseInt(demandInfoService.findMin(scenariosId));
@@ -180,7 +180,7 @@ public class SolutionCostController {
         result.put("totalPiece",totalPiece);
         result.put("siteInfoList",siteInfoList);
         result.put("totalVolList",totalVolList);
- //       result.put("branchTransportCost",branchTransportCost);
+        result.put("branchTransportCost",branchTransportCost);
 
         return result;
     }

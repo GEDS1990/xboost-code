@@ -152,6 +152,16 @@
         </where>
     </select>
 
+    <update id="updateCarLincence" parameterType="map">
+        UPDATE t_car_licence SET busy_idle=#{busyIdle}
+        WHERE scenariosId = #{scenariosId} AND name = #{name}
+    </update>
+
+    <select id="findCarLincence" parameterType="map" resultMap="carMap">
+        SELECT * FROM  t_car_licence
+        WHERE scenariosId = #{scenariosId} AND name = #{name}
+    </select>
+
     <resultMap id="carMap" type="com.xboost.pojo.CarLicence">
         <id property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>

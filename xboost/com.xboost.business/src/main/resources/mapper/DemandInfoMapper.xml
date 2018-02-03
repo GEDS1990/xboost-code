@@ -26,11 +26,11 @@
     </select>
 
     <select id="findMax" parameterType="String" resultType="String">
-        SELECT MAX(duration_end) FROM t_demand_info where scenariosId = #{scenariosId}
+        SELECT MAX(CAST(duration_end as SIGNED INTEGER)) FROM t_demand_info where scenariosId = #{scenariosId}
     </select>
 
     <select id="findMin" parameterType="String" resultType="String">
-        SELECT MIN(duration_start) FROM t_demand_info where scenariosId = #{scenariosId}
+        SELECT MAX(CAST(duration_start as SIGNED INTEGER)) FROM t_demand_info where scenariosId = #{scenariosId}
     </select>
 
     <select id="findByParam" parameterType="map" resultType="DemandInfo" resultMap="demandInfoMap">

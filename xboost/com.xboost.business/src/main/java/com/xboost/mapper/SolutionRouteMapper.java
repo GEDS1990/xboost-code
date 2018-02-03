@@ -86,5 +86,7 @@ public interface SolutionRouteMapper {
     //查询当前路线排的车辆
     String findRouteCar(@Param("scenariosId")String scenariosId,@Param("routeCount") String routeCount);
 
+    //根据route_count查询route
+    List<Route> findRouteByRouteCount(@Param("scenariosId")String scenariosId,@Param("routeCount")String routeCount);
 }
 
