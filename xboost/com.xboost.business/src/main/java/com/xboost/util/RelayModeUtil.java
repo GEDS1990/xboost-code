@@ -122,9 +122,11 @@ public class RelayModeUtil extends Thread implements IConstants {
         for(int e=0;e<flow_lim.size();e++){
             String siteCode1 = flow_lim.get(e).get("网点ID").toString();
             for(int s=0;s<SiteInfoAll.size();s++){
+                int idT = SiteInfoAll.get(s).getId();
                 String siteCode2 = SiteInfoAll.get(s).getSiteCode();
                 if(siteCode1.equals(siteCode2)){
-                    flow_lim.get(e).put("集散点ID",s+1);
+//                    flow_lim.get(e).put("集散点ID",s+1);
+                    flow_lim.get(e).put("集散点ID",idT);
                 }
             }
         }
