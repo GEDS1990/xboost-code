@@ -388,7 +388,7 @@ public class SolutionRouteController {
 
     @RequestMapping(value="/inputRoutesExcel", method = RequestMethod.POST)
     @ResponseBody
-    public String AddDemandInfoByExcel(Route route, @RequestParam MultipartFile[] file) {
+    public String inputRoutesExcel(Route route, @RequestParam MultipartFile[] file) {
         //设置场景Id
         route.setScenariosId(ShiroUtil.getOpenScenariosId());
         solutionRouteService.updateRouteByExcel(route, file);

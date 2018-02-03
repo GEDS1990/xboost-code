@@ -97,7 +97,7 @@ public class JieliResultController {
 
         }
 
-        solutionRouteService.addRoute(route);
+//        solutionRouteService.addRoute(route);
         return "success";
     }
 
