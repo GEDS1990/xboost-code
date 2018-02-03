@@ -39,6 +39,15 @@ public class SolutionVehiclesService {
     }
 
     /**
+     * 根据carType获取线路信息
+     * param param
+     * @return
+     */
+    public List<Map<String, Object>> findByCarRealy(Map<String, Object> param) {
+        return solutionVehiclesMapper.findByCarRealy(param);
+    }
+
+    /**
      * 根据carType获取线路数量
      * @param param
      * @return

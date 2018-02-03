@@ -269,7 +269,7 @@ public class SolutionCostController {
         planB.put("partTimeSalary", request.getParameter("partTimeSalaryB"));
         planB.put("partTimeWorkDay", request.getParameter("partTimeWorkDayB"));
         planB.put("piece", request.getParameter("pieceB"));
-        planB.put("sum1", request.getParameter("sum1B"));
+        planB.put("sum1", request.getParameter("sum2B"));
         planB.put("totalDailyLaborCost", request.getParameter("totalDailyLaborCostB"));
         planB.put("branchTransportCost", request.getParameter("branchTransportCostB"));
         planB.put("totalCost", request.getParameter("totalCostB"));
