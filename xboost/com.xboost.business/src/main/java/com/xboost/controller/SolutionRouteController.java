@@ -3,6 +3,7 @@ package com.xboost.controller;
 import com.google.common.collect.Maps;
 import com.mckinsey.sf.data.Car;
 import com.xboost.pojo.CarLicence;
+import com.xboost.pojo.DemandInfo;
 import com.xboost.pojo.Route;
 import com.xboost.pojo.SiteInfo;
 import com.xboost.service.*;
@@ -12,7 +13,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.servlet.ServletOutputStream;
@@ -370,7 +373,7 @@ public class SolutionRouteController {
             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
             String scenariosId = ShiroUtil.getOpenScenariosId();
             String[] titles = { "Route ID","Depot Order","Depot ID","Depot Name","Depot Address","Arrival Time",
-                                "Operation","Departure Time","Next Depot","Next Depot Distance","Car Name" };
+                                "Operation","Departure Time","Next Depot","Next Depot Distance","Car Type","Car Name" };
             String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
             solutionRouteService.exportResult(scenariosId,titles,outputStream,modelType);
             System.out.println("outputStream:"+outputStream);
@@ -383,5 +386,12 @@ public class SolutionRouteController {
         return null;
     }
 
-
+    @RequestMapping(value="/inputRoutesExcel", method = RequestMethod.POST)
+    @ResponseBody
+    public String AddDemandInfoByExcel(Route route, @RequestParam MultipartFile[] file) {
+        //设置场景Id
+        route.setScenariosId(ShiroUtil.getOpenScenariosId());
+        solutionRouteService.updateRouteByExcel(route, file);
+        return "redirect:/siteInfo";
+    }
 }
