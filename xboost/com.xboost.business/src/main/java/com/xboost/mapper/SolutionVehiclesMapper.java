@@ -24,5 +24,7 @@ public interface SolutionVehiclesMapper {
 
     // 查询所有的车辆
     List<Map<String,Object>> findAllByCar(String scenariosId);
+
+    List<Map<String, Object>> findByCarRealy(Map<String, Object> param);
 }
 

@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.xboost.mapper.SolutionVehiclesMapper;
 import com.xboost.pojo.Route;
 import com.xboost.pojo.SiteInfo;
+import com.xboost.service.MyScenariosService;
 import com.xboost.service.SiteInfoService;
 import com.xboost.service.SolutionRouteService;
 import com.xboost.service.SolutionVehiclesService;
@@ -20,6 +21,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +38,8 @@ public class SolutionVehiclesController {
     private SiteInfoService siteInfoService;
     @Inject
     private SolutionRouteService solutionRouteService;
+    @Inject
+    private MyScenariosService myScenariosService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -87,7 +91,15 @@ public class SolutionVehiclesController {
         Map<String,Object> result = Maps.newHashMap();
         Integer usingCarCount = solutionVehiclesService.findBusyCarCount(ShiroUtil.getOpenScenariosId());
 
-        List<Map<String,Object>> vehiclesList = solutionVehiclesService.findByCar(param); //.findAll();
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+        List<Map<String,Object>> vehiclesList = new ArrayList<>();
+        if ("1".equals(modelType)) {
+            vehiclesList = solutionVehiclesService.findByCar(param); //.findAll();
+        }
+        if ("2".equals(modelType)) {
+            vehiclesList = solutionVehiclesService.findByCarRealy(param); //.findAll();
+        }
+
         Integer count = solutionVehiclesService.findAllCountByCar(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = solutionVehiclesService.findCountByCar(param);
 
