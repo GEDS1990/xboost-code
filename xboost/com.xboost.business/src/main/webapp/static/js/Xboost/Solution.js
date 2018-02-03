@@ -1314,6 +1314,34 @@ $(function  () {
                 //此处为上传文件的进度条get();
             }
 
+            /*
+			 * 检测上传文件是否符合要求
+			 */
+            function FileTest (objid,form) {
+                var res = objid.files[0];
+                if (res != undefined) {
+                    var val = objid.value;
+                    var _fileName = res.name
+                    FileFormat(val,_fileName,form);
+                }
+            }
+            /*
+             * 判断文件格式
+             */
+            function FileFormat (val,fileName,form) {
+                var _index = val.lastIndexOf(".");
+                var _key = val.slice(_index);
+                var _zeng = /^(\.xlsx)$/i;
+                if (!_zeng.test(_key)) {
+                    form.push(false);
+                    $('.import-error').text("The file format of"+" "+fileName+" "+"is inconsistent  .xlsx").show();
+                    //alert("The file format of"+" "+fileName+" "+"is inconsistent  .xlsx")
+                }else{
+                    //将数据封装对象
+                    form.push(true);
+                }
+            }
+
             //导出excel表格进行排车
             $('.export-btn').click(function  () {
                 var _xls = $(this).attr('data-xls');
@@ -1325,7 +1353,7 @@ $(function  () {
 
             //导入excel 表格
             $('#cond-file-upload-info').click(function  () {
-                UploadFile("cond-input-form-info","cond_file","/siteInfo/addByExcel",'.bs-example-modal-input')
+                UploadFile("cond-input-form-info","cond_file","/route/inputRoutesExcel",'.bs-example-modal-input')
             });
 		}
 		
