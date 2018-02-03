@@ -39,11 +39,6 @@ public class TempService {
     @Inject
     private SiteInfoService siteInfoService;
 
-    @Inject
-    Route route;
-    @Inject
-    JieliResult jieliResult;
-
     public void saveTempInfo(Temp temp) {
         tempMapper.saveTemp(temp);
     }
@@ -64,6 +59,7 @@ public class TempService {
         solutionRouteService.delByScenariosId(Integer.parseInt(openScenariosId));
         String siteCode="";
         for(int i=0;i<jieliResults.size();i++){
+            JieliResult jieliResult = new JieliResult();
             jieliResult.setTimeId(jieliResults.get(i).get("time_id").toString());
             jieliResult.setDistance(jieliResults.get(i).get("distance").toString());
             jieliResult.setDidiNum(jieliResults.get(i).get("didi").toString());;
@@ -79,7 +75,7 @@ public class TempService {
             jieliResult.setjConnectionId(jieliResults.get(i).get("j_connection_id").toString());
             jieliResult.setConnection(jieliResults.get(i).get("connection").toString());
             jieliResult.setTimeBucket(jieliResults.get(i).get("timebucket").toString());
-
+            Route route = new Route();
             route.setScenariosId(openScenariosId);
             route.setRouteCount(String.valueOf(i+1));
             route.setCarType(jieliResult.getCarType());

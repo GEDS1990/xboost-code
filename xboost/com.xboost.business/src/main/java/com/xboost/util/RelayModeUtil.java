@@ -182,12 +182,15 @@ public class RelayModeUtil extends Thread implements IConstants {
             OD_demand.put("volume", Double.parseDouble(dinfo.getVotes()) / 0.8511);
 
             for (int e = 0; e < SiteInfoAll.size(); e++) {
+                int idT = SiteInfoAll.get(e).getId();
                 if (SiteInfoAll.get(e).getSiteCode().toString().equals(dinfo.getSiteCodeCollect().toString())) {
-                    OD_demand.put("inbound_id", e + 1);
+//                    OD_demand.put("inbound_id", e + 1);
+                    OD_demand.put("inbound_id", idT);
                     continue;
                 }
                 if (SiteInfoAll.get(e).getSiteCode().toString().equals(dinfo.getSiteCodeDelivery().toString())) {
-                    OD_demand.put("outbound_id", e + 1);
+//                    OD_demand.put("outbound_id", e + 1);
+                    OD_demand.put("outbound_id", idT);
                     continue;
                 }
             }
