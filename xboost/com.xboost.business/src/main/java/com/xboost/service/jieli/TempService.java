@@ -102,7 +102,7 @@ public class TempService {
 
             route.setScenariosId(openScenariosId);
             route.setRouteCount(String.valueOf(i+1));
-            route.setCarType(jieliResult.getCarType());
+//            route.setCarType(jieliResult.getCarType());
             route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
                     +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setSequence(String.valueOf(1));
@@ -117,12 +117,12 @@ public class TempService {
             route.setUnloadVolSum("0");
             route.setNextCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setCalcDis(jieliResult.getDistance());
-            route.setStr1(jieliResult.getCarNum());
+//            route.setStr1(jieliResult.getCarNum());
             solutionRouteService.addRoute(route);
 
             route.setScenariosId(openScenariosId);
             route.setRouteCount(String.valueOf(i+1));
-            route.setCarType(jieliResult.getCarType());
+//            route.setCarType(jieliResult.getCarType());
             route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
                     +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
             route.setSequence(String.valueOf(2));
@@ -137,7 +137,7 @@ public class TempService {
             route.setUnloadVolSum(jieliResult.getVolume());
             route.setNextCurLoc("");
             route.setCalcDis("0.00");
-            route.setStr1(jieliResult.getCarNum());
+//            route.setStr1(jieliResult.getCarNum());
             solutionRouteService.addRoute(route);
 
         }
