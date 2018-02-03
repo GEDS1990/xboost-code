@@ -1167,7 +1167,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Start Insert Result Data:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("90%"));
 
-        makeResults(gurobyResult);
+        makeResults(gurobyResult,gurobyCost);
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Finished."));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("100%"));
@@ -1175,7 +1175,7 @@ public class RelayModeUtil extends Thread implements IConstants {
 
     }
     ////////////
-    protected void makeResults(double[] solution){
+    protected void makeResults(double[] solution, double gurobyCost){
 //                route_opt start
         int I = route_list.size();
         int J = distance_ref_list.size()*full_time/route_time_unit;
@@ -1280,7 +1280,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         }
 
         logger.info("insert");
-        tempService.saveConnectionOpt(connection_opt_list,OpenScenariosId);
+        tempService.saveConnectionOpt(connection_opt_list,gurobyCost,OpenScenariosId);
 
     }
 

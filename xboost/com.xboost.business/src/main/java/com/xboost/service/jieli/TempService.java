@@ -3,11 +3,13 @@ package com.xboost.service.jieli;
 import com.mckinsey.sf.data.solution.ArrInfo;
 import com.xboost.mapper.ArrInfoMapper;
 import com.xboost.mapper.jieli.TempMapper;
+import com.xboost.pojo.Cost;
 import com.xboost.pojo.JieliResult;
 import com.xboost.pojo.Route;
 import com.xboost.pojo.jieli.Temp;
 import com.xboost.service.JieliResultService;
 import com.xboost.service.SiteInfoService;
+import com.xboost.service.SolutionCostService;
 import com.xboost.service.SolutionRouteService;
 import com.xboost.util.ShiroUtil;
 import org.apache.spark.sql.sources.In;
@@ -32,6 +34,8 @@ public class TempService {
 
     @Inject
     SolutionRouteService solutionRouteService;
+    @Inject
+    SolutionCostService solutionCostService;
 
     @Inject
     private JieliResultService jieliResultService;
@@ -55,10 +59,11 @@ public class TempService {
         tempMapper.savedistance_ref(dr);
     }
 
-    public void saveConnectionOpt(List<Map> jieliResults, String openScenariosId) {
+    public void saveConnectionOpt(List<Map> jieliResults, double gurobyCost, String openScenariosId) {
         solutionRouteService.delByScenariosId(Integer.parseInt(openScenariosId));
         String siteCode="";
         for(int i=0;i<jieliResults.size();i++){
+
             JieliResult jieliResult = new JieliResult();
             jieliResult.setTimeId(jieliResults.get(i).get("time_id").toString());
             jieliResult.setDistance(jieliResults.get(i).get("distance").toString());
@@ -75,7 +80,26 @@ public class TempService {
             jieliResult.setjConnectionId(jieliResults.get(i).get("j_connection_id").toString());
             jieliResult.setConnection(jieliResults.get(i).get("connection").toString());
             jieliResult.setTimeBucket(jieliResults.get(i).get("timebucket").toString());
+
             Route route = new Route();
+
+            if(Integer.parseInt(jieliResult.getDidiNum())!=0){
+                route.setCarType("didi");
+                route.setStr1(jieliResult.getDidiNum());
+            }
+            if(Integer.parseInt(jieliResult.getDadaNum())!=0){
+                route.setCarType(" dada");
+                route.setStr1(" "+jieliResult.getDidiNum());
+            }
+            if(Integer.parseInt(jieliResult.getBikeNum())!=0){
+                route.setCarType(" baidu");
+                route.setStr1(" "+jieliResult.getDidiNum());
+            }
+            if(Integer.parseInt(jieliResult.getTruckNum())!=0){
+                route.setCarType(" truck");
+                route.setStr1(" "+jieliResult.getDidiNum());
+            }
+
             route.setScenariosId(openScenariosId);
             route.setRouteCount(String.valueOf(i+1));
             route.setCarType(jieliResult.getCarType());
@@ -117,6 +141,14 @@ public class TempService {
             solutionRouteService.addRoute(route);
 
         }
+        //carType
+
+        ///cost
+        Cost cost = new Cost();
+        cost.setScenariosId(openScenariosId);
+        cost.setTotalCost(String.valueOf(gurobyCost));
+        solutionCostService.add(cost);
+
 //        solutionRouteService.addRoute(route);
     }
 
