@@ -3,7 +3,14 @@ package com.xboost.service.jieli;
 import com.mckinsey.sf.data.solution.ArrInfo;
 import com.xboost.mapper.ArrInfoMapper;
 import com.xboost.mapper.jieli.TempMapper;
+import com.xboost.pojo.JieliResult;
+import com.xboost.pojo.Route;
 import com.xboost.pojo.jieli.Temp;
+import com.xboost.service.JieliResultService;
+import com.xboost.service.SiteInfoService;
+import com.xboost.service.SolutionRouteService;
+import com.xboost.util.ShiroUtil;
+import org.apache.spark.sql.sources.In;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +29,21 @@ public class TempService {
      */
     @Inject
     TempMapper tempMapper;
+
+    @Inject
+    SolutionRouteService solutionRouteService;
+
+    @Inject
+    private JieliResultService jieliResultService;
+
+    @Inject
+    private SiteInfoService siteInfoService;
+
+    @Inject
+    Route route;
+    @Inject
+    JieliResult jieliResult;
+
     public void saveTempInfo(Temp temp) {
         tempMapper.saveTemp(temp);
     }
@@ -36,6 +58,70 @@ public class TempService {
 
     public void savedistance_ref(Map dr) {
         tempMapper.savedistance_ref(dr);
+    }
+
+    public void saveConnectionOpt(List<Map> jieliResults) {
+        solutionRouteService.delByScenariosId(Integer.parseInt(ShiroUtil.getOpenScenariosId()));
+        String siteCode="";
+        for(int i=0;i<jieliResults.size();i++){
+            jieliResult.setTimeId(jieliResults.get(i).get("time_id").toString());
+            jieliResult.setDistance(jieliResults.get(i).get("distance").toString());
+            jieliResult.setDidiNum(jieliResults.get(i).get("didi").toString());;
+            jieliResult.setMinutes(jieliResults.get(i).get("minutes").toString());
+            jieliResult.setTruckNum(jieliResults.get(i).get("truck").toString());
+            jieliResult.setOutboundId(jieliResults.get(i).get("outbound_id").toString());
+            jieliResult.setBikeNum(jieliResults.get(i).get("bike").toString());
+            jieliResult.setInboundId(jieliResults.get(i).get("inbound_id").toString());
+            jieliResult.setVolume(jieliResults.get(i).get("volume").toString());
+            jieliResult.setRouteCnt(jieliResults.get(i).get("route_cnt").toString());
+            jieliResult.setCrossRiver(jieliResults.get(i).get("cross_river").toString());
+            jieliResult.setDadaNum(jieliResults.get(i).get("dada").toString());
+            jieliResult.setjConnectionId(jieliResults.get(i).get("j_connection_id").toString());
+            jieliResult.setConnection(jieliResults.get(i).get("connection").toString());
+            jieliResult.setTimeBucket(jieliResults.get(i).get("timebucket").toString());
+
+            route.setScenariosId(ShiroUtil.getOpenScenariosId());
+            route.setRouteCount(String.valueOf(i+1));
+            route.setCarType(jieliResult.getCarType());
+            route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
+                    +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
+            route.setSequence(String.valueOf(1));
+            route.setCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId())));
+            route.setType("PICKUP");
+            route.setSbVol(jieliResult.getVolume());
+            route.setSbVolSum(jieliResult.getVolume());
+            route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
+            route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
+            route.setUnloadLoc("0");
+            route.setUnloadVol("0");
+            route.setUnloadVolSum("0");
+            route.setNextCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
+            route.setCalcDis(jieliResult.getDistance());
+            route.setStr1(jieliResult.getCarNum());
+            solutionRouteService.addRoute(route);
+
+            route.setScenariosId(ShiroUtil.getOpenScenariosId());
+            route.setRouteCount(String.valueOf(i+1));
+            route.setCarType(jieliResult.getCarType());
+            route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
+                    +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
+            route.setSequence(String.valueOf(2));
+            route.setCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
+            route.setType("DELIVER");
+            route.setSbVol("0");
+            route.setSbVolSum("0");
+            route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
+            route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
+            route.setUnloadLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
+            route.setUnloadVol(jieliResult.getVolume());
+            route.setUnloadVolSum(jieliResult.getVolume());
+            route.setNextCurLoc("");
+            route.setCalcDis("0.00");
+            route.setStr1(jieliResult.getCarNum());
+            solutionRouteService.addRoute(route);
+
+        }
+//        solutionRouteService.addRoute(route);
     }
 
     public void savetemp_list(Map tp) {

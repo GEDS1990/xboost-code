@@ -1051,7 +1051,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                         expr.addTerm(M32.getAsDouble(iRow,iCol), i_var[iCol]);
                     }
                 }
-                model.addConstr(expr,GRB.LESS_EQUAL,5.0,"m3_"+iRow); //todo : set 5 as outflow limit
+                model.addConstr(expr,GRB.LESS_EQUAL,2,"m3_"+iRow); //todo : set 5 as outflow limit
             }
             //M44
             //int nonzero4=0;
@@ -1066,7 +1066,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                         expr.addTerm(M44.getAsDouble(iRow,iCol), i_var[iCol+J*2]);
                     }
                 }
-                model.addConstr(expr,GRB.LESS_EQUAL,5.0,"m4_"+iRow); //todo : set 5 as outflow limit
+                model.addConstr(expr,GRB.LESS_EQUAL,3,"m4_"+iRow); //todo : set 5 as outflow limit
             }
 
             //M53,M55
@@ -1275,6 +1275,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         }
 
         logger.info("insert");
+        tempService.saveConnectionOpt(connection_opt_list);
 
     }
 
