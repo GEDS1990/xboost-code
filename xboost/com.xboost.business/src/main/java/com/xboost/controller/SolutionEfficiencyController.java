@@ -186,7 +186,7 @@ public class SolutionEfficiencyController {
         return result;
     }
 
-    //到达车辆数
+    //网点信息
     @RequestMapping(value = "/siteInfo.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<Map<String,Object>> loadSiteInfo(HttpServletRequest request) {
