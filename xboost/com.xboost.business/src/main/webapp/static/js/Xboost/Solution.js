@@ -82,13 +82,13 @@ $(function  () {
 				var sbVol = res[i].sbVol;
 				var unloadVol = res[i].unloadVol;
 				if (sbVol == 0 && unloadVol != 0) {
-					add +='<p>prevCurLoc:'+data.curLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
+					add +='<p>The previous location: '+data.curLoc+" , "+'Arrival Time: '+res[i].arrTime+" , "+'Type:unload '+" , "+'Unloadpiece: '+res[i].unloadVol+'</p>';
 				}
 				if (unloadVol == 0 && sbVol !=0) {
-					add +='<p>nextCurLoc:'+data.nextCurLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+					add +='<p>The next location: '+data.nextCurLoc+" , "+'Departure Time:'+res[i].endTime+" , "+'Type:load'+" , "+'loadpiece:'+res[i].sbVol+'</p>';
 				}else if (unloadVol != 0 && sbVol !=0){
-					add +='<p>prevCurLoc:'+data.curLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
-					add +='<p>nextCurLoc:'+data.nextCurLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+					add +='<p>The previous location: '+data.curLoc+" , "+'Arrival Time: '+res[i].arrTime+" , "+'Type:unload '+" , "+'Unloadpiece: '+res[i].unloadVol+'</p>';
+					add +='<p>The next location: '+data.nextCurLoc+" , "+'Departure Time:'+res[i].endTime+" , "+'Type:load'+" , "+'loadpiece:'+res[i].sbVol+'</p>';
 				}
 			}
 			sContentLine +='<div class="clearfix">';
@@ -110,13 +110,13 @@ $(function  () {
 				var sbVol = res[i].sbVol;
 				var unloadVol = res[i].unloadVol;
 				if (sbVol == 0 && unloadVol != 0) {
-					add +='<p>prevCurLoc:'+data.prevCurLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
+					add +='<p>The previous location: '+data.prevCurLoc+" , "+'Arrival Time:'+res[i].arrTime+" , "+'Type:unload'+" , "+' Unloadpiece:'+res[i].unloadVol+'</p>';
 				}
 				if (unloadVol == 0 && sbVol !=0) {
-					add +='<p>nextCurLoc:'+data.curLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+					add +='<p>The next location: '+data.curLoc+" , "+'Departure Time:'+res[i].endTime+" , "+'Type:load'+" , "+'loadpiece:'+res[i].sbVol+'</p>';
 				}else if (unloadVol != 0 && sbVol !=0){
-					add +='<p>prevCurLoc:'+data.prevCurLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
-					add +='<p>nextCurLoc:'+data.curLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+					add +='<p>The previous location: '+data.prevCurLoc+" , "+'Arrival Time:'+res[i].arrTime+" , "+'Type:unload'+" , "+' Unloadpiece:'+res[i].unloadVol+'</p>';
+					add +='<p>The next location: '+data.curLoc+" , "+' Departure Time:'+res[i].endTime+" , "+' Type:load'+" , "+' loadpiece:'+res[i].sbVol+'</p>';
 					
 				}
 			}
@@ -139,13 +139,13 @@ $(function  () {
 				var sbVol = res[i].sbVol;
 				var unloadVol = res[i].unloadVol;
 				if (sbVol == 0 && unloadVol != 0) {
-					add +='<p>prevCurLoc:'+data.prevCurLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
+					add +='<p>The previous location: '+data.prevCurLoc+" , "+' Arrival Time:'+res[i].arrTime+" , "+' Type:unload'+" , "+' Unloadpiece:'+res[i].unloadVol+'</p>';
 				}
 				if (unloadVol == 0 && sbVol !=0) {
-					add +='<p>nextCurLoc:'+data.curLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+					add +='<p>The next location: '+data.curLoc+" , "+' Departure Time:'+res[i].endTime+" , "+' Type:load'+" , "+' loadpiece:'+res[i].sbVol+'</p>';
 				}else if (unloadVol != 0 && sbVol !=0){
-					add +='<p>prevCurLoc:'+data.prevCurLoc+' Arrival Time:'+res[i].arrTime+' Type:unload'+' Unloadpiece:'+res[i].unloadVol+'</p>';
-					add +='<p>nextCurLoc:'+data.curLoc+' Departure Time:'+res[i].endTime+' Type:load'+' loadpiece:'+res[i].sbVol+'</p>';
+					add +='<p>The previous location: '+data.prevCurLoc+" , "+' Arrival Time:'+res[i].arrTime+" , "+' Type:unload'+" , "+' Unloadpiece:'+res[i].unloadVol+'</p>';
+					add +='<p>The next location: '+data.curLoc+" , "+' Departure Time:'+res[i].endTime+" , "+' Type:load'+" , "+' loadpiece:'+res[i].sbVol+'</p>';
 				}
 			}
 			sContentLine +='<div class="clearfix">';
@@ -162,12 +162,12 @@ $(function  () {
 		for (var j = 0;j<p_len;j++) {
 			if (listPoint[j].curLoc == val) {
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(21,32),{
+				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(24,32),{
 					anchor: new BMap.Size(10, 30)
 				});
 			}else{
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(16,24),{
+				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(19,24),{
 					anchor: new BMap.Size(10, 25)
 				});
 			}
@@ -1245,7 +1245,35 @@ $(function  () {
 					var routeNum = $('#route-route').val();
 					$.post("/route/updateCarName",{"routeCount":routeNum,"carName":_val,}).done(function(res){
 						if (res == "success") {
-							window.location.href = "/vehicles";
+							//window.location.href = "/vehicles";
+							var routeCount = $('#route-route').val();
+				        	$.get("/route/planCar.json",{"routeCount":routeCount}).done(function (data){
+		            			//console.log(data);
+		            			if (data.usingCar) {
+			            			var useCar = data.usingCar,
+			            			useCarLen = useCar.length;
+			            			$('#us-vehicle').empty();
+			            			$('#us-vehicle').append('<option>--Choose--</option>');
+			            			for (var x=0;x<useCarLen;x++) {
+			            				var useCarAdd = '<option value='+useCar[x]+'>'+useCar[x]+'</option>';
+			            				$('#us-vehicle').append(useCarAdd);
+			            			}
+			            		}
+			            		if (data.idleCar) {
+			            			var idleCar = data.idleCar,
+			            			idleCarLen = idleCar.length;
+			            			$('#idle-vehicle').empty();
+			            			$('#idle-vehicle').append('<option>--Choose--</option>');
+			            			for (var y=0;y<idleCarLen;y++) {
+			            				var idleCarAdd = '<option value='+idleCar[y]+'>'+idleCar[y]+'</option>';
+			            				$('#idle-vehicle').append(idleCarAdd);
+			            			}
+		
+			            		}
+			            		
+		            		}).fail(function (){
+		            			console.log("fail");
+		            		})
 						}
 					}).fail(function  () {
 						alert("fail");

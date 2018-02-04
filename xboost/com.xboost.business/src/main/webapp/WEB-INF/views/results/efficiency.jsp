@@ -33,7 +33,11 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <style type="text/css">
+    	.eff-info {
+    		display: none;
+    	}
+    </style>
 </head>
 
 <body>
@@ -74,7 +78,7 @@
 	        
 	        
 	        
-	    	<div id="route-wrap">
+	    	<div id="route-wrap" style="position: relative;">
 	    		<header class="clearfix result-header">
 	    			<div class="xb-fl">
 		    			<div class="select-depot">
@@ -86,8 +90,33 @@
 	    			</div>
 	    		</header>
 	    		
+	    		<!--loading-->
+				<div class="loadingalt">
+					<div class="spinner">
+						<div class="spinner-container container1">
+						    <div class="circle1"></div>
+						    <div class="circle2"></div>
+						    <div class="circle3"></div>
+						    <div class="circle4"></div>
+					    </div>
+					    <div class="spinner-container container2">
+						    <div class="circle1"></div>
+						    <div class="circle2"></div>
+						    <div class="circle3"></div>
+						    <div class="circle4"></div>
+					    </div>
+					    <div class="spinner-container container3">
+						    <div class="circle1"></div>
+						    <div class="circle2"></div>
+						    <div class="circle3"></div>
+						    <div class="circle4"></div>
+					    </div>
+					</div>
+					<p class="text-center" style="padding-top: 50px;font-size: 18px;">Loading ...</p>
+				</div>
+	    		
 	    		<!--发出 车辆数-->
-	    		<div style="padding: 10px;">
+	    		<div style="padding: 10px;" class="eff-info">
 	    			<div class="table-responsive active">
 						<table id="efficiency-car" class="table table-hover efficiency">
 							<thead id="car-thead">
@@ -101,7 +130,7 @@
 	    		</div>
 	    		
 	    		<!--发出 票数-->
-	    		<div style="padding: 10px;">
+	    		<div style="padding: 10px;" class="eff-info">
 	    			<div class="table-responsive active">
 						<table id="efficiency-sbVol" class="table table-hover efficiency">
 							<thead id="sbVol-thead">
@@ -115,7 +144,7 @@
 	    		</div>
 	    		
 	    		<!--到达车辆数-->
-	    		<div style="padding: 10px;">
+	    		<div style="padding: 10px;" class="eff-info">
 	    			<div class="table-responsive active">
 						<table id="efficiency-arrcar" class="table table-hover efficiency">
 							<thead id="arrcar-thead">
@@ -129,7 +158,7 @@
 	    		</div>
 	    		
 	    		<!--到达票数-->
-	    		<div style="padding: 10px;">
+	    		<div style="padding: 10px;" class="eff-info">
 	    			<div class="table-responsive active">
 						<table id="efficiency-unloadVol" class="table table-hover efficiency">
 							<thead id="unloadVol-thead">
@@ -143,7 +172,7 @@
 	    		</div>
 	    		
 	    		<!--网点信息-->
-	    		<div style="padding: 10px;">
+	    		<!--<div style="padding: 10px;">
 	    			<div class="table-responsive active">
 						<table class="table table-hover efficiency">
 							<thead>
@@ -164,7 +193,7 @@
 							</tbody>
 						</table>
 					</div>
-	    		</div>
+	    		</div>-->
 	    		
 	    	
 	    	
@@ -208,7 +237,29 @@
 
 
 
-
+<!--loading-->
+<div class="loading alt">
+	<div class="spinner">
+		<div class="spinner-container container1">
+		    <div class="circle1"></div>
+		    <div class="circle2"></div>
+		    <div class="circle3"></div>
+		    <div class="circle4"></div>
+	    </div>
+	    <div class="spinner-container container2">
+		    <div class="circle1"></div>
+		    <div class="circle2"></div>
+		    <div class="circle3"></div>
+		    <div class="circle4"></div>
+	    </div>
+	    <div class="spinner-container container3">
+		    <div class="circle1"></div>
+		    <div class="circle2"></div>
+		    <div class="circle3"></div>
+		    <div class="circle4"></div>
+	    </div>
+	</div>
+</div>
 
 
 
