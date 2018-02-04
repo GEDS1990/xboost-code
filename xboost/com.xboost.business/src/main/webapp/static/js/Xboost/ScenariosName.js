@@ -1432,7 +1432,7 @@ $(function  () {
 	                {"data":"lastOpenTime","name":"last_open_time"},
 	                {"data":"scenariosStatus","name":"scenarios_status"},
 	                {"data":function(row){
-	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"' data-scenariosname="+row.scenariosName+">Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
+	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"' data-scenariosname="+row.scenariosName+" data-status="+row.scenariosStatus+">Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
 	                }}
 	            ],
 	            "columnDefs":[ //具体列的定义
@@ -1474,13 +1474,19 @@ $(function  () {
 			formCreate.addEventListener("submit",function  (event) {
 				event.preventDefault();
 			});
-	    
         
 	        //点击open 打开场景
 	        $("body").on("click",".openLink-scen",function  () {
 	        	var $this = $(this);
+	        	var status = $this.attr("data-status");
 	        	var openScenariosId = $this.attr("data-scenariosid");
 	        	var scenName = $this.attr("data-scenariosname");
+	        	if (status == "Simulating") 
+	        	{
+	        		$('#modal-siming').find('.modal-body p').text("The Simulation is running and can not restart the Simulation");
+					$('#modal-siming').modal("show");
+					return false;
+	        	}
 	        	$.post("/MyScenarios/open",{"openScenariosId":openScenariosId,"openScenariosName":scenName}).done(function  (res) {
 	        		if (res == "success") {
 	        			$('#scen-name').remove();
@@ -1837,7 +1843,7 @@ $(function  () {
         });
 
         //编辑用户
-        $(document).delegate(".editLink","click",function(){
+        $(document).on(".editLink","click",function(){
             $("#editUserForm-user")[0].reset();
             var id = $(this).attr("data-id");
             $.get("/account/user.json",{"id":id}).done(function(result){
