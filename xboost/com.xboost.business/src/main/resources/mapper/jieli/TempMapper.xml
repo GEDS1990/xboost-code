@@ -135,7 +135,7 @@
             5 as c9,5 as c10,5 as c11,5 as c12,5 as c13,5 as c14,5 as c15,5 as c16,
             5 as c17,5 as c18,5 as c19,5 as c20,5 as c21,5 as c22,5 as c23,5 as c24,
             5 as c25,5 as c26,5 as c27,5 as c28,5 as c29
-        from t_site_info where scenariosId = #{scenariosId} and site_type = 'distrib. Center'
+        from t_site_info where scenariosId = #{scenariosId} and site_type = 'Dummy Hub'
     </select>
 
     <select id="findthree_points_route" resultType="map">
