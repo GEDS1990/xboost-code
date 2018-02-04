@@ -513,7 +513,7 @@ public class SolutionRouteService {
                             String[] row = lineList.get(i).split("#");
                             if("1".equals(row[1])) {
                                 String routeCount = row[0].substring(5);
-                                String carName = row[11];
+                                String carName = row[12];
                                 param.put("scenariosId",ShiroUtil.getOpenScenariosId());
                                 param.put("routeCount", routeCount);
                                 param.put("carName", carName);

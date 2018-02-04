@@ -216,7 +216,7 @@
         <result property="siteNightDelivery" column="site_night_delivery"/>
         <result property="siteArea" column="site_area"/>
         <result property="siteType" column="site_type"/>
-        <result property="carNum" column="car_num"/>
+        <result property="carNum" column="str1"/>
         <result property="largeCarModel" column="large_carModle"/>
         <result property="maxOperateNum" column="max_operate_num"/>
         <result property="distribCenter" column="distrib_center"/>
