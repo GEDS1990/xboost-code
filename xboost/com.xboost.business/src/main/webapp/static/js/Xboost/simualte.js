@@ -83,6 +83,16 @@ $(function  () {
 				}
 			});
 			
+			//获取当前场景是否在运行中
+			$.post("/cascade/runSilumate").done(function  (res) {
+				if (res == "Simulating") 
+				{
+					$('#modal-run').val("1");
+				}
+			}).fail(function  () {
+				console.log("fail");
+			});
+			
 			//点击运行run
 			$('#sim-run').click(function  () {
 				var runTime = $('#sim-run-time').val();
@@ -90,6 +100,13 @@ $(function  () {
 				var runModel = $('#sim-model').val();
 				var run_t_limit = $('#sim-run-t-limit').val();
 				var run_opt_limit = $("#sim-run-opt-limit").val();
+				var modal_run = $('#modal-run').val();
+				if (modal_run == 1) 
+				{
+					$('#modal-sim').find('.modal-body p').text("The Simulation is running and can not restart the Simulation");
+					$('#modal-sim').modal("show");
+					return false;
+				}
 				if (runModel == 0) 
 				{
 					$('#sim-error-check').show();
