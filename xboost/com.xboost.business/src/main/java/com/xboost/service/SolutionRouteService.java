@@ -254,14 +254,9 @@ public class SolutionRouteService {
      * 导出result_depots excel
      */
     public void exportResult(String scenariosId, String[] titles, ServletOutputStream outputStream, String modelType) {
-        List<Map<String, Object>> list = solutionRouteMapper.findAllByRoute(scenariosId);
-        Collections.sort(list, new Comparator<Map<String, Object>>() {
-            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-                Integer name1 = Integer.valueOf(o1.get("routeCount").toString()) ;//name1是从你list里面拿出来的一个
-                Integer name2 = Integer.valueOf(o2.get("routeCount").toString()) ; //name1是从你list里面拿出来的第二个name
-                return name1.compareTo(name2);
-            }
-        });
+        List<Map<String, Object>> routeList = solutionRouteMapper.findAllByRoute(scenariosId);
+        String sbVol;
+        String unloadVol;
         // 创建一个workbook 对应一个excel应用文件
         XSSFWorkbook workBook = new XSSFWorkbook();
         // 在workbook中添加一个sheet,对应Excel文件中的sheet
@@ -270,6 +265,8 @@ public class SolutionRouteService {
         ExportUtil exportUtil = new ExportUtil(workBook, sheet);
         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
+        sheet.setColumnWidth(6, 50 * 250);
+        sheet.setDefaultRowHeight((short) 36);
         // 构建表头
         XSSFRow headRow = sheet.createRow(0);
         XSSFCell cell = null;
@@ -282,10 +279,10 @@ public class SolutionRouteService {
 
         if ("1".equals(modelType)) {
             // 构建表体数据
-            if (list != null && list.size() > 0) {
-                for (int j = 0; j < list.size(); j++) {
+            if (routeList != null && routeList.size() > 0) {
+                for (int j = 0; j < routeList.size(); j++) {
                     XSSFRow bodyRow = sheet.createRow(j + 1);
-                    Map<String, Object> route = list.get(j);
+                    Map<String, Object> route = routeList.get(j);
 
                     int i = 0;
                     cell = bodyRow.createCell(i++);
@@ -372,10 +369,10 @@ public class SolutionRouteService {
             cell.setCellValue("Car Name");
             cell.setCellStyle(headStyle);
             // 构建表体数据
-            if (list != null && list.size() > 0) {
-                for (int j = 0; j < list.size(); j++) {
+            if (routeList != null && routeList.size() > 0) {
+                for (int j = 0; j < routeList.size(); j++) {
                     XSSFRow bodyRow = sheet.createRow(j + 1);
-                    Map<String, Object> route = list.get(j);
+                    Map<String, Object> route = routeList.get(j);
 
                     int i = 0;
                     cell = bodyRow.createCell(i++);
