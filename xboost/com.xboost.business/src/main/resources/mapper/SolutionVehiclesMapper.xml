@@ -38,10 +38,15 @@
     <select id="findByCarRealy" parameterType="map" resultType="map" resultMap="modelCar">
         SELECT * FROM t_solution_route r inner join t_car_info t on r.car_type = t.type
         LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
-        WHERE
+        <where>
             r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
             and t.scenariosId = #{scenariosId} and car_name !=""
+            <if test="keyword != null and keyword != ''">
+                and  r.car_name = #{keyword}
+            </if>
+        </where>
         order by r.route_count,r.sequence
+        <!--order by ${orderColumn} ${orderType}-->
         limit ${start},${length}
     </select>
 
