@@ -105,6 +105,7 @@ $(function  () {
 				{
 					$('#modal-sim').find('.modal-body p').text("The Simulation is running and can not restart the Simulation");
 					$('#modal-sim').modal("show");
+					return false;
 				}
 				if (runModel == 0) 
 				{
