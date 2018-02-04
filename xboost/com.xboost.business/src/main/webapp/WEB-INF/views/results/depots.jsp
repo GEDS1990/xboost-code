@@ -93,12 +93,12 @@
 	    			</div>
 	    		</header>
 	    		<div class="scen-box clearfix">
-	    			<div class="scen-itembox1"style="height: 456px;">
+	    			<div class="scen-itembox1" style="height: 456px;">
 	    				<div id="depots-map" style="width: 100%; ">
 	    					
 	    				</div>
 	    			</div>
-	    			<div class="scen-itembox2">
+	    			<div class="scen-itembox2" style="height: 456px;">
 	    				<h1><span id="depot">No Data</span></h1>
 	    				<ul class="scen-result">
 	    					<li>E:<span id ="east">--</span>&nbsp;&nbsp;N:<span id ="north">--</span></li>
