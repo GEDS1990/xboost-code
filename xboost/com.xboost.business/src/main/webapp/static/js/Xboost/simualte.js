@@ -18,11 +18,13 @@ $(function  () {
 				{
 					$('.sim-v-serial').hide();
 					$('.sim-v-relay').show();
+					$('.notes').hide();
 				}
 				else
 				{
 					$('.sim-v-serial').show();
 					$('.sim-v-relay').hide();
+					$('.notes').show();
 				}
 			});
 			//点击校验

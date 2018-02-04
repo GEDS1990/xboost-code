@@ -355,11 +355,22 @@ public class SolutionRouteService {
                     cell = bodyRow.createCell(i++);
                     cell.setCellValue(route.get("calcDis").toString() + "km");
                     cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("carType")+"");
+                    cell.setCellStyle(bodyStyle);
                 }
             }
         }
 
         if ("2".equals(modelType)) {
+            cell = headRow.createCell(titles.length);
+            cell.setCellValue("Car Num");
+            cell.setCellStyle(headStyle);
+
+            cell = headRow.createCell(titles.length+1);
+            cell.setCellValue("Car Name");
+            cell.setCellStyle(headStyle);
             // 构建表体数据
             if (list != null && list.size() > 0) {
                 for (int j = 0; j < list.size(); j++) {
@@ -376,15 +387,15 @@ public class SolutionRouteService {
                     cell.setCellStyle(bodyStyle);
 
                     cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("curLoc").toString());
+                    cell.setCellValue(route.get("curLoc")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("siteName").toString());
+                    cell.setCellValue(route.get("siteName")+"");
                     cell.setCellStyle(bodyStyle);
 
                     cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("siteAddress").toString());
+                    cell.setCellValue(route.get("siteAddress")+"");
                     cell.setCellStyle(bodyStyle);
 
                     String arrTime = (String) route.get("arrTime");
@@ -439,7 +450,7 @@ public class SolutionRouteService {
                     if("2".equals(route.get("sequence"))) {
                         cell.setCellValue("--");
                     }else {
-                        cell.setCellValue(route.get("nextCurLoc").toString());
+                        cell.setCellValue(route.get("nextCurLoc")+"");
                     }
                     cell.setCellStyle(bodyStyle);
 
@@ -452,7 +463,15 @@ public class SolutionRouteService {
                     cell.setCellStyle(bodyStyle);
 
                     cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("carType").toString());
+                    cell.setCellValue(route.get("carType")+"");
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(route.get("carNum")+"");
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue("");
                     cell.setCellStyle(bodyStyle);
                 }
             }

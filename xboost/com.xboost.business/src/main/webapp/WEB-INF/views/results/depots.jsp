@@ -93,7 +93,7 @@
 	    			</div>
 	    		</header>
 	    		<div class="scen-box clearfix">
-	    			<div class="scen-itembox1"style="height: 390px;">
+	    			<div class="scen-itembox1"style="height: 456px;">
 	    				<div id="depots-map" style="width: 100%; ">
 	    					
 	    				</div>
@@ -112,6 +112,9 @@
 	    					<li>vehicle quantity limit:<span id="vehicle-quantity-limit">--</span><span>(per 10mins)</span></li>
 	    					<li>vehicle weight limit:<span id="vehicle-weight-limit">--</span><span>(per 10mins)</span></li>
 	    					<li>piece capacity:<span id="piece-capacity">--</span><span>(per 10mins)</span></li>
+	    					<li><i class="depotline alt_last"></i>&nbsp;&nbsp;<i>The last dot</i></li>
+	    					<li><i class="depotline alt_next"></i>&nbsp;&nbsp;<i>The next dot</i></li>
+	    					<li><i class="depotline alt_each"></i>&nbsp;&nbsp;<i>Nodes of each other</i></li>
 	    				</ul>
 	    			</div>
 	    		</div>
