@@ -77,6 +77,7 @@ public class CascadeModelUtil extends Thread implements IConstants{
         OutputPrinter.printLine("start init ...");
         systemWebSocketHandler.sendMessageToUser( new TextMessage("8%...."));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("start init ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
         RoutingTransportCosts transportCost = new RoutingTransportCosts(siteDistService, conf.getTransportCost().getDistance(), conf.getTransportCost().getNearest(), conf.getTransportCost().getFixed_stop_time(), false,distMode);
         DefaultConstraints defaultCons = new DefaultConstraints(conf.getDistanceConstraint().getWeight(),conf.getTimeConstraint().getWeight(),1,transportCost);
         IConstraint[] cons = {defaultCons};
@@ -89,7 +90,7 @@ public class CascadeModelUtil extends Thread implements IConstants{
 
         OutputPrinter.printLine("start packing....");
         systemWebSocketHandler.sendMessageToUser( new TextMessage("10%...."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("s	start packing ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("start packing ..."));
         OutputPrinter.printLine("before packing: "+ input.getInitSolution().getUnassignedJobs().length);
         systemWebSocketHandler.sendMessageToUser( new TextMessage("15%...."));
 //        systemWebSocketHandler.sendMessageToUser( new TextMessage("before packing: "+ input.getInitSolution().getUnassignedJobs().length));
