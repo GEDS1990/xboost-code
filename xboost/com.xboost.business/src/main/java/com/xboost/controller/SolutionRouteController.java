@@ -130,6 +130,8 @@ public class SolutionRouteController {
 //                        routeList.get(i).put("unloadVolSum",unloadVolSum);
                         routeList.get(i).put("sbVol",sbVol);
                         routeList.get(i).put("unloadVol",unloadVol);
+                        routeList.get(i).put("nextCurLoc",route.get("nextCurLoc"));
+                        routeList.get(i).put("calcDis",route.get("calcDis"));
                         routeList.remove(j);
                         count = count -1;
                         filteredCount = filteredCount-1;
@@ -142,8 +144,8 @@ public class SolutionRouteController {
         Collections.sort(routeList, new Comparator<Map<String, Object>>() {
             @Override
             public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-                String s1 = (String) o1.get("sequence");
-                String s2 = (String) o2.get("sequence");
+                Integer s1 = Integer.parseInt(o1.get("sequence")+"");
+                Integer s2 = Integer.parseInt(o2.get("sequence")+"");
                 return s1.compareTo(s2);
             }
         });
