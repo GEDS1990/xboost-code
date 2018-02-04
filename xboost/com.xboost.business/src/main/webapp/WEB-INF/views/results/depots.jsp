@@ -112,9 +112,9 @@
 	    					<li>vehicle quantity limit:<span id="vehicle-quantity-limit">--</span><span>(per 10mins)</span></li>
 	    					<li>vehicle weight limit:<span id="vehicle-weight-limit">--</span><span>(per 10mins)</span></li>
 	    					<li>piece capacity:<span id="piece-capacity">--</span><span>(per 10mins)</span></li>
-	    					<li><i class="depotline alt_last"></i>&nbsp;&nbsp;<i>The last dot</i></li>
-	    					<li><i class="depotline alt_next"></i>&nbsp;&nbsp;<i>The next dot</i></li>
-	    					<li><i class="depotline alt_each"></i>&nbsp;&nbsp;<i>Nodes of each other</i></li>
+	    					<li><i class="depotline alt_last"></i>&nbsp;&nbsp;<i>The previous location</i></li>
+	    					<li><i class="depotline alt_next"></i>&nbsp;&nbsp;<i>The next location</i></li>
+	    					<li><i class="depotline alt_each"></i>&nbsp;&nbsp;<i>Locations of each other</i></li>
 	    				</ul>
 	    			</div>
 	    		</div>

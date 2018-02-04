@@ -840,6 +840,7 @@ $(function (){
 	(function  () {
 		var efficiency = doc.getElementById('efficiency-car');
 		if (efficiency) {
+			$('.loadingalt').show();
 			//请求发出 车辆数
 			$.get("/efficiency/leaveCarNum.json").done(function (res){
 				//console.log(res)
@@ -867,7 +868,7 @@ $(function (){
 					}
 					addthead+='<tr>';
 					addthead+='<th colspan='+(result.length+3)+'>No. of Departing Vehicles</th>';
-					addthead+='<th>Total Vehicles</th>';
+					addthead+='<th>Total Shipments</th>';
 					addthead+='</tr>';
 					addthead+='<tr>';
 					addthead+='<th>Depot ID</th>';
@@ -876,7 +877,8 @@ $(function (){
 					addthead+='<th>Total Delivery Shipments</th>';
 					addthead+='<th>'+allsum+'</th></tr>';
 					$('#car-thead').append(addthead);	
-					
+					$('#car-thead').parents('.eff-info').show();
+					$('.loadingalt').hide();
 				}
 				
 			}).fail(function (){
@@ -919,7 +921,8 @@ $(function (){
 					addthead+='<th>Total Delivery Shipments</th>';
 					addthead+='<th>'+allsum+'</th></tr>';
 					$('#sbVol-thead').append(addthead);	
-					
+					$('#sbVol-thead').parents('.eff-info').show();
+					$('.loadingalt').hide();
 				}
 			}).fail(function (){
 				console.log("fail");
@@ -952,7 +955,7 @@ $(function (){
 					}
 					addthead+='<tr>';
 					addthead+='<th colspan='+(result.length+3)+'>No. of Arraving vehicles</th>';
-					addthead+='<th>Total Vehicles</th>';
+					addthead+='<th>Total Shipments</th>';
 					addthead+='</tr>';
 					addthead+='<tr>';
 					addthead+='<th>Depot ID</th>';
@@ -960,8 +963,9 @@ $(function (){
 					addthead+=addth(result);
 					addthead+='<th>Total Receiving Shipments</th>';
 					addthead+='<th>'+allsum+'</th></tr>';
-					$('#arrcar-thead').append(addthead);	
-					
+					$('#arrcar-thead').append(addthead);
+					$('#arrcar-thead').parents('.eff-info').show();
+					$('.loadingalt').hide();
 				}
 			}).fail(function (){
 				console.log("fail");
@@ -1004,7 +1008,8 @@ $(function (){
 					addthead+='<th>Total Receiving Shipments</th>';
 					addthead+='<th>'+allsum+'</th></tr>';
 					$('#unloadVol-thead').append(addthead);	
-					
+					$('#unloadVol-thead').parents('.eff-info').show();
+					$('.loadingalt').hide();
 				}
 			}).fail(function (){
 				console.log("fail");
@@ -1012,6 +1017,7 @@ $(function (){
 			
 			
 			//网点信息
+			/*
 			$.get("/efficiency/siteInfo.json").done(function (res){
 				//console.log(res);
 				var _len = res.length;
@@ -1033,7 +1039,8 @@ $(function (){
 			}).fail(function  () {
 				alert("fail");
 			});
-
+			*/
+			
             //导出excel表格
             $('.export-btn').click(function  () {
                 var _xls = $(this).attr('data-xls');
