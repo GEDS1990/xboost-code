@@ -669,6 +669,7 @@ $(function (){
 								"cost":_cost,
 								"SiteInfo":SiteInfo
 							}
+							
 						}else if(_val == "b"){
 							var _cost = {
 								"sitePeopleWork":vmB.sitePeople,
@@ -689,6 +690,8 @@ $(function (){
 								"SiteInfo":SiteInfo
 							}
 						}
+						
+						console.log(data);
 						$.post("/costs/editRelay",data).done(function (res){
 							console.log(res);
 							if (res == "success") {
