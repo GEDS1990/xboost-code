@@ -516,6 +516,7 @@ public class OutputPrinter implements IConstants {
 						
 //						rr.createCell(0).setCellValue(routeCount);
 						routePojo.setRouteCount(String.valueOf(routeCount));
+						routePojo.setStr1("1.0");
 //						rr.createCell(1).setCellValue(carType);
 						routePojo.setCarType(carType);
 //						routePojo.setCarName(carType.concat(String.valueOf(routeCount)));
@@ -686,6 +687,7 @@ public class OutputPrinter implements IConstants {
 										(Strings.isEmpty(routePojoTemp.getSbVolSum().trim())?0:Double.parseDouble(routePojoTemp.getSbVolSum()))));
 								routePojoTemp.setSbVol(routePojoTemp.getSbVol().concat("/"+routePojo.getSbVol()));
 								routePojoTemp.setScenariosId(routePojo.getScenariosId());
+								routePojoTemp.setStr1("1.0");
 							solutionRouteService.updateRouteByTemp(routePojoTemp);//
 						}else{
 //							solutionRouteService.addRoute(routePojo);//将route插入数据库

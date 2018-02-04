@@ -54,7 +54,10 @@ public class SolutionDistributionService {
                             total = total + Integer.parseInt(demandInfo.getVotes() != null ? demandInfo.getVotes() : "0");
                         }
                     }
-                    map.put(String.valueOf(min + (jiange * i)) + "-" + String.valueOf(min + (jiange * (i + 1))), String.valueOf(df.format(total / totalAll * 100)));
+                    double d = 0;
+                    d = Double.parseDouble(df.format(total / totalAll * 100))>100?100:Double.parseDouble(df.format(total / totalAll * 100));
+                    d = Double.parseDouble(df.format(total / totalAll * 100))<0?0:Double.parseDouble(df.format(total / totalAll * 100));
+                    map.put(String.valueOf(min + (jiange * i)) + "-" + String.valueOf(min + (jiange * (i + 1))), String.valueOf(d));
                 }
                 break;
             case "1":
@@ -66,7 +69,10 @@ public class SolutionDistributionService {
                             total = total + Double.parseDouble(route.getSbVolSum() != null ? route.getSbVolSum() : "0");
                         }
                     }
-                    map.put(String.valueOf(min + (jiange * i)) + "-" + String.valueOf(min + (jiange * (i + 1))), String.valueOf(df.format(total / totalAllRoute * 100)));
+                    double d = 0;
+                    d = Double.parseDouble(df.format(total / totalAllRoute * 100))>100?100:Double.parseDouble(df.format(total / totalAllRoute * 100));
+                    d = Double.parseDouble(df.format(total / totalAllRoute * 100))<0?0:Double.parseDouble(df.format(total / totalAllRoute * 100));
+                    map.put(String.valueOf(min + (jiange * i)) + "-" + String.valueOf(min + (jiange * (i + 1))), String.valueOf(d));
                 }
                 break;
             case "3":
@@ -103,13 +109,41 @@ public class SolutionDistributionService {
                     }
                     totalD = total1 + total2 + total3 + total4 + total5 + total6 + total7;
                 }
-                map.put("tiqian60", df.format((total1 / totalD) * 100));
-                map.put("tiqian50", df.format((total2 / totalD) * 100));
-                map.put("tiqian40", df.format((total3 / totalD) * 100));
-                map.put("tiqian30", df.format((total4 / totalD) * 100));
-                map.put("tiqian20", df.format((total5 / totalD) * 100));
-                map.put("tiqian10", df.format((total6 / totalD) * 100));
-                map.put("zunshi", df.format((total7 / totalD) * 100));
+                double d1 = 0;
+                double d2 = 0;
+                double d3 = 0;
+                double d4 = 0;
+                double d5 = 0;
+                double d6 = 0;
+                double d7 = 0;
+                d1 = (total1 / totalD)>1?1:(total1 / totalD);
+                d1 = (total1 / totalD)<0?0:(total1 / totalD);
+
+                d2 = (total2 / totalD)>1?1:(total2 / totalD);
+                d2 = (total2 / totalD)<0?0:(total2 / totalD);
+
+                d3 = (total3 / totalD)>1?1:(total3 / totalD);
+                d3 = (total3 / totalD)<0?0:(total3 / totalD);
+
+                d4 = (total4 / totalD)>1?1:(total4 / totalD);
+                d4 = (total4 / totalD)<0?0:(total4 / totalD);
+
+                d5 = (total5 / totalD)>1?1:(total5 / totalD);
+                d5 = (total5 / totalD)<0?0:(total5 / totalD);
+
+                d6 = (total6 / totalD)>1?1:(total6 / totalD);
+                d6 = (total6 / totalD)<0?0:(total6 / totalD);
+
+                d7 = (total7 / totalD)>1?1:(total7 / totalD);
+                d7 = (total7 / totalD)<0?0:(total7 / totalD);
+
+                map.put("tiqian60", df.format(d1 * 100));
+                map.put("tiqian50", df.format(d2 * 100));
+                map.put("tiqian40", df.format(d3 * 100));
+                map.put("tiqian30", df.format(d4 * 100));
+                map.put("tiqian20", df.format(d5 * 100));
+                map.put("tiqian10", df.format(d6 * 100));
+                map.put("zunshi", df.format(d7 * 100));
                 break;
             default:
                 break;
