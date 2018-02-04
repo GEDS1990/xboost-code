@@ -301,7 +301,11 @@ $(function  () {
 	                $("#siteType").val(result.siteType);
 	                $("#distribCenter").val(result.distribCenter);
 	                $("#siteNightDelivery").val(result.siteNightDelivery);
-	                $("#carNum").val(result.carNum);
+	                $("#noOfTruckLimitation").val(result.noOfTruckLimitation);
+	                $("#noOfBaiduLimitation").val(result.noOfBaiduLimitation);
+	                $("#noOfDidiLimitation").val(result.noOfDidiLimitation);
+	                $("#noOfDadaLimitation").val(result.noOfDadaLimitation);
+	                $("#reserve").val(result.reserve);
 	                $("#largeCarModel").val(result.largeCarModel);
 	                $("#maxOperateNum").val(result.maxOperateNum);
 	                $("#editUserModal").modal("show");
