@@ -130,8 +130,23 @@ public class SolutionRouteController {
 //                        routeList.get(i).put("unloadVolSum",unloadVolSum);
                         routeList.get(i).put("sbVol",sbVol);
                         routeList.get(i).put("unloadVol",unloadVol);
-                        routeList.get(i).put("nextCurLoc",route.get("nextCurLoc"));
-                        routeList.get(i).put("calcDis",route.get("calcDis"));
+
+                        String curLoc = (String) routeList.get(i).get("curLoc");
+                        String nextCurLoc = (String) routeList.get(i).get("nextCurLoc");
+                        String calcDis = (String) routeList.get(i).get("calcDis");
+                        if(!curLoc.equals(nextCurLoc)) {
+                            routeList.get(i).put("nextCurLoc",nextCurLoc);
+                            routeList.get(i).put("calcDis",calcDis);
+                        }
+
+                        String curLoc2 = (String) routeList.get(j).get("curLoc");
+                        String nextCurLoc2 = (String) routeList.get(j).get("nextCurLoc");
+                        String calcDis2 = (String) routeList.get(j).get("calcDis");
+                        if(!curLoc2.equals(nextCurLoc2)) {
+                            routeList.get(i).put("nextCurLoc",nextCurLoc2);
+                            routeList.get(i).put("calcDis",calcDis2);
+                        }
+
                         routeList.remove(j);
                         count = count -1;
                         filteredCount = filteredCount-1;

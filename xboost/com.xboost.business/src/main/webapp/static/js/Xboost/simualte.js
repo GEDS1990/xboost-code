@@ -84,14 +84,15 @@ $(function  () {
 			});
 			
 			//获取当前场景是否在运行中
-			$.post("/cascade/runSilumate").done(function  (res) {
-				if (res == "Simulating") 
-				{
-					$('#modal-run').val("1");
-				}
-			}).fail(function  () {
-				console.log("fail");
-			});
+//			$.post("/cascade/runSilumate").done(function  (res) {
+//				console.log(res)
+//				if (res == "Simulating") 
+//				{
+//					$('#modal-run').val("1");
+//				}
+//			}).fail(function  () {
+//				console.log("fail");
+//			});
 			
 			//点击运行run
 			$('#sim-run').click(function  () {
@@ -101,12 +102,12 @@ $(function  () {
 				var run_t_limit = $('#sim-run-t-limit').val();
 				var run_opt_limit = $("#sim-run-opt-limit").val();
 				var modal_run = $('#modal-run').val();
-				if (modal_run == 1) 
-				{
-					$('#modal-sim').find('.modal-body p').text("The Simulation is running and can not restart the Simulation");
-					$('#modal-sim').modal("show");
-					return false;
-				}
+//				if (modal_run == 1) 
+//				{
+//					$('#modal-siming').find('.modal-body p').text("The Simulation is running and can not restart the Simulation");
+//					$('#modal-siming').modal("show");
+//					return false;
+//				}
 				if (runModel == 0) 
 				{
 					$('#sim-error-check').show();
@@ -154,20 +155,30 @@ $(function  () {
 						$('#sim-run-opt-limit').focus();
 						return false;
 					}
-					if (type == "" || type == "fail") 
-					{
-						$('#sim-error-run').show();
-					}
-					else if (type == "success")
-					{
-						$('#sim-error-check').hide();
-						$('#timelimit').hide();
-						$('#loopslimit').hide();
-						$('#tlimit').hide();
-						$('#olimit').hide();
-						$('#sim-error-run').hide();
-						window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+run_t_limit+"&loopLimit="+run_opt_limit;
-					}
+					
+					
+//					if (type == "" || type == "fail") 
+//					{
+//						$('#sim-error-run').show();
+//					}
+//					else if (type == "success")
+//					{
+//						$('#sim-error-check').hide();
+//						$('#timelimit').hide();
+//						$('#loopslimit').hide();
+//						$('#tlimit').hide();
+//						$('#olimit').hide();
+//						$('#sim-error-run').hide();
+//						window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+run_t_limit+"&loopLimit="+run_opt_limit;
+//					}
+					
+					$('#sim-error-check').hide();
+					$('#timelimit').hide();
+					$('#loopslimit').hide();
+					$('#tlimit').hide();
+					$('#olimit').hide();
+					$('#sim-error-run').hide();
+					window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+run_t_limit+"&loopLimit="+run_opt_limit;
 				}
 				
 			});
