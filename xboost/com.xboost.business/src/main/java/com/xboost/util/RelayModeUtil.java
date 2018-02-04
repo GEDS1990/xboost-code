@@ -1133,40 +1133,58 @@ public class RelayModeUtil extends Thread implements IConstants {
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Get Route:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("10%"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("getTwoPointsRoute ..."));
 
         getTwoPointsRoute();
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("getThreePointsRoute ..."));
         getThreePointsRoute();
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("getFourPointsRoute ..."));
         getFourPointsRoute();
 
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("getRouteTwoPoint ..."));
         getRouteTwoPoint();
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("getRouteThreePoint ..."));
         getRouteThreePoint();
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("getRouteFourPoint ..."));
         getRouteFourPoint();
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Calculate Constraint matrix"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("20%"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
 
 
         route_list.addAll(route_two_point_list);
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("add route_three_point_list..."));
         route_list.addAll(route_three_point_list);
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("add route_four_point_list..."));
         route_list.addAll(route_four_point_list);
 
         getConneciton();
 
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("getM1X ..."));
         getM1X();
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("getM2X ..."));
         getM2X();
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("getM3X ..."));
         getM3X();
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("getM4X ..."));
         getM4X();
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("getM5X ..."));
         getM5X();
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Start Invoke Gurobi:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("50%"));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
 
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("InvokeGurobi ..."));
         InvokeGurobi();
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Gurobi Optim Finished:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Start Insert Result Data:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("90%"));
 
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for makeResults ..."));
         makeResults(gurobyResult,gurobyCost);
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Finished."));

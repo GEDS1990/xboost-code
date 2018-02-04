@@ -5116,15 +5116,14 @@
 	 */
 	function _fnLog( settings, level, msg, tn )
 	{
-		msg = 'DataTables warning: '+
-			(settings ? 'table id='+settings.sTableId+' - ' : '')+msg;
+		msg = '数据展现异常，请稍后重试！ '
 	
-		if ( tn ) {
-			msg += '. For more information about this error, please see '+
-			'http://datatables.net/tn/'+tn;
-		}
+//		if ( tn ) {
+//			msg += '. For more information about this error, please see '+
+//			'http://datatables.net/tn/'+tn;
+//		}
 	
-		if ( ! level  ) {
+		if ( false  ) {
 			// Backwards compatibility pre 1.10
 			var ext = DataTable.ext;
 			var type = ext.sErrMode || ext.errMode;
