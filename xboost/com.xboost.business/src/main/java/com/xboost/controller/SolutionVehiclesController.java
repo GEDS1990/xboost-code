@@ -21,9 +21,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/11/5 0005.
@@ -128,15 +126,39 @@ public class SolutionVehiclesController {
 //                        vehiclesList.get(i).put("unloadVolSum",unloadVolSum);
                         vehiclesList.get(i).put("sbVol",sbVol);
                         vehiclesList.get(i).put("unloadVol",unloadVol);
+
+                        String curLoc = (String) vehiclesList.get(i).get("curLoc");
+                        String nextCurLoc = (String) vehiclesList.get(i).get("nextCurLoc");
+                        String calcDis = (String) vehiclesList.get(i).get("calcDis");
+                        if(!curLoc.equals(nextCurLoc)) {
+                            vehiclesList.get(i).put("nextCurLoc",nextCurLoc);
+                            vehiclesList.get(i).put("calcDis",calcDis);
+                        }
+
+                        String curLoc2 = (String) vehiclesList.get(j).get("curLoc");
+                        String nextCurLoc2 = (String) vehiclesList.get(j).get("nextCurLoc");
+                        String calcDis2 = (String) vehiclesList.get(j).get("calcDis");
+                        if(!curLoc2.equals(nextCurLoc2)) {
+                            vehiclesList.get(i).put("nextCurLoc",nextCurLoc2);
+                            vehiclesList.get(i).put("calcDis",calcDis2);
+                        }
+
                         vehiclesList.remove(j);
                         count = count -1;
                         filteredCount = filteredCount-1;
                     }
-
                 }
             }
-
         }
+
+        Collections.sort(vehiclesList, new Comparator<Map<String, Object>>() {
+            @Override
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                Integer s1 = Integer.parseInt(o1.get("sequence")+"");
+                Integer s2 = Integer.parseInt(o2.get("sequence")+"");
+                return s1.compareTo(s2);
+            }
+        });
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
