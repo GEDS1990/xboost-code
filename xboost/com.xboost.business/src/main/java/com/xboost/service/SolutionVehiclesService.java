@@ -89,6 +89,8 @@ public class SolutionVehiclesService {
         ExportUtil exportUtil = new ExportUtil(workBook, sheet);
         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
+        sheet.setColumnWidth(6, 50 * 250);
+        sheet.setDefaultRowHeight((short) 36);
         // 构建表头
         XSSFRow headRow = sheet.createRow(0);
         XSSFCell cell = null;

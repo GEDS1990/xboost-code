@@ -121,7 +121,7 @@
 		    						<!--relay-->
 		    						<ul class="item-content" v-show="relaySeen" v-for="site in sitelist">
 		    							<li>No. of Dummy Hub: <span>{{site.siteCode}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Votes: <span>{{site.totalVol}}</span></li>
-		    							<template v-if="site.siteType=='depot'">
+		    							<template v-if="site.siteType=='Non Dummy Hub'">
 		    								<li>No. of Staff per Dummy Hub: <!--<span>{{site.totalVol}}</span> ÷ <span>{{sitePeople}}</span> ≈ --><span>{{site.perMan}}</span>
 		    							</template>
 		    							<template v-else>
@@ -203,7 +203,7 @@
 		    						<!--relay-->
 		    						<ul class="item-content" v-show="relaySeen" v-for="site in sitelist">
 		    							<li>No. of Dummy Hub: <span>{{site.siteCode}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Votes: <span>{{site.totalVol}}</span></li>
-		    							<template v-if="site.siteType=='depot'">
+		    							<template v-if="site.siteType=='Non Dummy Hub'">
 		    								<li>No. of Staff per Dummy Hub: <!--<span>{{site.totalVol}}</span> ÷ <span>{{sitePeople}}</span> ≈ --><span>{{site.perMan}}</span>
 		    							</template>
 		    							<template v-else>
