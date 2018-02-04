@@ -170,21 +170,21 @@ public class TempService {
 
 
 
-    @Cacheable
+
     public List<Map> findthree_points_route(String scenariosId) {
         return tempMapper.findthree_points_route(scenariosId);
     }
-    @Cacheable
+
     public List<Map> findfour_points_route(String scenariosId) {
         return tempMapper.findfour_points_route(scenariosId);
     }
 
-    @Cacheable
+
     public List<Map> findAllTwoPointsRoute(String scenariosId) {
         return tempMapper.findAllTwoPointsRoute(scenariosId);
     }
 
-    @Cacheable
+
     public List<Map> findRouteTempBycode1(String route_temp_sql) {
         return tempMapper.findRouteTempBycode1(route_temp_sql);
     }
@@ -194,7 +194,7 @@ public class TempService {
      * param
      * @return
      */
-    @Cacheable
+
     public List<Map> findAll01(String scenariosId) {
         return tempMapper.findAll01(scenariosId);
     }
@@ -205,7 +205,7 @@ public class TempService {
      * param
      * @return
      */
-    @Cacheable
+
     public List<Map> findAllFlowLim(String scenariosId) {
         return tempMapper.findAllFlowLim(scenariosId);
     }
@@ -215,7 +215,7 @@ public class TempService {
      * param
      * @return
      */
-    @Cacheable
+
     public List<Map> findAll02(String scenariosId) {
         return tempMapper.findAll02(scenariosId);
     }
@@ -224,7 +224,7 @@ public class TempService {
      * param
      * @return
      */
-    @Cacheable
+
     public List<Map> findAll03(String scenariosId) {
         return tempMapper.findAll03(scenariosId);
     }
@@ -233,7 +233,7 @@ public class TempService {
      * param
      * @return
      */
-    @Cacheable
+
     public List<Map> findAll04(String scenariosId) {
         return tempMapper.findAll04(scenariosId);
     }
@@ -242,7 +242,7 @@ public class TempService {
      * param
      * @return
      */
-    @Cacheable
+
     public List<Map> findAll05(String scenariosId) {
         return tempMapper.findAll05(scenariosId);
     }
@@ -251,7 +251,7 @@ public class TempService {
      * param
      * @return
      */
-    @Cacheable
+
     public List<Map> findAll06(String scenariosId) {
         return tempMapper.findAll06(scenariosId);
     }
@@ -260,7 +260,7 @@ public class TempService {
      * param
      * @return
      */
-    @Cacheable
+
     public List<Map> findAll07(String scenariosId) {
         return tempMapper.findAll07(scenariosId);
     }
@@ -269,7 +269,7 @@ public class TempService {
      * param
      * @return
      */
-    @Cacheable
+
     public List<Map> findAll08(String scenariosId) {
         return tempMapper.findAll08(scenariosId);
     }
