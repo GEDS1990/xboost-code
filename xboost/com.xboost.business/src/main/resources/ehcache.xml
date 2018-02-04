@@ -13,7 +13,7 @@
         overflowToDisk="false"/>
 
 <!-- 菜单缓存 -->
-<cache name="menuCache"
+<cache name="resultCache"
        maxElementsInMemory="1000"
        eternal="false"
        timeToIdleSeconds="120"
