@@ -255,6 +255,16 @@ public class SolutionRouteService {
      */
     public void exportResult(String scenariosId, String[] titles, ServletOutputStream outputStream, String modelType) {
         List<Map<String, Object>> routeList = solutionRouteMapper.findAllByRoute(scenariosId);
+        for (int i = 0; i < routeList.size(); i++) {
+            String sbVol = (String) routeList.get(i).get("sbVol");
+            String unloadVol = (String) routeList.get(i).get("unloadVol");
+            if (sbVol != null && !"0".equals(sbVol)) {
+                routeList.get(i).put("sbVol", sbVol.substring(0, sbVol.indexOf(".")));
+            }
+            if (unloadVol != null && !"0".equals(unloadVol)) {
+                routeList.get(i).put("unloadVol", unloadVol.substring(0, unloadVol.indexOf(".")));
+            }
+        }
         String sbVol;
         String unloadVol;
         // 创建一个workbook 对应一个excel应用文件
