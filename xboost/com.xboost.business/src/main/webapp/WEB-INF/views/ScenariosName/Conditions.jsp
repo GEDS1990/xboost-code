@@ -179,8 +179,8 @@
 	                    <label class="col-sm-2 control-label">Night Operation Y/N</label>
 	                    <div class="col-sm-4">
 	                        <select type="text" class="form-control" name="siteNightDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-	                        	<option value="Non Dummy Hub">Non Dummy Hub</option>
-	                        	<option value="Dummy Hub">Dummy Hub</option>
+	                        	<option value="support">support</option>
+	                        	<option value="Non support">Non support</option>
 	                        </select>
 	                    </div>
 	                    
@@ -243,7 +243,6 @@
             </div>
             <form id="editUserForm" class="form-horizontal">
 	            <div class="modal-body">
-	                <input type="hidden" name="id" id="siteId" value="" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
 	                <div class="form-group">
 	                    <label class="col-sm-2 control-label">depot ID</label>
 	                    <div class="col-sm-4">
@@ -271,7 +270,7 @@
 	                    </div>
 	                </div>
 	                <div class="form-group">
-	                    <label class="col-sm-2 control-label">depot area</label>
+	                    <label class="col-sm-2 control-label">depot area(㎡)</label>
 	                    <div class="col-sm-4">
 	                        <input type="text" class="form-control" name="siteArea" id="siteArea" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
 	                    </div>
@@ -281,40 +280,60 @@
 	                    </div>
 	                </div>
 	                <div class="form-group">
-	                    <label class="col-sm-2 control-label">to distrib.center</label>
+	                    <label class="col-sm-2 control-label">To Dummy Hub</label>
 	                    <div class="col-sm-4">
 	                        <input type="text" class="form-control" name="distribCenter" id="distribCenter" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
 	                    </div>
-	                    <label class="col-sm-2 control-label">night distrib</label>
+	                    <label class="col-sm-2 control-label">Night Operation Y/N</label>
 	                    <div class="col-sm-4">
 	                        <select type="text" class="form-control" name="siteNightDelivery" id="siteNightDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-	                        	<option value="0">not support</option>
-	                        	<option value="1">support</option>
+	                        	<option value="Non Dummy Hub">Non Dummy Hub</option>
+	                        	<option value="Dummy Hub">Dummy Hub</option>
 	                        </select>
-	                    </div>
-	                </div>
-	                <div class="form-group">
-	                	<label class="col-sm-2 control-label">vehicle quantity limit</label>
-	                    <div class="col-sm-4">
-	                        <input type="text" class="form-control" name="carNum" id="carNum" id="carNum" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-	                    </div>
-	                    <label class="col-sm-2 control-label">vehicle weight limit</label>
-	                    <div class="col-sm-4">
-	                        <input type="text" class="form-control" name="largeCarModel" id="largeCarModel" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
 	                    </div>
 	                    
 	                </div>
 	                <div class="form-group">
+	                	<label class="col-sm-2 control-label">No. of Truck Limitation</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="noOfTruckLimitation" id="noOfTruckLimitation" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
+	                    </div>
+	                    <label class="col-sm-2 control-label">No. of Baidu Limitation</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="noOfBaiduLimitation" id="noOfBaiduLimitation" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                	<label class="col-sm-2 control-label">No. of DiDi Limitation</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="noOfDidiLimitation" id="noOfDidiLimitation" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
+	                    </div>
+	                    <label class="col-sm-2 control-label">No. of DaDa Limitation</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="noOfDadaLimitation" id="noOfDadaLimitation" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                	<label class="col-sm-2 control-label">Reserve</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="reserve" id="reserve" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
+	                    </div>
+	                    <label class="col-sm-2 control-label">Vehicle Type Limitation</label>
+	                    <div class="col-sm-4">
+	                        <input type="text" class="form-control" name="largeCarModel" id="largeCarModel" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
+	                    </div>
+	                </div>
+	                <div class="form-group">
 	                	<label class="col-sm-2 control-label">piece capacity(p)</label>
 	                    <div class="col-sm-4">
-	                        <input type="text" class="form-control" name="maxOperateNum" id="maxOperateNum" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                        <input type="text" class="form-control" name="maxOperateNum" id="maxOperateNum" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
 	                    </div>
 	                </div>
 	                
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	                <input type="submit" id="editBtn" class="btn btn-primary" value="Save" />
+	                <input type="submit" id="saveBtn" class="btn btn-primary" value="Save" />
 	            </div>
             </form>
         </div><!-- /.modal-content -->

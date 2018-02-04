@@ -130,38 +130,47 @@
             <form id="newUserForm-dist" class="form-horizontal">
             	<div class="modal-body">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">vehicle name</label>
+                        <!--<label class="col-sm-2 control-label">vehicle name</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="carType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-                        </div>
-                        <label class="col-sm-2 control-label">start depot</label>
+                        </div>-->
+                        <label class="col-sm-2 control-label">Origination Depot</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCollect" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        
-                        <label class="col-sm-2 control-label">end depot</label>
+                        <label class="col-sm-2 control-label">Destination Depot</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                         <label class="col-sm-2 control-label">transportation distance(km)</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">transportation distance(km)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="carDistance" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">transportation time(min) (higher priority)(货车)</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-2 control-label">trunk</label>
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationNightDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">transportation time(min) (higher priority)(百度)</label>
-                        <div class="col-sm-2">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">baidu</label>
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationNightDelivery2" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">transportation time(min) (higher priority)(滴滴)</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-2 control-label">didi</label>
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationNightDelivery3" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">dada</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="durationNightDelivery4" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                        </div>
+                        <label class="col-sm-2 control-label">reserve</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="durationNightDelivery5" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
                 
@@ -184,47 +193,56 @@
                 <h4 class="modal-title">Edit dot information</h4>
             </div>
             <form id="editUserForm-dist" class="form-horizontal">
-            	<div class="modal-body">
-                    <input type="hidden" name="id" id="siteId-dist" value="">
-                     <div class="form-group">
-                        <label class="col-sm-2 control-label">vehicle name</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="carType" id="carType" /required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
-                        </div>
-                        <label class="col-sm-2 control-label">start depot</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="siteCollect" id="siteCollect" /required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
-                        </div>
-                    </div>
+            	            	<div class="modal-body">
                     <div class="form-group">
-                        
-                        <label class="col-sm-2 control-label">end depot</label>
+                        <!--<label class="col-sm-2 control-label">vehicle name</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="carType" id="carType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                        </div>-->
+                        <label class="col-sm-2 control-label">Origination Depot</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="siteCollect" id="siteCollect" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                        </div>
+                        <label class="col-sm-2 control-label">Destination Depot</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteDelivery" id="siteDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                         <label class="col-sm-2 control-label">transportation distance(km)</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">transportation distance(km)</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="carDistance" id="carDistance" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">transportation time(min) (higher priority)(货车)</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-2 control-label">trunk</label>
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" name="durationNightDelivery" id="durationNightDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">transportation time(min) (higher priority)(百度)</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" name="durationNightDelivery" id="durationNightDelivery2" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">baidu</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="durationNightDelivery2" id="durationNightDelivery2" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
-                        <label class="col-sm-2 control-label">transportation time(min) (higher priority)(滴滴)</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" name="durationNightDelivery" id="durationNightDelivery3" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                        <label class="col-sm-2 control-label">didi</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="durationNightDelivery3" id="durationNightDelivery3" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">dada</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="durationNightDelivery4" id="durationNightDelivery4" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                        </div>
+                        <label class="col-sm-2 control-label">reserve</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="durationNightDelivery5" id="durationNightDelivery5" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+                        </div>
+                    </div>
+                
             	</div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	                <input type="submit" id="editBtn-dist" class="btn btn-primary" value="Save" />
+	                <input type="submit" id="saveBtn-dist" class="btn btn-primary" value="Save" />
 	            </div>
             </form>
         </div><!-- /.modal-content -->

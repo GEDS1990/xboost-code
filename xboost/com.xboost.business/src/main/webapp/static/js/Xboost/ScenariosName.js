@@ -301,7 +301,11 @@ $(function  () {
 	                $("#siteType").val(result.siteType);
 	                $("#distribCenter").val(result.distribCenter);
 	                $("#siteNightDelivery").val(result.siteNightDelivery);
-	                $("#carNum").val(result.carNum);
+	                $("#noOfTruckLimitation").val(result.noOfTruckLimitation);
+	                $("#noOfBaiduLimitation").val(result.noOfBaiduLimitation);
+	                $("#noOfDidiLimitation").val(result.noOfDidiLimitation);
+	                $("#noOfDadaLimitation").val(result.noOfDadaLimitation);
+	                $("#reserve").val(result.reserve);
 	                $("#largeCarModel").val(result.largeCarModel);
 	                $("#maxOperateNum").val(result.maxOperateNum);
 	                $("#editUserModal").modal("show");
@@ -500,6 +504,10 @@ $(function  () {
                 $("#siteDelivery").val(result.siteDelivery);
                 $("#carDistance").val(result.carDistance);
                 $("#durationNightDelivery").val(result.durationNightDelivery);
+                $("#durationNightDelivery2").val(result.durationNightDelivery2);
+                $("#durationNightDelivery3").val(result.durationNightDelivery3);
+                $("#durationNightDelivery4").val(result.durationNightDelivery4);
+                $("#durationNightDelivery5").val(result.durationNightDelivery5);
                 $("#editUserModal-dist").modal("show");
 
             }).fail(function(){
@@ -1498,9 +1506,9 @@ $(function  () {
 						//add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a><span id="scen-name-close" class="icon alt2 glyphicon glyphicon-remove"></span></li>';
 						add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a></li>';
 						add+='<li><ul class="xb-nav_ul" id="scen-class">';
-						add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Settings</a></li>';
-						add+='<li id="nav-Simualt"><a href="/simualte"><span class="icon-item alt icon-play"></span>Simulate</a></li>';
-						add+='<li id="nav-Results"><a href="/depots"><span class="icon-item alt icon-document-checked"></span>Results</a></li></ul></li>';
+						add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Input</a></li>';
+						add+='<li id="nav-Simualt"><a href="/simualte"><span class="icon-item alt icon-play"></span>Simulation</a></li>';
+						add+='<li id="nav-Results"><a href="/depots"><span class="icon-item alt icon-document-checked"></span>Output</a></li></ul></li>';
 						$('#after-content').after(add);
 						window.location.href = "/ScenariosName";
 	        		}

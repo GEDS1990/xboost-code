@@ -65,7 +65,7 @@
     <select id="findAllByRoute" resultType="map" resultMap="modelRouteAndSite">
         SELECT * FROM t_solution_route r inner join t_car_info c on r.car_type = c.type
         LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
-        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId} order by r.route_count,r.sequence
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId} order by r.route_count+0,r.sequence+0
     </select>
 
     <select id="findAllCountByRoute" resultType="long">
@@ -216,7 +216,7 @@
         <result property="siteNightDelivery" column="site_night_delivery"/>
         <result property="siteArea" column="site_area"/>
         <result property="siteType" column="site_type"/>
-        <result property="carNum" column="car_num"/>
+        <result property="carNum" column="str1"/>
         <result property="largeCarModel" column="large_carModle"/>
         <result property="maxOperateNum" column="max_operate_num"/>
         <result property="distribCenter" column="distrib_center"/>
