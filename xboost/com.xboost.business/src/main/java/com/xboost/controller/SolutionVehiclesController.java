@@ -107,58 +107,60 @@ public class SolutionVehiclesController {
         String unloadVol;
         if(""!=searchValue)
         {
-            for(int i=0;i<vehiclesList.size();i++)
-            {
-                Map<String,Object> vehicle = vehiclesList.get(i);
-                for(int j=i+1;j<vehiclesList.size();j++)
-                {
-                    if(vehicle.get("sequence").equals(vehiclesList.get(j).get("sequence"))){
+            if ("1".equals(modelType)) {
+                for(int i=0;i<vehiclesList.size();i++) {
+                    Map<String,Object> vehicle = vehiclesList.get(i);
+                    for(int j=i+1;j<vehiclesList.size();j++)
+                    {
+                        if(vehicle.get("sequence").equals(vehiclesList.get(j).get("sequence"))){
 //                        sbVolSum = Double.parseDouble(vehicle.get("sbVolSum").equals("0")?"":vehicle.get("sbVolSum").toString())
 //                                +Double.parseDouble(vehiclesList.get(j).get("sbVolSum").equals("0")?"":vehiclesList.get(j).get("sbVolSum").toString());
 //                        unloadVolSum = Double.parseDouble(vehicle.get("unloadVolSum").equals("0")?"":vehicle.get("unloadVolSum").toString())
 //                                +Double.parseDouble(vehiclesList.get(j).get("unloadVolSum").equals("0")?"":vehiclesList.get(j).get("unloadVolSum").toString());
-                        sbVol = (vehicle.get("sbVol").equals("0")?"":vehicle.get("sbVol").toString())
-                                +(vehiclesList.get(j).get("sbVol").equals("0")?"":vehiclesList.get(j).get("sbVol").toString());
-                        unloadVol = (vehicle.get("unloadVol").equals("0")?"":vehicle.get("unloadVol").toString())
-                                +(vehiclesList.get(j).get("unloadVol").equals("0")?"":(vehiclesList.get(j).get("unloadVol").toString()));
+                            sbVol = (vehicle.get("sbVol").equals("0")?"":vehicle.get("sbVol").toString())
+                                    +(vehiclesList.get(j).get("sbVol").equals("0")?"":vehiclesList.get(j).get("sbVol").toString());
+                            unloadVol = (vehicle.get("unloadVol").equals("0")?"":vehicle.get("unloadVol").toString())
+                                    +(vehiclesList.get(j).get("unloadVol").equals("0")?"":(vehiclesList.get(j).get("unloadVol").toString()));
 
 //                        vehiclesList.get(i).put("sbVolSum",sbVolSum);
 //                        vehiclesList.get(i).put("unloadVolSum",unloadVolSum);
-                        vehiclesList.get(i).put("sbVol",sbVol);
-                        vehiclesList.get(i).put("unloadVol",unloadVol);
+                            vehiclesList.get(i).put("sbVol",sbVol);
+                            vehiclesList.get(i).put("unloadVol",unloadVol);
 
-                        String curLoc = (String) vehiclesList.get(i).get("curLoc");
-                        String nextCurLoc = (String) vehiclesList.get(i).get("nextCurLoc");
-                        String calcDis = (String) vehiclesList.get(i).get("calcDis");
-                        if(!curLoc.equals(nextCurLoc)) {
-                            vehiclesList.get(i).put("nextCurLoc",nextCurLoc);
-                            vehiclesList.get(i).put("calcDis",calcDis);
+                            String curLoc = (String) vehiclesList.get(i).get("curLoc");
+                            String nextCurLoc = (String) vehiclesList.get(i).get("nextCurLoc");
+                            String calcDis = (String) vehiclesList.get(i).get("calcDis");
+                            if(!curLoc.equals(nextCurLoc)) {
+                                vehiclesList.get(i).put("nextCurLoc",nextCurLoc);
+                                vehiclesList.get(i).put("calcDis",calcDis);
+                            }
+
+                            String curLoc2 = (String) vehiclesList.get(j).get("curLoc");
+                            String nextCurLoc2 = (String) vehiclesList.get(j).get("nextCurLoc");
+                            String calcDis2 = (String) vehiclesList.get(j).get("calcDis");
+                            if(!curLoc2.equals(nextCurLoc2)) {
+                                vehiclesList.get(i).put("nextCurLoc",nextCurLoc2);
+                                vehiclesList.get(i).put("calcDis",calcDis2);
+                            }
+
+                            vehiclesList.remove(j);
+                            count = count -1;
+                            filteredCount = filteredCount-1;
                         }
-
-                        String curLoc2 = (String) vehiclesList.get(j).get("curLoc");
-                        String nextCurLoc2 = (String) vehiclesList.get(j).get("nextCurLoc");
-                        String calcDis2 = (String) vehiclesList.get(j).get("calcDis");
-                        if(!curLoc2.equals(nextCurLoc2)) {
-                            vehiclesList.get(i).put("nextCurLoc",nextCurLoc2);
-                            vehiclesList.get(i).put("calcDis",calcDis2);
-                        }
-
-                        vehiclesList.remove(j);
-                        count = count -1;
-                        filteredCount = filteredCount-1;
                     }
                 }
+                Collections.sort(vehiclesList, new Comparator<Map<String, Object>>() {
+                    @Override
+                    public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                        Integer s1 = Integer.parseInt(o1.get("sequence")+"");
+                        Integer s2 = Integer.parseInt(o2.get("sequence")+"");
+                        return s1.compareTo(s2);
+                    }
+                });
             }
         }
 
-        Collections.sort(vehiclesList, new Comparator<Map<String, Object>>() {
-            @Override
-            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-                Integer s1 = Integer.parseInt(o1.get("sequence")+"");
-                Integer s2 = Integer.parseInt(o2.get("sequence")+"");
-                return s1.compareTo(s2);
-            }
-        });
+
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
