@@ -106,7 +106,7 @@ public class SolutionCostController {
     }
 
     //查询成本信息
-    @RequestMapping(value = "/cost.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/cost.json",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String,Object> load(HttpServletRequest request) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
@@ -188,7 +188,7 @@ public class SolutionCostController {
 
 
     //查询初始化成本信息
-    @RequestMapping(value = "/costInitData.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/costInitData.json",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Map<String,Object> loadInitData(HttpServletRequest request) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
