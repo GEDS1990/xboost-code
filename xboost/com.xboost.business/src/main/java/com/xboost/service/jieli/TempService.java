@@ -56,6 +56,51 @@ public class TempService {
         tempMapper.savedistance_ref(dr);
     }
 
+    public Route setPickup(int i,JieliResult jieliResult,Route route,String openScenariosId){
+        route.setScenariosId(openScenariosId);
+        route.setRouteCount(String.valueOf(i+1));
+        route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
+                +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
+        route.setSequence(String.valueOf(1));
+        route.setCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId())));
+        route.setType("PICKUP");
+        route.setSbVol(jieliResult.getVolume());
+        route.setSbVolSum(jieliResult.getVolume());
+        route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
+        route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
+        route.setUnloadLoc("0");
+        route.setUnloadVol("0");
+        route.setUnloadVolSum("0");
+        route.setNextCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
+        route.setCalcDis(jieliResult.getDistance());
+        return route;
+    }
+
+    public Route setDelivery(int i,JieliResult jieliResult,Route route,String openScenariosId){
+        route.setScenariosId(openScenariosId);
+        route.setRouteCount(String.valueOf(i+1));
+        route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
+                +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
+        route.setSequence(String.valueOf(2));
+        route.setCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
+        route.setType("DELIVER");
+        route.setSbVol("0");
+        route.setSbVolSum("0");
+        route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
+        route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
+        route.setUnloadLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
+        route.setUnloadVol(jieliResult.getVolume());
+        route.setUnloadVolSum(jieliResult.getVolume());
+        route.setNextCurLoc("");
+        route.setCalcDis("0.00");
+        return route;
+    }
+    public void saveRoute(int i,JieliResult jieliResult,Route route,String openScenariosId){
+        route = setPickup(i,jieliResult,route,openScenariosId);
+        solutionRouteService.addRoute(route);
+        route = setDelivery(i,jieliResult,route,openScenariosId);
+        solutionRouteService.addRoute(route);
+    }
     public void saveConnectionOpt(List<Map> jieliResults, double gurobyCost, String openScenariosId) {
         solutionRouteService.delByScenariosId(Integer.parseInt(openScenariosId));
         String siteCode="";
@@ -83,59 +128,23 @@ public class TempService {
             if(Double.parseDouble(jieliResult.getDidiNum())>0){
                 route.setCarType("didi");
                 route.setStr1(jieliResult.getDidiNum());
+                saveRoute(i,jieliResult,route,openScenariosId);
             }
-            else if(Double.parseDouble(jieliResult.getDadaNum())>0){
+            if(Double.parseDouble(jieliResult.getDadaNum())>0){
                 route.setCarType("dada");
                 route.setStr1(jieliResult.getDadaNum());
+                saveRoute(i,jieliResult,route,openScenariosId);
             }
-            else if(Double.parseDouble(jieliResult.getBikeNum())>0){
+            if(Double.parseDouble(jieliResult.getBikeNum())>0){
                 route.setCarType("baidu");
                 route.setStr1(jieliResult.getBikeNum());
+                saveRoute(i,jieliResult,route,openScenariosId);
             }
-            else if(Double.parseDouble(jieliResult.getTruckNum())>0){
+            if(Double.parseDouble(jieliResult.getTruckNum())>0){
                 route.setCarType("truck");
                 route.setStr1(jieliResult.getTruckNum());
+                saveRoute(i,jieliResult,route,openScenariosId);
             }
-
-            route.setScenariosId(openScenariosId);
-            route.setRouteCount(String.valueOf(i+1));
-//            route.setCarType(jieliResult.getCarType());
-            route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
-                    +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
-            route.setSequence(String.valueOf(1));
-            route.setCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId())));
-            route.setType("PICKUP");
-            route.setSbVol(jieliResult.getVolume());
-            route.setSbVolSum(jieliResult.getVolume());
-            route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
-            route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
-            route.setUnloadLoc("0");
-            route.setUnloadVol("0");
-            route.setUnloadVolSum("0");
-            route.setNextCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
-            route.setCalcDis(jieliResult.getDistance());
-//            route.setStr1(jieliResult.getCarNum());
-            solutionRouteService.addRoute(route);
-
-            route.setScenariosId(openScenariosId);
-            route.setRouteCount(String.valueOf(i+1));
-//            route.setCarType(jieliResult.getCarType());
-            route.setLocation(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getInboundId()))+"-"
-                    +siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
-            route.setSequence(String.valueOf(2));
-            route.setCurLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
-            route.setType("DELIVER");
-            route.setSbVol("0");
-            route.setSbVolSum("0");
-            route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
-            route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
-            route.setUnloadLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
-            route.setUnloadVol(jieliResult.getVolume());
-            route.setUnloadVolSum(jieliResult.getVolume());
-            route.setNextCurLoc("");
-            route.setCalcDis("0.00");
-//            route.setStr1(jieliResult.getCarNum());
-            solutionRouteService.addRoute(route);
 
         }
         //carType
