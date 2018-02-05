@@ -162,7 +162,7 @@ $(function  () {
 	                ,"name":"site_area"},
 	                {"data":"siteType","name":"site_type"},
 	                {"data":function (res){
-	                	if (res.distribCenter == "") {
+	                	if (res.distribCenter == "" || $.trim(res.distribCenter) == "") {
 	                		return "--"
 	                	}
 	                	return res.distribCenter;
