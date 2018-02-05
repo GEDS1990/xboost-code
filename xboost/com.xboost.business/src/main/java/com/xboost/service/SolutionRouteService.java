@@ -7,6 +7,7 @@ import com.xboost.util.ExcelUtil;
 import com.xboost.util.ExportUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
@@ -255,6 +256,16 @@ public class SolutionRouteService {
      */
     public void exportResult(String scenariosId, String[] titles, ServletOutputStream outputStream, String modelType) {
         List<Map<String, Object>> routeList = solutionRouteMapper.findAllByRoute(scenariosId);
+        for (int i = 0; i < routeList.size(); i++) {
+            String sbVol = (String) routeList.get(i).get("sbVol");
+            String unloadVol = (String) routeList.get(i).get("unloadVol");
+            if (sbVol != null && !"0".equals(sbVol)) {
+                routeList.get(i).put("sbVol", sbVol.substring(0, sbVol.indexOf(".")));
+            }
+            if (unloadVol != null && !"0".equals(unloadVol)) {
+                routeList.get(i).put("unloadVol", unloadVol.substring(0, unloadVol.indexOf(".")));
+            }
+        }
         String sbVol;
         String unloadVol;
         // 创建一个workbook 对应一个excel应用文件
@@ -511,7 +522,7 @@ public class SolutionRouteService {
                         Map<String, Object> param = new HashMap<String, Object>();
                         for(int i=1;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-                            if("1".equals(row[1])) {
+                            if(row.length == 13 && "1".equals(row[1]) && !StringUtils.isBlank(row[12])) {
                                 String routeCount = row[0].substring(5);
                                 String carName = row[12];
                                 param.put("scenariosId",ShiroUtil.getOpenScenariosId());

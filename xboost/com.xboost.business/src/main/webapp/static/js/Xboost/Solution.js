@@ -1430,7 +1430,7 @@ $(function  () {
 	                	}else if(res.sbVol == ""){
 	                		res.sbVol = 0;
 	                	}
-	                	return "Unload "+res.unloadVol+" , "+"Load "+res.sbVol;
+	                	return "Unload "+Math.ceil(res.unloadVol)+" , "+"Load "+Math.ceil(res.sbVol);
 	                },"name":"unload_vol&sbVol"},
 	                {"data":function(res) {
 	                	return operationTime(res.endTime);
