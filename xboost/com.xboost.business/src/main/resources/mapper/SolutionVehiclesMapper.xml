@@ -9,7 +9,7 @@
         inner join t_car_info t on c.type= t.type LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
         where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and
         c.scenariosId = #{scenariosId} and t.scenariosId = #{scenariosId}
-        order by r.arr_time
+        order by r.car_name,r.sequence+0
 
     </select>
 
