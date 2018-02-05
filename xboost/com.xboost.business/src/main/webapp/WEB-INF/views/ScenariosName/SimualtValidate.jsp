@@ -102,12 +102,12 @@
 		    			</div>
 		    			<div class="clearfix sim-input sim-v-relay">
 		    				<p>No. of Time (Model Optimization Time):</p>
-		    				<input type="number" id="sim-run-t-limit" value="" /><span>(s)</span>
+		    				<input type="number" id="sim-run-t-limit" value="120" /><span>(s)</span>
 		    				<p id="tlimit" class="sim-error">You must set the Time limit</p>
 		    			</div>
 		    			<div class="clearfix sim-input sim-v-relay">
 		    				<p>No. of Optimization (Model Optimization Percentage):</p>
-		    				<input type="number" id="sim-run-opt-limit" value="" /><span>(%)</span>
+		    				<input type="number" id="sim-run-opt-limit" value="100" /><span>(%)</span>
 		    				<p id="olimit" class="sim-error">You must set the Optimization limit</p>
 		    			</div>
 	    			</div>

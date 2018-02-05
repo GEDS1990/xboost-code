@@ -1,107 +1,42 @@
 $(document).ready(function  () {
-	//侧边栏点击切换
-	$(".nav_xb").click(function  () {
-		var $this = $(this);
-		var _span = $this.find(".glyphicon");//当前点击下的span
-		var _spans = $this.parent("li").siblings("li").find(".glyphicon");//相邻下的span
-		var span_class = _span.attr("class");
-		var _ul = $this.parent("li").siblings("li").find("ul");
-		_ul.slideUp();//将相邻的列表收起来
-		_spans.attr("class","glyphicon glyphicon-triangle-right");//将相邻的小箭头设置向右
-		if(span_class == "glyphicon glyphicon-triangle-right"){ //判断小图标是否是向右的
-			_span.attr("class","glyphicon glyphicon-triangle-bottom");
-			$this.next("ul").slideDown()
-		}else{
-			_span.attr("class","glyphicon glyphicon-triangle-right");
-			$this.next("ul").slideUp()
-		}
-	});
-});	
-//上传
-$(document).ready(function  () {
-	var xhr;  
 	var doc = document;
-	var fileId = doc.getElementById("file"),
-		nameId = doc.getElementById("fileName"),
-		sizeId = doc.getElementById("fileSize"),
-		typeId = doc.getElementById("fileType"),
-		xb_file = doc.getElementById("xb_file");
-	
-	$("#xb_btn_up").click(function  () {//点击choice 相当于点击input file
-		$("#file").trigger("click");
-	});
-	$("#file").change(function  () {//#file发送改变就把改变的值赋给#xb_file
-		var res = $("#file").val();
-		$("#xb_file").val(res);
-		fileSelected(fileId,nameId,sizeId,typeId)
-	});
-	$("#xb_btn_upload").click(function  () {
-		UpladFile(fileId);
-	})
-});
-function createXMLHttpRequest() {  //ajax兼容
-    if (window.ActiveXObject) {  
-        xhr = new ActiveXObject("Microsoft.XMLHTTP");  
-    } else if (window.XMLHttpRequest) {  
-        xhr = new XMLHttpRequest();  
-    }  
-}  
-function fileSelected(fileId,nameId,sizeId,typeId) { // 获取显示文件信息
-	var file = fileId.files[0];
-	if (file) {
-	  var fileSize = 0;
-		if (file.size > 1024 * 1024){
-			fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
-		}else{
-			fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
-		}
-		  nameId.innerHTML = 'Name: ' + file.name;
-		  sizeId.innerHTML = 'Size: ' + fileSize;
-		  typeId.innerHTML = 'Type: ' + file.type;
+	//判断是否含有场景名称
+	var scenName  = $('#scenName').val();
+	if (scenName) {
+		var add = "";
+		add+='<li class="xb-hover" id="scen-name">';
+		add+='<a href="/ScenariosName" class="nav_xb" id="xb-nav-xb">';
+		add+='<span id="xb_nav_span" class="glyphicon glyphicon-triangle-bottom"></span>';
+		//add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a><span id="scen-name-close" class="icon alt2 glyphicon glyphicon-remove"></span></li>';
+		add+='<span class="icon alt1 alt icon-file-text-o"></span>'+scenName+'</a></li>';
+		add+='<li><ul class="xb-nav_ul" id="scen-class">';
+		add+='<li id="nav-Conditions"><a href="/siteInfo"><span class="icon-item alt icon-document-add"></span>Input</a></li>';
+		add+='<li id="nav-Simualt"><a href="/simualte"><span class="icon-item alt icon-play"></span>Simulation</a></li>';
+		add+='<li id="nav-Results"><a href="/depots"><span class="icon-item alt icon-document-checked"></span>Output</a></li></ul></li>';
+		$('#after-content').after(add);
 	}
-}
-function UpladFile(fileId) {  
-    var fileObj = fileId.files[0]; 
-    var vals = fileId.value;
-    var _index = vals.lastIndexOf(".");
-    var _key = vals.slice(_index);
-    var _zeng = /^(\.xls|\.xlsx|\.xlsm|\.xltx|\.xltm|\.xlam|\.xlsb)$/i
-    if(_zeng.test(_key)){
-    	var FileController = 'https://www.zhukaijie.site/in.php';  //改为接受表格数据接口
-        var form = new FormData(); 
-        $.ajax({
-        	type:"post",
-        	url:FileController,
-        	async:true,
-        	data:{myfile:fileObj},
-        	success:function (res) {
-        		alert("Upload success");
-        	}
-        });
-    }else{
-    	alert("The file format must be in the form of Excel")
-    }
-}
-//导出
-$(document).ready(function  () {
-	$("#key").click(function  () {
-		$('.table').tableExport({
-	    // 导出文件的名称
-	    filename: 'table_%DD%-%MM%-%YY%',
-	    // 导出文件的格式：csv, xls, txt, sql
-	    format: 'xls',
-	    // 导出指定的表格列
-	    cols: '1,2,3,4,5'
+	
+	/*
+	//点击X删除结构
+	$('body').on("click","#scen-name-close",function  () {
+		$('#scen-name-close').off("click");
+		$(this).parent("#scen-name").remove().next("li").remove();
+		//$(this).parent("#scen-name");
+		window.location.href = "/MyScenarios";
+		return false;
+	});
+	*/
+	
+	/*login out*///href="/logout"
+	$('#loginout').click(function (){
+		$('#modal-loginout').modal("show");
+		$('#modal-loginBtn').click(function (){
+			window.location.href = "/logout";
 		});
 	});
-});
-function ExportTable (type) {
-	$('.table').tableExport({
-	    // 导出文件的名称
-	    filename: 'table_%DD%-%MM%-%YY%',
-	    // 导出文件的格式：csv, xls, txt, sql
-	    format: 'xls',
-	    // 导出指定的表格列
-	    cols: '1,2,3,4,5'
-	});
-}
+	
+	
+	
+	
+	
+});	

@@ -1141,7 +1141,7 @@ $(function  () {
 	            ],
 	            "columnDefs":[ //具体列的定义
 	                {
-	                    "targets":[0],
+	                    "targets":[0,11],
 	                    "visible":false
 	                },
 	                {
