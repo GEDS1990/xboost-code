@@ -442,7 +442,7 @@ $(function (){
 			
 			
 			//请求数据
-			$.get("/costs/costInitData.json").done(function (data){
+			$.post("/costs/costInitData.json").done(function (data){
 				console.log(data)
 				var $res=data;
 				if (data.modelType == 1) {
@@ -450,7 +450,7 @@ $(function (){
 					vmB.serialSeen = true;
 					$('#model-type').text("Serial Model");
 					if (data) {
-						$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
+						$.post("/costs/cost.json",{"plan":"A"}).done(function (res){
 							console.log(res)
 							if (res.data[0].distribPeopleWork == null) {
 								var urlcost = "/costs/edit";
@@ -528,7 +528,7 @@ $(function (){
 					vmA.relaySeen = true;
 					vmB.relaySeen = true;
 					$('#model-type').text("Relay Model");
-					$.get("/costs/cost.json",{"plan":"A"}).done(function (res){
+					$.post("/costs/cost.json",{"plan":"A"}).done(function (res){
 						console.log(res)
 						if (res.data[0].distribPeopleWork == null) 
 						{
