@@ -55,6 +55,14 @@ public class ExcelUtil {
         }
     }
 
+    public static String getSheetName(File file) throws Exception {
+        FileInputStream is = new FileInputStream(file); // 文件流
+        Workbook workbook = getWorkbook(is, file.getName());
+        Sheet sheet = workbook.getSheetAt(0);
+        String sheetName=sheet.getSheetName();
+        return sheetName;
+    }
+
     /**
      * 读取Excel测试，兼容 Excel 2003/2007/2010
      *
