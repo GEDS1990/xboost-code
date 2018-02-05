@@ -79,6 +79,7 @@ public class CarService {
 //                        File fileTemp = (File) multipartFile;
                         ExcelUtil excelUtil = new ExcelUtil();
                         List<String> lineList = excelUtil.readExcel(fileTmp,2);
+                        String sheetName = excelUtil.getSheetName(fileTmp);
                         CarLicence carLicence = new CarLicence();
                         for(int i=2;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
@@ -160,7 +161,13 @@ public class CarService {
 
                             for(int k=1;k<num+1;k++){
                         //        String name = type + k;
-                                String name = Strings.getCarLicence("粤");
+                                String name;
+                                if(sheetName.contains("Shanghai"))
+                                {
+                                    name = Strings.getCarLicence("沪");
+                                }else{
+                                    name = Strings.getCarLicence("粤");
+                                }
                                 carLicence.setScenariosId(ShiroUtil.getOpenScenariosId());
                                 carLicence.setName(name);
                                 carLicence.setType(type);

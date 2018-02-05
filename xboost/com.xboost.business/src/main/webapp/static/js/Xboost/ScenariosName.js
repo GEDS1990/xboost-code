@@ -162,10 +162,10 @@ $(function  () {
 	                ,"name":"site_area"},
 	                {"data":"siteType","name":"site_type"},
 	                {"data":function (res){
-	                	if (res.distribCenter == "") {
+	                	if (res.distribCenter == "" || $.trim(res.distribCenter) == "") {
 	                		return "--"
 	                	}
-	                	return "--";
+	                	return res.distribCenter;
 	                },"name":"distrib_center"},
 	                {"data":"siteNightDelivery","name":"site_night_delivery"},
 	                {"data":function (res){
