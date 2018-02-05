@@ -659,7 +659,6 @@ $(function (){
 								"partTimeSalary":vmA.part_wage,
 								"partTimeWorkDay":vmA.part_work,
 								"sum2":vmA.day_p_cost,
-								"sum3":vmA.sum3,
 								"totalDailyLaborCost":vmA.day_allp_cost,
 								"branchTransportCost":vmA.line_cost,
 								"totalCost":vmA.allcost
@@ -679,7 +678,6 @@ $(function (){
 								"partTimeSalary":vmB.part_wage,
 								"partTimeWorkDay":vmB.part_work,
 								"sum2":vmB.day_p_cost,
-								"sum3":vmB.sum3,
 								"totalDailyLaborCost":vmB.day_allp_cost,
 								"branchTransportCost":vmB.line_cost,
 								"totalCost":vmB.allcost
