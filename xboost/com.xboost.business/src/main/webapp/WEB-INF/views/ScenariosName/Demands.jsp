@@ -74,8 +74,8 @@
 			            		<th>ID</th>
 				                <th>Origination Depot</th>
 				                <th>Start Time</th>
-				                <th>Destiantion Depot</th>
-				                <th>Effective End Time</th>
+				                <th>Destination Depot</th>
+				                <th>End Time</th>
 				                <th>Piece(p)</th>
 				                <th>Weight(kg)</th>
 				                <th>Product Type</th>

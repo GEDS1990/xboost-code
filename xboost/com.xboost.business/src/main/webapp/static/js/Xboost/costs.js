@@ -162,10 +162,10 @@ $(function (){
 									sum33 =  Math.round(sum33)+Math.round(price_full + price_part) ;
 								}
 							}
-							console.log(sum22)
-							console.log(sum33)
-							this.day_p_cost = sum22;
+//							console.log(sum22)
+//							console.log(sum33)
 							sum33==""?this.sum3=0:this.sum3=sum33;
+							this.day_p_cost = sum22 + sum33;
 							this.day_allp_cost = ((Number(this.day_p_cost)+Number(this.sum3))/this.piece).toFixed(2);
 							this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
 						}
@@ -347,10 +347,10 @@ $(function (){
 									sum33 =  Math.round(sum33)+Math.round(price_full + price_part) ;
 								}
 							}
-							console.log(sum22)
-							console.log(sum33)
-							this.day_p_cost = sum22;
+//							console.log(sum22)
+//							console.log(sum33)
 							sum33==""?this.sum3=0:this.sum3=sum33;
+							this.day_p_cost = sum22 + sum33;
 							this.day_allp_cost = ((Number(this.day_p_cost)+Number(this.sum3))/this.piece).toFixed(2);
 							this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
 						}
@@ -597,7 +597,7 @@ $(function (){
 							vmA.full_days = result.fullTimeWorkDay;
 							vmA.part_wage = result.partTimeSalary;
 							vmA.part_work = result.partTimeWorkDay;
-							vmA.day_p_cost = result.sum2;
+							vmA.day_p_cost = Number(result.sum2) + Number(result.sum3);
 							vmA.sum3 = result.sum3;
 							vmA.day_allp_cost = result.totalDailyLaborCost;
 							vmA.line_cost = result.branchTransportCost;
@@ -611,7 +611,7 @@ $(function (){
 							vmB.full_days = result.fullTimeWorkDay;
 							vmB.part_wage = result.partTimeSalary;
 							vmB.part_work = result.partTimeWorkDay;
-							vmB.day_p_cost = result.sum2;
+							vmB.day_p_cost = Number(result.sum2) + Number(result.sum3);
 							vmB.sum3 = result.sum3;
 							vmB.day_allp_cost = result.totalDailyLaborCost;
 							vmB.line_cost = result.branchTransportCost;
