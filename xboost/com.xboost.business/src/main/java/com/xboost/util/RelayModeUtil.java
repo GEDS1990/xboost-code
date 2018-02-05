@@ -99,6 +99,10 @@ public class RelayModeUtil extends Thread implements IConstants {
     Matrix M55;
 
     double truck_capacity = 400;
+    double bike_capacity = 35;
+    double didi_capacity = 60;
+    double dada_capacity = 35;
+
     double dist_limit_bike = 5;
     double dist_limit_dada = 10;
 
@@ -789,9 +793,9 @@ public class RelayModeUtil extends Thread implements IConstants {
         for (int ij=0;ij<J;ij++)
         {
             M22.setAsDouble(-truck_capacity,ij,ij);
-            M23.setAsDouble(-truck_capacity,ij,ij);
-            M24.setAsDouble(-truck_capacity,ij,ij);
-            M25.setAsDouble(-truck_capacity,ij,ij);
+            M23.setAsDouble(-bike_capacity,ij,ij);
+            M24.setAsDouble(-didi_capacity,ij,ij);
+            M25.setAsDouble(-dada_capacity,ij,ij);
         }
 
         logger.info("m2x");
