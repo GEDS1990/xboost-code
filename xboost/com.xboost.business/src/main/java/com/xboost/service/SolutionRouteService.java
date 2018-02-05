@@ -7,6 +7,7 @@ import com.xboost.util.ExcelUtil;
 import com.xboost.util.ExportUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
@@ -521,7 +522,7 @@ public class SolutionRouteService {
                         Map<String, Object> param = new HashMap<String, Object>();
                         for(int i=1;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-                            if("1".equals(row[1])) {
+                            if(row.length == 13 && "1".equals(row[1]) && !StringUtils.isBlank(row[12])) {
                                 String routeCount = row[0].substring(5);
                                 String carName = row[12];
                                 param.put("scenariosId",ShiroUtil.getOpenScenariosId());
