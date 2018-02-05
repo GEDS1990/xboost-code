@@ -165,7 +165,7 @@ $(function  () {
 	                	if (res.distribCenter == "") {
 	                		return "--"
 	                	}
-	                	return "--";
+	                	return res.distribCenter;
 	                },"name":"distrib_center"},
 	                {"data":"siteNightDelivery","name":"site_night_delivery"},
 	                {"data":function (res){
