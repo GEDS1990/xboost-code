@@ -94,7 +94,7 @@
 	    			</div>
 	    		</header>
 	    		<div class="scen-box clearfix">
-	    			<div class="scen-itembox1" style="height: 380px;">
+	    			<div class="scen-itembox1" style="height: 420px;">
 	    				<div id="depots-map" style="width: 100%; ">
 	    					
 	    				</div>

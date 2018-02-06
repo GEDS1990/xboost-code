@@ -162,12 +162,12 @@ $(function  () {
 		for (var j = 0;j<p_len;j++) {
 			if (listPoint[j].curLoc == val) {
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(24,32),{
+				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(30,40),{
 					anchor: new BMap.Size(10, 30)
 				});
 			}else{
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(19,24),{
+				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,32),{
 					anchor: new BMap.Size(10, 25)
 				});
 			}
@@ -263,7 +263,7 @@ $(function  () {
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
-		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(16,24),{
+		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,32),{
 		  	anchor: new BMap.Size(10, 24)
 		  });
 			  var marker = new BMap.Marker(point,{icon:myIcon});
@@ -358,7 +358,7 @@ $(function  () {
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
-		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,24),{
+		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,32),{
 		  	anchor: new BMap.Size(10, 24)
 		  });
 			  var marker = new BMap.Marker(point,{icon:myIcon});
@@ -954,6 +954,7 @@ $(function  () {
 	(function  () {
 		var SolutionRoute = doc.getElementById("SolutionRoute");
 		if (SolutionRoute) {
+			var route_operation = false;
 			//加载列表
 			var dt =$("#SolutionRoute").DataTable({
 	            "processing": true, //loading效果
@@ -1131,7 +1132,7 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var data = api.rows( {page:'current'} ).data();
-			        //console.log(data)
+			        console.log(data)
 			        var data_len = data.length;
 			        if (data_len != 0) {
 			        	var result = data,
@@ -1182,7 +1183,27 @@ $(function  () {
 								listPoint.push(liser);
 		            		}
 		            		var val = $('#route-route').val();
+		            		if (route_operation) 
+		            		{
+		            			var a_len = listArry.length;
+		            			var r_len = listPoint.length;
+		            			for (var a=0;a<a_len;a++) 
+		            			{
+		            				for (var b=0;b<r_len;b++) 
+		            				{
+		            					var a_cur = listArry[a].curLoc;
+		            					var b_cur = listPoint[b].curLoc;
+		            					if (a_cur == b_cur) 
+		            					{
+		            						listArry[a] = listPoint[b]
+		            					}
+		            				}
+		            			}
+		            		}
+		            		route_operation = true;
 	            			routeMapInit(listArry,val,listPoint);
+//	            			console.log(listArry)
+//	            			console.log(listPoint)
 		            		
 		            		//console.log(listPoint)
 		            		
