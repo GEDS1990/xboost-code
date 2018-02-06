@@ -162,12 +162,12 @@ $(function  () {
 		for (var j = 0;j<p_len;j++) {
 			if (listPoint[j].curLoc == val) {
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(24,32),{
+				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(30,40),{
 					anchor: new BMap.Size(10, 30)
 				});
 			}else{
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(19,24),{
+				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,32),{
 					anchor: new BMap.Size(10, 25)
 				});
 			}
@@ -263,7 +263,7 @@ $(function  () {
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
-		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(16,24),{
+		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,32),{
 		  	anchor: new BMap.Size(10, 24)
 		  });
 			  var marker = new BMap.Marker(point,{icon:myIcon});
@@ -358,7 +358,7 @@ $(function  () {
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
 		function addMarker(point,info){
-		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,24),{
+		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,32),{
 		  	anchor: new BMap.Size(10, 24)
 		  });
 			  var marker = new BMap.Marker(point,{icon:myIcon});
