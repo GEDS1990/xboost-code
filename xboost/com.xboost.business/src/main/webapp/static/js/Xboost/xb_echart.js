@@ -384,6 +384,7 @@ function add0(m){return m<10?'0'+m:m };
 		    	}else{
 		    		var xinfo = ['提早60','提早50以上','提早40以上','提早30以上','提早20以上','提早10以上','准时到'];
 		    		var arr = [res.tiqian60,res.tiqian50,res.tiqian40,res.tiqian30,res.tiqian20,res.tiqian10,res.zunshi];
+		    		console.log(arr)
 		    		var arrlen = arr.length;
 		    		var seriesinfo = [];
 		    		for (var x=0;x<arrlen;x++) {
@@ -394,7 +395,7 @@ function add0(m){return m<10?'0'+m:m };
 		    			seriesinfo.push(sum);
 		    		}
 		    		var slen = seriesinfo.length;
-		    		seriesinfo[slen-1] = (100 - seriesinfo[slen-2]).toFixed(2);
+		    		seriesinfo[slen-1] = 100;
 		    		var data = {
 		    			"xinfo":xinfo,
 				    	"seriesinfo":seriesinfo
