@@ -10,6 +10,7 @@ import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.poi.xssf.usermodel.*;
+import org.apache.spark.sql.sources.In;
 import org.joda.time.DateTime;
 import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
@@ -276,102 +277,65 @@ public class SolutionRouteService {
         ExportUtil exportUtil = new ExportUtil(workBook, sheet);
         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
-        sheet.setColumnWidth(6, 50 * 250);
-        sheet.setDefaultRowHeight((short) 36);
+
         // 构建表头
         XSSFRow headRow = sheet.createRow(0);
         XSSFCell cell = null;
 
-        for (int i = 0; i < titles.length; i++) {
-            cell = headRow.createCell(i);
-            cell.setCellValue(titles[i]);
-            cell.setCellStyle(headStyle);
-        }
+
 
         if ("1".equals(modelType)) {
-            // 构建表体数据
-            if (routeList != null && routeList.size() > 0) {
-                for (int j = 0; j < routeList.size(); j++) {
-                    XSSFRow bodyRow = sheet.createRow(j + 1);
-                    Map<String, Object> route = routeList.get(j);
-
-                    int i = 0;
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue("Route" + route.get("routeCount"));
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("sequence").toString());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("curLoc").toString());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("siteName").toString());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("siteAddress").toString());
-                    cell.setCellStyle(bodyStyle);
-
-                    String arrTime = (String) route.get("arrTime");
-                    int arr = Math.round(Float.parseFloat(arrTime));
-                    int arrHour = arr / 60;
-                    int arrMinute = arr % 60;
-                    String arrFormatTime = "";
-                    if(arrMinute >= 0 && arrMinute <= 9) {
-                        arrFormatTime = arrHour + ":0" + arrMinute;
-                    }else {
-                        arrFormatTime = arrHour + ":" + arrMinute;
-                    }
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(arrFormatTime);
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(i++);
-                    if (route.get("unloadVol").toString() == null || route.get("unloadVol").toString() == "") {
-                        cell.setCellValue("Unload 0,Load " + route.get("sbVol").toString());
-                    } else if (route.get("sbVol").toString() == null || route.get("sbVol").toString() == "") {
-                        cell.setCellValue("Unload " + route.get("unloadVol") + ",Load 0");
-                    } else if (route.get("unloadVol").toString() == null || route.get("unloadVol").toString() == "" || route.get("sbVol").toString() == null || route.get("sbVol").toString() == "") {
-                        cell.setCellValue("Unload 0,Load 0");
-                    } else {
-                        cell.setCellValue("Unload " + route.get("unloadVol").toString() + ",Load " + route.get("sbVol").toString());
-                    }
-                    cell.setCellStyle(bodyStyle);
-
-                    String endTime = (String) route.get("endTime");
-                    int end = Math.round(Float.parseFloat(endTime));
-                    int endHour = end / 60;
-                    int endMinute = end % 60;
-                    String endFormatTime = "";
-                    if(endMinute >= 0 && endMinute <= 9) {
-                        endFormatTime = endHour + ":0" + endMinute;
-                    }else {
-                        endFormatTime = endHour + ":" + endMinute;
-                    }
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(endFormatTime);
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("nextCurLoc").toString());
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("calcDis").toString() + "km");
-                    cell.setCellStyle(bodyStyle);
-
-                    cell = bodyRow.createCell(i++);
-                    cell.setCellValue(route.get("carType")+"");
-                    cell.setCellStyle(bodyStyle);
-                }
+            String[] title = { "Route Id", "Route", "Arrang Car" };
+            sheet.setColumnWidth(1, 80 * 250);
+            sheet.setDefaultRowHeight((short) 36);
+            for (int i = 0; i < title.length; i++) {
+                cell = headRow.createCell(i);
+                cell.setCellValue(title[i]);
+                cell.setCellStyle(headStyle);
             }
-        }
+
+            Set<String> routeId = new TreeSet<>(new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    Integer i1 = Integer.parseInt(o1);
+                    Integer i2 = Integer.parseInt(o2);
+                    return i1-i2 ;
+                }
+            });
+            for (Map map : routeList) {
+                routeId.add(map.get("routeCount").toString());
+            }
+            Map<String, String> routeData = new TreeMap<>(new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    Integer i1 = Integer.parseInt(o1);
+                    Integer i2 = Integer.parseInt(o2);
+                    return i1 - i2;
+                }
+            });
+            for (String id : routeId) {
+                List<String> list = new ArrayList<String>();
+                for (Map map : routeList) {
+                    if(map.get("routeCount").equals(id) && !list.contains(map.get("curLoc").toString())) {
+                        list.add(map.get("curLoc").toString());
+                    }
+                }
+                routeData.put(id, StringUtils.join(list, "-"));
+            }
+
+            // 构建表体数据
+         }
 
         if ("2".equals(modelType)) {
+            sheet.setColumnWidth(6, 50 * 250);
+            sheet.setDefaultRowHeight((short) 36);
+
+            for (int i = 0; i < titles.length; i++) {
+                cell = headRow.createCell(i);
+                cell.setCellValue(titles[i]);
+                cell.setCellStyle(headStyle);
+            }
+
             cell = headRow.createCell(titles.length);
             cell.setCellValue("Car Num");
             cell.setCellStyle(headStyle);
