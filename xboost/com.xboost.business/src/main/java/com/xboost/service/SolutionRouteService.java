@@ -324,7 +324,26 @@ public class SolutionRouteService {
             }
 
             // 构建表体数据
-         }
+            if (routeList != null && routeList.size() > 0) {
+                Set<Map.Entry<String, String>> entries = routeData.entrySet();
+                int j = 1;
+                for (Map.Entry<String, String> entry: entries) {
+                    XSSFRow bodyRow = sheet.createRow(j++);
+                    int i = 0;
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue("Route" + entry.getKey());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue(entry.getValue());
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = bodyRow.createCell(i++);
+                    cell.setCellValue("");
+                    cell.setCellStyle(bodyStyle);
+                }
+            }
+        }
 
         if ("2".equals(modelType)) {
             sheet.setColumnWidth(6, 50 * 250);
@@ -467,7 +486,7 @@ public class SolutionRouteService {
         return solutionRouteMapper.findRouteByRouteCount(scenariosId, routeCount);
     }
 
-    public void updateRouteByExcel(Route route, MultipartFile[] file){
+    public void updateRouteByExcel(String scenariosId, Route route, MultipartFile[] file, String modelType){
         //判断文件集合是否有文件
         if(file != null && file.length > 0) {
             for(MultipartFile multipartFile : file) {
@@ -486,7 +505,28 @@ public class SolutionRouteService {
                         Map<String, Object> param = new HashMap<String, Object>();
                         for(int i=1;i<lineList.size();i++){
                             String[] row = lineList.get(i).split("#");
-                            if(row.length == 13 && "1".equals(row[1]) && !StringUtils.isBlank(row[12])) {
+                            if ("1".equals(modelType) && row.length == 3 && !StringUtils.isBlank(row[2])) {
+                                String routeCount = row[0].substring(5);
+                                String carName = row[2];
+                                String oldCarName = findRouteCar(scenariosId,routeCount);
+
+                                param.put("scenariosId",ShiroUtil.getOpenScenariosId());
+                                param.put("routeCount", routeCount);
+                                param.put("carName", carName);
+
+                                if (!Strings.isEmpty(oldCarName)) {
+                                    updateCarToIdle(scenariosId,oldCarName);
+                                    updateCarName(param);
+                                    //把车的状态更新为busy
+                                    updateCarToBusy(scenariosId,carName);
+                                } else {
+                                    updateCarName(param);
+                                    //把车的状态更新为busy
+                                    updateCarToBusy(scenariosId,carName);
+                                }
+                            }
+
+                            if ("2".equals(modelType) && row.length == 13 && "1".equals(row[1]) && !StringUtils.isBlank(row[12])) {
                                 String routeCount = row[0].substring(5);
                                 String carName = row[12];
                                 param.put("scenariosId",ShiroUtil.getOpenScenariosId());

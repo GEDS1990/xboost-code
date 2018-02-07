@@ -406,9 +406,11 @@ public class SolutionRouteController {
     @RequestMapping(value="/inputRoutesExcel", method = RequestMethod.POST)
     @ResponseBody
     public String inputRoutesExcel(Route route, @RequestParam MultipartFile[] file) {
+        String scenariosId = ShiroUtil.getOpenScenariosId();
         //设置场景Id
-        route.setScenariosId(ShiroUtil.getOpenScenariosId());
-        solutionRouteService.updateRouteByExcel(route, file);
+        route.setScenariosId(scenariosId);
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+        solutionRouteService.updateRouteByExcel(scenariosId, route, file, modelType);
         return "redirect:/siteInfo";
     }
 }
