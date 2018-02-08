@@ -1262,49 +1262,55 @@ $(function  () {
 			});
 			$('#idle-vehicle').change(function  () {
 				var _val = $(this).val();
+				var _text = $(this).find("option:selected").text();//选中的文本
+				
 				$('#vehicle-btn').click(function  (e) {
 					var routeNum = $('#route-route').val();
 					//e.preventDefault();
-				 	var l = Ladda.create(this);
-				 	//////console.log(l)
-				 	l.start();
-					$.post("/route/updateCarName",{"routeCount":routeNum,"carName":_val,}).done(function(res){
-						if (res == "success") {
-							//window.location.href = "/vehicles";
-							var routeCount = $('#route-route').val();
-				        	$.get("/route/planCar.json",{"routeCount":routeCount}).done(function (data){
-		            			//////console.log(data);
-		            			if (data.usingCar) {
-			            			var useCar = data.usingCar,
-			            			useCarLen = useCar.length;
-			            			$('#us-vehicle').empty();
-			            			$('#us-vehicle').append('<option>--Choose--</option>');
-			            			for (var x=0;x<useCarLen;x++) {
-			            				var useCarAdd = '<option value='+useCar[x]+'>'+useCar[x]+'</option>';
-			            				$('#us-vehicle').append(useCarAdd);
-			            			}
-			            		}
-			            		if (data.idleCar) {
-			            			var idleCar = data.idleCar,
-			            			idleCarLen = idleCar.length;
-			            			$('#idle-vehicle').empty();
-			            			$('#idle-vehicle').append('<option>--Choose--</option>');
-			            			for (var y=0;y<idleCarLen;y++) {
-			            				var idleCarAdd = '<option value='+idleCar[y]+'>'+idleCar[y]+'</option>';
-			            				$('#idle-vehicle').append(idleCarAdd);
-			            			}
-		
-			            		}
-			            		
-		            		}).always(function() { 
-		            			l.stop();
-		            		}).fail(function  () {
-		            			////console.log("fail");
-		            		});
-						}
-					}).fail(function  () {
-						alert("fail");
-					})
+					console.log(_val)
+				console.log(_text)
+					if (_val != 0 || _text != "--Choose--") 
+					{
+					 	var l = Ladda.create(this);
+					 	l.start();
+						$.post("/route/updateCarName",{"routeCount":routeNum,"carName":_val,}).done(function(res){
+							if (res == "success") {
+								//window.location.href = "/vehicles";
+								var routeCount = $('#route-route').val();
+					        	$.get("/route/planCar.json",{"routeCount":routeCount}).done(function (data){
+			            			//////console.log(data);
+			            			if (data.usingCar) {
+				            			var useCar = data.usingCar,
+				            			useCarLen = useCar.length;
+				            			$('#us-vehicle').empty();
+				            			$('#us-vehicle').append('<option value="0">--Choose--</option>');
+				            			for (var x=0;x<useCarLen;x++) {
+				            				var useCarAdd = '<option value='+useCar[x]+'>'+useCar[x]+'</option>';
+				            				$('#us-vehicle').append(useCarAdd);
+				            			}
+				            		}
+				            		if (data.idleCar) {
+				            			var idleCar = data.idleCar,
+				            			idleCarLen = idleCar.length;
+				            			$('#idle-vehicle').empty();
+				            			$('#idle-vehicle').append('<option value="0">--Choose--</option>');
+				            			for (var y=0;y<idleCarLen;y++) {
+				            				var idleCarAdd = '<option value='+idleCar[y]+'>'+idleCar[y]+'</option>';
+				            				$('#idle-vehicle').append(idleCarAdd);
+				            			}
+										$('#idle-vehicle').val(0);
+				            		}
+				            		
+			            		}).always(function() { 
+			            			l.stop();
+			            		}).fail(function  () {
+			            			////console.log("fail");
+			            		});
+							}
+						}).fail(function  () {
+							alert("fail");
+						})
+					}
 				});
 			});
 
