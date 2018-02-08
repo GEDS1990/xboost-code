@@ -222,7 +222,12 @@ public class SiteInfoService {
         Double result = Math.floor(Double.parseDouble(time));
         Integer h = (int)(result/60);
         Integer m = (int)(result%60);
-        String t= h.toString()+":"+m.toString();
+        String t = "";
+        if(m >= 0 && m <= 9) {
+            t = h + ":0" + m;
+        }else {
+            t = h + ":" + m;
+        }
         return t;
     }
 
@@ -240,6 +245,7 @@ public class SiteInfoService {
         ExportUtil exportUtil = new ExportUtil(workBook, sheet);
         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
+        sheet.setColumnWidth(3, 80 * 250);
         // 构建表头
         XSSFRow headRow = sheet.createRow(0);
         XSSFCell cell = null;
