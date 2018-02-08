@@ -51,15 +51,15 @@ $(function  () {
 					document.getElementById('sim-check-info').innerHTML="";
 		            socket  = new SockJS("http://"+document.location.host+"/webSocketServer/validate");
 		            socket .onopen = function () {
-		                logg('Info: connection opened.');
+		                //logg('Info: connection opened.');
 		            };
 		
 		            socket .onmessage = function (event) {
 		                logg(event.data);
 		            };
 		            socket .onclose = function (event) {
-		                logg('Info: connection closed.');
-		                logg(event);
+		                //logg('Info: connection closed.');
+		                //logg(event);
 		            };
 					
 					$.post("/simualte/Validate").done(function  (result) {
@@ -72,13 +72,14 @@ $(function  () {
 					});
 					
 					function logg(messages) {
-			            var //consoleBox = document.getElementById('sim-check-info');
+			            var consoleBox = document.getElementById('sim-check-info');
 			            var p = document.createElement('p');
 			            p.style.wordWrap = 'break-word';
 			            // p.appendChild(document.createTextNode(messages));
 						p.innerHTML = messages;
-			            //consoleBox.appendChild(p);
-			            //consoleBox.scrollTop = //consoleBox.scrollHeight;
+			            consoleBox.appendChild(p);
+			            consoleBox.scrollTop = consoleBox.scrollHeight;
+			            //console.log(messages)
 			        }
 				}
 			});
@@ -232,7 +233,7 @@ $(function  () {
 				document.getElementById('sim-run-info').innerHTML="";
 	            ws = new SockJS("http://"+document.location.host+"/webSocketServer/sockjs");
 	            ws.onopen = function () {
-	                log('Info: connection opened.');
+	                //log('Info: connection opened.');
 	            };
 	
 	            ws.onmessage = function (event) {
@@ -287,7 +288,7 @@ $(function  () {
 					
 				});
 		        function log(messages) {
-		            var //consoleBox = document.getElementById('sim-run-info');
+		            var consoleBox = document.getElementById('sim-run-info');
 		            var p = document.createElement('p');
 		            p.style.wordWrap = 'break-word';
 		            var _r = /\%/;
@@ -304,8 +305,8 @@ $(function  () {
 		            	}
 		            }
 		            p.appendChild(document.createTextNode(messages));
-		            //consoleBox.appendChild(p);
-		            //consoleBox.scrollTop = //consoleBox.scrollHeight;
+		            consoleBox.appendChild(p);
+		            consoleBox.scrollTop = consoleBox.scrollHeight;
 		        }
 			}
 			
