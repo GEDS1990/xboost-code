@@ -1260,16 +1260,14 @@ $(function  () {
 					$('#idle-vehicle').show();
 				}
 			});
-			$('#idle-vehicle').change(function  () {
-				var _val = $(this).val();
-				var _text = $(this).find("option:selected").text();//选中的文本
-				
+			//$('#idle-vehicle').change(function  () {
 				$('#vehicle-btn').click(function  (e) {
 					var routeNum = $('#route-route').val();
 					//e.preventDefault();
-					console.log(_val)
-				console.log(_text)
-					if (_val != 0 || _text != "--Choose--") 
+					var _val = $('#idle-vehicle').val()
+					var _text = $('#idle-vehicle').find("option:selected").text()
+					//console.log(_val)
+					if (_val != 0 && _val != null && _text != "--Choose--") 
 					{
 					 	var l = Ladda.create(this);
 					 	l.start();
@@ -1312,7 +1310,7 @@ $(function  () {
 						})
 					}
 				});
-			});
+			//});
 
             /*
 			 * 选择上传文件
