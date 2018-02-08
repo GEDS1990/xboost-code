@@ -11,7 +11,7 @@
     <title>Xboost</title>
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
 
     <!-- MetisMenu CSS -->
     <link href="/static/js/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="/static/js/morris/morris.css">
     <link rel="stylesheet" href="/static/js/datatables/media/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/Xboost/icon.css" />
+    <link rel="stylesheet" href="/static/css/Xboost/loaders.css" />
+    <link rel="stylesheet" href="/static/css/Xboost/ladda-themeless.min.css" />
     <link rel="stylesheet" href="/static/css/Xboost/xb_main.css" />
     <link rel="stylesheet" href="/static/css/Xboost/ScenariosName.css" />
 
@@ -33,6 +35,9 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="/static/js/Xboost/spin.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/Xboost/ladda.min.js" type="text/javascript" charset="utf-8"></script>
+    
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Sjbn4XELTZZZKwunDx4AGqblQ2aViy3Z"></script>
     <style>
     	#depots-map {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
@@ -90,7 +95,7 @@
 		    			</div>
 	    			</div>
 	    			<div class="xb-fr">
-	    				<button><span class="icon-upload"></span>Export this Sheet</button>
+	    				<!--<button><span class="icon-upload"></span>Export this Sheet</button>-->
 	    			</div>
 	    		</header>
 	    		<div class="scen-box clearfix">
@@ -122,7 +127,9 @@
 	    						<select id="us-vehicle" style="width: 50%;"></select>
 	    						<select id="idle-vehicle" style="width: 50%;"></select>
 	    					</li>
-	    					<li><button id="vehicle-btn">submit</button></li>
+	    					<button id="vehicle-btn" class="btn btn-primary ladda-button" data-style="expand-right" >
+	    						<span class="ladda-label">submit</span>
+	    					</button>
 	    				</ul>
 	    			</div>
 	    		</div>
@@ -182,7 +189,7 @@
 			<form  method="post" id="cond-input-form-info" enctype="multipart/form-data">
 
 				<div class="model-input-content clearfix">
-					<div class="col-sm-4 text-right">Import "Depots Info" Settings:</div>
+					<div class="col-sm-4 text-right">Import "Route Car"Settings:</div>
 					<div class="col-sm-4">
 						<input type="file" name="file" class="cond_file"/>
 						<div class="cond-file-box clearfix">
@@ -227,8 +234,10 @@
     		<div class="col-sm-6 text-right">Export "Routes"</div>
         	<div class="col-sm-4">
         		<div class="export-btn"  data-xls="Depots_Info">
-        			<span class="icon-upload"></span>
-        			Export
+        			<a href="javascript:void(0);">
+        				<span class="icon-upload"></span>
+        				Export
+        			</a>
         		</div>
         	</div>
     	</div>
@@ -240,7 +249,6 @@
     </div>
   </div>
 </div>
-
 
 
 
@@ -270,12 +278,9 @@
 	$(function  () {
 		(function  () {
 			$('#nav-Results').addClass("active");
-			
-			
-		})()
-		
-		
+		}());
 	});
+	
 </script>
 </body>
 

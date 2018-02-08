@@ -52,7 +52,7 @@ var distributionEchart;
                 }
             ],
             "initComplete": function (settings, data) {
-            	console.log(data);
+            	//console.log(data);
             	if (data.data) {
             		var result = data.data,
             		len = result.length;
@@ -319,20 +319,20 @@ function add0(m){return m<10?'0'+m:m };
 	    $("#distribution-echarts").css("height",height-300); 
 	    var _val = $('#distribution-choose').val();
 	    $.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
-	    	//console.log(res);
+	    	////console.log(res);
 	    	var arr = [];
 	    	for (var i in res) {
 	    		var obj = {}
 	    		var s = i.split("-");
 	    		s.push(res[i]);
-	    		//console.log(s)
+	    		////console.log(s)
 				obj["start"] = s[0];
 				obj["end"] = s[1];
 				obj["num"] = s[2];
 				arr.push(obj);
 	    	}
 	    	arr.sort(startNum);
-	    	//console.log(arr);
+	    	////console.log(arr);
 	    	var xinfo = [];
 	    	var seriesinfo = [];
 	    	for (var j=0,len=arr.length;j<len;j++) {
@@ -353,21 +353,21 @@ function add0(m){return m<10?'0'+m:m };
 	    $('#distribution-choose').change(function  () {
 	    	var _val = $(this).val();
 	    	$.get("/distribution/getMaxMix.json",{"type":_val}).done(function (res){
-		    	//console.log(res);
+		    	////console.log(res);
 		    	if (_val == 0 || _val== 1) {
 		    		var arr = [];
 			    	for (var i in res) {
 			    		var obj = {}
 			    		var s = i.split("-");
 			    		s.push(res[i]);
-			    		//console.log(s)
+			    		////console.log(s)
 						obj["start"] = s[0];
 						obj["end"] = s[1];
 						obj["num"] = s[2];
 						arr.push(obj);
 			    	}
 			    	arr.sort(startNum);
-			    	//console.log(arr);
+			    	////console.log(arr);
 			    	var xinfo = [];
 			    	var seriesinfo = [];
 			    	for (var j=0,len=arr.length;j<len;j++) {
@@ -384,7 +384,7 @@ function add0(m){return m<10?'0'+m:m };
 		    	}else{
 		    		var xinfo = ['提早60','提早50以上','提早40以上','提早30以上','提早20以上','提早10以上','准时到'];
 		    		var arr = [res.tiqian60,res.tiqian50,res.tiqian40,res.tiqian30,res.tiqian20,res.tiqian10,res.zunshi];
-		    		//console.log(arr)
+		    		////console.log(arr)
 		    		var arrlen = arr.length;
 		    		var seriesinfo = [];
 		    		for (var x=0;x<arrlen;x++) {

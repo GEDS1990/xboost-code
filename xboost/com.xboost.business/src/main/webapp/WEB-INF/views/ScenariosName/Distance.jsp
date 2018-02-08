@@ -326,8 +326,10 @@
     		<div class="col-sm-6 text-right">Export "Depots Distance" Settings:</div>
         	<div class="col-sm-4">
         		<div class="export-btn"  data-xls="dist">
-        			<span class="icon-upload"></span>
-        			Export 
+        			<a href="javascript:void(0);">
+        				<span class="icon-upload"></span>
+        				Export
+        			</a> 
         		</div>
         	</div>
     	</div>

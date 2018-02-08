@@ -298,8 +298,10 @@
     		<div class="col-sm-6 text-right">Export "Shipments" Settings:</div>
         	<div class="col-sm-4" data-xls="Demands">
         		<div class="export-btn" data-xls="demands">
-        			<span class="icon-upload"></span>
-        			Export 
+        			<a href="javascript:void(0);">
+        				<span class="icon-upload"></span>
+        				Export
+        			</a>
         		</div>
         	</div>
     	</div>

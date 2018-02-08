@@ -251,9 +251,8 @@ table.dataTable thead>tr>td.sorting{
 	color: #8c97b2;
 	border: 1px solid #ccd4e3;
 	background-color: #eef1f7;
-	
 	border-radius: 5px;
-	line-height: 20px;
+	line-height: 18px;
 	text-align: center;
 }
 .model-input-content>div:last-child>div>a{
