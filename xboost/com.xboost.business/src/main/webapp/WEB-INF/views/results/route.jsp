@@ -95,7 +95,7 @@
 		    			</div>
 	    			</div>
 	    			<div class="xb-fr">
-	    				<button><span class="icon-upload"></span>Export this Sheet</button>
+	    				<!--<button><span class="icon-upload"></span>Export this Sheet</button>-->
 	    			</div>
 	    		</header>
 	    		<div class="scen-box clearfix">
@@ -189,7 +189,7 @@
 			<form  method="post" id="cond-input-form-info" enctype="multipart/form-data">
 
 				<div class="model-input-content clearfix">
-					<div class="col-sm-4 text-right">Import "Depots Info" Settings:</div>
+					<div class="col-sm-4 text-right">Import "Route Car"Settings:</div>
 					<div class="col-sm-4">
 						<input type="file" name="file" class="cond_file"/>
 						<div class="cond-file-box clearfix">
@@ -234,8 +234,10 @@
     		<div class="col-sm-6 text-right">Export "Routes"</div>
         	<div class="col-sm-4">
         		<div class="export-btn"  data-xls="Depots_Info">
-        			<span class="icon-upload"></span>
-        			Export
+        			<a href="javascript:void(0);">
+        				<span class="icon-upload"></span>
+        				Export
+        			</a>
         		</div>
         	</div>
     	</div>
@@ -249,7 +251,6 @@
 </div>
 
 
-<a href="#" id="form-submit" class="btn btn-primary btn-lg ladda-button" data-style="expand-right" data-size="l"><span class="ladda-label">Submit form</span></a>
 
 
 
@@ -280,29 +281,6 @@
 		}());
 	});
 	
-	$('#form-submit').click(function(e){
-
-	 	e.preventDefault();
-
-	 	var l = Ladda.create(this);
-
-	 	l.start();
-
-//	 	$.post("your-url", 
-//
-//	 	    { data : data },
-//
-//	 	  function(response){
-//
-//	 	    console.log(response);
-//
-//	 	  }, "json")
-//
-//	 	.always(function() { l.stop(); });
-
-	 	return false;
-
-	});
 </script>
 </body>
 

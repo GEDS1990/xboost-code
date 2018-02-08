@@ -163,7 +163,7 @@ $(function  () {
 			if (listPoint[j].curLoc == val) {
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
 				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(30,40),{
-					anchor: new BMap.Size(10, 30)
+					anchor: new BMap.Size(15, 40)
 				});
 			}else{
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
