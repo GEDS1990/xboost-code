@@ -179,8 +179,8 @@
 	                    <label class="col-sm-2 control-label">Night Operation Y/N</label>
 	                    <div class="col-sm-4">
 	                        <select type="text" class="form-control" name="siteNightDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-	                        	<option value="support">support</option>
-	                        	<option value="Non support">Non support</option>
+	                        	<option value="Y">Y</option>
+	                        	<option value="N">N</option>
 	                        </select>
 	                    </div>
 	                    
@@ -287,8 +287,8 @@
 	                    <label class="col-sm-2 control-label">Night Operation Y/N</label>
 	                    <div class="col-sm-4">
 	                        <select type="text" class="form-control" name="siteNightDelivery" id="siteNightDelivery" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
-	                        	<option value="Non Dummy Hub">Non Dummy Hub</option>
-	                        	<option value="Dummy Hub">Dummy Hub</option>
+	                        	<option value="N">N</option>
+	                        	<option value="Y">Y</option>
 	                        </select>
 	                    </div>
 	                    
@@ -418,8 +418,10 @@
     		<div class="col-sm-6 text-right">Export "Depots Info" Settings:</div>
         	<div class="col-sm-4">
         		<div class="export-btn"  data-xls="Depots_Info">
-        			<span class="icon-upload"></span>
-        			Export
+        			<a href="javascript:void(0);">
+        				<span class="icon-upload"></span>
+        				Export
+        			</a>
         		</div>
         	</div>
     	</div>

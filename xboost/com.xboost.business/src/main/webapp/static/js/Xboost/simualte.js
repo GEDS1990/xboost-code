@@ -63,35 +63,35 @@ $(function  () {
 		            };
 					
 					$.post("/simualte/Validate").done(function  (result) {
-						console.log(result);
+						//console.log(result);
 						type = result;
 					    socket.onclose();
 					}).fail(function  () {
 					    socket.onclose();
-						console.log("fail");
+						//console.log("fail");
 					});
 					
 					function logg(messages) {
-			            var consoleBox = document.getElementById('sim-check-info');
+			            var //consoleBox = document.getElementById('sim-check-info');
 			            var p = document.createElement('p');
 			            p.style.wordWrap = 'break-word';
 			            // p.appendChild(document.createTextNode(messages));
 						p.innerHTML = messages;
-			            consoleBox.appendChild(p);
-			            consoleBox.scrollTop = consoleBox.scrollHeight;
+			            //consoleBox.appendChild(p);
+			            //consoleBox.scrollTop = //consoleBox.scrollHeight;
 			        }
 				}
 			});
 			
 			//获取当前场景是否在运行中
 //			$.post("/cascade/runSilumate").done(function  (res) {
-//				console.log(res)
+//				//console.log(res)
 //				if (res == "Simulating") 
 //				{
 //					$('#modal-run').val("1");
 //				}
 //			}).fail(function  () {
-//				console.log("fail");
+//				//console.log("fail");
 //			});
 			
 			//点击运行run
@@ -246,15 +246,15 @@ $(function  () {
 
 	            $.post("/cascade/runSilumate",{"distMode":_distMode,"loadTime":_loadTime,"loopLimit":_loopLimit}).done(function(result){
 	                ws.onclose();
-	                console.log("success");
+	                //console.log("success");
 	            }).fail(function(){
 	                ws.onclose();
-	                console.log("fail");
+	                //console.log("fail");
 	            });
 	            //停止算法
 				$('#sim-stop').click(function  () {
 					$.post("/cascade/runSilumate").done(function (res){
-						console.log(res)
+						//console.log(res)
 						if (res == "Simulating") {
 							$('#modal-sim').find('.modal-body p').text("The Simulation is running and can not restart the Simulation");
 							$('#modal-sim').modal("show");
@@ -287,7 +287,7 @@ $(function  () {
 					
 				});
 		        function log(messages) {
-		            var consoleBox = document.getElementById('sim-run-info');
+		            var //consoleBox = document.getElementById('sim-run-info');
 		            var p = document.createElement('p');
 		            p.style.wordWrap = 'break-word';
 		            var _r = /\%/;
@@ -304,8 +304,8 @@ $(function  () {
 		            	}
 		            }
 		            p.appendChild(document.createTextNode(messages));
-		            consoleBox.appendChild(p);
-		            consoleBox.scrollTop = consoleBox.scrollHeight;
+		            //consoleBox.appendChild(p);
+		            //consoleBox.scrollTop = //consoleBox.scrollHeight;
 		        }
 			}
 			

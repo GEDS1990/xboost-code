@@ -262,8 +262,10 @@
     		<div class="col-sm-6 text-right">Export "Patameters" Settings:</div>
         	<div class="col-sm-4">
         		<div class="export-btn" data-xls="Patameters">
-        			<span class="icon-upload"></span>
-        			Export 
+        			<a href="javascript:void(0);">
+        				<span class="icon-upload"></span>
+        				Export
+        			</a> 
         		</div>
         	</div>
     	</div>

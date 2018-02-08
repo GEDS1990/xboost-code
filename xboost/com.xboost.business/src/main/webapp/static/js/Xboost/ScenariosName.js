@@ -77,8 +77,8 @@ $(function  () {
 			var xss = pattern.test(_input[i].value);
 			var _inputType = _input[i].getAttribute("required");
 			var _inputHid = _input[i].getAttribute("type");
-			//console.log(_inputType+"----------"+_inputHid)
-			//console.log(xss)
+			////console.log(_inputType+"----------"+_inputHid)
+			////console.log(xss)
 			if (Boolean(_inputType) == true  ) {
 				if (_input[i].value == "" || xss == true) {
 					_input[i].focus();
@@ -436,12 +436,12 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data)
+	            	////console.log(data)
 	            },
 	            "drawCallback":function  (settings, data) {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
-			        //console.log( api.rows( {page:'current'} ).data() );
+			        ////console.log( api.rows( {page:'current'} ).data() );
 	            }
 	        });
         
@@ -470,7 +470,7 @@ $(function  () {
                             window.location.reload(); 
                         }
                     }).fail(function(){
-                        console.log("fail");
+                        //console.log("fail");
                     });
         	});
             
@@ -528,7 +528,7 @@ $(function  () {
 	                    window.location.reload(); 
 	                }
 	        	}).fail(function(){
-	                console.log("fail");
+	                //console.log("fail");
 	            });
         	})
             
@@ -661,7 +661,7 @@ $(function  () {
 	                            window.location.reload(); 
 	                        }
 	                    }).fail(function(){
-	                        console.log("fail");
+	                        //console.log("fail");
 	                    });
 	        	});
 	            
@@ -718,7 +718,7 @@ $(function  () {
 		                    window.location.reload(); 
 		                }
 		            }).fail(function(){
-		                console.log("fail");
+		                //console.log("fail");
 		            });
 	        	})
 	            
@@ -762,7 +762,7 @@ $(function  () {
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
 	                {"data":function (row){
-	                	//console.log(row)
+	                	////console.log(row)
 	                	if (row.modelType == 1 || row.modelType == 2) {
 	                		if (row.parameterCode == "duration_relay" || row.parameterCode == "duration_peak" || row.parameterCode == "tansit_site_peak" || row.parameterCode == "duration_collect" || row.parameterCode == "duration_siteEnd_sort") {
 		                		return "<span style='color:lightgrey;'>"+row.parameterName+"</span>";
@@ -1165,7 +1165,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete":function  (settings, data) {
-	            	//console.log(data);
+	            	////console.log(data);
 	            }
 	        });
 	        
@@ -1266,7 +1266,7 @@ $(function  () {
 	            $("#editUserForm-tran")[0].reset();
 	            var id = $(this).attr("data-id");
 	            $.get("/car/transpt.json",{"id":id}).done(function(result){
-	            	//console.log(result)
+	            	////console.log(result)
 	                $("#siteId-tran").val(result.id);
 	                $("#type").val(result.type);
 	                $("#carSource").val(result.carSource);
@@ -1373,7 +1373,7 @@ $(function  () {
 	        });
 	
 	        $("#editBtn-tran").click(function(){
-	        	console.log($("#editUserForm-tran").serialize())
+	        	//console.log($("#editUserForm-tran").serialize())
 	        		FormInput("editUserForm-tran",function (){
 		        		$.post("/car/edit",$("#editUserForm-tran").serialize()).done(function(result){
 			                if(result == "success") {
@@ -1473,7 +1473,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log(data)
+	            	////console.log(data)
 	            }
 	        });
 	        

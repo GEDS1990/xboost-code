@@ -42,7 +42,7 @@ $(function  () {
 		  	this.closeInfoWindow();
 		  });
 		  marker.addEventListener("click", function(){
-		  	//console.log(curLoc)
+		  	//////console.log(curLoc)
 		  	$('#route-depot').val(curLoc);
 		  	count = curLoc;
 		  	depotMapInit(listPoint,curLoc);
@@ -61,7 +61,7 @@ $(function  () {
 			
 			map.addOverlay(polyline);//添加折线到地图上
 			polyline.addEventListener("mouseover", function(e){
-				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
+				//////console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
 				var point = new BMap.Point(e.point.lng,e.point.lat);
 		  		map.openInfoWindow(infoWindowLine,point);
 		  		
@@ -172,19 +172,19 @@ $(function  () {
 				});
 			}
 			
-			//console.log(points)
+			//////console.log(points)
 			var sContent = "";
 			sContent += '<p>ID: '+listPoint[j].curLoc+'</p>';
 			sContent += '<p>Type: '+listPoint[j].siteType+'</p>';
 			sContent += '<p>Name: '+listPoint[j].siteName+'</p>';
 			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
-			//console.log(infoWindow)
+			//////console.log(infoWindow)
 			addMarker(points,infoWindow,listPoint[j].curLoc ,myIcon);
 			//addMarkers(pointss);
 		};
 		if (val == "") {
 			//初始化路线
-			console.log("a")
+			////console.log("a")
 //			for (var x = 0;x<p_len;x++) {
 //				for (var y = 0 ;y<p_len;y++) {
 //					var _curLoc = listPoint[x].curLoc,
@@ -212,7 +212,7 @@ $(function  () {
 					"nextCurLoc":indnext[bb].nextCurLoc,
 					"list":indnext[bb].list
 				}
-				//console.log(bblist)
+				//////console.log(bblist)
 				depotPylineInfo(listPoint[index],indnext[bb],2,bblist);
 			}
 			for (var qq=0;qq<indPlen;qq++) {
@@ -238,7 +238,7 @@ $(function  () {
 							"nextCurLoc":res1,
 							"list":_list
 						}
-						//console.log(indnext[b].list)
+						//////console.log(indnext[b].list)
 						depotPylineInfo2(listPoint[index],indprev[q],3,blist);
 					}
 				}
@@ -282,7 +282,7 @@ $(function  () {
 			addArrow(polyline,15,Math.PI/7);
 			
 			polyline.addEventListener("mouseover", function(e){
-				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
+				//////console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
 				var point = new BMap.Point(e.point.lng,e.point.lat);
 		  		map.openInfoWindow(infoWindowLine,point);
 		  	});
@@ -310,7 +310,7 @@ $(function  () {
 		var p_len = listPoints.length;
 		for (var j = 0;j<p_len;j++) {
 			var points = new BMap.Point(listPoints[j].lng,listPoints[j].lat);
-			//console.log(points)
+			//////console.log(points)
 			var sContent = "";
 			sContent += '<p>ID: '+listPoints[j].curLoc+'</p>';
 			sContent += '<p>Type: '+listPoints[j].siteType+'</p>';
@@ -318,12 +318,12 @@ $(function  () {
 			sContent += '<p>Unload: '+ listPoints[j].unloadVol+'</p>';
 			sContent += '<p>Load: '+ listPoints[j].sbVol+'</p>';
 			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
-			//console.log(infoWindow)
+			//////console.log(infoWindow)
 			addMarker(points,infoWindow);
 		}
 		if (val && listPoint != undefined) {
 			//规划线路
-			//console.log(listPoint)
+			//////console.log(listPoint)
 			var list = [];
 			var p_lens = listPoint.length;
 			for (var q=0;q<p_lens;q++) {
@@ -334,14 +334,14 @@ $(function  () {
 			}
 			var routelist = uniqeByKeys(list,["sequence"]);
 			routelist.sort(sortNumber);
-			//console.log(routelist);
-			//console.log(listPoint);
+			//////console.log(routelist);
+			//////console.log(listPoint);
 			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
 				if (i==rl_len-1) {
 					continue;
 				}
 				depotPylineInfo(routelist[i],routelist[i+1]);
-				//console.log(i)
+				//////console.log(i)
 			}
 		}
 
@@ -377,7 +377,7 @@ $(function  () {
 			addArrow(polyline,15,Math.PI/7);
 			
 			polyline.addEventListener("mouseover", function(e){
-				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
+				//////console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
 				var point = new BMap.Point(e.point.lng,e.point.lat);
 		  		map.openInfoWindow(infoWindowLine,point);
 		  		
@@ -399,13 +399,13 @@ $(function  () {
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
-			//console.log("v")
+			//////console.log("v")
 		}
 		//初始化坐标
 		var p_len = listPoints.length;
 		for (var j = 0;j<p_len;j++) {
 			var points = new BMap.Point(listPoints[j].lng,listPoints[j].lat);
-			//console.log(points)
+			//////console.log(points)
 			var sContent = "";
 			sContent += '<p>ID: '+listPoints[j].curLoc+'</p>';
 			sContent += '<p>Type: '+listPoints[j].siteType+'</p>';
@@ -413,12 +413,12 @@ $(function  () {
 			sContent += '<p>Unload: '+listPoints[j].unloadVol+'</p>';
 			sContent += '<p>Load: '+listPoints[j].sbVol+'</p>';
 			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
-			//console.log(infoWindow)
+			//////console.log(infoWindow)
 			addMarker(points,infoWindow);
 		}
 		if (val && listPoint != undefined) {
 			//规划线路
-			//console.log(listPoint)
+			//////console.log(listPoint)
 			var list = [];
 			var p_lens = listPoint.length;
 			for (var q=0;q<p_lens;q++) {
@@ -427,16 +427,16 @@ $(function  () {
 					list.push(listPoint[q]);
 				}
 			}
-			//console.log(list)
+			//////console.log(list)
 			var routelist = uniqeByKeys(list,["sequence"]);
 			routelist.sort(sortNumber);
-			//console.log(routelist);
+			//////console.log(routelist);
 			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
 				if (i==rl_len-1) {
 					continue;
 				}
 				depotPylineInfo(routelist[i],routelist[i+1]);
-				//console.log(i)
+				//////console.log(i)
 			}
 		}
 
@@ -619,7 +619,7 @@ $(function  () {
 	}
 	function depotsNextList (arr){
 		var allnewarr = []
-		//console.log(arr);
+		//////console.log(arr);
 		var arrSite = uniqeByKeys(arr,["nextCurLoc"]);
 		for (var j=0,alen = arrSite.length;j<alen;j++) {
 			
@@ -649,7 +649,7 @@ $(function  () {
 	}
 	function depotsPrevList (arr){
 		var allnewarr = []
-		//console.log(arr);
+		//////console.log(arr);
 		var arrSite = uniqeByKeys(arr,["prevCurLoc"]);
 		for (var j=0,alen = arrSite.length;j<alen;j++) {
 			
@@ -744,7 +744,7 @@ $(function  () {
 	                }
 	            },
 	            "initComplete": function (settings, data) {
-	            	//console.log("i");
+	            	//////console.log("i");
 	            	if (data.data.length !=0) {
 	            		$('#depots-map').show();
 	            		var result = data.data,
@@ -753,10 +753,10 @@ $(function  () {
 	            		$('#route-depot').empty();
 	            		$('#route-depot').off("change");
 	            		$('#route-depot').append('<option value="0">All Depots</option>');
-	            		//console.log(result)
+	            		//////console.log(result)
                         var Arr = uniqeByKeys(result,["curLoc"]),
                         A_len = Arr.length;
-                        //console.log(Arr)
+                        //////console.log(Arr)
 	            		for (var i=0;i<A_len;i++) {
 	            			
 	            			var add='<option value='+Arr[i].curLoc+'>'+Arr[i].curLoc+'</option>';
@@ -823,7 +823,7 @@ $(function  () {
 	            			
 	            			//处理返回数据
 	
-	            			//console.log(rlist)
+	            			//////console.log(rlist)
 	            			liser["curLoc"] = Arr[j].curLoc;
 							liser["siteType"] = Arr[j].siteType;
 							liser["siteName"] = Arr[j].siteName;
@@ -839,7 +839,7 @@ $(function  () {
 							
 	            		
 						//查询所有网点坐标
-						//console.log(listPoint)
+						//////console.log(listPoint)
 						listArry="";
 						listArry = listPoint;
 							
@@ -856,8 +856,8 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var Datas = api.rows( {page:'current'} ).data();
-			        //console.log("d")
-			        //console.log(Datas);
+			        //////console.log("d")
+			        //////console.log(Datas);
 			        var listPoint = [];
 			        var _len = Datas.length;
 			        if (_len != 0 && count != "") {
@@ -908,7 +908,7 @@ $(function  () {
 				if (val == 0) {
 					depotMapInit(listArry,"");
 					table.search("").draw(false);
-					//console.log(1)
+					//////console.log(1)
 					$('#depot').text("No Data");
                     $('#east').text("--");
                     $('#north').text("--");
@@ -971,7 +971,7 @@ $(function  () {
 	            "columns":[  //返回的JSON中的对象和列的对应关系
 	                {"data":"id","name":"id"},
 	                {"data":function  (res) {
-	                	//console.log(res)
+	                	//////console.log(res)
 	                	return "Route "+add0(res.routeCount);
 	                },"name":"route_count"},
 	                {"data":"sequence","name":"sequence"},
@@ -1048,7 +1048,7 @@ $(function  () {
 	            		$('#route-name').text(_text);
 	            		//创建安排车辆
 	            		$.get("/route/planCar.json",{"routeCount":_val}).done(function (data){
-	            			//console.log(data);
+	            			//////console.log(data);
 	            			if (data.usingCar) {
 		            			var useCar = data.usingCar,
 		            			useCarLen = useCar.length;
@@ -1071,7 +1071,7 @@ $(function  () {
 	
 		            		}
 	            		}).fail(function (){
-	            			console.log("fail");
+	            			////console.log("fail");
 	            		})
 	            		
 	            		for (var f = 0;f<len;f++) {
@@ -1094,11 +1094,11 @@ $(function  () {
 							
 							listPoint.push(liser);
 	            		}
-	            		//console.log(listPoint);
+	            		//////console.log(listPoint);
 	            		listArry="";
 	            		//listArry = listPoint;
 						listArry = uniqeByKeys(listPoint,["curLoc"]);
-	            		// console.log(listArry);
+	            		// ////console.log(listArry);
 	            		var table = $('#SolutionRoute').DataTable();
 	            		setTimeout(function(){
 	            			if (_val) {
@@ -1106,7 +1106,7 @@ $(function  () {
 	            				routeMapInit(listPoint,_val);
 	            				
 	            				$.get("/route/totalDistance.json",{"routeCount":_val}).done(function (res){
-	            					//console.log(res)
+	            					//////console.log(res)
 									if (res) {
 										$('#total-distance').text(res.totalDistance+" km");
 										if (Boolean(res.carName) ) {
@@ -1117,7 +1117,7 @@ $(function  () {
 									}
 								}).fail(function (){
 									alert("fail");
-									console.log("fail");
+									////console.log("fail");
 								});
 	            			}
 	            			
@@ -1132,7 +1132,7 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var data = api.rows( {page:'current'} ).data();
-			        console.log(data)
+			        //////console.log(data)
 			        var data_len = data.length;
 			        if (data_len != 0) {
 			        	var result = data,
@@ -1140,7 +1140,7 @@ $(function  () {
 			        	var res = data[0];
 			        	//派车
 			        	$.get("/route/planCar.json",{"routeCount":res.routeCount}).done(function (data){
-	            			//console.log(data);
+	            			//////console.log(data);
 	            			if (data.usingCar) {
 		            			var useCar = data.usingCar,
 		            			useCarLen = useCar.length;
@@ -1202,13 +1202,13 @@ $(function  () {
 		            		}
 		            		route_operation = true;
 	            			routeMapInit(listArry,val,listPoint);
-//	            			console.log(listArry)
-//	            			console.log(listPoint)
+//	            			////console.log(listArry)
+//	            			////console.log(listPoint)
 		            		
-		            		//console.log(listPoint)
+		            		//////console.log(listPoint)
 		            		
 	            		}).fail(function (){
-	            			console.log("fail");
+	            			////console.log("fail");
 	            		})
 						$('#vehicle-load-requirement').text(res.carType);
 						$('#vehicle-piece-capacity').text(res.max_load);
@@ -1229,12 +1229,12 @@ $(function  () {
 			$(document).on("change","#route-route",function  () {
 				var val = $('#route-route').val(),
 					_text = "Route "+add0(val);
-					//console.log(val)
+					//////console.log(val)
 				table.search(val).draw(false);
 	            $('#route-name').text(_text);
 				
 				$.get("/route/totalDistance.json",{"routeCount":val}).done(function (res){
-					//console.log(res)
+					//////console.log(res)
 					if (res) {
 						$('#total-distance').text(res.totalDistance+" km");
 						if (Boolean(res.carName) ) {
@@ -1245,13 +1245,13 @@ $(function  () {
 						
 					}
 				}).fail(function (){
-					console.log("fail")
+					////console.log("fail")
 				});
 			});
 			//获取checked值paiche
 			$('input[type="radio"]').click(function (){
 				var _val = $("input[type='radio']:checked").val();
-				//console.log(_val)
+				//////console.log(_val)
 				if (_val == 1) {
 					$('#us-vehicle').show();
 					$('#idle-vehicle').hide();
@@ -1262,14 +1262,18 @@ $(function  () {
 			});
 			$('#idle-vehicle').change(function  () {
 				var _val = $(this).val();
-				$('#vehicle-btn').click(function  () {
+				$('#vehicle-btn').click(function  (e) {
 					var routeNum = $('#route-route').val();
+					//e.preventDefault();
+				 	var l = Ladda.create(this);
+				 	//////console.log(l)
+				 	l.start();
 					$.post("/route/updateCarName",{"routeCount":routeNum,"carName":_val,}).done(function(res){
 						if (res == "success") {
 							//window.location.href = "/vehicles";
 							var routeCount = $('#route-route').val();
 				        	$.get("/route/planCar.json",{"routeCount":routeCount}).done(function (data){
-		            			//console.log(data);
+		            			//////console.log(data);
 		            			if (data.usingCar) {
 			            			var useCar = data.usingCar,
 			            			useCarLen = useCar.length;
@@ -1292,9 +1296,11 @@ $(function  () {
 		
 			            		}
 			            		
-		            		}).fail(function (){
-		            			console.log("fail");
-		            		})
+		            		}).always(function() { 
+		            			l.stop();
+		            		}).fail(function  () {
+		            			////console.log("fail");
+		            		});
 						}
 					}).fail(function  () {
 						alert("fail");
@@ -1488,7 +1494,7 @@ $(function  () {
 	            },
 	            "initComplete": function (settings, data) {
 	            	var $this = this;
-	            	//console.log(data);
+	            	//////console.log(data);
 	            	if (data.data.length != 0) {
 	            		listLen = '';
 	            		listLen = data.data.length;
@@ -1519,7 +1525,7 @@ $(function  () {
 	            		
 //	            		var newResult = uniqeByKeys(result,["curLoc"]),
 //						newreslen = newResult.length;
-	            		//console.log(newResult)
+	            		//////console.log(newResult)
 	            		for (var f = 0;f<len;f++) {
 	            			var liser = {};
 	            			liser["carName"] = result[f].carName;
@@ -1540,7 +1546,7 @@ $(function  () {
 							liser["carGoods"] = result[f].carGoods;
 							listPoint.push(liser);
 	            		}
-	            		//console.log(listPoint);
+	            		//////console.log(listPoint);
 	            		listArry="";
 						listArry = uniqeByKeys(listPoint,["curLoc"]);
 	            		
@@ -1560,7 +1566,7 @@ $(function  () {
 	            	var api = this.api();
 			        // 输出当前页的数据到浏览器控制台
 			        var datas = api.rows( {page:'current'} ).data();
-			        //console.log(datas);
+			        //////console.log(datas);
 			        var datas_len = datas.length;
 			        if (datas_len !=0) {
 			        	var result = datas,
@@ -1609,7 +1615,7 @@ $(function  () {
 	        //点击选项 来查询
 	        var table = $('#SolutionVehicles').DataTable();
 			$(document).on("change","#route-vehicles",function  () {
-				//console.log(this.value)
+				//////console.log(this.value)
 				table.search(this.value).draw();
 				$('#route-name').text(this.value);
 				vehiclesMapInit(listArry,this.value)

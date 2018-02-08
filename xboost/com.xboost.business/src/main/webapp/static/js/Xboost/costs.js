@@ -102,9 +102,9 @@ $(function (){
 				methods:{
 					sum23:function (){ //单日人工总成本
 						var sum = (this.full_staff * this.full_salaty)/this.full_days + (this.part_staff*this.part_wage*this.part_work);
-						//console.log((this.full_staff))
+						////console.log((this.full_staff))
 						var r = Math.round(sum);
-						//console.log(Boolean(r))
+						////console.log(Boolean(r))
 						if (!Boolean(r)) {
 							r=0
 						}
@@ -162,8 +162,8 @@ $(function (){
 									sum33 =  Math.round(sum33)+Math.round(price_full + price_part) ;
 								}
 							}
-//							console.log(sum22)
-//							console.log(sum33)
+//							//console.log(sum22)
+//							//console.log(sum33)
 							sum33==""?this.sum3=0:this.sum3=sum33;
 							this.day_p_cost = sum22 + sum33;
 							this.day_allp_cost = ((Number(this.day_p_cost)+Number(this.sum3))/this.piece).toFixed(2);
@@ -287,9 +287,9 @@ $(function (){
 				methods:{
 					sum23:function (){ //单日人工总成本
 						var sum = (this.full_staff * this.full_salaty)/this.full_days + (this.part_staff*this.part_wage*this.part_work);
-						//console.log((this.full_staff))
+						////console.log((this.full_staff))
 						var r = Math.round(sum);
-						//console.log(Boolean(r))
+						////console.log(Boolean(r))
 						if (!Boolean(r)) {
 							r=0
 						}
@@ -347,8 +347,8 @@ $(function (){
 									sum33 =  Math.round(sum33)+Math.round(price_full + price_part) ;
 								}
 							}
-//							console.log(sum22)
-//							console.log(sum33)
+//							//console.log(sum22)
+//							//console.log(sum33)
 							sum33==""?this.sum3=0:this.sum3=sum33;
 							this.day_p_cost = sum22 + sum33;
 							this.day_allp_cost = ((Number(this.day_p_cost)+Number(this.sum3))/this.piece).toFixed(2);
@@ -443,7 +443,7 @@ $(function (){
 			
 			//请求数据
 			$.post("/costs/costInitData.json").done(function (data){
-				console.log(data)
+				//console.log(data)
 				var $res=data;
 				if (data.modelType == 1) {
 					vmA.serialSeen = true;
@@ -451,7 +451,7 @@ $(function (){
 					$('#model-type').text("Serial Model");
 					if (data) {
 						$.post("/costs/cost.json",{"plan":"A"}).done(function (res){
-							console.log(res)
+							//console.log(res)
 							if (res.data[0].distribPeopleWork == null) {
 								var urlcost = "/costs/edit";
 								vmA.sitePeople = $res.sitePeopleWork;
@@ -476,7 +476,7 @@ $(function (){
 								vmB.part_work = 2;
 							}else{
 								var result = res.data[0];
-								console.log(result)
+								//console.log(result)
 								var urlcost = "/costs/edit"; 
 								vmA.sitePeople = result.sitePeopleWork;
 								vmA.collectPeople = result.distribPeopleWork;
@@ -520,7 +520,7 @@ $(function (){
 								
 							}
 						}).fail(function (){
-							console.log("fail");
+							//console.log("fail");
 						})
 						
 					}
@@ -529,7 +529,7 @@ $(function (){
 					vmB.relaySeen = true;
 					$('#model-type').text("Relay Model");
 					$.post("/costs/cost.json",{"plan":"A"}).done(function (res){
-						console.log(res)
+						//console.log(res)
 						if (res.data[0].distribPeopleWork == null) 
 						{
 							var _lista =  relaylistInit($res.siteInfoList,$res.totalVolList);
@@ -621,7 +621,7 @@ $(function (){
 								
 							
 					}).fail(function  () {
-						console.log("fail");
+						//console.log("fail");
 					});
 				}
 				
@@ -633,19 +633,19 @@ $(function (){
 						if (_val == "a") 
 						{
 							var data = $("#cost-form-a").serialize();
-							//console.log(data)
+							////console.log(data)
 						}
 						else if(_val == "b")
 						{
 							var data = $("#cost-form-b").serialize();
 						}
 						$.post("/costs/edit",data).done(function (res){
-							//console.log(res);
+							////console.log(res);
 							if (res == "success") {
 								window.location.reload();
 							}
 						}).fail(function  () {
-							console.log("fail")
+							//console.log("fail")
 						});
 					}
 					else if ($res.modelType == 2)
@@ -689,14 +689,14 @@ $(function (){
 							}
 						}
 						
-						console.log(data);
+						//console.log(data);
 						$.post("/costs/editRelay",data).done(function (res){
-							console.log(res);
+							//console.log(res);
 							if (res == "success") {
 								window.location.reload();
 							}
 						}).fail(function  () {
-							console.log("fail")
+							//console.log("fail")
 						});
 					}
 					
@@ -707,7 +707,7 @@ $(function (){
 				
 				
 			}).fail(function  () {
-				console.log("fail");
+				//console.log("fail");
 			});
 			
 
@@ -720,12 +720,12 @@ $(function (){
                 var planB = $("#cost-form-b").serializeArray();
                 var dataB = "";
                 $.each(planB,function(idx,obj) {
-                	console.log(obj.name);
-                	console.log(obj.value);
+                	//console.log(obj.name);
+                	//console.log(obj.value);
                 	dataB += obj.name + "B=" + obj.value +"&";
                 });
 
-                console.log(dataB+dataA);
+                //console.log(dataB+dataA);
                 if (_xls) {
                     window.location.href="/costs/exportResult?"+dataB+dataA;
                 }
@@ -778,7 +778,7 @@ $(function (){
 			obj["num"] = s[3];
 			arr.push(obj);
 		}
-		//console.log(arr);
+		////console.log(arr);
 		var arrSite = uniqeByKeys(arr,["site"]);
 		for (var j=0,alen = arrSite.length;j<alen;j++) {
 			
@@ -841,13 +841,13 @@ $(function (){
 			$('.loadingalt').show();
 			//请求发出 车辆数
 			$.get("/efficiency/leaveCarNum.json").done(function (res){
-				//console.log(res)
+				////console.log(res)
 				if (res) {
 					var list = efficList(res);
-					//console.log(list);
+					////console.log(list);
 					//操作dom
 					var result = list[0].list;
-					//console.log(result)
+					////console.log(result)
 					var allsum = "";
 					var addthead="";
 					
@@ -857,7 +857,7 @@ $(function (){
 						addtbody+='<td>'+list[i].site+'</td>';
 						addtbody+='<td>'+list[i].max+'</td>';addtd
 						addtbody+=addtd(list[i].list);
-						//console.log(list[i].list)
+						////console.log(list[i].list)
 						addtbody+='<td>'+list[i].sum+'</td>';
 						addtbody+='<td></td>';
 						addtbody+='</tr>';
@@ -880,18 +880,18 @@ $(function (){
 				}
 				
 			}).fail(function (){
-				console.log("fail")
+				//console.log("fail")
 			});
 			
 			//请求发出票数
 			$.get("/efficiency/sbVol.json").done(function (res){
-				//console.log(res);
+				////console.log(res);
 				if (res) {
 					var list = efficList(res);
-					//console.log(list);
+					////console.log(list);
 					//操作dom
 					var result = list[0].list;
-					//console.log(result)
+					////console.log(result)
 					var allsum = "";
 					var addthead="";
 					
@@ -901,7 +901,7 @@ $(function (){
 						addtbody+='<td>'+list[i].site+'</td>';
 						addtbody+='<td>'+list[i].max+'</td>';addtd
 						addtbody+=addtd(list[i].list);
-						//console.log(list[i].list)
+						////console.log(list[i].list)
 						addtbody+='<td>'+list[i].sum+'</td>';
 						addtbody+='<td></td>';
 						addtbody+='</tr>';
@@ -923,18 +923,18 @@ $(function (){
 					$('.loadingalt').hide();
 				}
 			}).fail(function (){
-				console.log("fail");
+				//console.log("fail");
 			});
 			
 			//请求到达车辆数
 			$.get("/efficiency/arrCarNum.json").done(function (res){
-				//console.log(res);
+				////console.log(res);
 				if (res) {
 					var list = efficList(res);
-					//console.log(list);
+					////console.log(list);
 					//操作dom
 					var result = list[0].list;
-					//console.log(result)
+					////console.log(result)
 					var allsum = "";
 					var addthead="";
 					
@@ -944,7 +944,7 @@ $(function (){
 						addtbody+='<td>'+list[i].site+'</td>';
 						addtbody+='<td>'+list[i].max+'</td>';addtd
 						addtbody+=addtd(list[i].list);
-						//console.log(list[i].list)
+						////console.log(list[i].list)
 						addtbody+='<td>'+list[i].sum+'</td>';
 						addtbody+='<td></td>';
 						addtbody+='</tr>';
@@ -966,19 +966,19 @@ $(function (){
 					$('.loadingalt').hide();
 				}
 			}).fail(function (){
-				console.log("fail");
+				//console.log("fail");
 			});
 			
 			
 			//请求到达票数
 			$.get("/efficiency/unloadVol.json").done(function (res){
-				//console.log(res);
+				////console.log(res);
 				if (res) {
 					var list = efficList(res);
-					//console.log(list);
+					////console.log(list);
 					//操作dom
 					var result = list[0].list;
-					//console.log(result)
+					////console.log(result)
 					var allsum = "";
 					var addthead="";
 					
@@ -988,7 +988,7 @@ $(function (){
 						addtbody+='<td>'+list[i].site+'</td>';
 						addtbody+='<td>'+list[i].max+'</td>';addtd
 						addtbody+=addtd(list[i].list);
-						//console.log(list[i].list)
+						////console.log(list[i].list)
 						addtbody+='<td>'+list[i].sum+'</td>';
 						addtbody+='<td></td>';
 						addtbody+='</tr>';
@@ -1010,14 +1010,14 @@ $(function (){
 					$('.loadingalt').hide();
 				}
 			}).fail(function (){
-				console.log("fail");
+				//console.log("fail");
 			});
 			
 			
 			//网点信息
 			/*
 			$.get("/efficiency/siteInfo.json").done(function (res){
-				//console.log(res);
+				////console.log(res);
 				var _len = res.length;
 				for (var i=0;i<_len;i++) {
 					var add="";
@@ -1082,8 +1082,8 @@ $(function (){
 //	}else{
 //		_input.value = sum
 //	}
-//	console.log(e.value);
-//	console.log(_input.value);
+//	//console.log(e.value);
+//	//console.log(_input.value);
 //	
 //};
 //function inputChange1  (e) {
@@ -1097,6 +1097,6 @@ $(function (){
 //	}else{
 //		_input.value = sum
 //	}
-//	console.log(e.value);
-//	console.log(_input.value);
+//	//console.log(e.value);
+//	//console.log(_input.value);
 //};

@@ -11,7 +11,7 @@
     <title>Xboost</title>
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
 
     <!-- MetisMenu CSS -->
     <link href="/static/js/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="/static/js/morris/morris.css">
     <link rel="stylesheet" href="/static/js/datatables/media/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/Xboost/icon.css" />
+    <link rel="stylesheet" href="/static/css/Xboost/loaders.css" />
+    <link rel="stylesheet" href="/static/css/Xboost/ladda-themeless.min.css" />
     <link rel="stylesheet" href="/static/css/Xboost/xb_main.css" />
     <link rel="stylesheet" href="/static/css/Xboost/ScenariosName.css" />
 
@@ -33,6 +35,9 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="/static/js/Xboost/spin.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/Xboost/ladda.min.js" type="text/javascript" charset="utf-8"></script>
+    
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Sjbn4XELTZZZKwunDx4AGqblQ2aViy3Z"></script>
     <style>
     	#depots-map {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
@@ -122,7 +127,9 @@
 	    						<select id="us-vehicle" style="width: 50%;"></select>
 	    						<select id="idle-vehicle" style="width: 50%;"></select>
 	    					</li>
-	    					<li><button id="vehicle-btn">submit</button></li>
+	    					<button id="vehicle-btn" class="btn btn-primary ladda-button" data-style="expand-right" >
+	    						<span class="ladda-label">submit</span>
+	    					</button>
 	    				</ul>
 	    			</div>
 	    		</div>
@@ -242,7 +249,7 @@
 </div>
 
 
-
+<a href="#" id="form-submit" class="btn btn-primary btn-lg ladda-button" data-style="expand-right" data-size="l"><span class="ladda-label">Submit form</span></a>
 
 
 
@@ -270,11 +277,31 @@
 	$(function  () {
 		(function  () {
 			$('#nav-Results').addClass("active");
-			
-			
-		})()
-		
-		
+		}());
+	});
+	
+	$('#form-submit').click(function(e){
+
+	 	e.preventDefault();
+
+	 	var l = Ladda.create(this);
+
+	 	l.start();
+
+//	 	$.post("your-url", 
+//
+//	 	    { data : data },
+//
+//	 	  function(response){
+//
+//	 	    console.log(response);
+//
+//	 	  }, "json")
+//
+//	 	.always(function() { l.stop(); });
+
+	 	return false;
+
 	});
 </script>
 </body>
