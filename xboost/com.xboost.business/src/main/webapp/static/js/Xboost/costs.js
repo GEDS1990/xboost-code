@@ -162,12 +162,11 @@ $(function (){
 									sum33 =  Math.round(sum33)+Math.round(price_full + price_part) ;
 								}
 							}
-//							//console.log(sum22)
-//							//console.log(sum33)
 							sum33==""?this.sum3=0:this.sum3=sum33;
 							this.day_p_cost = sum22 + sum33;
-							this.day_allp_cost = ((Number(this.day_p_cost)+Number(this.sum3))/this.piece).toFixed(2);
+							this.day_allp_cost = ((Number(this.day_p_cost))/this.piece).toFixed(2);
 							this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
+							
 						}
 						
 					}
@@ -351,7 +350,7 @@ $(function (){
 //							//console.log(sum33)
 							sum33==""?this.sum3=0:this.sum3=sum33;
 							this.day_p_cost = sum22 + sum33;
-							this.day_allp_cost = ((Number(this.day_p_cost)+Number(this.sum3))/this.piece).toFixed(2);
+							this.day_allp_cost = ((Number(this.day_p_cost))/this.piece).toFixed(2);
 							this.allcost = (Number(this.day_allp_cost) + Number(this.line_cost)).toFixed(2);
 						}
 						
