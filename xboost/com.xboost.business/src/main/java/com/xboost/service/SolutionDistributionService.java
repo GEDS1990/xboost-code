@@ -109,33 +109,41 @@ public class SolutionDistributionService {
                     }
                     totalD = total1 + total2 + total3 + total4 + total5 + total6 + total7;
                 }
-                double d1 = 0;
-                double d2 = 0;
-                double d3 = 0;
-                double d4 = 0;
-                double d5 = 0;
-                double d6 = 0;
-                double d7 = 0;
-                d1 = (total1 / totalD)>1?1:(total1 / totalD);
-                d1 = (total1 / totalD)<0?0:(total1 / totalD);
+                int d1 = 0;
+                int d2 = 0;
+                int d3 = 0;
+                int d4 = 0;
+                int d5 = 0;
+                int d6 = 0;
+                int d7 = 0;
 
-                d2 = (total2 / totalD)>1?1:(total2 / totalD);
-                d2 = (total2 / totalD)<0?0:(total2 / totalD);
-
-                d3 = (total3 / totalD)>1?1:(total3 / totalD);
-                d3 = (total3 / totalD)<0?0:(total3 / totalD);
-
-                d4 = (total4 / totalD)>1?1:(total4 / totalD);
-                d4 = (total4 / totalD)<0?0:(total4 / totalD);
-
-                d5 = (total5 / totalD)>1?1:(total5 / totalD);
-                d5 = (total5 / totalD)<0?0:(total5 / totalD);
-
-                d6 = (total6 / totalD)>1?1:(total6 / totalD);
-                d6 = (total6 / totalD)<0?0:(total6 / totalD);
-
-                d7 = (total7 / totalD)>1?1:(total7 / totalD);
-                d7 = (total7 / totalD)<0?0:(total7 / totalD);
+                d1 = (int)(total1 / totalD);
+                d2 = (int)(total2 / totalD);
+                d3 = (int)(total3 / totalD);
+                d4 = (int)(total4 / totalD);
+                d5 = (int)(total5 / totalD);
+                d6 = (int)(total6 / totalD);
+                d7 = (int)(total7 / totalD);
+//                d1 = (total1 / totalD)>1?1:(total1 / totalD);
+//                d1 = (total1 / totalD)<0?0:(total1 / totalD);
+//
+//                d2 = (total2 / totalD)>1?1:(total2 / totalD);
+//                d2 = (total2 / totalD)<0?0:(total2 / totalD);
+//
+//                d3 = (total3 / totalD)>1?1:(total3 / totalD);
+//                d3 = (total3 / totalD)<0?0:(total3 / totalD);
+//
+//                d4 = (total4 / totalD)>1?1:(total4 / totalD);
+//                d4 = (total4 / totalD)<0?0:(total4 / totalD);
+//
+//                d5 = (total5 / totalD)>1?1:(total5 / totalD);
+//                d5 = (total5 / totalD)<0?0:(total5 / totalD);
+//
+//                d6 = (total6 / totalD)>1?1:(total6 / totalD);
+//                d6 = (total6 / totalD)<0?0:(total6 / totalD);
+//
+//                d7 = (total7 / totalD)>1?1:(total7 / totalD);
+//                d7 = (total7 / totalD)<0?0:(total7 / totalD);
 
                 map.put("tiqian60", df.format(d1 * 100));
                 map.put("tiqian50", df.format(d2 * 100));

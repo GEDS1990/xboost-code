@@ -58,7 +58,7 @@
 	    	<div>
 	    		<!--Depots Info-->
 			    <div class="table-responsive active">
-		            <table id="userTable" class="table table-striped table-bordered table-hover">
+		            <table id="userTable-account" class="table table-striped table-bordered table-hover">
 			            <thead>
 			            	<tr>
 			            		<th>ID</th>

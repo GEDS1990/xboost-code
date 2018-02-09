@@ -51,24 +51,24 @@ $(function  () {
 					document.getElementById('sim-check-info').innerHTML="";
 		            socket  = new SockJS("http://"+document.location.host+"/webSocketServer/validate");
 		            socket .onopen = function () {
-		                logg('Info: connection opened.');
+		                //logg('Info: connection opened.');
 		            };
 		
 		            socket .onmessage = function (event) {
 		                logg(event.data);
 		            };
 		            socket .onclose = function (event) {
-		                logg('Info: connection closed.');
-		                logg(event);
+		                //logg('Info: connection closed.');
+		                //logg(event);
 		            };
 					
 					$.post("/simualte/Validate").done(function  (result) {
-						console.log(result);
+						//console.log(result);
 						type = result;
 					    socket.onclose();
 					}).fail(function  () {
 					    socket.onclose();
-						console.log("fail");
+						//console.log("fail");
 					});
 					
 					function logg(messages) {
@@ -79,19 +79,20 @@ $(function  () {
 						p.innerHTML = messages;
 			            consoleBox.appendChild(p);
 			            consoleBox.scrollTop = consoleBox.scrollHeight;
+			            //console.log(messages)
 			        }
 				}
 			});
 			
 			//获取当前场景是否在运行中
 //			$.post("/cascade/runSilumate").done(function  (res) {
-//				console.log(res)
+//				//console.log(res)
 //				if (res == "Simulating") 
 //				{
 //					$('#modal-run').val("1");
 //				}
 //			}).fail(function  () {
-//				console.log("fail");
+//				//console.log("fail");
 //			});
 			
 			//点击运行run
@@ -232,7 +233,7 @@ $(function  () {
 				document.getElementById('sim-run-info').innerHTML="";
 	            ws = new SockJS("http://"+document.location.host+"/webSocketServer/sockjs");
 	            ws.onopen = function () {
-	                log('Info: connection opened.');
+	                //log('Info: connection opened.');
 	            };
 	
 	            ws.onmessage = function (event) {
@@ -246,15 +247,15 @@ $(function  () {
 
 	            $.post("/cascade/runSilumate",{"distMode":_distMode,"loadTime":_loadTime,"loopLimit":_loopLimit}).done(function(result){
 	                ws.onclose();
-	                console.log("success");
+	                //console.log("success");
 	            }).fail(function(){
 	                ws.onclose();
-	                console.log("fail");
+	                //console.log("fail");
 	            });
 	            //停止算法
 				$('#sim-stop').click(function  () {
 					$.post("/cascade/runSilumate").done(function (res){
-						console.log(res)
+						//console.log(res)
 						if (res == "Simulating") {
 							$('#modal-sim').find('.modal-body p').text("The Simulation is running and can not restart the Simulation");
 							$('#modal-sim').modal("show");

@@ -89,7 +89,7 @@
 		    			</div>
 	    			</div>
 	    			<div class="xb-fr">
-	    				<button><span class="icon-upload"></span>Export this Sheet</button>
+	    				<!--<button><span class="icon-upload"></span>Export this Sheet</button>-->
 	    			</div>
 	    		</header>
 	    		<div class="scen-box clearfix">
@@ -165,11 +165,13 @@
 	    
         <!--content s-->
     	<div class="model-input-content clearfix">
-    		<div class="col-sm-6 text-right">Export "Depots Info"</div>
+    		<div class="col-sm-6 text-right">Export "Vehicles"</div>
         	<div class="col-sm-4">
         		<div class="export-btn"  data-xls="Depots_Info">
-        			<span class="icon-upload"></span>
-        			Export
+        			<a href="javascript:void(0);">
+        				<span class="icon-upload"></span>
+        				Export
+        			</a>
         		</div>
         	</div>
     	</div>

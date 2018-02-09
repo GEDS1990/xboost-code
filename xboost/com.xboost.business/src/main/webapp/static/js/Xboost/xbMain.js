@@ -98,7 +98,7 @@ $(function  () {
 function CategoryList () {
 	$.get("/MyScenarios/category.json").done(function  (res) {
 		if (res) {
-			//console.log(res);
+			////console.log(res);
 			if (res.data.length !=0) {
 				var result = res.data,
 				len = result.length;
@@ -114,7 +114,7 @@ function CategoryList () {
 			}
 		}
 	}).fail(function  () {
-		console.log("fail");
+		//console.log("fail");
 	})
 }
 //初始化 分类选项
@@ -144,7 +144,7 @@ function CategoryList () {
 			var info = $('#classAdd').val();
 			if (info) {
 				$.post("/MyScenarios/addCategory",{"categoryName":info}).done(function  (res) {
-					console.log(res);
+					//console.log(res);
 					if (res == "success") {
 						CategoryList();
 					}
@@ -183,7 +183,7 @@ function CategoryList () {
     function userList () {
         $.get("/account/alluser.json").done(function  (res) {
             if (res) {
-                //console.log(res);
+                ////console.log(res);
                 if (res) {
                     var result = res,
                     len = result.length;
@@ -197,7 +197,7 @@ function CategoryList () {
                 }
             }
         }).fail(function  () {
-            console.log("fail");
+            //console.log("fail");
         })
     }
 }());
@@ -293,7 +293,7 @@ function CategoryList () {
 			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
 			map.addOverlay(polyline);//添加折线到地图上
 			polyline.addEventListener("mouseover", function(e){
-				//console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
+				////console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
 				var point = new BMap.Point(e.point.lng,e.point.lat);
 		  		map.openInfoWindow(infoWindowLine,point);
 		  		
@@ -321,30 +321,30 @@ function CategoryList () {
 		for (var j = 0;j<p_len;j++) {
 			if (listPoint[j].curLoc == val) {
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(24,32),{
-					anchor: new BMap.Size(10, 30)
+				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(30,40),{
+					anchor: new BMap.Size(15, 39)
 				});
-				console.log(val)
+				//console.log(val)
 			}else{
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(19,24),{
+				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,32),{
 					anchor: new BMap.Size(10, 25)
 				});
 			}
 			
-			//console.log(points)
+			////console.log(points)
 			var sContent = "";
 			sContent += '<p>ID: '+listPoint[j].curLoc+'</p>';
 			sContent += '<p>Type: '+listPoint[j].siteType+'</p>';
 			sContent += '<p>Name: '+listPoint[j].siteName+'</p>';
 			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
-			//console.log(infoWindow)
+			////console.log(infoWindow)
 			addMarker(points,infoWindow,myIcon);
 			//addMarkers(pointss);
 		};
 		if (val == "") {
 			//初始化路线
-			console.log("a")
+			//console.log("a")
 //			for (var x = 0;x<p_len;x++) {
 //				for (var y = 0 ;y<p_len;y++) {
 //					var _curLoc = listPoint[x].curLoc,
@@ -403,7 +403,7 @@ function CategoryList () {
 			}
 			
 		}).fail(function  () {
-			console.log('fail');
+			//console.log('fail');
 		});
 		//获取overview
 		$.get("/ScenariosName/settingsOverview.json",{"id":scenId}).done(function  (res) {
@@ -415,11 +415,11 @@ function CategoryList () {
 			}
             
         }).fail(function  (e) {
-            console.log('fail');
+            //console.log('fail');
         });
 
         $.get("/ScenariosName/resultOverview1.json",{"id":scenId}).done(function  (res) {
-        	//console.log(res)
+        	////console.log(res)
         	if (res) {
         		$('#title').text("Results Overview");
 	            if(res.scenario.scenariosModel=="1"){
@@ -441,10 +441,10 @@ function CategoryList () {
         	}
             
         }).fail(function  (e) {
-            console.log('fail');
+            //console.log('fail');
         });
         $.get("/ScenariosName/resultOverview2.json",{"id":scenId}).done(function  (res) {
-        	console.log(res)
+        	//console.log(res)
         	if (res) {
         		$('#staff-quantity').text( (res.staffCount == 0?'--':res.staffCount));
 	            $('#staff-cost').text( (res.cost.totalDailyLaborCost == null?'--':res.cost.totalDailyLaborCost) );
@@ -454,7 +454,7 @@ function CategoryList () {
         	}
             
         }).fail(function  (e) {
-            console.log('fail');
+            //console.log('fail');
         });
 		
 		//创建场景
@@ -502,7 +502,7 @@ function CategoryList () {
                 {"data":"curLoc","name":"cur_loc"}
             ],
             "initComplete": function (settings, data) {
-            	//console.log(data.data.length);
+            	////console.log(data.data.length);
 	            	if (data.data.length !=0) {
 	            		$('#depots-map').show();
 	            		var result = data.data,
@@ -515,10 +515,10 @@ function CategoryList () {
 //	            		for (var i=0;i<len;i++) {
 //                          arr.push(result[i].curLoc);
 //                      }
-	            		//console.log(arr)
+	            		////console.log(arr)
                         var Arr = uniqeByKeys(result,["curLoc"]),
                         A_len = Arr.length;
-                        //console.log(Arr)
+                        ////console.log(Arr)
 	            		for (var i=0;i<A_len;i++) {
 	            			
 	            			var add='<option value='+Arr[i].curLoc+'>'+Arr[i].curLoc+'</option>';
@@ -551,7 +551,7 @@ function CategoryList () {
 							
 	            		
 						//查询所有网点坐标
-						//console.log(listPoint)
+						////console.log(listPoint)
 						listArry="";
 						listArry = listPoint;
 							
