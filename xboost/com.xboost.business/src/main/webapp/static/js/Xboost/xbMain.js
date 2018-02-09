@@ -321,13 +321,13 @@ function CategoryList () {
 		for (var j = 0;j<p_len;j++) {
 			if (listPoint[j].curLoc == val) {
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(24,32),{
-					anchor: new BMap.Size(10, 30)
+				var myIcon = new BMap.Icon("/static/images/locationB.png", new BMap.Size(30,40),{
+					anchor: new BMap.Size(15, 39)
 				});
 				//console.log(val)
 			}else{
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
-				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(19,24),{
+				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,32),{
 					anchor: new BMap.Size(10, 25)
 				});
 			}
