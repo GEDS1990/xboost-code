@@ -505,6 +505,7 @@ $(function  () {
             $("#editUserForm-dist")[0].reset();
             var id = $(this).attr("data-id");
             $.get("siteDist/siteDistInfo.json",{"id":id}).done(function(result){
+            	console.log(result)
                 $("#siteId-dist").val(result.id);
                 $("#carType").val(result.carType);
                 $("#siteCollect").val(result.siteCollect);

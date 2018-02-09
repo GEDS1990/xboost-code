@@ -173,6 +173,7 @@
             </div>
             <form id="editUserForm-dem" class="form-horizontal">
               	<div class="modal-body">
+              		<input type="hidden" name="id" id="siteId-dem" value="">
                     <div class="form-group">
                         <!--<label class="col-sm-2 control-label">date</label>
                         <div class="col-sm-4">
@@ -218,7 +219,7 @@
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	                <input type="submit" id="saveBtn-dem" class="btn btn-primary" value="Save" />
+	                <input type="submit" id="editBtn-dem" class="btn btn-primary" value="Save" />
 	            </div>
             </form>
         </div><!-- /.modal-content -->

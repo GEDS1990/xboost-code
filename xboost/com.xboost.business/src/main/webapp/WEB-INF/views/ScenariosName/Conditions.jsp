@@ -243,6 +243,7 @@
             </div>
             <form id="editUserForm" class="form-horizontal">
 	            <div class="modal-body">
+	            	<input type="hidden" name="id" id="siteId" value="">
 	                <div class="form-group">
 	                    <label class="col-sm-2 control-label">depot ID</label>
 	                    <div class="col-sm-4">
@@ -333,7 +334,7 @@
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	                <input type="submit" id="saveBtn" class="btn btn-primary" value="Save" />
+	                <input type="submit" id="editBtn" class="btn btn-primary" value="Save" />
 	            </div>
             </form>
         </div><!-- /.modal-content -->

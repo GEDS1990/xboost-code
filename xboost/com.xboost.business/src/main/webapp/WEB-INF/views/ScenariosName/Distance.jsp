@@ -193,12 +193,14 @@
                 <h4 class="modal-title">Edit dot information</h4>
             </div>
             <form id="editUserForm-dist" class="form-horizontal">
-            	            	<div class="modal-body">
+            	<div class="modal-body">
+            		<input type="hidden" name="id" id="siteId-dist" value="">
                     <div class="form-group">
                         <!--<label class="col-sm-2 control-label">vehicle name</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="carType" id="carType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
                         </div>-->
+                        <input type="hidden" name="carType" id="carType" />
                         <label class="col-sm-2 control-label">Origination Depot</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="siteCollect" id="siteCollect" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
@@ -242,7 +244,7 @@
             	</div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	                <input type="submit" id="saveBtn-dist" class="btn btn-primary" value="Save" />
+	                <input type="submit" id="editBtn-dist" class="btn btn-primary" value="Save" />
 	            </div>
             </form>
         </div><!-- /.modal-content -->
