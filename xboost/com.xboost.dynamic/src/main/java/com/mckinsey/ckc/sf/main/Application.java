@@ -69,6 +69,14 @@ public class Application {
 		main.start();
 		return "success";
 	}
+
+	@RequestMapping(value="/mainhub/calculate")
+	public String calculateHub() {
+		Main_Hub mainHub = new Main_Hub();
+		//main.calculate();
+		mainHub.start();
+		return "success";
+	}
 //
 //	@RequestMapping(value="/main/calculateTimer")
 //	public void calculateTimer(){

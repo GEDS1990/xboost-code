@@ -22,7 +22,7 @@ import com.mckinsey.ckc.sf.data.Result;
 import com.mckinsey.ckc.sf.preparation.DataPreparation;
 import com.mckinsey.ckc.sf.utils.Tools;
 
-public class Main_Hub implements IConstants {
+public class Main_Hub extends Thread implements IConstants {
 
 	// public static HashMap<Integer, Parcel> parcelMap = new HashMap<Integer,
 	// Parcel>();;
@@ -577,6 +577,10 @@ public class Main_Hub implements IConstants {
 		System.out.println("distancePerCarrier:\t" + result.getDistancePerCarrier());
 		System.out.println("time used:\t" + (System.currentTimeMillis() - start_time));
 
+	}
+	public void run(){
+		Main_Hub mainHub =new Main_Hub();
+		mainHub.calculate();
 	}
 
 //	public static void main(String[] args) {
