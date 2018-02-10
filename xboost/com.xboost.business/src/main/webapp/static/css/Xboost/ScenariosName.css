@@ -454,7 +454,23 @@ table.table-bordered.dataTable td:last-child {
 .km-min.active{
 	cursor: not-allowed;
 }
-
+/************para***********************************/
+.para-setting label {
+	font-weight: 700;
+    color: #687189;
+}
+.para-setting select {
+	padding: 0.02rem 0.06rem;
+	background-color: #eef1f7;
+	border: 1px solid #CCC;
+	border-radius: 5px;
+}
+.para-setting p {
+	border: 0;
+	box-shadow:none;
+	color: red;
+	display: none;
+}
 /************result***********************************/
 /***route***/
 #route-wrap{
