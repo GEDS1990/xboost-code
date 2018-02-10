@@ -98,7 +98,7 @@
 			            	</tr>
 			            </tbody>
 		            </table>
-		        </div>
+		        </div> 
 		        
 		        <!--<div style="background-color: #fff;">
 		        	<header class="result-header">
