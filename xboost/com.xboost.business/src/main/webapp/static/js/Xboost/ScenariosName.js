@@ -952,6 +952,14 @@ $(function  () {
 	            
 	
 	        });
+	        
+	        //用户手动输入
+	        $('#js-save-para').click(function  () {
+	        	//var Waiting_Time = 
+	        });
+	        
+	        
+	        
 	        //导入excel表格
 	         $("#cond-file-upload-pata").click(function(){
 	             UploadFile("cond-input-form-pata","cond_file","/modelArg/addByExcel",'.bs-example-modal-input')

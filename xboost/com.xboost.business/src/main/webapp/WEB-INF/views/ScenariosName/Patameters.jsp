@@ -33,7 +33,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 
 <body>
@@ -64,8 +63,9 @@
 	        		<li class="active"><a  class="active" href="/modelArg">Parameters</a></li>
 	        	</ul>
 	        </div>
+	        
+	        <!--Parameters-->
 	    	<div>
-		        <!--Parameters-->
 		        <div class="table-responsive active">
 		        	<div class="xb-fl" style="margin-bottom: 10px;">
 		    			<div class="select-depot">
@@ -99,7 +99,69 @@
 			            </tbody>
 		            </table>
 		        </div>
+		        
+		        <!--<div style="background-color: #fff;">
+		        	<header class="result-header">
+		        		<p style="color: #000;">Parameters</p>
+		        	</header>
+		        	<section>
+		        		<form id="form-para-setting" class="form-horizontal para-setting">
+			            	<div class="modal-body">
+			            		<div class="form-group">
+			                        <label class="col-sm-3 control-label">Simulation Method: </label>
+			                        <div class="col-sm-3">
+			                            <select id="sim-model" class="form-control">
+						    				<option value="1">Serial model</option>
+						    				<option value="2">Relay model</option>
+						    				
+						    			</select>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                        <label class="col-sm-3 control-label">Dummy Hub Waiting Time(min): </label>
+			                        <div class="col-sm-3">
+			                            <input type="number" class="form-control" />
+			                        </div>
+			                        <div class="col-sm-6">
+			                            <p class="form-control">Please enter Waiting Time</p>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                        <label class="col-sm-3 control-label">Sorting Efficiency in Depot(p): </label>
+			                        <div class="col-sm-3">
+			                            <input type="number" class="form-control" />
+			                        </div>
+			                        <div class="col-sm-6">
+			                            <p class="form-control">Please enter Sorting Efficiency</p>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                        <label class="col-sm-3 control-label">Sorting Efficiency in Second Layer Hub(p): </label>
+			                        <div class="col-sm-3">
+			                            <input type="number" class="form-control" />
+			                        </div>
+			                        <div class="col-sm-6">
+			                            <p class="form-control">Please enter Sorting Efficiency</p>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                        <label class="col-sm-3 control-label">Delivery Window(min): </label>
+			                        <div class="col-sm-3">
+			                            <input type="text" class="form-control" disabled="disabled" value="120" />
+			                        </div>
+			                    </div>
+			                
+			            	</div>
+				            <div class="modal-footer" style="text-align: center;">
+				            	<button type="button" id="js-save-para" class="btn btn-primary">Save</button>
+				                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				            </div>
+			            </form>
+		        	</section>
+		        </div>-->
+		      
 	    	</div>
+	    	
 	    </div>
 	    <!-- /#page-wrapper -->
 	</div>
