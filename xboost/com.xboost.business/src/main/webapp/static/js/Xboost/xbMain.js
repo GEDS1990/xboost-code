@@ -471,7 +471,7 @@ function CategoryList () {
                         if("success" == result) {
                             $("#newUserForm-scen")[0].reset();
                             $("#newUserModal-scen").modal("hide");
-                            dt.ajax.reload();
+                            //dt.ajax.reload();
                             window.location.reload(); 
                         }
                     }).fail(function(){

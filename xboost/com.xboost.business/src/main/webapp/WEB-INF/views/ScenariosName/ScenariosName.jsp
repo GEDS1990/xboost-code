@@ -180,7 +180,7 @@
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	                <input type="submit" id="saveBtn-scen" class="btn btn-primary" value="Save">
+	                <input type="button" id="saveBtn-scen" class="btn btn-primary" value="Save">
 	            </div>
             </form>
         </div><!-- /.modal-content -->
