@@ -11,6 +11,7 @@
     <module>com.xboost.cascade</module>
     <module>com.xboost.relay</module>
     <module>com.xboost.dynamic</module>
+    <module>com.xboost.dynamic.carrier</module>
   </modules>
 
   <properties>

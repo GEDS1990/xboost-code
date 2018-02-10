@@ -155,7 +155,8 @@ public class MyScenariosController {
     @ResponseBody
     public String edit(Scenarios scenario) {
         myScenariosService.edit(scenario);
-
+        ShiroUtil.setOpenScenariosName(scenario.getScenariosName());
+        logger.info(ShiroUtil.getOpenScenariosId());
         return "success";
     }
 
