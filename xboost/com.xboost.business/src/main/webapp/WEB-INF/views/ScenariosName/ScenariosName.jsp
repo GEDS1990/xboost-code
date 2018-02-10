@@ -147,6 +147,7 @@
             </div>
             <form id="newUserForm-scen" class="form-horizontal">
 	            <div class="modal-body">
+	            	<input type="hidden" name="id" id="scen-edit-id" />
 	                <div class="form-group">
 	                    <label class="col-sm-4 control-label">Scenarios Name*:</label>
 	                    <div class="col-sm-7">

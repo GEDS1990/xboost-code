@@ -391,6 +391,7 @@ function CategoryList () {
 		
 		
 		var scenId = $('#scenName').attr("data-id");
+		$('#scen-edit-id').val(scenId);
 		//获取场景信息
 		$.get("/MyScenarios/scen.json",{"id":scenId}).done(function  (res) {
 			if (res) {
@@ -466,7 +467,7 @@ function CategoryList () {
         	pattern = new RegExp("[`~!@#$^&*=|{}':;',\\[\\]<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"),
 			xss = pattern.test(_val);
         	if (_val && !xss) {
-        		$.post("/MyScenarios/add",$("#newUserForm-scen").serialize()).done(function(result){
+        		$.post("/MyScenarios/edit",$("#newUserForm-scen").serialize()).done(function(result){
                         if("success" == result) {
                             $("#newUserForm-scen")[0].reset();
                             $("#newUserModal-scen").modal("hide");

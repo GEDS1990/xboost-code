@@ -576,7 +576,7 @@ $(function  () {
 	(function  () {
 		var Demands = doc.getElementById("Demands");
 		if (Demands) {
-			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Demands.xlsx";
+			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Shipments.xlsx";
 			$('.down-href').attr("href",href);
 			var dt =$("#Demands").DataTable({
 	            "processing": true, //loding效果
