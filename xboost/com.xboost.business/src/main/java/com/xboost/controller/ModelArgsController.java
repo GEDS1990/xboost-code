@@ -64,8 +64,6 @@ public class ModelArgsController {
         Map<String,Object> result = Maps.newHashMap();
 
         List<ModelArgs> modelArgsList = modelArgsService.findAllModelArg(scenariosId,modelType); //.findAll();
-        Integer count = modelArgsService.findAllCount(scenariosId,modelType);
-        result.put("recordsTotal",count); //总记录数
         result.put("data",modelArgsList);
         return result;
     }
