@@ -78,8 +78,7 @@
 
     <update id="edit">
         UPDATE t_scenarios_info SET scenarios_name = #{scenariosName},scenarios_category=#{scenariosCategory},
-        scenarios_desc=#{scenariosDesc},scenarios_model=#{scenariosModel},scenarios_out=#{scenariosOut},
-        scenarios_status=#{scenariosStatus},last_open_time=#{lastOpenTime},simulate_finish_time=#{simulateFinishTime} where id = #{id}
+        scenarios_desc=#{scenariosDesc} where id = #{id}
     </update>
 
     <update id="updateOpenTime">

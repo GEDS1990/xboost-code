@@ -70,7 +70,7 @@ public class CascadeController {
     public String docascade(String distMode,String loadTime,String loopLimit){
         Integer scenariosId = Integer.parseInt(ShiroUtil.getOpenScenariosId());
         String stauts = myScenariosService.findById(scenariosId).getScenariosStatus();
-        if(stauts.equals("Simulating")&&"1".equals(distMode))
+        if(stauts.equals("Simulating"))
         {
             return "Simulating";
         }

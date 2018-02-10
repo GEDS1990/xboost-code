@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.ModelArgsMapper">
+
+    <cache/>
+
+    <insert id="add">
+        INSERT INTO t_model_args(scenariosId,model_type,duration_collect,duration_load,duration_siteStart_sort,
+        duration_relay,duration_transfer,duration_siteEnd_sort,duration_unload,num_operater,site_people_work,
+        distri_people_work,duration_peak_start,duration_peak_end,duration_siteTransfer_start,duration_siteTransfer_end)
+        values(#{scenariosId},#{modelType},#{durationCollect},#{durationLoad},#{durationSiteStartSort},#{durationRelay},
+        #{durationTransfer},#{durationSiteEndSort},#{durationUnload},#{numOperater},#{sitePeopleWork},
+        #{distriPeopleWork},#{durationPeakStart},#{durationPeakEnd},#{durationSiteTransferStart},#{durationSiteTransferEnd})
+    </insert>
+
+    <select id="findAll" parameterType="map" resultType="ModelArgs" resultMap="modelArgsMap">
+        select * from t_model_args where scenariosId = #{scenariosId} and model_type = #{modelType}
+    </select>
+
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(*) FROM t_model_args where scenariosId = #{scenariosId} and model_type = #{modelType}
+    </select>
+
+    <select id="findById" resultType="com.xboost.pojo.ModelArgs"  resultMap="modelArgsMap">
+        SELECT * FROM t_model_arg where id = #{id}
+    </select>
+
+    <update id="edit">
+        update t_model_args set scenariosId = #{scenariosId},model_type = #{modelType},duration_collect = #{durationCollect},
+        duration_load= #{durationLoad},duration_siteStart_sort = #{durationSiteStartSort},duration_relay = #{durationRelay},
+        duration_transfer= #{durationTransfer},duration_siteEnd_sort = #{durationSiteEndSort},duration_unload = #{durationUnload},
+        num_operater = #{numOperater},site_people_work= #{sitePeopleWork},distri_people_work = #{distriPeopleWork},
+        duration_peak_start = #{durationPeakStart},duration_peak_end = #{durationPeakEnd},
+        duration_siteTransfer_start= #{durationSiteTransferStart},duration_siteTransfer_end = #{durationSiteTransferEnd} where id = #{id}
+    </update>
+
+    <resultMap id="modelArgsMap" type="ModelArgs">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="modelType" column="model_type"/>
+        <result property="durationCollect" column="duration_collect"/>
+        <result property="durationLoad" column="duration_load"/>
+        <result property="durationSiteStartSort" column="duration_siteStart_sort"/>
+        <result property="durationRelay" column="duration_relay"/>
+        <result property="durationTransfer" column="duration_transfer"/>
+        <result property="durationSiteEndSort" column="duration_siteEnd_sort"/>
+        <result property="durationUnload" column="duration_unload"/>
+        <result property="numOperater" column="num_operater"/>
+        <result property="sitePeopleWork" column="site_people_work"/>
+        <result property="distriPeopleWork" column="distri_people_work"/>
+        <result property="durationPeakStart" column="duration_peak_start"/>
+        <result property="durationPeakEnd" column="duration_peak_end"/>
+        <result property="durationSiteTransferStart" column="duration_siteTransfer_start"/>
+        <result property="durationSiteTransferEnd" column="duration_siteTransfer_end"/>
+    </resultMap>
+
+</mapper>
