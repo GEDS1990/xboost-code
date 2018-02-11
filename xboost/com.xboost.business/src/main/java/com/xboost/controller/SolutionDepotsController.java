@@ -5,9 +5,12 @@ import com.xboost.pojo.Route;
 import com.xboost.pojo.SiteInfo;
 import com.xboost.service.SiteInfoService;
 import com.xboost.service.SolutionRouteService;
+import com.xboost.util.RedisUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +35,11 @@ public class SolutionDepotsController {
     private SolutionRouteService solutionRouteService;
     @Inject
     private SiteInfoService siteInfoService;
+
+    @Inject
+    private RedisUtil redisUtil;
+
+    private static Logger logger = LoggerFactory.getLogger(SolutionDepotsController.class);
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -68,6 +76,17 @@ public class SolutionDepotsController {
         String orderColumnName = request.getParameter("columns["+orderColumnIndex+"][name]");
         String scenariosId = ShiroUtil.getOpenScenariosId();
         String siteCode="";
+
+        // 判断是否有缓存
+        Object value = null;
+        String key = redisUtil.getKey(request);
+        key = key+"-"+start+"-"+length+"-"+searchValue+"-"+orderColumnIndex+"-"+orderType
+                +"-"+orderColumnName;//!!!!!!!!!!
+        if (redisUtil.exists(key)) {
+            value = redisUtil.get(key);
+            logger.info("----获取缓存---key="+key);
+            return (Map<String,Object>)value;
+        }
 
         Map<String,Object> param = Maps.newHashMap();
         param.put("start",start);
@@ -143,6 +162,9 @@ public class SolutionDepotsController {
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",siteList);
  //       result.put("nextSite",nextSiteList);
+
+        redisUtil.set(key,result);
+        logger.info("----加入缓存---key="+key);
         return result;
     }
 

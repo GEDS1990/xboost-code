@@ -17,18 +17,38 @@
     <!--必须，否则方法拦截无效-->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     <!--方法拦截类配置-->
-    <bean id="methodCacheInterceptor" class="com.xboost.interceptor.MethodCacheInterceptor" >
-        <property name="redisUtil" ref="redisUtil" />
-    </bean >
+    <!--<bean id="methodCacheInterceptor" class="com.xboost.interceptor.MethodCacheInterceptor" >-->
+        <!--<property name="redisUtil" ref="redisUtil" />-->
+    <!--</bean >-->
     <!-- 需要加入缓存的类或方法  proxy-target-class="true"-->
-    <bean id="methodCachePointCut"  class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
-        <property name="advice" ref="methodCacheInterceptor" />
-        <property name="patterns" >
-            <list>
-                <value>.*/efficiency/arrCarNum.*</value >
-            </list>
-        </property>
-    </bean >
+    <!--<bean id="methodCachePointCut"  class="org.springframework.aop.support.RegexpMethodPointcutAdvisor ">-->
+        <!--<property name="advice" ref="methodCacheInterceptor" />-->
+        <!--<property name="patterns" >-->
+            <!--<list>-->
+                <!--<value>.*load.*</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean >-->
+    <!--<bean id="methodCachePointCut"  class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">-->
+    <!--<property name="advice" ref="methodCacheInterceptor" />-->
+    <!--<property name="mappedName" >-->
+    <!--<value>.*load.*</value>-->
+    <!--</property>-->
+    <!--</bean >-->
+    <!--<bean id="controllerInterceptor" class="com.xboost.interceptor.ControllerInterceptor"/>-->
+    <!--<bean id="handlerMapping"-->
+    <!--class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
+    <!--<property name="interceptors">-->
+    <!--<list>-->
+    <!--<ref bean="controllerInterceptor" />-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--<property name="mappings">-->
+    <!--<props>-->
+    <!--<prop key="/efficiency/arrCarNum.json">SolutionEfficiencyController</prop>-->
+    <!--</props>-->
+    <!--</property>-->
+    <!--</bean>-->
     <!-- redis数据源 -->
     <bean id="jedispoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxIdle" value="${redis.maxIdle}" />

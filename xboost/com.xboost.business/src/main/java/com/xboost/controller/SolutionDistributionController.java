@@ -1,16 +1,17 @@
 package com.xboost.controller;
 
+import com.google.common.collect.Maps;
 import com.xboost.pojo.DemandInfo;
 import com.xboost.pojo.Route;
-import com.xboost.service.ArrInfoService;
-import com.xboost.service.DemandInfoService;
-import com.xboost.service.SolutionDistributionService;
-import com.xboost.service.SolutionRouteService;
+import com.xboost.service.*;
 import com.xboost.util.ExportUtil;
+import com.xboost.util.RedisUtil;
 import com.xboost.util.ShiroUtil;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -33,6 +35,11 @@ import java.util.Map;
 public class SolutionDistributionController {
     @Inject
     private SolutionDistributionService solutionDistributionService;
+
+    @Inject
+    private RedisUtil redisUtil;
+
+    private static Logger logger = LoggerFactory.getLogger(SolutionDistributionController.class);
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -51,8 +58,21 @@ public class SolutionDistributionController {
      */
     @RequestMapping(value = "/getMaxMix.json", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map<String, Object> getMaxMix(String type) {
-        return solutionDistributionService.getDataByType(type);
+    public Map<String, Object> getMaxMix(HttpServletRequest request,String type) {
+        Map<String,Object> result = Maps.newHashMap();
+        // 判断是否有缓存
+        Object value = null;
+        String key = redisUtil.getKey(request);
+        key = key+"-"+type;//!!!!!!!!!!
+        if (redisUtil.exists(key)) {
+            value = redisUtil.get(key);
+            logger.info("----获取缓存---key="+key);
+            return (Map<String,Object>)value;
+        }
+        result = solutionDistributionService.getDataByType(type);
+        redisUtil.set(key,result);
+        logger.info("----加入缓存---key="+key);
+        return result;
     }
 
     @RequestMapping(value = "/exportResult", method = RequestMethod.GET, produces = {"application/vnd.ms-excel;charset=UTF-8"})

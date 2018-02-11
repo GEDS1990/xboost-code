@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * redis cache 工具类
  */
@@ -81,6 +83,14 @@ public final class RedisUtil {
         return result;
     }
 
+    /**
+     * 获取key
+     * @return
+     */
+    public String getKey(HttpServletRequest request) {
+        String key = ShiroUtil.getCurrentUserId()+"-"+ShiroUtil.getOpenScenariosId()+"-"+request.getRequestURI();
+        return key;
+    }
     /**
      * 写入缓存
      * @param key

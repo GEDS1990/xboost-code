@@ -6,9 +6,12 @@ import com.xboost.pojo.ModelArg;
 import com.xboost.pojo.Route;
 import com.xboost.pojo.SiteInfo;
 import com.xboost.service.*;
+import com.xboost.util.RedisUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +49,11 @@ public class SolutionCostController {
     private DemandInfoService demandInfoService;
     @Inject
     private SolutionEfficiencyService solutionEfficiencyService;
+
+    @Inject
+    private RedisUtil redisUtil;
+
+    private static Logger logger = LoggerFactory.getLogger(SolutionCostController.class);
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -112,6 +120,16 @@ public class SolutionCostController {
         String scenariosId = ShiroUtil.getOpenScenariosId();
         String modelType = myScenariosService.findById(Integer.parseInt(scenariosId)).getScenariosModel();
         String plan = request.getParameter("plan");
+
+        // 判断是否有缓存
+        Object value = null;
+        String key = redisUtil.getKey(request);
+        key = key+"-"+modelType+"-"+plan;//!!!!!!!!!!
+        if (redisUtil.exists(key)) {
+            value = redisUtil.get(key);
+            logger.info("----获取缓存---key="+key);
+            return (Map<String,Object>)value;
+        }
 
         Map<String,Object> param = Maps.newHashMap();
         param.put("modelType",modelType);
@@ -182,6 +200,8 @@ public class SolutionCostController {
         result.put("totalVolList",totalVolList);
         result.put("branchTransportCost",branchTransportCost);
 
+        redisUtil.set(key,result);
+        logger.info("----加入缓存---key="+key);
         return result;
     }
 
@@ -193,6 +213,16 @@ public class SolutionCostController {
     public Map<String,Object> loadInitData(HttpServletRequest request) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
         String modelType = myScenariosService.findById(Integer.parseInt(scenariosId)).getScenariosModel();
+
+        // 判断是否有缓存
+        Object value = null;
+        String key = redisUtil.getKey(request);
+        key = key+"-"+modelType;//!!!!!!!!!!
+        if (redisUtil.exists(key)) {
+            value = redisUtil.get(key);
+            logger.info("----获取缓存---key="+key);
+            return (Map<String,Object>)value;
+        }
 
         //网点集散点人效
         Integer sitePeopleWork = modelArgService.findSitePeopleWork(scenariosId,modelType);
@@ -230,6 +260,8 @@ public class SolutionCostController {
         result.put("siteInfoList",siteInfoList);
         result.put("totalVolList",totalVolList);
 
+        redisUtil.set(key,result);
+        logger.info("----加入缓存---key="+key);
         return result;
     }
 

@@ -3,6 +3,7 @@ package com.xboost.controller;
 import com.google.common.collect.Maps;
 import com.xboost.pojo.Route;
 import com.xboost.service.*;
+import com.xboost.util.RedisUtil;
 import com.xboost.util.ShiroUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,9 @@ public class SolutionEfficiencyController {
     @Inject
     SolutionEfficiencyService solutionEfficiencyService;
 
+    @Inject
+    private RedisUtil redisUtil;
+
     private static Logger logger = LoggerFactory.getLogger(SiteInfoService.class);
 
     @RequestMapping(method = RequestMethod.GET)
@@ -42,6 +46,14 @@ public class SolutionEfficiencyController {
     @ResponseBody
     public Map<String,Object> loadSbVol(HttpServletRequest request) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
+        // 判断是否有缓存
+        Object value = null;
+        String key = redisUtil.getKey(request);
+        if (redisUtil.exists(key)) {
+            value = redisUtil.get(key);
+            logger.info("----获取缓存---key="+key);
+            return (Map<String,Object>)value;
+        }
         int periodTime = 10;
         int min = Integer.parseInt(demandInfoService.findMin(scenariosId));
         int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
@@ -64,6 +76,8 @@ public class SolutionEfficiencyController {
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),sbVol);
             }
         }
+        redisUtil.set(key,result);
+        logger.info("----加入缓存---key="+key);
         return result;
     }
 
@@ -72,6 +86,14 @@ public class SolutionEfficiencyController {
     @ResponseBody
     public Map<String,Object> loadUnloadVol(HttpServletRequest request) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
+        // 判断是否有缓存
+        Object value = null;
+        String key = redisUtil.getKey(request);
+        if (redisUtil.exists(key)) {
+            value = redisUtil.get(key);
+            logger.info("----获取缓存---key="+key);
+            return (Map<String,Object>)value;
+        }
         int periodTime = 10;
         int min = Integer.parseInt(demandInfoService.findMin(scenariosId));
         int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
@@ -94,6 +116,8 @@ public class SolutionEfficiencyController {
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),unloadVol);
             }
         }
+        redisUtil.set(key,result);
+        logger.info("----加入缓存---key="+key);
         return result;
     }
 
@@ -102,6 +126,14 @@ public class SolutionEfficiencyController {
     @ResponseBody
     public Map<String,Object> loadLeaveCarNum(HttpServletRequest request) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
+        // 判断是否有缓存
+        Object value = null;
+        String key = redisUtil.getKey(request);
+        if (redisUtil.exists(key)) {
+            value = redisUtil.get(key);
+            logger.info("----获取缓存---key="+key);
+            return (Map<String,Object>)value;
+        }
         int periodTime = 10;
         int min = Integer.parseInt(demandInfoService.findMin(scenariosId));
         int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
@@ -138,6 +170,8 @@ public class SolutionEfficiencyController {
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),leaveCarNum);
             }
         }
+        redisUtil.set(key,result);
+        logger.info("----加入缓存---key="+key);
         return result;
     }
 
@@ -146,6 +180,15 @@ public class SolutionEfficiencyController {
     @ResponseBody
     public Map<String,Object> load(HttpServletRequest request) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
+        // 判断是否有缓存
+        Object value = null;
+        String key = redisUtil.getKey(request);
+        if (redisUtil.exists(key)) {
+            value = redisUtil.get(key);
+            logger.info("----获取缓存---key="+key);
+            return (Map<String,Object>)value;
+        }
+
         int periodTime = 10;
         int min = Integer.parseInt(demandInfoService.findMin(scenariosId));
         int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
@@ -183,6 +226,8 @@ public class SolutionEfficiencyController {
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),arrCarNum);
             }
         }
+        redisUtil.set(key,result);
+        logger.info("----加入缓存---key="+key);
         return result;
     }
 
@@ -191,9 +236,19 @@ public class SolutionEfficiencyController {
     @ResponseBody
     public List<Map<String,Object>> loadSiteInfo(HttpServletRequest request) {
         String scenariosId = ShiroUtil.getOpenScenariosId();
+        // 判断是否有缓存
+        Object value = null;
+        String key = redisUtil.getKey(request);
+        if (redisUtil.exists(key)) {
+            value = redisUtil.get(key);
+            logger.info("----获取缓存---key="+key);
+            return (List<Map<String,Object>>)value;
+        }
 
         List<Map<String,Object>> siteList = solutionEfficiencyService.findSiteInfo(scenariosId);
 
+        redisUtil.set(key,siteList);
+        logger.info("----加入缓存---key="+key);
         return siteList;
     }
 

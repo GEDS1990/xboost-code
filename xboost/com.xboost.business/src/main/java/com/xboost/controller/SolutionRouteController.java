@@ -7,9 +7,12 @@ import com.xboost.pojo.DemandInfo;
 import com.xboost.pojo.Route;
 import com.xboost.pojo.SiteInfo;
 import com.xboost.service.*;
+import com.xboost.util.RedisUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +42,11 @@ public class SolutionRouteController {
     private CarService carService;
     @Inject
     private MyScenariosService myScenariosService;
+
+    @Inject
+    private RedisUtil redisUtil;
+
+    private static Logger logger = LoggerFactory.getLogger(SolutionRouteController.class);
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -85,6 +93,17 @@ public class SolutionRouteController {
         String orderColumnIndex = request.getParameter("order[0][column]");
         String orderType = request.getParameter("order[0][dir]");
         String orderColumnName = request.getParameter("columns["+orderColumnIndex+"][name]");
+
+        // 判断是否有缓存
+        Object value = null;
+        String key = redisUtil.getKey(request);
+        key = key+"-"+start+"-"+length+"-"+searchValue+"-"+orderColumnIndex+"-"+orderType
+                +"-"+orderColumnName;//!!!!!!!!!!
+        if (redisUtil.exists(key)) {
+            value = redisUtil.get(key);
+            logger.info("----获取缓存---key="+key);
+            return (Map<String,Object>)value;
+        }
 
         Map<String,Object> param = Maps.newHashMap();
         param.put("start",start);
@@ -172,6 +191,10 @@ public class SolutionRouteController {
 
         String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
         result.put("modelType", modelType);
+
+        redisUtil.set(key,result);
+        logger.info("----加入缓存---key="+key);
+
         return result;
     }
 

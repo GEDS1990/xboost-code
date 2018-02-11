@@ -20,7 +20,7 @@ public class MethodCacheInterceptor implements MethodInterceptor {
 
         Object[] arguments = invocation.getArguments();
         String key = getCacheKey(targetName, methodName, arguments);
-        System.out.println(targetName + "." + methodName + "-----SQL-----"+arguments[0].toString());
+        System.out.println(targetName + "." + methodName + "-----SQL-----");
         try {
             // 判断是否有缓存
             if (redisUtil.exists(key)) {
