@@ -146,7 +146,8 @@
 			                    <div class="form-group">
 			                        <label class="col-sm-3 control-label">Delivery Window(min): </label>
 			                        <div class="col-sm-3">
-			                            <input type="text" class="form-control" disabled="disabled" name="durationRelay" id="durationRelay" />
+			                            <input type="text" disabled="disabled"  class="form-control" name="durationRelay" id="durationRelay1"  />
+			                            <input type="hidden" name="durationRelay" id="durationRelay"  />
 			                        </div>
 			                        <div class="col-sm-6">
 			                            <p class="form-control">Please enter Delivery Window</p>
@@ -159,6 +160,7 @@
 				                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				            </div>
 			            </form>
+			            <input hidden="hidden" id="add-edit" value="0" />
 		        	</section>
 		        </div>
 		      

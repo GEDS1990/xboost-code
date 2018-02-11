@@ -14,7 +14,7 @@
     </insert>
 
     <select id="findAll" parameterType="map" resultType="ModelArgs" resultMap="modelArgsMap">
-        select * from t_model_args where scenariosId = #{scenariosId} and model_type = #{modelType}
+        select * from t_model_args where scenariosId = #{scenariosId}
     </select>
 
     <select id="findAllCount" resultType="long">
