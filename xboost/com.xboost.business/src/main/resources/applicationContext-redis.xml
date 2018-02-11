@@ -63,7 +63,7 @@
         <property name="port" value="${redis.port}" />
         <property name="hostName" value="${redis.host}" />
         <property name="password" value="${redis.pass}" />
-        <property name="timeout" value="100" />
+        <property name="timeout" value="${redis.timeout}" />
     </bean >
     <!-- 配置spring的redisTemplate，注入connectionFactory，指定key和value的序列化类 -->
 
