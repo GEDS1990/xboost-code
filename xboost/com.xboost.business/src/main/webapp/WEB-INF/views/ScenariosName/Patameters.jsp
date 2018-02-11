@@ -146,7 +146,7 @@
 			                    <div class="form-group">
 			                        <label class="col-sm-3 control-label">Delivery Window(min): </label>
 			                        <div class="col-sm-3">
-			                            <input type="text" disabled="disabled"  class="form-control" name="durationRelay" id="durationRelay1"  />
+			                            <input type="text" disabled="disabled"  class="form-control"  id="durationRelay1"  />
 			                            <input type="hidden" name="durationRelay" id="durationRelay"  />
 			                        </div>
 			                        <div class="col-sm-6">

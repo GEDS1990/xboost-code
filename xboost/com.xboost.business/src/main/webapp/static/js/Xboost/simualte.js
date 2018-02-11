@@ -11,22 +11,35 @@ $(function  () {
 	(function  () {
 		var simCheck = doc.getElementById("sim-check");
 		if (simCheck) {
-			//点击下来框确定模型需要什么参数
-			$("#sim-model").change(function  () {
-				var val = $(this).val();
-				if (val == 2) 
-				{
-					$('.sim-v-serial').hide();
-					$('.sim-v-relay').show();
-					$('.notes').hide();
-				}
-				else
-				{
-					$('.sim-v-serial').show();
-					$('.sim-v-relay').hide();
-					$('.notes').show();
-				}
-			});
+		
+			//获取相应模型
+			//查询Parameters参数
+	        $.get('/modelArgs/modelArgs.json').done(function (row){
+	        	//console.log(row)
+	        	if (row.data.length != 0)
+	        	{
+	        		var res = row.data[0];
+	        		if (res.modelType == 1) 
+	        		{
+	        			var add = '<option value="1">Serial model</option>';
+	        			$('#sim-model').append(add);
+	        			$('.sim-v-serial').show();
+						$('.sim-v-relay').hide();
+						$('.notes').show();
+	        		}
+	        		else if (res.modelType == 2)
+	        		{
+	        			var add = '<option value="2">Relay model</option>';
+	        			$('#sim-model').append(add);
+	        			$('.sim-v-serial').hide();
+						$('.sim-v-relay').show();
+						$('.notes').hide();
+	        		}
+	        		
+	        	}
+	        }).fail(function  () {
+	        	console.log("fail");
+	        });
 			//点击校验
 			$("#sim-check").click(function  () {
 				var _val = $('#sim-model').val();
