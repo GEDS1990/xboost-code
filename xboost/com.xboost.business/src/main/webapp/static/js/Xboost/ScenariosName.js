@@ -753,10 +753,11 @@ $(function  () {
 	 * 
 	 */
 	(function  () {
-		var Patameters = document.getElementById("Patameters");
-		if (Patameters) {
+		var Patameters_section = document.getElementById("Patameters-section");
+		if (Patameters_section) {
 			var href = "http://"+document.location.host+"/static/excelTemplate/Template - Settings - Parameters.xlsx";
 			$('.down-href').attr("href",href);
+			/*
 			var dt =$("#Patameters").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
@@ -861,6 +862,7 @@ $(function  () {
 	            		},0)
 	            }
 	        });
+	        */
 	        
 	        //点击选项搜索
 	        $('#pata-model-type').change(function  () {
@@ -953,9 +955,80 @@ $(function  () {
 	
 	        });
 	        
+	        //查询Parameters参数
+	        $.get('/modelArgs/modelArgs.json').done(function (row){
+	        	console.log(row)
+	        	if (row.data.length != 0)
+	        	{
+	        		var res = row.data[0];
+	        		$('#add-edit').val(1);
+	        		$('#modelType').val(res.modelType);
+		        	$('#durationTransfer').val(res.durationTransfer);
+		        	$('#sitePeopleWork').val(res.sitePeopleWork);
+		        	$('#distriPeopleWork').val(res.distriPeopleWork);
+		        	$('#durationRelay1').val(res.durationRelay);
+		        	$('#durationRelay').val(res.durationRelay);
+	        	}
+	        	else
+	        	{
+	        		$('#add-edit').val(0);
+	        		$('#durationRelay1').val(120);
+	        		$('#durationRelay').val(120);
+	        	}
+	        }).fail(function  () {
+	        	console.log("fail");
+	        });
+	        
+	        //检测是否输入
+	        $('#form-para-setting input').blur(function  () {
+        		var _val = $.trim($(this).val());
+        		if (_val == "") 
+        		{
+        			$(this).parents('.form-group').find('p').css('display','block');
+        		}
+        		else
+        		{
+        			$(this).parents('.form-group').find('p').css('display','none');
+        		}
+        	});
+	        
 	        //用户手动输入
 	        $('#js-save-para').click(function  () {
-	        	//var Waiting_Time = 
+	        	var status = $('#add-edit').val();
+	        	if (status == 0) 
+	        	{
+	        		var url_para = "/modelArgs/add";
+	        	}
+	        	else if (status == 1)
+	        	{
+	        		var url_para = "/modelArgs/edit";
+	        	}
+//	        	var modelType = $('#model-type').val();
+//	        	var Waiting_Time = $('#durationTransfer').val();
+//	        	var sort_depot = $('#sitePeopleWork').val();
+//	        	var sort_dis_depot = $('#distriPeopleWork').val();
+//	        	var Delivery_Window =  $('#durationRelay').val();
+	        	var _input = doc.getElementById('form-para-setting').getElementsByTagName('input');
+	        	var _p = doc.getElementById('form-para-setting').getElementsByTagName('p');
+	        	var _len = _input.length;
+	        	for (var i=0;i<_len;i++)
+	        	{
+	        		if ($.trim(_input[i].value) == "")
+		        	{
+		        		_p[i].style.display = "block";
+		        		_input[i].focus();
+		        		return false;
+		        	}
+	        	}
+	        	//提交数据
+	        	$.post(url_para,$('#form-para-setting').serialize()).done(function  (res) {
+	        		if (res == "success")
+	        		{
+	        			window.location.reload();
+	        		}
+	        	}).fail(function  () {
+	        		console.log("fail");
+	        	});
 	        });
 	        
 	        
