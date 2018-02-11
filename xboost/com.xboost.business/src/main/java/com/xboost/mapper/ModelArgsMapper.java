@@ -22,6 +22,7 @@ public interface ModelArgsMapper {
 
     //根据用户的ID查询模型整体参数
     ModelArgs findById(Integer id);
+    ModelArgs findByScenariosId(String scenariosId);
 
     // 编辑模型整体参数  @param modelArg
     void edit(ModelArgs modelArgs);

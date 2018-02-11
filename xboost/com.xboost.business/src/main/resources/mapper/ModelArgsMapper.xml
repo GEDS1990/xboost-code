@@ -22,7 +22,11 @@
     </select>
 
     <select id="findById" resultType="com.xboost.pojo.ModelArgs"  resultMap="modelArgsMap">
-        SELECT * FROM t_model_arg where id = #{id}
+        SELECT * FROM t_model_args where id = #{id}
+    </select>
+
+    <select id="findByScenariosId" resultType="com.xboost.pojo.ModelArgs"  resultMap="modelArgsMap">
+        SELECT * FROM t_model_args where scenariosId = #{scenariosId}
     </select>
 
     <update id="edit">

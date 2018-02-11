@@ -105,6 +105,9 @@ public class ModelArgsService {
         return modelArgsMapper.findById(id);
     }
 
+    public ModelArgs findByScenariosId(String scenariosId) {
+        return modelArgsMapper.findByScenariosId(scenariosId);
+    }
 
     /**
      * 编辑模型整体参数信息
