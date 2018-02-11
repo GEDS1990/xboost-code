@@ -4,10 +4,7 @@ import com.mckinsey.sf.data.Car;
 import com.xboost.pojo.Configuration;
 import com.xboost.service.*;
 import com.xboost.service.jieli.TempService;
-import com.xboost.util.CascadeModelUtil;
-import com.xboost.util.RelayModeRUtil;
-import com.xboost.util.RelayModeUtil;
-import com.xboost.util.ShiroUtil;
+import com.xboost.util.*;
 import com.xboost.websocket.SystemWebSocketHandler;
 import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
@@ -62,6 +59,9 @@ public class CascadeController {
     @Value("${Rserver.RShellPath}")
     private String RShellPath;
 
+    @Inject
+    private RedisUtil redisUtil;
+
     CascadeModelUtil cmu;
     private static Logger logger = LoggerFactory.getLogger(CascadeController.class);
 
@@ -78,6 +78,9 @@ public class CascadeController {
         myScenariosService.updateStatus("Simulating");
         ShiroUtil.clearSimulateConsole();
         logger.info("distMode:"+distMode);
+
+        redisUtil.removePattern(ShiroUtil.getCurrentUserId()+"-"+ShiroUtil.getOpenScenariosId()+"-*");
+
         if("1".equals(distMode)){
             //查询Confiuration表数据
             Map<String, Object> param = new HashMap<String,Object>();

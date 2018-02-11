@@ -107,6 +107,7 @@ public class CascadeModelUtil extends Thread implements IConstants{
 //        systemWebSocketHandler.sendMessageToUser( new TextMessage("initSolution:"+initSolutionBeforePack.getRoutes().length+","+initSolutionBeforePack.getUnassignedJobs().length));
         OutputPrinter.printLine("build initSolution....");
         systemWebSocketHandler.sendMessageToUser( new TextMessage("25%...."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes...."));
 //        systemWebSocketHandler.sendMessageToUser( new TextMessage("build initSolution...."));
         GreedyInsertion constructive = new GreedyInsertion();
         constructive.setTransportCost(transportCost);
@@ -119,7 +120,7 @@ public class CascadeModelUtil extends Thread implements IConstants{
 //        systemWebSocketHandler.sendMessageToUser( new TextMessage("initSolution:"+initSolutionAfterPack.getRoutes().size()+" "+initSolutionAfterPack.getUnassigned().size()));
         for(Job j: initSolutionAfterPack.getUnassigned().values()){
             System.out.println(j.getId());
-            systemWebSocketHandler.sendMessageToUser( new TextMessage(j.getId()));
+//            systemWebSocketHandler.sendMessageToUser( new TextMessage(j.getId()));
         }
         List<IRemoval> rops = new ArrayList<IRemoval>();
         //add shawRemoval
@@ -145,6 +146,7 @@ public class CascadeModelUtil extends Thread implements IConstants{
         PALNS algo = new PALNS(initSolutionAfterPack, rops, iops, conf.getPconf());
         OutputPrinter.printLine("start running ...");
         systemWebSocketHandler.sendMessageToUser( new TextMessage("start running..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please wait for minutes..."));
         Solution finalPackSolution = (Solution)algo.runAlgo();
         SolutionJson finalSolutionJson = finalPackSolution.SolutionToJson(finalPackSolution);
         finalSolutionJson = jobPacker.unpack(finalSolutionJson);
