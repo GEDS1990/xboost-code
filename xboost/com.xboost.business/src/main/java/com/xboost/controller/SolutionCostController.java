@@ -1,10 +1,7 @@
 package com.xboost.controller;
 
 import com.google.common.collect.Maps;
-import com.xboost.pojo.Cost;
-import com.xboost.pojo.ModelArg;
-import com.xboost.pojo.Route;
-import com.xboost.pojo.SiteInfo;
+import com.xboost.pojo.*;
 import com.xboost.service.*;
 import com.xboost.util.RedisUtil;
 import com.xboost.util.ShiroUtil;
@@ -38,7 +35,7 @@ public class SolutionCostController {
     @Inject
     private SolutionCostService solutionCostService;
     @Inject
-    private ModelArgService modelArgService;
+    private ModelArgsService modelArgsService;
     @Inject
     private SiteInfoService siteInfoService;
     @Inject
@@ -224,10 +221,12 @@ public class SolutionCostController {
             return (Map<String,Object>)value;
         }
 
+        ModelArgs modelArgs=modelArgsService.findByScenariosId(scenariosId);
+
         //网点集散点人效
-        Integer sitePeopleWork = modelArgService.findSitePeopleWork(scenariosId,modelType);
+        Integer sitePeopleWork = modelArgs.getSitePeopleWork();
         //集配站集散点人效
-        Integer distribPeopleWork = modelArgService.findDistribPeopleWork(scenariosId,modelType);
+        Integer distribPeopleWork = modelArgs.getDistriPeopleWork();
         //当前场景下网点总数
         Integer siteCount = demandInfoService.siteCount();
         //总件量

@@ -69,8 +69,10 @@ public class SolutionVehiclesController {
         {
             length =Integer.valueOf(request.getParameter("length"));
         }
-//        String searchValue = request.getParameter("search[value]");
-        String searchValue = Strings.toUTF8(request.getParameter("search[value]"));
+        //Linux
+        String searchValue = request.getParameter("search[value]");
+        //Windows
+     //   String searchValue = Strings.toUTF8(request.getParameter("search[value]"));
         String orderColumnIndex = request.getParameter("order[0][column]");
         String orderType = request.getParameter("order[0][dir]");
         String orderColumnName = request.getParameter("columns["+orderColumnIndex+"][name]");
