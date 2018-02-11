@@ -65,8 +65,8 @@
 	        </div>
 	        
 	        <!--Parameters-->
-	    	<div>
-		        <div class="table-responsive active">
+	    	<div id="Patameters-section">
+		        <!--<div class="table-responsive active">
 		        	<div class="xb-fl" style="margin-bottom: 10px;">
 		    			<div class="select-depot">
 		    				<span class="glyphicon glyphicon-align-left"></span>
@@ -98,9 +98,9 @@
 			            	</tr>
 			            </tbody>
 		            </table>
-		        </div> 
+		        </div> -->
 		        
-		        <!--<div style="background-color: #fff;">
+		        <div style="background-color: #fff;">
 		        	<header class="result-header">
 		        		<p style="color: #000;">Parameters</p>
 		        	</header>
@@ -110,17 +110,16 @@
 			            		<div class="form-group">
 			                        <label class="col-sm-3 control-label">Simulation Method: </label>
 			                        <div class="col-sm-3">
-			                            <select id="sim-model" class="form-control">
+			                            <select name="modelType" id="modelType" class="form-control">
 						    				<option value="1">Serial model</option>
 						    				<option value="2">Relay model</option>
-						    				
 						    			</select>
 			                        </div>
 			                    </div>
 			                    <div class="form-group">
 			                        <label class="col-sm-3 control-label">Dummy Hub Waiting Time(min): </label>
 			                        <div class="col-sm-3">
-			                            <input type="number" class="form-control" />
+			                            <input type="number" class="form-control" name="durationTransfer" id="durationTransfer" />
 			                        </div>
 			                        <div class="col-sm-6">
 			                            <p class="form-control">Please enter Waiting Time</p>
@@ -129,7 +128,7 @@
 			                    <div class="form-group">
 			                        <label class="col-sm-3 control-label">Sorting Efficiency in Depot(p): </label>
 			                        <div class="col-sm-3">
-			                            <input type="number" class="form-control" />
+			                            <input type="number" class="form-control" name="sitePeopleWork" id="sitePeopleWork" />
 			                        </div>
 			                        <div class="col-sm-6">
 			                            <p class="form-control">Please enter Sorting Efficiency</p>
@@ -138,7 +137,7 @@
 			                    <div class="form-group">
 			                        <label class="col-sm-3 control-label">Sorting Efficiency in Second Layer Hub(p): </label>
 			                        <div class="col-sm-3">
-			                            <input type="number" class="form-control" />
+			                            <input type="number" class="form-control" name="distriPeopleWork" id="distriPeopleWork" />
 			                        </div>
 			                        <div class="col-sm-6">
 			                            <p class="form-control">Please enter Sorting Efficiency</p>
@@ -147,7 +146,10 @@
 			                    <div class="form-group">
 			                        <label class="col-sm-3 control-label">Delivery Window(min): </label>
 			                        <div class="col-sm-3">
-			                            <input type="text" class="form-control" disabled="disabled" value="120" />
+			                            <input type="text" class="form-control" disabled="disabled" name="durationRelay" id="durationRelay" />
+			                        </div>
+			                        <div class="col-sm-6">
+			                            <p class="form-control">Please enter Delivery Window</p>
 			                        </div>
 			                    </div>
 			                
@@ -158,7 +160,7 @@
 				            </div>
 			            </form>
 		        	</section>
-		        </div>-->
+		        </div>
 		      
 	    	</div>
 	    	
