@@ -1024,7 +1024,7 @@ $(function  () {
 	        	$.post(url_para,$('#form-para-setting').serialize()).done(function  (res) {
 	        		if (res == "success")
 	        		{
-	        			//window.location.reload();
+	        			window.location.reload();
 	        		}
 	        	}).fail(function  () {
 	        		console.log("fail");
