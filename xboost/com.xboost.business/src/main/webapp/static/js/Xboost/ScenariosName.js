@@ -957,7 +957,7 @@ $(function  () {
 	        
 	        //查询Parameters参数
 	        $.get('/modelArgs/modelArgs.json').done(function (row){
-	        	console.log(row)
+	        	//console.log(row)
 	        	if (row.data.length != 0)
 	        	{
 	        		var res = row.data[0];
@@ -972,6 +972,9 @@ $(function  () {
 	        	else
 	        	{
 	        		$('#add-edit').val(0);
+	        		$('#durationTransfer').val(10);
+		        	$('#sitePeopleWork').val(300);
+		        	$('#distriPeopleWork').val(500);
 	        		$('#durationRelay1').val(120);
 	        		$('#durationRelay').val(120);
 	        	}
