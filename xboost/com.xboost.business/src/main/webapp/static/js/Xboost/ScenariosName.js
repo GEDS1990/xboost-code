@@ -174,7 +174,9 @@ $(function  () {
 	                	}
 	                	return res.distribCenter;
 	                },"name":"distrib_center"},
-	                {"data":"siteNightDelivery","name":"site_night_delivery"},
+	                {"data":function  (row) {
+	                	return "<span style='color:grey;'>"+row.siteNightDelivery+"</span>";
+	                },"name":"site_night_delivery"},
 	                {"data":function (res){
 	                	if (res.noOfTruckLimitation >= 999 ) {
 	                		return "∞";
@@ -207,9 +209,9 @@ $(function  () {
                     },"name":"reserve"},
 	                {"data":function (res){
 	                	if (res.largeCarModel >= 999) {
-	                		return "∞";
+	                		return "<span style='color:grey;'>∞</span>";
 	                	}
-	                	return res.largeCarModel;
+	                	return "<span style='color:grey;'>"+res.largeCarModel+"</span>";
 	                },"name":"large_carModle"},
 	                {"data":"maxOperateNum","name":"max_operate_num"},
 	                {"data":function(row){
@@ -409,9 +411,9 @@ $(function  () {
 	                },"name":"duration_night_delivery3"},
 	                {"data":function (res){
 	                	if ( !Boolean(res.durationNightDelivery5) ) {
-	                		return "--"
+	                		return "<span style='color:grey;'>--</span>";
 	                	}
-	                	return Number(res.durationNightDelivery5).toFixed(2);
+	                	return "<span style='color:grey;'>"+Number(res.durationNightDelivery5).toFixed(2)+"</span>";
 	                },"name":"duration_night_delivery3"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-dist' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dist' data-id='"+row.id+"'>Del</a>";
@@ -601,15 +603,15 @@ $(function  () {
 	                {"data":"votes","name":"votes"},
 	                {"data":function (res){
 	                	if (res.weight == null || res.weight == "" ||  res.weight == ' ' || res.weight == 0) {
-	                		return "-";
+	                		return "<span style='color:grey;'>-</span>";
 	                	}
-	                	return res.weight;
+	                	return "<span style='color:grey;'>"+res.weight+"</span>";
 	                },"name":"weight"},
 	                {"data":function (res){
 	                	if (res.productType == null || res.productType == "" ||  res.productType == ' ' ||  res.productType == 0) {
-	                		return "-";
+	                		return "<span style='color:grey;'>-</span>";
 	                	}
-	                	return res.productType;
+	                	return "<span style='color:grey;'>"+res.productType+"</span>";
 	                },"name":"product_type"},
 	                {"data":function(row){
 	                    return "<a href='javascript:;' class='editLink-dem' data-id='"+row.id+"'>Edit</a> <a href='javascript:;' class='delLink-dem' data-id='"+row.id+"'>Del</a>";
@@ -1077,9 +1079,9 @@ $(function  () {
 	                {"data":"carSource","name":"car_source"},
 	                {"data":function (res){
 	                	if (res.num >= 99) {
-	                		return "∞";
+	                		return "<span style='color:grey;'>∞</span>";
 	                	}else{
-	                		return res.num;
+	                		return "<span style='color:grey;'>"+res.num+"</span>";
 	                	}
 	                },"name":"num"},
 	                {"data":function  (res) {
@@ -1121,15 +1123,15 @@ $(function  () {
 	                },"name":"duration_unload_full"},
 	                {"data":function (res){
 	                	if (res.start_location == null || res.start_location == "" || res.start_location == " " || res.start_location == 0) {
-	                		return "-";
+	                		return "<span style='color:grey;'>-</span>";
 	                	}
-	                	return res.start_location;
+	                	return "<span style='color:grey;'>"+res.start_location+"</span>";
 	                },"name":"start_location"},
 	                {"data":function (res){
 	                	if (res.end_location == null || res.end_location == "" || res.end_location == " " || res.end_location == 0) {
-	                		return "-";
+	                		return "<span style='color:grey;'>-</span>";
 	                	}
-	                	return res.start_location;
+	                	return "<span style='color:grey;'>"+res.end_location+"</span>";
 	                },"name":"end_location"},
 	                {"data":"a1","name":"a1"},
 	                {"data":function  (res) {
