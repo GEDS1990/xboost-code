@@ -198,7 +198,17 @@ table.dataTable thead>tr>td.sorting_asc,
 table.dataTable thead>tr>td.sorting_desc, 
 table.dataTable thead>tr>td.sorting{
 	padding-right: 0 ;
-} 
+}
+#Depots_Info tbody>tr>td:nth-child(9),
+#Depots_Info tbody>tr>td:nth-child(14),
+#Depots_Distance tbody>tr>td:nth-child(8), 
+#Transportation tbody>tr>td:nth-child(3),
+#Transportation tbody>tr>td:nth-child(11),
+#Transportation tbody>tr>td:nth-child(12),
+#Demands tbody>tr>td:nth-child(6),
+#Demands tbody>tr>td:nth-child(7) {
+	background-color: #eef1f7;
+}
 .btn.btn-success{
 	background-color: #5ab0ee;
 }
@@ -350,6 +360,7 @@ table.table-bordered.dataTable td:last-child {
 #modal-info>.modal-dialog{
 	width: 500px;
 }
+
 /**************** simulate********************************/
 .sim-content{
 	background-color: #fff;
