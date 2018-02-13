@@ -1,0 +1,284 @@
+/*.g-bg{
+	background-image: url(../images/banner.jpg);
+	background-size: cover;
+	background-position: left top;
+	background-repeat: no-repeat;
+}*/
+
+/*去除百度地图logo*/
+.BMap_cpyCtrl {
+    display:none;
+}
+.anchorBL{
+    display:none;
+}
+.g-bg{
+	background-color: rgba(12,12,37,0.9);
+}
+body {
+	font: normal 100% Helvetica, Arial, sans-serif;
+}
+* {
+	box-sizing: border-box;
+}
+ul,ol{
+	list-style: none;
+}
+body,html{
+	height: 100%;
+}
+.g-wrap{
+	display: flex;
+	height: 100%;
+}
+.left-cont{
+	flex-grow: 1;
+	width: 25%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	height: 100%;
+}
+.center-cont{
+	flex-grow: 1;
+	width: 50%;
+	align-items: flex-end;
+	height: 100%;
+}
+.right-cont{
+	flex-grow: 1;
+	width: 25%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	height: 100%;
+}
+.left-cont>div,
+.center-cont>div,
+.right-cont>div{
+	position: relative;
+}
+.left-cont>div{
+	width: 100%;
+	height: 33.33%;
+	padding: 5px;
+}
+.center-cont>div:first-child{
+	width: 100%;
+	height: 10%;
+	padding: 5px;
+}
+.center-cont>div:nth-child(2){
+	width: 100%;
+	height: 30%;
+	display: flex;
+}
+.center-cont >div:nth-child(2) >div {
+	width: 50%;
+	height: 100%;
+	padding: 5px;
+	position: relative;
+}
+.center-cont>div:last-child{
+	width: 100%;
+	height: 60%;
+	padding: 5px;
+}
+.right-cont>div{
+	width: 100%;
+	height: 33.33%;
+	padding: 5px;
+}
+.g-top{
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+}
+.g-top time{
+	display: block;
+	text-align: right;
+	color: #fff;
+}
+.g-top h1{
+	color: #ff9900;
+	margin: 0;
+	font-weight: 900;
+	font-size: 1.5em;
+}
+
+.box-show {
+	width: 100%;height:100%;border: 1px solid #4e4f66;
+	box-shadow: 0px 0px 5px 2px #4e4f66 inset;
+	color: #fff;
+	overflow-y: hidden;
+}
+.box-show h3 {
+	font-weight: 900;
+	font-size: 1.3em;
+}
+.para-h3 {
+	float: left;
+}
+.info-contect {
+	font-weight: 700;
+	font-size: 16px;
+}
+.info-contect li {
+	padding: 0.1875em 0;
+}
+.info-contect span{
+	font-weight: 300;
+	font-size: 16px;
+}
+.linealt:before{
+	content: '';
+	display: block;
+	width: 2px;
+	height: 10px;
+	background-color: #afbdca;
+	position: absolute;
+}
+.linealt:after{
+	content: '';
+	display: block;
+	width: 10px;
+	height: 2px;
+	background-color: #afbdca;
+	position: absolute;
+}
+.line1:before,
+.line1:after{
+	top: 5px;
+	left: 5px;
+}
+.line2:before,
+.line2:after{
+	top: 5px;
+	right: 5px;
+}
+.line3:before,
+.line3:after{
+	bottom: 5px;
+	left: 5px;
+}
+.line4:before,
+.line4:after{
+	bottom: 5px;
+	right: 5px;
+}
+.dashboard{
+	color: #fff;
+	text-align: center;
+	
+}
+.dashboard h4{
+	font-weight: 900;
+}
+.dashboard>div{
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background-color: red
+}
+.key-info .form-control,
+.para-info .form-control{
+	display: inline-block;
+	width: auto;
+}
+.para-info label,
+.key-info label {
+	display: inline-block;
+	width: 40%;
+}
+.key-info,
+.para-info {
+	padding-left: 50px;
+}
+.form-control[readonly] {
+	background-color: #fff;
+}
+.para-info-title {
+	font-size: 18px;
+	font-weight: 700;
+	margin-left: -10px;
+}
+.btn.alt {
+	font-size: 1em;
+	padding: 5px;
+	border-radius: 5px;
+	float: right;
+}
+.box-show.alt {
+	position: relative;
+	padding-top: 10px;
+	padding-right: 10px;
+}
+.box-show.alt header,
+.box-show.alt ul {
+	padding-left: 20px;
+}
+.e-tip {
+	padding: 0;
+	margin: 0;
+}
+.e-tip-point {
+	display:inline-block;
+	margin-right:5px;
+	border-radius:10px;
+	width:9px;
+	height:9px;
+	background-color:#358be3;
+}
+
+@media only screen and (min-width: 1400px ) {
+	.g-top h1 {
+		font-size: 1.3em;
+	}
+	.g-top time {
+		font-size: 1em;
+	}
+}
+@media (max-width: 1399px) and (min-width: 1200px ) {
+	.g-top h1 {
+		font-size: 1.2em;
+	}
+	.g-top time {
+		font-size: 0.8em;
+	}
+	.box-show h3 {
+		font-size: 1.1em;
+	}
+	.info-contect {
+		font-size: 0.9em;
+	}
+	.info-contect span {
+	    font-size: 0.9em;
+	}
+}
+@media only screen and (max-width: 1200px ) {
+	.g-top {
+		display: block;
+	}
+	.g-top h1 {
+		font-size: 1.2em;
+	}
+	.g-top time {
+		font-size: 1em;
+		text-align: left;
+	}
+	.box-show h3 {
+		font-size: 1em;
+	}
+	.info-contect {
+		font-size: 0.8em;
+	}
+	.info-contect span {
+	    font-size: 0.8em;
+	}
+	.btn.btn-primary.alt {
+		font-size: 0.8em;
+	}
+	.btn.alt {
+		float: left;
+	}
+}
