@@ -139,6 +139,15 @@ public class DemandInfoService {
         return demandInfoMapper.findAll(scenariosId);
     }
 
+    /**
+     * 查询所有需求信息 包含起点和终点的负重
+     * param
+     * @return
+     */
+    public List<Map<String, Object>> findAllAndWeight(String scenariosId) {
+        return demandInfoMapper.findAllAndWeight(scenariosId);
+    }
+
     //max-min
     public String findMinMax(String scenariosId){
         return demandInfoMapper.findMinMax(scenariosId);

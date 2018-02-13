@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/jedate.css"/>
+	</head>
+	<body class="g-bg">
+		<section class="g-wrap">
+			<div class="left-cont">
+				<div>
+					<div id="right-bar" class="box-show"></div>
+					<span class="line1 linealt"></span>
+					<span class="line2 linealt"></span>
+					<span class="line3 linealt"></span>
+					<span class="line4 linealt"></span>
+				</div>
+				<div>
+					<div id="left-bar" class="box-show"></div>
+					<span class="line1 linealt"></span>
+					<span class="line2 linealt"></span>
+					<span class="line3 linealt"></span>
+					<span class="line4 linealt"></span>
+				</div>
+				<div>
+					<div id="left-pie" class="box-show"></div>
+					<span class="line1 linealt"></span>
+					<span class="line2 linealt"></span>
+					<span class="line3 linealt"></span>
+					<span class="line4 linealt"></span>
+				</div>
+			</div>
+			<div class="center-cont">
+				<div class="g-top">
+					<h1>Xboost Dynamic Network Dashboard</h1>
+					<div>
+						<time>Current Time：<span id="time"></span></time>
+						
+					</div>
+				</div>
+				<!--set info-->
+				<div>
+					<!--Parameters-->
+					<div>
+						<div class="box-show alt">
+							<header class="clearfix">
+								<h3 class="para-h3">Parameters View</h3>
+								<button class="btn btn-primary alt" data-toggle="modal" data-target="#setModal">
+									<i class="iconfont icon-setting"></i> Settings
+								</button>
+							</header>
+							<ul class="info-contect">
+								<li>No. of Normal Carrier : <span id="para_normal_carrier_num">--</span></li>
+								<li>No. of SwoT Carrier : <span id="para_SwoT_carrier_num">--</span></li>
+								<li>Start time : <span id="para_start_time">--</span></li>
+								<li>End time : <span id="para_end_time">--</span></li>
+								<li>Effective Delivey Time : <span id="eff_time">--</span></li>
+								<li>Refresh time : <span id="refresh_time">--</span></li>
+							</ul>
+						</div>
+						<span class="line1 linealt"></span>
+						<span class="line2 linealt"></span>
+						<span class="line3 linealt"></span>
+						<span class="line4 linealt"></span>
+					</div>
+					<!---->
+					<div>
+						<div class="box-show alt">
+							<h3 style="padding-left: 20px;">Current Status</h3>
+							<ul class="info-contect">
+								<li>NO. of working Carrier : <span>--</span></li>
+								<li>NO. of new demand : <span>--</span></li>
+								<!--<li>Total income: <span>--</span></li>-->
+								<li>Cost/Parcel : <span>--</span></li>
+								<li>Cost/Hour : <span>--</span></li>
+							</ul>
+						</div>
+						<span class="line1 linealt"></span>
+						<span class="line2 linealt"></span>
+						<span class="line3 linealt"></span>
+						<span class="line4 linealt"></span>
+					</div>
+				</div>
+				<div>
+					<div id="main" class="box-show"></div>
+					<span class="line1 linealt"></span>
+					<span class="line2 linealt"></span>
+					<span class="line3 linealt"></span>
+					<span class="line4 linealt"></span>
+				</div>
+			</div>
+			<div class="right-cont">
+				<div>
+					<div id="right-dashboard" class="box-show"></div>
+					<!--<div class="dashboard">
+						<div></div>
+					</div>-->
+					<span class="line1 linealt"></span>
+					<span class="line2 linealt"></span>
+					<span class="line3 linealt"></span>
+					<span class="line4 linealt"></span>
+				</div>
+				<div>
+					<div id="left-line" class="box-show"></div>
+					<span class="line1 linealt"></span>
+					<span class="line2 linealt"></span>
+					<span class="line3 linealt"></span>
+					<span class="line4 linealt"></span>
+				</div>
+				<div>
+					<div id="right-line" class="box-show"></div>
+					<span class="line1 linealt"></span>
+					<span class="line2 linealt"></span>
+					<span class="line3 linealt"></span>
+					<span class="line4 linealt"></span>
+				</div>
+			</div>
+		</section>
+		
+		<!--Modal setting-->
+		<div class="modal fade" id="setModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" role="document" style="max-width: 600px;">
+			    <div class="modal-content">
+			        <div class="modal-header">
+			        	<h4 class="modal-title" id="myModalLabel">Key assumptions and parameters</h4>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				          <span class="sr-only">Close</span>
+				        </button>
+			        </div>
+			        <div class="modal-body">
+			        	<!--key-->
+			        	<div class="key-info">
+			        		<h5 class="text-center">Key assumptions</h5>
+			        		<div class="form-group">
+							    <label for="start_time">Picking start time : </label>
+							    <input type="text" class="form-control" id="start_time"  readonly="readonly"/>
+							</div>
+							<div class="form-group">
+							    <label for="end_time">Picking end time : </label>
+							    <input type="text" class="form-control" id="end_time"  readonly="readonly"/>
+							</div>
+							<div class="form-group">
+							    <label for="cut_time">Demand cut time : </label>
+							    <input type="text" class="form-control" id="cut_time"  readonly="readonly"/>
+							</div>
+							<div class="form-group">
+							    <label for="refresh_frequency">Refresh frequency : </label>
+							    <input type="text" class="form-control" id="refresh_frequency" />
+							    <span> (mins)</span>
+							</div>
+			        	</div>
+			        	<!--parameter-->
+			        	<div class="para-info">
+			        		<h5 class="text-center">Parameters</h5>
+			        		<label class="para-info-title">Carrier</label>
+			        		<div class="form-group">
+							    <label for="">Normal Carrier : </label>
+							    <input type="text" class="form-control" id=""  />
+							</div>
+							<div class="form-group">
+							    <label for="">Capocity of Normal Carrier: </label>
+							    <input type="text" class="form-control" id=""  />
+							    <span> (pieces)</span>
+							</div>
+							<div class="form-group">
+							    <label for="">Speed of Carrier : </label>
+							    <input type="text" class="form-control" id=""  />
+							    <span> (km/h)</span>
+							</div>
+							<div class="form-group">
+							    <label for="">SWOT Carrier : </label>
+							    <input type="text" class="form-control" id=""  />
+							    <span> (pieces)</span>
+							</div>
+							<div class="form-group">
+							    <label for="">Capocity of SWOT Carrier : </label>
+							    <input type="text" class="form-control" id=""  />
+							</div>
+							<label class="para-info-title">Demand</label>
+							<div class="form-group">
+							    <label for="">Required shipping time : </label>
+							    <input type="text" class="form-control" id=""  />
+							    <span> (hours)</span>
+							</div>
+			        	</div>
+			        </div>
+			        <div class="modal-footer">
+			        	<button type="button" class="btn btn-primary" id="save_para">Save changes</button>
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        </div>
+			    </div>
+		    </div>
+		</div>
+		
+		
+		
+		
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/popper.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="../static/js/flex.js" type="text/javascript" charset="utf-8"></script>-->
+		<!--<script type="text/javascript" src="../static/js/echarts.js" ></script>-->
+		<!--<script type="text/javascript" src="../static/js/echarts-all.js" ></script>-->
+		<script type="text/javascript" src="static/js/echarts-all-3.js"></script>
+        <script type="text/javascript" src="static/js/dataTool.min.js"></script>
+        <script type="text/javascript" src="static/js/china.js"></script>
+        <script type="text/javascript" src="static/js/world.js"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Sjbn4XELTZZZKwunDx4AGqblQ2aViy3Z"></script>
+        <script type="text/javascript" src="static/js/bmap.min.js"></script>
+        <script type="text/javascript" src="static/js/echarts-liquidfill.js"></script>
+        <script type="text/javascript" src="static/js/jquery.jedate.js"></script>
+        <script type="text/javascript" src="static/js/main.js"></script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
