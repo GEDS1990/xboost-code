@@ -2,11 +2,7 @@ package com.mckinsey.ckc.sf.main;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.Filter;
@@ -49,6 +45,11 @@ import com.mckinsey.ckc.sf.restful.data.XYModel;
 public class Application_RealTime implements Filter,IConstants,EmbeddedServletContainerCustomizer{
 
 	//initialize timeID with start time
+	private static Calendar cal=Calendar.getInstance();
+	private static int h=cal.get(Calendar.HOUR_OF_DAY);
+	private static int mi=cal.get(Calendar.MINUTE);
+	private static int time=h*60+mi;
+//	private static int timeID = time/TIME_UNIT-1;
 	private static int timeID = PICKING_START_TIME*60/TIME_UNIT-1;
 	private final AtomicLong counter = new AtomicLong(timeID);
 	
@@ -134,12 +135,12 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		XYModel model = new XYModel();
 		Date date = new Date(System.currentTimeMillis());
-		date.setDate(17);
-		date.setMonth(3);
-		date.setYear(117);
-		date.setHours(timeID*TIME_UNIT/60);
-		date.setMinutes(timeID*TIME_UNIT%60);
-		date.setSeconds(0);
+//		date.setDate(17);
+//		date.setMonth(3);
+//		date.setYear(117);
+//		date.setHours(timeID*TIME_UNIT/60);
+//		date.setMinutes(timeID*TIME_UNIT%60);
+//		date.setSeconds(0);
 		model.setX(sdf.format(date));
 		dvList.add(model);
 		return dvList;

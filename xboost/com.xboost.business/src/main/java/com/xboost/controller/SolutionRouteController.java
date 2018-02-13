@@ -174,6 +174,19 @@ public class SolutionRouteController {
                 }
             }
         }
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+        
+        if ("2".equals(modelType)) {
+            for (Map map : routeList) {
+                if (map.get("sequence").equals("1")) {
+                    map.put("arrTime", "--");
+                }
+                if (map.get("sequence").equals("2")) {
+                    map.put("endTime", "--");
+                }
+            }
+        }
+
 
         Collections.sort(routeList, new Comparator<Map<String, Object>>() {
             @Override
@@ -188,8 +201,6 @@ public class SolutionRouteController {
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",routeList);
-
-        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
         result.put("modelType", modelType);
 
         redisUtil.set(key,result);
