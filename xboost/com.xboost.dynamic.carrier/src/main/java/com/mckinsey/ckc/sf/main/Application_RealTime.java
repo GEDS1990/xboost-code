@@ -49,6 +49,7 @@ import com.mckinsey.ckc.sf.restful.data.XYModel;
 public class Application_RealTime implements Filter,IConstants,EmbeddedServletContainerCustomizer{
 
 	//initialize timeID with start time
+//	private static int timeID = 12*60/TIME_UNIT-1;
 	private static int timeID = PICKING_START_TIME*60/TIME_UNIT-1;
 	private final AtomicLong counter = new AtomicLong(timeID);
 	
@@ -134,12 +135,12 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		XYModel model = new XYModel();
 		Date date = new Date(System.currentTimeMillis());
-		date.setDate(17);
-		date.setMonth(3);
-		date.setYear(117);
-		date.setHours(timeID*TIME_UNIT/60);
-		date.setMinutes(timeID*TIME_UNIT%60);
-		date.setSeconds(0);
+//		date.setDate(17);
+//		date.setMonth(3);
+//		date.setYear(117);
+//		date.setHours(timeID*TIME_UNIT/60);
+//		date.setMinutes(timeID*TIME_UNIT%60);
+//		date.setSeconds(0);
 		model.setX(sdf.format(date));
 		dvList.add(model);
 		return dvList;
