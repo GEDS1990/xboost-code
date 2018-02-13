@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.SolutionActivityMapper">
+
+
+    <insert id="addActivity">
+        INSERT into t_solution_activity(scenariosId ,userId,pickup_loc,delivery_loc,route_count,end_time,Arr_time,
+        vol,createtime)
+        VALUES (#{scenariosId},#{userId},#{pickupLoc},#{deliveryLoc},#{routeCount},#{endTime},#{ArrTime},
+        #{vol},#{createTime})
+    </insert>
+
+    <delete id="delByScenariosId">
+        DELETE FROM t_solution_activity WHERE scenariosId = #{scenariosId}
+    </delete>
+
+    <select id="findAll" parameterType="map" resultType="Activity" resultMap="modelActivity">
+        SELECT * FROM t_solution_activity where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findByParam" parameterType="map" resultType="Activity" resultMap="modelActivity">
+        SELECT * from t_solution_activity
+        <where>
+            scenariosId = #{scenariosId}
+            and userId = #{userId}
+            <if test="keyword != null and keyword != ''">
+                and pickup_loc LIKE #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(*) FROM t_solution_activity where scenariosId = #{scenariosId} and userId = #{userId}
+    </select>
+
+    <select id="findCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_solution_activity
+        <where>
+            scenariosId = #{scenariosId} and userId = #{userId}
+            <if test="keyword != null and keyword != ''">
+                and pickup_loc LIKE #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultType="com.xboost.pojo.Activity"  resultMap="modelActivity">
+        SELECT * FROM t_solution_activity where id = #{id}
+    </select>
+
+    <resultMap id="modelActivity" type="Activity">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="userId" column="userId"/>
+        <result property="pickupLoc" column="pickup_loc"/>
+        <result property="deliveryLoc" column="delivery_loc"/>
+        <result property="routeCount" column="route_count"/>
+        <result property="endTime" column="end_time"/>
+        <result property="ArrTime" column="Arr_time"/>
+        <result property="vol" column="vol"/>
+    </resultMap>
+
+</mapper>

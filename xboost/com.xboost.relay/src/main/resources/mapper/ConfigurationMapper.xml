@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.ConfigurationMapper">
+
+
+    <select id="findConfigByParam" parameterType="map" resultMap="configurationMap">
+        select c.id c_id, c.scenariosId, c.optimize_iterations ,c.load_time ,c.dist_mode,c.car_cost_mode
+        from t_configuration as c
+        where c.scenariosId=#{scenariosId}
+    </select>
+
+    <resultMap id="configurationMap" type="com.xboost.pojo.Configuration">
+        <result property="id" column="c_id"/>
+        <result property="optimizeIterations" column="optimize_iterations"/>
+        <result property="loadTime" column="load_time"/>
+        <result property="distMode" column="dist_mode"/>
+        <result property="carCostMode" column="car_cost_mode"/>
+        <!--<collection property="carTemplates" ofType="Car" column="scenariosId" select="com.xboost.mapper.CarMapper.findByscenariosId"/>-->
+       <!-- <collection property="carTemplates" column="scenariosId" ofType="com.xboost.pojo.Car">
+            <id property="id" column="ci_id"/>
+            <result property="maxStop" column="max_stop"/>
+            <result property="dimensions" column="dimensions"/>
+            <result property="startLocation" column="start_location"/>
+            <result property="endLocation" column="end_location"/>
+            <result property="maxRunningTime" column="max_running_time"/>
+            <result property="costPerDistance" column="cost_per_distance"/>
+            <result property="costPerTime" column="cost_per_time"/>
+            <result property="fixedCost" column="fixed_cost"/>
+            <result property="velocity" column="velocity"/>
+            <result property="fixedRound" column="fixed_round"/>
+            <result property="fixedRoundFee" column="fixed_round_fee"/>
+        </collection>-->
+    </resultMap>
+
+</mapper>

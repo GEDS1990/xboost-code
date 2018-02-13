@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.DimensionsMapper">
+    <cache/>
+    <select id="findByScenariosId" resultType="com.xboost.pojo.Dimensions">
+        <!--SELECT * FROM t_dimensions_info WHERE id IN (SELECT dimensions FROM t_car_info WHERE scenariosId = #{scenariosId})-->
+        SELECT * FROM t_dimensions_info
+    </select>
+</mapper>

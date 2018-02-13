@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.SiteInfoMapper">
+
+    <insert id="save">
+        INSERT into t_site_info(scenariosId,site_code,longitude,latitude,site_name,site_address,site_night_delivery,site_area,site_type,
+        large_carModle,max_operate_num,distrib_center,total_vol,full_time_staff1,part_time_staff1,full_time_staff2,
+        part_time_staff2,str2,str3,createtime,updatetime,no_of_truck_limitation,no_of_baidu_limitation,no_of_didi_limitation,no_of_dada_limitation,reserve)
+        VALUES (#{scenariosId},#{siteCode},#{siteLongitude},#{siteLatitude},#{siteName},#{siteAddress},#{siteNightDelivery},#{siteArea},#{siteType},
+        #{largeCarModel},#{maxOperateNum},#{distribCenter},#{totalVol},#{fullTimeStaff1},#{partTimeStaff1},
+        #{fullTimeStaff2},#{partTimeStaff2},#{str2},#{str3},#{createTime},#{updateTime},#{noOfTruckLimitation},#{noOfBaiduLimitation},
+        #{noOfDidiLimitation},#{noOfDidiLimitation},#{reserve})
+    </insert>
+
+    <update id="update">
+        update t_site_info set scenariosId = #{scenariosId},site_code = #{siteCode},longitude = #{siteLongitude},
+        latitude = #{siteLatitude},site_name= #{siteName},site_address = #{siteAddress},site_night_delivery = #{siteNightDelivery},
+        site_area = #{siteArea},site_type = #{siteType},large_carModle = #{largeCarModel},
+        max_operate_num = #{maxOperateNum},distrib_center = #{distribCenter},total_vol=#{totalVol},full_time_staff1=#{fullTimeStaff1},
+        part_time_staff1=#{partTimeStaff1},full_time_staff2=#{fullTimeStaff2},part_time_staff2=#{partTimeStaff2},
+        no_of_truck_limitation=#{noOfTruckLimitation}, no_of_baidu_limitation=#{noOfBaiduLimitation}, no_of_didi_limitation=#{noOfDidiLimitation},
+        no_of_dada_limitation=#{noOfDadaLimitation},reserve=#{reserve}
+        where id = #{id}
+    </update>
+
+    <select id="findAll" parameterType="map" resultType="SiteInfo" resultMap="siteInfoMap">
+        SELECT * FROM t_site_info where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findSiteCode" resultType="String">
+        SELECT distinct(site_code) FROM t_site_info where scenariosId = #{scenariosId}
+    </select>
+
+
+    <select id="findSiteInfoBySiteCode" parameterType="map" resultType="SiteInfo"  resultMap="siteInfoMap">
+        SELECT * FROM t_site_info where scenariosId = #{scenariosId} and site_code = #{siteCode}
+    </select>
+
+    <select id="findByParam" parameterType="map" resultType="SiteInfo" resultMap="siteInfoMap">
+        SELECT * from t_site_info
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and site_code like #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+    <select id="findSiteInfoCount" resultType="long">
+        SELECT COUNT(*) FROM t_site_info where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findSiteInfoCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_site_info
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and  site_code like #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findSiteInfoById" resultType="com.xboost.pojo.SiteInfo"  resultMap="siteInfoMap">
+        SELECT * FROM t_site_info where id = #{id}
+    </select>
+
+    <select id="findSiteCodeById" resultType="String">
+        SELECT site_code FROM t_site_info where id = #{id}
+    </select>
+
+    <update id="editSiteInfo">
+        UPDATE t_site_info SET scenariosId = #{scenariosId},site_code = #{siteCode},longitude = #{siteLongitude},latitude=#{siteLatitude},site_name=#{siteName},site_address=#{siteAddress},
+        site_night_delivery=#{siteNightDelivery},site_area=#{siteArea},site_type=#{siteType},large_carModle=#{largeCarModel},
+        max_operate_num=#{maxOperateNum},distrib_center=#{distribCenter},total_vol=#{totalVol},full_time_staff1=#{fullTimeStaff1},
+        part_time_staff1=#{partTimeStaff1},full_time_staff2=#{fullTimeStaff2},part_time_staff2=#{partTimeStaff2},
+        no_of_truck_limitation=#{noOfTruckLimitation}, no_of_baidu_limitation=#{noOfBaiduLimitation}, no_of_didi_limitation=#{noOfDidiLimitation},
+        no_of_dada_limitation=#{noOfDadaLimitation},reserve=#{reserve}
+        where id = #{id}
+    </update>
+
+    <delete id="delById">
+        DELETE FROM t_site_info WHERE id = #{id}
+    </delete>
+
+    <delete id="delbyScenariodId">
+        DELETE FROM t_site_info WHERE scenariosId = #{scenariosId}
+    </delete>
+
+    <select id="findAllBySiteCode" resultType="map" resultMap="modelRouteAndSite">
+        SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} order by r.arr_time asc
+    </select>
+
+    <select id="findAllCountBySiteCode" resultType="long">
+        SELECT count(*) FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findBySiteCode" parameterType="map" resultType="map" resultMap="modelRouteAndSite">
+        SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        <where>
+            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and  r.cur_loc = #{keyword}
+            </if>
+        </where>
+        order by r.arr_time asc
+        limit ${start},${length}
+    </select>
+
+    <select id="findCountBySiteCode" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        <where>
+            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and  r.cur_loc = #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findNextSite" resultType="map" resultMap="modelRouteAndSite">
+        SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.next_cur_loc = d.site_code
+        <where>
+            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+            <if test="siteCode != null and siteCode != ''">
+                and  r.cur_loc = #{siteCode}
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="siteInfoMap" type="SiteInfo">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="siteCode" column="site_code"/>
+        <result property="siteLongitude" column="longitude"/>
+        <result property="siteLatitude" column="latitude"/>
+        <result property="siteName" column="site_name"/>
+        <result property="siteAddress" column="site_address"/>
+        <result property="siteNightDelivery" column="site_night_delivery"/>
+        <result property="siteArea" column="site_area"/>
+        <result property="siteType" column="site_type"/>
+        <result property="largeCarModel" column="large_carModle"/>
+        <result property="maxOperateNum" column="max_operate_num"/>
+        <result property="distribCenter" column="distrib_center"/>
+        <result property="totalVol" column="total_vol"/>
+        <result property="fullTimeStaff1" column="full_time_staff1"/>
+        <result property="partTimeStaff1" column="part_time_staff1"/>
+        <result property="fullTimeStaff2" column="full_time_staff2"/>
+        <result property="partTimeStaff2" column="part_time_staff2"/>
+        <result property="noOfTruckLimitation" column="no_of_truck_limitation"/>
+        <result property="noOfBaiduLimitation" column="no_of_baidu_limitation"/>
+        <result property="noOfDidiLimitation" column="no_of_didi_limitation"/>
+        <result property="noOfDadaLimitation" column="no_of_dada_limitation"/>
+        <result property="reserve" column="reserve"/>
+    </resultMap>
+
+    <resultMap id="modelRouteAndSite" type="map">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="routeCount" column="route_count"/>
+        <result property="carType" column="car_type"/>
+        <result property="location" column="location"/>
+        <result property="sequence" column="sequence"/>
+        <result property="curLoc" column="cur_loc"/>
+        <result property="type" column="type"/>
+        <result property="sbLoc" column="sb_loc"/>
+        <result property="sbVol" column="sb_vol"/>
+        <result property="sbVolSum" column="sb_vol_sum"/>
+        <result property="arrTime" column="arr_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="unloadLoc" column="unload_loc"/>
+        <result property="unloadVol" column="unload_vol"/>
+        <result property="unloadVolSum" column="unload_vol_sum"/>
+        <result property="nextCurLoc" column="next_cur_loc"/>
+        <result property="calcDis" column="calc_dis"/>
+        <result property="carGoods" column="car_goods"/>
+        <result property="siteCode" column="site_code"/>
+        <result property="siteLongitude" column="longitude"/>
+        <result property="siteLatitude" column="latitude"/>
+        <result property="siteName" column="site_name"/>
+        <result property="siteAddress" column="site_address"/>
+        <result property="siteNightDelivery" column="site_night_delivery"/>
+        <result property="siteArea" column="site_area"/>
+        <result property="siteType" column="site_type"/>
+        <result property="largeCarModel" column="large_carModle"/>
+        <result property="maxOperateNum" column="max_operate_num"/>
+        <result property="distribCenter" column="distrib_center"/>
+        <result property="totalVol" column="total_vol"/>
+        <result property="fullTimeStaff1" column="full_time_staff1"/>
+        <result property="partTimeStaff1" column="part_time_staff1"/>
+        <result property="fullTimeStaff2" column="full_time_staff2"/>
+        <result property="partTimeStaff2" column="part_time_staff2"/>
+        <result property="noOfTruckLimitation" column="no_of_truck_limitation"/>
+        <result property="noOfBaiduLimitation" column="no_of_baidu_limitation"/>
+        <result property="noOfDidiLimitation" column="no_of_didi_limitation"/>
+        <result property="noOfDadaLimitation" column="no_of_dada_limitation"/>
+        <result property="reserve" column="reserve"/>
+    </resultMap>
+
+
+</mapper>

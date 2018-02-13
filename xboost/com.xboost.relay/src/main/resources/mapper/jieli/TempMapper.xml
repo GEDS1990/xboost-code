@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.jieli.TempMapper">
+    <cache/>
+    <insert id="save" >
+        INSERT into t_jieli_temp(scenarios_name,scenarios_category,scenarios_desc,scenarios_model,scenarios_out,
+        scenarios_status,last_open_time,simulate_finish_time,str1,str2,str3,createtime,updatetime)
+        VALUES (#{scenariosName},#{scenariosCategory},#{scenariosDesc},#{scenariosModel},#{scenariosOut},
+        #{scenariosStatus},#{lastOpenTime},#{simulateFinishTime},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+    </insert>
+
+    <select id="findAll01" resultType="map">
+        select
+            m_od_id, scenario, scenario_lim1, scenario_lim2, i_route_id, distance, time, demand, point1, point2,
+            point3, point4, connection1, connection2, connection3, time1, time2, time3, dist1, dist2, dist3, timecost,
+            wait_time, timebucket_1, timebucket_2, timebucket_3, timebucket_4, timebucket_5, timebucket_6, timebucket_7,
+            timebucket_8, timebucket_9, timebucket_10, timebucket_11, timebucket_12, timebucket_13, timebucket_14,
+            timebucket_15, timebucket_16, timebucket_17, timebucket_18, timebucket_19, timebucket_20, timebucket_21, time_id1,
+            time_id2
+        from
+        (select
+            *, 1 as time_id1, 2 as time_id2, connection1||'-t1' as timebucket_1,connection2||'-t2' as timebucket_2,
+            '' as timebucket_3, '' as timebucket_4, '' as timebucket_5, '' as timebucket_6, '' as timebucket_7,
+            '' as timebucket_8, '' as timebucket_9, '' as timebucket_10, '' as timebucket_11, '' as timebucket_12,
+            '' as timebucket_13, '' as timebucket_14, '' as timebucket_15, '' as timebucket_16, '' as timebucket_17,
+            '' as timebucket_18, '' as timebucket_19, '' as timebucket_20, '' as timebucket_21
+        from t_jieli_three_points_route where scenariosId = #{OpenScenariosId}) as three_points_route
+    </select>
+    <select id="findAll02" resultType="map">
+        select *, 1 as time_id1, 2 as time_id2, 3 as time_id3 ,connection1||'-t1' as timebucket_1,
+            connection2||'-t2' as timebucket_2,connection3||'-t3' as timebucket_3, '' as timebucket_4, '' as timebucket_5, '' as timebucket_6, '' as timebucket_7,
+            '' as timebucket_8, '' as timebucket_9, '' as timebucket_10, '' as timebucket_11, '' as timebucket_12, '' as timebucket_13, '' as timebucket_14,
+            '' as timebucket_15, '' as timebucket_16, '' as timebucket_17, '' as timebucket_18, '' as timebucket_19, '' as timebucket_20, '' as timebucket_21
+        from t_jieli_four_points_route where scenariosId = #{OpenScenariosId}
+    </select>
+    <select id="findAll03" resultType="map">
+        select *
+        from
+        t_site_distance
+    </select>
+    <select id="findAll04" resultType="map">
+        select *, connection||'-t21' as timebucket from t_jieli_temp
+    </select>
+    <select id="findAll05" resultType="map">
+        select t1.*,
+            t2.dummy_id as dummy_in_id
+        from
+            (select * from t_jieli_connection where scenariosId = #{OpenScenariosId}) t1
+        left join
+            (select * from t_jieli_id_mapping where scenariosId = #{OpenScenariosId}) t2
+        on
+            t1.inbound_id=t2.m_od_id
+    </select>
+    <select id="findRouteTempBycode1" parameterType="String">
+        <![CDATA[
+            ${route_temp_sql}
+        ]]>
+    </select>
+
+    <select id="findAllTwoPointsRoute" resultType="map">
+        select
+            t1.OD_id as m_od_id,
+            CONCAT(CONCAT(t1.inbound_id,'-'),t1.outbound_id) as i_route_id,
+            t2.km as distance,
+            t2.minutes as time,
+            t1.volume as demand,
+            t1.inbound_id as point1,
+            0 as point2,
+            0 as point3,
+            t1.outbound_id as point4,
+            CONCAT(CONCAT(t1.inbound_id,'-'),t1.outbound_id) as connection1,
+            '' as connection2,
+            '' as connection3,
+            t2.minutes as time1,
+            0 as time2,
+            0 as time3,
+            t2.km as dist1,
+            0 as dist2,
+            0 as dist3,
+            -t2.minutes as timecost,
+            t1.scenario as scenario,
+            t1.scenario_lim1 as scenario_lim1,
+            t1.scenario_lim2 as scenario_lim2,
+            0 as wait_time
+        from
+            (select * from t_jieli_od_demand where scenariosId  = #{OpenScenariosId}) as t1
+        left join
+            (select * from t_jieli_distance_ref where scenariosId  = #{OpenScenariosId}) as t2
+        on
+            t1.inbound_id=t2.inbound_id
+            and t1.outbound_id=t2.outbound_id
+    </select>
+
+
+    <select id="findfour_points_route" resultType="map">
+        <![CDATA[
+            select m_od_id,
+                 t1.scenario as scenario,
+                 t1.scenario_lim1 as scenario_lim1,
+                 t1.scenario_lim2 as scenario_lim2,
+                 CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(point1,'-'),point2),'-'),t1.outbound_id),'-'),point4) as i_route_id,
+                 t1.dist1+t1.km+t2.km as distance,
+                 t1.time1+t1.minutes+t2.minutes as time,
+                 demand,
+                 point1,
+                 point2,
+                 t1.outbound_id as point3,
+                 point4,
+                CONCAT(CONCAT(point1,'-'),point2) as connection1,
+                CONCAT(CONCAT(point2,'-'),t1.outbound_id) as connection2,
+                CONCAT(CONCAT(t1.outbound_id,'-'),point4) as connection3,
+                 t1.time1 as time1,
+                 t1.minutes as time2,
+                 t2.minutes as time3,
+                 t1.dist1 as dist1,
+                 t1.km as dist2,
+                 t2.km as dist3,
+                 -t1.time1-t1.minutes-t2.minutes-40 as timecost,
+                 40 as wait_time
+             from (select * from t_jieli_temp_list where scenariosId = #{OpenScenariosId}) t1
+             left join (select * from t_jieli_distance_ref where scenariosId = #{OpenScenariosId}) t2
+                 on t1.outbound_id=t2.inbound_id
+                 and t1.point4=t2.outbound_id
+             where point1!=t1.outbound_id
+                 and point2!=t1.outbound_id
+                 and point4!=t1.outbound_id
+                 and t1.time1+t1.minutes+t2.minutes<=170
+                 and t1.time1+t1.minutes+t2.minutes<=2*t1.time
+        ]]>
+    </select>
+
+    <select id="findAllFlowLim" resultType="map">
+        select site_code as 网点ID, id as 集散点ID, '' as Lon, '' as Lat,
+            '' as c1, 5 as c2,5 as c3,5 as c4,5 as c5,5 as c6,5 as c7,5 as c8,
+            5 as c9,5 as c10,5 as c11,5 as c12,5 as c13,5 as c14,5 as c15,5 as c16,
+            5 as c17,5 as c18,5 as c19,5 as c20,5 as c21,5 as c22,5 as c23,5 as c24,
+            5 as c25,5 as c26,5 as c27,5 as c28,5 as c29
+        from t_site_info where scenariosId = #{scenariosId} and site_type = 'Dummy Hub'
+    </select>
+
+    <select id="findthree_points_route" resultType="map">
+        <![CDATA[
+            select
+                m_od_id,
+                t1.scenario as scenario,
+                t1.scenario_lim1 as scenario_lim1,
+                t1.scenario_lim2 as scenario_lim2,
+                CONCAT(CONCAT(CONCAT(CONCAT(point1,'-'),t1.outbound_id),'-'),point4) as i_route_id,
+                t1.km+t2.km as distance,
+                t1.minutes+t2.minutes as time,
+                demand,
+                point1,
+                t1.outbound_id as point2,
+                0 as point3,
+                point4,
+                CONCAT(CONCAT(point1,'-'),t1.outbound_id) as connection1,
+                CONCAT(CONCAT(t1.outbound_id,'-'),point4) as connection2,
+                '' as connection3,
+                t1.minutes as time1,
+                t2.minutes as time2,
+                0 as time3,
+                t1.km as dist1,
+                t2.km as dist2,
+                0 as dist3,
+                -t1.minutes-t2.minutes-20 as timecost,
+                20 as wait_time
+            from (select * from t_jieli_temp_list where scenariosId = #{OpenScenariosId}) t1
+            left join (select * from t_jieli_distance_ref where scenariosId = #{OpenScenariosId}) t2
+            on
+                t1.outbound_id=t2.inbound_id
+                and t1.point4=t2.outbound_id
+            where
+                point1!=t1.outbound_id
+                and point4!=t1.outbound_id
+                and t1.minutes + t2.minutes <= 190
+                and t1.minutes + t2.minutes <= 2*t1.time
+        ]]>
+    </select>
+
+    <select id="findAll06" resultType="map">
+        select t1.*,
+        t2.dummy_id as dummy_out_id
+        from
+        (select * from t_jieli_connection2 where scenariosId = #{OpenScenariosId}) t1
+        left join (select * from t_jieli_id_mapping where scenariosId = #{OpenScenariosId}) t2
+        on t1.outbound_id=t2.m_od_id
+
+    </select>
+
+    <select id="savetemp_list" parameterType="map">
+        insert into t_jieli_temp_list(
+            scenariosId,
+            m_od_id,
+            minutes,
+            i_route_id,
+            distance,
+            km,
+            demand,
+            point1,
+            point2,
+            point3,
+            point4,
+            outbound_id,
+            inbound_id,
+            connection1,
+            connection2,
+            connection3,
+            time,
+            time1,
+            time2,
+            time3,
+            dist1,
+            dist2,
+            dist3,
+            timecost,
+            scenario,
+            scenario_lim1,
+            scenario_lim2,
+            wait_time
+        )
+        values(
+            #{scenariosId},
+            #{m_od_id,},
+            #{minutes},
+            #{i_route_id},
+            #{distance},
+            #{km},
+            #{demand},
+            #{point1},
+            #{point2},
+            #{point3},
+            #{point4},
+            #{outbound_id},
+            #{inbound_id},
+            #{connection1},
+            #{connection2},
+            #{connection3},
+            #{time},
+            #{time1},
+            #{time2},
+            #{time3},
+            #{dist1},
+            #{dist2},
+            #{dist3},
+            #{timecost},
+            #{scenario},
+            #{scenario_lim1},
+            #{scenario_lim2},
+            #{wait_time}
+        )
+
+    </select>
+    <select id="savedistance_ref" parameterType="map">
+        insert into t_jieli_distance_ref(
+        scenariosId,
+        OD_id,
+        inbound_id,
+        outbound_id,
+        km,
+        minutes,
+        cross_river
+        )
+        values(
+        #{scenariosId},
+        #{OD_id},
+        #{inbound_id},
+        #{outbound_id},
+        #{km},
+        #{minutes},
+        #{cross_river}
+        )
+
+    </select>
+
+    <select id="saveOD_demand" parameterType="map">
+        insert into t_jieli_od_demand(
+        scenariosId,
+        OD_id,
+        volume,
+        inbound_id,
+        outbound_id,
+        km,
+        scenario,
+        scenario_lim1,
+        scenario_lim2,
+        kmh,
+        minutes
+        )
+        values(
+        #{scenariosId},
+        #{OD_id},
+        #{volume},
+        #{inbound_id},
+        #{outbound_id},
+        #{km},
+        #{scenario},
+        #{scenario_lim1},
+        #{scenario_lim2},
+        #{kmh},
+        #{minutes}
+        )
+
+    </select>
+
+    <delete id="delAllOD_demandByScenariosId" parameterType="String">
+        delete from t_jieli_od_demand where scenariosId  = #{OpenScenariosId}
+    </delete>
+
+    <delete id="delAlltemp_listByScenariosId" parameterType="String">
+        delete from t_jieli_temp_list where scenariosId  = #{OpenScenariosId}
+    </delete>
+
+    <delete id="delAlldistance_refByScenariosId" parameterType="String">
+        delete from t_jieli_distance_ref where scenariosId  = #{OpenScenariosId}
+    </delete>
+
+    <select id="saveRouteOpt" parameterType="map">
+        insert into t_jieli_route_opt(scenariosId,
+        m_od_id,
+        i_route_id,
+        demand,
+        inbound_id,
+        outbound_id,
+        cost_data,
+        cost_truck,
+        cost_didi,
+        cost_bike,
+        min_didi,
+        km,
+        kmh_bike,
+        kmh_truck,
+        kmh_didi,
+        point1,
+        point2,
+        point3,
+        point4,
+        connection,
+        connection1,
+        connection2,
+        connection3,
+        time,
+        time1,
+        time2,
+        time3,
+        time_id1,
+        timecost,
+        distance,
+        dist1,
+        dist2,
+        dist3,
+        ok,
+        cross_river,
+        timebucket_1,
+        timebucket_02,
+        route_type,
+        scenario,
+        route_open,
+        scenario_lim1,
+        scenario_lim2,
+        wait_time
+        )
+        values(
+        #{scenariosId}},
+        #{m_od_id},
+        #{i_route_id},
+        #{demand},
+        #{inbound_id},
+        #{outbound_id},
+        #{cost_data},
+        #{cost_truck},
+        #{cost_didi},
+        #{cost_bike},
+        #{min_didi},
+        #{km},
+        #{kmh_bike},
+        #{kmh_truck},
+        #{kmh_didi},
+        #{point1},
+        #{point2},
+        #{point3},
+        #{point4},
+        #{connection},
+        #{connection1},
+        #{connection2},
+        #{connection3},
+        #{time},
+        #{time1},
+        #{time2},
+        #{time3},
+        #{time_id1},
+        #{timecost},
+        #{distance},
+        #{dist1},
+        #{dist2},
+        #{dist3},
+        #{ok},
+        #{cross_river},
+        #{timebucket_1},
+        #{timebucket_02},
+        #{route_type},
+        #{scenario},
+        #{route_open},
+        #{scenario_lim1},
+        #{scenario_lim2},
+        #{wait_time}
+        ) where scenariosId = #{OpenScenariosId}
+    </select>
+    <select id="findAll07" resultType="map">
+        select t1.*,
+        t2.site_code as point1_name,
+        t3.site_code as point2_name,
+        t4.site_code as point3_name,
+        t5.site_code as point4_name
+        from
+            (select * from route_opt where scenariosId = #{OpenScenariosId}) t1
+        left join t_site_info t2
+        on t1.point1=t2.site_code
+        left join t_site_info t3
+        on t1.point2=t3.site_code
+        left join t_site_info t4
+        on t1.point3=t4.site_code
+        left join t_site_info t5
+        on t1.point4=t5.site_code
+
+    </select>
+
+    <select id="findAll08" resultType="map">
+        select timebucket,sum(volume) as volume,
+        sum(route_cnt) as route_cnt
+        from (select timebucket_1 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_2 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_3 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_4 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_5 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_6 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_7 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_8 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_9 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_10 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_11 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_12 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_13 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_14 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_15 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_16 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_17 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_18 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_19 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_20 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        union all select timebucket_21 as timebucket,sum(demand) as volume,
+        count(*) as route_cnt
+        from route_opt
+        where route_open=1
+        group by 1
+        )
+        where timebucket !=''
+        group by 1
+    </select>
+
+    <select id="findByParam" parameterType="map">
+        SELECT * from t_jieli_temp
+        <where>
+            1 = 1
+            <if test="userId != null and userId != ''">
+                and id in (select scenariosId from t_jieli_temp where userId=#{userId})
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and scenarios_name LIKE #{keyword} or scenarios_category like #{keyword} or scenarios_desc like #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(*) FROM t_jieli_temp where id in (select scenariosId from t_scenarios_user where userId=#{userId})
+    </select>
+
+
+    <select id="findCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_jieli_temp
+        <where>
+            1 = 1
+            <if test="userId != null and userId != ''">
+                and id in (select scenariosId from t_scenarios_user where userId=#{userId})
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and scenarios_name LIKE #{keyword} or scenarios_category like #{keyword} or scenarios_desc like #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <delete id="delById">
+        DELETE FROM t_jieli_temp WHERE scenariosId = #{id} and userId = #{userId}
+    </delete>
+</mapper>
