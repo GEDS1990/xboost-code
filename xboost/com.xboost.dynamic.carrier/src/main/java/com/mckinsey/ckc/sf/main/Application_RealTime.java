@@ -2,11 +2,7 @@ package com.mckinsey.ckc.sf.main;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.Filter;
@@ -49,7 +45,11 @@ import com.mckinsey.ckc.sf.restful.data.XYModel;
 public class Application_RealTime implements Filter,IConstants,EmbeddedServletContainerCustomizer{
 
 	//initialize timeID with start time
-//	private static int timeID = 12*60/TIME_UNIT-1;
+	private static Calendar cal=Calendar.getInstance();
+	private static int h=cal.get(Calendar.HOUR_OF_DAY);
+	private static int mi=cal.get(Calendar.MINUTE);
+	private static int time=h*60+mi;
+//	private static int timeID = time/TIME_UNIT-1;
 	private static int timeID = PICKING_START_TIME*60/TIME_UNIT-1;
 	private final AtomicLong counter = new AtomicLong(timeID);
 	
