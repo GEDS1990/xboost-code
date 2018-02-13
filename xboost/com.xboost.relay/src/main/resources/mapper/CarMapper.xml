@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.CarMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT into t_car_info(scenariosId,name,carType,busy_idle,type,num,dimensions,skills,start_location,end_location,max_distance,
+        max_running_time,cost_per_distance,cost_per_time,fixed_cost,max_stop,velocity,velocity2,velocity3,fixed_round,fixed_round_fee,
+        car_source,max_load,duration_unload_full,price_type,a1,b1,c1,d1,e1,f1,a2,b2,c2,d2,e2,f2,costa1,costb1,costc1,costd1,coste1,costf1,
+        costa2,costb2,costc2,costd2,coste2,costf2,costa3,costb3,costc3,costd3,coste3,costf3,
+        createtime,updatetime)
+        VALUES (#{scenariosId},#{name},#{carType},#{busyIdle},#{type},#{num},#{dimensions},#{skills},#{startLocation},#{endLocation},#{maxDistance},
+        #{maxRunningTime},#{costPerDistance},#{costPerTime},#{fixedCost},#{maxStop},#{velocity},#{velocity2},#{velocity3},#{fixedRound},#{fixedRoundFee},
+        #{carSource},#{maxLoad},#{durationUnloadFull},#{priceType},#{a1},#{b1},#{c1},#{d1},#{e1},#{f1},#{a2},#{b2},#{c2},#{d2},#{e2},#{f2},
+        #{costa1},#{costb1},#{costc1},#{costd1},#{coste1},#{costf1}, #{costa2},#{costb2},#{costc2},#{costd2},#{coste2},#{costf2},
+        #{costa3},#{costb3},#{costc3},#{costd3},#{coste3},#{costf3},
+        #{createTime},#{updateTime})
+    </insert>
+
+
+    <update id="update">
+        update t_car_info set scenariosId = #{scenariosId},name=#{name},type = #{type},num=#{num},dimensions = #{dimensions},skills = #{skills},
+        start_location = #{startLocation},end_location = #{endLocation},max_distance = #{maxDistance},
+        max_running_time = #{maxRunningTime},cost_per_distance = #{costPerDistance},cost_per_time = #{costPerTime},
+        fixed_cost = #{fixedCost},max_stop = #{maxStop},velocity = #{velocity},velocity2 = #{velocity2},velocity3 = #{velocity3},fixed_round = #{fixedRound},
+        fixed_round_fee = #{fixedRoundFee},car_source = #{carSource},max_load = #{maxLoad},duration_unload_full = #{durationUnloadFull},
+        price_type = #{priceType},a1 = #{a1},b1 = #{b1},c1 = #{c1},d1 = #{d1},e1 = #{e1},f1 = #{f1},costa1 = #{costa1},costb1 = #{costb1},costc1 = #{costc1},costd1 = #{costd1},
+        coste1 = #{coste1},costf1 = #{costf1},
+        a2 = #{a2},b2 = #{b2},c2 = #{c2},d2 = #{d2},e2 = #{e2},f2 = #{f2},costa2 = #{costa2},costb2 = #{costb2},costc2 = #{costc2},costd2 = #{costd2},
+        coste2 = #{coste2},costf2 = #{costf2}，costa3 = #{costa3},costb3 = #{costb3},costc3 = #{costc3},costd3 = #{costd3},
+        coste3 = #{coste3},costf3 = #{costf3} where id = #{id}
+    </update>
+
+    <insert id="saveTimeWindow">
+        INSERT into t_time_window(carId,start,end)
+        VALUES (#{carId},#{start},#{end})
+    </insert>
+
+
+    <select id="findAll" parameterType="map" resultMap="transportMap">
+        SELECT * FROM t_car_info where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findByParam" parameterType="map" resultMap="transportMap">
+        SELECT * from t_car_info
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and type LIKE #{keyword} or car_source like #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(*) FROM t_car_info where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_car_info
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                where type LIKE #{keyword} or car_source like #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findCarCost" resultMap="transportMap">
+        SELECT * FROM t_car_info WHERE scenariosId = #{scenariosId} and
+        type = (SELECT DISTINCT(car_type) FROM t_solution_route WHERE scenariosId=#{scenariosId} AND route_count=#{routeCount})
+        <!--SELECT * FROM t_solution_route r INNER JOIN t_car_info c ON c.type=r.car_type-->
+        <!--where r.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId} and r.route_count = #{routeCount}-->
+    </select>
+
+    <select id="findById" resultMap="transportMap">
+        SELECT * FROM t_car_info where id = #{id}
+    </select>
+
+    <update id="editTransport">
+        UPDATE t_car_info SET scenariosId = #{scenariosId},name=#{name},type = #{type},num=#{num},
+        dimensions = #{dimensions},skills = #{skills},start_location = #{startLocation},
+        end_location = #{endLocation},max_distance = #{maxDistance},max_running_time = #{maxRunningTime},
+        cost_per_distance = #{costPerDistance},cost_per_time = #{costPerTime},fixed_cost = #{fixedCost},max_stop = #{maxStop},
+        velocity = #{velocity},velocity2 = #{velocity2},velocity3 = #{velocity3},fixed_round = #{fixedRound},fixed_round_fee = #{fixedRoundFee},
+        car_source = #{carSource},max_load = #{maxLoad},duration_unload_full = #{durationUnloadFull},price_type = #{priceType}
+        where id = #{id}
+    </update>
+
+
+    <delete id="delById">
+        DELETE FROM t_car_info WHERE id = #{id}
+    </delete>
+    <delete id="delByScenariosId">
+        DELETE FROM t_car_info WHERE scenariosId = #{scenariosId}
+    </delete>
+
+    <delete id="delTimeWindow">
+        DELETE FROM t_time_window WHERE carId = #{id}
+    </delete>
+
+    <select id="findCarByParam" parameterType="map" resultMap="transportMap">
+        <!--select * from t_car_info as ci where ci.scenariosId=#{scenariosId}-->
+        select * from t_car_info as ci, t_time_window as t where ci.id=t.carId and ci.scenariosId=#{scenariosId}
+    </select>
+
+    <!--<select id="findByScenariosId" resultType="com.xboost.pojo.Dimensions">
+        SELECT dimensions FROM t_dimensions_info WHERE carId IN (SELECT id FROM t_car_info WHERE scenariosId = #{scenariosId})
+    </select>-->
+
+    <insert id="saveCarLincence" useGeneratedKeys="true" keyProperty="id">
+        INSERT into t_car_licence(scenariosId,name,type,busy_idle,str1,str2,str3,create_time,update_time)
+        VALUES (#{scenariosId},#{name},#{type},#{busyIdle},#{str1},#{str2},#{str3},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="editCarLincence">
+        UPDATE t_car_licence SET scenariosId = #{scenariosId},name=#{name},type = #{type},busy_idle=#{busyIdle}
+        where id = #{id}
+    </update>
+
+    <delete id="delCarLincenceByScenariosId">
+        DELETE FROM t_car_licence WHERE scenariosId = #{scenariosId}
+    </delete>
+
+    <select id="findAllCar" parameterType="map" resultMap="carMap">
+        SELECT * FROM t_car_licence where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findCarLicenceByParam" parameterType="map" resultMap="carMap">
+        SELECT * from t_car_licence
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and type LIKE #{keyword} or name like #{keyword}
+            </if>
+        </where>
+        order by ${orderColumn} ${orderType}
+        limit ${start},${length}
+    </select>
+
+    <select id="findAllCarCount" resultType="long">
+        SELECT COUNT(*) FROM t_car_licence where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findCarCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_car_licence
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                where type LIKE #{keyword} or name like #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateCarLincence" parameterType="map">
+        UPDATE t_car_licence SET busy_idle=#{busyIdle}
+        WHERE scenariosId = #{scenariosId} AND name = #{name}
+    </update>
+
+    <select id="findCarLincence" parameterType="map" resultMap="carMap">
+        SELECT * FROM  t_car_licence
+        WHERE scenariosId = #{scenariosId} AND name = #{name}
+    </select>
+
+    <resultMap id="carMap" type="com.xboost.pojo.CarLicence">
+        <id property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="busyIdle" column="busy_idle"/>
+    </resultMap>
+
+    <resultMap id="transportMap" type="com.mckinsey.sf.data.Car">
+        <id property="id" column="id"/>
+        <result property="maxStop" column="max_stop"/>
+        <result property="dimensions" column="dimensions"/>
+        <result property="fixedRound" column="fixed_round"/>
+        <result property="fixedRoundFee" column="fixed_round_fee"/>
+        <result property="startLocation" column="start_location"/>
+        <result property="endLocation" column="end_location"/>
+        <result property="maxDistance" column="max_distance"/>
+        <result property="maxRunningTime" column="max_running_time"/>
+        <result property="costPerDistance" column="cost_per_distance"/>
+        <result property="costPerTime" column="cost_per_time"/>
+        <result property="fixedCost" column="fixed_cost"/>
+        <result property="velocity" column="velocity"/>
+        <result property="velocity2" column="velocity2"/>
+        <result property="velocity3" column="velocity3"/>
+        <result property="carSource" column="car_source"/>
+        <result property="maxLoad" column="max_load"/>
+        <result property="durationUnloadFull" column="duration_unload_full"/>
+        <result property="type" column="type"/>
+        <result property="name" column="name"/>
+        <result property="num" column="num"/>
+        <result property="priceType" column="price_type"/>
+        <result property="a1" column="a1"/>
+        <result property="b1" column="b1"/>
+        <result property="c1" column="c1"/>
+        <result property="d1" column="d1"/>
+        <result property="e1" column="e1"/>
+        <result property="f1" column="f1"/>
+        <result property="a2" column="a2"/>
+        <result property="b2" column="b2"/>
+        <result property="c2" column="c2"/>
+        <result property="d2" column="d2"/>
+        <result property="e2" column="e2"/>
+        <result property="f2" column="f2"/>
+        <result property="costa1" column="costa1"/>
+        <result property="costb1" column="costb1"/>
+        <result property="costc1" column="costc1"/>
+        <result property="costd1" column="costd1"/>
+        <result property="coste1" column="coste1"/>
+        <result property="costf1" column="costf1"/>
+        <result property="costa2" column="costa2"/>
+        <result property="costb2" column="costb2"/>
+        <result property="costc2" column="costc2"/>
+        <result property="costd2" column="costd2"/>
+        <result property="coste2" column="coste2"/>
+        <result property="costf2" column="costf2"/>
+        <result property="costa3" column="costa3"/>
+        <result property="costb3" column="costb3"/>
+        <result property="costc3" column="costc3"/>
+        <result property="costd3" column="costd3"/>
+        <result property="coste3" column="coste3"/>
+        <result property="costf3" column="costf3"/>
+        <association property="tw" javaType="com.mckinsey.sf.data.TimeWindow">
+            <result property="start" column="start"/>
+            <result property="end" column="end"/>
+        </association>
+    </resultMap>
+
+   </mapper>

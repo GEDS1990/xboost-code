@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.SolutionRouteMapper">
+
+    <insert id="addRoute">
+        INSERT into t_solution_route(scenariosId ,userId,route_count,car_type,car_name,location,sequence,cur_loc,
+        type,sb_loc,sb_vol,sb_vol_sum,arr_time,end_time,unload_loc,unload_vol,unload_vol_sum,next_cur_loc,calc_dis,
+        car_goods,str1,createtime)
+        VALUES (#{scenariosId},#{userId},#{routeCount},#{carType},#{carName},#{location},#{sequence},#{curLoc},
+        #{type},#{sbLoc},#{sbVol},#{sbVolSum},#{arrTime},#{endTime},#{unloadLoc},#{unloadVol},#{unloadVolSum},#{nextCurLoc},#{calcDis},
+        #{carGoods},#{str1},#{createTime})
+    </insert>
+
+    <delete id="delByScenariosId">
+        DELETE FROM t_solution_route WHERE scenariosId = #{scenariosId}
+    </delete>
+
+    <select id="findAll" parameterType="map" resultType="Route" resultMap="modelRoute">
+        SELECT * FROM t_solution_route where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findRouteCar" resultType="String">
+        SELECT distinct(car_name) FROM t_solution_route where scenariosId = #{scenariosId} and route_count=#{routeCount}
+    </select>
+
+    <select id="findByParam" parameterType="map" resultType="Route" resultMap="modelRoute">
+        SELECT * from t_solution_route
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and  cur_loc = #{keyword}
+            </if>
+        </where>
+        <!--order by ${orderColumn} ${orderType}-->
+        limit ${start},${length}
+    </select>
+
+
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(*) FROM t_solution_route where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findRouteNum" resultType="long">
+        SELECT COUNT(distinct(route_count)) FROM t_solution_route where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findCountByParam" resultType="long" parameterType="map">
+        SELECT count(*) from t_solution_route
+        <where>
+            scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and  cur_loc = #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultType="com.xboost.pojo.Route"  resultMap="modelRoute">
+        SELECT * FROM t_solution_route where id = #{id}
+    </select>
+
+    <select id="findRouteId" resultType="Integer">
+        SELECT id FROM t_solution_route where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findAllByRoute" resultType="map" resultMap="modelRouteAndSite">
+        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_type = c.type
+        LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId} order by r.route_count+0,r.sequence+0
+    </select>
+
+    <select id="findAllCountByRoute" resultType="long">
+        SELECT count(*) FROM t_solution_route r inner join t_car_info c on r.car_type = c.type
+        LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        where r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findByRoute" parameterType="map" resultType="map" resultMap="modelRouteAndSite">
+        SELECT * FROM t_solution_route r ,t_car_info c ,t_site_info d
+        <where>
+            r.car_type = c.type
+            and r.cur_loc = d.site_code
+            and r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and  r.route_count = #{keyword}
+            </if>
+        </where>
+        order by r.arr_time asc
+        limit ${start},${length}
+    </select>
+
+    <select id="findCountByRoute" resultType="long" parameterType="map">
+        SELECT count(*) FROM t_solution_route r ,t_car_info c ,t_site_info d
+        <where>
+            r.car_type = c.type
+            and r.cur_loc = d.site_code
+            and r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId} and c.scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and  r.route_count = #{keyword}
+            </if>
+        </where>
+    </select>
+
+    <select id="findTotalDistance" resultType="String" parameterType="map">
+        SELECT ROUND(SUM(calc_dis),2) FROM t_solution_route WHERE scenariosId=#{scenariosId} and route_count=#{routeCount}
+    </select>
+
+    <update id="updateCarName" parameterType="map">
+        UPDATE t_solution_route SET car_name=#{carName} WHERE scenariosId=#{scenariosId} and route_count=#{routeCount}
+    </update>
+
+    <update id="updateCarToBusy">
+        UPDATE t_car_licence SET busy_idle="1" WHERE scenariosId=#{scenariosId} and name=#{carName}
+    </update>
+
+    <update id="updateCarToIdle">
+        UPDATE t_car_licence SET busy_idle="0" WHERE scenariosId=#{scenariosId} and name=#{carName}
+    </update>
+
+    <update id="updateAllCarToIdle">
+        UPDATE t_car_licence SET busy_idle="0" WHERE scenariosId=#{scenariosId}
+    </update>
+
+
+    <update id="updateScenariosModel">
+        UPDATE t_scenarios_info SET scenarios_model=#{scenariosModel} where id = #{openScenariosId}
+    </update>
+
+    <update id="updateRouteByTemp">
+        UPDATE t_solution_route SET sb_vol=#{sbVol},sb_vol_sum=#{sbVolSum},unload_vol=#{unloadVol},unload_vol_sum=#{unloadVolSum}
+        WHERE scenariosId=#{scenariosId} and arr_time=#{arrTime} and sequence=#{sequence} and unload_loc=#{unloadLoc}
+    </update>
+
+    <select id="findUsingCar" resultType="String" parameterType="map">
+        SELECT DISTINCT(c.t_name) FROM t_car_info c inner join t_solution_route r on r.car_type = c.type
+        WHERE c.scenariosId=#{scenariosId} and r.scenariosId=#{scenariosId}
+        and r.route_count=#{routeCount} and c.busy_idle="1"
+    </select>
+
+    <select id="findUsingCar1" resultType="String" parameterType="map">
+        SELECT name FROM t_car_licence WHERE scenariosId=#{scenariosId} and busy_idle="1"
+    </select>
+
+    <select id="findIdleCar1" resultType="String" parameterType="map">
+        SELECT name FROM t_car_licence WHERE scenariosId=#{scenariosId} and busy_idle="0"
+    </select>
+
+    <select id="findIdleCar" resultType="String" parameterType="map">
+        SELECT DISTINCT(c.name) FROM t_car_licence c inner join t_solution_route r on r.car_type = c.type
+        WHERE c.scenariosId=#{scenariosId} and r.scenariosId=#{scenariosId}
+        and r.route_count=#{routeCount} and c.busy_idle="0"
+    </select>
+
+    <select id="findRouteCount" resultType="String">
+        SELECT DISTINCT(route_count) FROM t_solution_route WHERE scenariosId=#{scenariosId}
+    </select>
+
+    <select id="findCarLoad" resultType="String" parameterType="map" resultMap="modelRouteAndCar">
+        SELECT * FROM t_solution_route r inner join t_car_info c on r.car_type = c.type
+        WHERE c.scenariosId=#{scenariosId} and r.scenariosId=#{scenariosId}
+        and r.route_count=#{routeCount} and c.busy_idle="0"
+    </select>
+
+    <select id="findRouteByRouteCount" resultMap="modelRoute">
+        SELECT * FROM t_solution_route WHERE scenariosId=#{scenariosId} AND route_count=#{routeCount}
+    </select>
+
+    <resultMap id="modelRoute" type="Route">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="routeCount" column="route_count"/>
+        <result property="carName" column="car_name"/>
+        <result property="carType" column="car_type"/>
+        <result property="location" column="location"/>
+        <result property="sequence" column="sequence"/>
+        <result property="curLoc" column="cur_loc"/>
+        <result property="type" column="type"/>
+        <result property="sbLoc" column="sb_loc"/>
+        <result property="sbVol" column="sb_vol"/>
+        <result property="sbVolSum" column="sb_vol_sum"/>
+        <result property="arrTime" column="arr_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="unloadLoc" column="unload_loc"/>
+        <result property="unloadVol" column="unload_vol"/>
+        <result property="unloadVolSum" column="unload_vol_sum"/>
+        <result property="nextCurLoc" column="next_cur_loc"/>
+        <result property="calcDis" column="calc_dis"/>
+        <result property="carGoods" column="car_goods"/>
+    </resultMap>
+
+    <resultMap id="modelRouteAndSite" type="map">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="routeCount" column="route_count"/>
+        <result property="carName" column="car_name"/>
+        <result property="carType" column="car_type"/>
+        <result property="location" column="location"/>
+        <result property="sequence" column="sequence"/>
+        <result property="curLoc" column="cur_loc"/>
+        <result property="type" column="type"/>
+        <result property="sbLoc" column="sb_loc"/>
+        <result property="sbVol" column="sb_vol"/>
+        <result property="sbVolSum" column="sb_vol_sum"/>
+        <result property="arrTime" column="arr_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="unloadLoc" column="unload_loc"/>
+        <result property="unloadVol" column="unload_vol"/>
+        <result property="unloadVolSum" column="unload_vol_sum"/>
+        <result property="nextCurLoc" column="next_cur_loc"/>
+        <result property="calcDis" column="calc_dis"/>
+        <result property="carGoods" column="car_goods"/>
+        <result property="siteCode" column="site_code"/>
+        <result property="siteLongitude" column="longitude"/>
+        <result property="siteLatitude" column="latitude"/>
+        <result property="siteName" column="site_name"/>
+        <result property="siteAddress" column="site_address"/>
+        <result property="siteNightDelivery" column="site_night_delivery"/>
+        <result property="siteArea" column="site_area"/>
+        <result property="siteType" column="site_type"/>
+        <result property="carNum" column="str1"/>
+        <result property="largeCarModel" column="large_carModle"/>
+        <result property="maxOperateNum" column="max_operate_num"/>
+        <result property="distribCenter" column="distrib_center"/>
+        <result property="busyIdle" column="busy_idle"/>
+    </resultMap>
+
+    <resultMap id="modelRouteAndCar" type="Route">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="routeCount" column="route_count"/>
+        <result property="carName" column="car_name"/>
+        <result property="carType" column="car_type"/>
+        <result property="location" column="location"/>
+        <result property="sequence" column="sequence"/>
+        <result property="curLoc" column="cur_loc"/>
+        <result property="type" column="type"/>
+        <result property="sbLoc" column="sb_loc"/>
+        <result property="sbVol" column="sb_vol"/>
+        <result property="sbVolSum" column="sb_vol_sum"/>
+        <result property="arrTime" column="arr_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="unloadLoc" column="unload_loc"/>
+        <result property="unloadVol" column="unload_vol"/>
+        <result property="unloadVolSum" column="unload_vol_sum"/>
+        <result property="nextCurLoc" column="next_cur_loc"/>
+        <result property="calcDis" column="calc_dis"/>
+        <result property="carGoods" column="car_goods"/>
+        <result property="maxStop" column="max_stop"/>
+        <result property="dimensions" column="dimensions"/>
+        <result property="fixedRound" column="fixed_round"/>
+        <result property="fixedRoundFee" column="fixed_round_fee"/>
+        <result property="startLocation" column="start_location"/>
+        <result property="endLocation" column="end_location"/>
+        <result property="maxDistance" column="max_distance"/>
+        <result property="maxRunningTime" column="max_running_time"/>
+        <result property="costPerDistance" column="cost_per_distance"/>
+        <result property="costPerTime" column="cost_per_time"/>
+        <result property="fixedCost" column="fixed_cost"/>
+        <result property="velocity" column="velocity"/>
+        <result property="velocity2" column="velocity2"/>
+        <result property="velocity3" column="velocity3"/>
+        <result property="carSource" column="car_source"/>
+        <result property="maxLoad" column="max_load"/>
+        <result property="durationUnloadFull" column="duration_unload_full"/>
+        <result property="type" column="type"/>
+        <result property="name" column="name"/>
+        <result property="num" column="num"/>
+        <result property="priceType" column="price_type"/>
+    </resultMap>
+
+
+
+</mapper>
