@@ -66,8 +66,9 @@ public class TempService {
         route.setType("PICKUP");
         route.setSbVol(jieliResult.getVolume());
         route.setSbVolSum(jieliResult.getVolume());
-        route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
-        route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
+//        route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
+//        route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
+        route.setEndTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
         route.setUnloadLoc("0");
         route.setUnloadVol("0");
         route.setUnloadVolSum("0");
@@ -86,8 +87,9 @@ public class TempService {
         route.setType("DELIVER");
         route.setSbVol("0");
         route.setSbVolSum("0");
-        route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
-        route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
+//        route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
+//        route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
+        route.setArrTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
         route.setUnloadLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
         route.setUnloadVol(jieliResult.getVolume());
         route.setUnloadVolSum(jieliResult.getVolume());
