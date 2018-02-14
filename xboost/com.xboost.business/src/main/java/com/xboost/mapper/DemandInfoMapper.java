@@ -22,6 +22,8 @@ public interface DemandInfoMapper {
      // 查询所有需求信息  @return
     List<DemandInfo> findAll(String scenariosId);
 
+    List<Map<String, Object>> findAllAndWeight(String scenariosId);
+
     //查询所有需求信息总数
     Long findAllCount(String scenariosId);
 

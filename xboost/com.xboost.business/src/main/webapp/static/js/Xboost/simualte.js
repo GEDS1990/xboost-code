@@ -63,7 +63,7 @@ $(function  () {
 		            }
 					document.getElementById('sim-check-info').innerHTML="";
 		            socket  = new SockJS("http://"+document.location.host+"/webSocketServer/validate");
-		            socket .onopen = function () {
+                                                  		            socket .onopen = function () {
 		                //logg('Info: connection opened.');
 		            };
 		

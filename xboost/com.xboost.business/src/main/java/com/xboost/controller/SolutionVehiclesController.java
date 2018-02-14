@@ -163,7 +163,16 @@ public class SolutionVehiclesController {
             }
         }
 
-
+        if ("2".equals(modelType)) {
+            for (Map map : vehiclesList) {
+                if (map.get("sequence").equals("1")) {
+                    map.put("arrTime", "--");
+                }
+                if (map.get("sequence").equals("2")) {
+                    map.put("endTime", "--");
+                }
+            }
+        }
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数

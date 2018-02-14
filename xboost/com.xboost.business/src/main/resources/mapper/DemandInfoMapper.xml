@@ -21,6 +21,13 @@
         SELECT * FROM t_demand_info where scenariosId = #{scenariosId}
     </select>
 
+    <select id="findAllAndWeight" parameterType="java.lang.String" resultMap="demandInfoMapAndWeight">
+        SELECT d.*, s1.max_operate_num AS max_collect_num, s2.max_operate_num AS max_delivery_num
+        FROM t_demand_info d,t_site_info s1,t_site_info s2
+        WHERE d.scenariosId = #{scenariosId} AND d.site_collect = s1.site_code AND d.site_delivery = s2.site_code
+        AND s1.scenariosId = d.scenariosId AND s2.scenariosId = d.scenariosId
+    </select>
+
     <select id="findMinMax" parameterType="String" resultType="String">
         SELECT concat(concat(Min(duration_start),"-"),Max(duration_end)) as maxMin FROM t_demand_info where scenariosId = #{scenariosId}
     </select>
@@ -103,6 +110,21 @@
         <result property="weight" column="weight"/>
         <result property="votes" column="votes"/>
         <result property="ageing" column="ageing"/>
+    </resultMap>
+
+    <resultMap id="demandInfoMapAndWeight" type="map">
+        <result property="id" column="id"/>
+        <result property="date" column="date"/>
+        <result property="siteCodeCollect" column="site_collect"/>
+        <result property="siteCodeDelivery" column="site_delivery"/>
+        <result property="productType" column="product_type"/>
+        <result property="durationStart" column="duration_start"/>
+        <result property="durationEnd" column="duration_end"/>
+        <result property="weight" column="weight"/>
+        <result property="votes" column="votes"/>
+        <result property="ageing" column="ageing"/>
+        <result property="maxCollectNum" column="max_collect_num"/>
+        <result property="maxDeliveryNum" column="max_delivery_num"/>
     </resultMap>
 
 
