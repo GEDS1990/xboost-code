@@ -557,4 +557,8 @@ public class CarService {
     public CarLicence findCarLincence(Map<String, Object> param) {
         return transportMapper.findCarLincence(param);
     }
+
+    public Car findCarByCarName(Map<String, Object> param) {
+        return transportMapper.findCarByCarName(param);
+    }
 }

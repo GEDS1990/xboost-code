@@ -76,5 +76,7 @@ public interface CarMapper {
     void updateCarLincence(Map<String, Object> param);
 
     CarLicence findCarLincence(Map<String, Object> param);
+
+    Car findCarByCarName(Map<String, Object> param);
 }
 

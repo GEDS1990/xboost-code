@@ -22,13 +22,13 @@ public class App  implements Filter {
         String ip="";
      String address="";
      
-     InetAddress addr = InetAddress.getLocalHost();
-     ip=addr.getHostAddress()+"";//获得本机IP
-     address=addr.getHostName()+"";//获得本机名称
+//     InetAddress addr = InetAddress.getLocalHost();
+//     ip=addr.getHostAddress()+"";//获得本机IP
+//     address=addr.getHostName()+"";//获得本机名称
 //     System.out.println( address+"---cow  boy--"+ip);
-   //输出服务的一些提示信息到控制台 
-   System.out.println("RESTful WebService服务已经启动"); 
-   System.out.println("服务访问地址: http://" + ip + ":8383/helloworld"); 
+   //输出服务的一些提示信息到控制台
+   System.out.println("RESTful WebService服务已经启动");
+   System.out.println("服务访问地址: http://" + ip + ":8383/helloworld");
         SpringApplication.run(App.class, args);
     }
 

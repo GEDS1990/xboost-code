@@ -66,7 +66,7 @@
 	        </div>
 	    	<div>
 	    		<!--Depots Info-->
-			    <div class="table-responsive active">
+			    <div class="active">
 			    	<a href="javascript:;" id="addNewUser-info" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus"></i>Add Info</a>
 		            <table id="Depots_Info" class="table table-striped table-bordered table-hover">
 					    <thead>
@@ -96,21 +96,6 @@
 					    	</tr>
 					    </thead>
 			            <tbody id="info-tbody">
-			            	<tr>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-			            	</tr>
 			            </tbody>
 		            </table>
 		        </div>
