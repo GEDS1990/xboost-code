@@ -162,6 +162,11 @@
         WHERE scenariosId = #{scenariosId} AND name = #{name}
     </select>
 
+    <select id="findCarByCarName" parameterType="map" resultMap="transportMap">
+        SELECT * FROM t_car_info
+        WHERE scenariosId = #{scenariosId} AND name = #{name}
+    </select>
+
     <resultMap id="carMap" type="com.xboost.pojo.CarLicence">
         <id property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>

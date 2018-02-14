@@ -352,6 +352,8 @@ public class ValidateController {
         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
         int depotsDistance_flag = flag;
         float shortSiteDistance = siteDistList.get(0).getCarDistance();
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("scenariosId", ShiroUtil.getOpenScenariosId());
         for(int i=0;i<siteDistList.size();i++){
             SiteDist siteDist = siteDistList.get(i);
             String depotsDistanceWrongLink = wrongLink("siteDist", siteDist.getSiteCollect());
@@ -397,6 +399,81 @@ public class ValidateController {
                 result = depotsDistanceWrongLink+":end depot is not exist. \n";
                 systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
             }
+
+            //truck
+            if (siteDist.getDurationNightDelivery() != null) {
+//                param.put("name", "truck");
+//                Car car = transportService.findCarByCarName(param);
+                Double carDistance = siteDist.getCarDistance() + 0.0;
+                if (carDistance < 10) {
+                    if (Math.round(carDistance) != Math.round(15 / 60.0 * Double.parseDouble(siteDist.getDurationNightDelivery()))) {
+                        flag = flag + 1;
+                        result = depotsDistanceWrongLink+":truck inconsistency of speed. \n";
+                        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+                    }
+                }
+                if (carDistance >= 10 && carDistance <= 30) {
+                    if (Math.round(carDistance) != Math.round(20 / 60.0 * Double.parseDouble(siteDist.getDurationNightDelivery()))) {
+                        flag = flag + 1;
+                        result = depotsDistanceWrongLink+":truck inconsistency of speed. \n";
+                        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+                    }
+                }
+                if (carDistance > 30) {
+                    if (Math.round(carDistance) != Math.round(30 / 60.0 * Double.parseDouble(siteDist.getDurationNightDelivery()))) {
+                        flag = flag + 1;
+                        result = depotsDistanceWrongLink+":truck inconsistency of speed. \n";
+                        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+                    }
+                }
+            }
+
+            // 百度
+            if (siteDist.getDurationNightDelivery2() != null) {
+                Double carDistance = siteDist.getCarDistance() + 0.0;
+                if (Math.round(carDistance) != Math.round(12 / 60.0 * Double.parseDouble(siteDist.getDurationNightDelivery2()))) {
+                    flag = flag + 1;
+                    result = depotsDistanceWrongLink+":baidu nconsistency of speed. \n";
+                    systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+                }
+            }
+
+            // didi
+            if (siteDist.getDurationNightDelivery3() != null) {
+                Double carDistance = siteDist.getCarDistance() + 0.0;
+                if (carDistance < 10) {
+                    if (Math.round(carDistance) != Math.round(15 / 60.0 * Double.parseDouble(siteDist.getDurationNightDelivery3()))) {
+                        flag = flag + 1;
+                        result = depotsDistanceWrongLink+":didi inconsistency of speed. \n";
+                        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+                    }
+                }
+                if (carDistance >= 10 && carDistance <= 30) {
+                    if (Math.round(carDistance) != Math.round(20 / 60.0 * Double.parseDouble(siteDist.getDurationNightDelivery3()))) {
+                        flag = flag + 1;
+                        result = depotsDistanceWrongLink+":didi inconsistency of speed. \n";
+                        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+                    }
+                }
+                if (carDistance > 30) {
+                    if (Math.round(carDistance) != Math.round(30 / 60.0 * Double.parseDouble(siteDist.getDurationNightDelivery3()))) {
+                        flag = flag + 1;
+                        result = depotsDistanceWrongLink+":didi inconsistency of speed. \n";
+                        systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+                    }
+                }
+            }
+
+            // dada
+            if (siteDist.getDurationNightDelivery4() != null) {
+                Double carDistance = siteDist.getCarDistance() + 0.0;
+                if (Math.round(carDistance) != Math.round(12 / 60.0 * Double.parseDouble(siteDist.getDurationNightDelivery4()))) {
+                    flag = flag + 1;
+                    result = depotsDistanceWrongLink+":dada nconsistency of speed. \n";
+                    systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
+                }
+            }
+
             //获取最短的网点距离
             shortSiteDistance = shortSiteDistance < siteDist.getCarDistance() ? shortSiteDistance : siteDist.getCarDistance();
         }

@@ -1461,7 +1461,11 @@ $(function  () {
 	                {"data":"siteName","name":"site_name"},
 	                {"data":"siteAddress","name":"site_address"},
 	                {"data":function(res) {
-	                	return operationTime(res.arrTime);
+	                	if (res.arrTime == "--") {
+	                		return res.arrTime;
+						}else {
+                            return operationTime(res.arrTime);
+						}
 	                },"name":"arr_time"},
 	                {"data":function(res) {
 	                	if (res.unloadVol == "") {
@@ -1472,7 +1476,11 @@ $(function  () {
 	                	return "Unload "+Math.ceil(res.unloadVol)+" , "+"Load "+Math.ceil(res.sbVol);
 	                },"name":"unload_vol&sbVol"},
 	                {"data":function(res) {
-	                	return operationTime(res.endTime);
+                        if (res.endTime == "--") {
+                            return res.endTime;
+                        }else {
+                            return operationTime(res.endTime);
+                        }
 	                },"name":"end_time"},
 	                {"data":function(res) {
 	                	return res.nextCurLoc+","+res.calcDis+"km";
