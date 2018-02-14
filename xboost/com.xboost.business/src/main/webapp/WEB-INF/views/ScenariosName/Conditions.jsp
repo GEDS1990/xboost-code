@@ -96,21 +96,6 @@
 					    	</tr>
 					    </thead>
 			            <tbody id="info-tbody">
-			            	<tr>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-			            	</tr>
 			            </tbody>
 		            </table>
 		        </div>
