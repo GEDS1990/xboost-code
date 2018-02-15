@@ -68,6 +68,7 @@ public class TempService {
         route.setSbVolSum(jieliResult.getVolume());
 //        route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
 //        route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
+        route.setArrTime("--");
         route.setEndTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
         route.setUnloadLoc("0");
         route.setUnloadVol("0");
@@ -90,6 +91,7 @@ public class TempService {
 //        route.setArrTime((Integer.parseInt(jieliResult.getTimeId())-1)*10 + 780 +"");
 //        route.setEndTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
         route.setArrTime((Integer.parseInt(jieliResult.getTimeId()))*10 + 780 +"");
+        route.setEndTime("--");
         route.setUnloadLoc(siteInfoService.findSiteCodeById(Integer.parseInt(jieliResult.getOutboundId())));
         route.setUnloadVol(jieliResult.getVolume());
         route.setUnloadVolSum(jieliResult.getVolume());
