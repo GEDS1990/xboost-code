@@ -17,8 +17,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -59,7 +58,7 @@ public class SolutionEfficiencyController {
         int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
         List<String> siteList = solutionEfficiencyService.findAllSite(scenariosId);
 
-        Map<String,Object> result = Maps.newHashMap();
+        Map<String,Object> result = Maps.newTreeMap();
         Map<String,Object> param = Maps.newHashMap();
         Integer sbVol;
 
@@ -76,6 +75,7 @@ public class SolutionEfficiencyController {
                 result.put(site+"-"+String.valueOf(min+(periodTime*j))+"-"+String.valueOf(min+(periodTime*(j+1))),sbVol);
             }
         }
+
         redisUtil.set(key,result);
         logger.info("----加入缓存---key="+key);
         return result;
@@ -99,7 +99,7 @@ public class SolutionEfficiencyController {
         int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
         List<String> siteList = solutionEfficiencyService.findAllSite(scenariosId);
 
-        Map<String,Object> result = Maps.newHashMap();
+        Map<String,Object> result = Maps.newTreeMap();
         Map<String,Object> param = Maps.newHashMap();
         Integer unloadVol;
 
@@ -139,7 +139,7 @@ public class SolutionEfficiencyController {
         int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
         List<String> siteList = solutionEfficiencyService.findAllSite(scenariosId);
 
-        Map<String,Object> result = Maps.newHashMap();
+        Map<String,Object> result = Maps.newTreeMap();
         Map<String,Object> param = Maps.newHashMap();
         Integer leaveCarNum;
         List<Route> carList;
@@ -194,7 +194,7 @@ public class SolutionEfficiencyController {
         int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
         List<String> siteList = solutionEfficiencyService.findAllSite(scenariosId);
 
-        Map<String,Object> result = Maps.newHashMap();
+        Map<String,Object> result = Maps.newTreeMap();
         Map<String,Object> param = Maps.newHashMap();
         Integer arrCarNum;
         List<Route> carList;
