@@ -234,8 +234,7 @@ public class SiteInfoService {
     /**
      * 导出result_depots excel
      */
-    public void exportResult(String scenariosId,String[] titles, ServletOutputStream outputStream)
-    {
+    public void exportResult(String scenariosId,String[] titles, ServletOutputStream outputStream) {
         List<Map<String,Object>> list = siteInfoMapper.findAllBySiteCode(scenariosId);
         // 创建一个workbook 对应一个excel应用文件
         XSSFWorkbook workBook = new XSSFWorkbook();
