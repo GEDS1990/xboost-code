@@ -49,7 +49,7 @@ public class SolutionDistributionService {
                 for (int i = 0; i < (max - min) / jiange; i++) {
                     double total = 0;
                     for (DemandInfo demandInfo : demandInfoList) {
-                        double res = Integer.parseInt(demandInfo.getDurationEnd() != null ? demandInfo.getDurationEnd() : "0");
+                        double res = Integer.parseInt(demandInfo.getDurationEnd() != null && !demandInfo.getDurationEnd().equals("--")  ? demandInfo.getDurationEnd() : "0");
                         if (res > (min + jiange * i) && res <= (min + jiange * (i + 1))) {
                             total = total + Integer.parseInt(demandInfo.getVotes() != null ? demandInfo.getVotes() : "0");
                         }
@@ -64,7 +64,7 @@ public class SolutionDistributionService {
                 for (int i = 0; i < (max - min) / jiange; i++) {
                     double total = 0;
                     for (Route route : routeList) {
-                        double res = Double.parseDouble(route.getArrTime() != null ? route.getArrTime() : "0");
+                        double res = Double.parseDouble(route.getArrTime() != null && !route.getArrTime().equals("--") ? route.getArrTime() : "0");
                         if (res > (min + jiange * i) && res <= (min + jiange * (i + 1))) {
                             total = total + Double.parseDouble(route.getSbVolSum() != null ? route.getSbVolSum() : "0");
                         }
@@ -109,21 +109,21 @@ public class SolutionDistributionService {
                     }
                     totalD = total1 + total2 + total3 + total4 + total5 + total6 + total7;
                 }
-                int d1 = 0;
-                int d2 = 0;
-                int d3 = 0;
-                int d4 = 0;
-                int d5 = 0;
-                int d6 = 0;
-                int d7 = 0;
+                double d1 = 0;
+                double d2 = 0;
+                double d3 = 0;
+                double d4 = 0;
+                double d5 = 0;
+                double d6 = 0;
+                double d7 = 0;
 
-                d1 = (int)(total1 / totalD);
-                d2 = (int)(total2 / totalD);
-                d3 = (int)(total3 / totalD);
-                d4 = (int)(total4 / totalD);
-                d5 = (int)(total5 / totalD);
-                d6 = (int)(total6 / totalD);
-                d7 = (int)(total7 / totalD);
+                d1 = (total1 / totalD);
+                d2 = (total2 / totalD);
+                d3 = (total3 / totalD);
+                d4 = (total4 / totalD);
+                d5 = (total5 / totalD);
+                d6 = (total6 / totalD);
+                d7 = (total7 / totalD);
 //                d1 = (total1 / totalD)>1?1:(total1 / totalD);
 //                d1 = (total1 / totalD)<0?0:(total1 / totalD);
 //
@@ -230,7 +230,7 @@ public class SolutionDistributionService {
         Map<String, Object> dataByType3 = getDataByType("3");
         Set<String> sortKeySet3 = getSortKeySetByMap(dataByType3);
         Iterator<String> iterator3 = sortKeySet3.iterator();
-        Float arrPercentage = 0F;
+        double arrPercentage = 0;
 
         Map<String, Object> dataByType4 = getDataByType("4");
         Map<String, Object> dataByType5 = getDataByType("5");
@@ -291,7 +291,11 @@ public class SolutionDistributionService {
             if(j >= 2 && j<=dataByType0.size()+2 && dataByType0.size()>0 ) {
                 String next = iterator0.next();
                 cell = row.createCell(0);
-                cell.setCellValue(convertTime(next));
+                cell.setCellValue(convertTime(next, "start"));
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(1);
+                cell.setCellValue(convertTime(next, "end"));
                 cell.setCellStyle(bodyStyle);
 
                 cell = row.createCell(2);
@@ -300,7 +304,11 @@ public class SolutionDistributionService {
 
                 String next1 = iterator1.next();
                 cell = row.createCell(4);
-                cell.setCellValue(convertTime(next1));
+                cell.setCellValue(convertTime(next1, "start"));
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(5);
+                cell.setCellValue(convertTime(next1, "end"));
                 cell.setCellStyle(bodyStyle);
 
                 cell = row.createCell(6);
@@ -313,8 +321,14 @@ public class SolutionDistributionService {
                 if (dataByType3.get("tiqian"+(7-j)+"0") != null) {
                     arrPercentage += Float.parseFloat(dataByType3.get("tiqian"+(7-j)+"0")+"");
                 }
+                if (j == 7) {
+                    arrPercentage += Float.parseFloat(dataByType3.get("zunshi")+"");
+                    if (arrPercentage > 100.00) {
+                        arrPercentage = 100.00;
+                    }
+                }
                 cell = row.createCell(12);
-                cell.setCellValue(dataByType3.get("tiqian"+(7-j)+"0") == null ? "0.00%" : arrPercentage+"%");
+                cell.setCellValue(arrPercentage+"%");
                 cell.setCellStyle(bodyStyle);
             }
 
@@ -352,8 +366,27 @@ public class SolutionDistributionService {
         return sortSet;
     }
 
-    public String convertTime(String key) {
-        return  Integer.parseInt(key.substring(0, key.indexOf("-")))/60 + ":" + Integer.parseInt(key.substring(0, key.indexOf("-")))%60
-                + "-" + Integer.parseInt(key.substring(key.indexOf("-")+1))/60 + ":" + Integer.parseInt(key.substring(key.indexOf("-")+1))%60;
+    public String convertTime(String key, String place) {
+        int startTime = Integer.parseInt(key.substring(0, key.indexOf("-")));
+        int endTime = Integer.parseInt(key.substring(key.indexOf("-") + 1));
+        switch (place) {
+            case "start" :
+                return timeTransfer(startTime);
+            case "end":
+                return timeTransfer(endTime);
+        }
+        return key;
+    }
+
+    public String timeTransfer(int time){
+        Integer h = (int)(time/60);
+        Integer m = (int)(time%60);
+        String t = "";
+        if(m >= 0 && m <= 9) {
+            t = h + ":0" + m;
+        }else {
+            t = h + ":" + m;
+        }
+        return t;
     }
 }
