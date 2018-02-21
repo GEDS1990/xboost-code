@@ -49,8 +49,8 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 	private static int h=cal.get(Calendar.HOUR_OF_DAY);
 	private static int mi=cal.get(Calendar.MINUTE);
 	private static int time=h*60+mi;
-	private static int timeID = time/TIME_UNIT-1;
-//	private static int timeID = PICKING_START_TIME*60/TIME_UNIT-1;
+//	private static int timeID = time/TIME_UNIT-1;
+	private static int timeID = PICKING_START_TIME*60/TIME_UNIT-1;
 	private final AtomicLong counter = new AtomicLong(timeID);
 	
 	public HashMap<Integer, Carrier> carrierMap = new HashMap<Integer, Carrier>();
@@ -97,7 +97,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 	}
 
 
-	@RequestMapping(value = "/daynamic/move", method = RequestMethod.POST)
+	@RequestMapping(value = "/dynamic/move", method = RequestMethod.POST)
 	public ResponseEntity<MoveResponse> move(@RequestBody MoveRequest request) {
 		MoveResponse response = new MoveResponse();
 		if (request != null) {
