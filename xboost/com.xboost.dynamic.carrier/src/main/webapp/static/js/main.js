@@ -1,6 +1,14 @@
 ﻿$(function (){
 	var list_3 = "";
-	var list_7 = "";
+	var timeNow = "";
+	var url_main = "http://localhost:8081/";
+	var url_map = '/davav'; //地图
+	var url_feixian = '/parcel_feixian';//飞线
+	var url_one_hour = '/one_hour';//最近一小时新增包裹
+	var url_yunli = '/pressure';//运力指数
+	var url_parcel = '/realtime_parcel'; //实时包裹
+	var url_time = '/date'; //实时包裹
+	var sum = '';//实时增加包裹数叠加
 	/*
 	 * 
 	 * modal time
@@ -44,11 +52,51 @@
 	//time
 	window.onload=function(){
 		//定时器每秒调用一次fnDate()
+//		$.post(url_main+url_time).done(function  (obj) {
+//			var oDiv=document.getElementById('time');
+//			var time=obj[0].x;
+//			timeNow = time;
+//			oDiv.innerHTML=time;
+//		}).fail(function  () {
+//			console.log("fail");
+//		});
 		clearInterval(timeTicket0);
 		var timeTicket0 = setInterval(function(){
 				fnDate('time');
 			},1000);
 		
+	};
+	function fnDate_$(id,obj){
+		var oDiv=document.getElementById(id);
+		if (obj)
+		{
+			var date=new Date(obj);
+		}
+		else
+		{
+			var date=new Date();
+		}
+		var year=date.getFullYear();//当前年份
+		var month=date.getMonth();//当前月份
+		var data=date.getDate();//天
+		var hours=date.getHours();//小时
+		var minute=date.getMinutes();//分
+		var second=date.getSeconds();//秒
+		var time=year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(hours)+":"+add0(minute)+":"+add0(second);
+		oDiv.innerHTML=time;
+		timeNow = time;
+	};
+	function fnDate(id){
+		var oDiv=document.getElementById(id);
+		var date=new Date();
+		var year=date.getFullYear();//当前年份
+		var month=date.getMonth();//当前月份
+		var data=date.getDate();//天
+		var hours=date.getHours();//小时
+		var minute=date.getMinutes();//分
+		var second=date.getSeconds();//秒
+		var time=year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(hours)+":"+add0(minute)+":"+add0(second);
+		oDiv.innerHTML=time;
 	};
 	function status_time () {
 		var i_time;
@@ -93,18 +141,6 @@
 	var i_time_18 = status_time_18();
 	////console.log(i_time_18);
 	//js 获取当前时间
-	function fnDate(id){
-		var oDiv=document.getElementById(id);
-		var date=new Date();
-		var year=date.getFullYear();//当前年份
-		var month=date.getMonth();//当前月份
-		var data=date.getDate();//天
-		var hours=date.getHours();//小时
-		var minute=date.getMinutes();//分
-		var second=date.getSeconds();//秒
-		var time=year+"-"+add0((month+1))+"-"+add0(data)+" "+add0(hours)+":"+add0(minute)+":"+add0(second);
-		oDiv.innerHTML=time;
-	};
 	function fnDate_hours(){
 		var date=new Date();
 		var hours=date.getHours();//小时
@@ -684,270 +720,72 @@
 			        }
 			    ]
 			};
-		var getTime = function  () {
-			var arr = [];//
-			var date=new Date();
-  			var hours=date.getHours();//小时
-			var minute=date.getMinutes();//分
-			for (var i=6;i>-1;i--) 
-			{
-				var m = minute - i - 1;
-				var h = hours - 1;
-				if (m < 0) 
-				{
-					if (h == -1) 
-					{
-						var hh = 23;
-					}
-					else
-					{
-						var hh = add0(h);
-					}
-					var mm = 60 - Math.abs(m);
-				}
-				else
-				{
-					var mm = add0(m);
-					var hh = add0(hours);
-				}
-				var add = hh + ":" + mm;
-				arr.push(add);
-			}
-			return arr;
-		};
-		var getY = function  (arr,arrB) {
-			var list = [];
+		function getTime (arr) {
 			var len = arr.length;
-			for (var i=0;i<len;i++) 
+			var xlist = [];
+			var ylist = [];
+			var list = [];
+			if (len != 0 && len < 7) 
 			{
-				if (arr[i] < "10:00" || arr[i] >= "18:00") 
+				xlist.push('09:55');
+				ylist.push(0);
+				for (var i=0;i<len;i++) 
 				{
-					list.push(0);
+					var add_x = ( arr[i].x ).slice(0,5);
+					var add_y = ( arr[i].y ).toFixed(3);
+					xlist.push(add_x);
+					ylist.push(add_y);
 				}
-				else
+				list.push(xlist);
+				list.push(ylist);
+			}
+			else
+			{
+				var arr_last = arr.slice(-7);
+				for (var i=0;i<7;i++) 
 				{
-					list.push(arrB[i]);
+					var add_x = ( arr_last[i].x ).slice(0,5);
+					var add_y = ( arr_last[i].y ).toFixed(3);
+					xlist.push(add_x);
+					ylist.push(add_y);
 				}
+				list.push(xlist);
+				list.push(ylist);
 			}
 			return list;
+			
 		};
-		option.xAxis[0].data = getTime();
 		myChart.setOption(option);
-		var bb = [6.3, 6.2, 6.0, 6.1, 6.0, 6.3, 6.1];
-		if (status) 
-		{
-			var aa = getTime();
-			var b = getY(aa,bb);
-			var timeTicket3;
-			var timeTicket3_0;
-			option.xAxis[0].data = getTime();
+		function Pressure () {
+			$.post(url_main+url_yunli).done(function  (res) {
+				//console.log(res);
+				var result = getTime(res);
+				//console.log(result)
+				if (result.length != 0) 
+				{
+					option.xAxis[0].data = result[0];
+					option.series[0].data = result[1];
+				}
+				myChart.setOption(option);
+			}).fail(function  () {
+				console.log("fail");
+			});
+		};
+		setTimeout(function  () {
+			Pressure();
+			clearInterval(time33)
+			var time33 = setInterval(function  () {
+				Pressure();
+			},301000);
+		},1000);
+		
+		/*
+		 * option.xAxis[0].data = getTime();
 			option.series[0].data = b;
 			myChart.setOption(option, true);
-			setTimeout(function  () {
-				var i =Math.floor(Math.random()*7);
-				b.shift();
-				b.push(bb[i]);
-			    option.xAxis[0].data = getTime();
-			    option.series[0].data = b;
-			    myChart.setOption(option, true);
-				clearInterval(timeTicket3);
-				timeTicket3 = setInterval(function (){
-					var i =Math.floor(Math.random()*7);
-					b.shift();
-					b.push(bb[i]);
-				    option.xAxis[0].data = getTime();
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-				},60000);
-			},second_s);
-			
-			
-			setTimeout(function () {
-				var i =Math.floor(Math.random()*7);
-				b.shift();
-				b.push(bb[i]);
-				clearInterval(timeTicket3);
-				option.xAxis[0].data = getTime();
-			    option.series[0].data = b;
-			    myChart.setOption(option, true);
-				clearInterval(timeTicket3_0);
-				timeTicket3_0 = setInterval(function (){
-					b.shift();
-					b.push(0);
-				    option.xAxis[0].data = getTime();
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-				},60000);
-				
-				clearInterval(timeTicket33_24);
-				var timeTicket33_24 = setInterval(function  () {
-					setTimeout(function  () {
-						var aa = getTime();
-						var b = getY(aa,bb);
-						var timeTicket3;
-						var timeTicket3_0;
-						option.xAxis[0].data = getTime();
-						option.series[0].data = b;
-						myChart.setOption(option, true);
-						setTimeout(function  () {
-							var i =Math.floor(Math.random()*7);
-							b.shift();
-							b.push(bb[i]);
-						    option.xAxis[0].data = getTime();
-						    option.series[0].data = b;
-						    myChart.setOption(option, true);
-							clearInterval(timeTicket3);
-							timeTicket3 = setInterval(function (){
-								var i =Math.floor(Math.random()*7);
-								b.shift();
-								b.push(bb[i]);
-							    option.xAxis[0].data = getTime();
-							    option.series[0].data = b;
-							    myChart.setOption(option, true);
-							},60000);
-						},60000);
-						
-						setTimeout(function  () {
-							clearInterval(timeTicket3);
-							var i =Math.floor(Math.random()*7);
-							b.shift();
-							b.push(bb[i]);
-							option.xAxis[0].data = getTime();
-						    option.series[0].data = b;
-						    myChart.setOption(option, true);
-							clearInterval(timeTicket3_0);
-							timeTicket3_0 = setInterval(function (){
-								b.shift();
-								b.push(0);
-							    option.xAxis[0].data = getTime();
-							    option.series[0].data = b;
-							    myChart.setOption(option, true);
-							},60000);
-						},28800000);
-					},57600000);
-				},86400000)
-			},i_time_18);
-		}
-		else
-		{
-			var aa = getTime();
-			var b = getY(aa,bb);
-			var timeTicket3_1;
-			option.xAxis[0].data = getTime();
-			option.series[0].data = b;
-			myChart.setOption(option, true);
-			setTimeout(function (){
-				b.shift();
-				b.push(0);
-			    option.xAxis[0].data = getTime();
-			    option.series[0].data = b;
-			    myChart.setOption(option, true);
-			    
-			    clearInterval(timeTicket3_1);
-				timeTicket3_1 = setInterval(function (){
-					b.shift();
-					b.push(0);
-				    option.xAxis[0].data = getTime();
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-				},60000);
-			},second_s);
-			
-			
-			setTimeout(function (){
-				clearInterval(timeTicket3_1);
-				var aa = getTime();
-				var b = getY(aa,bb);
-				var timeTicket3;
-				var timeTicket3_0;
-				option.xAxis[0].data = getTime();
-				option.series[0].data = b;
-				myChart.setOption(option, true);
-				setTimeout(function  () {
-					var i =Math.floor(Math.random()*7);
-					b.shift();
-					b.push(bb[i]);
-				    option.xAxis[0].data = getTime();
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-					clearInterval(timeTicket3);
-					timeTicket3 = setInterval(function (){
-						var i =Math.floor(Math.random()*7);
-						b.shift();
-						b.push(bb[i]);
-					    option.xAxis[0].data = getTime();
-					    option.series[0].data = b;
-					    myChart.setOption(option, true);
-					},60000);
-				},60000);
-				
-				setTimeout(function  () {
-					clearInterval(timeTicket3);
-					clearInterval(timeTicket3_0);
-					var i =Math.floor(Math.random()*7);
-					b.shift();
-					b.push(bb[i]);
-					option.xAxis[0].data = getTime();
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-					timeTicket3_0 = setInterval(function (){
-						b.shift();
-						b.push(0);
-					    option.xAxis[0].data = getTime();
-					    option.series[0].data = b;
-					    myChart.setOption(option, true);
-					},60000);
-				},28800000);
-				
-				
-				
-				clearInterval(timeTicket3_24);
-				var timeTicket3_24 = setInterval(function  () {
-					var aa = getTime();
-					var b = getY(aa,bb);
-					var timeTicket3;
-					var timeTicket3_0;
-					option.xAxis[0].data = getTime();
-					option.series[0].data = b;
-					myChart.setOption(option, true);
-					setTimeout(function  () {
-						var i =Math.floor(Math.random()*7);
-						b.shift();
-						b.push(bb[i]);
-					    option.xAxis[0].data = getTime();
-					    option.series[0].data = b;
-					    myChart.setOption(option, true);
-						clearInterval(timeTicket3);
-						timeTicket3 = setInterval(function (){
-							var i =Math.floor(Math.random()*7);
-							b.shift();
-							b.push(bb[i]);
-						    option.xAxis[0].data = getTime();
-						    option.series[0].data = b;
-						    myChart.setOption(option, true);
-						},60000);
-					},60000);
-					
-					setTimeout(function  () {
-						clearInterval(timeTicket3);
-						clearInterval(timeTicket3_0);
-						var i =Math.floor(Math.random()*7);
-						b.shift();
-						b.push(bb[i]);
-						option.xAxis[0].data = getTime();
-					    option.series[0].data = b;
-					    myChart.setOption(option, true);
-						timeTicket3_0 = setInterval(function (){
-							b.shift();
-							b.push(0);
-						    option.xAxis[0].data = getTime();
-						    option.series[0].data = b;
-						    myChart.setOption(option, true);
-						},60000);
-					},28800000);
-				},86400000);
-			},i_time);
-		}
+		 
+		 * */
+		
 		
 	}());
 	
@@ -958,10 +796,10 @@
 		var status = fnDate_hours();
 		var myCarrList;
 		var myPartList;
-		var myData;
-		var myData1;
+		var myData = [];
+		var myData1 = [];
 		var myLine_all;
-		var myLine;
+		var myLine = [];
 		var carrTimeId;
 		var partTimeId;
 		var count_carr = 0;
@@ -1112,9 +950,6 @@
 				var m = minutes - a + 5;
 				id = ((hours*60) + m)/5;
 			}
-//			//console.log(hours)
-//			//console.log(minutes)
-//			//console.log(id)
 			return id ;
 		};
 		//循环输出飞线
@@ -1144,406 +979,401 @@
 			
 			return list;
 		};
+		function renderItem(params, api) {
+		    var coords = [
+		        [121.442293,31.280756],
+		        [121.381352,31.265448],
+		        [121.433094,31.235317],
+		        [121.469889,31.239763],
+		        [121.485986,31.2773]
+		    ];
+		    var points = [];
+		    for (var i = 0; i < coords.length; i++) {
+		        points.push(api.coord(coords[i]));
+		    }
+		    var color = api.visual('color');
+		
+		    return {
+		        type: 'polygon',
+		        shape: {
+		            points: echarts.graphic.clipPointsByRect(points, {
+		                x: params.coordSys.x,
+		                y: params.coordSys.y,
+		                width: params.coordSys.width,
+		                height: params.coordSys.height
+		            })
+		        },
+		        style: api.style({
+		            fill: color,
+		            stroke: echarts.color.lift(color)
+		        })
+		    };
+		};
+		function renderItem1(params, api) {
+		    var coords = [
+		        [121.438843,31.207647],
+		        [121.446317,31.17206],
+		        [121.507833,31.200729],
+		        [121.529105,31.250136],
+		        [121.473338,31.237293]
+		    ];
+		    var points = [];
+		    for (var i = 0; i < coords.length; i++) {
+		        points.push(api.coord(coords[i]));
+		    }
+		    var color = api.visual('color');
+		
+		    return {
+		        type: 'polygon',
+		        shape: {
+		            points: echarts.graphic.clipPointsByRect(points, {
+		                x: params.coordSys.x,
+		                y: params.coordSys.y,
+		                width: params.coordSys.width,
+		                height: params.coordSys.height
+		            })
+		        },
+		        style: api.style({
+		            fill: color,
+		            stroke: echarts.color.lift(color)
+		        })
+		    };
+		};
+		function Carr_list (arr) {
+			var len = arr.length;
+			var list = [];
+			if (len) 
+			{
+				for (var i=0;i<len;i++) 
+				{
+					var item = [],
+						a = Number(arr[i].currentLong),
+						b = Number(arr[i].currentLat);
+					item.push(a);
+					item.push(b);
+					list.push(item);
+				}
+			}
+			return list; 
+		};
+		function Par_list (arr) {
+			var len = arr.length;
+			var list = [];
+			if (len) 
+			{
+				for (var i=0;i<len;i++) 
+				{
+					
+					var item_p = [],
+						item_pp = [];
+					var arr_x = (arr[i].x).split(",");
+					var arr_y = (arr[i].y).split(",");
+					//console.log(arr_x)
+					//console.log(arr_y)
+					item_p.push(arr_x[0],arr_x[1]);
+					item_pp.push(arr_y[0],arr_y[1]);
+					list.push(item_p);
+					list.push(item_pp);
+				}
+			}
+			return list;
+		};
+		function Par_list_line (arr) {
+			var len = arr.length;
+			var list = [];
+			if (len) 
+			{
+				for (var i=0;i<len;i++) 
+				{
+					var item_p = [],
+						item_all = '',
+						item_pp = [];
+					var arr_x = (arr[i].x).split(',');
+					var arr_y = (arr[i].y).split(',');
+					item_p.push(arr_x[0],arr_x[1]);
+					item_pp.push(arr_y[0],arr_y[1]);
+					item_all = {
+			    		"coords":[item_p,item_pp],
+			    		"lineStyle":{
+			    			"normal":{
+			    				color:"rgba(88,186,247,1)"
+			    			}
+			    		}
+			    	}
+					list.push(item_all);
+				}
+			}
+			return list;
+		};
 		var app = {},
 		option = null;
-		function mapajax (timeId,s_time) {
-//			$.ajax({
-//				type:"get",
-//				url:"http://182.254.216.232:80/main/calculate",
-//				async:true,
-//				success:function  (res) {
-//					////console.log(res);
-//				},
-//				error:function  () {
-//					////console.log("fail");
-//				}
-//			});
+		option = {
+	        bmap: {
+	            center: [121.491280, 31.220435],
+	            zoom: 12,
+	            roam: true,
+	            mapStyle: {
+	              'styleJson': [
+	                {
+	                  'featureType': 'water',
+	                  'elementType': 'all',
+	                  'stylers': {
+	                    'color': '#031628'
+	                  }
+	                },
+	                {
+	                  'featureType': 'land',
+	                  'elementType': 'geometry',
+	                  'stylers': {
+	                    'color': '#000102'
+	                  }
+	                },
+	                {
+	                  'featureType': 'highway',
+	                  'elementType': 'all',
+	                  'stylers': {
+	                    'visibility': 'off'
+	                  }
+	                },
+	                {
+	                  'featureType': 'arterial',
+	                  'elementType': 'geometry.fill',
+	                  'stylers': {
+	                    'color': '#000000'
+	                  }
+	                },
+	                {
+	                  'featureType': 'arterial',
+	                  'elementType': 'geometry.stroke',
+	                  'stylers': {
+	                    'color': '#0b3d51'
+	                  }
+	                },
+	                {
+	                  'featureType': 'local',
+	                  'elementType': 'geometry',
+	                  'stylers': {
+	                    'color': '#000000'
+	                  }
+	                },
+	                {
+	                  'featureType': 'railway',
+	                  'elementType': 'geometry.fill',
+	                  'stylers': {
+	                    'color': '#000000'
+	                  }
+	                },
+	                {
+	                  'featureType': 'railway',
+	                  'elementType': 'geometry.stroke',
+	                  'stylers': {
+	                    'color': '#08304b'
+	                  }
+	                },
+	                {
+	                  'featureType': 'subway',
+	                  'elementType': 'geometry',
+	                  'stylers': {
+	                    'lightness': -70
+	                  }
+	                },
+	                {
+	                  'featureType': 'building',
+	                  'elementType': 'geometry.fill',
+	                  'stylers': {
+	                    'color': '#000000'
+	                  }
+	                },
+	                {
+	                  'featureType': 'all',
+	                  'elementType': 'labels.text.fill',
+	                  'stylers': {
+	                    'color': '#857f7f'
+	                  }
+	                },
+	                {
+	                  'featureType': 'all',
+	                  'elementType': 'labels.text.stroke',
+	                  'stylers': {
+	                    'color': '#000000'
+	                  }
+	                },
+	                {
+	                  'featureType': 'building',
+	                  'elementType': 'geometry',
+	                  'stylers': {
+	                    'color': '#022338'
+	                  }
+	                },
+	                {
+	                  'featureType': 'green',
+	                  'elementType': 'geometry',
+	                  'stylers': {
+	                    'color': '#062032'
+	                  }
+	                },
+	                {
+	                  'featureType': 'boundary',
+	                  'elementType': 'all',
+	                  'stylers': {
+	                    'color': '#465b6c'
+	                  }
+	                },
+	                {
+	                  'featureType': 'manmade',
+	                  'elementType': 'all',
+	                  'stylers': {
+	                    'color': '#022338'
+	                  }
+	                },
+	                {
+	                  'featureType': 'label',
+	                  'elementType': 'all',
+	                  'stylers': {
+	                    'visibility': 'off'
+	                  }
+	                }
+	              ]
+	            }
+	        },
+	        
+	        series: [
+	        {
+	            type: 'lines',
+	            coordinateSystem: 'bmap',
+	            polyline: true,
+	            data:myLine,
+	            lineStyle: {
+	                normal: {
+	                    width: 1
+	                }
+	            },
+	            effect: {
+	                constantSpeed: 40,
+	                show: true,
+	                trailLength: 0.5,
+	                symbolSize: 5
+	            },
+	            zlevel: 1
+	        },
+	        
+	        {
+	        	type: 'scatter',
+	            coordinateSystem: 'bmap',
+	            data: myData,
+	            itemStyle : {
+                	normal:{
+                		color:"#ddb926",
+                	}
+            	},
+	            symbolSize:5
+	        },
+	        {
+	        	type: 'scatter',
+	            coordinateSystem: 'bmap',
+	            data: myData1,
+	            itemStyle : {
+                	normal:{
+                		color:"#ddb926",
+                	}
+            	},
+            	symbolSize:5
+	        }
+	        /*
+	        {
+	            type: 'custom',
+	            coordinateSystem: 'bmap',
+	            renderItem: renderItem,
+	            itemStyle: {
+	                normal: {
+	                    opacity: 0.5,
+	                    color:'blue'
+	                }
+	            },
+	            animation: false,
+	            silent: true,
+	            data: [0],
+	            z: -10
+	        },
+	        {
+	            type: 'custom',
+	            coordinateSystem: 'bmap',
+	            renderItem: renderItem1,
+	            itemStyle: {
+	                normal: {
+	                    opacity: 0.5,
+	                    color:'red'
+	                }
+	            },
+	            animation: false,
+	            silent: true,
+	            data: [0],
+	            z: -10
+	        }*/
+	        
+	        
+	        
+	        ]
+	    };
+	    /*
+	    var myData = [
+		    {value:[121.485615,31.215004]},
+		    {value:[121.420446,31.260015]}
+		  ];
+		
+		*/
+					
+		function mapajax () {
 			$.ajax({
-				type:"get",
-				url:"http://182.254.216.232:80/main/dynamic",
-				//url:"/echart/echart.json",
-				//url:"point1.json",
-				data:{"timeId":timeId},
+				type:"post",
+				url:url_main+url_map,
 				async:true,
 				success:function  (data) {
-					//console.log(data);
-					clearInterval(timeTicketAjax);
-					clearInterval(timeTicket444);
-					count_line = 0;
-					if (s_time) 
-					{
-						var res = {carrierList:[],parcelList:[]};
-					}
-					else
-					{
-						var res = data;
-					}
-					if (res.carrierList.length !=0 ) 
-					{
-						carrTimeId = carrTimeIdList(res.carrierList);
-						myData = carrlist(res.carrierList,carrTimeId[0]);
-					}
-					else
-					{
-						myData = [];
-					}
-					if (res.parcelList.length !=0 ) 
-					{
-						partTimeId = partTimeIdList(res.parcelList);
-						myData1 = parlist(res.parcelList,partTimeId[0]);
-						myLine_all = parlist_line(res.parcelList,partTimeId[0]);
-						lineCount =  Math.ceil( (myLine_all.length)/30 );
-						myLine = lineFly(myLine_all,0,lineCount);
-					}
-					else
-					{
-						myData1 = [];
-						myLine_all = [];
-					}
-					//console.log(res)
-					
-					/*
-				    var myData = [
-					    {value:[121.485615,31.215004]},
-					    {value:[121.420446,31.260015]}
-					  ];
-					
-					  */
-					function renderItem(params, api) {
-					    var coords = [
-					        [121.442293,31.280756],
-					        [121.381352,31.265448],
-					        [121.433094,31.235317],
-					        [121.469889,31.239763],
-					        [121.485986,31.2773]
-					    ];
-					    var points = [];
-					    for (var i = 0; i < coords.length; i++) {
-					        points.push(api.coord(coords[i]));
-					    }
-					    var color = api.visual('color');
-					
-					    return {
-					        type: 'polygon',
-					        shape: {
-					            points: echarts.graphic.clipPointsByRect(points, {
-					                x: params.coordSys.x,
-					                y: params.coordSys.y,
-					                width: params.coordSys.width,
-					                height: params.coordSys.height
-					            })
-					        },
-					        style: api.style({
-					            fill: color,
-					            stroke: echarts.color.lift(color)
-					        })
-					    };
-					};
-					function renderItem1(params, api) {
-					    var coords = [
-					        [121.438843,31.207647],
-					        [121.446317,31.17206],
-					        [121.507833,31.200729],
-					        [121.529105,31.250136],
-					        [121.473338,31.237293]
-					    ];
-					    var points = [];
-					    for (var i = 0; i < coords.length; i++) {
-					        points.push(api.coord(coords[i]));
-					    }
-					    var color = api.visual('color');
-					
-					    return {
-					        type: 'polygon',
-					        shape: {
-					            points: echarts.graphic.clipPointsByRect(points, {
-					                x: params.coordSys.x,
-					                y: params.coordSys.y,
-					                width: params.coordSys.width,
-					                height: params.coordSys.height
-					            })
-					        },
-					        style: api.style({
-					            fill: color,
-					            stroke: echarts.color.lift(color)
-					        })
-					    };
-					};
-				    option = {
-				        bmap: {
-				            center: [121.491280, 31.220435],
-				            zoom: 12,
-				            roam: true,
-				            mapStyle: {
-				              'styleJson': [
-				                {
-				                  'featureType': 'water',
-				                  'elementType': 'all',
-				                  'stylers': {
-				                    'color': '#031628'
-				                  }
-				                },
-				                {
-				                  'featureType': 'land',
-				                  'elementType': 'geometry',
-				                  'stylers': {
-				                    'color': '#000102'
-				                  }
-				                },
-				                {
-				                  'featureType': 'highway',
-				                  'elementType': 'all',
-				                  'stylers': {
-				                    'visibility': 'off'
-				                  }
-				                },
-				                {
-				                  'featureType': 'arterial',
-				                  'elementType': 'geometry.fill',
-				                  'stylers': {
-				                    'color': '#000000'
-				                  }
-				                },
-				                {
-				                  'featureType': 'arterial',
-				                  'elementType': 'geometry.stroke',
-				                  'stylers': {
-				                    'color': '#0b3d51'
-				                  }
-				                },
-				                {
-				                  'featureType': 'local',
-				                  'elementType': 'geometry',
-				                  'stylers': {
-				                    'color': '#000000'
-				                  }
-				                },
-				                {
-				                  'featureType': 'railway',
-				                  'elementType': 'geometry.fill',
-				                  'stylers': {
-				                    'color': '#000000'
-				                  }
-				                },
-				                {
-				                  'featureType': 'railway',
-				                  'elementType': 'geometry.stroke',
-				                  'stylers': {
-				                    'color': '#08304b'
-				                  }
-				                },
-				                {
-				                  'featureType': 'subway',
-				                  'elementType': 'geometry',
-				                  'stylers': {
-				                    'lightness': -70
-				                  }
-				                },
-				                {
-				                  'featureType': 'building',
-				                  'elementType': 'geometry.fill',
-				                  'stylers': {
-				                    'color': '#000000'
-				                  }
-				                },
-				                {
-				                  'featureType': 'all',
-				                  'elementType': 'labels.text.fill',
-				                  'stylers': {
-				                    'color': '#857f7f'
-				                  }
-				                },
-				                {
-				                  'featureType': 'all',
-				                  'elementType': 'labels.text.stroke',
-				                  'stylers': {
-				                    'color': '#000000'
-				                  }
-				                },
-				                {
-				                  'featureType': 'building',
-				                  'elementType': 'geometry',
-				                  'stylers': {
-				                    'color': '#022338'
-				                  }
-				                },
-				                {
-				                  'featureType': 'green',
-				                  'elementType': 'geometry',
-				                  'stylers': {
-				                    'color': '#062032'
-				                  }
-				                },
-				                {
-				                  'featureType': 'boundary',
-				                  'elementType': 'all',
-				                  'stylers': {
-				                    'color': '#465b6c'
-				                  }
-				                },
-				                {
-				                  'featureType': 'manmade',
-				                  'elementType': 'all',
-				                  'stylers': {
-				                    'color': '#022338'
-				                  }
-				                },
-				                {
-				                  'featureType': 'label',
-				                  'elementType': 'all',
-				                  'stylers': {
-				                    'visibility': 'off'
-				                  }
-				                }
-				              ]
-				            }
-				        },
-				        
-				        series: [
-				        /*
-				        {
-				            type: 'lines',
-				            coordinateSystem: 'bmap',
-				            polyline: true,
-				            data: busLines,
-				            silent: true,
-				            lineStyle: {
-				                normal: {
-				                    // color: '#c23531',
-				                    // color: 'rgb(200, 35, 45)',
-				                    opacity: 0.2,
-				                    width: 1
-				                }
-				            },
-				            progressiveThreshold: 500,
-				            progressive: 200
-				        }, 
-				        */
-				        {
-				            type: 'lines',
-				            coordinateSystem: 'bmap',
-				            polyline: true,
-				            //data: busLines,
-				            data:myLine,
-				            lineStyle: {
-				                normal: {
-				                    width: 1
-				                }
-				            },
-				            effect: {
-				                constantSpeed: 40,
-				                show: true,
-				                trailLength: 0.5,
-				                symbolSize: 5
-				            },
-				            zlevel: 1
-				        },
-				        
-				        {
-				        	type: 'scatter',
-				            coordinateSystem: 'bmap',
-				            data: myData,
-				            itemStyle : {
-			                	normal:{
-			                		color:"#ddb926",
-			                	}
-		                	},
-				            symbolSize:5
-				        },
-				        {
-				        	type: 'scatter',
-				            coordinateSystem: 'bmap',
-				            data: myData1,
-				            itemStyle : {
-			                	normal:{
-			                		color:"#ddb926",
-			                	}
-		                	},
-		                	symbolSize:5
-				        }
-				        /*
-				        {
-				            type: 'custom',
-				            coordinateSystem: 'bmap',
-				            renderItem: renderItem,
-				            itemStyle: {
-				                normal: {
-				                    opacity: 0.5,
-				                    color:'blue'
-				                }
-				            },
-				            animation: false,
-				            silent: true,
-				            data: [0],
-				            z: -10
-				        },
-				        {
-				            type: 'custom',
-				            coordinateSystem: 'bmap',
-				            renderItem: renderItem1,
-				            itemStyle: {
-				                normal: {
-				                    opacity: 0.5,
-				                    color:'red'
-				                }
-				            },
-				            animation: false,
-				            silent: true,
-				            data: [0],
-				            z: -10
-				        }*/
-				        
-				        
-				        
-				        ]
-				    };
-				
-					if (option && typeof option === "object") {
-						myChart.setOption(option);
-						timeTicket444 = setInterval(function () {
-							count_line++
-							var l_list = lineFly(myLine_all,count_line,lineCount);
-							////console.log(l_list)
-							option.series[0].data = l_list; 
-							myChart.setOption(option);
-						},10000);
-						timeTicketAjax = setInterval(function () {
-							var id = timenow();
-							////console.log(id)
-							if (id < 120 || id >215) 
-							{
-								mapajax(id,true);
-							}
-							else
-							{
-								mapajax(id);
-							}
-						},300000);
-					}
-		        
+					var timeTicket55;
+					clearInterval(timeTicket55);
+					var $data = data;//地图
+		        	$.post(url_main+url_feixian).done(function  (res) {
+		        		var $res = res;//飞线
+		        		var line = Par_list_line($res);
+		        		var len = line.length;
+		        		var count = 1;
+		        		if (len !=0 ) 
+		        		{
+		        			option.series[0].data = [line[0]];
+		        		}
+		        		option.series[1].data = Carr_list($data);
+		        		option.series[2].data = Par_list($res);
+		        		myChart.setOption(option);
+		        		if (len > 1)
+		        		{
+		        			clearInterval(timeTicket55);
+			        		timeTicket55 = setInterval(function  () {
+			        			if (count >= len) 
+			        			{
+			        				count = 0;
+			        			}
+			        			option.series[0].data = [line[count]];
+			        			count++;
+			        			myChart.setOption(option);
+			        		},5000);
+		        		}
+		        		
+		        		
+		        	}).fail(function  () {
+		        		console.log("fail");
+		        	});
 		        },
 		        error:function  () {
-		        	////console.log("fail");	
+		        	console.log("fail");
 		        }
 			});
 		};
-		//执行请求  
-		//myChart.showLoading();
-		if (status) 
-		{
-			var id = timenow();
-			mapajax(id);
-		}
-		else
-		{
-			var id = timenow();
-			mapajax(id,true);
-			setTimeout(function  () {
-				var id = timenow();
-				mapajax(id);
-			},i_time);
-		}
-		
+		//初始化
+		mapajax();
+		clearInterval(timeTicket5);
+		var timeTicket5 = setInterval(function  () {
+			mapajax();
+		},300000);
 	}());
 	
 	
@@ -1722,7 +1552,7 @@
 			        }
 			    },
 			    grid: {
-				    left: '2%',
+				    left: '5%',
 					right: '2%',
 					bottom: '3%',
 					containLabel: true
@@ -1763,9 +1593,6 @@
 			            nameTextStyle:{
 			            	color:'#fff'
 			            },
-			            max: function(value) {
-						    return 10000;
-						},
 			            splitLine :{
 			            	show:true,
 			            	lineStyle:{
@@ -1800,8 +1627,8 @@
 			};
 		myChart.setOption(option);
 		function Parcels_status () {
-			$.post('http://39.108.208.44:8081/realtime_parcel').done(function  (res) {
-				console.log(res);
+			$.post(url_main+url_parcel).done(function  (res) {
+				//console.log(res);
 				if (res.length != 0)
 				{
 					var sum=0;
@@ -1811,12 +1638,13 @@
 					{
 						sum = sum + Math.ceil(res[i].y);
 					}
+					
 					var yy0 = Math.ceil(res[0].y);
 					var yy1 = Math.ceil(res[1].y);
-					var yy2 = Math.ceil(res[2].y);
-					var per0 = ( (yy0/sum).toFixed(4) )*100 + "%";
-					var per1 = ( (yy1/sum).toFixed(4) )*100 + "%";
-					var per2 = (100-(yy0/sum).toFixed(4)*100-(yy1/sum).toFixed(4)*100) + "%";
+					var yy2 = sum - yy0 - yy1;
+					var per0 = ( (yy0/sum)*100 ).toFixed(2) + "%";
+					var per1 = ( (yy1/sum)*100 ).toFixed(2) + "%";
+					var per2 = ( (yy2/sum)*100 ).toFixed(2) + "%";
 					var add0 = {name:'Unattended',pp:[per0],value:yy0};
 					var add1 = {name:'Pickup',pp:[per1],value:yy1};
 					var add2 = {name:'Delivered',pp:[per2],value:yy2};
@@ -1828,11 +1656,13 @@
 				}
 			});
 		};
-		Parcels_status();
+		setTimeout(function  () {
+			Parcels_status();
+		},2000);
 		clearInterval(time6);
 		var time6 = setInterval(function  () {
 			Parcels_status();
-		},300000);
+		},302000);
 
 
 	}());
@@ -1918,334 +1748,56 @@
 			        }
 			    ]
 			};
-		var getTimeHour = function  () {
-			var arr = [];//
-			var date=new Date();
-  			var hours=date.getHours();//小时
-  			var h_h = hours - 10;
-			if (h_h >= 0 && h_h <=3) 
-			{
-				for (var i=0;i<4;i++) 
-				{
-					var add = 10+ i + ":00";
-					arr.push(add);
-				}
-			}
-			else if (h_h >= 9 && h_h <=12)
-			{
-				for (var i=0;i<4;i++) 
-				{
-					var add = 19+ i + ":00";
-					arr.push(add);
-				}
-			}
-			else
-			{
-				for (var i=3;i>=0;i--)
-				{
-					var h = hours - i;
-					if (h < 0) 
-					{
-						var hh = 24 - Math.abs(h);
-					}
-					else
-					{
-						var hh = add0(h);
-					}
-					var add = hh + ":00";
-					arr.push(add);
-				}
-			}
-			return arr;
-		};
-		var getY = function  (arr) {
-			var list = [];
-			var date=new Date();
-			var hours = date.getHours();//时
-			var hours_00 = hours + ":00"
-			var minute=date.getMinutes();//分
-			var hh = hours - 10;
+		function getTimeHour (arr) {
 			var len = arr.length;
-			for (var i=0;i<len;i++) 
+			var xlist = [];
+			var ylist = [];
+			var list = [];
+			if (len != 0)
 			{
-				if (hours_00 == arr[i]) 
+				var result = arr[0];
+				var x =Number( ( result.x ).slice(0,2) );
+				var c = x - 10;
+				if (c == 0)
 				{
-					data_i = i;
+					xlist.push('09:00','10:00');
+					sum = sum + result.y;
+					ylist.push(0);
+					ylist.push(sum);
+					list.push(xlist);
+					list.push(ylist);
 				}
-				if (arr[i] < "10:00" || arr[i] > "18:00") 
-				{
-					list.push(0);
-				}
-				else
-				{
-					if (arr[0] == "10:00") 
-					{
-						switch (hh) {
-							case 0:
-								var add = (minute+1) * 52;
-								list = [add,0,0,0];
-								break;
-							case 1:
-								var add =3120 + (minute+1) * 52;
-								list = [3120,add,0,0];
-								break;
-							case 2:
-								var add =3120*2 + (minute+1) * 52;
-								list = [3120,6240,add,0];
-								break;
-							case 3:
-								var add =3120*3 + (minute+1) * 52;
-								list = [3120,6240,9360,add];
-								break;
-						}
-					}
-					else if (arr[0] > "10:00" && arr[3] < "19:00")
-					{
-						var a1 = 3120*(hh-2);
-						var a2 = 3120*(hh-1);
-						var a3 = 3120*(hh);
-						var add =3120*hh + (minute+1) * 52;
-						list.push(a1);
-						list.push(a2);
-						list.push(a3);
-						list.push(add);
-					}
-				}
+				
 			}
 			return list;
+			
 		};
-		option.xAxis[0].data = getTimeHour();
 		
+		/*
+		 * option.xAxis[0].data = getTimeHour();
+			    option.series[0].data = b;
+			    myChart.setOption(option, true);
+		 */
 		myChart.setOption(option);
-		//var bb = [3140, 3000, 3100, 3119, 3034, 3028];
-		if (status)
-		{
-			var aaaa = getTimeHour();
-			var b = getY(aaaa);
-			var timeTicket7;
-			var timeTicket7_5;
-			var timeTicket7_0;
-			option.series[0].data = b;
-			myChart.setOption(option);
-			clearInterval(timeTicket7_5);
-			timeTicket7_5 = setInterval(function  () {
-				option.xAxis[0].data = getTimeHour();
-				if (b[data_i] != 0) 
+		function New_parcels () {
+			$.post(url_main+url_one_hour).done(function  (res) {
+				//console.log(res);
+				var result = getTimeHour(res);
+				if (result[0] != []) 
 				{
-					b[data_i] = b[data_i] + 5*52;
+					option.xAxis[0].data = result[0];
+			    	option.series[0].data = result[1];
 				}
-				else
-				{
-					b = [0,0,0,0]
-				}
-			    option.series[0].data = b;
-			    myChart.setOption(option, true);
-			},300000);
-			setTimeout(function (){
-				clearInterval(timeTicket7_5);
-				var aaaa = getTimeHour();
-				var b = getY(aaaa);
-			    option.xAxis[0].data = getTimeHour();
-			    option.series[0].data = b;
-			    myChart.setOption(option, true);
-			    
-			    clearInterval(timeTicket7_5);
-				timeTicket7_5 = setInterval(function  () {
-					option.xAxis[0].data = getTimeHour();
-					if (b[data_i] != 0) 
-					{
-						b[data_i] = b[data_i] + 5*52;
-					}
-					else
-					{
-						b = [0,0,0,0]
-					}
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-				},300000);
-				
-				clearInterval(timeTicket7);
-				timeTicket7 = setInterval(function (){
-					clearInterval(timeTicket7_5);
-					var aaaa = getTimeHour();
-					var b = getY(aaaa);
-				    option.xAxis[0].data = getTimeHour();
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-				    
-				    clearInterval(timeTicket7_5);
-					timeTicket7_5 = setInterval(function  () {
-						option.xAxis[0].data = getTimeHour();
-						if (b[data_i] != 0) 
-						{
-							b[data_i] = b[data_i] + 5*52;
-						}
-						else
-						{
-							b = [0,0,0,0]
-						}
-					    option.series[0].data = b;
-					    myChart.setOption(option, true);
-					},300000);
-				},3600000);
-			},time_i);
-			
-			
-			
-			setTimeout(function (){
-				var aaaa = getTimeHour();
-				var b = getY(aaaa);
-				var timeTicket7;
-				var timeTicket7_5;
-				var timeTicket7_0;
-				option.series[0].data = b;
-				myChart.setOption(option);
-				clearInterval(timeTicket7_5);
-				timeTicket7_5 = setInterval(function  () {
-					option.xAxis[0].data = getTimeHour();
-					if (b[data_i] != 0) 
-					{
-						b[data_i] = b[data_i] + 5*52;
-					}
-					else
-					{
-						b = [0,0,0,0]
-					}
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-				},300000);
-				clearInterval(timeTicket7);
-				timeTicket7 = setInterval(function (){
-					clearInterval(timeTicket7_5);
-					var aaaa = getTimeHour();
-					var b = getY(aaaa);
-				    option.xAxis[0].data = getTimeHour();
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-				    
-				    clearInterval(timeTicket7_5);
-					timeTicket7_5 = setInterval(function  () {
-						option.xAxis[0].data = getTimeHour();
-						if (b[data_i] != 0) 
-						{
-							b[data_i] = b[data_i] + 5*52;
-						}
-						else
-						{
-							b = [0,0,0,0]
-						}
-					    option.series[0].data = b;
-					    myChart.setOption(option, true);
-					},300000);
-				},3600000);
-			},i_time);
-		}
-		else
-		{
-			var aaaa = getTimeHour();
-			var b = getY(aaaa);
-			var timeTicket7;
-			var timeTicket7_5;
-			var timeTicket7_0;
-			option.series[0].data = b;
-			myChart.setOption(option);
-			setTimeout(function (){
-				var aaaa = getTimeHour();
-				var b = getY(aaaa);
-				var timeTicket7;
-				var timeTicket7_5;
-				var timeTicket7_0;
-				option.series[0].data = b;
-				myChart.setOption(option);
-				clearInterval(timeTicket7_5);
-				timeTicket7_5 = setInterval(function  () {
-					option.xAxis[0].data = getTimeHour();
-					if (b[data_i] != 0) 
-					{
-						b[data_i] = b[data_i] + 5*52;
-					}
-					else
-					{
-						b = [0,0,0,0]
-					}
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-				},300000);
-				clearInterval(timeTicket7);
-				timeTicket7 = setInterval(function (){
-					clearInterval(timeTicket7_5);
-					var aaaa = getTimeHour();
-					var b = getY(aaaa);
-				    option.xAxis[0].data = getTimeHour();
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-				    
-				    clearInterval(timeTicket7_5);
-					timeTicket7_5 = setInterval(function  () {
-						option.xAxis[0].data = getTimeHour();
-						if (b[data_i] != 0) 
-						{
-							b[data_i] = b[data_i] + 5*52;
-						}
-						else
-						{
-							b = [0,0,0,0]
-						}
-					    option.series[0].data = b;
-					    myChart.setOption(option, true);
-					},300000);
-				},3600000);
-			},time_i);
-			
-			
-			setTimeout(function (){
-				var aaaa = getTimeHour();
-				var b = getY(aaaa);
-				var timeTicket7;
-				var timeTicket7_5;
-				var timeTicket7_0;
-				option.series[0].data = b;
-				myChart.setOption(option);
-				clearInterval(timeTicket7_5);
-				timeTicket7_5 = setInterval(function  () {
-					option.xAxis[0].data = getTimeHour();
-					if (b[data_i] != 0) 
-					{
-						b[data_i] = b[data_i] + 5*52;
-					}
-					else
-					{
-						b = [0,0,0,0]
-					}
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-				},300000);
-				clearInterval(timeTicket7);
-				timeTicket7 = setInterval(function (){
-					clearInterval(timeTicket7_5);
-					var aaaa = getTimeHour();
-					var b = getY(aaaa);
-				    option.xAxis[0].data = getTimeHour();
-				    option.series[0].data = b;
-				    myChart.setOption(option, true);
-				    
-				    clearInterval(timeTicket7_5);
-					timeTicket7_5 = setInterval(function  () {
-						option.xAxis[0].data = getTimeHour();
-						if (b[data_i] != 0) 
-						{
-							b[data_i] = b[data_i] + 5*52;
-						}
-						else
-						{
-							b = [0,0,0,0]
-						}
-					    option.series[0].data = b;
-					    myChart.setOption(option, true);
-					},300000);
-				},3600000);
-			},i_time);
-		}
+			    myChart.setOption(option);
+			}).fail(function  () {
+				console.log("fail");
+			});
+		};
+		setTimeout(function  () {
+			New_parcels()
+		},1000)
+		
+		
 		
 	}());
                                                    
