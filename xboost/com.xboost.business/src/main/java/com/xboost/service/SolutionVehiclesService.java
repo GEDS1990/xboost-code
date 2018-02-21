@@ -4,6 +4,7 @@ import com.xboost.mapper.SolutionRouteMapper;
 import com.xboost.mapper.SolutionVehiclesMapper;
 import com.xboost.pojo.Route;
 import com.xboost.util.ExportUtil;
+import com.xboost.util.ShiroUtil;
 import org.apache.poi.xssf.usermodel.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -14,6 +15,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +31,8 @@ public class SolutionVehiclesService {
 
     @Inject
     private SolutionVehiclesMapper solutionVehiclesMapper;
+    @Inject
+    private MyScenariosService myScenariosService;
 
     /**
      * 根据carType获取线路信息
@@ -74,6 +79,19 @@ public class SolutionVehiclesService {
         return solutionVehiclesMapper.findBusyCarCount(scenariosId).intValue();
     }
 
+    public String timeTransfer(String time){
+        Double result = Math.floor(Double.parseDouble(time));
+        Integer h = (int)(result/60);
+        Integer m = (int)(result%60);
+        String t = "";
+        if(m >= 0 && m <= 9) {
+            t = h + ":0" + m;
+        }else {
+            t = h + ":" + m;
+        }
+        return t;
+    }
+
     /**
      *  导出excel
      * @param scenariosId
@@ -81,6 +99,34 @@ public class SolutionVehiclesService {
      */
     public void exportResult(String scenariosId,String[] titles,ServletOutputStream outputStream ) {
         List<Map<String, Object>> list = solutionVehiclesMapper.findAllByCar(scenariosId);
+
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+        String sbVol;
+        String unloadVol;
+        if ("1".equals(modelType)) {
+            for (int i = list.size()-1; i >= 0; i--) {
+                String curLoc = (String) list.get(i).get("curLoc");
+                String nextCurLoc = (String) list.get(i).get("nextCurLoc");
+
+                if (curLoc.equals(nextCurLoc)) {
+                    list.remove(i);
+                }
+
+/*                String curLoc2 = (String) list.get(i-1).get("curLoc");
+                String nextCurLoc2 = (String) list.get(i-1).get("nextCurLoc");
+                String calcDis2 = (String) list.get(i-1).get("calcDis");*/
+
+                /*if (curLoc.equals(curLoc2)) {
+                    if (curLoc.equals(nextCurLoc)) {
+                        list.remove(i);
+                    }
+                    if (curLoc2.equals(nextCurLoc2)) {
+                        list.remove(i-1);
+                    }
+                }*/
+            }
+        }
+
         // 创建一个workbook 对应一个excel应用文件
         XSSFWorkbook workBook = new XSSFWorkbook();
         // 在workbook中添加一个sheet,对应Excel文件中的sheet
@@ -130,7 +176,7 @@ public class SolutionVehiclesService {
                 String arrTime = (String)vehicle.get("arrTime");
                 String arr = arrTime.substring(0, arrTime.indexOf('.'));
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(Integer.parseInt(arr)/60+":"+Integer.parseInt(arr)%60);
+                cell.setCellValue(timeTransfer(arr));
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
@@ -155,7 +201,7 @@ public class SolutionVehiclesService {
                 String endTime = (String)vehicle.get("endTime");
                 String end = endTime.substring(0, endTime.indexOf('.'));
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(Integer.parseInt(end)/60+":"+Integer.parseInt(end)%60);
+                cell.setCellValue(timeTransfer(end));
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);

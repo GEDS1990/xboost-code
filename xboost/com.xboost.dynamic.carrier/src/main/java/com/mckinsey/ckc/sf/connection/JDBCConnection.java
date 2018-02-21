@@ -8,8 +8,8 @@ import java.sql.SQLException;
 public class JDBCConnection {
 	// JDBC driver name and database URL
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://182.254.216.232:3306/xboost3";
-//	static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/xboost2";
+//	static final String DB_URL = "jdbc:mysql://182.254.216.232:3306/xboost3";
+	static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/xboost2";
 	
 	static final String DB_URL_CLOUD = "jdbc:mysql://58f045257775e.sh.cdb.myqcloud.com:3635/dynamic_network";
 	static Connection conn;

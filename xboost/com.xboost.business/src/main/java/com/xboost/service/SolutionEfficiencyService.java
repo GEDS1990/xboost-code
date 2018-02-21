@@ -104,7 +104,7 @@ public class SolutionEfficiencyService {
         int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
         List<String> siteList = findAllSite(scenariosId);
 
-        Map<String,Object> result = Maps.newHashMap();
+        Map<String,Object> result = Maps.newTreeMap();
         Map<String,Object> param = Maps.newHashMap();
         Integer leaveCarNum;
         List<Route> carList;
@@ -140,13 +140,11 @@ public class SolutionEfficiencyService {
                 leaveCarNum = findLeaveCarCount(param);
                 for(int x=0;x<carList.size();x++) {
                     Route car = carList.get(x);
-                    for(int y=x+1;y<carList.size();y++)
-                    {
+                    for(int y=x+1;y<carList.size();y++) {
                         if(car.getRouteCount().equals(carList.get(y).getRouteCount())&&car.getCarType().equals(carList.get(y).getCarType())
                                 &&car.getSequence().equals(carList.get(y).getSequence())){
                             leaveCarNum = leaveCarNum -1;
                         }
-
                     }
                 }
                 leaveALLNum += leaveCarNum;
@@ -171,7 +169,6 @@ public class SolutionEfficiencyService {
                                 &&car.getCarType().equals(carList.get(y).getCarType())){
                             arrCarNum = arrCarNum -1;
                         }
-
                     }
                 }
                 arravingALLNum += arrCarNum;
@@ -316,18 +313,12 @@ public class SolutionEfficiencyService {
         cell.setCellValue(receivingTotal);
         cell.setCellStyle(headStyle);
 
-        try
-        {
-//            FileOutputStream fout = new FileOutputStream("E:/Depots_info.xlsx");
-//            workBook.write(fout);
-//            fout.flush();
-//            fout.close();
+        try {
             workBook.write(outputStream);
             outputStream.flush();
             outputStream.close();
         }
-        catch (IOException e)
-        {
+        catch (IOException e) {
             e.printStackTrace();
         }
     }

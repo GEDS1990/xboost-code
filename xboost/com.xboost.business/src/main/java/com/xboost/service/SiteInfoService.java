@@ -234,9 +234,37 @@ public class SiteInfoService {
     /**
      * 导出result_depots excel
      */
-    public void exportResult(String scenariosId,String[] titles, ServletOutputStream outputStream)
-    {
+    public void exportResult(String scenariosId,String[] titles, ServletOutputStream outputStream) {
         List<Map<String,Object>> list = siteInfoMapper.findAllBySiteCode(scenariosId);
+        String sbVol;
+        String unloadVol;
+        for(int i=0;i<list.size();i++) {
+            Map<String,Object> site = list.get(i);
+            for(int j=i+1;j<list.size();j++) {
+                if(site.get("curLoc").equals(list.get(j).get("curLoc"))&&site.get("arrTime").equals(list.get(j).get("arrTime"))
+                        &&site.get("carType").equals(list.get(j).get("carType"))){
+                    if(!site.get("sbVol").equals("0")&&!list.get(j).get("sbVol").equals("0")){
+                        sbVol = (site.get("sbVol").equals("0")?"":site.get("sbVol").toString())
+                                +(list.get(j).get("sbVol").equals("0")?"":"/"+list.get(j).get("sbVol").toString());
+                    } else {
+                        sbVol = (site.get("sbVol").equals("0")?"":site.get("sbVol").toString())
+                                +(list.get(j).get("sbVol").equals("0")?"":list.get(j).get("sbVol").toString());
+                    }
+                    if(!site.get("unloadVol").equals("0")&&!list.get(j).get("unloadVol").equals("0")) {
+                        unloadVol = (site.get("unloadVol").equals("0")?"":site.get("unloadVol").toString())
+                                +(list.get(j).get("unloadVol").equals("0")?"":"/"+(list.get(j).get("unloadVol").toString()));
+                    } else {
+                        unloadVol = (site.get("unloadVol").equals("0")?"":site.get("unloadVol").toString())
+                                +(list.get(j).get("unloadVol").equals("0")?"":(list.get(j).get("unloadVol").toString()));
+                    }
+
+                    list.get(i).put("sbVol",sbVol);
+                    list.get(i).put("unloadVol",unloadVol);
+                    list.remove(j);
+                }
+            }
+        }
+
         // 创建一个workbook 对应一个excel应用文件
         XSSFWorkbook workBook = new XSSFWorkbook();
         // 在workbook中添加一个sheet,对应Excel文件中的sheet
