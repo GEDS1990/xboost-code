@@ -1169,6 +1169,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         systemWebSocketHandler.sendMessageToUser( new TextMessage("getM1X ..."));
         getM1X();
         systemWebSocketHandler.sendMessageToUser( new TextMessage("getM2X ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
         getM2X();
         systemWebSocketHandler.sendMessageToUser( new TextMessage("getM3X ..."));
         getM3X();
@@ -1182,6 +1183,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
 
         systemWebSocketHandler.sendMessageToUser( new TextMessage("InvokeGurobi ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
         InvokeGurobi();
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Gurobi Optim Finished:"));
