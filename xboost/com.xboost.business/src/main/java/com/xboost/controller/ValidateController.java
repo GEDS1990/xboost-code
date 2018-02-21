@@ -356,7 +356,7 @@ public class ValidateController {
         param.put("scenariosId", ShiroUtil.getOpenScenariosId());
         for(int i=0;i<siteDistList.size();i++){
             SiteDist siteDist = siteDistList.get(i);
-            String depotsDistanceWrongLink = wrongLink("siteDist", siteDist.getSiteCollect());
+            String depotsDistanceWrongLink = wrongLink("siteDist", siteDist.getSiteCollect() + " - " + siteDist.getSiteDelivery());
             if(Strings.isEmpty(siteDist.getSiteCollect())){
                 flag = flag + 1;
                 result = depotsDistanceWrongLink+":pickup depot is wrong. Because it's empty.\n";

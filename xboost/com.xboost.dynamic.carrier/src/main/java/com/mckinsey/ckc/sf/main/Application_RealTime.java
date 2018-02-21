@@ -49,8 +49,8 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 	private static int h=cal.get(Calendar.HOUR_OF_DAY);
 	private static int mi=cal.get(Calendar.MINUTE);
 	private static int time=h*60+mi;
-//	private static int timeID = time/TIME_UNIT-1;
-	private static int timeID = PICKING_START_TIME*60/TIME_UNIT-1;
+	private static int timeID = time/TIME_UNIT-1;
+//	private static int timeID = PICKING_START_TIME*60/TIME_UNIT-1;
 	private final AtomicLong counter = new AtomicLong(timeID);
 	
 	public HashMap<Integer, Carrier> carrierMap = new HashMap<Integer, Carrier>();
@@ -97,7 +97,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 	}
 
 
-	@RequestMapping(value = "/move", method = RequestMethod.POST)
+	@RequestMapping(value = "/daynamic/move", method = RequestMethod.POST)
 	public ResponseEntity<MoveResponse> move(@RequestBody MoveRequest request) {
 		MoveResponse response = new MoveResponse();
 		if (request != null) {
@@ -114,7 +114,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 	}
 	
 	
-	@RequestMapping("/davav")
+	@RequestMapping("/dynamic/davav")
 	public List<CarrierRecords> datav(@RequestParam(value = "carrierid", defaultValue = "World") String name) {
 		timeID = (int)counter.incrementAndGet();
 		if(timeID >  PICKING_END_TIME*60/TIME_UNIT){
@@ -129,7 +129,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 		return dataVMap.get(timeID);
 	}
 	
-	@RequestMapping("/date")
+	@RequestMapping("/dynamic/date")
 	public List<XYModel> date(@RequestParam(value = "carrierid", defaultValue = "World") String name) {
 		List<XYModel> dvList = new ArrayList<XYModel>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -147,7 +147,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 	}
 	
 	
-	@RequestMapping("/davavstatistic")
+	@RequestMapping("/dynamic/davavstatistic")
 	public List<DataVModel> datav_statistic(@RequestParam(value = "carrierid", defaultValue = "World") String name) {
 		DataVModel dv = dataVStaticsticMap.get(timeID);
 		List<DataVModel> dvList = new ArrayList<DataVModel>();
@@ -155,7 +155,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 		return dvList;
 	}
 	
-	@RequestMapping("/carrier")
+	@RequestMapping("/dynamic/carrier")
 	public List<XYModel> carrier(@RequestParam(value = "carrierid", defaultValue = "World") String name) {
 		XYModel dv = new XYModel();
 		List<XYModel> dvList = new ArrayList<XYModel>();
@@ -169,7 +169,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 		return dvList;
 	}
 	
-	@RequestMapping("/parcel_feixian")
+	@RequestMapping("/dynamic/parcel_feixian")
 	public List<FeiXianModel> parcel_feixian(@RequestParam(value = "carrierid", defaultValue = "World") String name) {
 		
 		List<FeiXianModel> dvList = new ArrayList<FeiXianModel>();
@@ -185,7 +185,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 		return dvList;
 	}
 	
-	@RequestMapping("/one_hour")
+	@RequestMapping("/dynamic/one_hour")
 	public List<XYModel> one_hour(@RequestParam(value = "carrierid", defaultValue = "World") String name) {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		List<XYModel> dvList = new ArrayList<XYModel>();
@@ -195,7 +195,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 		date.setHours(timeID*TIME_UNIT/60);
 		date.setMinutes(timeID*TIME_UNIT%60);
 		date.setSeconds(0);
-		dv.setX(sdf.format(date));
+		dv.setX(sdf.format(cal));
 		for(int index = timeID-60/TIME_UNIT;index <= timeID;index++){
 			if(timeIdParcelList.containsKey(index)){
 				sum += timeIdParcelList.get(index).size();
@@ -207,18 +207,22 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 	}
 	
 	
-	@RequestMapping("/pressure")
+	@RequestMapping("/dynamic/pressure")
 	public List<XYModel> pressure(@RequestParam(value = "carrierid", defaultValue = "World") String name) {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		List<XYModel> dvList = new ArrayList<XYModel>();
 		for(int index = timeID-60/TIME_UNIT;index <= timeID;index++){
 			XYModel dv = new XYModel();
 			if(main.timeIdPressure.containsKey(index)){
+//				Calendar cal=Calendar.getInstance();
+//				cal.set(Calendar.HOUR, timeID*TIME_UNIT/60);
+//				cal.set(Calendar.MINUTE, timeID*TIME_UNIT%60);
+//				cal.set(Calendar.SECOND, 0);
 				Date date = new Date(System.currentTimeMillis());
 				date.setHours(index*TIME_UNIT/60);
 				date.setMinutes(index*TIME_UNIT%60);
 				date.setSeconds(0);
-				dv.setX(sdf.format(date));
+				dv.setX(sdf.format(cal));
 				dv.setY(main.timeIdPressure.get(index));
 				dvList.add(dv);
 			}
@@ -227,7 +231,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 	}
 	
 	
-	@RequestMapping("/realtime_parcel")
+	@RequestMapping("/dynamic/realtime_parcel")
 	public List<XYModel> realtime_parcel(@RequestParam(value = "carrierid", defaultValue = "World") String name) {
 		XYModel dv = new XYModel();
 		List<XYModel> dvList = new ArrayList<XYModel>();
