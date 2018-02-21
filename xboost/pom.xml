@@ -6,10 +6,7 @@
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <module>com.xboost.common</module>
     <module>com.xboost.business</module>
-    <module>com.xboost.cascade</module>
-    <module>com.xboost.relay</module>
     <module>com.xboost.dynamic</module>
     <module>com.xboost.dynamic.carrier</module>
   </modules>
