@@ -80,7 +80,16 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 		
 		//initialize carrier
 		for (int i = 1; i <= N_CARRIER_RANGE; i++) {
-			Points point = pointsList.get(rand.nextInt(pointsList.size()));
+			int seed;
+			if(pointsList.size()==0)
+			{
+				seed=0;
+			}else
+			{
+				seed=rand.nextInt(pointsList.size());
+			}
+			Points point = pointsList.get(seed);
+	//		Points point = pointsList.get(rand.nextInt(pointsList.size()));
 			Carrier carrier = new Carrier();
 			carrier.setCarrierID(i);
 			carrier.setCurrentPos(point.getPosition());
@@ -97,7 +106,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 	}
 
 
-	@RequestMapping(value = "/daynamic/move", method = RequestMethod.POST)
+	@RequestMapping(value = "/dynamic/move", method = RequestMethod.POST)
 	public ResponseEntity<MoveResponse> move(@RequestBody MoveRequest request) {
 		MoveResponse response = new MoveResponse();
 		if (request != null) {
@@ -116,7 +125,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 	
 	@RequestMapping("/dynamic/davav")
 	public List<CarrierRecords> datav(@RequestParam(value = "carrierid", defaultValue = "World") String name) {
-		timeID = (int)counter.incrementAndGet();
+//		timeID = (int)counter.incrementAndGet();
 		if(timeID >  PICKING_END_TIME*60/TIME_UNIT){
 			timeID =  PICKING_START_TIME*60/TIME_UNIT-1;
 			counter.set(PICKING_START_TIME*60/TIME_UNIT-1);
@@ -195,7 +204,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 		date.setHours(timeID*TIME_UNIT/60);
 		date.setMinutes(timeID*TIME_UNIT%60);
 		date.setSeconds(0);
-		dv.setX(sdf.format(cal));
+		dv.setX(sdf.format(date));
 		for(int index = timeID-60/TIME_UNIT;index <= timeID;index++){
 			if(timeIdParcelList.containsKey(index)){
 				sum += timeIdParcelList.get(index).size();
@@ -222,7 +231,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 				date.setHours(index*TIME_UNIT/60);
 				date.setMinutes(index*TIME_UNIT%60);
 				date.setSeconds(0);
-				dv.setX(sdf.format(cal));
+				dv.setX(sdf.format(date));
 				dv.setY(main.timeIdPressure.get(index));
 				dvList.add(dv);
 			}
