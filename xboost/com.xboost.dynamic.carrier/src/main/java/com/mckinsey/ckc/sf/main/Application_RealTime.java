@@ -125,7 +125,7 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 	
 	@RequestMapping("/dynamic/davav")
 	public List<CarrierRecords> datav(@RequestParam(value = "carrierid", defaultValue = "World") String name) {
-//		timeID = (int)counter.incrementAndGet();
+		timeID = (int)counter.incrementAndGet();
 		if(timeID >  PICKING_END_TIME*60/TIME_UNIT){
 			timeID =  PICKING_START_TIME*60/TIME_UNIT-1;
 			counter.set(PICKING_START_TIME*60/TIME_UNIT-1);
