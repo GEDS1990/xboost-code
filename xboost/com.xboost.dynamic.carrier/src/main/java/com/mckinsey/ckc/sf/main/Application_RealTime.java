@@ -207,43 +207,53 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 		XYModel dv2 = new XYModel();
 		XYModel dv3 = new XYModel();
 		Date date = new Date(System.currentTimeMillis());
-		date.setHours(timeID*TIME_UNIT/60);
-		date.setMinutes(timeID*TIME_UNIT%60);
+		date.setHours((int)timeID/12);
+		date.setMinutes(0);
 		date.setSeconds(0);
 		dv.setX(sdf.format(date));
 		Date date1 = new Date(System.currentTimeMillis());
-		date1.setHours(timeID*TIME_UNIT/60-1);
-		date1.setMinutes(timeID*TIME_UNIT%60);
+		date1.setHours((int)timeID/12-1);
+		date1.setMinutes(0);
 		date1.setSeconds(0);
 		Date date2 = new Date(System.currentTimeMillis());
-		date2.setHours(timeID*TIME_UNIT/60-2);
-		date2.setMinutes(timeID*TIME_UNIT%60);
+		date2.setHours((int)timeID/12-2);
+		date2.setMinutes(0);
 		date2.setSeconds(0);
 		Date date3 = new Date(System.currentTimeMillis());
-		date3.setHours(timeID*TIME_UNIT/60-3);
-		date3.setMinutes(timeID*TIME_UNIT%60);
+		date3.setHours((int)timeID/12-3);
+		date3.setMinutes(0);
 		date3.setSeconds(0);
 
-		for(int index = timeID-60/TIME_UNIT;index <= timeID;index++){
-			if(timeIdParcelList.containsKey(index)){
-				sum += timeIdParcelList.get(index).size();
-			}
-		}
-		for(int index = timeID-120/TIME_UNIT;index <= timeID-60/TIME_UNIT;index++){
-			if(timeIdParcelList.containsKey(index)){
-				sum1 += timeIdParcelList.get(index).size();
-			}
-		}
-		for(int index = timeID-180/TIME_UNIT;index <= timeID-120/TIME_UNIT;index++){
-			if(timeIdParcelList.containsKey(index)){
-				sum2 += timeIdParcelList.get(index).size();
-			}
-		}
-		for(int index = timeID-240/TIME_UNIT;index <= timeID-180/TIME_UNIT;index++){
+//		for(int index = timeID-60/TIME_UNIT;index <= timeID;index++){
+//			if(timeIdParcelList.containsKey(index)){
+//				sum += timeIdParcelList.get(index).size();
+//			}
+//		}
+
+		for(int index = (int)timeID/12*60/TIME_UNIT-240/TIME_UNIT;index <= (int)timeID/12*60-180/TIME_UNIT;index++){
 			if(timeIdParcelList.containsKey(index)){
 				sum3 += timeIdParcelList.get(index).size();
 			}
 		}
+		for(int index = (int)timeID/12*60/TIME_UNIT-180/TIME_UNIT;index <= (int)timeID/12*60-120/TIME_UNIT;index++){
+			if(timeIdParcelList.containsKey(index)){
+				sum2 += timeIdParcelList.get(index).size();
+			}
+		}
+		sum2=sum2+sum3;
+		for(int index = (int)timeID/12*60/TIME_UNIT-120/TIME_UNIT;index <= (int)timeID/12*60-60/TIME_UNIT;index++){
+			if(timeIdParcelList.containsKey(index)){
+				sum1 += timeIdParcelList.get(index).size();
+			}
+		}
+		sum1=sum1+sum2;
+		for(int index = (int)timeID/12*60/TIME_UNIT-60/TIME_UNIT;index <= timeID;index++){
+			if(timeIdParcelList.containsKey(index)){
+				sum += timeIdParcelList.get(index).size();
+			}
+		}
+		sum=sum+sum1;
+
 		dv.setX(sdf.format(date));
 		dv.setY(sum);
 		dv1.setX(sdf.format(date1));
