@@ -9,6 +9,8 @@
 	var url_parcel = '/realtime_parcel'; //实时包裹
 	var url_time = '/date'; //实时包裹
 	var sum = '';//实时增加包裹数叠加
+	var time_5min = 300000;
+	var time_c = 800;
 	/*
 	 * 
 	 * modal time
@@ -776,8 +778,8 @@
 			clearInterval(time33)
 			var time33 = setInterval(function  () {
 				Pressure();
-			},301000);
-		},1000);
+			},time_5min);
+		},time_c);
 		
 		/*
 		 * option.xAxis[0].data = getTime();
@@ -1373,7 +1375,7 @@
 		clearInterval(timeTicket5);
 		var timeTicket5 = setInterval(function  () {
 			mapajax();
-		},300000);
+		},time_5min);
 	}());
 	
 	
@@ -1661,8 +1663,8 @@
 			clearInterval(time6);
 			var time6 = setInterval(function  () {
 				Parcels_status();
-			},302000);
-		},2000);
+			},time_5min);
+		},time_c);
 		
 
 
@@ -1756,15 +1758,11 @@
 			var list = [];
 			if (len != 0)
 			{
-				var result = arr[0];
-				var x =Number( ( result.x ).slice(0,2) );
-				var c = x - 10;
-				if (c == 0)
+				for (var i=0;i<len;i++)
 				{
-					xlist.push('09:00','10:00');
-					sum = sum + result.y;
-					ylist.push(0);
-					ylist.push(sum);
+					var x =( arr[i].x ).slice(0,5);
+					xlist.unshift(x);
+					ylist.unshift(arr[i].y);
 					list.push(xlist);
 					list.push(ylist);
 				}
@@ -1782,7 +1780,7 @@
 		myChart.setOption(option);
 		function New_parcels () {
 			$.post(url_main+url_one_hour).done(function  (res) {
-				//console.log(res);
+				console.log(res);
 				var result = getTimeHour(res);
 				if (result[0] != []) 
 				{
@@ -1795,8 +1793,12 @@
 			});
 		};
 		setTimeout(function  () {
-			New_parcels()
-		},3000)
+			New_parcels();
+			clearInterval(time77);
+			var time77 = setInterval(function  () {
+				New_parcels();
+			},time_5min);
+		},time_c);
 		
 		
 		
