@@ -26,8 +26,10 @@ import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2017/11/5 0005.
@@ -537,8 +539,7 @@ public class SolutionCostService {
             resultB.put("totalVolList",totalVolList);
             resultB.put("branchTransportCost",branchTransportCost);
 
-            String[] grid = {"0,0,0,3", "1,1,0,1", "1,1,2,3", "2,2,0,1", "2,2,2,3", "3,3,0,1", "3,3,2,3", "6,6,0,1", "6,6,2,3", "7,7,0,1", "7,7,2,3",
-                    "12,12,0,1", "12,12,2,3", "14,14,0,1", "14,14,2,3", "15,15,0,1", "15,15,2,3", "20,20,0,1", "20,20,2,3", "21,21,0,1", "21,21,2,3"};
+            String[] grid = {"0,0,0,3", "1,1,0,1", "1,1,2,3", "2,2,0,1", "2,2,2,3", "3,3,0,1", "3,3,2,3", "6,6,0,1", "6,6,2,3"};
 
             //动态合并单元格
             for (int i = 0; i < grid.length; i++) {
@@ -578,6 +579,7 @@ public class SolutionCostService {
 
             // 构建表体数据与结构
             for (int i = 3; i <  6; i++) {
+                String[] efficiency = {"300", "500"};
                 XSSFRow row = sheet.createRow(i);
                 for (int j = 0; j < 4; j++) {
                     cell = row.createCell(j);
@@ -592,10 +594,25 @@ public class SolutionCostService {
                 cell = row.createCell(2);
                 cell.setCellValue(relayColumn1[i-3]);
                 cell.setCellStyle(bodyStyle);
+
+                if (i > 3) {
+                    cell = row.createCell(1);
+                    cell.setCellValue(efficiency[i-4]);
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = row.createCell(3);
+                    cell.setCellValue(efficiency[i-4]);
+                    cell.setCellStyle(bodyStyle);
+                }
             }
 
             int n = 7;
+            Set<String> keySet = totalVolList.keySet();
+            Iterator<String> keyIterator = keySet.iterator();
             for (int i = 0; i < totalVolList.size(); i++) {
+                String key = keyIterator.next();
+                Integer value = (Integer) totalVolList.get(key);
+                String[] depotData = {value+"",(value/500+1)+"", "1","0"};
                 for (int k = n; k < relayColumn2.length + n; k++) {
                     XSSFRow row = sheet.createRow(k);
                     for (int j = 0; j < 4; j++) {
@@ -609,6 +626,14 @@ public class SolutionCostService {
 
                     cell = row.createCell(2);
                     cell.setCellValue(relayColumn2[k-n]);
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = row.createCell(1);
+                    cell.setCellValue(depotData[k-n]);
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = row.createCell(3);
+                    cell.setCellValue(depotData[k-n]);
                     cell.setCellStyle(bodyStyle);
                 }
                 n += relayColumn2.length;
