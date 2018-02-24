@@ -230,26 +230,44 @@ public class Application_RealTime implements Filter,IConstants,EmbeddedServletCo
 //			}
 //		}
 
-		for(int index = (int)timeID/12*60/TIME_UNIT-240/TIME_UNIT;index <= (int)timeID/12*60-180/TIME_UNIT;index++){
+		for(int index = (int)timeID/12*60/TIME_UNIT-180/TIME_UNIT;index < (int)timeID/12*60/TIME_UNIT-120/TIME_UNIT;index++){
 			if(timeIdParcelList.containsKey(index)){
+				if(timeID>=0 &&timeID<=12){
+					sum3 = 0;
+				}
 				sum3 += timeIdParcelList.get(index).size();
+
 			}
 		}
-		for(int index = (int)timeID/12*60/TIME_UNIT-180/TIME_UNIT;index <= (int)timeID/12*60-120/TIME_UNIT;index++){
+		for(int index = (int)timeID/12*60/TIME_UNIT-120/TIME_UNIT;index < (int)timeID/12*60/TIME_UNIT-60/TIME_UNIT;index++){
 			if(timeIdParcelList.containsKey(index)){
-				sum2 += timeIdParcelList.get(index).size();
+				if(timeID>=0 &&timeID<=12){
+					sum2 = 0;
+				}else{
+					sum2 += timeIdParcelList.get(index).size();
+				}
 			}
 		}
 		sum2=sum2+sum3;
-		for(int index = (int)timeID/12*60/TIME_UNIT-120/TIME_UNIT;index <= (int)timeID/12*60-60/TIME_UNIT;index++){
+		for(int index = (int)timeID/12*60/TIME_UNIT-60/TIME_UNIT;index < (int)timeID/12*60/TIME_UNIT;index++){
 			if(timeIdParcelList.containsKey(index)){
-				sum1 += timeIdParcelList.get(index).size();
+				if(timeIdParcelList.containsKey(index)){
+					if(timeID>=0 &&timeID<=12){
+						sum1 = 0;
+					}else{
+						sum1 += timeIdParcelList.get(index).size();
+					}
+				}
 			}
 		}
 		sum1=sum1+sum2;
-		for(int index = (int)timeID/12*60/TIME_UNIT-60/TIME_UNIT;index <= timeID;index++){
+		for(int index = (int)timeID/12*60/TIME_UNIT;index <= timeID;index++){
 			if(timeIdParcelList.containsKey(index)){
-				sum += timeIdParcelList.get(index).size();
+				if(timeID>=0 &&timeID<=12){
+					sum = 0;
+				}else{
+					sum += timeIdParcelList.get(index).size();
+				}
 			}
 		}
 		sum=sum+sum1;
