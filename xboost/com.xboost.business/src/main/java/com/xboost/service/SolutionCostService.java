@@ -1,10 +1,12 @@
 package com.xboost.service;
 
+import com.google.common.collect.Maps;
 import com.mckinsey.sf.data.Car;
 import com.xboost.mapper.SolutionCostMapper;
 import com.xboost.mapper.SolutionRouteMapper;
 import com.xboost.pojo.Cost;
 import com.xboost.mapper.CarMapper;
+import com.xboost.pojo.Route;
 import com.xboost.util.ExcelUtil;
 import com.xboost.util.ExportUtil;
 import com.xboost.util.ShiroUtil;
@@ -24,8 +26,10 @@ import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2017/11/5 0005.
@@ -43,6 +47,10 @@ public class SolutionCostService {
     private SolutionRouteMapper solutionRouteMapper;
     @Inject
     private CarMapper carMapper;
+    @Inject
+    private SolutionEfficiencyService solutionEfficiencyService;
+    @Inject
+    private DemandInfoService demandInfoService;
 
     /**
      * 新增成本基础信息
@@ -447,10 +455,91 @@ public class SolutionCostService {
             }
         }
 
+        String[] relayColumn1 = {"人效", "depot人效 (p)", "distrib. center人效 (p)", "", "",
+                "支线  总票数", "支线  所需人数", " · Full-time Staff", " · Part-time Staff", "", "...", "",
+                "工资设定", " · Full-time salary (/month)", " · Full-time working days (/month)", " · Part-time wage (/hour)", " · Part-time working hours (/day)", "",
+                "成本", "支线depot单日人工成本", "支线distrib. center单日人工成本", "单日总体人工成本 (per piece)", "支线运输成本 (per piece)", "总成本 (per piece)"};
+
+        String[] relayColumn2 = {"支线  总票数", "支线  所需人数", " · Full-time Staff", " · Part-time Staff"};
+
+        String[] relayColumn3 = {"工资设定", " · Full-time salary (/month)", " · Full-time working days (/month)", " · Part-time wage (/hour)", " · Part-time working hours (/day)", "",
+                "成本", "支线depot单日人工成本", "支线distrib. center单日人工成本", "单日总体人工成本 (per piece)", "支线运输成本 (per piece)", "总成本 (per piece)"};
+
+
         // 接力模型
         if ("2".equals(modelType)) {
-            String[] grid = {"0,0,0,3", "1,1,0,1", "1,1,2,3", "2,2,0,1", "2,2,2,3", "3,3,0,1", "3,3,2,3", "6,6,0,1", "6,6,2,3", "7,7,0,1", "7,7,2,3",
-                    "12,12,0,1", "12,12,2,3", "14,14,0,1", "14,14,2,3", "15,15,0,1", "15,15,2,3", "20,20,0,1", "20,20,2,3", "21,21,0,1", "21,21,2,3"};
+            Map<String,Object> param = Maps.newHashMap();
+            param.put("modelType",modelType);
+            param.put("scenariosId",scenariosId);
+            param.put("plan","A");
+            Map<String,Object> resultA = Maps.newHashMap();
+            List<Cost> costListA = findByParam(param);
+
+            param.put("plan","B");
+            Map<String,Object> resultB = Maps.newHashMap();
+            List<Cost> costListB = findByParam(param);
+
+            //总件量
+            Integer totalPiece = findTotalPiece(scenariosId);
+            //网点
+            List<String> siteCodeList=solutionEfficiencyService.findAllSite(scenariosId);
+            Map<String,Object> totalVolList=Maps.newHashMap();
+            Map<String,Object> siteInfoList=Maps.newHashMap();
+
+            String branchTransportCost = findBranchCost(scenariosId);
+
+            int periodTime = 20;
+            int min = Integer.parseInt(demandInfoService.findMin(scenariosId));
+            int max = Integer.parseInt(demandInfoService.findMax(scenariosId));
+            List<String> siteList = solutionEfficiencyService.findAllSite(scenariosId);
+
+            Map<String,Object> param2 = Maps.newHashMap();
+
+            List<Route> carList;
+
+            Integer sbVol;
+
+            Integer unloadVol;
+
+            for(int i=0;i<siteList.size();i++){
+                String site = siteList.get(i);
+                int deliverMaxNum = 0;
+                int receivingMaxNum = 0;
+                int maxNum = 0;
+
+                for(int j=0;j<(max-min)/periodTime;j++) {
+                    param2.put("scenariosId",scenariosId);
+                    param2.put("curLoc",site);
+                    param2.put("min",min+(periodTime*j));
+                    param2.put("periodTime",periodTime);
+
+                    //发出票数
+                    sbVol = (null == solutionEfficiencyService.findSbVol(param2)?0:solutionEfficiencyService.findSbVol(param2));
+                    deliverMaxNum = deliverMaxNum > sbVol ? deliverMaxNum : sbVol;
+
+                    //到达票数
+                    unloadVol = (null == solutionEfficiencyService.findUnloadVol(param2)?0:solutionEfficiencyService.findUnloadVol(param2));
+                    receivingMaxNum = receivingMaxNum > unloadVol ? receivingMaxNum : unloadVol;
+                }
+                maxNum = deliverMaxNum > receivingMaxNum ? deliverMaxNum : receivingMaxNum;
+                totalVolList.put(site, maxNum);
+            }
+
+            resultA.put("data",costListA);
+            resultA.put("modelType",modelType);
+            resultA.put("totalPiece",totalPiece);
+            resultA.put("siteInfoList",siteInfoList);
+            resultA.put("totalVolList",totalVolList);
+            resultA.put("branchTransportCost",branchTransportCost);
+
+            resultB.put("data",costListB);
+            resultB.put("modelType",modelType);
+            resultB.put("totalPiece",totalPiece);
+            resultB.put("siteInfoList",siteInfoList);
+            resultB.put("totalVolList",totalVolList);
+            resultB.put("branchTransportCost",branchTransportCost);
+
+            String[] grid = {"0,0,0,3", "1,1,0,1", "1,1,2,3", "2,2,0,1", "2,2,2,3", "3,3,0,1", "3,3,2,3", "6,6,0,1", "6,6,2,3"};
 
             //动态合并单元格
             for (int i = 0; i < grid.length; i++) {
@@ -489,9 +578,9 @@ public class SolutionCostService {
             }
 
             // 构建表体数据与结构
-            for (int i = 3; i < column2.length + 3; i++) {
+            for (int i = 3; i <  6; i++) {
+                String[] efficiency = {"300", "500"};
                 XSSFRow row = sheet.createRow(i);
-                // 初始化所有的列
                 for (int j = 0; j < 4; j++) {
                     cell = row.createCell(j);
                     cell.setCellValue("");
@@ -499,18 +588,84 @@ public class SolutionCostService {
                 }
 
                 cell = row.createCell(0);
-                cell.setCellValue(column2[i-3]);
+                cell.setCellValue(relayColumn1[i-3]);
                 cell.setCellStyle(bodyStyle);
 
                 cell = row.createCell(2);
-                cell.setCellValue(column2[i-3]);
+                cell.setCellValue(relayColumn1[i-3]);
                 cell.setCellStyle(bodyStyle);
 
+                if (i > 3) {
+                    cell = row.createCell(1);
+                    cell.setCellValue(efficiency[i-4]);
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = row.createCell(3);
+                    cell.setCellValue(efficiency[i-4]);
+                    cell.setCellStyle(bodyStyle);
+                }
+            }
+
+            int n = 7;
+            Set<String> keySet = totalVolList.keySet();
+            Iterator<String> keyIterator = keySet.iterator();
+            for (int i = 0; i < totalVolList.size(); i++) {
+                String key = keyIterator.next();
+                Integer value = (Integer) totalVolList.get(key);
+                String[] depotData = {value+"",(value/500+1)+"", "1","0"};
+                for (int k = n; k < relayColumn2.length + n; k++) {
+                    XSSFRow row = sheet.createRow(k);
+                    for (int j = 0; j < 4; j++) {
+                        cell = row.createCell(j);
+                        cell.setCellValue("");
+                        cell.setCellStyle(bodyStyle);
+                    }
+                    cell = row.createCell(0);
+                    cell.setCellValue(relayColumn2[k-n]);
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = row.createCell(2);
+                    cell.setCellValue(relayColumn2[k-n]);
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = row.createCell(1);
+                    cell.setCellValue(depotData[k-n]);
+                    cell.setCellStyle(bodyStyle);
+
+                    cell = row.createCell(3);
+                    cell.setCellValue(depotData[k-n]);
+                    cell.setCellStyle(bodyStyle);
+                }
+                n += relayColumn2.length;
+                XSSFRow row = sheet.createRow(n);
+                for (int j = 0; j < 4; j++) {
+                    cell = row.createCell(j);
+                    cell.setCellValue("");
+                    cell.setCellStyle(bodyStyle);
+                }
+                n++;
+            }
+
+            for (int i = n; i < n + relayColumn3.length; i++) {
+                XSSFRow row = sheet.createRow(i);
+                for (int j = 0; j < 4; j++) {
+                    cell = row.createCell(j);
+                    cell.setCellValue("");
+                    cell.setCellStyle(bodyStyle);
+                }
+
+                cell = row.createCell(0);
+                cell.setCellValue(relayColumn3[i - n]);
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(2);
+                cell.setCellValue(relayColumn3[i - n]);
+                cell.setCellStyle(bodyStyle);
             }
         }
 
         // 综合模型
-        if ("3".equals(modelType)) {
+        /*if ("3".equals(modelType)) {
             String[] grid = {"0,0,0,3", "1,1,0,1", "1,1,2,3", "2,2,0,1", "2,2,2,3", "3,3,0,1", "3,3,2,3", "6,6,0,1", "6,6,2,3", "7,7,0,1", "7,7,2,3",
                     "13,13,0,1", "13,13,2,3", "18,18,0,1", "18,18,2,3", "20,20,0,1", "20,20,2,3", "21,21,0,1", "21,21,2,3", "26,26,0,1", "26,26,2,3",
                     "27,27,0,1", "27,27,2,3"};
@@ -569,7 +724,7 @@ public class SolutionCostService {
                 cell.setCellValue(column3[i-3]);
                 cell.setCellStyle(bodyStyle);
             }
-        }
+        }*/
 
         try {
 //            FileOutputStream fout = new FileOutputStream("E:/Depots_info.xlsx");
