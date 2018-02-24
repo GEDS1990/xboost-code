@@ -433,7 +433,7 @@ public class ValidateController {
                 Double carDistance = siteDist.getCarDistance() + 0.0;
                 if (Math.round(carDistance) != Math.round(12 / 60.0 * Double.parseDouble(siteDist.getDurationNightDelivery2()))) {
                     flag = flag + 1;
-                    result = depotsDistanceWrongLink+":baidu nconsistency of speed. \n";
+                    result = depotsDistanceWrongLink+":baidu inconsistency of speed. \n";
                     systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
                 }
             }
