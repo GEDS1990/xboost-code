@@ -646,6 +646,7 @@ public class SolutionCostService {
                 n++;
             }
 
+            String[] data3 = {"","","","","","","",totalPiece+"","","",branchTransportCost+"",""};
             for (int i = n; i < n + relayColumn3.length; i++) {
                 XSSFRow row = sheet.createRow(i);
                 for (int j = 0; j < 4; j++) {
@@ -660,6 +661,14 @@ public class SolutionCostService {
 
                 cell = row.createCell(2);
                 cell.setCellValue(relayColumn3[i - n]);
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(1);
+                cell.setCellValue(data3[i - n]);
+                cell.setCellStyle(bodyStyle);
+
+                cell = row.createCell(3);
+                cell.setCellValue(data3[i - n]);
                 cell.setCellStyle(bodyStyle);
             }
         }
