@@ -405,14 +405,14 @@ public class ValidateController {
 //                param.put("name", "truck");
 //                Car car = transportService.findCarByCarName(param);
                 Double carDistance = siteDist.getCarDistance() + 0.0;
-                if (carDistance < 10) {
+                if (carDistance <= 10) {
                     if (Math.round(carDistance) != Math.round(15 / 60.0 * Double.parseDouble(siteDist.getDurationNightDelivery()))) {
                         flag = flag + 1;
                         result = depotsDistanceWrongLink+":truck inconsistency of speed. \n";
                         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
                     }
                 }
-                if (carDistance >= 10 && carDistance <= 30) {
+                if (carDistance > 10 && carDistance <= 30) {
                     if (Math.round(carDistance) != Math.round(20 / 60.0 * Double.parseDouble(siteDist.getDurationNightDelivery()))) {
                         flag = flag + 1;
                         result = depotsDistanceWrongLink+":truck inconsistency of speed. \n";
