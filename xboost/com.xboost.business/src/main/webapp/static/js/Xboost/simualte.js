@@ -172,28 +172,28 @@ $(function  () {
 					}
 					
 					
-//					if (type == "" || type == "fail") 
-//					{
-//						$('#sim-error-run').show();
-//					}
-//					else if (type == "success")
-//					{
-//						$('#sim-error-check').hide();
-//						$('#timelimit').hide();
-//						$('#loopslimit').hide();
-//						$('#tlimit').hide();
-//						$('#olimit').hide();
-//						$('#sim-error-run').hide();
-//						window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+run_t_limit+"&loopLimit="+run_opt_limit;
-//					}
+					if (type == "" || type == "fail")
+					{
+						$('#sim-error-run').show();
+					}
+					else if (type == "success")
+					{
+						$('#sim-error-check').hide();
+						$('#timelimit').hide();
+						$('#loopslimit').hide();
+						$('#tlimit').hide();
+						$('#olimit').hide();
+						$('#sim-error-run').hide();
+						window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+run_t_limit+"&loopLimit="+run_opt_limit;
+					}
 					
-					$('#sim-error-check').hide();
-					$('#timelimit').hide();
-					$('#loopslimit').hide();
-					$('#tlimit').hide();
-					$('#olimit').hide();
-					$('#sim-error-run').hide();
-					window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+run_t_limit+"&loopLimit="+run_opt_limit;
+//					$('#sim-error-check').hide();
+//					$('#timelimit').hide();
+//					$('#loopslimit').hide();
+//					$('#tlimit').hide();
+//					$('#olimit').hide();
+//					$('#sim-error-run').hide();
+//					window.location.href = "/Simualte?run=yes&distMode="+runModel+"&loadTime="+run_t_limit+"&loopLimit="+run_opt_limit;
 				}
 				
 			});
