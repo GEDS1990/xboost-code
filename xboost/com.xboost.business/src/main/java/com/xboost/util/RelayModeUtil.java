@@ -33,8 +33,12 @@ public class RelayModeUtil extends Thread implements IConstants {
     public TempService tempService;
     public SiteInfoService siteInfoService;
     public String OpenScenariosId;
+    public String MIPgap;
+    public String TimeLimit;
     private static Logger logger = LoggerFactory.getLogger(RelayModeUtil.class);
-    public RelayModeUtil(TempService tempService, DemandInfoService demandInfoService, SiteDistService siteDistService, SiteInfoService siteInfoService){
+    public RelayModeUtil(String loadTime,String loopLimit,TempService tempService, DemandInfoService demandInfoService, SiteDistService siteDistService, SiteInfoService siteInfoService){
+        this.TimeLimit = loadTime;
+        this.MIPgap = loopLimit;
         this.config = config;
         this.demandInfoService = demandInfoService;
         this.siteDistService = siteDistService;
@@ -1101,8 +1105,10 @@ public class RelayModeUtil extends Thread implements IConstants {
                 }
                 model.addConstr(expr,GRB.EQUAL,0.0,"m5_"+iRow); //
             }
-            model.set("MIPgap","0.05");
-            model.set("TimeLimit","3600");
+//            model.set("MIPgap","0.05");
+//            model.set("TimeLimit","3600");
+            model.set("MIPgap",MIPgap);
+            model.set("TimeLimit",TimeLimit);
 
             //invoke
             model.optimize();

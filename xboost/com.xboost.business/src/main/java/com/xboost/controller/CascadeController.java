@@ -108,7 +108,7 @@ public class CascadeController {
 //            }
 //        LogFactory.getLog(AccountController.class).info("input:"+input);
         }else if("2".equals(distMode)){
-            RelayModeUtil rm = new RelayModeUtil(tempService,demandInfoService,siteDistService,siteInfoService);
+            RelayModeUtil rm = new RelayModeUtil(loadTime,loopLimit,tempService,demandInfoService,siteDistService,siteInfoService);
 //            RelayModeRUtil rm = new RelayModeRUtil(RserverIp);
             try {
                 rm.run();
