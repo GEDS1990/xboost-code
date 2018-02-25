@@ -78,7 +78,7 @@ $(function  () {
 					$.post("/simualte/Validate").done(function  (result) {
 						//console.log(result);
 						type = result;
-						alert("simualte "+type);
+						alert("validate "+type);
 					    socket.onclose();
 					}).fail(function  () {
 					    socket.onclose();
