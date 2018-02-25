@@ -704,7 +704,11 @@ $(function  () {
 	                {"data":"curLoc","name":"cur_loc"},
 	                {"data":"carType","name":"car_type"},
 	                {"data":function  (res) {
-	                	return operationTime(res.arrTime);
+                        if (res.arrTime == "--") {
+                            return res.arrTime;
+                        }else {
+                            return operationTime(res.arrTime);
+                        }
 	                },"name":"arr_time"},
 	                {"data":function  (res) {
 	                	if (res.unloadVol == "") {
@@ -715,7 +719,11 @@ $(function  () {
 	                	return "Unload "+res.unloadVol+" , "+"Load "+res.sbVol;
 	                },"name":"unloadVol & sbVol"},
 	                {"data":function  (res) {
-	                	return operationTime(res.endTime);
+                        if (res.endTime == "--") {
+                            return res.endTime;
+                        }else {
+                            return operationTime(res.endTime);
+                        }
 	                },"name":"end_time"}
 	                
 	            ],

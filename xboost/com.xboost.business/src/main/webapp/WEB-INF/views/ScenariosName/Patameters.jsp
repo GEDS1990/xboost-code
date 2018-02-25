@@ -49,7 +49,7 @@
 	        	<div class="xb-fl">
 	        		<p>${sessionScope.openScenariosName}(Settings)</p>
 	        	</div>
-	        	<div class="xb-fr">
+	        	<div class="xb-fr" style="display: none;">
 	        		<button id="btn-input" data-toggle="modal" data-target=".bs-example-modal-input"><span class="icon-download"></span>Import Settings</button>
 	        		<button id="btn-export" data-toggle="modal" data-target=".bs-example-modal-export"><span class="icon-upload"></span>Export Settings</button>
 	        	</div>
@@ -157,7 +157,6 @@
 			            	</div>
 				            <div class="modal-footer" style="text-align: center;">
 				            	<button type="button" id="js-save-para" class="btn btn-primary">Save</button>
-				                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				            </div>
 			            </form>
 			            <input hidden="hidden" id="add-edit" value="0" />

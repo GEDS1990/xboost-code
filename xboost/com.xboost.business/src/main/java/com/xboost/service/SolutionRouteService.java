@@ -390,20 +390,12 @@ public class SolutionRouteService {
                     cell.setCellStyle(bodyStyle);
 
                     String arrTime = (String) route.get("arrTime");
-                    int arr = Math.round(Float.parseFloat(arrTime));
-                    int arrHour = arr / 60;
-                    int arrMinute = arr % 60;
-                    String arrFormatTime = "";
-                    if(arrMinute >= 0 && arrMinute <= 9) {
-                        arrFormatTime = arrHour + ":0" + arrMinute;
-                    }else {
-                        arrFormatTime = arrHour + ":" + arrMinute;
-                    }
+                    arrTime = convertTime(arrTime);
                     cell = bodyRow.createCell(i++);
                     if("1".equals(route.get("sequence"))) {
                         cell.setCellValue("--");
                     }else {
-                        cell.setCellValue(arrFormatTime);
+                        cell.setCellValue(arrTime);
                     }
                     cell.setCellStyle(bodyStyle);
 
@@ -420,20 +412,12 @@ public class SolutionRouteService {
                     cell.setCellStyle(bodyStyle);
 
                     String endTime = (String) route.get("endTime");
-                    int end = Math.round(Float.parseFloat(endTime));
-                    int endHour = end / 60;
-                    int endMinute = end % 60;
-                    String endFormatTime = "";
-                    if(endMinute >= 0 && endMinute <= 9) {
-                        endFormatTime = endHour + " : 0" + endMinute;
-                    }else {
-                        endFormatTime = endHour + " : " + endMinute;
-                    }
+                    endTime = convertTime(endTime);
                     cell = bodyRow.createCell(i++);
                     if("2".equals(route.get("sequence"))) {
                         cell.setCellValue("--");
                     }else {
-                        cell.setCellValue(endFormatTime);
+                        cell.setCellValue(endTime);
                     }
                     cell.setCellStyle(bodyStyle);
 
@@ -543,5 +527,20 @@ public class SolutionRouteService {
             }
         }
 
+    }
+
+    public String convertTime(String time) {
+        if (time.equals("--")) {
+            return time;
+        }
+        int formatTime = Math.round(Float.parseFloat(time));
+        int formatHour = formatTime / 60;
+        int formatMinute = formatTime % 60;
+        if(formatMinute >= 0 && formatMinute <= 9) {
+            time = formatHour + " : 0" + formatMinute;
+        }else {
+            time = formatHour + " : " + formatMinute;
+        }
+        return time;
     }
 }
