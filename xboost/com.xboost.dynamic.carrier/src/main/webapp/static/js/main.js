@@ -1,7 +1,8 @@
 ﻿$(function (){
 	var list_3 = "";
 	var timeNow = "";
-	var url_main = "http://"+document.location.host+"/dynamic";
+	//var url_main = "http://"+document.location.host+"/dynamic";
+	var url_main = "http://39.108.208.44:8081/dynamic";
 	var url_map = '/davav'; //地图
 	var url_feixian = '/parcel_feixian';//飞线
 	var url_one_hour = '/one_hour';//最近一小时新增包裹
@@ -441,7 +442,7 @@
 			    },
 			    grid: {
 				    left: '2%',
-					right: '2%',
+					right: '5%',
 					bottom: '3%',
 					containLabel: true
 				},
@@ -665,7 +666,7 @@
 			    },
 			    grid: {
 				    left: '8%',
-					right: '2%',
+					right: '5%',
 					bottom: '3%',
 					containLabel: true
 				},
@@ -729,8 +730,8 @@
 			var list = [];
 			if (len != 0 && len < 7) 
 			{
-				xlist.push('09:55');
-				ylist.push(0);
+//				xlist.push('09:55');
+//				ylist.push(0);
 				for (var i=0;i<len;i++) 
 				{
 					var add_x = ( arr[i].x ).slice(0,5);
@@ -1646,7 +1647,8 @@
 					var yy2 = sum - yy0 - yy1;
 					var per0 = ( (yy0/sum)*100 ).toFixed(2) + "%";
 					var per1 = ( (yy1/sum)*100 ).toFixed(2) + "%";
-					var per2 = ( (yy2/sum)*100 ).toFixed(2) + "%";
+					var pp =Number(( (yy0/sum)*100 ).toFixed(2))  + Number(( (yy1/sum)*100 ).toFixed(2));
+					var per2 = ( 100 - pp ).toFixed(2) + "%";
 					var add0 = {name:'Unattended',pp:[per0],value:yy0};
 					var add1 = {name:'Pickup',pp:[per1],value:yy1};
 					var add2 = {name:'Delivered',pp:[per2],value:yy2};
@@ -1690,7 +1692,7 @@
 			    },
 			    grid: {
 				    left: '5%',
-					right: '2%',
+					right: '5%',
 					bottom: '3%',
 					containLabel: true
 				},
@@ -1780,7 +1782,7 @@
 		myChart.setOption(option);
 		function New_parcels () {
 			$.post(url_main+url_one_hour).done(function  (res) {
-				console.log(res);
+				//console.log(res);
 				var result = getTimeHour(res);
 				if (result[0] != []) 
 				{
