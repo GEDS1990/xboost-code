@@ -864,14 +864,14 @@ $(function (){
 						$('#car-tbody').append(addtbody);
 					}
 					addthead+='<tr>';
-					addthead+='<th colspan='+(result.length+3)+'>No. of Departing Vehicles</th>';
-					addthead+='<th>Total Shipments</th>';
+					addthead+='<th colspan='+(result.length+3)+'>No. of Departing Vehicles Throughput</th>';
+					addthead+='<th>Total Vehicles Throughput</th>';
 					addthead+='</tr>';
 					addthead+='<tr>';
 					addthead+='<th>Depot ID</th>';
-					addthead+='<th>Peak No. of Shipments</th>';
+					addthead+='<th>Peak No. of Vehicles Throughput</th>';
 					addthead+=addth(result);
-					addthead+='<th>Total Departing Vehicles</th>';
+					addthead+='<th>Total Departing Vehicles Throughput</th>';
 					addthead+='<th>'+allsum+'</th></tr>';
 					$('#car-thead').append(addthead);	
 					$('#car-thead').parents('.eff-info').show();
@@ -951,14 +951,14 @@ $(function (){
 						$('#arrcar-tbody').append(addtbody);
 					}
 					addthead+='<tr>';
-					addthead+='<th colspan='+(result.length+3)+'>No. of Arraving Vehicles</th>';
-					addthead+='<th>Total Shipments</th>';
+					addthead+='<th colspan='+(result.length+3)+'>No. of Arriving Vehicles Throughput</th>';
+					addthead+='<th>Total Vehicles Throughput</th>';
 					addthead+='</tr>';
 					addthead+='<tr>';
 					addthead+='<th>Depot ID</th>';
-					addthead+='<th>Peak No. of Shipments</th>';
+					addthead+='<th>Peak No. of Vehicles Throughput</th>';
 					addthead+=addth(result);
-					addthead+='<th>Total Arrive Vehicles</th>';
+					addthead+='<th>Total Arrive Vehicles Throughput</th>';
 					addthead+='<th>'+allsum+'</th></tr>';
 					$('#arrcar-thead').append(addthead);
 					$('#arrcar-thead').parents('.eff-info').show();

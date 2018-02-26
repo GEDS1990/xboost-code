@@ -135,7 +135,7 @@
 			                        </div>
 			                    </div>
 			                    <div class="form-group">
-			                        <label class="col-sm-3 control-label">Manual Efficiency in Second Layer Hub(p): </label>
+			                        <label class="col-sm-3 control-label">Manual Efficiency in District hub(p): </label>
 			                        <div class="col-sm-3">
 			                            <input type="number" class="form-control" name="distriPeopleWork" id="distriPeopleWork" />
 			                        </div>
