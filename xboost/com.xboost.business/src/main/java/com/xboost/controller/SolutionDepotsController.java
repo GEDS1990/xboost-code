@@ -3,6 +3,7 @@ package com.xboost.controller;
 import com.google.common.collect.Maps;
 import com.xboost.pojo.Route;
 import com.xboost.pojo.SiteInfo;
+import com.xboost.service.MyScenariosService;
 import com.xboost.service.SiteInfoService;
 import com.xboost.service.SolutionRouteService;
 import com.xboost.util.RedisUtil;
@@ -35,6 +36,8 @@ public class SolutionDepotsController {
     private SolutionRouteService solutionRouteService;
     @Inject
     private SiteInfoService siteInfoService;
+    @Inject
+    private MyScenariosService myScenariosService;
 
     @Inject
     private RedisUtil redisUtil;
@@ -156,33 +159,37 @@ public class SolutionDepotsController {
 
             }
         }
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
-        for (int i = 0; i < siteList.size(); i++) {
-            String loadVol1 = siteList.get(i).get("sbVol")+"";
-            String[] strings = loadVol1.split("/");
-            Float loadSum = 0F;
-            for (int j = 0; j < strings.length; j++) {
-                float v = Float.parseFloat(strings[j]);
-                loadSum += v;
-            }
-            if (loadSum == 0F) {
-                siteList.get(i).put("sbVol","0");
-            }
-        }
 
-        for (int i = 0; i < siteList.size(); i++) {
-            String unloadVol1 = siteList.get(i).get("unloadVol")+"";
-            String[] strings = unloadVol1.split("/");
-            Float unloadSum = 0F;
-            for (int j = 0; j < strings.length; j++) {
-                float v = Float.parseFloat(strings[j]);
-                unloadSum += v;
+        if (modelType.equals("2")) {
+            for (int i = 0; i < siteList.size(); i++) {
+                String loadVol1 = siteList.get(i).get("sbVol")+"";
+                String[] strings = loadVol1.split("/");
+                Float loadSum = 0F;
+                for (int j = 0; j < strings.length; j++) {
+                    float v = Float.parseFloat(strings[j]);
+                    loadSum += v;
+                }
+                if (loadSum == 0F) {
+                    siteList.get(i).put("sbVol","0");
+                }
             }
-            if (unloadSum == 0F) {
-                siteList.get(i).put("unloadVol","0");
+
+            for (int i = 0; i < siteList.size(); i++) {
+                String unloadVol1 = siteList.get(i).get("unloadVol")+"";
+                String[] strings = unloadVol1.split("/");
+                Float unloadSum = 0F;
+                for (int j = 0; j < strings.length; j++) {
+                    float v = Float.parseFloat(strings[j]);
+                    unloadSum += v;
+                }
+                if (unloadSum == 0F) {
+                    siteList.get(i).put("unloadVol","0");
+                }
             }
         }
 
