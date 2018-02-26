@@ -126,21 +126,21 @@
 			                        </div>
 			                    </div>
 			                    <div class="form-group">
-			                        <label class="col-sm-3 control-label">Sorting Efficiency in Depot(p): </label>
+			                        <label class="col-sm-3 control-label">Manual Efficiency in Depot(p): </label>
 			                        <div class="col-sm-3">
 			                            <input type="number" class="form-control" name="sitePeopleWork" id="sitePeopleWork" />
 			                        </div>
 			                        <div class="col-sm-6">
-			                            <p class="form-control">Please enter Sorting Efficiency</p>
+			                            <p class="form-control">Please enter Manual Efficiency</p>
 			                        </div>
 			                    </div>
 			                    <div class="form-group">
-			                        <label class="col-sm-3 control-label">Sorting Efficiency in Second Layer Hub(p): </label>
+			                        <label class="col-sm-3 control-label">Manual Efficiency in District hub(p): </label>
 			                        <div class="col-sm-3">
 			                            <input type="number" class="form-control" name="distriPeopleWork" id="distriPeopleWork" />
 			                        </div>
 			                        <div class="col-sm-6">
-			                            <p class="form-control">Please enter Sorting Efficiency</p>
+			                            <p class="form-control">Please enter Manual Efficiency</p>
 			                        </div>
 			                    </div>
 			                    <div class="form-group">
