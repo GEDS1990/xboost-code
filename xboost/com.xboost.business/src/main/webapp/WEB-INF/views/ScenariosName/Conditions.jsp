@@ -89,7 +89,7 @@
                                     <th>No. of<br />DiDi Limitation</th>
                                     <th>No. of<br />DaDa Limitation</th>
                                     <th>Reserve</th>
-                                    <th>Vehicle Type<br />Limitation</th>
+                                    <th>Vehicle Weight<br />Limitation</th>
                                     <th>piece<br />capacity(p)</th>
                                 </tr>
 
@@ -195,7 +195,7 @@
 	                    <div class="col-sm-4">
 	                        <input type="text" class="form-control" name="reserve" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
 	                    </div>
-	                    <label class="col-sm-2 control-label">Vehicle Type Limitation</label>
+	                    <label class="col-sm-2 control-label">Vehicle Weight Limitation</label>
 	                    <div class="col-sm-4">
 	                        <input type="text" class="form-control" name="largeCarModel" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
 	                    </div>
@@ -304,7 +304,7 @@
 	                    <div class="col-sm-4">
 	                        <input type="text" class="form-control" name="reserve" id="reserve" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
 	                    </div>
-	                    <label class="col-sm-2 control-label">Vehicle Type Limitation</label>
+	                    <label class="col-sm-2 control-label">Vehicle Weight Limitation</label>
 	                    <div class="col-sm-4">
 	                        <input type="text" class="form-control" name="largeCarModel" id="largeCarModel" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');">
 	                    </div>
