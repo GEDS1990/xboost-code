@@ -725,13 +725,21 @@
 			};
 		function getTime (arr) {
 			var len = arr.length;
+			var arrtt = ['09:25','09:30','09:35','09:40','09:45','09:50','09:55'];
+			var arryy = [0,0,0,0,0,0,0];
 			var xlist = [];
 			var ylist = [];
 			var list = [];
 			if (len != 0 && len < 7) 
 			{
-//				xlist.push('09:55');
-//				ylist.push(0);
+				var lenn = 7-len;
+				var x_list = arrtt.slice(0-lenn);
+				var y_list = arryy.slice(0-lenn);
+				for (var j=0;j<lenn;j++)
+				{
+					xlist.push(x_list[j]);
+					ylist.push(y_list[j]);
+				}
 				for (var i=0;i<len;i++) 
 				{
 					var add_x = ( arr[i].x ).slice(0,5);
@@ -792,17 +800,18 @@
 		
 	}());
 	
-	//main
+	
+		//main
 	(function (){
 		var myChart = echarts.init(document.getElementById('main'));
 		window.onresize = myChart.resize; 
 		var status = fnDate_hours();
 		var myCarrList;
 		var myPartList;
-		var myData = [];
-		var myData1 = [];
+		var myData;
+		var myData1;
 		var myLine_all;
-		var myLine = [];
+		var myLine;
 		var carrTimeId;
 		var partTimeId;
 		var count_carr = 0;
@@ -953,6 +962,9 @@
 				var m = minutes - a + 5;
 				id = ((hours*60) + m)/5;
 			}
+//			//console.log(hours)
+//			//console.log(minutes)
+//			//console.log(id)
 			return id ;
 		};
 		//循环输出飞线
@@ -982,389 +994,388 @@
 			
 			return list;
 		};
-		function renderItem(params, api) {
-		    var coords = [
-		        [121.442293,31.280756],
-		        [121.381352,31.265448],
-		        [121.433094,31.235317],
-		        [121.469889,31.239763],
-		        [121.485986,31.2773]
-		    ];
-		    var points = [];
-		    for (var i = 0; i < coords.length; i++) {
-		        points.push(api.coord(coords[i]));
-		    }
-		    var color = api.visual('color');
-		
-		    return {
-		        type: 'polygon',
-		        shape: {
-		            points: echarts.graphic.clipPointsByRect(points, {
-		                x: params.coordSys.x,
-		                y: params.coordSys.y,
-		                width: params.coordSys.width,
-		                height: params.coordSys.height
-		            })
-		        },
-		        style: api.style({
-		            fill: color,
-		            stroke: echarts.color.lift(color)
-		        })
-		    };
-		};
-		function renderItem1(params, api) {
-		    var coords = [
-		        [121.438843,31.207647],
-		        [121.446317,31.17206],
-		        [121.507833,31.200729],
-		        [121.529105,31.250136],
-		        [121.473338,31.237293]
-		    ];
-		    var points = [];
-		    for (var i = 0; i < coords.length; i++) {
-		        points.push(api.coord(coords[i]));
-		    }
-		    var color = api.visual('color');
-		
-		    return {
-		        type: 'polygon',
-		        shape: {
-		            points: echarts.graphic.clipPointsByRect(points, {
-		                x: params.coordSys.x,
-		                y: params.coordSys.y,
-		                width: params.coordSys.width,
-		                height: params.coordSys.height
-		            })
-		        },
-		        style: api.style({
-		            fill: color,
-		            stroke: echarts.color.lift(color)
-		        })
-		    };
-		};
-		function Carr_list (arr) {
-			var len = arr.length;
-			var list = [];
-			if (len) 
-			{
-				for (var i=0;i<len;i++) 
-				{
-					var item = [],
-						a = Number(arr[i].currentLong),
-						b = Number(arr[i].currentLat);
-					item.push(a);
-					item.push(b);
-					list.push(item);
-				}
-			}
-			return list; 
-		};
-		function Par_list (arr) {
-			var len = arr.length;
-			var list = [];
-			if (len) 
-			{
-				for (var i=0;i<len;i++) 
-				{
-					
-					var item_p = [],
-						item_pp = [];
-					var arr_x = (arr[i].x).split(",");
-					var arr_y = (arr[i].y).split(",");
-					//console.log(arr_x)
-					//console.log(arr_y)
-					item_p.push(arr_x[0],arr_x[1]);
-					item_pp.push(arr_y[0],arr_y[1]);
-					list.push(item_p);
-					list.push(item_pp);
-				}
-			}
-			return list;
-		};
-		function Par_list_line (arr) {
-			var len = arr.length;
-			var list = [];
-			if (len) 
-			{
-				for (var i=0;i<len;i++) 
-				{
-					var item_p = [],
-						item_all = '',
-						item_pp = [];
-					var arr_x = (arr[i].x).split(',');
-					var arr_y = (arr[i].y).split(',');
-					item_p.push(arr_x[0],arr_x[1]);
-					item_pp.push(arr_y[0],arr_y[1]);
-					item_all = {
-			    		"coords":[item_p,item_pp],
-			    		"lineStyle":{
-			    			"normal":{
-			    				color:"rgba(88,186,247,1)"
-			    			}
-			    		}
-			    	}
-					list.push(item_all);
-				}
-			}
-			return list;
-		};
 		var app = {},
 		option = null;
-		option = {
-	        bmap: {
-	            center: [121.491280, 31.220435],
-	            zoom: 12,
-	            roam: true,
-	            mapStyle: {
-	              'styleJson': [
-	                {
-	                  'featureType': 'water',
-	                  'elementType': 'all',
-	                  'stylers': {
-	                    'color': '#031628'
-	                  }
-	                },
-	                {
-	                  'featureType': 'land',
-	                  'elementType': 'geometry',
-	                  'stylers': {
-	                    'color': '#000102'
-	                  }
-	                },
-	                {
-	                  'featureType': 'highway',
-	                  'elementType': 'all',
-	                  'stylers': {
-	                    'visibility': 'off'
-	                  }
-	                },
-	                {
-	                  'featureType': 'arterial',
-	                  'elementType': 'geometry.fill',
-	                  'stylers': {
-	                    'color': '#000000'
-	                  }
-	                },
-	                {
-	                  'featureType': 'arterial',
-	                  'elementType': 'geometry.stroke',
-	                  'stylers': {
-	                    'color': '#0b3d51'
-	                  }
-	                },
-	                {
-	                  'featureType': 'local',
-	                  'elementType': 'geometry',
-	                  'stylers': {
-	                    'color': '#000000'
-	                  }
-	                },
-	                {
-	                  'featureType': 'railway',
-	                  'elementType': 'geometry.fill',
-	                  'stylers': {
-	                    'color': '#000000'
-	                  }
-	                },
-	                {
-	                  'featureType': 'railway',
-	                  'elementType': 'geometry.stroke',
-	                  'stylers': {
-	                    'color': '#08304b'
-	                  }
-	                },
-	                {
-	                  'featureType': 'subway',
-	                  'elementType': 'geometry',
-	                  'stylers': {
-	                    'lightness': -70
-	                  }
-	                },
-	                {
-	                  'featureType': 'building',
-	                  'elementType': 'geometry.fill',
-	                  'stylers': {
-	                    'color': '#000000'
-	                  }
-	                },
-	                {
-	                  'featureType': 'all',
-	                  'elementType': 'labels.text.fill',
-	                  'stylers': {
-	                    'color': '#857f7f'
-	                  }
-	                },
-	                {
-	                  'featureType': 'all',
-	                  'elementType': 'labels.text.stroke',
-	                  'stylers': {
-	                    'color': '#000000'
-	                  }
-	                },
-	                {
-	                  'featureType': 'building',
-	                  'elementType': 'geometry',
-	                  'stylers': {
-	                    'color': '#022338'
-	                  }
-	                },
-	                {
-	                  'featureType': 'green',
-	                  'elementType': 'geometry',
-	                  'stylers': {
-	                    'color': '#062032'
-	                  }
-	                },
-	                {
-	                  'featureType': 'boundary',
-	                  'elementType': 'all',
-	                  'stylers': {
-	                    'color': '#465b6c'
-	                  }
-	                },
-	                {
-	                  'featureType': 'manmade',
-	                  'elementType': 'all',
-	                  'stylers': {
-	                    'color': '#022338'
-	                  }
-	                },
-	                {
-	                  'featureType': 'label',
-	                  'elementType': 'all',
-	                  'stylers': {
-	                    'visibility': 'off'
-	                  }
-	                }
-	              ]
-	            }
-	        },
-	        
-	        series: [
-	        {
-	            type: 'lines',
-	            coordinateSystem: 'bmap',
-	            polyline: true,
-	            data:myLine,
-	            lineStyle: {
-	                normal: {
-	                    width: 1
-	                }
-	            },
-	            effect: {
-	                constantSpeed: 40,
-	                show: true,
-	                trailLength: 0.5,
-	                symbolSize: 5
-	            },
-	            zlevel: 1
-	        },
-	        
-	        {
-	        	type: 'scatter',
-	            coordinateSystem: 'bmap',
-	            data: myData,
-	            itemStyle : {
-                	normal:{
-                		color:"#ddb926",
-                	}
-            	},
-	            symbolSize:5
-	        },
-	        {
-	        	type: 'scatter',
-	            coordinateSystem: 'bmap',
-	            data: myData1,
-	            itemStyle : {
-                	normal:{
-                		color:"#ddb926",
-                	}
-            	},
-            	symbolSize:5
-	        }
-	        /*
-	        {
-	            type: 'custom',
-	            coordinateSystem: 'bmap',
-	            renderItem: renderItem,
-	            itemStyle: {
-	                normal: {
-	                    opacity: 0.5,
-	                    color:'blue'
-	                }
-	            },
-	            animation: false,
-	            silent: true,
-	            data: [0],
-	            z: -10
-	        },
-	        {
-	            type: 'custom',
-	            coordinateSystem: 'bmap',
-	            renderItem: renderItem1,
-	            itemStyle: {
-	                normal: {
-	                    opacity: 0.5,
-	                    color:'red'
-	                }
-	            },
-	            animation: false,
-	            silent: true,
-	            data: [0],
-	            z: -10
-	        }*/
-	        
-	        
-	        
-	        ]
-	    };
-	    /*
-	    var myData = [
-		    {value:[121.485615,31.215004]},
-		    {value:[121.420446,31.260015]}
-		  ];
-		
-		*/
+		function mapajax (timeId,s_time) {
+			$.ajax({
+				type:"get",
+				url:"http://182.254.216.232:80/main/dynamic",
+				//url:"/echart/echart.json",
+				//url:"point1.json",
+				data:{"timeId":timeId},
+				async:true,
+				success:function  (data) {
+					////console.log(data);
+					clearInterval(timeTicketAjax);
+					clearInterval(timeTicket444);
+					count_line = 0;
+					if (s_time) 
+					{
+						var res = {carrierList:[],parcelList:[]};
+					}
+					else
+					{
+						var res = data;
+					}
+					if (res.carrierList.length !=0 ) 
+					{
+						carrTimeId = carrTimeIdList(res.carrierList);
+						myData = carrlist(res.carrierList,carrTimeId[0]);
+					}
+					else
+					{
+						myData = [];
+					}
+					if (res.parcelList.length !=0 ) 
+					{
+						partTimeId = partTimeIdList(res.parcelList);
+						myData1 = parlist(res.parcelList,partTimeId[0]);
+						myLine_all = parlist_line(res.parcelList,partTimeId[0]);
+						lineCount =  Math.ceil( (myLine_all.length)/30 );
+						myLine = lineFly(myLine_all,0,lineCount);
+					}
+					else
+					{
+						myData1 = [];
+						myLine_all = [];
+					}
+					//console.log(res)
 					
-		function mapajax () {
+					/*
+				    var myData = [
+					    {value:[121.485615,31.215004]},
+					    {value:[121.420446,31.260015]}
+					  ];
+					
+					  */
+					function renderItem(params, api) {
+					    var coords = [
+					        [121.442293,31.280756],
+					        [121.381352,31.265448],
+					        [121.433094,31.235317],
+					        [121.469889,31.239763],
+					        [121.485986,31.2773]
+					    ];
+					    var points = [];
+					    for (var i = 0; i < coords.length; i++) {
+					        points.push(api.coord(coords[i]));
+					    }
+					    var color = api.visual('color');
+					
+					    return {
+					        type: 'polygon',
+					        shape: {
+					            points: echarts.graphic.clipPointsByRect(points, {
+					                x: params.coordSys.x,
+					                y: params.coordSys.y,
+					                width: params.coordSys.width,
+					                height: params.coordSys.height
+					            })
+					        },
+					        style: api.style({
+					            fill: color,
+					            stroke: echarts.color.lift(color)
+					        })
+					    };
+					};
+					function renderItem1(params, api) {
+					    var coords = [
+					        [121.438843,31.207647],
+					        [121.446317,31.17206],
+					        [121.507833,31.200729],
+					        [121.529105,31.250136],
+					        [121.473338,31.237293]
+					    ];
+					    var points = [];
+					    for (var i = 0; i < coords.length; i++) {
+					        points.push(api.coord(coords[i]));
+					    }
+					    var color = api.visual('color');
+					
+					    return {
+					        type: 'polygon',
+					        shape: {
+					            points: echarts.graphic.clipPointsByRect(points, {
+					                x: params.coordSys.x,
+					                y: params.coordSys.y,
+					                width: params.coordSys.width,
+					                height: params.coordSys.height
+					            })
+					        },
+					        style: api.style({
+					            fill: color,
+					            stroke: echarts.color.lift(color)
+					        })
+					    };
+					};
+				    option = {
+				        bmap: {
+				            center: [121.491280, 31.220435],
+				            zoom: 12,
+				            roam: true,
+				            mapStyle: {
+				              'styleJson': [
+				                {
+				                  'featureType': 'water',
+				                  'elementType': 'all',
+				                  'stylers': {
+				                    'color': '#031628'
+				                  }
+				                },
+				                {
+				                  'featureType': 'land',
+				                  'elementType': 'geometry',
+				                  'stylers': {
+				                    'color': '#000102'
+				                  }
+				                },
+				                {
+				                  'featureType': 'highway',
+				                  'elementType': 'all',
+				                  'stylers': {
+				                    'visibility': 'off'
+				                  }
+				                },
+				                {
+				                  'featureType': 'arterial',
+				                  'elementType': 'geometry.fill',
+				                  'stylers': {
+				                    'color': '#000000'
+				                  }
+				                },
+				                {
+				                  'featureType': 'arterial',
+				                  'elementType': 'geometry.stroke',
+				                  'stylers': {
+				                    'color': '#0b3d51'
+				                  }
+				                },
+				                {
+				                  'featureType': 'local',
+				                  'elementType': 'geometry',
+				                  'stylers': {
+				                    'color': '#000000'
+				                  }
+				                },
+				                {
+				                  'featureType': 'railway',
+				                  'elementType': 'geometry.fill',
+				                  'stylers': {
+				                    'color': '#000000'
+				                  }
+				                },
+				                {
+				                  'featureType': 'railway',
+				                  'elementType': 'geometry.stroke',
+				                  'stylers': {
+				                    'color': '#08304b'
+				                  }
+				                },
+				                {
+				                  'featureType': 'subway',
+				                  'elementType': 'geometry',
+				                  'stylers': {
+				                    'lightness': -70
+				                  }
+				                },
+				                {
+				                  'featureType': 'building',
+				                  'elementType': 'geometry.fill',
+				                  'stylers': {
+				                    'color': '#000000'
+				                  }
+				                },
+				                {
+				                  'featureType': 'all',
+				                  'elementType': 'labels.text.fill',
+				                  'stylers': {
+				                    'color': '#857f7f'
+				                  }
+				                },
+				                {
+				                  'featureType': 'all',
+				                  'elementType': 'labels.text.stroke',
+				                  'stylers': {
+				                    'color': '#000000'
+				                  }
+				                },
+				                {
+				                  'featureType': 'building',
+				                  'elementType': 'geometry',
+				                  'stylers': {
+				                    'color': '#022338'
+				                  }
+				                },
+				                {
+				                  'featureType': 'green',
+				                  'elementType': 'geometry',
+				                  'stylers': {
+				                    'color': '#062032'
+				                  }
+				                },
+				                {
+				                  'featureType': 'boundary',
+				                  'elementType': 'all',
+				                  'stylers': {
+				                    'color': '#465b6c'
+				                  }
+				                },
+				                {
+				                  'featureType': 'manmade',
+				                  'elementType': 'all',
+				                  'stylers': {
+				                    'color': '#022338'
+				                  }
+				                },
+				                {
+				                  'featureType': 'label',
+				                  'elementType': 'all',
+				                  'stylers': {
+				                    'visibility': 'off'
+				                  }
+				                }
+				              ]
+				            }
+				        },
+				        
+				        series: [
+				        /*
+				        {
+				            type: 'lines',
+				            coordinateSystem: 'bmap',
+				            polyline: true,
+				            data: busLines,
+				            silent: true,
+				            lineStyle: {
+				                normal: {
+				                    // color: '#c23531',
+				                    // color: 'rgb(200, 35, 45)',
+				                    opacity: 0.2,
+				                    width: 1
+				                }
+				            },
+				            progressiveThreshold: 500,
+				            progressive: 200
+				        }, 
+				        */
+				        {
+				            type: 'lines',
+				            coordinateSystem: 'bmap',
+				            polyline: true,
+				            //data: busLines,
+				            data:myLine,
+				            lineStyle: {
+				                normal: {
+				                    width: 1
+				                }
+				            },
+				            effect: {
+				                constantSpeed: 40,
+				                show: true,
+				                trailLength: 0.5,
+				                symbolSize: 5
+				            },
+				            zlevel: 1
+				        },
+				        
+				        {
+				        	type: 'scatter',
+				            coordinateSystem: 'bmap',
+				            data: myData,
+				            itemStyle : {
+			                	normal:{
+			                		color:"#ddb926",
+			                	}
+		                	},
+				            symbolSize:5
+				        },
+				        {
+				        	type: 'scatter',
+				            coordinateSystem: 'bmap',
+				            data: myData1,
+				            itemStyle : {
+			                	normal:{
+			                		color:"#ddb926",
+			                	}
+		                	},
+		                	symbolSize:5
+				        }
+				        /*
+				        {
+				            type: 'custom',
+				            coordinateSystem: 'bmap',
+				            renderItem: renderItem,
+				            itemStyle: {
+				                normal: {
+				                    opacity: 0.5,
+				                    color:'blue'
+				                }
+				            },
+				            animation: false,
+				            silent: true,
+				            data: [0],
+				            z: -10
+				        },
+				        {
+				            type: 'custom',
+				            coordinateSystem: 'bmap',
+				            renderItem: renderItem1,
+				            itemStyle: {
+				                normal: {
+				                    opacity: 0.5,
+				                    color:'red'
+				                }
+				            },
+				            animation: false,
+				            silent: true,
+				            data: [0],
+				            z: -10
+				        }*/
+				        
+				        
+				        
+				        ]
+				    };
+				
+					if (option && typeof option === "object") {
+						option.series[0].data = myLine; 
+						option.series[1].data = myData; 
+						option.series[2].data = myData1; 
+						myChart.setOption(option);
+						timeTicket444 = setInterval(function () {
+							count_line++
+							var l_list = lineFly(myLine_all,count_line,lineCount);
+							////console.log(l_list)
+							option.series[0].data = l_list; 
+							myChart.setOption(option);
+						},10000);
+						timeTicketAjax = setInterval(function () {
+							var id = timenow();
+							////console.log(id)
+							
+								mapajax(id);
+							
+						},300000);
+					}
+		        
+		        },
+		        error:function  () {
+		        	////console.log("fail");	
+		        }
+			});
+		};
+		//执行请求  
+		//myChart.showLoading();
+		var id = timenow();
+		mapajax(id);
+		
+		function mapajax1 () {
 			$.ajax({
 				type:"post",
 				url:url_main+url_map,
 				async:true,
 				success:function  (data) {
-					var timeTicket55;
-					clearInterval(timeTicket55);
-					var $data = data;//地图
-		        	$.post(url_main+url_feixian).done(function  (res) {
-		        		var $res = res;//飞线
-		        		var line = Par_list_line($res);
-		        		var len = line.length;
-		        		var count = 1;
-		        		if (len !=0 ) 
-		        		{
-		        			option.series[0].data = [line[0]];
-		        		}
-		        		option.series[1].data = Carr_list($data);
-		        		option.series[2].data = Par_list($res);
-		        		myChart.setOption(option);
-		        		if (len > 1)
-		        		{
-		        			clearInterval(timeTicket55);
-			        		timeTicket55 = setInterval(function  () {
-			        			if (count >= len) 
-			        			{
-			        				count = 0;
-			        			}
-			        			option.series[0].data = [line[count]];
-			        			count++;
-			        			myChart.setOption(option);
-			        		},5000);
-		        		}
 		        		
-		        		
-		        	}).fail(function  () {
-		        		console.log("fail");
-		        	});
 		        },
 		        error:function  () {
 		        	console.log("fail");
@@ -1372,12 +1383,22 @@
 			});
 		};
 		//初始化
-		mapajax();
+		mapajax1();
 		clearInterval(timeTicket5);
 		var timeTicket5 = setInterval(function  () {
-			mapajax();
+			mapajax1();
 		},time_5min);
+		
+		
+		
 	}());
+	
+	
+	
+	
+	
+		
+	
 	
 	
 	//right-dashboard
