@@ -1325,19 +1325,19 @@
 		  ];
 		
 		*/
-					
+		var timeTicket55;			
 		function mapajax () {
 			$.ajax({
 				type:"post",
 				url:url_main+url_map,
 				async:true,
 				success:function  (data) {
-					var timeTicket55;
 					clearInterval(timeTicket55);
 					var $data = data;//地图
 		        	$.post(url_main+url_feixian).done(function  (res) {
 		        		var $res = res;//飞线
 		        		var line = Par_list_line($res);
+		        		console.log(line)
 		        		var len = line.length;
 		        		var count = 1;
 		        		if (len !=0 ) 
@@ -1355,6 +1355,7 @@
 			        			{
 			        				count = 0;
 			        			}
+			        			console.log(line[count])
 			        			option.series[0].data = [line[count]];
 			        			count++;
 			        			myChart.setOption(option);
