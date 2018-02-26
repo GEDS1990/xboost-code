@@ -1,8 +1,8 @@
 ﻿$(function (){
 	var list_3 = "";
 	var timeNow = "";
-	var url_main = "http://"+document.location.host+"/dynamic";
-	//var url_main = "http://39.108.208.44:8081/dynamic";
+	//var url_main = "http://"+document.location.host+"/dynamic";
+	var url_main = "http://39.108.208.44:8081/dynamic";
 	var url_map = '/davav'; //地图
 	var url_feixian = '/parcel_feixian';//飞线
 	var url_one_hour = '/one_hour';//最近一小时新增包裹
