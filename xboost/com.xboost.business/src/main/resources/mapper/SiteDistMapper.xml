@@ -65,8 +65,8 @@
     </select>
 
     <update id="editSiteDist">
-        UPDATE t_site_distance SET scenariosId = #{scenariosId},carType = #{car_type},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
-        car_distance=#{car_distance},duration_night_delivery=#{durationNightDelivery},duration_night_delivery2 = #{durationNightDelivery2}，
+        UPDATE t_site_distance SET scenariosId = #{scenariosId},car_type = #{carType},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
+        car_distance=#{carDistance},duration_night_delivery=#{durationNightDelivery},duration_night_delivery2 = #{durationNightDelivery2},
         duration_night_delivery3 = #{durationNightDelivery3},duration_night_delivery4 = #{durationNightDelivery4},duration_night_delivery5 = #{durationNightDelivery5}
         where id = #{id}
     </update>
