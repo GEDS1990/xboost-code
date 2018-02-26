@@ -1189,6 +1189,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
 
         systemWebSocketHandler.sendMessageToUser( new TextMessage("InvokeGurobi ..."));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("65%"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
         InvokeGurobi();
 

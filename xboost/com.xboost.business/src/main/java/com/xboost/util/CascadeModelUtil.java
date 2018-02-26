@@ -148,6 +148,7 @@ public class CascadeModelUtil extends Thread implements IConstants{
         systemWebSocketHandler.sendMessageToUser( new TextMessage("start running..."));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("please wait for minutes..."));
         Solution finalPackSolution = (Solution)algo.runAlgo();
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("40%..."));
         SolutionJson finalSolutionJson = finalPackSolution.SolutionToJson(finalPackSolution);
         finalSolutionJson = jobPacker.unpack(finalSolutionJson);
         //将finalSolutionJson存储到数据库

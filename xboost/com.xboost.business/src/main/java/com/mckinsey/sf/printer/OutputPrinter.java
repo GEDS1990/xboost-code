@@ -207,6 +207,7 @@ public class OutputPrinter implements IConstants {
 		List<JobInfo> jobInfos = new ArrayList<JobInfo>();
 		List<ArrInfo> arrInfos = new ArrayList<ArrInfo>();
 
+		systemWebSocketHandler.sendMessageToUser( new TextMessage("60%...."));
 		systemWebSocketHandler.sendMessageToUser( new TextMessage("It May Take Some Minutes,Please Waiting..."));
 		for(Route r : s.getRoutes().values()){
 			ConstraintState cstat = s.getConstraintState(DEFAULT_CONSTRAINTS);
@@ -338,6 +339,7 @@ public class OutputPrinter implements IConstants {
 
 		printLine("+---------------------------------------+");
 		systemWebSocketHandler.sendMessageToUser( new TextMessage("+---------------------------------------+"));
+		systemWebSocketHandler.sendMessageToUser( new TextMessage("75%..."));
 
 	}
 
