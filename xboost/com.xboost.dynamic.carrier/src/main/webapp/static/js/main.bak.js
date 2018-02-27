@@ -1,8 +1,8 @@
 ﻿$(function (){
 	var list_3 = "";
 	var timeNow = "";
-	var url_main = "http://"+document.location.host+"/dynamic";
-	//var url_main = "http://39.108.208.44:8081/dynamic";
+	//var url_main = "http://"+document.location.host+"/dynamic";
+	var url_main = "http://39.108.208.44:8081/dynamic";
 	var url_map = '/davav'; //地图
 	var url_feixian = '/parcel_feixian';//飞线
 	var url_one_hour = '/one_hour';//最近一小时新增包裹
@@ -1325,19 +1325,19 @@
 		  ];
 		
 		*/
-					
+		var timeTicket55;			
 		function mapajax () {
 			$.ajax({
 				type:"post",
 				url:url_main+url_map,
 				async:true,
 				success:function  (data) {
-					var timeTicket55;
 					clearInterval(timeTicket55);
 					var $data = data;//地图
 		        	$.post(url_main+url_feixian).done(function  (res) {
 		        		var $res = res;//飞线
 		        		var line = Par_list_line($res);
+		        		console.log(line)
 		        		var len = line.length;
 		        		var count = 1;
 		        		if (len !=0 ) 
@@ -1355,6 +1355,7 @@
 			        			{
 			        				count = 0;
 			        			}
+			        			console.log(line[count])
 			        			option.series[0].data = [line[count]];
 			        			count++;
 			        			myChart.setOption(option);
