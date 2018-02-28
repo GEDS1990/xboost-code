@@ -667,6 +667,7 @@ public class DefaultConstraints implements IConstraint,IConstants,Serializable {
 				total = 30+(dist-5)*5;
 			}
 		}else{
+			total = 11;
 			System.err.println("no such car");
 		}
 		

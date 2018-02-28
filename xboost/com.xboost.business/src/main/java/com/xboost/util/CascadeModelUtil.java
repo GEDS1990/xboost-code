@@ -118,10 +118,10 @@ public class CascadeModelUtil extends Thread implements IConstants{
         OutputPrinter.printLine("initSolution:"+initSolutionAfterPack.getRoutes().size()+" "+initSolutionAfterPack.getUnassigned().size());
         systemWebSocketHandler.sendMessageToUser( new TextMessage("30%...."));
 //        systemWebSocketHandler.sendMessageToUser( new TextMessage("initSolution:"+initSolutionAfterPack.getRoutes().size()+" "+initSolutionAfterPack.getUnassigned().size()));
-        for(Job j: initSolutionAfterPack.getUnassigned().values()){
-            System.out.println(j.getId());
-//            systemWebSocketHandler.sendMessageToUser( new TextMessage(j.getId()));
-        }
+//        for(Job j: initSolutionAfterPack.getUnassigned().values()){
+//            System.out.println(j.getId());
+////            systemWebSocketHandler.sendMessageToUser( new TextMessage(j.getId()));
+//        }
         List<IRemoval> rops = new ArrayList<IRemoval>();
         //add shawRemoval
         shawRemoval.setTransportCost(transportCost);

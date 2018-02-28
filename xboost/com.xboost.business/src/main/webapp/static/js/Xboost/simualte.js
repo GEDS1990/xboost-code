@@ -74,7 +74,7 @@ $(function  () {
 		                //logg('Info: connection closed.');
 		                //logg(event);
 		            };
-					
+
 					$.post("/simualte/Validate").done(function  (result) {
 						//console.log(result);
 						type = result;
@@ -84,7 +84,7 @@ $(function  () {
 					    socket.onclose();
 						//console.log("fail");
 					});
-					
+
 					function logg(messages) {
 			            var consoleBox = document.getElementById('sim-check-info');
 			            var p = document.createElement('p');
@@ -302,25 +302,32 @@ $(function  () {
 					
 				});
 		        function log(messages) {
+
+		            var _r = /▉/;
 		            var consoleBox = document.getElementById('sim-run-info');
-		            var p = document.createElement('p');
-		            p.style.wordWrap = 'break-word';
-		            var _r = /\%/;
 		            if (_r.test(messages)) {
-		            	var i = messages.indexOf("%");
-		            	var num = messages.substr(0,i);
-		            	if (num == '99') {
-		            		var res = messages.replace("99","100");
-		            		example.percent = '('+res+')';
-		            		$('#sim-percent').text('('+res+')');
-		            	}else{
-		            		example.percent = '('+messages+')';
-		            		$('#sim-percent').text('('+messages+')');
-		            	}
+                        consoleBox.appendChild(document.createTextNode(messages));
+		            }else{
+                        var p = document.createElement('p');
+                        p.style.wordWrap = 'break-word';
+                        p.appendChild(document.createTextNode(messages));
+                        consoleBox.appendChild(p);
 		            }
-		            p.appendChild(document.createTextNode(messages));
-		            consoleBox.appendChild(p);
+
 		            consoleBox.scrollTop = consoleBox.scrollHeight;
+		            var _r = /\%/;
+                    if (_r.test(messages)) {
+                        var i = messages.indexOf("%");
+                        var num = messages.substr(0,i);
+                        if (num == '99') {
+                            var res = messages.replace("99","100");
+                            example.percent = '('+res+')';
+                            $('#sim-percent').text('('+res+')');
+                        }else{
+                            example.percent = '('+messages+')';
+                            $('#sim-percent').text('('+messages+')');
+                        }
+                    }
 		        }
 			}
 			

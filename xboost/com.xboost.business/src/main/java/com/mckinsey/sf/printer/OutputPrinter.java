@@ -209,7 +209,13 @@ public class OutputPrinter implements IConstants {
 
 		systemWebSocketHandler.sendMessageToUser( new TextMessage("60%...."));
 		systemWebSocketHandler.sendMessageToUser( new TextMessage("It May Take Some Minutes,Please Waiting..."));
+		int jd1 = s.getRoutes().values().size()/10;
+		int jd2 = 0;
 		for(Route r : s.getRoutes().values()){
+			jd2++;
+			if(jd2%jd1 == 0){
+				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
+			}
 			ConstraintState cstat = s.getConstraintState(DEFAULT_CONSTRAINTS);
 			RouteState rstat = cstat.getRouteState(r);
 

@@ -308,15 +308,15 @@ public class SolutionCostController {
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         try {
             ServletOutputStream outputStream = response.getOutputStream();
-            String fileName = new String(("Result_Costs").getBytes(), "utf-8");
-            response.setCharacterEncoding("utf-8");
-            response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
-            String scenariosId = ShiroUtil.getOpenScenariosId();
-            String modelType = myScenariosService.findById(Integer.parseInt(scenariosId)).getScenariosModel();
-            String[] titles = { "串点模型", "接力模型", "综合模型" };
-            solutionCostService.exportResult(scenariosId,titles,outputStream,modelType,planA,planB);
-            System.out.println("outputStream:"+outputStream);
-        }
+        String fileName = new String(("Result_Costs").getBytes(), "utf-8");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        String modelType = myScenariosService.findById(Integer.parseInt(scenariosId)).getScenariosModel();
+        String[] titles = { "串点模型", "接力模型", "综合模型" };
+        solutionCostService.exportResult(scenariosId,titles,outputStream,modelType,planA,planB);
+        System.out.println("outputStream:"+outputStream);
+    }
         catch (IOException e) {
             e.printStackTrace();
             System.out.println("网络连接故障!错误信息:"+e.getMessage());

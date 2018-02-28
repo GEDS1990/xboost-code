@@ -13,6 +13,8 @@ import com.mckinsey.sf.insertion.IInsertion;
 import com.mckinsey.sf.insertion.InsertionCtx;
 import com.mckinsey.sf.removal.RemovalCtx;
 import com.mckinsey.sf.utils.DeepCopy;
+import com.xboost.websocket.SystemWebSocketHandler;
+import org.springframework.web.socket.TextMessage;
 
 import java.io.Serializable;
 import java.util.*;
@@ -41,7 +43,7 @@ public class Solution implements ISolution,Serializable {
 	private IConstraint[] constraints;
 	private ICostCalculator objective;
 	private NoiseMaker noiser;
-	
+
 	public Solution() {
 		super();
 	}
@@ -128,22 +130,39 @@ public class Solution implements ISolution,Serializable {
 	public static Solution newSolution(Job[] jobs, RouteJson[] routes, IConstraint[] cons, ICarManager cm, ICostCalculator obj,
 			NoiseMaker noiser, IInsertion constructive) {
 		HashMap<String, Route> initRoutes = new HashMap<String, Route>();
-		
+		SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
+
+		int jd11 = jobs.length/10;
+		int jd22 = 0;
 		for(RouteJson r : routes){
+			jd22++;
+			if(jd22%jd11 == 0){
+				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
+			}
 			Route initR = routeFromJson(r);
 			initRoutes.put(initR.getId(),initR);
 		}
 		
 		HashMap<String, Job> initJobs = new HashMap<String, Job>();
-		
+		int jd1 = jobs.length/10;
+		int jd2 = 0;
 		for(Job j : jobs){
+			jd2++;
+			if(jd2%jd1 == 0){
+				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
+			}
 			initJobs.put(j.getId(), j);
 		}
 		
 		Solution ret = new Solution(new HashMap<String,ConstraintState>(), initRoutes,
 				initJobs, cm, Double.MAX_VALUE, cons,obj,noiser);
-
+		int jd3 = ret.routes.entrySet().size()/10;
+		int jd4 = 0;
 		for(Entry<String, Route> entryRoute : ret.routes.entrySet()){
+			jd4++;
+			if(jd4%jd3 == 0){
+				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
+			}
 			Route r = entryRoute.getValue();
 			for(IConstraint c : ret.constraints){
 				c.updateStates(ret, r);

@@ -150,6 +150,8 @@ public class RelayModeUtil extends Thread implements IConstants {
 /////////////// begin : jisan_candidates    SiteInfoAll
 
         int siz = 1;
+
+        int iii = 0;
         for(SiteInfo siteInfo:SiteInfoAll){
             if(siz<79){
                 Map siteMap = new HashMap();
@@ -184,6 +186,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         int idemand = 0;
         int[] scenario_lim1 = {1, 1, 1, 1, 1};
         int[] scenario_lim2 = {9, 12, 15, 18, 21};
+
         for (DemandInfo dinfo:OD_demand_list_temp)
         {
             Map<String, Object> OD_demand = new HashMap<String, Object>();
@@ -235,8 +238,11 @@ public class RelayModeUtil extends Thread implements IConstants {
                     OD_demand.put("minutes", (Double.parseDouble(OD_demand.get("km").toString()) / Double.parseDouble(OD_demand.get("kmh").toString())) * 60);
                 }
             }
+//            System.out.println("OD_demand.get(\"km\").toString():"+OD_demand.get("km").toString());
             if (!(Double.parseDouble(OD_demand.get("km").toString()) == 0.0) && !OD_demand.get("inbound_id").equals(OD_demand.get("outbound_id")))
             {
+//                iii++;
+//                System.out.println("iii:"+iii);
                 OD_demand_list.add(OD_demand);
                 idemand++;
             }

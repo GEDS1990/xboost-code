@@ -392,6 +392,9 @@ function add0(m){return m<10?'0'+m:m };
 		    			for (var y=0;y<x+1;y++) {
 		    				sum = (Number(sum) + Number(arr[y])).toFixed(2);
 		    			}
+		    			if(sum>100){
+		    			sum = 100;
+		    			}
 		    			seriesinfo.push(sum);
 		    		}
 		    		var slen = seriesinfo.length;
