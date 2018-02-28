@@ -171,8 +171,14 @@ public class SolutionDepotsController {
                 String[] strings = loadVol1.split("/");
                 Float loadSum = 0F;
                 for (int j = 0; j < strings.length; j++) {
-                    float v = Float.parseFloat(strings[j]);
-                    loadSum += v;
+                    if(strings[j].equals("0.0") || strings[j].equals("0")) {
+                        float v = Float.parseFloat(strings[j]);
+                        loadSum += v;
+                    }else {
+                        loadSum++;
+                        break;
+                    }
+
                 }
                 if (loadSum == 0F) {
                     siteList.get(i).put("sbVol","0");
@@ -184,8 +190,13 @@ public class SolutionDepotsController {
                 String[] strings = unloadVol1.split("/");
                 Float unloadSum = 0F;
                 for (int j = 0; j < strings.length; j++) {
-                    float v = Float.parseFloat(strings[j]);
-                    unloadSum += v;
+                    if(strings[j].equals("0.0") || strings[j].equals("0")) {
+                        float v = Float.parseFloat(strings[j]);
+                        unloadSum += v;
+                    }else {
+                        unloadSum++;
+                        break;
+                    }
                 }
                 if (unloadSum == 0F) {
                     siteList.get(i).put("unloadVol","0");
