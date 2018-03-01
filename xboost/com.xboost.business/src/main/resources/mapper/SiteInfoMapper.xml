@@ -9,7 +9,7 @@
         VALUES (#{scenariosId},#{siteCode},#{siteLongitude},#{siteLatitude},#{siteName},#{siteAddress},#{siteNightDelivery},#{siteArea},#{siteType},
         #{largeCarModel},#{maxOperateNum},#{distribCenter},#{totalVol},#{fullTimeStaff1},#{partTimeStaff1},
         #{fullTimeStaff2},#{partTimeStaff2},#{str2},#{str3},#{createTime},#{updateTime},#{noOfTruckLimitation},#{noOfBaiduLimitation},
-        #{noOfDidiLimitation},#{noOfDidiLimitation},#{reserve})
+        #{noOfDidiLimitation},#{noOfDadaLimitation},#{reserve})
     </insert>
 
     <update id="update">
