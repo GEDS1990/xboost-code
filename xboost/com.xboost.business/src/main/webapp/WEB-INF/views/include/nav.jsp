@@ -78,11 +78,11 @@
 	                    </div>--%>
 	                    <div class="form-group">
 	                        <label>New password</label>
-	                        <input type="text" class="form-control" value="" name="pwd1" id="pwd1">
+	                        <input class="form-control" placeholder="Password" type="password" value="" name="pwd1" id="pwd1">
 	                    </div>
 	                    <div class="form-group">
 	                        <label>Reenter the new password again</label>
-	                        <input type="text" class="form-control" value="" name="pwd2" id="pwd2">
+	                        <input class="form-control" placeholder="Password" type="password" value="" name="pwd2" id="pwd2">
 	                    </div>
 	                </form>
 	            </div>
@@ -164,7 +164,7 @@
                  //清空session
                  $("#editPwdForm")[0].reset();
                  $("#editPwdModal").modal('hide');
-                 window.location.href="/home";
+                 window.location.href="/MyScenarios";
                  alert("修改密码成功，下次登录请使用新密码！");
              }).fail(function(){
                  alert("修改密码异常！请联系管理员！");
