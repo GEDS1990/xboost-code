@@ -260,9 +260,16 @@ $(function  () {
 	
 
 	            $.post("/cascade/runSilumate",{"distMode":_distMode,"loadTime":_loadTime,"loopLimit":_loopLimit}).done(function(result){
+	                type = result;
+	                if(type.equals("success")){
+                        alert("runSilumate success , please redirect to output!");
+	                }else{
+                        alert("runSilumate fail , please try again!");
+	                }
 	                ws.onclose();
 	                //console.log("success");
 	            }).fail(function(){
+	                alert("runSilumate fail , please try again!");
 	                ws.onclose();
 	                //console.log("fail");
 	            });

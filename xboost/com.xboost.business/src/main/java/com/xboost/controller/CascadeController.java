@@ -118,13 +118,14 @@ public class CascadeController {
                 e.printStackTrace();
                 TextMessage message = new TextMessage(e.toString());
                 systemWebSocketHandler.sendMessageToUser(message);
+                return "fail";
             }
         }else if("3".equals(distMode)){
 
         }
         myScenariosService.updateFinishTime();
         myScenariosService.updateStatus("Editable");
-        return null;
+        return "success";
     }
     @RequestMapping(value="/restartSilumate",method = RequestMethod.GET)
     @ResponseBody
