@@ -50,6 +50,19 @@
         limit ${start},${length}
     </select>
 
+    <select id="findByCarPlan" parameterType="map" resultType="map" resultMap="modelCar">
+        SELECT * FROM t_solution_route r LEFT JOIN t_site_info d ON r.cur_loc = d.site_code
+        <where>
+            r.scenariosId = #{scenariosId} and d.scenariosId = #{scenariosId}
+            <if test="keyword != null and keyword != ''">
+                and  r.car_name = #{keyword}
+            </if>
+        </where>
+        order by r.sequence
+        <!--order by ${orderColumn} ${orderType}-->
+        limit ${start},${length}
+    </select>
+
 
     <select id="findCountByCar" resultType="long" parameterType="map">
         SELECT count(*) FROM t_solution_route r INNER join t_car_licence c on r.car_name = c.name
