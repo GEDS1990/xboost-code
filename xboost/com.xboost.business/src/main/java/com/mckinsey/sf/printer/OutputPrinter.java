@@ -181,7 +181,7 @@ public class OutputPrinter implements IConstants {
 //			systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+type+"\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
 		}else if(type.equals(START) || type.equals(END)){
 			printLine("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t\t\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n");
-			systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t\t\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
+//			systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t\t\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
 		}else{
 			printLine("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n");
 //			systemWebSocketHandler.sendMessageToUser( new TextMessage("|"+type+"\t\t|"+loc+"\t\t|"+act.getJobId()+"\t|"+arrTimestr+"\t|"+endTimestr+"\t|"+act.getId()+"\t|\r\n"));
@@ -208,7 +208,7 @@ public class OutputPrinter implements IConstants {
 		List<ArrInfo> arrInfos = new ArrayList<ArrInfo>();
 
 		systemWebSocketHandler.sendMessageToUser( new TextMessage("60%...."));
-		systemWebSocketHandler.sendMessageToUser( new TextMessage("It May Take Some Minutes,Please Waiting..."));
+		systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
 
 		for(Route r : s.getRoutes().values()){
 

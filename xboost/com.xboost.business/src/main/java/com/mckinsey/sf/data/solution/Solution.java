@@ -132,13 +132,13 @@ public class Solution implements ISolution,Serializable {
 			NoiseMaker noiser, IInsertion constructive) {
 		HashMap<String, Route> initRoutes = new HashMap<String, Route>();
 
-		int jd11 = (routes.length/10)>0?(routes.length/10):1;
-		int jd22 = 0;
+//		int jd11 = (routes.length/10)>0?(routes.length/10):1;
+//		int jd22 = 0;
 		for(RouteJson r : routes){
-			jd22++;
-			if(jd22%jd11 == 0){
-				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
-			}
+//			jd22++;
+//			if(jd22%jd11 == 0){
+//				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
+//			}
 			Route initR = routeFromJson(r);
 			initRoutes.put(initR.getId(),initR);
 		}

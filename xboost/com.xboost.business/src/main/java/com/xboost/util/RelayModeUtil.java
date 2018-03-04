@@ -1149,7 +1149,7 @@ public class RelayModeUtil extends Thread implements IConstants {
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Get all the route details:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("10%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("Get all the route details in any combination ..."));
 
         getTwoPointsRoute();
@@ -1167,7 +1167,7 @@ public class RelayModeUtil extends Thread implements IConstants {
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Calculate Constraint matrix"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("20%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
 
 
         route_list.addAll(route_two_point_list);
@@ -1181,7 +1181,7 @@ public class RelayModeUtil extends Thread implements IConstants {
         systemWebSocketHandler.sendMessageToUser( new TextMessage("Stitching any combination of one under the limit matrix ..."));
         getM1X();
         systemWebSocketHandler.sendMessageToUser( new TextMessage("Stitching any combination of two under the limit matrix ..."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
         getM2X();
         systemWebSocketHandler.sendMessageToUser( new TextMessage("Stitching any combination of three under the limit matrix ..."));
         getM3X();
@@ -1192,11 +1192,11 @@ public class RelayModeUtil extends Thread implements IConstants {
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Prepare to invoke integer optimization components Gurobi:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("50%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
 
         systemWebSocketHandler.sendMessageToUser( new TextMessage("start to invoke integer optimization components ..."));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("65%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
         InvokeGurobi();
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Gurobi Optim Finished:"));

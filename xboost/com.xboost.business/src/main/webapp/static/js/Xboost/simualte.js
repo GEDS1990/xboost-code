@@ -303,21 +303,18 @@ $(function  () {
 				});
 		        function log(messages) {
 
-		            var _r = /▉/;
-		            var flag = 0;
+		            var _r = new RegExp("Waiting...");
 		            var consoleBox = document.getElementById('sim-run-info');
+		            var loadbardiv = document.getElementById('loadbardiv');
 		            if (_r.test(messages)) {
-		                flag++;
                         consoleBox.appendChild(document.createTextNode(messages));
-                        if(flag>10){
-                            var str=consoleBox.innerHTML.substring(0,consoleBox.innerHTML.length-10);
-                            consoleBox.innerHTML=str;
-                        }
+		                loadbardiv.style.display="";
 		            }else{
                         var p = document.createElement('p');
                         p.style.wordWrap = 'break-word';
                         p.appendChild(document.createTextNode(messages));
                         consoleBox.appendChild(p);
+                        loadbardiv.style.display="none";
 		            }
 
 		            consoleBox.scrollTop = consoleBox.scrollHeight;
@@ -333,6 +330,7 @@ $(function  () {
                             example.percent = '('+messages+')';
                             $('#sim-percent').text('('+messages+')');
                         }
+                        loadbardiv.style.display="none";
                     }
 		        }
 			}

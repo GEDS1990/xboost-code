@@ -18,6 +18,7 @@
 
     <!-- Custom CSS -->
     <link href="/static/css/sb-admin-2.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/Xboost/load-bar.css" />
 
     <!-- Custom Fonts -->
     <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -63,7 +64,13 @@
 	    			<p>This Scenario can't be modified while its simulation is running</p>
 	    		</header>
 	    		<div class="sim-box">
-	    			
+
+                    <div id="loadbardiv"  style="display:none;" class="wrapper">
+                        <div class="load-bar">
+                            <div class="load-bar-inner" data-loading="0"> </div>
+                        </div>
+                    </div>
+
 	    			<div class="form-group sim-ground alt-sims" id="sim-run-info">
 	    				${sessionScope.SimulateLog}
 	    			</div>
@@ -159,7 +166,19 @@
 			$('#nav-Simualt').addClass("active");
 		})()
 	});
+
+	$(function(){
+      var interval = setInterval(increment,5000);
+      var current = 0;
+
+      function increment(){
+        current++;
+        if(current == 100) { current = 0; }
+      }
+    });
+
 </script>
+
 </body>
 
 </html>
