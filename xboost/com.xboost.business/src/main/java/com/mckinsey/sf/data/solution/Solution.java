@@ -43,6 +43,7 @@ public class Solution implements ISolution,Serializable {
 	private IConstraint[] constraints;
 	private ICostCalculator objective;
 	private NoiseMaker noiser;
+	private static SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
 
 	public Solution() {
 		super();
@@ -130,15 +131,14 @@ public class Solution implements ISolution,Serializable {
 	public static Solution newSolution(Job[] jobs, RouteJson[] routes, IConstraint[] cons, ICarManager cm, ICostCalculator obj,
 			NoiseMaker noiser, IInsertion constructive) {
 		HashMap<String, Route> initRoutes = new HashMap<String, Route>();
-		SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
 
-		int jd11 = jobs.length/10;
-		int jd22 = 0;
+//		int jd11 = (routes.length/10)>0?(routes.length/10):1;
+//		int jd22 = 0;
 		for(RouteJson r : routes){
-			jd22++;
-			if(jd22%jd11 == 0){
-				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
-			}
+//			jd22++;
+//			if(jd22%jd11 == 0){
+//				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
+//			}
 			Route initR = routeFromJson(r);
 			initRoutes.put(initR.getId(),initR);
 		}
@@ -148,8 +148,8 @@ public class Solution implements ISolution,Serializable {
 		int jd2 = 0;
 		for(Job j : jobs){
 			jd2++;
-			if(jd2%jd1 == 0){
-				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
+			if(jd2 == 0){
+				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉2"));
 			}
 			initJobs.put(j.getId(), j);
 		}
@@ -159,10 +159,10 @@ public class Solution implements ISolution,Serializable {
 		int jd3 = ret.routes.entrySet().size()/10;
 		int jd4 = 0;
 		for(Entry<String, Route> entryRoute : ret.routes.entrySet()){
-			jd4++;
-			if(jd4%jd3 == 0){
-				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
-			}
+//			jd4++;
+//			if(jd4%jd3 == 0){
+//				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉3"));
+//			}
 			Route r = entryRoute.getValue();
 			for(IConstraint c : ret.constraints){
 				c.updateStates(ret, r);
@@ -170,8 +170,7 @@ public class Solution implements ISolution,Serializable {
 
 		}
 
-		ret = (Solution)constructive.insert(ret);
-		ret.calcCost();
+		ret = (Solution)constructive.insert(ret);ret.calcCost();
 		return ret;
 
 	}
@@ -227,10 +226,17 @@ public class Solution implements ISolution,Serializable {
 		if (cars.size() == 0) {
 			return ret;
 		}
-
+		int jd3 = (cars.size()*constraints.length/10)>0?(cars.size()*constraints.length/10):1;
+		int jd4 = 0;
+		int jd5 = 0;
 		for (Car car : cars) {
+			jd4++;
 			Route r = Route.newRoute(car, UUID.randomUUID().toString());
 			for (IConstraint c : constraints) {
+//				jd5++;
+//				if((jd4*jd5)%jd3 == 0){
+//					systemWebSocketHandler.sendMessageToUser( new TextMessage("▉3"));
+//				}
 				c.updateStates(this, r);
 			}
 			this.routes.put(r.getId(), r);

@@ -1142,65 +1142,65 @@ public class RelayModeUtil extends Thread implements IConstants {
 
 
 
-        systemWebSocketHandler.sendMessageToUser(new TextMessage("params:"));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("Load model input parameters:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("1%"));
 
         InitData();
 
-        systemWebSocketHandler.sendMessageToUser(new TextMessage("Get Route:"));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("Get all the route details:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("10%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("getTwoPointsRoute ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Get all the route details in any combination ..."));
 
         getTwoPointsRoute();
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("getThreePointsRoute ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Get all the route details in the three combinations ..."));
         getThreePointsRoute();
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("getFourPointsRoute ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Get all the route details under the four combinations ..."));
         getFourPointsRoute();
 
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("getRouteTwoPoint ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Get all the point details under the two combinations ..."));
         getRouteTwoPoint();
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("getRouteThreePoint ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Get all the point details under the three combinations ..."));
         getRouteThreePoint();
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("getRouteFourPoint ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Get all the point details under the four combinations ..."));
         getRouteFourPoint();
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Calculate Constraint matrix"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("20%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
 
 
         route_list.addAll(route_two_point_list);
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("add route_three_point_list..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Save all the route details under the three combinations under cache..."));
         route_list.addAll(route_three_point_list);
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("add route_four_point_list..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Save all the route details under the four combinations under cache..."));
         route_list.addAll(route_four_point_list);
 
         getConneciton();
 
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("getM1X ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Stitching any combination of one under the limit matrix ..."));
         getM1X();
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("getM2X ..."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Stitching any combination of two under the limit matrix ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
         getM2X();
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("getM3X ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Stitching any combination of three under the limit matrix ..."));
         getM3X();
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("getM4X ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Stitching any combination of four under the limit matrix ..."));
         getM4X();
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("getM5X ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Stitching any combination of five under the limit matrix ..."));
         getM5X();
 
-        systemWebSocketHandler.sendMessageToUser(new TextMessage("Start Invoke Gurobi:"));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("Prepare to invoke integer optimization components Gurobi:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("50%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
 
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("InvokeGurobi ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("start to invoke integer optimization components ..."));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("65%"));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
         InvokeGurobi();
 
         systemWebSocketHandler.sendMessageToUser(new TextMessage("Gurobi Optim Finished:"));
-        systemWebSocketHandler.sendMessageToUser(new TextMessage("Start Insert Result Data:"));
+        systemWebSocketHandler.sendMessageToUser(new TextMessage("Prepare to report the output to the database:"));
         systemWebSocketHandler.sendMessageToUser(new TextMessage("90%"));
 
         systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for makeResults ..."));

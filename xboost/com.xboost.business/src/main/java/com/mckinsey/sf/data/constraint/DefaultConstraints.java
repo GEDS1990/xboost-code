@@ -7,6 +7,7 @@ import com.mckinsey.sf.data.solution.Solution;
 import com.mckinsey.sf.insertion.InsertionCtx;
 import com.mckinsey.sf.printer.OutputPrinter;
 import com.mckinsey.sf.removal.RemovalCtx;
+import org.springframework.web.socket.TextMessage;
 
 import java.io.Serializable;
 import java.util.List;
@@ -98,7 +99,13 @@ public class DefaultConstraints implements IConstraint,IConstants,Serializable {
 		Activity start = r.getActs().get(0);
 
 //		double totalVolume = 0;
+//		int jd1 = (r.getActs().size()/10)>0?(r.getActs().size()/10):1;
+//		int jd2 = 0;
 		for (int ind =0; ind<r.getActs().size(); ind++) {
+//			jd2++;
+			if(ind == 0){
+//				systemWebSocketHandler.sendMessageToUser( new TextMessage("▉4"));
+			}
 			Activity act = r.getActs().get(ind);
 			int indicator = Route.getIndicator(act, start, r.getActs().get(r.getActs().size()-1));
 			Job j = r.getJobs().get(act.getJobId());
@@ -666,8 +673,13 @@ public class DefaultConstraints implements IConstraint,IConstants,Serializable {
 			}else{
 				total = 30+(dist-5)*5;
 			}
+		}else if("dada".equalsIgnoreCase(r.getC().getType())||"达达".equalsIgnoreCase(r.getC().getType())){
+			if(dist<=2){
+				total = 10;
+			}else{
+				total = 10+(dist-2)*2;
+			}
 		}else{
-			total = 11;
 			System.err.println("no such car");
 		}
 		

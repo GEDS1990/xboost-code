@@ -68,16 +68,16 @@ public class CascadeModelUtil extends Thread implements IConstants{
         Config conf = initConf(config,demandInfoService);
 
         systemWebSocketHandler.sendMessageToUser( new TextMessage("1%...."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("initConf...."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Initialize model parameters and configuration...."));
 
         Input input = initInput(config , demandInfoService);
         systemWebSocketHandler.sendMessageToUser( new TextMessage("5%...."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("initInput...."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Initialize model input...."));
         long startTime = System.currentTimeMillis();
         OutputPrinter.printLine("start init ...");
         systemWebSocketHandler.sendMessageToUser( new TextMessage("8%...."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("start init ..."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Load model parameters ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
         RoutingTransportCosts transportCost = new RoutingTransportCosts(siteDistService, conf.getTransportCost().getDistance(), conf.getTransportCost().getNearest(), conf.getTransportCost().getFixed_stop_time(), false,distMode);
         DefaultConstraints defaultCons = new DefaultConstraints(conf.getDistanceConstraint().getWeight(),conf.getTimeConstraint().getWeight(),1,transportCost);
         IConstraint[] cons = {defaultCons};
@@ -90,7 +90,7 @@ public class CascadeModelUtil extends Thread implements IConstants{
 
         OutputPrinter.printLine("start packing....");
         systemWebSocketHandler.sendMessageToUser( new TextMessage("10%...."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("start packing ..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Ready to begin analyzing package information ..."));
         OutputPrinter.printLine("before packing: "+ input.getInitSolution().getUnassignedJobs().length);
         systemWebSocketHandler.sendMessageToUser( new TextMessage("15%...."));
 //        systemWebSocketHandler.sendMessageToUser( new TextMessage("before packing: "+ input.getInitSolution().getUnassignedJobs().length));
@@ -107,7 +107,7 @@ public class CascadeModelUtil extends Thread implements IConstants{
 //        systemWebSocketHandler.sendMessageToUser( new TextMessage("initSolution:"+initSolutionBeforePack.getRoutes().length+","+initSolutionBeforePack.getUnassignedJobs().length));
         OutputPrinter.printLine("build initSolution....");
         systemWebSocketHandler.sendMessageToUser( new TextMessage("25%...."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes...."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting...."));
 //        systemWebSocketHandler.sendMessageToUser( new TextMessage("build initSolution...."));
         GreedyInsertion constructive = new GreedyInsertion();
         constructive.setTransportCost(transportCost);
@@ -145,8 +145,8 @@ public class CascadeModelUtil extends Thread implements IConstants{
         }
         PALNS algo = new PALNS(initSolutionAfterPack, rops, iops, conf.getPconf());
         OutputPrinter.printLine("start running ...");
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("start running..."));
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("please wait for minutes..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Ready to start running the optimization model..."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
         Solution finalPackSolution = (Solution)algo.runAlgo();
         systemWebSocketHandler.sendMessageToUser( new TextMessage("40%..."));
         SolutionJson finalSolutionJson = finalPackSolution.SolutionToJson(finalPackSolution);
@@ -162,15 +162,15 @@ public class CascadeModelUtil extends Thread implements IConstants{
         OutputPrinter.PrintRoutes(finalSolution);
         systemWebSocketHandler.sendMessageToUser( new TextMessage("83%...."));
         long endTime = System.currentTimeMillis();
-        systemWebSocketHandler.sendMessageToUser( new TextMessage("total time used:"+(endTime-startTime)+"ms"));
+//        systemWebSocketHandler.sendMessageToUser( new TextMessage("The total running time of the model is:"+(endTime-startTime)+"ms"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("write Standard Output To Databases"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("90%...."));
         OutputPrinter.writeStandardOutputToExcel(finalSolution,transportCost);
         systemWebSocketHandler.sendMessageToUser( new TextMessage("98%...."));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("finished write Output To Databases"));
         systemWebSocketHandler.sendMessageToUser( new TextMessage("100%...."));
-        OutputPrinter.printLine("All finished.");
-        OutputPrinter.printLine("total time used:"+(endTime-startTime)+"ms");
+        OutputPrinter.printLine("All finished.Please check the optimization data on the output page");
+        OutputPrinter.printLine("The total running time of the model is:"+(endTime-startTime)+"ms");
     }
     private Config initConf(Configuration config,DemandInfoService demandInfoService) {
 

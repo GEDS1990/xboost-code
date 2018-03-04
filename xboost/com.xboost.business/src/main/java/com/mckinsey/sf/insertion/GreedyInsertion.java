@@ -8,6 +8,8 @@ import com.mckinsey.sf.data.constraint.IConstraint;
 import com.mckinsey.sf.data.solution.ISolution;
 import com.mckinsey.sf.data.solution.Solution;
 import com.mckinsey.sf.printer.OutputPrinter;
+import com.xboost.websocket.SystemWebSocketHandler;
+import org.springframework.web.socket.TextMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +25,7 @@ public class GreedyInsertion implements IInsertion {
 
 	private boolean concurrent;
 	private ITransportCosts transportCost;
+	private static SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
 
 	public GreedyInsertion() {
 		concurrent = false;
@@ -53,7 +56,15 @@ public class GreedyInsertion implements IInsertion {
 		int n = s.getUnassigned().size();
 		
 //		OutputPrinter.printLine("routes 1: "+s.getRoutes().size());
+		int jd3 = (n/10)>0?(n/10):1;
+		int jd4 = 0;
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("."));
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
 		for (int i = 0; i < n; i++) {
+//				jd4++;
+//				if((jd4)%jd3 == 0){
+//					systemWebSocketHandler.sendMessageToUser( new TextMessage("▉"));
+//				}
 //			OutputPrinter.printLine("i: "+i);
 			InsertionCtx min = findMin(s, s.getUnassigned(), s.getRoutes(), cache);
 //			OutputPrinter.printLine("routes 2: "+s.getRoutes().size());

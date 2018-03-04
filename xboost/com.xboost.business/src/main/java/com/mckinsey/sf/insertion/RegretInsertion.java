@@ -8,6 +8,8 @@ import com.mckinsey.sf.data.constraint.IConstraint;
 import com.mckinsey.sf.data.solution.ISolution;
 import com.mckinsey.sf.data.solution.Solution;
 import com.mckinsey.sf.printer.OutputPrinter;
+import com.xboost.websocket.SystemWebSocketHandler;
+import org.springframework.web.socket.TextMessage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +30,7 @@ public class RegretInsertion implements IInsertion {
 	
 	private int ks;
 	private ITransportCosts transportCost;
+	private static SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
 
 	public RegretInsertion(int[] k) {
 		super();
@@ -71,11 +74,11 @@ public class RegretInsertion implements IInsertion {
 		
 		Cache cache = new Cache();
 		int n = s.getUnassigned().size();
-		
-		
+
+//		systemWebSocketHandler.sendMessageToUser( new TextMessage("please waiting for minutes..."));
 		for(int i=0 ;i<n;i++){
 			InsertionCtx max = findMaxRegret(s,s.getUnassigned(),s.getRoutes(),cache);
-			
+//			systemWebSocketHandler.sendMessageToUser( new TextMessage("▉7"));
 			//not enough routes
 			if(max.isNullCtx()){
 				HashMap<String, Route> routes = s.newRoutes();
@@ -101,9 +104,14 @@ public class RegretInsertion implements IInsertion {
 		
 		for(Job job : jobs.values()){
 			List<InsertionCtx> ctxs = new ArrayList<InsertionCtx>();
-			
+			int jd3 = (routes.values().size()/10)>0?(routes.values().size()/10):1;
+			int jd4 = 0;
 			for(Route route : routes.values()){
-				
+
+//				jd4++;
+//				if(jd4%jd3 == 0){
+//					systemWebSocketHandler.sendMessageToUser( new TextMessage("▉8"));
+//				}
 				InsertionCtx ctx = null;
 				if (cache.get(route, job) == null) {
 					ctx = tryInsert(s, route, job);

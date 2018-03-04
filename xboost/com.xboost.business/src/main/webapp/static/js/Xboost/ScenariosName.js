@@ -1534,7 +1534,12 @@ $(function  () {
 	                {"data":"lastOpenTime","name":"last_open_time"},
 	                {"data":"scenariosStatus","name":"scenarios_status"},
 	                {"data":function(row){
-	                    return "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"' data-scenariosname="+row.scenariosName+" data-status="+row.scenariosStatus+">Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
+                        var ulHtml = "";
+                        ulHtml += "<a href='javascript:;' class='openLink-scen' data-scenariosid='"+row.id+"' data-scenariosname="+row.scenariosName+" data-status="+row.scenariosStatus+">Open</a> <a href='javascript:;' class='editLink-scen' data-scenariosid='"+row.id+"'>Export</a> <a href='javascript:;' class='delLink-scen' data-scenariosid='"+row.id+"'>Delete</a>";
+//                        ulHtml += '<shiro:hasRole name="管理员">'
+//                        ulHtml += " <a href='javascript:;' class='resLink-scen' data-scenariosid='"+row.id+"'>Restore</a>";
+//                        ulHtml +='</shiro:hasRole>'
+                        return ulHtml;
 	                }}
 	            ],
 	            "columnDefs":[ //具体列的定义
@@ -1635,7 +1640,27 @@ $(function  () {
 	        	}
 	            
 	        });
-	
+
+
+	        //还原场景状态（管理员权限）
+	        $(document).delegate(".resLink-scen","click",function(){
+	            var id = $(this).attr("data-scenariosid");
+	            $('#modal-res').modal("show")
+	            $('#modal-resBtn').click(function  () {
+	            	$.post("/MyScenarios/res",{"id":id}).done(function(result){
+	                    if("success" == result) {
+	                        dt.ajax.reload();
+	                        window.location.reload();
+	                    }
+	                }).fail(function(){
+	                    //alert("Delete exception");
+	                });
+	            })
+
+
+
+	        });
+
 	        //删除用户
 	        $(document).delegate(".delLink-scen","click",function(){
 	            var id = $(this).attr("data-scenariosid");
@@ -1938,6 +1963,7 @@ $(function  () {
 		            $('#modal-userdelBtn').click(function  () {
 		                $.post("/account/del",{"id":id}).done(function(result){
 		                    if("success" == result) {
+		                    $('#modal-user').modal("hide");
 		                        dt.ajax.reload();
 		                    }
 		                }).fail(function(){
