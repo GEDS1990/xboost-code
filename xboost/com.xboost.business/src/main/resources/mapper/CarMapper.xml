@@ -40,6 +40,10 @@
         SELECT * FROM t_car_info where scenariosId = #{scenariosId}
     </select>
 
+    <select id="findByCarType" resultMap="transportMap">
+        SELECT * FROM t_car_info where scenariosId = #{scenariosId} and type=#{carType}
+    </select>
+
     <select id="findByParam" parameterType="map" resultMap="transportMap">
         SELECT * from t_car_info
         <where>

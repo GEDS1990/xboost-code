@@ -27,6 +27,8 @@ public interface CarMapper {
     // 查询所有运力信息  @return
     List<Car> findAll(String scenariosId);
 
+    Car findByCarType(@Param("scenariosId")String scenariosId,@Param("carType")String carType);
+
     Long findAllCount(String scenariosId);
 
     // 根据参数查询运力信息  @param param @return

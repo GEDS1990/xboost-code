@@ -1,10 +1,14 @@
 package com.xboost.service.jieli;
 
+import com.google.common.collect.Maps;
 import com.mckinsey.sf.data.solution.ArrInfo;
 import com.xboost.mapper.ArrInfoMapper;
+import com.xboost.mapper.CarMapper;
+import com.xboost.mapper.RideMapper;
 import com.xboost.mapper.jieli.TempMapper;
 import com.xboost.pojo.Cost;
 import com.xboost.pojo.JieliResult;
+import com.xboost.pojo.Ride;
 import com.xboost.pojo.Route;
 import com.xboost.pojo.jieli.Temp;
 import com.xboost.service.*;
@@ -15,8 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.util.*;
 
 @Named
 @Transactional
@@ -28,6 +32,10 @@ public class TempService {
      */
     @Inject
     TempMapper tempMapper;
+    @Inject
+    RideMapper rideMapper;
+    @Inject
+    CarMapper carMapper;
 
     @Inject
     SolutionRouteService solutionRouteService;
@@ -163,6 +171,265 @@ public class TempService {
 
 //        solutionRouteService.addRoute(route);
     }
+
+    public Map<Integer,List> rideResult(List<Route> jieliResults){
+        int i=1;
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        Map<Integer,List> rideMap = Maps.newHashMap();
+        while (null != jieliResults && jieliResults.size()>0){
+            Ride ride = new Ride();
+            Map<String,List<Route>> result = ride(jieliResults);
+            List<Route> rideList= result.get("rideList");
+            rideMap.put(i,rideList);
+            for(int y=0;y<rideList.size();y++)
+            {
+                ride.setScenariosId(scenariosId);
+                ride.setRideId(String.valueOf(i));
+                ride.setRouteCount(rideList.get(y).getRouteCount());
+                ride.setSequence(String.valueOf(y+1));
+                ride.setCurLoc(rideList.get(y).getCurLoc());
+                ride.setCarType(rideList.get(y).getCarType());
+                ride.setArrTime(rideList.get(y).getArrTime());
+                ride.setEndTime(rideList.get(y).getEndTime());
+                rideMapper.save(ride);
+            }
+            i++;
+
+        }
+        return rideMap;
+    }
+
+    public Map<String,List<Route>> ride(List<Route> jieliResults){
+        Map<String,List<Route>> result1= firstRoute(jieliResults);
+        List<Route> rideList= result1.get("rideList");
+        List<Route> jieliResultList= result1.get("jieliResults");
+        for(int i=0;i<jieliResults.size();i++){
+            autoSplic(jieliResultList,rideList);
+        }
+        rideList = autoSplic(jieliResultList,rideList).get("rideList");
+        jieliResults= autoSplic(jieliResultList,rideList).get("jieliResults");
+
+        Map<String,List<Route>> result = Maps.newHashMap();
+        result.put("jieliResults",jieliResults);
+        result.put("rideList",rideList);
+        return result;
+    }
+
+    //按照sequeue正序排列;
+    public void ascBySequence(List<Route> rideList) {
+        if (null != rideList && rideList.size() > 0) {
+            //   final SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+            Collections.sort(rideList, new Comparator<Route>() {
+                @Override
+                public int compare(Route o1, Route o2) {
+                    int ret = 0;
+                    try {
+                        //比较两个对象的顺序，如果前者小于、等于或者大于后者，则分别返回-1/0/1
+                        ret = o2.getSequence().compareTo(o1.getSequence());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return ret;
+                }
+            });
+        }
+    }
+
+    public Map<String,List<Route>> firstRoute(List<Route> jieliResults){
+        if (null != jieliResults && jieliResults.size()>0) {
+            //   final SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+            Collections.sort(jieliResults, new Comparator<Route>() {
+                @Override
+                public int compare(Route o1, Route o2) {
+                    int ret = 0;
+                    try {
+                        //比较两个对象的顺序，如果前者小于、等于或者大于后者，则分别返回-1/0/1
+                        ret = o2.getEndTime().compareTo(o1.getEndTime());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return ret;
+                }
+            });
+        }
+
+        List<Route> rideList = new ArrayList<>();
+        String routeCount = jieliResults.get(0).getRouteCount();
+        Map<String,List<Route>> tempResult = oneRoute(jieliResults,routeCount);
+        List<Route> tempList = tempResult.get("tempList");
+        ascBySequence(tempList);
+        rideList.add(tempList.get(0));
+        rideList.add(tempList.get(1));
+
+        for(int j=0;j<jieliResults.size();j++)
+        {
+            if(routeCount.equals(jieliResults.get(j).getRouteCount())){
+
+                jieliResults.remove(jieliResults.get(j));
+            }
+        }
+
+        Map<String,List<Route>> result = Maps.newHashMap();
+        result.put("jieliResults",jieliResults);
+        result.put("rideList",rideList);
+        return result;
+
+    }
+
+    public Map<String,List<Route>> autoSplic(List<Route> jieliResults,List<Route> rideList) {
+  //      solutionRouteService.delByScenariosId(Integer.parseInt(openScenariosId));
+
+        for(int i=0;i<jieliResults.size();i++){
+            Route ride = jieliResults.get(i);
+            String routeCount = ride.getRouteCount();
+            List<Route> tempList = new ArrayList<>();
+            Map<String,List<Route>> result=oneRoute(jieliResults,routeCount);
+            tempList = result.get("tempList");
+            rideList.add(tempList.get(0));
+            rideList.add(tempList.get(1));
+            if(!isQualifiedCondition(rideList)){
+                rideList.remove(rideList.size()-1);
+                rideList.remove(rideList.size()-2);
+            }else {
+                for(int j=0;j<jieliResults.size();j++)
+                {
+                    if(routeCount.equals(jieliResults.get(j).getRouteCount())){
+
+                        jieliResults.remove(jieliResults.get(j));
+                    }
+                }
+                break;
+            }
+            if(rideList.get(rideList.size()-2).getCurLoc().equals(rideList.get(rideList.size()-3).getCurLoc())){
+                rideList.remove(rideList.size()-2);
+            }
+        }
+        Map<String,List<Route>> result = Maps.newHashMap();
+        result.put("jieliResults",jieliResults);
+        result.put("rideList",rideList);
+        return result;
+    }
+
+    public Map<String,List<Route>> oneRoute(List<Route> jieliResults,String routeCount){
+        List<Route> tempList = new ArrayList<>();
+        for(int j=0;j<jieliResults.size();j++)
+        {
+            Route ride = jieliResults.get(j);
+            if(routeCount.equals(ride.getRouteCount())){
+
+                tempList.add(jieliResults.get(j));
+            }
+        }
+        ascBySequence(tempList);
+        Map<String,List<Route>> result = Maps.newHashMap();
+        result.put("jieliResults",jieliResults);
+        result.put("tempList",tempList);
+        return result;
+    }
+
+
+    public boolean isQualifiedCondition(List<Route> rideList){
+        boolean result=true;
+        if(isSameCarType(rideList) && isOnTime(rideList) && isMaxDistance(rideList) && isMaxRunTime(rideList) && isMaxStop(rideList)){
+            result = true;
+        }else{
+            result = false;
+        }
+
+
+
+        return result;
+    }
+
+    public boolean isOnTime(List<Route> rideList){
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        boolean result=true;
+
+        String oriSite = rideList.get(rideList.size()-3).getCurLoc();
+        String desSite = rideList.get(rideList.size()-2).getCurLoc();
+        String oriArrTime = rideList.get(rideList.size()-3).getArrTime();
+        String desEndTime = rideList.get(rideList.size()-2).getEndTime();
+
+        if(Integer.parseInt(desEndTime)-Integer.parseInt(oriArrTime)<=10){
+            result = true;
+        }else {
+            result = false;
+        }
+
+
+        return true;
+    }
+    public boolean isMaxDistance(List<Route> rideList){
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        double sumDisTance=0.0;
+        boolean result=true;
+        for(int i=0;i<rideList.size();i++)
+        {
+            sumDisTance += Double.parseDouble(rideList.get(i).getCalcDis());
+        }
+        String carType=rideList.get(0).getCarType();
+        Double maxDistance = carMapper.findByCarType(scenariosId,carType).getMaxDistance();
+
+        if(sumDisTance<=maxDistance)
+        {
+            result = true;
+        }else {
+            result = false;
+        }
+
+        return result;
+    }
+    public boolean isMaxStop(List<Route> rideList){
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        boolean result=true;
+        String carType=rideList.get(0).getCarType();
+        int sumStop = rideList.size();
+        int maxStop = carMapper.findByCarType(scenariosId,carType).getMaxStop();
+
+        if(sumStop<=maxStop)
+        {
+            result = true;
+        }else {
+            result = false;
+        }
+
+        return result;
+    }
+    public boolean isMaxRunTime(List<Route> rideList){
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        boolean result=true;
+        String carType=rideList.get(0).getCarType();
+        int sumRunTime = rideList.size();
+        Double maxRunTime = carMapper.findByCarType(scenariosId,carType).getMaxRunningTime();
+
+        if(sumRunTime<=maxRunTime)
+        {
+            result = true;
+        }else {
+            result = false;
+        }
+
+        return true;
+    }
+    public boolean isSameCarType(List<Route> rideList){
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        boolean result=true;
+        String carType0 = rideList.get(0).getCarType();
+        String carType = rideList.get(rideList.size()-1).getCarType();
+
+        if(carType0.equals(carType))
+        {
+            result = true;
+        }else {
+            result = false;
+        }
+
+        return result;
+    }
+
+
+
+
 
     public void savetemp_list(Map tp) {
         tempMapper.savetemp_list(tp);

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xboost.mapper.RideMapper">
+
+    <insert id="save">
+        INSERT into t_solution_splic(scenariosId ,userId,rideId,timeId,route_count,sequence,cur_loc,next_cur_loc,car_type,car_name,create_time)
+        VALUES (#{scenariosId},#{userId},#{rideId},#{timeId},#{routeCount},#{sequence},#{curLoc},#{nextCurLoc},#{carType},#{carName},#{createTime})
+    </insert>
+
+    <delete id="delByScenariosId">
+        DELETE FROM t_solution_splic WHERE scenariosId = #{scenariosId}
+    </delete>
+
+    <select id="findAll" parameterType="map" resultType="Route" resultMap="modelRoute">
+        SELECT * FROM t_solution_splic where scenariosId = #{scenariosId}
+    </select>
+
+
+    <update id="update">
+        UPDATE t_solution_splic SET car_name=#{carName} WHERE scenariosId=#{scenariosId} and rideId=#{rideId}
+    </update>
+
+
+    <resultMap id="modelRoute" type="Route">
+        <result property="id" column="id"/>
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="rideId" column="rideId"/>
+        <result property="timeId" column="timeId"/>
+        <result property="routeCount" column="route_count"/>
+        <result property="sequence" column="sequence"/>
+        <result property="curLoc" column="cur_loc"/>
+        <result property="nextCurLoc" column="next_cur_loc"/>
+        <result property="carType" column="car_type"/>
+        <result property="carName" column="car_name"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+</mapper>
