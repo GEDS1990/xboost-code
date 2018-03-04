@@ -304,9 +304,15 @@ $(function  () {
 		        function log(messages) {
 
 		            var _r = /▉/;
+		            var flag = 0;
 		            var consoleBox = document.getElementById('sim-run-info');
 		            if (_r.test(messages)) {
+		                flag++;
                         consoleBox.appendChild(document.createTextNode(messages));
+                        if(flag>10){
+                            var str=consoleBox.innerHTML.substring(0,consoleBox.innerHTML.length-10);
+                            consoleBox.innerHTML=str;
+                        }
 		            }else{
                         var p = document.createElement('p');
                         p.style.wordWrap = 'break-word';

@@ -284,7 +284,8 @@ public class SolutionRouteService {
 
 
 
-        if ("1".equals(modelType)) {
+//        if ("1".equals(modelType)) {
+        if (false) {
             String[] title = { "Route Id", "Route", "Arrang Car" };
             sheet.setColumnWidth(1, 80 * 250);
             sheet.setDefaultRowHeight((short) 36);
@@ -345,7 +346,8 @@ public class SolutionRouteService {
             }
         }
 
-        if ("2".equals(modelType)) {
+//        if ("2".equals(modelType)) {
+        if (true) {
             sheet.setColumnWidth(6, 50 * 250);
             sheet.setDefaultRowHeight((short) 36);
 

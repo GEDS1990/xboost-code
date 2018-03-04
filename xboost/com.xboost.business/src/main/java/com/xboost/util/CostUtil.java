@@ -28,7 +28,6 @@ public class CostUtil {
                 total = 30+(dist-5)*5;
             }
         }else{
-            total = 11;
             System.err.println("no such car");
         }
         return total;

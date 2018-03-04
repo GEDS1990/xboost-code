@@ -1938,6 +1938,7 @@ $(function  () {
 		            $('#modal-userdelBtn').click(function  () {
 		                $.post("/account/del",{"id":id}).done(function(result){
 		                    if("success" == result) {
+		                    $('#modal-user').modal("hide");
 		                        dt.ajax.reload();
 		                    }
 		                }).fail(function(){

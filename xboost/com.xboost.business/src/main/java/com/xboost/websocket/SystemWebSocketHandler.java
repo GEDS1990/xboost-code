@@ -3,7 +3,11 @@ package com.xboost.websocket;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.CopyOnWriteArraySet;
+
+import com.xboost.service.MyScenariosService;
 import com.xboost.util.ShiroUtil;
+import com.xboost.util.SpringBeanFactoryUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
@@ -14,9 +18,11 @@ import org.springframework.web.socket.WebSocketSession;
 public class SystemWebSocketHandler implements WebSocketHandler {
 
     private Logger logger = LoggerFactory.getLogger(SystemWebSocketHandler.class);
+    private MyScenariosService myScenariosService =
+            (MyScenariosService)SpringBeanFactoryUtil.getBean("myScenariosService");
 
-    private static final ArrayList<WebSocketSession> users = new ArrayList<WebSocketSession>();;
-
+//    private static final ArrayList<WebSocketSession> users = new ArrayList<WebSocketSession>();;
+    private static CopyOnWriteArraySet<WebSocketSession> users = new CopyOnWriteArraySet<WebSocketSession>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -75,6 +81,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
                     }
                 } catch (IOException e) {
 //                    e.printStackTrace();
+                    myScenariosService.updateStatus("Editable");
                 }
 //                break;
 //            }
