@@ -438,6 +438,7 @@ public class OutputPrinter implements IConstants {
 			int routeCount = 1;
 
 			systemWebSocketHandler.sendMessageToUser(new TextMessage("Insert into DB...."));
+			systemWebSocketHandler.sendMessageToUser(new TextMessage("Waiting...."));
 //			double d = 90.0;
 			for (Entry<String, Route> entry : s.getRoutes().entrySet()) {
 //				d = d<95.0?d+0.01:d;
