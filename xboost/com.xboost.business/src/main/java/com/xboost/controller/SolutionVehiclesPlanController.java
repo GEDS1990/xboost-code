@@ -6,6 +6,7 @@ import com.xboost.pojo.Route;
 import com.xboost.service.*;
 import com.xboost.service.jieli.TempService;
 import com.xboost.util.ShiroUtil;
+import com.xboost.util.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -126,15 +127,39 @@ public class SolutionVehiclesPlanController {
     @RequestMapping(value = "/planCar",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String planCar(HttpServletRequest request) {
-
-        String scenariosId = ShiroUtil.getOpenScenariosId();
-
         Map<String,Object> result = Maps.newHashMap();
-        List<Route> routeList = solutionRouteService.findAllRoute(ShiroUtil.getOpenScenariosId());
+        String rideId = request.getParameter("rideId");
+        String carName = request.getParameter("carName");
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        String modelType = myScenariosService.findById(Integer.parseInt(scenariosId)).getScenariosModel();
+        String oldCarName="";
+        if(modelType.equals("2"))
+        {
+            oldCarName = solutionRouteService.findRouteCarRelay(scenariosId,rideId);
+        }else {
 
-        tempService.rideResult(routeList);
+            oldCarName = solutionRouteService.findRouteCar(scenariosId,rideId);
+        }
+
+        Map<String,Object> param = Maps.newHashMap();
+        param.put("routeCount",rideId);
+        param.put("carName",carName);
+        param.put("scenariosId",scenariosId);
+
+        if(!Strings.isEmpty(oldCarName)){
+            solutionRouteService.updateCarToIdle(scenariosId,oldCarName);
+        }
+        if(modelType.equals("2"))
+        {
+            solutionRouteService.updateCarNameRelay(param);
+        }else {
+            solutionRouteService.updateCarName(param);
+        }
+        //把车的状态更新为busy
+        solutionRouteService.updateCarToBusy(scenariosId,carName);
 
         return "success";
+
     }
 
     //自动拼接

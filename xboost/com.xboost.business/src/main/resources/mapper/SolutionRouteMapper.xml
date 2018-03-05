@@ -20,7 +20,11 @@
     </select>
 
     <select id="findRouteCar" resultType="String">
-        SELECT distinct(car_name) FROM t_solution_route where scenariosId = #{scenariosId} and route_count=#{routeCount}
+        SELECT distinct(car_name) FROM t_solution_route where scenariosId = #{scenariosId} and route_count=#{rideId}
+    </select>
+
+    <select id="findRouteCarRelay" resultType="String">
+        SELECT distinct(car_name) FROM t_solution_splic where scenariosId = #{scenariosId} and rideId=#{rideId}
     </select>
 
     <select id="findByParam" parameterType="map" resultType="Route" resultMap="modelRoute">
@@ -105,7 +109,11 @@
     </select>
 
     <update id="updateCarName" parameterType="map">
-        UPDATE t_solution_route SET car_name=#{carName} WHERE scenariosId=#{scenariosId} and route_count=#{routeCount}
+        UPDATE t_solution_route SET car_name=#{carName} WHERE scenariosId=#{scenariosId} and route_count=#{rideId}
+    </update>
+
+    <update id="updateCarName" parameterType="map">
+        UPDATE t_solution_splic SET car_name=#{carName} WHERE scenariosId=#{scenariosId} and rideId=#{rideId}
     </update>
 
     <update id="updateCarToBusy">
