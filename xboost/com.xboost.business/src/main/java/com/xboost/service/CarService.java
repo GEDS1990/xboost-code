@@ -561,4 +561,8 @@ public class CarService {
     public Car findCarByCarName(Map<String, Object> param) {
         return transportMapper.findCarByCarName(param);
     }
+
+    public List<String> findIdleCar(String scenariosId,String carType) {
+        return transportMapper.findIdleCar(scenariosId,carType);
+    }
 }

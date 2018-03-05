@@ -38,6 +38,8 @@ public class SolutionVehiclesPlanController {
     private MyScenariosService myScenariosService;
     @Inject
     private TempService tempService;
+    @Inject
+    private CarService carService;
 
 
     @RequestMapping(method = RequestMethod.GET)
@@ -94,10 +96,18 @@ public class SolutionVehiclesPlanController {
 
         String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
         List<Map> rideList = null;
+
         if(modelType.equals("2")){
             rideList = solutionRideService.findAllRidesRelay(ShiroUtil.getOpenScenariosId());
+
         }else{
             rideList = solutionRideService.findAllRidesSeries(ShiroUtil.getOpenScenariosId());
+        }
+        for(int i=0;i<rideList.size();i++)
+        {
+            String carType=rideList.get(i).get("carType").toString();
+            List<String> carList= carService.findIdleCar(ShiroUtil.getOpenScenariosId(),carType);
+            rideList.get(i).put("carList",carList);
         }
         Integer count = solutionVehiclesService.findAllCountByCar(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = solutionVehiclesService.findCountByCar(param);
@@ -112,7 +122,22 @@ public class SolutionVehiclesPlanController {
 
     }
 
-    //查询网点操作信息
+    //排车
+    @RequestMapping(value = "/planCar",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String planCar(HttpServletRequest request) {
+
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+
+        Map<String,Object> result = Maps.newHashMap();
+        List<Route> routeList = solutionRouteService.findAllRoute(ShiroUtil.getOpenScenariosId());
+
+        tempService.rideResult(routeList);
+
+        return "success";
+    }
+
+    //自动拼接
     @RequestMapping(value = "/saveSplic",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String saveSplic(HttpServletRequest request) {
