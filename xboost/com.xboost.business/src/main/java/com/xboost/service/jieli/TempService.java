@@ -118,6 +118,7 @@ public class TempService {
     }
     public void saveConnectionOpt(List<Map> jieliResults, double gurobyCost, String openScenariosId) {
         solutionRouteService.delByScenariosId(Integer.parseInt(openScenariosId));
+        solutionRouteService.updateAllCarToIdle(ShiroUtil.getOpenScenariosId());//更新车辆为可用
         String siteCode="";
         for(int i=0;i<jieliResults.size();i++){
 
