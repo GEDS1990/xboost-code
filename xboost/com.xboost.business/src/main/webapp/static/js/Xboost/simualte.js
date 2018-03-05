@@ -78,9 +78,14 @@ $(function  () {
 					$.post("/simualte/Validate").done(function  (result) {
 						//console.log(result);
 						type = result;
-						alert("validate "+type);
+						if(type == "success"){
+                              alert("run validate success !");
+                        }else{
+                              alert("run validate fail , "+"error is :"+result);
+                        }
 					    socket.onclose();
 					}).fail(function  () {
+					    alert("run validate fail , "+"error is server error!");
 					    socket.onclose();
 						//console.log("fail");
 					});
@@ -261,7 +266,7 @@ $(function  () {
 
 	            $.post("/cascade/runSilumate",{"distMode":_distMode,"loadTime":_loadTime,"loopLimit":_loopLimit}).done(function(result){
 	                type = result;
-	                if(type.equals("success")){
+	                if(type == "success"){
                         alert("run silumate success , please redirect to output!");
 	                }else{
                         alert("run silumate fail , "+"error is :"+result);
@@ -269,7 +274,7 @@ $(function  () {
 	                ws.onclose();
 	                //console.log("success");
 	            }).fail(function(){
-	                alert("runSilumate fail , please try again!");
+	                alert("run silumate fail , please try again!");
 	                ws.onclose();
 	                //console.log("fail");
 	            });
