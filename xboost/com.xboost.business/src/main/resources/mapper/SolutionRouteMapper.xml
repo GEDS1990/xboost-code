@@ -112,7 +112,7 @@
         UPDATE t_solution_route SET car_name=#{carName} WHERE scenariosId=#{scenariosId} and route_count=#{rideId}
     </update>
 
-    <update id="updateCarName" parameterType="map">
+    <update id="updateCarNameRelay" parameterType="map">
         UPDATE t_solution_splic SET car_name=#{carName} WHERE scenariosId=#{scenariosId} and rideId=#{rideId}
     </update>
 
