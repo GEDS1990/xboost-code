@@ -142,7 +142,7 @@ public class SolutionVehiclesPlanController {
         }
 
         Map<String,Object> param = Maps.newHashMap();
-        param.put("routeCount",rideId);
+        param.put("rideId",rideId);
         param.put("carName",carName);
         param.put("scenariosId",scenariosId);
 
