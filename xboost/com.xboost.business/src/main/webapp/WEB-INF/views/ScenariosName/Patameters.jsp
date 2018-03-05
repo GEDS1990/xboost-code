@@ -58,7 +58,7 @@
 	        	<ul class="cond-top-ul clearfix">
 	        		<li><a href="/siteInfo">Depots Info</a></li>
 	        		<li><a href="/siteDist">Depots Distance</a></li>
-	        		<li><a href="/car">Vehicles</a></li>
+	        		<li><a href="/car">Shipping Supply</a></li>
 	        		<li><a href="/demandInfo">Shipments</a></li>
 	        		<li class="active"><a  class="active" href="/modelArg">Parameters</a></li>
 	        	</ul>
@@ -117,7 +117,7 @@
 			                        </div>
 			                    </div>
 			                    <div class="form-group">
-			                        <label class="col-sm-3 control-label">Dummy Hub Waiting Time(min): </label>
+			                        <label class="col-sm-3 control-label">Super Depot Waiting Time(min): </label>
 			                        <div class="col-sm-3">
 			                            <input type="number" class="form-control" name="durationTransfer" id="durationTransfer" />
 			                        </div>

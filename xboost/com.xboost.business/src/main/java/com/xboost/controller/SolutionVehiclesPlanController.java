@@ -93,12 +93,11 @@ public class SolutionVehiclesPlanController {
         Map<String,Object> result = Maps.newHashMap();
 
         String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
-        List<Ride> rideList = null;
-        List<Route> routeList = null;
-        if("2"==modelType){
-            rideList = solutionRideService.findAllRides(ShiroUtil.getOpenScenariosId());
+        List<Map> rideList = null;
+        if(modelType.equals("2")){
+            rideList = solutionRideService.findAllRidesRelay(ShiroUtil.getOpenScenariosId());
         }else{
-            routeList = solutionRouteService.findAllRoute(ShiroUtil.getOpenScenariosId());
+            rideList = solutionRideService.findAllRidesSeries(ShiroUtil.getOpenScenariosId());
         }
         Integer count = solutionVehiclesService.findAllCountByCar(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = solutionVehiclesService.findCountByCar(param);
@@ -108,12 +107,9 @@ public class SolutionVehiclesPlanController {
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
-        if("2"==modelType){
-            result.put("data",rideList);
-        }else{
-            result.put("data",routeList);
-        }
+        result.put("data",rideList);
         return result;
+
     }
 
     //查询网点操作信息

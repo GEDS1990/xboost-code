@@ -58,10 +58,10 @@
 	        	<ul class="cond-top-ul clearfix">
 	        		<li><a href="/depots">Depots</a></li>
 	        		<li><a href="/route">Route</a></li>
-	        		<li><a href="/vehicles">Vehicles</a></li>
-	        		<li><a href="/vehiclesPlan">VehiclesPlan</a></li>
+	        		<!--<li><a href="/vehicles">Vehicles</a></li>-->
+	        		<li><a href="/vehiclesPlan">Vehicle Scheduling</a></li>
 	        		<li class="active"><a class="active" href="/costs">Costs</a></li>
-	        		<li><a href="/efficiency">Efficiency</a></li>
+	        		<li><a href="/efficiency">Depot Efficiency</a></li>
 	        		<li><a href="/distribution">Distribution</a></li>
 	        	</ul>
 	        	<!--<ul class="cond-top-ul clearfix">
@@ -103,16 +103,16 @@
 		    						<h1>Manual Efficiency</h1>
 		    						<ul class="item-content">
 		    							<li>Manual Efficiency in Depot: <input type="number" name="sitePeopleWork"  min="0" v-model="sitePeople"/></li>
-		    							<li>Manual Efficiency in Second Layer Hub: <input type="number" name="distribPeopleWork" min="0" v-model="collectPeople"/></li>
+		    							<li>Manual Efficiency in District hub: <input type="number" name="distribPeopleWork" min="0" v-model="collectPeople"/></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
 		    						<h1>Staffing Arrangement</h1>
 		    						<!--serial-->
 		    						<ul class="item-content" v-show="serialSeen">
-		    							<li>No. of Dummy Hub: <span>{{depotcount}}</span></li>
+		    							<li>No. of None-SD: <span>{{depotcount}}</span></li>
 		    							<input type="hidden" name="siteCount" v-bind:value="depotcount" />
-		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
+		    							<li>No. of Staff per None-SD: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
 		    							<li>Total Staff: <span>{{depotAllPeople}}</span></li>
 										<input type="hidden"  v-bind:value="depotAllPeople" />
@@ -121,14 +121,14 @@
 		    						</ul>
 		    						<!--relay-->
 		    						<ul class="item-content" v-show="relaySeen" v-for="site in sitelist">
-		    							<li>Dummy Hub: <span>{{site.siteCode}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Votes: <span>{{site.totalVol}}</span></li>
-		    							<template v-if="site.siteType=='Non Dummy Hub'">
+		    							<li>{{site.siteType}}: <span>{{site.siteCode}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Votes: <span>{{site.totalVol}}</span></li>
+		    							<template v-if="site.siteType=='None-SD'">
 		    								<li><span>{{site.totalVol}}</span> ÷ <span>{{sitePeople}}(Manual Efficiency in Depot)</span> ≈ <span>{{site.perMan}}</span>
 		    							</template>
 		    							<template v-else>
-		    								<li><span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}(Manual Efficiency in Second Layer Hub)</span> ≈ <span>{{site.perMan}}</span>
+		    								<li><span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}(Manual Efficiency in District hub)</span> ≈ <span>{{site.perMan}}</span>
 		    							</template>
-		    							<li>Total Staff of Dummy Hub <span>{{site.siteCode}}</span>: <span>{{site.perMan}}</span></li>
+		    							<li>Total Staff of {{site.siteType}} <span>{{site.siteCode}}</span>: <span>{{site.perMan}}</span></li>
 		    							<li>Full-time Staff: <input type="number" data-name="fullTimeStaff" min="0" v-bind:data-total="site.perMan" v-model="site.full"  v-on:input="input_full(site)"/></li>
 		    							<li>Part-time Staff: <input type="number" data-name="partTimeStaff" min="0" v-bind:data-total="site.perMan" v-model="site.part"  v-on:input="input_part(site)"/></li>
 		    						</ul>
@@ -184,16 +184,16 @@
 		    						<h1>Manual Efficiency</h1>
 		    						<ul class="item-content">
 		    							<li>Manual Efficiency in Depot: <input type="number" name="sitePeopleWork"  min="0" v-model="sitePeople"/></li>
-		    							<li>Manual Efficiency in Second Layer Hub: <input type="number" name="distribPeopleWork" min="0" v-model="collectPeople"/></li>
+		    							<li>Manual Efficiency in District hub: <input type="number" name="distribPeopleWork" min="0" v-model="collectPeople"/></li>
 		    						</ul>
 		    					</div>
 		    					<div class="item-box">
 		    						<h1>Staffing Arrangement</h1>
 		    						<!--serial-->
 		    						<ul class="item-content" v-show="serialSeen">
-		    							<li>No. of Dummy Hub: <span>{{depotcount}}</span></li>
+		    							<li>No. of None-SD: <span>{{depotcount}}</span></li>
 		    							<input type="hidden" name="siteCount" v-bind:value="depotcount" />
-		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
+		    							<li>No. of Staff per None-SD: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
 		    							<li>Total Staff: <span>{{depotAllPeople}}</span></li>
 										<input type="hidden"  v-bind:value="depotAllPeople" />
@@ -202,14 +202,14 @@
 		    						</ul>
 		    						<!--relay-->
 		    						<ul class="item-content" v-show="relaySeen" v-for="site in sitelist">
-		    							<li>Dummy Hub: <span>{{site.siteCode}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Votes: <span>{{site.totalVol}}</span></li>
-		    							<template v-if="site.siteType=='Non Dummy Hub'">
+		    							<li>{{site.siteType}}: <span>{{site.siteCode}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Votes: <span>{{site.totalVol}}</span></li>
+		    							<template v-if="site.siteType=='None-SD'">
 		    								<li><span>{{site.totalVol}}</span> ÷ <span>{{sitePeople}}(Manual Efficiency in Depot)</span> ≈ <span>{{site.perMan}}</span>
 		    							</template>
 		    							<template v-else>
-		    								<li><span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}(Manual Efficiency in Second Layer Hub)</span> ≈ <span>{{site.perMan}}</span>
+		    								<li><span>{{site.totalVol}}</span> ÷ <span>{{collectPeople}}(Manual Efficiency in District hub)</span> ≈ <span>{{site.perMan}}</span>
 		    							</template>
-		    							<li>Total Staff of Dummy Hub <span>{{site.siteCode}}</span>: <span>{{site.perMan}}</span></li>
+		    							<li>Total Staff of {{site.siteType}} <span>{{site.siteCode}}</span>: <span>{{site.perMan}}</span></li>
 		    							<li>Full-time Staff: <input type="number" data-name="fullTimeStaff" min="0" v-bind:data-total="site.perMan" v-model="site.full"  v-on:input="input_full(site)"/></li>
 		    							<li>Part-time Staff: <input type="number" data-name="partTimeStaff" min="0" v-bind:data-total="site.perMan" v-model="site.part"  v-on:input="input_part(site)"/></li>
 		    						</ul>

@@ -23,7 +23,9 @@ public interface RideMapper {
 
     void delByScenariosId(String scenariosId);
 
-    List<Ride> findAllRides(String openScenariosId);
+    List<Map> findAllRidesRelay(String openScenariosId);
+
+    List<Map> findAllRidesSeries(String openScenariosId);
 
 }
 
