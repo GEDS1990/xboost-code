@@ -62,10 +62,10 @@
 	        	<ul class="cond-top-ul clearfix">
 	        		<li><a href="/depots">Depots</a></li>
 	        		<li><a href="/route">Route</a></li>
-	        		<li><a href="/vehicles">Vehicles</a></li>
-	        		<li class="active"><a  class="active" href="/vehiclesPlan">VehiclesPlan</a></li>
+	        		<!--<li><a href="/vehicles">Vehicles</a></li>-->
+	        		<li class="active"><a  class="active" href="/vehiclesPlan">Vehicle Scheduling</a></li>
 	        		<li><a href="/costs">Costs</a></li>
-	        		<li><a href="/efficiency">Efficiency</a></li>
+	        		<li><a href="/efficiency">Depot Efficiency</a></li>
 	        		<li><a href="/distribution">Distribution</a></li>
 	        	</ul>
 	        	<!--<ul class="cond-top-ul clearfix">

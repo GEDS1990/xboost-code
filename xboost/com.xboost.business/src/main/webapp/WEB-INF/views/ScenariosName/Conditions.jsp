@@ -59,7 +59,7 @@
 	        	<ul class="cond-top-ul clearfix">
 	        		<li class="active"><a class="active" href="/siteInfo">Depots Info</a></li>
 	        		<li><a href="/siteDist">Depots Distance</a></li>
-	        		<li><a href="/car">Vehicles</a></li>
+	        		<li><a href="/car">Shipping Supply</a></li>
 	        		<li><a href="/demandInfo">Shipments</a></li>
 	        		<li><a href="/modelArg">Parameters</a></li>
 	        	</ul>
@@ -79,7 +79,7 @@
 					    		<th rowspan="2">depot<br />address</th>
 					    		<th rowspan="2">depot<br />area(㎡)</th>
 					    		<th rowspan="2">depot<br />type</th>
-					    		<th rowspan="2">To Dummy Hub</th>
+					    		<th rowspan="2">To Super Depot</th>
 					    		<th rowspan="2">Night Operation<br />Y/N</th>
 					    		<th colspan="7">per 10 minutes</th>
                                 <th rowspan="2">operation</th>
@@ -153,11 +153,14 @@
 	                    </div>
 	                    <label class="col-sm-2 control-label">depot type</label>
 	                    <div class="col-sm-4">
-	                        <input type="text" class="form-control" name="siteType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                        <select type="text" class="form-control" name="siteType" >
+	                        	<option value="Super Depot">Super Depot</option>
+	                        	<option value="None-SD">None-SD</option>
+	                        </select>
 	                    </div>
 	                </div>
 	                <div class="form-group">
-	                    <label class="col-sm-2 control-label">To Dummy Hub</label>
+	                    <label class="col-sm-2 control-label">To Super Depot</label>
 	                    <div class="col-sm-4">
 	                        <input type="text" class="form-control" name="distribCenter" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
 	                    </div>
@@ -262,11 +265,14 @@
 	                    </div>
 	                    <label class="col-sm-2 control-label">depot type</label>
 	                    <div class="col-sm-4">
-	                        <input type="text" class="form-control" name="siteType" id="siteType" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
+	                        <select type="text" class="form-control" name="siteType" id="siteType" >
+	                        	<option value="Super Depot">Super Depot</option>
+	                        	<option value="None-SD">None-SD</option>
+	                        </select>
 	                    </div>
 	                </div>
 	                <div class="form-group">
-	                    <label class="col-sm-2 control-label">To Dummy Hub</label>
+	                    <label class="col-sm-2 control-label">To Super Depot</label>
 	                    <div class="col-sm-4">
 	                        <input type="text" class="form-control" name="distribCenter" id="distribCenter" required oninvalid="setCustomValidity('Please enter information');" oninput="setCustomValidity('');"/>
 	                    </div>

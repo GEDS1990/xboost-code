@@ -148,7 +148,7 @@ $(function (){
 						if (len != 0) {
 							for (var i=0;i<len;i++) {
 								var type = list[i].siteType;
-								if (type == "Non Dummy Hub") 
+								if (type == "None-SD") 
 								{
 									var price_full = Math.round((list[i].full * this.full_salaty)/this.full_days);
 									var price_part = Math.round((list[i].part*this.part_wage*this.part_work));
@@ -215,7 +215,7 @@ $(function (){
 						var list = this.sitelist;
 						var len = list.length;
 						for (var i=0;i<len;i++) {
-							if (list[i].siteType == "Non Dummy Hub") {
+							if (list[i].siteType == "None-SD") {
 								list[i].perMan =Math.ceil(Number(list[i].totalVol)/Number(val)) ;
 								list[i].full = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
 								list[i].part = 0;
@@ -227,7 +227,7 @@ $(function (){
 						var list = this.sitelist;
 						var len = list.length;
 						for (var i=0;i<len;i++) {
-							if (list[i].siteType != "Non Dummy Hub") {
+							if (list[i].siteType != "None-SD") {
 								list[i].perMan = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
 								list[i].full = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
 								list[i].part = 0;
@@ -332,7 +332,7 @@ $(function (){
 						if (len != 0) {
 							for (var i=0;i<len;i++) {
 								var type = list[i].siteType;
-								if (type == "Non Dummy Hub") 
+								if (type == "None-SD") 
 								{
 									var price_full = Math.round((list[i].full * this.full_salaty)/this.full_days);
 									var price_part = Math.round((list[i].part*this.part_wage*this.part_work));
@@ -400,7 +400,7 @@ $(function (){
 						var list = this.sitelist;
 						var len = list.length;
 						for (var i=0;i<len;i++) {
-							if (list[i].siteType == "Non Dummy Hub") {
+							if (list[i].siteType == "None-SD") {
 								list[i].perMan =Math.ceil(Number(list[i].totalVol)/Number(val)) ;
 								list[i].full = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
 								list[i].part = 0;
@@ -412,7 +412,7 @@ $(function (){
 						var list = this.sitelist;
 						var len = list.length;
 						for (var i=0;i<len;i++) {
-							if (list[i].siteType != "Non Dummy Hub") {
+							if (list[i].siteType != "None-SD") {
 								list[i].perMan = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
 								list[i].full = Math.ceil(Number(list[i].totalVol)/Number(val)) ;
 								list[i].part = 0;
@@ -539,7 +539,7 @@ $(function (){
 							vmA.sitePeople = $res.sitePeopleWork;
 							vmA.collectPeople = $res.distribPeopleWork;
 							for (var i=0;i<len;i++) {
-								if (_lista[i].siteType == "Non Dummy Hub") {
+								if (_lista[i].siteType == "None-SD") {
 									var num = Number(_lista[i].totalVol)/Number(count_s);
 									_lista[i].perMan = Math.ceil(num);
 									_lista[i].full = Math.ceil(num);
@@ -552,7 +552,7 @@ $(function (){
 								}
 							}
 							for (var i=0;i<len;i++) {
-								if (_listb[i].siteType == "Non Dummy Hub") {
+								if (_listb[i].siteType == "None-SD") {
 									var num = Number(_listb[i].totalVol)/Number(count_s);
 									_listb[i].perMan = Math.ceil(num);
 									_listb[i].full = Math.ceil(num);
