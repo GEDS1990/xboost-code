@@ -62,8 +62,8 @@
 	        	<ul class="cond-top-ul clearfix">
 	        		<li><a href="/depots">Depots</a></li>
 	        		<li><a href="/route">Route</a></li>
-	        		<li class="active"><a  class="active" href="/vehicles">Vehicles</a></li>
-	        		<li><a href="/vehiclesPlan">VehiclesPlan</a></li>
+	        		<li><a href="/vehicles">Vehicles</a></li>
+	        		<li class="active"><a  class="active" href="/vehiclesPlan">VehiclesPlan</a></li>
 	        		<li><a href="/costs">Costs</a></li>
 	        		<li><a href="/efficiency">Efficiency</a></li>
 	        		<li><a href="/distribution">Distribution</a></li>
@@ -82,12 +82,12 @@
 	    	<div id="route-wrap">
 	    		<header class="clearfix result-header">
 	    			<div class="xb-fl">
-		    			<div class="select-depot">
+		    			<!--<div class="select-depot">
 		    				<span class="glyphicon glyphicon-align-left"></span>
 		    				<select id="route-vehicles" class="route-select">
 		    					
 		    				</select>
-		    			</div>
+		    			</div>-->
 	    			</div>
 	    			<div class="xb-fr">
 	    				<!--<button><span class="icon-upload"></span>Export this Sheet</button>-->
@@ -102,12 +102,11 @@
 	    			<div class="scen-itembox2">
 	    				<h1 id="route-name">No Data</h1>
 	    				<ul class="scen-cost">
-	    					<li>vehicle type:<span id="veh-type">--</span></li>
-	    					<li>vehicle source:<span id="veh-source">--</span></li>
-	    					<li>vehicle weight limit:<span id="veh-limit">--</span></li>
-	    					<li>vehicle piece capacity:<span id="veh-piece">--</span></li>
-	    					<!--<li>unloading time:<span id="veh-unloadtime">--</span></li>-->
-	    					<li>speed:<span id="veh-speed">--</span></li>
+	    					<li>total distance(km):<span id="total-distance"></span></li>
+	    					<li>vehicle load requirement:<span id="vehicle-load-requirement"></span></li>
+	    					<li>vehicle piece capacity requirement:<span id="vehicle-piece-capacity"></span></li>
+	    					<li>vehicle type:<span id="speed-requirement"></span></li>
+	    					<li style="color: blue;">Chosen Vehicle:<span style="color: blue;font-weight: inherit;" id="Chosen-Vehicle">--</span></li>
 	    				</ul>
 	    			</div>
 	    		</div>
@@ -116,34 +115,18 @@
 	    	
 	    		<!--Solution vehicle-->
 			    <div class="table-responsive active result-style">
-		            <table id="SolutionVehicles" class="table table-striped table-bordered table-hover">
+		            <table id="SolutionVehiclesPlan" class="table table-striped table-bordered table-hover">
 					    <thead>
 					    	<tr>
 					    		<th rowspan="1">id</th>
-					    		<th rowspan="1">Vehicle name</th>
-					    		<th rowspan="1">Depot Order</th>
-					    		<th rowspan="1">Depot ID</th>
-					    		<th rowspan="1">Depot Name</th>
-					    		<th rowspan="1">Depot Address</th>
-					    		<th rowspan="1">Arriva Time</th>
-					    		<th rowspan="1">Operation</th>
-					    		<th rowspan="1">Departure Time</th>
-					    		<th rowspan="1">Next Depot & Distance</th>
+					    		<th rowspan="1">Ride ID</th>
+					    		<th rowspan="1">Depot&Order</th>
+					    		<th rowspan="1">Vehicle Type</th>
+					    		<th rowspan="1">Chosen Vehicle</th>
 					    	</tr>
 					    </thead>
 			            <tbody id="vehicle-tbody">
-			            	<tr>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
-			            	</tr>
+
 			            </tbody>
 		            </table>
 		        </div>
@@ -204,7 +187,7 @@
 <script src="/static/js/datatables/media/js/dataTables.bootstrap.min.js"></script>
 <script src="/static/js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/flex.js"></script>
-<script type="text/javascript" src="/static/js/Xboost/Solution.js" ></script>
+<script type="text/javascript" src="/static/js/Xboost/vehiclesplan.js" ></script>
 <script type="text/javascript">
 	$(function  () {
 		(function  () {

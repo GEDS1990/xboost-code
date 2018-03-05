@@ -640,3 +640,6 @@ body{
 .table.table-hover.efficiency>thead{
     border: 1px solid #ddd;
 }
+#SolutionVehiclesPlan_wrapper >div:first-child {
+	display: none;
+}
