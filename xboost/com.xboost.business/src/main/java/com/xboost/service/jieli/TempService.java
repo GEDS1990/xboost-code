@@ -43,6 +43,9 @@ public class TempService {
     SolutionCostService solutionCostService;
 
     @Inject
+    private  SolutionRideService solutionRideService;
+
+    @Inject
     private JieliResultService jieliResultService;
 
     @Inject
@@ -170,6 +173,9 @@ public class TempService {
         solutionCostService.add(cost);
 
 //        solutionRouteService.addRoute(route);
+        solutionRideService.delByScenariosId(openScenariosId);
+        List<Route> routeList = solutionRouteService.findAllRoute(openScenariosId);
+        rideResult(routeList);
     }
 
     public void rideResult(List<Route> jieliResults){

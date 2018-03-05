@@ -11,17 +11,28 @@
         DELETE FROM t_solution_splic WHERE scenariosId = #{scenariosId}
     </delete>
 
-    <select id="findAll" parameterType="map" resultType="Route" resultMap="modelRoute">
+    <select id="findAll" parameterType="map" resultType="Ride" resultMap="modelRide">
         SELECT * FROM t_solution_splic where scenariosId = #{scenariosId}
     </select>
 
+    <select id="findAllRidesRelay" resultType="map" resultMap="modelRideAndSite">
+        SELECT s.scenariosId,s.rideId,s.sequence,s.cur_loc,s.car_type,s.car_name,d.latitude,d.longitude
+        FROM t_solution_splic s LEFT JOIN t_site_info d ON s.cur_loc = d.site_code
+        WHERE s.scenariosId = #{openScenariosId} AND d.scenariosId=#{openScenariosId}
+    </select>
+
+    <select id="findAllRidesSeries" resultType="map" resultMap="modelRouteAndSite">
+        SELECT s.scenariosId,s.route_count,s.sequence,s.cur_loc,car_type,s.car_name,d.latitude,d.longitude
+        FROM t_solution_route s LEFT JOIN t_site_info d ON s.cur_loc = d.site_code
+        WHERE s.scenariosId = #{openScenariosId} AND d.scenariosId=#{openScenariosId}
+    </select>
 
     <update id="update">
         UPDATE t_solution_splic SET car_name=#{carName} WHERE scenariosId=#{scenariosId} and rideId=#{rideId}
     </update>
 
 
-    <resultMap id="modelRoute" type="Route">
+    <resultMap id="modelRide" type="Ride">
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
         <result property="rideId" column="rideId"/>
@@ -33,6 +44,30 @@
         <result property="carType" column="car_type"/>
         <result property="carName" column="car_name"/>
         <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <resultMap id="modelRideAndSite" type="map">
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="rideId" column="rideId"/>
+        <result property="sequence" column="sequence"/>
+        <result property="curLoc" column="cur_loc"/>
+        <result property="carType" column="car_type"/>
+        <result property="carName" column="car_name"/>
+        <result property="siteLongitude" column="longitude"/>
+        <result property="siteLatitude" column="latitude"/>
+
+    </resultMap>
+
+    <resultMap id="modelRouteAndSite" type="map">
+        <result property="scenariosId" column="scenariosId"/>
+        <result property="RideId" column="route_count"/>
+        <result property="sequence" column="sequence"/>
+        <result property="curLoc" column="cur_loc"/>
+        <result property="carType" column="car_type"/>
+        <result property="carName" column="car_name"/>
+        <result property="siteLongitude" column="longitude"/>
+        <result property="siteLatitude" column="latitude"/>
+
     </resultMap>
 
 </mapper>
