@@ -1,11 +1,9 @@
 package com.xboost.controller;
 
 import com.google.common.collect.Maps;
+import com.xboost.pojo.Ride;
 import com.xboost.pojo.Route;
-import com.xboost.service.MyScenariosService;
-import com.xboost.service.SiteInfoService;
-import com.xboost.service.SolutionRouteService;
-import com.xboost.service.SolutionVehiclesService;
+import com.xboost.service.*;
 import com.xboost.service.jieli.TempService;
 import com.xboost.util.ShiroUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +30,8 @@ public class SolutionVehiclesPlanController {
     private SolutionVehiclesService solutionVehiclesService;
     @Inject
     private SiteInfoService siteInfoService;
+    @Inject
+    private SolutionRideService solutionRideService;
     @Inject
     private SolutionRouteService solutionRouteService;
     @Inject
@@ -93,18 +93,26 @@ public class SolutionVehiclesPlanController {
         Map<String,Object> result = Maps.newHashMap();
 
         String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
-        List<Route> routeList = solutionRouteService.findAllRoute(ShiroUtil.getOpenScenariosId());
+        List<Ride> rideList = null;
+        List<Route> routeList = null;
+        if("2"==modelType){
+            rideList = solutionRideService.findAllRides(ShiroUtil.getOpenScenariosId());
+        }else{
+            routeList = solutionRouteService.findAllRoute(ShiroUtil.getOpenScenariosId());
+        }
         Integer count = solutionVehiclesService.findAllCountByCar(ShiroUtil.getOpenScenariosId());
         Integer filteredCount = solutionVehiclesService.findCountByCar(param);
 
-        tempService.rideResult(routeList);
-
-
+//        tempService.rideResult(routeList);
 
         result.put("draw",draw);
         result.put("recordsTotal",count); //总记录数
         result.put("recordsFiltered",filteredCount); //过滤出来的数量
-        result.put("data",routeList);
+        if("2"==modelType){
+            result.put("data",rideList);
+        }else{
+            result.put("data",routeList);
+        }
         return result;
     }
 
@@ -114,8 +122,6 @@ public class SolutionVehiclesPlanController {
     public String saveSplic(HttpServletRequest request) {
 
         String scenariosId = ShiroUtil.getOpenScenariosId();
-
-
 
         Map<String,Object> result = Maps.newHashMap();
         List<Route> routeList = solutionRouteService.findAllRoute(ShiroUtil.getOpenScenariosId());

@@ -4,6 +4,7 @@ import com.mckinsey.sf.data.Car;
 import com.mckinsey.sf.data.TimeWindow;
 import com.xboost.pojo.CarLicence;
 import com.xboost.pojo.Ride;
+import com.xboost.pojo.Route;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public interface RideMapper {
 
     void delByScenariosId(String scenariosId);
 
+    List<Ride> findAllRides(String openScenariosId);
 
 }
 

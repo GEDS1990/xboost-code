@@ -11,8 +11,12 @@
         DELETE FROM t_solution_splic WHERE scenariosId = #{scenariosId}
     </delete>
 
-    <select id="findAll" parameterType="map" resultType="Route" resultMap="modelRoute">
+    <select id="findAll" parameterType="map" resultType="Ride" resultMap="modelRide">
         SELECT * FROM t_solution_splic where scenariosId = #{scenariosId}
+    </select>
+
+    <select id="findAllRides" parameterType="map" resultType="Ride" resultMap="modelRide">
+        SELECT * FROM t_solution_splic where scenariosId = #{openScenariosId}
     </select>
 
 
@@ -21,7 +25,7 @@
     </update>
 
 
-    <resultMap id="modelRoute" type="Route">
+    <resultMap id="modelRide" type="Ride">
         <result property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
         <result property="rideId" column="rideId"/>
