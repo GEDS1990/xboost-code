@@ -178,7 +178,7 @@ public class TempService {
         rideResult(routeList);
     }
 
-    public Map<Integer,List> rideResult(List<Route> jieliResults){
+    public void rideResult(List<Route> jieliResults){
         int i=1;
         String scenariosId = ShiroUtil.getOpenScenariosId();
         Map<Integer,List> rideMap = Maps.newHashMap();
@@ -202,18 +202,21 @@ public class TempService {
             i++;
 
         }
-        return rideMap;
     }
 
     public Map<String,List<Route>> ride(List<Route> jieliResults){
         Map<String,List<Route>> result1= firstRoute(jieliResults);
         List<Route> rideList= result1.get("rideList");
         List<Route> jieliResultList= result1.get("jieliResults");
-        for(int i=0;i<jieliResults.size();i++){
-            autoSplic(jieliResultList,rideList);
+
+        if (null != jieliResults && jieliResults.size()>0){
+            for(int i=0;i<jieliResults.size();i++){
+                Map<String,List<Route>> result = autoSplic(jieliResultList,rideList);
+                rideList = result.get("rideList");
+                jieliResults= result.get("jieliResults");
+            }
         }
-        rideList = autoSplic(jieliResultList,rideList).get("rideList");
-        jieliResults= autoSplic(jieliResultList,rideList).get("jieliResults");
+
 
         Map<String,List<Route>> result = Maps.newHashMap();
         result.put("jieliResults",jieliResults);
@@ -231,7 +234,7 @@ public class TempService {
                     int ret = 0;
                     try {
                         //比较两个对象的顺序，如果前者小于、等于或者大于后者，则分别返回-1/0/1
-                        ret = o2.getSequence().compareTo(o1.getSequence());
+                        ret = o1.getSequence().compareTo(o2.getSequence());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -267,11 +270,19 @@ public class TempService {
         rideList.add(tempList.get(0));
         rideList.add(tempList.get(1));
 
+        System.out.println("first route: route count ="+rideList.get(0).getRouteCount()
+                +"  sequence="+rideList.get(0).getSequence());
+        System.out.println("first route: route count ="+rideList.get(1).getRouteCount()
+                +"  sequence="+rideList.get(1).getSequence());
+
         for(int j=0;j<jieliResults.size();j++)
         {
             if(routeCount.equals(jieliResults.get(j).getRouteCount())){
 
                 jieliResults.remove(jieliResults.get(j));
+            }
+            if(jieliResults.size()<=2){
+                jieliResults.clear();
             }
         }
 
@@ -295,7 +306,7 @@ public class TempService {
             rideList.add(tempList.get(1));
             if(!isQualifiedCondition(rideList)){
                 rideList.remove(rideList.size()-1);
-                rideList.remove(rideList.size()-2);
+                rideList.remove(rideList.size()-1);
             }else {
                 for(int j=0;j<jieliResults.size();j++)
                 {
@@ -306,9 +317,9 @@ public class TempService {
                 }
                 break;
             }
-            if(rideList.get(rideList.size()-2).getCurLoc().equals(rideList.get(rideList.size()-3).getCurLoc())){
-                rideList.remove(rideList.size()-2);
-            }
+        }
+        if((rideList.size()>2)&&rideList.get(rideList.size()-2).getCurLoc().equals(rideList.get(rideList.size()-3).getCurLoc())){
+            rideList.remove(rideList.size()-2);
         }
         Map<String,List<Route>> result = Maps.newHashMap();
         result.put("jieliResults",jieliResults);

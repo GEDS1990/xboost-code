@@ -59,6 +59,7 @@
 	        		<li><a href="/depots">Depots</a></li>
 	        		<li><a href="/route">Route</a></li>
 	        		<li><a href="/vehicles">Vehicles</a></li>
+	        		<li><a href="/vehiclesPlan">VehiclesPlan</a></li>
 	        		<li><a href="/costs">Costs</a></li>
 	        		<li><a href="/efficiency">Efficiency</a></li>
 	        		<li class="active"><a class="active" href="/distribution">Distribution</a></li>
