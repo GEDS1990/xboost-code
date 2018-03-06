@@ -87,7 +87,7 @@ public interface SolutionRouteMapper {
     List<Map<String,Object>> findCarLoad(@Param("scenariosId")String scenariosId,@Param("routeCount") String routeCount);
 
     //查询当前路线排的车辆
-    String findRouteCar(@Param("scenariosId")String scenariosId,@Param("routeCount") String rideId);
+    String findRouteCar(@Param("scenariosId")String scenariosId,@Param("rideId") String rideId);
     String findRouteCarRelay(@Param("scenariosId")String scenariosId,@Param("routeCount") String rideId);
 
     //根据route_count查询route
