@@ -64,6 +64,9 @@ public interface SolutionRouteMapper {
     //排车更新carName到route表
     void updateCarName(Map<String, Object> param);
 
+    //排车更新carName到splic表
+    void updateCarNameRelay(Map<String, Object> param);
+
     void updateCarToBusy(@Param("scenariosId")String scenariosId,@Param("carName") String carName);
 
     void updateCarToIdle(@Param("scenariosId")String scenariosId,@Param("carName") String carName);
@@ -84,7 +87,8 @@ public interface SolutionRouteMapper {
     List<Map<String,Object>> findCarLoad(@Param("scenariosId")String scenariosId,@Param("routeCount") String routeCount);
 
     //查询当前路线排的车辆
-    String findRouteCar(@Param("scenariosId")String scenariosId,@Param("routeCount") String routeCount);
+    String findRouteCar(@Param("scenariosId")String scenariosId,@Param("routeCount") String rideId);
+    String findRouteCarRelay(@Param("scenariosId")String scenariosId,@Param("routeCount") String rideId);
 
     //根据route_count查询route
     List<Route> findRouteByRouteCount(@Param("scenariosId")String scenariosId,@Param("routeCount")String routeCount);

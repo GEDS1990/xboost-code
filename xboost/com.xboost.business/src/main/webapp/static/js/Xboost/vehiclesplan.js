@@ -12,11 +12,11 @@ $(document).ready(function(){
             
         },
         "columns":[  //返回的JSON中的对象和列的对应关系
-            {"data":"id","name":"id"},
-            {"data":"carName","name":"car_name"},
+        	{"data":"id","name":"id"},
+            {"data":"RideId","name":"RideId"},
+            {"data":"carType","name":"carType"},
             {"data":"sequence","name":"sequence"},
-            {"data":"curLoc","name":"cur_loc"},
-            {"data":"siteName","name":"site_name"}
+            {"data":"curLoc","name":"cur_loc"}
             
         ],
         "columnDefs":[ //具体列的定义
@@ -42,7 +42,7 @@ $(document).ready(function(){
         },
         "initComplete": function (settings, data) {
         	var $this = this;
-        	//////console.log(data);
+        	console.log(data);
         	
         },
         "drawCallback":function  (settings) {
