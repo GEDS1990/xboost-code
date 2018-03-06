@@ -140,7 +140,9 @@ public class SolutionVehiclesPlanController {
         {
             String carType=rideList.get(i).get("carType").toString();
             List<String> carList= carService.findIdleCar(ShiroUtil.getOpenScenariosId(),carType);
+            String maxLoad = carService.findByCarType(ShiroUtil.getOpenScenariosId(),carType).getMaxLoad();
             rideList.get(i).put("carList",carList);
+            rideList.get(i).put("maxLoad",maxLoad);
         }
 
 
