@@ -570,9 +570,6 @@ $(function  () {
 		var table = $('#SolutionDeport').DataTable();
 		table.search(val).draw(false);
 	}
-	
-	
-	
 	//去除重复数组元素
 	function unique(arr) {
 		var result = [], hash = {};

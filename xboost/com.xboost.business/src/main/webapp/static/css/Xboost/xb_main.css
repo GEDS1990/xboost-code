@@ -572,6 +572,29 @@ body{
 .depotline.alt_each {
 	background-color: red;
 }
+/**vehicle**/
+.plancar {
+	display: block;
+	clear: both;
+}
+.plancar>span {
+	float: left;
+	display: block;
+	margin-right: 110px;
+}
+.plancar>button {
+	float: right;
+    width: 100px;
+    margin-left: -100%;
+}
+#VehiclesPlan thead tr>th:nth-child(2) {
+	width: 50%;
+}
+#VehiclesPlan>tbody>tr>td:nth-child(2) {
+	text-align: left;
+	padding-left: 5px;
+	padding-right: 5px;
+}
 /***costs***/
 .result-cost-item{
 	float: left;
