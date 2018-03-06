@@ -113,7 +113,7 @@
 	    					<li>vehicle piece capacity requirement:<span id="vehicle-piece-capacity"></span></li>
 	    					<li>speed requirement:<span id="speed-requirement"></span></li>
 	    					<li style="color: blue;">Chosen Vehicle:<span style="color: blue;font-weight: inherit;" id="Chosen-Vehicle">--</span></li>
-	    					<li class="route-choose">Choose vehicle:<span>--</span></li>
+	    					<!--<li class="route-choose">Choose vehicle:<span>--</span></li>
 	    					<li>
 	    						<form>
 		    						<label >
@@ -130,7 +130,7 @@
 	    					</li>
 	    					<button id="vehicle-btn" class="btn btn-primary ladda-button" data-style="expand-right" >
 	    						<span class="ladda-label">submit</span>
-	    					</button>
+	    					</button>-->
 	    				</ul>
 	    			</div>
 	    		</div>
