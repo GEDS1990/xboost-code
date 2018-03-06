@@ -134,9 +134,9 @@
 		    						</ul>
 		    						<!--mixed-->
 		    						<!--<ul class="item-content" v-show="mixedSeen">
-		    							<li>No. of Dummy Hub: <span>{{depotcount}}</span></li>
+		    							<li>No. of Super Depot: <span>{{depotcount}}</span></li>
 		    							<input type="hidden" name="siteCount" v-bind:value="depotcount" />
-		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
+		    							<li>No. of Staff per Super Depot: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
 		    							<li>Total Staff: <span>{{depotAllPeople}}</span></li>
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>
@@ -215,9 +215,9 @@
 		    						</ul>
 		    						<!--mixed-->
 		    						<!--<ul class="item-content" v-show="mixedSeen">
-		    							<li>No. of Dummy Hub: <span>{{depotcount}}</span></li>
+		    							<li>No. of Super Depot: <span>{{depotcount}}</span></li>
 		    							<input type="hidden" name="siteCount" v-bind:value="depotcount" />
-		    							<li>No. of Staff per Dummy Hub: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
+		    							<li>No. of Staff per Super Depot: <input type="number"  min="0" v-model="depotPeoplecount" /></li>
 		    							<input type="hidden" name="peopleNumPerSite"  v-bind:value="depotPeoplecount"/>
 		    							<li>Total Staff: <span>{{depotAllPeople}}</span></li>
 		    							<li>Full-time Staff: <input type="number" name="fullTimeStaff" min="0" v-model="full_staff"/></li>

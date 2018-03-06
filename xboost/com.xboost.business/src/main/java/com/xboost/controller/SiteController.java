@@ -152,7 +152,7 @@ public class SiteController {
             response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
             String scenariosId = ShiroUtil.getOpenScenariosId();
             String[] titles = { "ID","depot ID","longitude","latitude","depot name","depot address","depot area",
-                    "depot type","to Dummy Hub","night distrib","one period of time : 10 (min)",
+                    "depot type","to Super Depot","night distrib","one period of time : 10 (min)",
                     "one period of time : 10 (min)","one period of time : 10 (min)",
                     "one period of time : 10 (min)","one period of time : 10 (min)",
                     "one period of time : 10 (min)","one period of time : 10 (min)"};

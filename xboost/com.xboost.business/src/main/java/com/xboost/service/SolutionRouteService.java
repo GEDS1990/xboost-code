@@ -202,6 +202,11 @@ public class SolutionRouteService {
         solutionRouteMapper.updateCarName(param);
     }
 
+    //把排车的车名更新到splic表
+    public void updateCarNameRelay(Map<String, Object> param) {
+        solutionRouteMapper.updateCarNameRelay(param);
+    }
+
     public void updateCarToBusy(String scenariosId, String carName) {
         solutionRouteMapper.updateCarToBusy(scenariosId, carName);
     }
@@ -234,8 +239,11 @@ public class SolutionRouteService {
         return solutionRouteMapper.findIdleCar(scenariosId, routeCount);
     }
 
-    public String findRouteCar(String scenariosId, String routeCount) {
-        return solutionRouteMapper.findRouteCar(scenariosId, routeCount);
+    public String findRouteCar(String scenariosId, String rideId) {
+        return solutionRouteMapper.findRouteCar(scenariosId, rideId);
+    }
+    public String findRouteCarRelay(String scenariosId, String rideId) {
+        return solutionRouteMapper.findRouteCar(scenariosId, rideId);
     }
 
     //校验这段路线车上件量是否超出车的最大载件量
