@@ -114,7 +114,19 @@
 	    	
 	    	
 	    		<!--Solution vehicle-->
-			    <div class="table-responsive active result-style">
+	    		<div class="table-responsive active result-style">
+		            <table id="VehiclesPlan" class="table table-striped table-bordered table-hover">
+					    <thead>
+					    	<tr>
+					    		<th rowspan="1">Ride ID</th>
+					    		<th rowspan="1">Depot&Order</th>
+					    		<th rowspan="1">Vehicle Type</th>
+					    		<th rowspan="1">Chosen Vehicle</th>
+					    	</tr>
+					    </thead>
+		            </table>
+		        </div>
+			    <div class="table-responsive active result-style" style="display: none;">
 		            <table id="SolutionVehiclesPlan" class="table table-striped table-bordered table-hover">
 					    <thead>
 					    	<tr>
