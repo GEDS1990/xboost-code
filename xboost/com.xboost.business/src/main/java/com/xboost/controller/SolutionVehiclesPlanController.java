@@ -101,8 +101,40 @@ public class SolutionVehiclesPlanController {
         if(modelType.equals("2")){
             rideList = solutionRideService.findAllRidesRelay(ShiroUtil.getOpenScenariosId());
 
-        }else{
+        }else {
             rideList = solutionRideService.findAllRidesSeries(ShiroUtil.getOpenScenariosId());
+            for (int i = 0; i < rideList.size(); i++) {
+                Map<String, Object> ride = rideList.get(i);
+                String sbVol;
+                String unloadVol;
+                for (int j = i + 1; j < rideList.size(); j++) {
+                    if (ride.get("sequence").equals(rideList.get(j).get("sequence"))) {
+                        sbVol = (ride.get("sbVol").equals("0") ? "" : ride.get("sbVol").toString())
+                                + (rideList.get(j).get("sbVol").equals("0") ? "" : rideList.get(j).get("sbVol").toString());
+                        unloadVol = (ride.get("unloadVol").equals("0") ? "" : ride.get("unloadVol").toString())
+                                + (rideList.get(j).get("unloadVol").equals("0") ? "" : (rideList.get(j).get("unloadVol").toString()));
+
+                        rideList.get(i).put("sbVol", sbVol);
+                        rideList.get(i).put("unloadVol", unloadVol);
+
+                        String curLoc = (String) rideList.get(i).get("curLoc");
+                        String nextCurLoc = (String) rideList.get(i).get("nextCurLoc");
+                        if (!curLoc.equals(nextCurLoc)) {
+                            rideList.get(i).put("nextCurLoc", nextCurLoc);
+                        }
+
+                        String curLoc2 = (String) rideList.get(j).get("curLoc");
+                        String nextCurLoc2 = (String) rideList.get(j).get("nextCurLoc");
+                        if (!curLoc2.equals(nextCurLoc2)) {
+                            rideList.get(i).put("nextCurLoc", nextCurLoc2);
+                        }
+
+                        rideList.remove(j);
+//                        count = count -1;
+//                        filteredCount = filteredCount-1;
+                    }
+                }
+            }
         }
         for(int i=0;i<rideList.size();i++)
         {
@@ -110,14 +142,11 @@ public class SolutionVehiclesPlanController {
             List<String> carList= carService.findIdleCar(ShiroUtil.getOpenScenariosId(),carType);
             rideList.get(i).put("carList",carList);
         }
-        Integer count = solutionVehiclesService.findAllCountByCar(ShiroUtil.getOpenScenariosId());
-        Integer filteredCount = solutionVehiclesService.findCountByCar(param);
 
-//        tempService.rideResult(routeList);
 
         result.put("draw",draw);
-        result.put("recordsTotal",count); //总记录数
-        result.put("recordsFiltered",filteredCount); //过滤出来的数量
+//        result.put("recordsTotal",count); //总记录数
+//        result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",rideList);
         return result;
 
