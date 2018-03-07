@@ -604,6 +604,16 @@ body{
 .chosen-data {
 	color: blue;
 }
+.plan-loading {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    margin-left: -100px;
+    margin-top: -26px;
+    text-align: center;
+    padding: 1em 0;
+}
 /***costs***/
 .result-cost-item{
 	float: left;

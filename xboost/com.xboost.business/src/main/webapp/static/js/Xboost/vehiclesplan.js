@@ -213,6 +213,7 @@ $(document).ready(function(){
 	        	var list = RideId_List(result,ridelist);
 	        	console.log(list);
 	        	creatEle('VehiclesPlan',list);
+	        	$('.plan-loading').hide();
         	}
         	
         },
