@@ -152,7 +152,7 @@ $(document).ready(function(){
 				add += '<td>Ride '+add00(data[i].RideId)+'</td>';
 				add += '<td><span class="plancar"><span>'+conjoin(data[i].val)+'</span><button class="btn btn-primary j-car-plan-btn" data-rideid='+data[i].RideId+'>View on Map</button>'+'</span></td>';
 				add += '<td>'+data[i].carType+'</td>';
-				add += '<td>Chosen:<span>--</span> <select style="width:30%">'+creatSelect(data[i].carList)+'</select> <button class="btn btn-primary" id="j-save-car">Submit</button></td>';
+				add += '<td><span class="chosen">Chosen:</span><span class="chosen-data">--</span> <select style="width:30%">'+creatSelect(data[i].carList)+'</select> <button class="btn btn-primary" id="j-save-car">Submit</button></td>';
 				r_tr.innerHTML = add;
 				r_tbody.appendChild(r_tr);
 			}
