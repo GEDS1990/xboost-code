@@ -80,6 +80,7 @@ public class SolutionVehiclesPlanController {
         String orderColumnIndex = request.getParameter("order[0][column]");
         String orderType = request.getParameter("order[0][dir]");
         String orderColumnName = request.getParameter("columns["+orderColumnIndex+"][name]");
+        String scenariosId = ShiroUtil.getOpenScenariosId();
 
         Map<String,Object> param = Maps.newHashMap();
         param.put("start",start);
@@ -99,10 +100,10 @@ public class SolutionVehiclesPlanController {
         List<Map> rideList = null;
 
         if(modelType.equals("2")){
-            rideList = solutionRideService.findAllRidesRelay(ShiroUtil.getOpenScenariosId());
+            rideList = solutionRideService.findByRide2(scenariosId,searchValue);
 
         }else {
-            rideList = solutionRideService.findAllRidesSeries(ShiroUtil.getOpenScenariosId());
+            rideList = solutionRideService.findByRide1(scenariosId,searchValue);
             for (int i = 0; i < rideList.size(); i++) {
                 Map<String, Object> ride = rideList.get(i);
                 String sbVol;
@@ -136,14 +137,6 @@ public class SolutionVehiclesPlanController {
                 }
             }
         }
-        for(int i=0;i<rideList.size();i++)
-        {
-            String carType=rideList.get(i).get("carType").toString();
-            List<String> carList= carService.findIdleCar(ShiroUtil.getOpenScenariosId(),carType);
-            String maxLoad = carService.findByCarType(ShiroUtil.getOpenScenariosId(),carType).getMaxLoad();
-            rideList.get(i).put("carList",carList);
-            rideList.get(i).put("maxLoad",maxLoad);
-        }
 
 
         result.put("draw",draw);
@@ -153,6 +146,105 @@ public class SolutionVehiclesPlanController {
         return result;
 
     }
+
+    //查询网点操作信息
+    @RequestMapping(value = "/vehicles.json",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Map<String,Object> loadRideMap(HttpServletRequest request) {
+        Map<String,Object> result = Maps.newHashMap();
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+        List<Map> tempList = null;
+        Map<String,Object> temp = Maps.newHashMap();
+        List<Map> rideList = null;
+        Map<String,Object> rideRoute = Maps.newHashMap();
+        String carType="";
+        String carName="";
+        String curLoc ="";
+        String depotOrder="";
+        List<String> carList= new ArrayList<>();
+
+
+        if(modelType.equals("2")){
+
+            Integer maxRideId = solutionRideService.maxRideId(scenariosId);
+            for(int x=1;x<=maxRideId;x++)
+            {
+                tempList = solutionRideService.findByRide2(scenariosId,String.valueOf(x));
+                Integer maxSequence= Integer.parseInt(tempList.get(tempList.size()-1).get("sequence").toString());
+
+                for(int y=0;y<maxSequence;y++){
+                    temp = tempList.get(y);
+                    curLoc = temp.get("curLoc").toString();
+                    if(y == maxSequence-1){
+                        depotOrder += curLoc;
+                    }else {
+                        depotOrder += curLoc + ">>";
+                    }
+                }
+                if(null!=tempList.get(0).get("carName").toString()){
+                    carName = tempList.get(0).get("carName").toString();
+                }else
+                {
+                    carName="--";
+                }
+                carType = tempList.get(0).get("carType").toString();
+                carList= carService.findIdleCar(ShiroUtil.getOpenScenariosId(),carType);
+
+                rideRoute.put("RideId ",x);
+                rideRoute.put("depotOrder",depotOrder);
+                rideRoute.put("carType",carType);
+                rideRoute.put("carName",carName);
+                rideRoute.put("carList",carList);
+                rideList.add(rideRoute);
+            }
+
+        }else {
+            Integer maxRideId = solutionRideService.maxRouteId(scenariosId);
+            for(int x=1;x<=maxRideId;x++)
+            {
+                tempList = solutionRideService.findByRide1(scenariosId,String.valueOf(x));
+                Integer maxSequence= Integer.parseInt(tempList.get(tempList.size()-1).get("sequence").toString());
+
+                for(int y=0;y<maxSequence;y++){
+                    temp = tempList.get(y);
+                    curLoc = temp.get("curLoc").toString();
+                    String curNextLoc = temp.get("curNextLoc").toString();
+                    if(curLoc.equals(curNextLoc))
+                    {
+                        curLoc = "";
+                    }
+                    if(y == maxSequence-1){
+                        depotOrder += curLoc;
+                    }else {
+                        depotOrder += curLoc + ">>";
+                    }
+                }
+                if(null!=tempList.get(0).get("carName").toString()){
+                    carName = tempList.get(0).get("carName").toString();
+                }else
+                {
+                    carName="--";
+                }
+                carType = tempList.get(0).get("carType").toString();
+                carList= carService.findIdleCar(ShiroUtil.getOpenScenariosId(),carType);
+
+                rideRoute.put("RideId ",x);
+                rideRoute.put("depotOrder",depotOrder);
+                rideRoute.put("carType",carType);
+                rideRoute.put("carName",carName);
+                rideRoute.put("carList",carList);
+                rideList.add(rideRoute);
+            }
+
+        }
+
+
+        result.put("data",rideList);
+        return result;
+
+    }
+
 
     //排车
     @RequestMapping(value = "/planCar",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")

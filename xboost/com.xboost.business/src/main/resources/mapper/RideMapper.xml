@@ -17,18 +17,39 @@
         SELECT * FROM t_solution_splic where scenariosId = #{scenariosId}
     </select>
 
+    <select id="findByRide2" resultType="map" resultMap="modelRideAndSite">
+        SELECT s.scenariosId,s.rideId,s.sequence,s.cur_loc,s.car_type,s.car_name FROM t_solution_splic s
+        WHERE s.scenariosId = #{openScenariosId} and s.rideId=#{rideId} order by s.rideId+0,s.sequence+0 asc
+    </select>
+    <select id="findByRides1" resultType="map" resultMap="modelRouteAndSite">
+        SELECT s.scenariosId,s.route_count,s.sequence,s.cur_loc,s.next_cur_loc,car_type,s.car_name FROM t_solution_route s
+        WHERE s.scenariosId = #{openScenariosId} and s.route_count=#{rideId} order by s.route_count+0,s.sequence+0 asc
+    </select>
+
     <select id="findAllRidesRelay" resultType="map" resultMap="modelRideAndSite">
-        SELECT s.scenariosId,s.rideId,s.sequence,s.cur_loc,s.next_cur_loc,s.car_type,s.car_name,
-        s.sb_vol,s.unload_vol,s.arr_time,s.end_time,d.site_name,d.site_type,d.latitude,d.longitude
-        FROM t_solution_splic s LEFT JOIN t_site_info d ON s.cur_loc = d.site_code
-        WHERE s.scenariosId = #{openScenariosId} AND d.scenariosId=#{openScenariosId} order by s.rideId+0,s.sequence+0 asc
+        SELECT s.scenariosId,s.rideId,s.sequence,s.cur_loc,s.car_type,s.car_name FROM t_solution_splic s
+        WHERE s.scenariosId = #{openScenariosId} order by s.rideId+0,s.sequence+0 asc
     </select>
 
     <select id="findAllRidesSeries" resultType="map" resultMap="modelRouteAndSite">
-        SELECT s.scenariosId,s.route_count,s.sequence,s.cur_loc,s.next_cur_loc,car_type,
-        s.car_name,s.sb_vol,s.unload_vol,s.arr_time,s.end_time,d.site_name,d.site_type,d.latitude,d.longitude
+        SELECT s.scenariosId,s.route_count,s.sequence,s.cur_loc,car_type,s.car_name
+        FROM t_solution_route s WHERE s.scenariosId = #{openScenariosId} order by s.route_count+0,s.sequence+0 asc
+    </select>
+
+    <select id="findByRideSeries" resultType="map" resultMap="modelRouteAndSite">
+        SELECT s.scenariosId,s.sequence,s.cur_loc,s.next_cur_loc,car_type,s.car_name,
+        s.sb_vol,s.unload_vol,s.arr_time,s.end_time,d.site_name,d.site_type,d.latitude,d.longitude
         FROM t_solution_route s LEFT JOIN t_site_info d ON s.cur_loc = d.site_code
         WHERE s.scenariosId = #{openScenariosId} AND d.scenariosId=#{openScenariosId}
+        and s.route_count=#{rideId} order by s.rideId+0,s.sequence+0 asc
+    </select>
+
+    <select id="findByRideRelay" resultType="map" resultMap="modelRideAndSite">
+        SELECT s.scenariosId,s.rideId,s.sequence,s.cur_loc,s.next_cur_loc,s.car_type,s.car_name,
+        s.sb_vol,s.unload_vol,s.arr_time,s.end_time,d.site_name,d.site_type,d.latitude,d.longitude
+        FROM t_solution_splic s LEFT JOIN t_site_info d ON s.cur_loc = d.site_code
+        WHERE s.scenariosId = #{openScenariosId} AND d.scenariosId=#{openScenariosId}
+        and s.rideId=#{rideId} order by s.rideId+0,s.sequence+0 asc
     </select>
 
     <update id="update">

@@ -23,9 +23,25 @@ public interface RideMapper {
 
     void delByScenariosId(String scenariosId);
 
+
+    List<Map> findByRides1(@Param("openScenariosId") String openScenariosId,@Param("rideId")String rideId);
+
+    List<Map> findByRides2(@Param("openScenariosId") String openScenariosId,@Param("rideId")String rideId);
+
+
     List<Map> findAllRidesRelay(String openScenariosId);
 
     List<Map> findAllRidesSeries(String openScenariosId);
+
+    List<Map> findByRideRelay(@Param("openScenariosId") String openScenariosId,@Param("rideId")String rideId);
+
+    List<Map> findByRideSeries(@Param("openScenariosId") String openScenariosId,@Param("rideId")String rideId);
+
+    Integer maxRideId(String openScenariosId);
+    Integer maxRouteId(String openScenariosId);
+
+    Integer maxSequence(@Param("openScenariosId") String openScenariosId,@Param("rideId")String rideId);
+
 
 }
 
