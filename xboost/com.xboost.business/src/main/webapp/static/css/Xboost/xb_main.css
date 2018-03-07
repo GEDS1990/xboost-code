@@ -586,6 +586,8 @@ body{
 	float: right;
     width: 100px;
     margin-left: -100%;
+    padding-left: 0;
+    padding-right: 0;
 }
 #VehiclesPlan thead tr>th:nth-child(2) {
 	width: 50%;
