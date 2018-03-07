@@ -59,6 +59,12 @@ $(document).ready(function(){
 		});
 		return arr;
 	};
+	function Sort_rideid (arr) {
+		arr.sort(function  (a,b) {
+			return a.RideId - b.RideId;
+		});
+		return arr;
+	};
 	function RideId_List (result,rideidlist) {
 		var len1 = result.length;
     	var len2 = rideidlist.length;
@@ -83,6 +89,7 @@ $(document).ready(function(){
     		item.carType = rideidlist[i].carType;
     		item.val = Sort_sequence(l);
     		list.push(item);
+    		Sort_rideid(list);
     	}
     	return list;
 	};
