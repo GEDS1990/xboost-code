@@ -139,6 +139,7 @@ $(document).ready(function(){
 		}
 		return add;
 	};
+	/*
 	function creatEle (id,data) {
 		var p = doc.getElementById(id);
 		var r_tbody = doc.createElement('tbody');
@@ -158,6 +159,28 @@ $(document).ready(function(){
 			}
 			p.appendChild(r_tbody);
 		}
+	};*/
+	function creatEle (id,data) {
+		var p = doc.getElementById(id);
+		var r_tbody = doc.createElement('tbody');
+		var len = data.length;
+		console.log(data)
+		if (len !=0) 
+		{
+			for (var i=0;i<len;i++)
+			{
+				console.log(data[i].RideId)
+				var add='';
+				var r_tr = doc.createElement('tr');
+				add += '<td>Ride '+add00(data[i].RideId)+'</td>';
+				add += '<td><span class="plancar"><span>'+(data[i].depotOrder)+'</span><button class="btn btn-primary j-car-plan-btn" data-rideid='+data[i].RideId+'>View on Map</button>'+'</span></td>';
+				add += '<td>'+data[i].carType+'</td>';
+				add += '<td><span class="chosen">Chosen:</span><span class="chosen-data">--</span> <select style="width:30%">'+creatSelect(data[i].carList)+'</select> <button class="btn btn-primary" id="j-save-car">Submit</button></td>';
+				r_tr.innerHTML = add;
+				r_tbody.appendChild(r_tr);
+			}
+			p.appendChild(r_tbody);
+		}
 	};
 	
 	
@@ -170,7 +193,7 @@ $(document).ready(function(){
         "order":[[0,'desc']],//默认排序方式
         "lengthMenu":[100000],//每页显示数据条数菜单
         "ajax":{
-            url:"/vehiclesPlan/vehiclesPlan.json", //获取数据的URL
+            url:"/vehiclesPlan/vehicles.json", //获取数据的URL
             type:"get" //获取数据的方式
             
         },
@@ -209,10 +232,11 @@ $(document).ready(function(){
         	if (!planType) 
         	{
         		var result = data.data;
-	        	var ridelist = uniqeByKeys(result,['RideId']);
-	        	var list = RideId_List(result,ridelist);
-	        	console.log(list);
-	        	creatEle('VehiclesPlan',list);
+        		console.log(result)
+//	        	var ridelist = uniqeByKeys(result,['RideId']);
+//	        	var list = RideId_List(result,ridelist);
+//	        	console.log(list);
+	        	creatEle('VehiclesPlan',result);
 	        	$('.plan-loading').hide();
         	}
         	
@@ -221,11 +245,11 @@ $(document).ready(function(){
         	var api = this.api();
 	        // 输出当前页的数据到浏览器控制台
 	        var datas = api.rows( {page:'current'} ).data();
-	        console.log(datas);
-	        if (planType) 
-	        {
-	        	console.log(1111)
-	        }
+//	        console.log(datas);
+//	        if (planType) 
+//	        {
+//	        	console.log(1111)
+//	        }
 	        
         }
     });
@@ -233,10 +257,13 @@ $(document).ready(function(){
 	//点击view on map
 	$('body').on('click','.j-car-plan-btn',function  () {
 		var rideId = $(this).attr('data-rideid');
-		planType = true;
+		//planType = true;
 		console.log(rideId)
-		var table = $('#SolutionVehiclesPlan').DataTable();
-		table.search(rideId).draw(false);
+		$.get('/vehiclesPlan/vehiclesPlan.json',{"rideId":rideId}).done(function  (res) {
+			console.log(res)
+		}).fail(function  () {
+			//console.log()
+		});
 	});
 	
 	

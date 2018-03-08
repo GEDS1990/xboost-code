@@ -191,7 +191,7 @@ public class SolutionVehiclesPlanController {
                 carType = tempList.get(0).get("carType").toString();
                 carList= carService.findIdleCar(ShiroUtil.getOpenScenariosId(),carType);
 
-                rideRoute.put("RideId ",x);
+                rideRoute.put("RideId",x);
                 rideRoute.put("depotOrder",depotOrder);
                 rideRoute.put("carType",carType);
                 rideRoute.put("carName",carName);
