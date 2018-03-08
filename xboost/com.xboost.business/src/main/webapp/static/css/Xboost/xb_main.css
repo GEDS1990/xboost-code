@@ -581,6 +581,7 @@ body{
 	float: left;
 	display: block;
 	margin-right: 110px;
+	word-break:break-all;
 }
 .plancar>button {
 	float: right;
