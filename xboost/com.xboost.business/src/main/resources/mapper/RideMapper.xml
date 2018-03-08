@@ -17,11 +17,19 @@
         SELECT * FROM t_solution_splic where scenariosId = #{scenariosId}
     </select>
 
+    <select id="maxRideId" resultType="Integer">
+        SELECT max(rideId+0) FROM t_solution_splic s WHERE s.scenariosId = #{openScenariosId}
+    </select>
+
+    <select id="maxRouteId" resultType="Integer">
+        SELECT max(route_count+0) FROM t_solution_route s WHERE s.scenariosId = #{openScenariosId}
+    </select>
+
     <select id="findByRide2" resultType="map" resultMap="modelRideAndSite">
         SELECT s.scenariosId,s.rideId,s.sequence,s.cur_loc,s.car_type,s.car_name FROM t_solution_splic s
         WHERE s.scenariosId = #{openScenariosId} and s.rideId=#{rideId} order by s.rideId+0,s.sequence+0 asc
     </select>
-    <select id="findByRides1" resultType="map" resultMap="modelRouteAndSite">
+    <select id="findByRide1" resultType="map" resultMap="modelRouteAndSite">
         SELECT s.scenariosId,s.route_count,s.sequence,s.cur_loc,s.next_cur_loc,car_type,s.car_name FROM t_solution_route s
         WHERE s.scenariosId = #{openScenariosId} and s.route_count=#{rideId} order by s.route_count+0,s.sequence+0 asc
     </select>

@@ -139,6 +139,7 @@ $(document).ready(function(){
 		}
 		return add;
 	};
+	/*
 	function creatEle (id,data) {
 		var p = doc.getElementById(id);
 		var r_tbody = doc.createElement('tbody');
@@ -158,6 +159,27 @@ $(document).ready(function(){
 			}
 			p.appendChild(r_tbody);
 		}
+	};*/
+	function creatEle (id,data) {
+		var p = doc.getElementById(id);
+		var r_tbody = doc.createElement('tbody');
+		var len = data.length;
+		console.log(data)
+		if (len !=0) 
+		{
+			for (var i=0;i<len;i++)
+			{
+				var add='';
+				var r_tr = doc.createElement('tr');
+				add += '<td>Ride '+add00(data[i].RideId)+'</td>';
+				add += '<td><span class="plancar"><span>'+(data[i].depotOrder)+'</span><button class="btn btn-primary j-car-plan-btn" data-rideid='+data[i].RideId+'>View on Map</button>'+'</span></td>';
+				add += '<td>'+data[i].carType+'</td>';
+				add += '<td><span class="chosen">Chosen:</span><span class="chosen-data">'+(data[i].carName)+'</span> <select style="width:30%">'+creatSelect(data[i].carList)+'</select> <button class="btn btn-primary" id="j-save-car">Submit</button></td>';
+				r_tr.innerHTML = add;
+				r_tbody.appendChild(r_tr);
+			}
+			p.appendChild(r_tbody);
+		}
 	};
 	
 	
@@ -170,7 +192,7 @@ $(document).ready(function(){
         "order":[[0,'desc']],//默认排序方式
         "lengthMenu":[100000],//每页显示数据条数菜单
         "ajax":{
-            url:"/vehiclesPlan/vehiclesPlan.json", //获取数据的URL
+            url:"/vehiclesPlan/vehicles.json", //获取数据的URL
             type:"get" //获取数据的方式
             
         },
@@ -209,10 +231,10 @@ $(document).ready(function(){
         	if (!planType) 
         	{
         		var result = data.data;
-	        	var ridelist = uniqeByKeys(result,['RideId']);
-	        	var list = RideId_List(result,ridelist);
-	        	console.log(list);
-	        	creatEle('VehiclesPlan',list);
+//	        	var ridelist = uniqeByKeys(result,['RideId']);
+//	        	var list = RideId_List(result,ridelist);
+//	        	console.log(list);
+	        	creatEle('VehiclesPlan',result);
 	        	$('.plan-loading').hide();
         	}
         	
@@ -221,22 +243,241 @@ $(document).ready(function(){
         	var api = this.api();
 	        // 输出当前页的数据到浏览器控制台
 	        var datas = api.rows( {page:'current'} ).data();
-	        console.log(datas);
-	        if (planType) 
-	        {
-	        	console.log(1111)
-	        }
+//	        console.log(datas);
+//	        if (planType) 
+//	        {
+//	        	console.log(1111)
+//	        }
 	        
         }
     });
 	
+		function vehiclesMapInit (listPoint) {
+		map.clearOverlays();
+		if (listPoint != undefined) {
+			var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
+		}
+		
+		map.centerAndZoom(point, 13);
+		map.enableScrollWheelZoom(true);
+		// 编写自定义函数,创建标注
+		function addMarker(point,info){
+		  var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,32),{
+		  	anchor: new BMap.Size(10, 24)
+		  });
+			  var marker = new BMap.Marker(point,{icon:myIcon});
+		  map.addOverlay(marker);
+		  marker.addEventListener("mouseover", function(){
+		  	this.openInfoWindow(info);
+		  });
+		  marker.addEventListener("mouseout", function(){
+		  	this.closeInfoWindow();
+		  });
+		}
+		function addpPyline (pointA,pointB,infoWindowLine) {
+			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  //定义折线
+			map.addOverlay(polyline);//添加折线到地图上
+			
+			addArrow(polyline,15,Math.PI/7);
+			
+			polyline.addEventListener("mouseover", function(e){
+				//////console.log(e.point) //获取经过折线的当前坐标，触发覆盖物的事件返回值
+				var point = new BMap.Point(e.point.lng,e.point.lat);
+		  		map.openInfoWindow(infoWindowLine,point);
+		  		
+		  	});
+		  	polyline.addEventListener("mouseout", function(){
+		  		map.closeInfoWindow();
+		  	});
+		}
+		function depotPylineInfo (listPointX,listPointY) {
+			var pointA = new BMap.Point(listPointX.lng,listPointX.lat),
+				pointB = new BMap.Point(listPointY.lng,listPointY.lat);					
+			var sContentLine = "";
+			sContentLine +='<div class="clearfix">';
+			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+':</p>';
+			sContentLine +='<div>';
+			sContentLine +='<p>Departure time: '+listPointX.endTime+'</p>';
+			sContentLine +='<p>Arrival time: '+listPointY.arrTime+'</p>';
+			sContentLine +='<p>Goods: '+listPointX.carGoods+'</p>';
+			sContentLine +='</div></div>';
+			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
+			addpPyline(pointA,pointB,infoWindowLine);
+			//////console.log("v")
+		}
+		//初始化坐标
+		var p_len = listPoint.length;
+		for (var j = 0;j<p_len;j++) {
+			var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
+			//////console.log(points)
+			var sContent = "";
+			sContent += '<p>ID: '+listPoint[j].curLoc+'</p>';
+			sContent += '<p>Type: '+listPoint[j].siteType+'</p>';
+			sContent += '<p>Name: '+listPoint[j].siteName+'</p>';
+			sContent += '<p>Unload: '+listPoint[j].unloadVol+'</p>';
+			sContent += '<p>Load: '+listPoint[j].sbVol+'</p>';
+			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+			//////console.log(infoWindow)
+			addMarker(points,infoWindow);
+		}
+		if (listPoint != undefined) {
+			//规划线路
+			//////console.log(listPoint)
+			var list = [];
+			var p_lens = listPoint.length;
+			for (var q=0;q<p_lens;q++) {
+				var carName = listPoint[q].carName;
+				if (val == carName) {
+					list.push(listPoint[q]);
+				}
+			}
+			//////console.log(list)
+			var routelist = uniqeByKeys(list,["sequence"]);
+			routelist.sort(sortNumber);
+			//////console.log(routelist);
+			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
+				if (i==rl_len-1) {
+					continue;
+				}
+				depotPylineInfo(routelist[i],routelist[i+1]);
+				//////console.log(i)
+			}
+		}
+
+		
+	};
+	
+	//绘制箭头函数
+	function addArrow(polyline,length,angleValue){ //绘制箭头的函数  
+
+		var linePoint=polyline.getPath();//线的坐标串  
+		
+		var arrowCount=linePoint.length;  
+		
+		for(var i =1;i<arrowCount;i++){ //在拐点处绘制箭头  
+		
+		var pixelStart=map.pointToPixel(linePoint[i-1]);  
+		
+		var pixelEnd=map.pointToPixel(linePoint[i]);  
+		
+		var angle=angleValue;//箭头和主线的夹角  
+		
+		var r=length; // r/Math.sin(angle)代表箭头长度  
+		
+		var delta=0; //主线斜率，垂直时无斜率  
+		
+		var param=0; //代码简洁考虑  
+		
+		var pixelTemX,pixelTemY;//临时点坐标  
+		
+		var pixelX,pixelY,pixelX1,pixelY1;//箭头两个点  
+		
+		if(pixelEnd.x-pixelStart.x==0){ //斜率不存在是时  
+		
+		    pixelTemX=pixelEnd.x;  
+		
+		    if(pixelEnd.y>pixelStart.y)  
+		
+		    {  
+		
+		    pixelTemY=pixelEnd.y-r;  
+		
+		    }  
+		
+		    else  
+		
+		    {  
+		
+		    pixelTemY=pixelEnd.y+r;  
+		
+		    }     
+		
+		    //已知直角三角形两个点坐标及其中一个角，求另外一个点坐标算法  
+		
+		    pixelX=pixelTemX-r*Math.tan(angle);   
+		
+		    pixelX1=pixelTemX+r*Math.tan(angle);  
+		
+		    pixelY=pixelY1=pixelTemY;  
+		
+		}  
+		
+		else  //斜率存在时  
+		
+		{  
+		
+		    delta=(pixelEnd.y-pixelStart.y)/(pixelEnd.x-pixelStart.x);  
+		
+		    param=Math.sqrt(delta*delta+1);  
+		
+		  
+		
+		    if((pixelEnd.x-pixelStart.x)<0) //第二、三象限  
+		
+		    {  
+		
+		    pixelTemX=pixelEnd.x+ r/param;  
+		
+		    pixelTemY=pixelEnd.y+delta*r/param;  
+		
+		    }  
+		
+		    else//第一、四象限  
+		
+		    {  
+		
+		    pixelTemX=pixelEnd.x- r/param;  
+		
+		    pixelTemY=pixelEnd.y-delta*r/param;  
+		
+		    }  
+		
+		    //已知直角三角形两个点坐标及其中一个角，求另外一个点坐标算法  
+		
+		    pixelX=pixelTemX+ Math.tan(angle)*r*delta/param;  
+		
+		    pixelY=pixelTemY-Math.tan(angle)*r/param;  
+		
+		  
+		
+		    pixelX1=pixelTemX- Math.tan(angle)*r*delta/param;  
+		
+		    pixelY1=pixelTemY+Math.tan(angle)*r/param;  
+		
+		}  
+		
+		  
+		
+		var pointArrow=map.pixelToPoint(new BMap.Pixel(pixelX,pixelY));  
+		
+		var pointArrow1=map.pixelToPoint(new BMap.Pixel(pixelX1,pixelY1));  
+		
+		var Arrow = new BMap.Polyline([  
+		
+		    pointArrow,  
+		
+		 linePoint[i],  
+		
+		    pointArrow1  
+		
+		], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.8});  
+		
+		map.addOverlay(Arrow);  
+		
+		
+		}  
+
+	};
+	
 	//点击view on map
 	$('body').on('click','.j-car-plan-btn',function  () {
 		var rideId = $(this).attr('data-rideid');
-		planType = true;
-		console.log(rideId)
-		var table = $('#SolutionVehiclesPlan').DataTable();
-		table.search(rideId).draw(false);
+		//planType = true;
+		$.get('/vehiclesPlan/vehiclesPlan.json',{"rideId":rideId}).done(function  (res) {
+			console.log(res)
+		}).fail(function  () {
+			//console.log()
+		});
 	});
 	
 	

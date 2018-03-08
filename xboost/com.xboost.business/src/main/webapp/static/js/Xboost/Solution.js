@@ -35,7 +35,9 @@ $(function  () {
 		  	
 		  	var marker = new BMap.Marker(point,{icon:myIcon});
 		  map.addOverlay(marker);
-		  marker.addEventListener("mouseover", function(){
+		  marker.addEventListener("mouseover", function(e){
+//		  	var point = new BMap.Point(e.point.lng,e.point.lat);
+//		  	console.log(point)
 		  	this.openInfoWindow(info);
 		  });
 		  marker.addEventListener("mouseout", function(){
@@ -168,7 +170,7 @@ $(function  () {
 			}else{
 				var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
 				var myIcon = new BMap.Icon("/static/images/location.png", new BMap.Size(24,32),{
-					anchor: new BMap.Size(10, 25)
+					anchor: new BMap.Size(12, 25)
 				});
 			}
 			
