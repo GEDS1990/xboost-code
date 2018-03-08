@@ -215,19 +215,19 @@ public class SolutionVehiclesPlanController {
                 for(int y=0;y<maxSequence;y++){
                     Map<String,Object> temp = tempList.get(y);
                     curLoc = temp.get("curLoc").toString();
-                    String curNextLoc = "";
-                    if(null !=temp.get("curNextLoc")){
+                    String curNextLoc= temp.get("nextCurLoc").toString();
+                    String separator=">>";
 
-                        curNextLoc=temp.get("curNextLoc").toString();
-                    }
+
                     if(curLoc.equals(curNextLoc))
                     {
                         curLoc = "";
+                        separator="";
                     }
                     if(y == maxSequence-1){
                         depotOrder += curLoc;
                     }else {
-                        depotOrder += curLoc + ">>";
+                        depotOrder += curLoc + separator;
                     }
                 }
                 if(null!=tempList.get(0).get("carName")){
