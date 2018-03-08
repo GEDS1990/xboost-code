@@ -209,7 +209,11 @@ public class SolutionVehiclesPlanController {
                 for(int y=0;y<maxSequence;y++){
                     temp = tempList.get(y);
                     curLoc = temp.get("curLoc").toString();
-                    String curNextLoc = temp.get("curNextLoc").toString();
+                    String curNextLoc = "";
+                    if(null !=temp.get("curNextLoc")){
+
+                        curNextLoc=temp.get("curNextLoc").toString();
+                    }
                     if(curLoc.equals(curNextLoc))
                     {
                         curLoc = "";
@@ -220,7 +224,7 @@ public class SolutionVehiclesPlanController {
                         depotOrder += curLoc + ">>";
                     }
                 }
-                if(null!=tempList.get(0).get("carName").toString()){
+                if(null!=tempList.get(0).get("carName")){
                     carName = tempList.get(0).get("carName").toString();
                 }else
                 {
