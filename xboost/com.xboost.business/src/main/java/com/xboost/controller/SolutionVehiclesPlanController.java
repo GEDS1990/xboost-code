@@ -101,10 +101,10 @@ public class SolutionVehiclesPlanController {
         List<Map> rideList = new ArrayList<>();
 
         if(modelType.equals("2")){
-            rideList = solutionRideService.findByRide2(scenariosId,searchValue);
+            rideList = solutionRideService.findByRideRelay(scenariosId,searchValue);
 
         }else {
-            rideList = solutionRideService.findByRide1(scenariosId,searchValue);
+            rideList = solutionRideService.findByRideSeries(scenariosId,searchValue);
             for (int i = 0; i < rideList.size(); i++) {
                 Map<String, Object> ride = rideList.get(i);
                 String sbVol;
