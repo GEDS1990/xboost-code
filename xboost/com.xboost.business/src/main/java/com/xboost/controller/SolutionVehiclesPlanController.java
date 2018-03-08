@@ -154,9 +154,9 @@ public class SolutionVehiclesPlanController {
         Map<String,Object> result = Maps.newHashMap();
         String scenariosId = ShiroUtil.getOpenScenariosId();
         String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
-        List<Map> tempList = null;
+        List<Map> tempList = new ArrayList<>();
         Map<String,Object> temp = Maps.newHashMap();
-        List<Map> rideList = null;
+        List<Map> rideList = new ArrayList<>();
         Map<String,Object> rideRoute = Maps.newHashMap();
         String carType="";
         String carName="";
@@ -182,7 +182,7 @@ public class SolutionVehiclesPlanController {
                         depotOrder += curLoc + ">>";
                     }
                 }
-                if(null!=tempList.get(0).get("carName").toString()){
+                if(null!=tempList.get(0).get("carName")){
                     carName = tempList.get(0).get("carName").toString();
                 }else
                 {

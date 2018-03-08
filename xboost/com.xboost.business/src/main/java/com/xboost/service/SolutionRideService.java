@@ -17,11 +17,11 @@ public class SolutionRideService {
     public RideMapper rideMapper;
 
     public List<Map> findByRide1(String openScenariosId,String rideId) {
-        return rideMapper.findByRides1(openScenariosId,rideId);
+        return rideMapper.findByRide1(openScenariosId,rideId);
     }
 
     public List<Map> findByRide2(String openScenariosId,String rideId) {
-        return rideMapper.findByRides2(openScenariosId,rideId);
+        return rideMapper.findByRide2(openScenariosId,rideId);
     }
 
     public List<Map> findAllRidesRelay(String openScenariosId) {
