@@ -195,9 +195,12 @@ public class TempService {
                 ride.setRouteCount(rideList.get(y).getRouteCount());
                 ride.setSequence(String.valueOf(y+1));
                 ride.setCurLoc(rideList.get(y).getCurLoc());
+                ride.setNextCurLoc(rideList.get(y).getNextCurLoc());
                 ride.setCarType(rideList.get(y).getCarType());
                 ride.setArrTime(rideList.get(y).getArrTime());
                 ride.setEndTime(rideList.get(y).getEndTime());
+                ride.setSbVol(rideList.get(y).getSbVol());
+                ride.setUnloadVol(rideList.get(y).getUnloadVol());
                 rideMapper.save(ride);
             }
             i++;
@@ -319,8 +322,17 @@ public class TempService {
                 break;
             }
         }
-        if((rideList.size()>2)&&rideList.get(rideList.size()-2).getCurLoc().equals(rideList.get(rideList.size()-3).getCurLoc())){
-            rideList.remove(rideList.size()-2);
+
+        if(rideList.size()>2){
+
+            Route ride1 = rideList.get(rideList.size()-2);
+            Route ride2 = rideList.get(rideList.size()-3);
+            if(ride1.getCurLoc().equals(ride2.getCurLoc())){
+                rideList.get(rideList.size()-2).setUnloadVol(ride2.getUnloadVol());
+                rideList.remove(rideList.size()-3);
+            }else{
+                rideList.get(rideList.size()-3).setNextCurLoc(ride1.getCurLoc());
+            }
         }
         Map<String,List<Route>> result = Maps.newHashMap();
         result.put("jieliResults",jieliResults);

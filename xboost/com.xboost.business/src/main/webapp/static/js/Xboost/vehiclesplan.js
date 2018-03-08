@@ -9,12 +9,12 @@ $(document).ready(function(){
 	map.centerAndZoom('北京');
 	
 	var doc = document;
-	
+	var planType = false;
 	//depot search 
 	function depotSearch (selement,val){
 		var table = $(selement).DataTable();
 		table.search(val).draw(false);
-	}
+	};
 	//去除重复数组元素
 	function unique(arr) {
 		var result = [], hash = {};
@@ -59,6 +59,12 @@ $(document).ready(function(){
 		});
 		return arr;
 	};
+	function Sort_rideid (arr) {
+		arr.sort(function  (a,b) {
+			return a.RideId - b.RideId;
+		});
+		return arr;
+	};
 	function RideId_List (result,rideidlist) {
 		var len1 = result.length;
     	var len2 = rideidlist.length;
@@ -83,8 +89,16 @@ $(document).ready(function(){
     		item.carType = rideidlist[i].carType;
     		item.val = Sort_sequence(l);
     		list.push(item);
+    		Sort_rideid(list);
     	}
     	return list;
+	};
+	//求时间
+	function operationTime (data) {
+		var result = parseInt(data),
+	    	h = parseInt(result/60),
+	    	m = result%60;
+	    	return add0(h)+":"+add0(m);
 	};
 	function add00(m){
 		var r;
@@ -136,9 +150,9 @@ $(document).ready(function(){
 				var add='';
 				var r_tr = doc.createElement('tr');
 				add += '<td>Ride '+add00(data[i].RideId)+'</td>';
-				add += '<td><span class="plancar"><span>'+conjoin(data[i].val)+'</span><button data-rideid='+data[i].RideId+'>View on Map</button>'+'</span></td>';
+				add += '<td><span class="plancar"><span>'+conjoin(data[i].val)+'</span><button class="btn btn-primary j-car-plan-btn" data-rideid='+data[i].RideId+'>View on Map</button>'+'</span></td>';
 				add += '<td>'+data[i].carType+'</td>';
-				add += '<td>Chosen:<span>--</span> <select>'+creatSelect(data[i].carList)+'</select> <button id="j-save-car">Submit</button></td>';
+				add += '<td><span class="chosen">Chosen:</span><span class="chosen-data">--</span> <select style="width:30%">'+creatSelect(data[i].carList)+'</select> <button class="btn btn-primary" id="j-save-car">Submit</button></td>';
 				r_tr.innerHTML = add;
 				r_tbody.appendChild(r_tr);
 			}
@@ -192,21 +206,38 @@ $(document).ready(function(){
         "initComplete": function (settings, data) {
         	var $this = this;
         	//console.log(data);
-        	var result = data.data;
-        	var ridelist = uniqeByKeys(result,['RideId']);
-        	var list = RideId_List(result,ridelist);
-        	console.log(list);
-        	creatEle('VehiclesPlan',list);
+        	if (!planType) 
+        	{
+        		var result = data.data;
+	        	var ridelist = uniqeByKeys(result,['RideId']);
+	        	var list = RideId_List(result,ridelist);
+	        	console.log(list);
+	        	creatEle('VehiclesPlan',list);
+	        	$('.plan-loading').hide();
+        	}
+        	
         },
         "drawCallback":function  (settings) {
         	var api = this.api();
 	        // 输出当前页的数据到浏览器控制台
 	        var datas = api.rows( {page:'current'} ).data();
-	        //////console.log(datas);
+	        console.log(datas);
+	        if (planType) 
+	        {
+	        	console.log(1111)
+	        }
 	        
         }
     });
 	
+	//点击view on map
+	$('body').on('click','.j-car-plan-btn',function  () {
+		var rideId = $(this).attr('data-rideid');
+		planType = true;
+		console.log(rideId)
+		var table = $('#SolutionVehiclesPlan').DataTable();
+		table.search(rideId).draw(false);
+	});
 	
 	
 	

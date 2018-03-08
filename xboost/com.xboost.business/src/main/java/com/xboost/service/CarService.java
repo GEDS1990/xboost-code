@@ -231,6 +231,10 @@ public class CarService {
         return transportMapper.findById(id);
     }
 
+    public Car findByCarType(String scenariosId,String carType) {
+        return transportMapper.findByCarType(scenariosId,carType);
+    }
+
 
     /**
      * 编辑运力信息

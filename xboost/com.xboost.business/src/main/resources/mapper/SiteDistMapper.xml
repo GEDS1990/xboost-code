@@ -64,6 +64,11 @@
         SELECT * FROM t_site_distance where id = #{id}
     </select>
 
+    <select id="findDistance" parameterType="map" resultType="String">
+        SELECT car_distance FROM t_site_distance where scenariosId = #{scenariosId}
+        and site_collect = #{siteCollect} and site_delivery = #{siteDelivery}
+    </select>
+
     <update id="editSiteDist">
         UPDATE t_site_distance SET scenariosId = #{scenariosId},car_type = #{carType},site_collect = #{siteCollect},site_delivery=#{siteDelivery},
         car_distance=#{carDistance},duration_night_delivery=#{durationNightDelivery},duration_night_delivery2 = #{durationNightDelivery2},
