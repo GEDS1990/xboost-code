@@ -74,7 +74,8 @@ public class SolutionVehiclesPlanController {
             length =Integer.valueOf(request.getParameter("length"));
         }
         //Linux
-        String searchValue = request.getParameter("search[value]");
+      //  String searchValue = request.getParameter("search[value]");
+        String searchValue = request.getParameter("rideId");
         //Windows
      //   String searchValue = Strings.toUTF8(request.getParameter("search[value]"));
         String orderColumnIndex = request.getParameter("order[0][column]");
@@ -97,7 +98,7 @@ public class SolutionVehiclesPlanController {
         Map<String,Object> result = Maps.newHashMap();
 
         String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
-        List<Map> rideList = null;
+        List<Map> rideList = new ArrayList<>();
 
         if(modelType.equals("2")){
             rideList = solutionRideService.findByRide2(scenariosId,searchValue);
