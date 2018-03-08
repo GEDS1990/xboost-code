@@ -155,15 +155,8 @@ public class SolutionVehiclesPlanController {
         Map<String,Object> result = Maps.newHashMap();
         String scenariosId = ShiroUtil.getOpenScenariosId();
         String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
-        List<Map> tempList = new ArrayList<>();
-        Map<String,Object> temp = Maps.newHashMap();
         List<Map> rideList = new ArrayList<>();
-        Map<String,Object> rideRoute = Maps.newHashMap();
-        String carType="";
-        String carName="";
-        String curLoc ="";
-        String depotOrder="";
-        List<String> carList= new ArrayList<>();
+
 
 
         if(modelType.equals("2")){
@@ -171,11 +164,17 @@ public class SolutionVehiclesPlanController {
             Integer maxRideId = solutionRideService.maxRideId(scenariosId);
             for(int x=1;x<=maxRideId;x++)
             {
-                tempList = solutionRideService.findByRide2(scenariosId,String.valueOf(x));
+                String depotOrder="";
+                List<Map> tempList = solutionRideService.findByRide2(scenariosId,String.valueOf(x));
                 Integer maxSequence= Integer.parseInt(tempList.get(tempList.size()-1).get("sequence").toString());
+                Map<String,Object> rideRoute = Maps.newHashMap();
+                String carType="";
+                String carName="";
+                String curLoc ="";
+                List<String> carList= new ArrayList<>();
 
                 for(int y=0;y<maxSequence;y++){
-                    temp = tempList.get(y);
+                    Map<String,Object> temp = tempList.get(y);
                     curLoc = temp.get("curLoc").toString();
                     if(y == maxSequence-1){
                         depotOrder += curLoc;
@@ -204,11 +203,17 @@ public class SolutionVehiclesPlanController {
             Integer maxRideId = solutionRideService.maxRouteId(scenariosId);
             for(int x=1;x<=maxRideId;x++)
             {
-                tempList = solutionRideService.findByRide1(scenariosId,String.valueOf(x));
+                List<Map> tempList = solutionRideService.findByRide1(scenariosId,String.valueOf(x));
                 Integer maxSequence= Integer.parseInt(tempList.get(tempList.size()-1).get("sequence").toString());
+                String depotOrder="";
+                Map<String,Object> rideRoute = Maps.newHashMap();
+                String carType="";
+                String carName="";
+                String curLoc ="";
+                List<String> carList= new ArrayList<>();
 
                 for(int y=0;y<maxSequence;y++){
-                    temp = tempList.get(y);
+                    Map<String,Object> temp = tempList.get(y);
                     curLoc = temp.get("curLoc").toString();
                     String curNextLoc = "";
                     if(null !=temp.get("curNextLoc")){
