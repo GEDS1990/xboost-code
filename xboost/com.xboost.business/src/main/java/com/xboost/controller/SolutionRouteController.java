@@ -204,7 +204,7 @@ public class SolutionRouteController {
         result.put("modelType", modelType);
 
         redisUtil.set(key,result);
-        logger.info("----加入缓存---key="+key);
+
 
         return result;
     }

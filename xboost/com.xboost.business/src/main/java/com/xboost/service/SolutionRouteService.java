@@ -265,18 +265,61 @@ public class SolutionRouteService {
      */
     public void exportResult(String scenariosId, String[] titles, ServletOutputStream outputStream, String modelType) {
         List<Map<String, Object>> routeList = solutionRouteMapper.findAllByRoute(scenariosId);
-        for (int i = 0; i < routeList.size(); i++) {
-            String sbVol = (String) routeList.get(i).get("sbVol");
-            String unloadVol = (String) routeList.get(i).get("unloadVol");
-            if (sbVol != null && !"0".equals(sbVol)) {
-                routeList.get(i).put("sbVol", sbVol.substring(0, sbVol.indexOf(".")));
-            }
-            if (unloadVol != null && !"0".equals(unloadVol)) {
-                routeList.get(i).put("unloadVol", unloadVol.substring(0, unloadVol.indexOf(".")));
-            }
-        }
+//        for (int i = 0; i < routeList.size(); i++) {
+//            String sbVol = (String) routeList.get(i).get("sbVol");
+//            String unloadVol = (String) routeList.get(i).get("unloadVol");
+//            if (sbVol != null && !"0".equals(sbVol)) {
+//                routeList.get(i).put("sbVol", sbVol.substring(0, sbVol.indexOf(".")));
+//            }
+//            if (unloadVol != null && !"0".equals(unloadVol)) {
+//                routeList.get(i).put("unloadVol", unloadVol.substring(0, unloadVol.indexOf(".")));
+//            }
+//        }
         String sbVol;
         String unloadVol;
+        ////////
+        for(int i=0;i<routeList.size();i++)
+        {
+            Map<String,Object> route = routeList.get(i);
+            for(int j=i+1;j<routeList.size();j++)
+            {
+                if(route.get("routeCount").equals(routeList.get(j).get("routeCount"))&&route.get("sequence").equals(routeList.get(j).get("sequence"))){
+//                        sbVolSum = Double.parseDouble(route.get("sbVolSum").equals("0")?"":route.get("sbVolSum").toString())
+//                                +Double.parseDouble(routeList.get(j).get("sbVolSum").equals("0")?"":routeList.get(j).get("sbVolSum").toString());
+//                        unloadVolSum = Double.parseDouble(route.get("unloadVolSum").equals("0")?"":route.get("unloadVolSum").toString())
+//                                +Double.parseDouble(routeList.get(j).get("unloadVolSum").equals("0")?"":routeList.get(j).get("unloadVolSum").toString());
+                    sbVol = (route.get("sbVol").equals("0")?"":route.get("sbVol").toString())
+                            +(routeList.get(j).get("sbVol").equals("0")?"":routeList.get(j).get("sbVol").toString());
+                    unloadVol = (route.get("unloadVol").equals("0")?"":route.get("unloadVol").toString())
+                            +(routeList.get(j).get("unloadVol").equals("0")?"":(routeList.get(j).get("unloadVol").toString()));
+
+//                        routeList.get(i).put("sbVolSum",sbVolSum);
+//                        routeList.get(i).put("unloadVolSum",unloadVolSum);
+                    routeList.get(i).put("sbVol",sbVol);
+                    routeList.get(i).put("unloadVol",unloadVol);
+
+                    String curLoc = (String) routeList.get(i).get("curLoc");
+                    String nextCurLoc = (String) routeList.get(i).get("nextCurLoc");
+                    String calcDis = (String) routeList.get(i).get("calcDis");
+                    if(!curLoc.equals(nextCurLoc)) {
+                        routeList.get(i).put("nextCurLoc",nextCurLoc);
+                        routeList.get(i).put("calcDis",calcDis);
+                    }
+
+                    String curLoc2 = (String) routeList.get(j).get("curLoc");
+                    String nextCurLoc2 = (String) routeList.get(j).get("nextCurLoc");
+                    String calcDis2 = (String) routeList.get(j).get("calcDis");
+                    if(!curLoc2.equals(nextCurLoc2)) {
+                        routeList.get(i).put("nextCurLoc",nextCurLoc2);
+                        routeList.get(i).put("calcDis",calcDis2);
+                    }
+
+                    routeList.remove(j);
+                }
+
+            }
+        }
+        //////////
         // 创建一个workbook 对应一个excel应用文件
         XSSFWorkbook workBook = new XSSFWorkbook();
         // 在workbook中添加一个sheet,对应Excel文件中的sheet

@@ -2,6 +2,10 @@ package com.xboost.util;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import com.xboost.controller.SolutionRouteController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
@@ -13,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 public final class RedisUtil {
     /*private Logger logger = Logger.getLogger(RedisUtil.class);  */
     private RedisTemplate<Serializable, Object> redisTemplate;
+    private static Logger logger = LoggerFactory.getLogger(RedisUtil.class);
 
     /**
      * 批量删除对应的value
@@ -50,7 +55,13 @@ public final class RedisUtil {
      * @return
      */
     public boolean exists(final String key) {
-        return redisTemplate.hasKey(key);
+        boolean res;
+        try{
+            res = redisTemplate.hasKey(key);
+        }catch (Exception e){
+            res = false;
+        }
+        return res;
     }
 
     /**
@@ -77,8 +88,10 @@ public final class RedisUtil {
             ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
             operations.set(key, value);
             result = true;
+            logger.info("----加入缓存---key="+key);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            logger.info("----加入缓存失败----连接异常---key="+key);
         }
         return result;
     }
@@ -104,8 +117,10 @@ public final class RedisUtil {
             operations.set(key, value);
             redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
             result = true;
+            logger.info("----加入缓存---key="+key);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            logger.info("----加入缓存失败----连接异常---key="+key);
         }
         return result;
     }
