@@ -6,7 +6,6 @@ $(document).ready(function(){
 	map.addControl(top_left_control);        
 	map.addControl(top_left_navigation);     
 	map.addControl(top_right_navigation);
-	map.centerAndZoom('北京');
 	
 	var doc = document;
 	var planType = false;
@@ -94,11 +93,19 @@ $(document).ready(function(){
     	return list;
 	};
 	//求时间
+	function add0(m){return m<10?'0'+m:m };
 	function operationTime (data) {
-		var result = parseInt(data),
-	    	h = parseInt(result/60),
-	    	m = result%60;
+		var reg = /^[\d]+$/;
+		if (reg.test(data)) {
+			var result = parseInt(data),
+		    	h = parseInt(result/60),
+		    	m = result%60;
 	    	return add0(h)+":"+add0(m);
+		}else{
+			return data;
+		}
+		
+		
 	};
 	function add00(m){
 		var r;
@@ -164,9 +171,11 @@ $(document).ready(function(){
 		var p = doc.getElementById(id);
 		var r_tbody = doc.createElement('tbody');
 		var len = data.length;
-		console.log(data)
+		//console.log(data)
 		if (len !=0) 
 		{
+			$('.j-car-plan-btn').off('click');
+			$('.j-save-car').off('click');
 			for (var i=0;i<len;i++)
 			{
 				var add='';
@@ -174,7 +183,7 @@ $(document).ready(function(){
 				add += '<td>Ride '+add00(data[i].RideId)+'</td>';
 				add += '<td><span class="plancar"><span>'+(data[i].depotOrder)+'</span><button class="btn btn-primary j-car-plan-btn" data-rideid='+data[i].RideId+'>View on Map</button>'+'</span></td>';
 				add += '<td>'+data[i].carType+'</td>';
-				add += '<td><span class="chosen">Chosen:</span><span class="chosen-data">'+(data[i].carName)+'</span> <select style="width:30%">'+creatSelect(data[i].carList)+'</select> <button class="btn btn-primary" id="j-save-car">Submit</button></td>';
+				add += '<td><span class="chosen">Chosen:</span><span class="chosen-data">'+(data[i].carName)+'</span> <select style="width:30%">'+creatSelect(data[i].carList)+'</select> <button data-rideid='+data[i].RideId+' class="btn btn-primary j-save-car" >Submit</button></td>';
 				r_tr.innerHTML = add;
 				r_tbody.appendChild(r_tr);
 			}
@@ -252,12 +261,11 @@ $(document).ready(function(){
         }
     });
 	
-		function vehiclesMapInit (listPoint) {
+	function vehiclesPlanMapInit (listPoint) {
 		map.clearOverlays();
 		if (listPoint != undefined) {
-			var point = new BMap.Point(listPoint[0].lng,listPoint[0].lat);
+			var point = new BMap.Point(listPoint[0].siteLongitude,listPoint[0].siteLatitude);
 		}
-		
 		map.centerAndZoom(point, 13);
 		map.enableScrollWheelZoom(true);
 		// 编写自定义函数,创建标注
@@ -291,15 +299,15 @@ $(document).ready(function(){
 		  	});
 		}
 		function depotPylineInfo (listPointX,listPointY) {
-			var pointA = new BMap.Point(listPointX.lng,listPointX.lat),
-				pointB = new BMap.Point(listPointY.lng,listPointY.lat);					
+			var pointA = new BMap.Point(listPointX.siteLongitude,listPointX.siteLatitude),
+				pointB = new BMap.Point(listPointY.siteLongitude,listPointY.siteLatitude);					
 			var sContentLine = "";
 			sContentLine +='<div class="clearfix">';
 			sContentLine +='<p>'+listPointX.curLoc+' to '+listPointY.curLoc+':</p>';
 			sContentLine +='<div>';
-			sContentLine +='<p>Departure time: '+listPointX.endTime+'</p>';
-			sContentLine +='<p>Arrival time: '+listPointY.arrTime+'</p>';
-			sContentLine +='<p>Goods: '+listPointX.carGoods+'</p>';
+			sContentLine +='<p>Departure time: '+operationTime(listPointX.endTime)+'</p>';
+			sContentLine +='<p>Arrival time: '+operationTime(listPointY.arrTime)+'</p>';
+			//sContentLine +='<p>Goods: '+listPointX.carGoods+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
@@ -308,7 +316,7 @@ $(document).ready(function(){
 		//初始化坐标
 		var p_len = listPoint.length;
 		for (var j = 0;j<p_len;j++) {
-			var points = new BMap.Point(listPoint[j].lng,listPoint[j].lat);
+			var points = new BMap.Point(listPoint[j].siteLongitude,listPoint[j].siteLatitude);
 			//////console.log(points)
 			var sContent = "";
 			sContent += '<p>ID: '+listPoint[j].curLoc+'</p>';
@@ -322,24 +330,11 @@ $(document).ready(function(){
 		}
 		if (listPoint != undefined) {
 			//规划线路
-			//////console.log(listPoint)
-			var list = [];
-			var p_lens = listPoint.length;
-			for (var q=0;q<p_lens;q++) {
-				var carName = listPoint[q].carName;
-				if (val == carName) {
-					list.push(listPoint[q]);
-				}
-			}
-			//////console.log(list)
-			var routelist = uniqeByKeys(list,["sequence"]);
-			routelist.sort(sortNumber);
-			//////console.log(routelist);
-			for (var i=0,rl_len = routelist.length;i<rl_len;i++) {
+			for (var i=0,rl_len = listPoint.length;i<rl_len;i++) {
 				if (i==rl_len-1) {
 					continue;
 				}
-				depotPylineInfo(routelist[i],routelist[i+1]);
+				depotPylineInfo(listPoint[i],listPoint[i+1]);
 				//////console.log(i)
 			}
 		}
@@ -475,11 +470,37 @@ $(document).ready(function(){
 		//planType = true;
 		$.get('/vehiclesPlan/vehiclesPlan.json',{"rideId":rideId}).done(function  (res) {
 			console.log(res)
+			var result = Sort_sequence(res.data);
+			console.log(result);
+			vehiclesPlanMapInit(result);
 		}).fail(function  () {
 			//console.log()
 		});
 	});
-	
+	//保存排车
+	$('body').on('click','.j-save-car',function  () {
+		var rideId = $(this).attr('data-rideid');
+		var carName = $(this).prev().val();
+		console.log(rideId)
+		console.log(carName)
+		if ( Boolean(rideId) && Boolean(carName) )
+		{
+			var l = Ladda.create(this);
+		 	l.start();
+			var data = {
+				"rideId":rideId,
+				"carName":carName
+			};
+			$.get('/vehiclesPlan/planCar',data).done(function  (res) {
+				console.log(res)
+				console.log(data)
+			}).fail(function  () {
+				
+			}).always(function  () {
+				//l.stop();
+			});
+		}
+	});
 	
 	
 	

@@ -23,6 +23,7 @@
     <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/static/js/morris/morris.css">
     <link rel="stylesheet" href="/static/js/datatables/media/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/Xboost/ladda-themeless.min.css" />
     <link rel="stylesheet" href="/static/css/Xboost/icon.css" />
     <link rel="stylesheet" href="/static/css/Xboost/xb_main.css" />
     <link rel="stylesheet" href="/static/css/Xboost/ScenariosName.css" />
@@ -33,6 +34,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="/static/js/Xboost/spin.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/Xboost/ladda.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Sjbn4XELTZZZKwunDx4AGqblQ2aViy3Z"></script>
     <style>
     	#depots-map {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
