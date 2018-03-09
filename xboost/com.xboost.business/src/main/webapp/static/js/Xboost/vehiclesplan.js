@@ -508,6 +508,7 @@ $(document).ready(function(){
 			$.get('/vehiclesPlan/planCar',data).done(function  (res) {
 				console.log(res)
 				console.log(data)
+				$this.prev().find('option:selected').remove();
 				l.stop();
 			}).fail(function  () {
 				
