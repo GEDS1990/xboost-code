@@ -181,9 +181,9 @@ $(document).ready(function(){
 				var add='';
 				var r_tr = doc.createElement('tr');
 				add += '<td>Ride '+add00(data[i].RideId)+'</td>';
-				add += '<td><span class="plancar"><span>'+(data[i].depotOrder)+'</span><button class="btn btn-primary j-car-plan-btn" data-rideid='+data[i].RideId+'>View on Map</button>'+'</span></td>';
+				add += '<td><span class="plancar"><span>'+(data[i].depotOrder)+'</span><button data-style="slide-right" class="btn btn-primary j-car-plan-btn ladda-button" data-rideid='+data[i].RideId+'><span class="ladda-label">View on Map</span></button>'+'</span></td>';
 				add += '<td>'+data[i].carType+'</td>';
-				add += '<td><span class="chosen">Chosen:</span><span class="chosen-data">'+(data[i].carName)+'</span> <select style="width:30%">'+creatSelect(data[i].carList)+'</select> <button data-rideid='+data[i].RideId+' class="btn btn-primary j-save-car" >Submit</button></td>';
+				add += '<td><span class="chosen">Chosen:</span><span class="chosen-data">'+(data[i].carName)+'</span> <select style="width:30%">'+creatSelect(data[i].carList)+'</select> <button data-rideid='+data[i].RideId+' class="btn btn-primary j-save-car ladda-button" data-style="slide-right"><span class="ladda-label">Submit</span></button></td>';
 				r_tr.innerHTML = add;
 				r_tbody.appendChild(r_tr);
 			}
@@ -237,15 +237,17 @@ $(document).ready(function(){
         "initComplete": function (settings, data) {
         	var $this = this;
         	//console.log(data);
-        	if (!planType) 
+        	if (data.data.length !=0) 
         	{
-        		var result = data.data;
+        		var result = Sort_rideid(data.data);
 //	        	var ridelist = uniqeByKeys(result,['RideId']);
 //	        	var list = RideId_List(result,ridelist);
 //	        	console.log(list);
-	        	creatEle('VehiclesPlan',result);
-	        	$('.plan-loading').hide();
+				var rideId = result[0].RideId;
+				creatEle('VehiclesPlan',result);
+				ViewMap(rideId);
         	}
+        	$('.plan-loading').hide();
         	
         },
         "drawCallback":function  (settings) {
@@ -463,26 +465,38 @@ $(document).ready(function(){
 		}  
 
 	};
-	
-	//点击view on map
-	$('body').on('click','.j-car-plan-btn',function  () {
-		var rideId = $(this).attr('data-rideid');
-		//planType = true;
+	function ViewMap (rideId,$this) {
+		if ($this)
+		{
+			var l = Ladda.create($this);
+	 		l.start();
+		}
 		$.get('/vehiclesPlan/vehiclesPlan.json',{"rideId":rideId}).done(function  (res) {
-			console.log(res)
 			var result = Sort_sequence(res.data);
-			console.log(result);
 			vehiclesPlanMapInit(result);
+			if ($this) 
+			{
+				l.stop();
+			}
 		}).fail(function  () {
 			//console.log()
 		});
+	}
+	//点击view on map
+	$('body').on('click','.j-car-plan-btn',function  () {
+		var $this = this;
+		var rideId = $(this).attr('data-rideid');
+		if (Boolean(rideId)) 
+		{
+			ViewMap(rideId,$this);
+		}
+		
 	});
 	//保存排车
 	$('body').on('click','.j-save-car',function  () {
+		var $this = $(this);
 		var rideId = $(this).attr('data-rideid');
 		var carName = $(this).prev().val();
-		console.log(rideId)
-		console.log(carName)
 		if ( Boolean(rideId) && Boolean(carName) )
 		{
 			var l = Ladda.create(this);
@@ -494,11 +508,12 @@ $(document).ready(function(){
 			$.get('/vehiclesPlan/planCar',data).done(function  (res) {
 				console.log(res)
 				console.log(data)
+				l.stop();
 			}).fail(function  () {
 				
 			}).always(function  () {
-				//l.stop();
-			});
+				
+			}); 
 		}
 	});
 	
