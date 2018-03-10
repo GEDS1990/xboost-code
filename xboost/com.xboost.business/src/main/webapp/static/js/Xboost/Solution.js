@@ -698,9 +698,9 @@ $(function  () {
 	                type:"get", //获取数据的方式
 	                cache:true,
 	                error:function (){
-	                	$('#SolutionDeport_processing').hide();
-	                	var add = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No Data</td></tr>';
-	                	$('#depot-tbody').append(add);
+	                	$('#SolutionDeport_processing').show();
+	                	//var add = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No Data</td></tr>';
+	                	//$('#depot-tbody').append(add);
 	                	$('#depots-map').hide();
 	                }
 	                

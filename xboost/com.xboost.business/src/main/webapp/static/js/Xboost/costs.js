@@ -880,8 +880,6 @@ $(function (){
 				}
 				
 			}).fail(function (){
-				$('#efficiency-error-info').show();
-				$('.loadingalt').hide();
 			});
 			
 			//请求发出票数
@@ -925,8 +923,6 @@ $(function (){
 					$('.loadingalt').hide();
 				}
 			}).fail(function (){
-				$('#efficiency-error-info').show();
-				$('.loadingalt').hide();
 			});
 			
 			//请求到达车辆数
@@ -970,8 +966,6 @@ $(function (){
 					$('.loadingalt').hide();
 				}
 			}).fail(function (){
-				$('#efficiency-error-info').show();
-				$('.loadingalt').hide();
 			});
 			
 			
@@ -1016,8 +1010,6 @@ $(function (){
 					$('.loadingalt').hide();
 				}
 			}).fail(function (){
-				$('#efficiency-error-info').show();
-				$('.loadingalt').hide();
 			});
 			
 			

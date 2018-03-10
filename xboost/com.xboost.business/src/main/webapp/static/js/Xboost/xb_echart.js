@@ -349,7 +349,7 @@ function add0(m){return m<10?'0'+m:m };
 			distributionEcharts(data);
 	    	
 	    }).fail(function  () {
-	    	$('.echarts-error-info').show();
+	    	//$('.echarts-error-info').show();
 	    });
 	    $('#distribution-choose').change(function  () {
 	    	var _val = $(this).val();
@@ -411,7 +411,7 @@ function add0(m){return m<10?'0'+m:m };
 		    	
 		    	
 		    }).fail(function  () {
-		    	$('.echarts-error-info').show();
+		    	//$('.echarts-error-info').show();
 		    });
 	    });
 	    

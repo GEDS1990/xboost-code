@@ -204,9 +204,9 @@ $(document).ready(function(){
             url:"/vehiclesPlan/vehicles.json", //获取数据的URL
             type:"get", //获取数据的方式
             error:function (){
-            	$('#SolutionVehiclesPlan_processing').hide();
-            	var add = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty">No Data</td></tr>';
-            	$('#vehicle-tbody').append(add);
+            	$('#SolutionVehiclesPlan_processing').show();
+//          	var add = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty">No Data</td></tr>';
+//          	$('#vehicle-tbody').append(add);
             	$('#depots-map').hide();
             }
             
