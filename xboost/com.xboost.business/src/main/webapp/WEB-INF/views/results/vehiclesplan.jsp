@@ -105,10 +105,9 @@
 	    			<div class="scen-itembox2">
 	    				<h1 id="route-name">No Data</h1>
 	    				<ul class="scen-cost">
-	    					<li>total distance(km):<span id="total-distance"></span></li>
-	    					<li>vehicle load requirement:<span id="vehicle-load-requirement"></span></li>
-	    					<li>vehicle piece capacity requirement:<span id="vehicle-piece-capacity"></span></li>
-	    					<li>vehicle type:<span id="speed-requirement"></span></li>
+	    					<li>total distance(km):<span id="total-distance">--</span></li>
+	    					<li>vehicle piece capacity requirement:<span id="vehicle-piece-capacity">--</span></li>
+	    					<li>vehicle type:<span id="type-requirement">--</span></li>
 	    					<li style="color: blue;">Chosen Vehicle:<span style="color: blue;font-weight: inherit;" id="Chosen-Vehicle">--</span></li>
 	    				</ul>
 	    			</div>

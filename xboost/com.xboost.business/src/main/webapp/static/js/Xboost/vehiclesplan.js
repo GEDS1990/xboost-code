@@ -472,8 +472,21 @@ $(document).ready(function(){
 	 		l.start();
 		}
 		$.get('/vehiclesPlan/vehiclesPlan.json',{"rideId":rideId}).done(function  (res) {
-			var result = Sort_sequence(res.data);
-			vehiclesPlanMapInit(result);
+			if (res.data)
+			{
+				var result = Sort_sequence(res.data);
+				vehiclesPlanMapInit(result);
+				var route_name ="Ride " + add00(rideId) || "No Data",
+					total = res.totalDistance || "--",
+					piece_capacity = res.maxLoad || "--",
+					type = res.carType || "--",
+					chosen = res.carName || "--";
+				$('#route-name').text(route_name);
+				$('#total-distance').text(total);
+				$('#vehicle-piece-capacity').text(piece_capacity);
+				$('#type-requirement').text(type);
+				$('#Chosen-Vehicle').text(chosen);
+			}
 			if ($this) 
 			{
 				l.stop();
@@ -508,6 +521,8 @@ $(document).ready(function(){
 			$.get('/vehiclesPlan/planCar',data).done(function  (res) {
 				if (res.data === "success") {
 					$this.prev().find('option:selected').remove();
+					$this.parent('td').find('.chosen-data').text(carName);
+					$('#Chosen-Vehicle').text(carName);
 					l.stop();
 				}
 			}).fail(function  () {
