@@ -262,7 +262,10 @@ public class SolutionVehiclesPlanController {
     public String planCar(HttpServletRequest request) {
         Map<String,Object> result = Maps.newHashMap();
         String rideId = request.getParameter("rideId");
-        String carName = request.getParameter("carName");
+        //Linux
+      //  String carName = request.getParameter("carName");
+        //Windows
+        String carName = Strings.toUTF8(request.getParameter("carName"));
         String scenariosId = ShiroUtil.getOpenScenariosId();
         String modelType = myScenariosService.findById(Integer.parseInt(scenariosId)).getScenariosModel();
         String oldCarName="";
