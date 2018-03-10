@@ -183,7 +183,7 @@ $(document).ready(function(){
 				add += '<td>Ride '+add00(data[i].RideId)+'</td>';
 				add += '<td><span class="plancar"><span>'+(data[i].depotOrder)+'</span><button data-style="slide-right" class="btn btn-primary j-car-plan-btn ladda-button" data-rideid='+data[i].RideId+'><span class="ladda-label">View on Map</span></button>'+'</span></td>';
 				add += '<td>'+data[i].carType+'</td>';
-				add += '<td><span class="chosen">Chosen:</span><span class="chosen-data">'+(data[i].carName)+'</span> <select style="width:30%">'+creatSelect(data[i].carList)+'</select> <button data-rideid='+data[i].RideId+' class="btn btn-primary j-save-car ladda-button" data-style="slide-right"><span class="ladda-label">Submit</span></button></td>';
+				add += '<td><span class="plan-wrap"><span class="chosen">Chosen:</span><span class="chosen-data">'+(data[i].carName)+'</span> <select class="plan-select">'+creatSelect(data[i].carList)+'</select> <button data-rideid='+data[i].RideId+' class="btn btn-primary j-save-car ladda-button" data-style="slide-right"><span class="ladda-label">Submit</span></button></span></td>';
 				r_tr.innerHTML = add;
 				r_tbody.appendChild(r_tr);
 			}
@@ -199,7 +199,7 @@ $(document).ready(function(){
         "searchDelay": 1000,//搜索延迟
         "destroy": true,
         "order":[[0,'desc']],//默认排序方式
-        "lengthMenu":[100000],//每页显示数据条数菜单
+        "lengthMenu":[1000000],//每页显示数据条数菜单
         "ajax":{
             url:"/vehiclesPlan/vehicles.json", //获取数据的URL
             type:"get" //获取数据的方式
@@ -207,17 +207,27 @@ $(document).ready(function(){
         },
         "columns":[  //返回的JSON中的对象和列的对应关系
         	{"data":"id","name":"id"},
-            {"data":"RideId","name":"RideId"},
-            {"data":"carType","name":"carType"},
-            {"data":"sequence","name":"sequence"},
-            {"data":"curLoc","name":"cur_loc"}
+            {"data":function (data){
+            	return "Ride "+add00(data.RideId);
+            },"name":"RideId"},
+            {"data":function (data){
+            	return '<span class="plancar"><span>'+(data.depotOrder)+'</span><button data-style="slide-right" class="btn btn-primary j-car-plan-btn ladda-button" data-rideid='+data.RideId+'><span class="ladda-label">View on Map</span></button>'+'</span>'
+            }},
+            {"data":"carType","name":"car_type"},
+            {"data":function (data){
+            	return '<span class="plan-wrap"><span class="chosen">Chosen:</span><span class="chosen-data">'+(data.carName)+'</span> <select class="plan-select">'+creatSelect(data.carList)+'</select> <button data-rideid='+data.RideId+' class="btn btn-primary j-save-car ladda-button" data-style="slide-right"><span class="ladda-label">Submit</span></button></span>';
+            }}
             
         ],
         "columnDefs":[ //具体列的定义
         	{
                 "targets":[0],
                 "visible":false
-           }
+            },
+        	{
+                "targets":[0,1,2,3,4],
+                "orderable":false
+            }
         ],
         "language":{
             "lengthMenu":"Show _MENU_ Record",
@@ -244,10 +254,9 @@ $(document).ready(function(){
 //	        	var list = RideId_List(result,ridelist);
 //	        	console.log(list);
 				var rideId = result[0].RideId;
-				creatEle('VehiclesPlan',result);
+				//creatEle('VehiclesPlan',result);
 				ViewMap(rideId);
         	}
-        	$('.plan-loading').hide();
         	
         },
         "drawCallback":function  (settings) {
