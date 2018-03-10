@@ -109,7 +109,7 @@ public class SolutionVehiclesPlanController {
             carType = rideList.get(0).get("carType").toString();
             carName = rideList.get(0).get("carName").toString();
             maxLoad = carService.findByCarType(scenariosId,carType).getMaxLoad();
-
+            totalDistance = solutionRideService.findTotalDistance(scenariosId,searchValue);
         }else {
             rideList = solutionRideService.findByRideSeries(scenariosId,searchValue);
             carType = rideList.get(0).get("carType").toString();

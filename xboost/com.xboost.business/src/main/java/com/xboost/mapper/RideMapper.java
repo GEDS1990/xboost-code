@@ -37,6 +37,8 @@ public interface RideMapper {
 
     List<Map> findByRideSeries(@Param("openScenariosId") String openScenariosId,@Param("rideId")String rideId);
 
+    String findTotalDistance(@Param("openScenariosId") String openScenariosId,@Param("rideId")String rideId);
+
     Integer maxRideId(String openScenariosId);
     Integer maxRouteId(String openScenariosId);
 
