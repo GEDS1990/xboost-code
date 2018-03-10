@@ -581,11 +581,13 @@ body{
 	align-items: center;
 }
 .plancar>span {
+	width: 86%;
 	display: block;
+	text-align: left;
 	word-break:break-all;
 }
 .plancar>button {
-    width: 100px;
+    width: 14%;
     padding-left: 0;
     padding-right: 0;
 }
@@ -607,8 +609,8 @@ body{
 	padding-right: 5px;
 	align-items: center;
 }
-#VehiclesPlan thead tr>th:nth-child(2) {
-	width: 55%;
+#SolutionVehiclesPlan thead tr>th:nth-child(2) {
+	width: 55%!important;
 }
 #VehiclesPlan>tbody>tr>td:nth-child(2) {
 	text-align: left;

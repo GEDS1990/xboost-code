@@ -517,6 +517,8 @@ $(document).ready(function(){
 		if ( Boolean(rideId) && Boolean(carName) )
 		{
 			var l = Ladda.create(this);
+			console.log(this)
+			console.log($('.j-save-car'))
 		 	l.start();
 			var data = {
 				"rideId":rideId,
