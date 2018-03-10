@@ -4,9 +4,9 @@
 
     <insert id="save">
         INSERT into t_solution_splic(scenariosId ,userId,rideId,timeId,route_count,sequence,cur_loc,next_cur_loc,
-        car_type,car_name,arr_time,end_time,sb_vol,unload_vol,create_time)
+        car_type,car_name,arr_time,end_time,sb_vol,unload_vol,car_goods,calc_dis,create_time)
         VALUES (#{scenariosId},#{userId},#{rideId},#{timeId},#{routeCount},#{sequence},#{curLoc},#{nextCurLoc},
-        #{carType},#{carName},#{arrTime},#{endTime},#{sbVol},#{unloadVol},#{createTime})
+        #{carType},#{carName},#{arrTime},#{endTime},#{sbVol},#{unloadVol},#{carGoods},#{calcDis},#{createTime})
     </insert>
 
     <delete id="delByScenariosId">
@@ -46,7 +46,7 @@
 
     <select id="findByRideSeries" resultType="map" resultMap="modelRouteAndSite">
         SELECT s.scenariosId,s.sequence,s.cur_loc,s.next_cur_loc,car_type,s.car_name,
-        s.sb_vol,s.unload_vol,s.arr_time,s.end_time,d.site_name,d.site_type,d.latitude,d.longitude
+        s.sb_vol,s.unload_vol,s.arr_time,s.end_time,s.car_goods,d.site_name,d.site_type,d.latitude,d.longitude
         FROM t_solution_route s LEFT JOIN t_site_info d ON s.cur_loc = d.site_code
         WHERE s.scenariosId = #{openScenariosId} AND d.scenariosId=#{openScenariosId}
         and s.route_count=#{rideId} order by s.route_count+0,s.sequence+0 asc
@@ -54,10 +54,14 @@
 
     <select id="findByRideRelay" resultType="map" resultMap="modelRideAndSite">
         SELECT s.scenariosId,s.rideId,s.sequence,s.cur_loc,s.next_cur_loc,s.car_type,s.car_name,
-        s.sb_vol,s.unload_vol,s.arr_time,s.end_time,d.site_name,d.site_type,d.latitude,d.longitude
+        s.sb_vol,s.unload_vol,s.arr_time,s.end_time,s.car_goods,d.site_name,d.site_type,d.latitude,d.longitude
         FROM t_solution_splic s LEFT JOIN t_site_info d ON s.cur_loc = d.site_code
         WHERE s.scenariosId = #{openScenariosId} AND d.scenariosId=#{openScenariosId}
         and s.rideId=#{rideId} order by s.rideId+0,s.sequence+0 asc
+    </select>
+
+    <select id="findTotalDistance" resultType="String" parameterType="map">
+        SELECT ROUND(SUM(calc_dis),2) FROM t_solution_splic WHERE scenariosId=#{openScenariosId} and rideId=#{rideId}
     </select>
 
     <update id="update">
@@ -77,6 +81,11 @@
         <result property="carType" column="car_type"/>
         <result property="carName" column="car_name"/>
         <result property="createTime" column="create_time"/>
+        <result property="sbVol" column="sb_vol"/>
+        <result property="unloadVol" column="unload_vol"/>
+        <result property="arrTime" column="arr_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="carGoods" column="car_goods"/>
     </resultMap>
 
     <resultMap id="modelRideAndSite" type="map">
@@ -91,6 +100,7 @@
         <result property="unloadVol" column="unload_vol"/>
         <result property="arrTime" column="arr_time"/>
         <result property="endTime" column="end_time"/>
+        <result property="carGoods" column="car_goods"/>
         <result property="siteName" column="site_name"/>
         <result property="siteType" column="site_type"/>
         <result property="siteLongitude" column="longitude"/>
@@ -110,6 +120,7 @@
         <result property="unloadVol" column="unload_vol"/>
         <result property="arrTime" column="arr_time"/>
         <result property="endTime" column="end_time"/>
+        <result property="carGoods" column="car_goods"/>
         <result property="siteName" column="site_name"/>
         <result property="siteType" column="site_type"/>
         <result property="siteLongitude" column="longitude"/>
