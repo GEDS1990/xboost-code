@@ -501,23 +501,20 @@ $(document).ready(function(){
 		{
 			var l = Ladda.create(this);
 		 	l.start();
-			var datas = {
+			var data = {
 				"rideId":rideId,
 				"carName":carName
 			};
-			$.ajax({
-				type:'GET',
-				url:"/vehiclesPlan/planCar",
-				data:datas,
-				success:function (res){
-					console.log(res)
-					console.log(1)
-					console.log(data)
-	//				$this.prev().find('option:selected').remove();
-	//				l.stop();
+			$.get('/vehiclesPlan/planCar',data).done(function  (res) {
+				if (res.data === "success") {
+					$this.prev().find('option:selected').remove();
+					l.stop();
 				}
+			}).fail(function  () {
 				
-			})
+			}).always(function  () {
+				
+			}); 
 		}
 	});
 	
