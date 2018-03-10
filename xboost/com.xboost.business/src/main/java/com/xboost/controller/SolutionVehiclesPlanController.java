@@ -99,12 +99,23 @@ public class SolutionVehiclesPlanController {
 
         String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
         List<Map> rideList = new ArrayList<>();
+        String carType="";
+        String carName="";
+        String maxLoad="";
+        String totalDistance="";
 
         if(modelType.equals("2")){
             rideList = solutionRideService.findByRideRelay(scenariosId,searchValue);
+            carType = rideList.get(0).get("carType").toString();
+            carName = rideList.get(0).get("carName").toString();
+            maxLoad = carService.findByCarType(scenariosId,carType).getMaxLoad();
 
         }else {
             rideList = solutionRideService.findByRideSeries(scenariosId,searchValue);
+            carType = rideList.get(0).get("carType").toString();
+            carName = rideList.get(0).get("carName").toString();
+            maxLoad = carService.findByCarType(scenariosId,carType).getMaxLoad();
+            totalDistance = solutionRouteService.findTotalDistance(scenariosId,searchValue);
             for (int i = 0; i < rideList.size(); i++) {
                 Map<String, Object> ride = rideList.get(i);
                 String sbVol;
@@ -144,6 +155,10 @@ public class SolutionVehiclesPlanController {
 //        result.put("recordsTotal",count); //总记录数
 //        result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",rideList);
+        result.put("totalDistance",totalDistance);
+        result.put("maxLoad",maxLoad);
+        result.put("carType",carType);
+        result.put("carName",carName);
         return result;
 
     }
