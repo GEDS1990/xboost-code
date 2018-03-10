@@ -259,8 +259,7 @@ public class SolutionVehiclesPlanController {
     //排车
     @RequestMapping(value = "/planCar",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String planCar(HttpServletRequest request) {
-        Map<String,Object> result = Maps.newHashMap();
+    public Map planCar(HttpServletRequest request) {
         String rideId = request.getParameter("rideId");
         //Linux
       //  String carName = request.getParameter("carName");
@@ -294,7 +293,10 @@ public class SolutionVehiclesPlanController {
         //把车的状态更新为busy
         solutionRouteService.updateCarToBusy(scenariosId,carName);
 
-        return "success";
+        Map<String,Object> result = Maps.newHashMap();
+        result.put("data","success");
+
+        return result;
 
     }
 
