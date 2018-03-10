@@ -79,8 +79,6 @@ public class ValidateController {
         String result="";
         int flag=0;
         Logger logger = LoggerFactory.getLogger(ValidateController.class);
-
-
         /**
          * 校验车辆信息
          */
@@ -88,6 +86,7 @@ public class ValidateController {
         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
         int vehicles_flag = flag;
         double longCarDistance = transportationList.get(0).getMaxDistance();
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
         for(int i=0;i<transportationList.size();i++){
             Car car = transportationList.get(i);
             String vehiclesWrongLink = wrongLink("car", car.getType());

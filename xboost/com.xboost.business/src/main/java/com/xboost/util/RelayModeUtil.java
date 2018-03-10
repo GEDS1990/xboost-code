@@ -193,6 +193,9 @@ public class RelayModeUtil extends Thread implements IConstants {
             OD_demand.put("scenariosId", OpenScenariosId);
             OD_demand.put("OD_id", idemand);
             OD_demand.put("volume", Double.parseDouble(dinfo.getVotes()) / 0.8511);
+            logger.info("dinfo getSiteCodeCollect()："+dinfo.getSiteCodeCollect().toString());
+            logger.info("dinfo getSiteCodeDelivery()："+dinfo.getSiteCodeDelivery().toString());
+
 
             for (int e = 0; e < SiteInfoAll.size(); e++) {
                 int idT = SiteInfoAll.get(e).getId();
@@ -200,51 +203,70 @@ public class RelayModeUtil extends Thread implements IConstants {
 //                    OD_demand.put("inbound_id", e + 1);
                     OD_demand.put("inbound_id", idT);
                     continue;
+                }else{
+                    OD_demand.put("inbound_id", 0);
                 }
                 if (SiteInfoAll.get(e).getSiteCode().toString().equals(dinfo.getSiteCodeDelivery().toString())) {
 //                    OD_demand.put("outbound_id", e + 1);
                     OD_demand.put("outbound_id", idT);
                     continue;
+                }else{
+                    OD_demand.put("outbound_id", idT);
                 }
             }
 
             for (int e = 0; e < siteDistList.size(); e++) {
+
+                int sce = 0;
+                double dis = 0.0;
                 if (siteDistList.get(e).getSiteCollect().toString().equals(dinfo.getSiteCodeCollect().toString()) &&
                         siteDistList.get(e).getSiteDelivery().toString().equals(dinfo.getSiteCodeDelivery().toString())) {
                     OD_demand.put("km", siteDistList.get(e).getCarDistance());
-                    int sce = 0;
-                    double dis = siteDistList.get(e).getCarDistance();
-                    if (dis < 10) {
-                        sce = 1;
-                    } else if (dis >= 10 && dis < 15) {
-                        sce = 2;
-                    } else if (dis >= 15 && dis < 20) {
-                        sce = 3;
-                    } else if (dis >= 20 && dis < 30) {
-                        sce = 4;
-                    } else if (dis >= 30) {
-                        sce = 5;
-                    }
-                    OD_demand.put("scenario", sce);
-                    OD_demand.put("scenario_lim1", scenario_lim1[sce - 1]);
-                    OD_demand.put("scenario_lim2", scenario_lim2[sce - 1]);
-                    if (dis <= 10) {
-                        OD_demand.put("kmh", speed2);
-                    } else if (dis > 10 && dis <= 30) {
-                        OD_demand.put("kmh", speed3);
-                    } else if (dis > 30) {
-                        OD_demand.put("kmh", speed4);
-                    }
-                    OD_demand.put("minutes", (Double.parseDouble(OD_demand.get("km").toString()) / Double.parseDouble(OD_demand.get("kmh").toString())) * 60);
+                    dis = siteDistList.get(e).getCarDistance();
+                }else{
+                    continue;
+//                    logger.info("部分demands的网点距离在distances中没有找到：OD_id="+OD_demand.get("OD_id").toString()+"。将使用默认值0.0");
+//                    OD_demand.put("km", 0.0);
+//                    dis = 0.0;
                 }
+                //////////////////
+                if (dis < 10) {
+                    sce = 1;
+                } else if (dis >= 10 && dis < 15) {
+                    sce = 2;
+                } else if (dis >= 15 && dis < 20) {
+                    sce = 3;
+                } else if (dis >= 20 && dis < 30) {
+                    sce = 4;
+                } else if (dis >= 30) {
+                    sce = 5;
+                }
+                OD_demand.put("scenario", sce);
+                OD_demand.put("scenario_lim1", scenario_lim1[sce - 1]);
+                OD_demand.put("scenario_lim2", scenario_lim2[sce - 1]);
+                if (dis <= 10) {
+                    OD_demand.put("kmh", speed2);
+                } else if (dis > 10 && dis <= 30) {
+                    OD_demand.put("kmh", speed3);
+                } else if (dis > 30) {
+                    OD_demand.put("kmh", speed4);
+                }
+                OD_demand.put("minutes", (Double.parseDouble(OD_demand.get("km").toString()) / Double.parseDouble(OD_demand.get("kmh").toString())) * 60);
+                ///////////
             }
+
 //            System.out.println("OD_demand.get(\"km\").toString():"+OD_demand.get("km").toString());
-            if (!(Double.parseDouble(OD_demand.get("km").toString()) == 0.0) && !OD_demand.get("inbound_id").equals(OD_demand.get("outbound_id")))
-            {
+            try{
+                if (!(Double.parseDouble(OD_demand.get("km").toString()) == 0.0) && !OD_demand.get("inbound_id").equals(OD_demand.get("outbound_id")))
+                {
 //                iii++;
 //                System.out.println("iii:"+iii);
-                OD_demand_list.add(OD_demand);
-                idemand++;
+                    OD_demand_list.add(OD_demand);
+                    idemand++;
+                }
+            }catch (Exception e){
+                systemWebSocketHandler.sendMessageToUser(new TextMessage("Exception happend while siteCodeCollect=:"
+                        +dinfo.getSiteCodeCollect().toString()+"and siteCodeDelivery="+dinfo.getSiteCodeDelivery().toString()));
             }
 
 
