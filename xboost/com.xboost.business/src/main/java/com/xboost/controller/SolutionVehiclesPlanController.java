@@ -198,10 +198,11 @@ public class SolutionVehiclesPlanController {
                 String curLoc ="";
                 List<String> carList= new ArrayList<>();
 
-                for(int y=0;y<maxSequence;y++){
+                for(int y=0;y<rideList.size();y++){
                     Map<String,Object> temp = tempList.get(y);
                     curLoc = temp.get("curLoc").toString();
-                    if(y == maxSequence-1){
+                    String sequence = temp.get("sequence").toString();
+                    if(sequence.equals(maxSequence)){
                         depotOrder += curLoc;
                     }else {
                         depotOrder += curLoc + ">>";
@@ -229,7 +230,7 @@ public class SolutionVehiclesPlanController {
             for(int x=1;x<=maxRideId;x++)
             {
                 List<Map> tempList = solutionRideService.findByRide1(scenariosId,String.valueOf(x));
-                Integer maxSequence= Integer.parseInt(tempList.get(tempList.size()-1).get("sequence").toString());
+                String maxSequence= tempList.get(tempList.size()-1).get("sequence").toString();
                 String depotOrder="";
                 Map<String,Object> rideRoute = Maps.newHashMap();
                 String carType="";
@@ -237,11 +238,12 @@ public class SolutionVehiclesPlanController {
                 String curLoc ="";
                 List<String> carList= new ArrayList<>();
 
-                for(int y=0;y<maxSequence;y++){
+                for(int y=0;y<tempList.size();y++){
                     Map<String,Object> temp = tempList.get(y);
                     curLoc = temp.get("curLoc").toString();
                     String curNextLoc= temp.get("nextCurLoc").toString();
                     String separator=">>";
+                    String sequence = temp.get("sequence").toString();
 
 
                     if(curLoc.equals(curNextLoc))
@@ -249,7 +251,7 @@ public class SolutionVehiclesPlanController {
                         curLoc = "";
                         separator="";
                     }
-                    if(y == maxSequence-1){
+                    if(sequence.equals(maxSequence)){
                         depotOrder += curLoc;
                     }else {
                         depotOrder += curLoc + separator;
