@@ -40,6 +40,10 @@ public class SolutionRideService {
         return rideMapper.findByRideSeries(openScenariosId,rideId);
     }
 
+    public String findTotalDistance(String openScenariosId,String rideId) {
+        return rideMapper.findTotalDistance(openScenariosId,rideId);
+    }
+
     public Integer maxRideId(String openScenariosId) {
         return rideMapper.maxRideId(openScenariosId);
     }

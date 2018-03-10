@@ -112,25 +112,7 @@
 	    					<li>vehicle type requirement:<span id="vehicle-load-requirement"></span></li>
 	    					<li>vehicle piece capacity requirement:<span id="vehicle-piece-capacity"></span></li>
 	    					<li>speed requirement:<span id="speed-requirement"></span></li>
-	    					<!--<li style="color: blue;">Chosen Vehicle:<span style="color: blue;font-weight: inherit;" id="Chosen-Vehicle">--</span></li>
-	    					<li class="route-choose">Choose vehicle:<span>--</span></li>
-	    					<li>
-	    						<form>
-		    						<label >
-		    							<input type="radio" name="type"  checked="checked"  value="1"/> Using Vehicle
-		    						</label>
-		    						<label style="margin-left: 10px;">
-		    							<input type="radio" name="type"  value="0"/> Idle Vehicle
-		    						</label>
-	    						</form>
-	    					</li>
-	    					<li>
-	    						<select id="us-vehicle" style="width: 50%;"></select>
-	    						<select id="idle-vehicle" style="width: 50%;"></select>
-	    					</li>
-	    					<button id="vehicle-btn" class="btn btn-primary ladda-button" data-style="expand-right" >
-	    						<span class="ladda-label">submit</span>
-	    					</button>-->
+	    					
 	    				</ul>
 	    			</div>
 	    		</div>
@@ -284,5 +266,23 @@
 	
 </script>
 </body>
-
+<!--<li style="color: blue;">Chosen Vehicle:<span style="color: blue;font-weight: inherit;" id="Chosen-Vehicle">--</span></li>
+	    					<li class="route-choose">Choose vehicle:<span>--</span></li>
+	    					<li>
+	    						<form>
+		    						<label >
+		    							<input type="radio" name="type"  checked="checked"  value="1"/> Using Vehicle
+		    						</label>
+		    						<label style="margin-left: 10px;">
+		    							<input type="radio" name="type"  value="0"/> Idle Vehicle
+		    						</label>
+	    						</form>
+	    					</li>
+	    					<li>
+	    						<select id="us-vehicle" style="width: 50%;"></select>
+	    						<select id="idle-vehicle" style="width: 50%;"></select>
+	    					</li>
+	    					<button id="vehicle-btn" class="btn btn-primary ladda-button" data-style="expand-right" >
+	    						<span class="ladda-label">submit</span>
+	    					</button>-->
 </html>

@@ -99,12 +99,33 @@ public class SolutionVehiclesPlanController {
 
         String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
         List<Map> rideList = new ArrayList<>();
+        String carType="";
+        String carName="";
+        String maxLoad="";
+        String totalDistance="";
 
         if(modelType.equals("2")){
             rideList = solutionRideService.findByRideRelay(scenariosId,searchValue);
-
+            carType = rideList.get(0).get("carType").toString();
+            if(null!=rideList.get(0).get("carName")){
+                carName = rideList.get(0).get("carName").toString();
+            }else
+            {
+                carName="--";
+            }
+            maxLoad = carService.findByCarType(scenariosId,carType).getMaxLoad();
+            totalDistance = solutionRideService.findTotalDistance(scenariosId,searchValue);
         }else {
             rideList = solutionRideService.findByRideSeries(scenariosId,searchValue);
+            carType = rideList.get(0).get("carType").toString();
+            if(null!=rideList.get(0).get("carName")){
+                carName = rideList.get(0).get("carName").toString();
+            }else
+            {
+                carName="--";
+            }
+            maxLoad = carService.findByCarType(scenariosId,carType).getMaxLoad();
+            totalDistance = solutionRouteService.findTotalDistance(scenariosId,searchValue);
             for (int i = 0; i < rideList.size(); i++) {
                 Map<String, Object> ride = rideList.get(i);
                 String sbVol;
@@ -144,6 +165,10 @@ public class SolutionVehiclesPlanController {
 //        result.put("recordsTotal",count); //总记录数
 //        result.put("recordsFiltered",filteredCount); //过滤出来的数量
         result.put("data",rideList);
+        result.put("totalDistance",totalDistance);
+        result.put("maxLoad",maxLoad);
+        result.put("carType",carType);
+        result.put("carName",carName);
         return result;
 
     }
@@ -173,10 +198,11 @@ public class SolutionVehiclesPlanController {
                 String curLoc ="";
                 List<String> carList= new ArrayList<>();
 
-                for(int y=0;y<maxSequence;y++){
+                for(int y=0;y<rideList.size();y++){
                     Map<String,Object> temp = tempList.get(y);
                     curLoc = temp.get("curLoc").toString();
-                    if(y == maxSequence-1){
+                    String sequence = temp.get("sequence").toString();
+                    if(sequence.equals(maxSequence)){
                         depotOrder += curLoc;
                     }else {
                         depotOrder += curLoc + ">>";
@@ -204,7 +230,7 @@ public class SolutionVehiclesPlanController {
             for(int x=1;x<=maxRideId;x++)
             {
                 List<Map> tempList = solutionRideService.findByRide1(scenariosId,String.valueOf(x));
-                Integer maxSequence= Integer.parseInt(tempList.get(tempList.size()-1).get("sequence").toString());
+                String maxSequence= tempList.get(tempList.size()-1).get("sequence").toString();
                 String depotOrder="";
                 Map<String,Object> rideRoute = Maps.newHashMap();
                 String carType="";
@@ -212,11 +238,12 @@ public class SolutionVehiclesPlanController {
                 String curLoc ="";
                 List<String> carList= new ArrayList<>();
 
-                for(int y=0;y<maxSequence;y++){
+                for(int y=0;y<tempList.size();y++){
                     Map<String,Object> temp = tempList.get(y);
                     curLoc = temp.get("curLoc").toString();
                     String curNextLoc= temp.get("nextCurLoc").toString();
                     String separator=">>";
+                    String sequence = temp.get("sequence").toString();
 
 
                     if(curLoc.equals(curNextLoc))
@@ -224,7 +251,7 @@ public class SolutionVehiclesPlanController {
                         curLoc = "";
                         separator="";
                     }
-                    if(y == maxSequence-1){
+                    if(sequence.equals(maxSequence)){
                         depotOrder += curLoc;
                     }else {
                         depotOrder += curLoc + separator;
@@ -239,7 +266,7 @@ public class SolutionVehiclesPlanController {
                 carType = tempList.get(0).get("carType").toString();
                 carList= carService.findIdleCar(ShiroUtil.getOpenScenariosId(),carType);
 
-                rideRoute.put("RideId ",x);
+                rideRoute.put("RideId",x);
                 rideRoute.put("depotOrder",depotOrder);
                 rideRoute.put("carType",carType);
                 rideRoute.put("carName",carName);
@@ -259,8 +286,7 @@ public class SolutionVehiclesPlanController {
     //排车
     @RequestMapping(value = "/planCar",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String planCar(HttpServletRequest request) {
-        Map<String,Object> result = Maps.newHashMap();
+    public Map planCar(HttpServletRequest request) {
         String rideId = request.getParameter("rideId");
         //Linux
       //  String carName = request.getParameter("carName");
@@ -294,7 +320,10 @@ public class SolutionVehiclesPlanController {
         //把车的状态更新为busy
         solutionRouteService.updateCarToBusy(scenariosId,carName);
 
-        return "success";
+        Map<String,Object> result = Maps.newHashMap();
+        result.put("data","success");
+
+        return result;
 
     }
 

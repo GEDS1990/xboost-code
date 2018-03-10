@@ -21,6 +21,8 @@ public class Ride implements Serializable {
     private String endTime;
     private String sbVol;
     private String unloadVol;
+    private String carGoods;
+    private String calcDis;
     private String str1;                    //预留字段
     private String str2;                    //预留字段
     private String str3;                  //预留字段
@@ -145,6 +147,22 @@ public class Ride implements Serializable {
 
     public void setUnloadVol(String unloadVol) {
         this.unloadVol = unloadVol;
+    }
+
+    public String getCarGoods() {
+        return carGoods;
+    }
+
+    public void setCarGoods(String carGoods) {
+        this.carGoods = carGoods;
+    }
+
+    public String getCalcDis() {
+        return calcDis;
+    }
+
+    public void setCalcDis(String calcDis) {
+        this.calcDis = calcDis;
     }
 
     public String getStr1() {

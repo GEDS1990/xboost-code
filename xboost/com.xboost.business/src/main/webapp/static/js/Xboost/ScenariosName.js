@@ -1629,7 +1629,7 @@ $(function  () {
 	                            $("#newUserForm-scen")[0].reset();
 	                            $("#newUserModal-scen").modal("hide");
 	                            dt.ajax.reload();
-	                            window.location.reload(); 
+	                            //window.location.reload(); 
 	                        }
 	                    }).fail(function(){
 	                        //alert("Exception occurs when adding");
@@ -1650,7 +1650,7 @@ $(function  () {
 	            	$.post("/MyScenarios/res",{"id":id}).done(function(result){
 	                    if("success" == result) {
 	                        dt.ajax.reload();
-	                        window.location.reload();
+	                        //window.location.reload();
 	                    }
 	                }).fail(function(){
 	                    //alert("Delete exception");
@@ -1663,13 +1663,23 @@ $(function  () {
 
 	        //删除用户
 	        $(document).delegate(".delLink-scen","click",function(){
+	        	var nav_scen_id = $('#scen-name').attr("data-scenariosid");
 	            var id = $(this).attr("data-scenariosid");
 	            $('#modal-del').modal("show")
 	            $('#modal-delBtn').click(function  () {
+	            	var $this = this;
+	            	var l = Ladda.create($this);
+		 			l.start();
 	            	$.post("/MyScenarios/del",{"id":id}).done(function(result){
 	                    if("success" == result) {
+	                    	if (nav_scen_id === id) 
+	                    	{
+	                    		$('#scen-name').remove();
+	                    		$('.scenInfo-list').remove();
+	                    	}
 	                        dt.ajax.reload();
-	                        window.location.reload(); 
+	                        l.stop();
+	                        $('#modal-del').modal('hide');
 	                    }
 	                }).fail(function(){
 	                    //alert("Delete exception");
