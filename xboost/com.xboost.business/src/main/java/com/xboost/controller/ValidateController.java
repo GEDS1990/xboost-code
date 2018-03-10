@@ -88,6 +88,7 @@ public class ValidateController {
         systemWebSocketHandler.sendMessageToUser( new TextMessage(result));
         int vehicles_flag = flag;
         double longCarDistance = transportationList.get(0).getMaxDistance();
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting..."));
         for(int i=0;i<transportationList.size();i++){
             Car car = transportationList.get(i);
             String vehiclesWrongLink = wrongLink("car", car.getType());
