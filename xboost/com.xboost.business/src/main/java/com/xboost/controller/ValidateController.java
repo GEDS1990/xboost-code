@@ -79,8 +79,7 @@ public class ValidateController {
         String result="";
         int flag=0;
         Logger logger = LoggerFactory.getLogger(ValidateController.class);
-
-
+        
         /**
          * 校验车辆信息
          */
