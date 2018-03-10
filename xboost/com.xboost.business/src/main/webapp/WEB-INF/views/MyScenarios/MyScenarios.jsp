@@ -23,6 +23,7 @@
     <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/static/js/morris/morris.css">
     <link rel="stylesheet" href="/static/js/datatables/media/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/Xboost/ladda-themeless.min.css" />
     <link rel="stylesheet" href="/static/css/Xboost/icon.css" />
     <link rel="stylesheet" href="/static/css/Xboost/xb_main.css" />
     <link rel="stylesheet" href="/static/css/Xboost/ScenariosName.css" />
@@ -33,7 +34,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+	<script src="/static/js/Xboost/spin.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/Xboost/ladda.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <body>
@@ -214,7 +216,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="button" id="modal-delBtn" class="btn btn-primary">Yes</button>
+                <button type="button" id="modal-delBtn" data-style="slide-right" class="btn btn-primary ladda-button"><span class="ladda-label">Yes</span></button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
