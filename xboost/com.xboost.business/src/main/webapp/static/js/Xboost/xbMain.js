@@ -495,7 +495,10 @@ function CategoryList () {
             "lengthMenu":[100000],//每页显示数据条数菜单
             "ajax":{
                 url:"/depots/depots.json", //获取数据的URL
-                type:"get" //获取数据的方式
+                type:"get",//获取数据的方式
+                error:function (){
+                	$('#depots-map').hide();
+                }
                 
             },
             "columns":[  //返回的JSON中的对象和列的对应关系

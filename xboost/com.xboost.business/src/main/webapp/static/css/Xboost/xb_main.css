@@ -699,3 +699,10 @@ body{
 #SolutionVehiclesPlan_wrapper >div:first-child {
 	display: none;
 }
+/***********Distribution***********/
+.echarts-error-info {
+	display: none;
+	text-align: center;
+	font-size: 16px;
+    color: #19a371;
+}

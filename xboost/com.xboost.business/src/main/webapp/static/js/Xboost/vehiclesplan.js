@@ -202,7 +202,13 @@ $(document).ready(function(){
         "lengthMenu":[1000000],//每页显示数据条数菜单
         "ajax":{
             url:"/vehiclesPlan/vehicles.json", //获取数据的URL
-            type:"get" //获取数据的方式
+            type:"get", //获取数据的方式
+            error:function (){
+            	$('#SolutionVehiclesPlan_processing').hide();
+            	var add = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty">No Data</td></tr>';
+            	$('#vehicle-tbody').append(add);
+            	$('#depots-map').hide();
+            }
             
         },
         "columns":[  //返回的JSON中的对象和列的对应关系
