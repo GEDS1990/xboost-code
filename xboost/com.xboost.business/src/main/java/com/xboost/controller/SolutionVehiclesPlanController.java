@@ -107,13 +107,23 @@ public class SolutionVehiclesPlanController {
         if(modelType.equals("2")){
             rideList = solutionRideService.findByRideRelay(scenariosId,searchValue);
             carType = rideList.get(0).get("carType").toString();
-            carName = rideList.get(0).get("carName").toString();
+            if(null!=rideList.get(0).get("carName")){
+                carName = rideList.get(0).get("carName").toString();
+            }else
+            {
+                carName="--";
+            }
             maxLoad = carService.findByCarType(scenariosId,carType).getMaxLoad();
             totalDistance = solutionRideService.findTotalDistance(scenariosId,searchValue);
         }else {
             rideList = solutionRideService.findByRideSeries(scenariosId,searchValue);
             carType = rideList.get(0).get("carType").toString();
-            carName = rideList.get(0).get("carName").toString();
+            if(null!=rideList.get(0).get("carName")){
+                carName = rideList.get(0).get("carName").toString();
+            }else
+            {
+                carName="--";
+            }
             maxLoad = carService.findByCarType(scenariosId,carType).getMaxLoad();
             totalDistance = solutionRouteService.findTotalDistance(scenariosId,searchValue);
             for (int i = 0; i < rideList.size(); i++) {
