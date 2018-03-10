@@ -263,12 +263,7 @@ $(document).ready(function(){
         	var api = this.api();
 	        // 输出当前页的数据到浏览器控制台
 	        var datas = api.rows( {page:'current'} ).data();
-//	        console.log(datas);
-//	        if (planType) 
-//	        {
-//	        	console.log(1111)
-//	        }
-	        
+	        console.log(datas);
         }
     });
 	
@@ -529,8 +524,7 @@ $(document).ready(function(){
 			};
 			$.get('/vehiclesPlan/planCar',data).done(function  (res) {
 				if (res.data === "success") {
-					$this.prev().find('option:selected').remove();
-					$this.parent('td').find('.chosen-data').text(carName);
+					dt.ajax.reload();
 					$('#Chosen-Vehicle').text(carName);
 					l.stop();
 				}
