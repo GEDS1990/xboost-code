@@ -49,7 +49,7 @@
         s.sb_vol,s.unload_vol,s.arr_time,s.end_time,d.site_name,d.site_type,d.latitude,d.longitude
         FROM t_solution_route s LEFT JOIN t_site_info d ON s.cur_loc = d.site_code
         WHERE s.scenariosId = #{openScenariosId} AND d.scenariosId=#{openScenariosId}
-        and s.route_count=#{rideId} order by s.rideId+0,s.sequence+0 asc
+        and s.route_count=#{rideId} order by s.route_count+0,s.sequence+0 asc
     </select>
 
     <select id="findByRideRelay" resultType="map" resultMap="modelRideAndSite">
