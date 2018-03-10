@@ -41,6 +41,8 @@ public class TempService {
     SolutionRouteService solutionRouteService;
     @Inject
     SolutionCostService solutionCostService;
+    @Inject
+    SiteDistService siteDistService;
 
     @Inject
     private  SolutionRideService solutionRideService;
@@ -201,6 +203,8 @@ public class TempService {
                 ride.setEndTime(rideList.get(y).getEndTime());
                 ride.setSbVol(rideList.get(y).getSbVol());
                 ride.setUnloadVol(rideList.get(y).getUnloadVol());
+                ride.setCarGoods(rideList.get(y).getCarGoods());
+                ride.setCalcDis(rideList.get(y).getCalcDis());
                 rideMapper.save(ride);
             }
             i++;
@@ -332,6 +336,12 @@ public class TempService {
                 rideList.remove(rideList.size()-3);
             }else{
                 rideList.get(rideList.size()-3).setNextCurLoc(ride1.getCurLoc());
+                Map<String,Object> param = Maps.newHashMap();
+                param.put("scenariosId",ShiroUtil.getOpenScenariosId());
+                param.put("siteCollect",ride2.getCurLoc());
+                param.put("siteDelivery",ride1.getCurLoc());
+                String distance = siteDistService.findDistance(param);
+                rideList.get(rideList.size()-3).setCalcDis(distance);
             }
         }
         Map<String,List<Route>> result = Maps.newHashMap();

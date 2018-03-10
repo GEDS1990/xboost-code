@@ -158,6 +158,10 @@ public class SiteDistService {
         return siteDistMapper.findById(id);
     }
 
+    public String findDistance(Map<String, Object> param){
+        return siteDistMapper.findDistance(param);
+    }
+
 
     /**
      * 编辑网点信息
