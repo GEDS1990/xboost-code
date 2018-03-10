@@ -116,7 +116,7 @@
 	    	
 	    	
 	    		<!--Solution vehicle-->
-	    		<div class="table-responsive active result-style" style="position: relative;">
+	    		<!--<div class="table-responsive active result-style" style="position: relative;">
 		            <table id="VehiclesPlan" class="table table-striped table-bordered table-hover">
 					    <thead>
 					    	<tr>
@@ -128,8 +128,8 @@
 					    </thead>
 		            </table>
 		            <div class="plan-loading dataTables_processing panel panel-default" >Loading...</div>
-		        </div>
-			    <div class="table-responsive active result-style" style="display: none;">
+		        </div>-->
+			    <div class="table-responsive active result-style">
 		            <table id="SolutionVehiclesPlan" class="table table-striped table-bordered table-hover">
 					    <thead>
 					    	<tr>

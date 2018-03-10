@@ -574,24 +574,41 @@ body{
 }
 /**vehicle**/
 .plancar {
-	display: block;
-	clear: both;
+	display: flex;
+	padding-left: 5px;
+	padding-right: 5px;
+	justify-content: space-between;
+	align-items: center;
 }
 .plancar>span {
-	float: left;
 	display: block;
-	margin-right: 110px;
 	word-break:break-all;
 }
 .plancar>button {
-	float: right;
     width: 100px;
-    margin-left: -100%;
     padding-left: 0;
     padding-right: 0;
 }
+.plan-wrap >select,
+.plan-wrap >span,
+.plan-wrap >span,
+.plan-wrap >button {
+	display: block;
+}
+.plan-wrap >select {
+	width: 30%;
+}
+.plan-wrap >button {
+	margin-left: 5px;
+}
+.plan-wrap {
+	display: flex;
+	padding-left: 5px;
+	padding-right: 5px;
+	align-items: center;
+}
 #VehiclesPlan thead tr>th:nth-child(2) {
-	width: 50%;
+	width: 55%;
 }
 #VehiclesPlan>tbody>tr>td:nth-child(2) {
 	text-align: left;
@@ -603,17 +620,11 @@ body{
 	color: #687189;
 }
 .chosen-data {
+	width: 22%;
 	color: blue;
 }
-.plan-loading {
-	position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 200px;
-    margin-left: -100px;
-    margin-top: -26px;
-    text-align: center;
-    padding: 1em 0;
+#SolutionVehiclesPlan_wrapper >div:nth-child(3) {
+	display: none;
 }
 /***costs***/
 .result-cost-item{
