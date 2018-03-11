@@ -69,7 +69,7 @@
         and site_collect = #{siteCollect} and site_delivery = #{siteDelivery}
     </select>
 
-    <select id="findTime" parameterType="map" resultType="String">
+    <select id="findTime" parameterType="map" resultMap="siteDistMap">
         SELECT * FROM t_site_distance where scenariosId = #{scenariosId}
         and site_collect = #{siteCollect} and site_delivery = #{siteDelivery}
     </select>

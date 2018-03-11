@@ -400,22 +400,22 @@ public class TempService {
         param.put("siteCollect",oriSite);
         param.put("siteDelivery",desSite);
         SiteDist siteDist = siteDistService.findTime(param);
-        int time=0;
+        double time=0;
         String carType = rideList.get(0).getCarType();
         if(carType.equals("truck")){
-            time = Integer.parseInt(siteDist.getDurationNightDelivery());
+            time = Double.parseDouble(siteDist.getDurationNightDelivery());
         }else if(carType.equals("baidu")){
-            time = Integer.parseInt(siteDist.getDurationNightDelivery2());
+            time = Double.parseDouble(siteDist.getDurationNightDelivery2());
         }
         else if(carType.equals("didi")){
-            time = Integer.parseInt(siteDist.getDurationNightDelivery3());
+            time = Double.parseDouble(siteDist.getDurationNightDelivery3());
         }else if(carType.equals("dada")){
-            time = Integer.parseInt(siteDist.getDurationNightDelivery4());
+            time = Double.parseDouble(siteDist.getDurationNightDelivery4());
         }else {
-            time = Integer.parseInt(siteDist.getDurationNightDelivery5());
+            time = Double.parseDouble(siteDist.getDurationNightDelivery5());
         }
 
-        if(Integer.parseInt(desEndTime)-Integer.parseInt(oriArrTime)>=time){
+        if(Double.parseDouble(desEndTime)-Double.parseDouble(oriArrTime)>=time){
             result = true;
         }else {
             result = false;

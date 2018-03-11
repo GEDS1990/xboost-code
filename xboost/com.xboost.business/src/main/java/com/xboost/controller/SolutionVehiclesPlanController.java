@@ -191,14 +191,14 @@ public class SolutionVehiclesPlanController {
             {
                 String depotOrder="";
                 List<Map> tempList = solutionRideService.findByRide2(scenariosId,String.valueOf(x));
-                Integer maxSequence= Integer.parseInt(tempList.get(tempList.size()-1).get("sequence").toString());
+                String maxSequence= tempList.get(tempList.size()-1).get("sequence").toString();
                 Map<String,Object> rideRoute = Maps.newHashMap();
                 String carType="";
                 String carName="";
                 String curLoc ="";
                 List<String> carList= new ArrayList<>();
 
-                for(int y=0;y<rideList.size();y++){
+                for(int y=0;y<tempList.size();y++){
                     Map<String,Object> temp = tempList.get(y);
                     curLoc = temp.get("curLoc").toString();
                     String sequence = temp.get("sequence").toString();
