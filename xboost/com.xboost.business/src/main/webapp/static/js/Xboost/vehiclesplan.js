@@ -95,7 +95,7 @@ $(document).ready(function(){
 	//求时间
 	function add0(m){return m<10?'0'+m:m };
 	function operationTime (data) {
-		var reg = /^[\d]+$/;
+		var reg = /^\d+(\.\d+)?$/;
 		if (reg.test(data)) {
 			var result = parseInt(data),
 		    	h = parseInt(result/60),
@@ -202,7 +202,13 @@ $(document).ready(function(){
         "lengthMenu":[1000000],//每页显示数据条数菜单
         "ajax":{
             url:"/vehiclesPlan/vehicles.json", //获取数据的URL
-            type:"get" //获取数据的方式
+            type:"get", //获取数据的方式
+            error:function (){
+            	$('#SolutionVehiclesPlan_processing').show();
+//          	var add = '<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty">No Data</td></tr>';
+//          	$('#vehicle-tbody').append(add);
+            	$('#depots-map').hide();
+            }
             
         },
         "columns":[  //返回的JSON中的对象和列的对应关系
@@ -263,7 +269,13 @@ $(document).ready(function(){
         	var api = this.api();
 	        // 输出当前页的数据到浏览器控制台
 	        var datas = api.rows( {page:'current'} ).data();
-	        console.log(datas);
+	        //console.log(datas);
+	        if (datas.length != 0) 
+	        {
+	        	var $this = doc.getElementsByClassName('j-save-car')[0];
+	        	var l = Ladda.create($this);
+	 			l.stop();
+	        }
         }
     });
 	
@@ -313,7 +325,7 @@ $(document).ready(function(){
 			sContentLine +='<div>';
 			sContentLine +='<p>Departure time: '+operationTime(listPointX.endTime)+'</p>';
 			sContentLine +='<p>Arrival time: '+operationTime(listPointY.arrTime)+'</p>';
-			//sContentLine +='<p>Goods: '+listPointX.carGoods+'</p>';
+			sContentLine +='<p>Goods: '+listPointX.carGoods+'</p>';
 			sContentLine +='</div></div>';
 			var infoWindowLine = new BMap.InfoWindow(sContentLine); // 创建信息窗口对象
 			addpPyline(pointA,pointB,infoWindowLine);
@@ -486,6 +498,7 @@ $(document).ready(function(){
 					type = res.carType || "--",
 					chosen = res.carName || "--";
 				$('#route-name').text(route_name);
+				$('#route-name').attr('data-rideid',rideId);
 				$('#total-distance').text(total);
 				$('#vehicle-piece-capacity').text(piece_capacity);
 				$('#type-requirement').text(type);
@@ -513,6 +526,7 @@ $(document).ready(function(){
 	$('body').on('click','.j-save-car',function  () {
 		var $this = $(this);
 		var rideId = $(this).attr('data-rideid');
+		var rideID_scenname = $('#route-name').attr('data-rideid');
 		var carName = $(this).prev().val();
 		if ( Boolean(rideId) && Boolean(carName) )
 		{
@@ -525,8 +539,11 @@ $(document).ready(function(){
 			$.get('/vehiclesPlan/planCar',data).done(function  (res) {
 				if (res.data === "success") {
 					dt.ajax.reload();
-					$('#Chosen-Vehicle').text(carName);
-					l.stop();
+					if (rideID_scenname === rideId) 
+					{
+						$('#Chosen-Vehicle').text(carName);
+					}
+					//l.stop();
 				}
 			}).fail(function  () {
 				

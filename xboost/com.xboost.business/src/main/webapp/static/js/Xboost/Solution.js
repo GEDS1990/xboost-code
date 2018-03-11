@@ -685,6 +685,7 @@ $(function  () {
 		var SolutionDeport = doc.getElementById("SolutionDeport");
 		if (SolutionDeport) {
 			//加载列表
+			$('#depot-tbody').empty();
 			var dt =$("#SolutionDeport").DataTable({
 	            "processing": true, //loding效果
 	            "serverSide":true, //服务端处理
@@ -695,7 +696,13 @@ $(function  () {
 	            "ajax":{
 	                url:"/depots/depots.json", //获取数据的URL
 	                type:"get", //获取数据的方式
-	                cache:true
+	                cache:true,
+	                error:function (){
+	                	$('#SolutionDeport_processing').show();
+	                	//var add = '<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No Data</td></tr>';
+	                	//$('#depot-tbody').append(add);
+	                	$('#depots-map').hide();
+	                }
 	                
 	            },
 	            "columns":[  //返回的JSON中的对象和列的对应关系
