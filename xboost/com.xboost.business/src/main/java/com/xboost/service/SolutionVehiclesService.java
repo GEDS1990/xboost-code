@@ -223,7 +223,7 @@ public class SolutionVehiclesService {
         sheet.setColumnWidth(1, 80 * 250);
         sheet.setColumnWidth(2, 15 * 250);
         sheet.setColumnWidth(3, 15 * 250);
-        sheet.setDefaultRowHeight((short) 36);
+        sheet.setDefaultRowHeight((short) 100);
         // 构建表头
         XSSFRow headRow = sheet.createRow(0);
         XSSFCell cell = null;
