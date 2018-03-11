@@ -158,6 +158,10 @@ public class SiteDistService {
         return siteDistMapper.findById(id);
     }
 
+    public SiteDist findTime(Map<String, Object> param) {
+        return siteDistMapper.findTime(param);
+    }
+
     public String findDistance(Map<String, Object> param){
         return siteDistMapper.findDistance(param);
     }

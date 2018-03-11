@@ -41,6 +41,8 @@ public interface SiteDistMapper {
 
     String findDistance(Map<String, Object> param);
 
+    SiteDist findTime(Map<String, Object> param);
+
 
     // 根据id编辑网点距离信息  @param siteInfo
     void editSiteDist(SiteDist siteDist);

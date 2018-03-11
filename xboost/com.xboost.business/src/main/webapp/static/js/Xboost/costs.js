@@ -842,6 +842,7 @@ $(function (){
 			$.get("/efficiency/leaveCarNum.json").done(function (res){
 				////console.log(res)
 				if (res) {
+					$('#efficiency-error-info').hide();
 					var list = efficList(res);
 					////console.log(list);
 					//操作dom
@@ -879,13 +880,13 @@ $(function (){
 				}
 				
 			}).fail(function (){
-				//console.log("fail")
 			});
 			
 			//请求发出票数
 			$.get("/efficiency/sbVol.json").done(function (res){
 				////console.log(res);
 				if (res) {
+					$('#efficiency-error-info').hide();
 					var list = efficList(res);
 					////console.log(list);
 					//操作dom
@@ -922,13 +923,13 @@ $(function (){
 					$('.loadingalt').hide();
 				}
 			}).fail(function (){
-				//console.log("fail");
 			});
 			
 			//请求到达车辆数
 			$.get("/efficiency/arrCarNum.json").done(function (res){
 				////console.log(res);
 				if (res) {
+					$('#efficiency-error-info').hide();
 					var list = efficList(res);
 					////console.log(list);
 					//操作dom
@@ -965,7 +966,6 @@ $(function (){
 					$('.loadingalt').hide();
 				}
 			}).fail(function (){
-				//console.log("fail");
 			});
 			
 			
@@ -973,6 +973,7 @@ $(function (){
 			$.get("/efficiency/unloadVol.json").done(function (res){
 				////console.log(res);
 				if (res) {
+					$('#efficiency-error-info').hide();
 					var list = efficList(res);
 					////console.log(list);
 					//操作dom
@@ -1009,7 +1010,6 @@ $(function (){
 					$('.loadingalt').hide();
 				}
 			}).fail(function (){
-				//console.log("fail");
 			});
 			
 			

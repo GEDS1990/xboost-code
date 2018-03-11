@@ -93,6 +93,8 @@
 	    		</header>
 	    		<div class="sim-box">
 	    			<div id="distribution-echarts" style="border:1px solid #ccc;padding:10px;">
+	    				<p class="echarts-error-info">No Data</p>
+	    			</div>
 	    		</div>
 	    		
 	    	

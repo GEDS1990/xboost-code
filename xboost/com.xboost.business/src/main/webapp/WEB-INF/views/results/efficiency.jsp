@@ -90,7 +90,15 @@
 	    				<!--<button><span class="icon-upload"></span>Export this Sheet</button>-->
 	    			</div>
 	    		</header>
-	    		
+	    		<div style="padding: 10px;display: none;" id="efficiency-error-info">
+	    			<div class="table-responsive active">
+						<table class="table table-hover efficiency">
+							<tbody>
+								<tr class="odd"><td valign="top" colspan="4" class="dataTables_empty">No Data</td></tr>
+							</tbody>
+						</table>
+					</div>
+	    		</div>
 	    		<!--loading-->
 				<div class="loadingalt">
 					<div class="spinner">
