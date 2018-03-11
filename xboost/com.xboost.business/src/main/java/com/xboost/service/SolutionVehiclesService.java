@@ -1,5 +1,6 @@
 package com.xboost.service;
 
+import com.google.common.collect.Maps;
 import com.xboost.mapper.SolutionRouteMapper;
 import com.xboost.mapper.SolutionVehiclesMapper;
 import com.xboost.pojo.Route;
@@ -14,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/11/5 0005.
@@ -33,6 +32,10 @@ public class SolutionVehiclesService {
     private SolutionVehiclesMapper solutionVehiclesMapper;
     @Inject
     private MyScenariosService myScenariosService;
+    @Inject
+    private CarService carService;
+    @Inject
+    private SolutionRideService solutionRideService;
 
     /**
      * 根据carType获取线路信息
@@ -92,54 +95,134 @@ public class SolutionVehiclesService {
         return t;
     }
 
-    public void autoPlanCar(String scenariosId){
+
+    public List<Map> vehicleScheduling() {
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+        List<Map> rideList = new ArrayList<>();
+
+        if(modelType.equals("2")){
+
+            Integer maxRideId = solutionRideService.maxRideId(scenariosId);
+            if(null!=maxRideId){
+
+                for(int x=1;x<=maxRideId;x++)
+                {
+                    String depotOrder="";
+                    List<Map> tempList = solutionRideService.findByRide2(scenariosId,String.valueOf(x));
+                    String maxSequence= tempList.get(tempList.size()-1).get("sequence").toString();
+                    Map<String,Object> rideRoute = Maps.newHashMap();
+                    String carType="";
+                    String carName="";
+                    String curLoc ="";
+                    List<String> carList= new ArrayList<>();
+
+                    for(int y=0;y<tempList.size();y++){
+                        Map<String,Object> temp = tempList.get(y);
+                        curLoc = temp.get("curLoc").toString();
+                        String sequence = temp.get("sequence").toString();
+                        if(sequence.equals(maxSequence)){
+                            depotOrder += curLoc;
+                        }else {
+                            depotOrder += curLoc + ">>";
+                        }
+                    }
+                    if(null!=tempList.get(0).get("carName")){
+                        carName = tempList.get(0).get("carName").toString();
+                    }else
+                    {
+                        carName="--";
+                    }
+                    carType = tempList.get(0).get("carType").toString();
+                    carList= carService.findIdleCar(ShiroUtil.getOpenScenariosId(),carType);
+
+                    rideRoute.put("RideId",x);
+                    rideRoute.put("depotOrder",depotOrder);
+                    rideRoute.put("carType",carType);
+                    rideRoute.put("carName",carName);
+                    rideRoute.put("carList",carList);
+                    rideList.add(rideRoute);
+                }
+            }
+
+        }else {
+            Integer maxRideId = solutionRideService.maxRouteId(scenariosId);
+            if(null!=maxRideId){
+
+                for(int x=1;x<=maxRideId;x++)
+                {
+                    List<Map> tempList = solutionRideService.findByRide1(scenariosId,String.valueOf(x));
+                    String maxSequence= tempList.get(tempList.size()-1).get("sequence").toString();
+                    String depotOrder="";
+                    Map<String,Object> rideRoute = Maps.newHashMap();
+                    String carType="";
+                    String carName="";
+                    String curLoc ="";
+                    List<String> carList= new ArrayList<>();
+
+                    for(int y=0;y<tempList.size();y++){
+                        Map<String,Object> temp = tempList.get(y);
+                        curLoc = temp.get("curLoc").toString();
+                        String curNextLoc= temp.get("nextCurLoc").toString();
+                        String separator=">>";
+                        String sequence = temp.get("sequence").toString();
+
+
+                        if(curLoc.equals(curNextLoc))
+                        {
+                            curLoc = "";
+                            separator="";
+                        }
+                        if(sequence.equals(maxSequence)){
+                            depotOrder += curLoc;
+                        }else {
+                            depotOrder += curLoc + separator;
+                        }
+                    }
+                    if(null!=tempList.get(0).get("carName")){
+                        carName = tempList.get(0).get("carName").toString();
+                    }else
+                    {
+                        carName="--";
+                    }
+                    carType = tempList.get(0).get("carType").toString();
+                    carList= carService.findIdleCar(ShiroUtil.getOpenScenariosId(),carType);
+
+                    rideRoute.put("RideId",x);
+                    rideRoute.put("depotOrder",depotOrder);
+                    rideRoute.put("carType",carType);
+                    rideRoute.put("carName",carName);
+                    rideRoute.put("carList",carList);
+                    rideList.add(rideRoute);
+                }
+            }
+
+        }
+
+        return rideList;
 
     }
 
+
+
     /**
      *  导出excel
-     * @param scenariosId
+     * @param
      * @return
      */
-    public void exportResult(String scenariosId,String[] titles,ServletOutputStream outputStream ) {
-        List<Map<String, Object>> list = solutionVehiclesMapper.findAllByCar(scenariosId);
-
-        String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
-        String sbVol;
-        String unloadVol;
-        if ("1".equals(modelType)) {
-            for (int i = list.size()-1; i >= 0; i--) {
-                String curLoc = (String) list.get(i).get("curLoc");
-                String nextCurLoc = (String) list.get(i).get("nextCurLoc");
-
-                if (curLoc.equals(nextCurLoc)) {
-                    list.remove(i);
-                }
-
-/*                String curLoc2 = (String) list.get(i-1).get("curLoc");
-                String nextCurLoc2 = (String) list.get(i-1).get("nextCurLoc");
-                String calcDis2 = (String) list.get(i-1).get("calcDis");*/
-
-                /*if (curLoc.equals(curLoc2)) {
-                    if (curLoc.equals(nextCurLoc)) {
-                        list.remove(i);
-                    }
-                    if (curLoc2.equals(nextCurLoc2)) {
-                        list.remove(i-1);
-                    }
-                }*/
-            }
-        }
-
+    public void exportResult(String[] titles,ServletOutputStream outputStream ) {
         // 创建一个workbook 对应一个excel应用文件
         XSSFWorkbook workBook = new XSSFWorkbook();
         // 在workbook中添加一个sheet,对应Excel文件中的sheet
 
-        XSSFSheet sheet = workBook.createSheet("Vehicle");
+        XSSFSheet sheet = workBook.createSheet("VehicleScheduling");
         ExportUtil exportUtil = new ExportUtil(workBook, sheet);
         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
-        sheet.setColumnWidth(6, 50 * 250);
+        sheet.setColumnWidth(0, 15 * 250);
+        sheet.setColumnWidth(1, 80 * 250);
+        sheet.setColumnWidth(2, 15 * 250);
+        sheet.setColumnWidth(3, 15 * 250);
         sheet.setDefaultRowHeight((short) 36);
         // 构建表头
         XSSFRow headRow = sheet.createRow(0);
@@ -150,87 +233,43 @@ public class SolutionVehiclesService {
             cell.setCellValue(titles[i]);
             cell.setCellStyle(headStyle);
         }
+        List<Map> rideList = vehicleScheduling();
         // 构建表体数据
-        if (list != null && list.size() > 0) {
-            for (int j = 0; j < list.size(); j++) {
+        if (rideList != null && rideList.size() > 0) {
+            for (int j = 0; j < rideList.size(); j++) {
                 XSSFRow bodyRow = sheet.createRow(j + 1);
-                Map<String,Object> vehicle = list.get(j);
+                Map<String, Object> ride = rideList.get(j);
 
                 int i = 0;
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("carName")+"");
+                cell.setCellValue("Ride " + String.format("%03d", Integer.parseInt(ride.get("RideId").toString())));
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("sequence")+"");
+                cell.setCellValue(ride.get("depotOrder") + "");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("curLoc")+"");
+                cell.setCellValue(ride.get("carType") + "");
                 cell.setCellStyle(bodyStyle);
 
                 cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("siteName")+"");
+                cell.setCellValue(ride.get("carName") + "");
                 cell.setCellStyle(bodyStyle);
 
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("siteAddress")+"");
-                cell.setCellStyle(bodyStyle);
-
-                String arrTime = (String)vehicle.get("arrTime");
-                String arr = arrTime.substring(0, arrTime.indexOf('.'));
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(timeTransfer(arr));
-                cell.setCellStyle(bodyStyle);
-
-                cell = bodyRow.createCell(i++);
-                if(vehicle.get("unloadVol").toString()==null || vehicle.get("unloadVol").toString()=="")
-                {
-                    cell.setCellValue("Unload 0,Load "+vehicle.get("sbVol").toString());
-                }
-                else if(vehicle.get("sbVol").toString()==null || vehicle.get("sbVol").toString()=="")
-                {
-                    cell.setCellValue("Unload "+vehicle.get("unloadVol")+",Load 0");
-                }
-                else if(vehicle.get("unloadVol").toString()==null || vehicle.get("unloadVol").toString()==""||vehicle.get("sbVol").toString()==null || vehicle.get("sbVol").toString()=="")
-                {
-                    cell.setCellValue("Unload 0,Load 0");
-                }
-                else
-                {
-                    cell.setCellValue("Unload "+vehicle.get("unloadVol").toString()+",Load "+vehicle.get("sbVol").toString());
-                }
-                cell.setCellStyle(bodyStyle);
-
-                String endTime = (String)vehicle.get("endTime");
-                String end = endTime.substring(0, endTime.indexOf('.'));
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(timeTransfer(end));
-                cell.setCellStyle(bodyStyle);
-
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("nextCurLoc")+"");
-                cell.setCellStyle(bodyStyle);
-
-                cell = bodyRow.createCell(i++);
-                cell.setCellValue(vehicle.get("calcDis")+"km");
-                cell.setCellStyle(bodyStyle);
             }
-        }
 
-        try
-        {
+            try {
 //            FileOutputStream fout = new FileOutputStream("E:/Depots_info.xlsx");
 //            workBook.write(fout);
 //            fout.flush();
 //            fout.close();
-            workBook.write(outputStream);
-            outputStream.flush();
-            outputStream.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
+                workBook.write(outputStream);
+                outputStream.flush();
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

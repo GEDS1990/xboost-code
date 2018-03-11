@@ -385,4 +385,28 @@ public class SolutionVehiclesPlanController {
 
 
     }
+
+    @RequestMapping(value = "/exportResult",method = RequestMethod.GET,produces = {"application/vnd.ms-excel;charset=UTF-8"})
+    @ResponseBody
+    public String exportResult(HttpServletResponse response)
+    {
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        try
+        {
+            ServletOutputStream outputStream = response.getOutputStream();
+            String fileName = new String(("Result_Vehicle Scheduling").getBytes(), "utf-8");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
+            String[] titles = { "Ride ID","Depot & Order","Vehicle Type","Chosen Vehicle"};
+            String modelType = myScenariosService.findById(Integer.parseInt(ShiroUtil.getOpenScenariosId())).getScenariosModel();
+            solutionVehiclesService.exportResult(titles,outputStream);
+            System.out.println("outputStream:"+outputStream);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.out.println("网络连接故障!错误信息:"+e.getMessage());
+        }
+        return null;
+    }
 }

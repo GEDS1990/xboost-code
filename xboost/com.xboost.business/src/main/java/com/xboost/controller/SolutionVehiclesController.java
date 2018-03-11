@@ -215,7 +215,7 @@ public class SolutionVehiclesController {
             String scenariosId = ShiroUtil.getOpenScenariosId();
             String[] titles = { "Vehicle ID","Depot Order","Depot ID","Depot Name","Depot Address",
                     "Arrival Time","Operation","Departure Time","Next Depot","Next Depot Distance" };
-            solutionVehiclesService.exportResult(scenariosId,titles,outputStream);
+            solutionVehiclesService.exportResult(titles,outputStream);
             //       System.out.println("outputStream:"+outputStream);
         }
         catch (IOException e) {
