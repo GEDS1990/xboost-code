@@ -13,11 +13,14 @@ import com.xboost.util.ShiroUtil;
 import org.apache.spark.sql.sources.In;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.socket.TextMessage;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.ParseException;
 import java.util.*;
+
+import static com.mckinsey.sf.constants.IConstants.systemWebSocketHandler;
 
 @Named
 @Transactional
@@ -40,9 +43,12 @@ public class TempService {
     SolutionCostService solutionCostService;
     @Inject
     SiteDistService siteDistService;
-
     @Inject
     private  SolutionRideService solutionRideService;
+    @Inject
+    private  CarService carService;
+    @Inject
+    private  MyScenariosService myScenariosService;
 
     @Inject
     private JieliResultService jieliResultService;
@@ -179,6 +185,10 @@ public class TempService {
     }
 
     public void rideResult(List<Route> jieliResults){
+        System.out.println("Invoking route automatic splicing algorithm.");
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Invoking route automatic splicing algorithm."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting......"));
+
         int i=1;
         String scenariosId = ShiroUtil.getOpenScenariosId();
         Map<Integer,List> rideMap = Maps.newHashMap();
@@ -207,6 +217,9 @@ public class TempService {
             i++;
 
         }
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Invoking intelligent schedule vehicle algorithm."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting......"));
+        autoPlanCar();
     }
 
     public Map<String,List<Route>> ride(List<Route> jieliResults){
@@ -310,7 +323,6 @@ public class TempService {
         for(int i=0;i<jieliResults.size();i++){
             Route ride = jieliResults.get(i);
             String routeCount = ride.getRouteCount();
-            System.out.println("out of bound: "+routeCount);
             System.out.println("jieliResult size :" +jieliResults.size());
 
             List<Route> tempList = new ArrayList<>();
@@ -329,27 +341,33 @@ public class TempService {
                         jieliResults.remove(jieliResults.get(j));
                     }
                 }
-                break;
+
+                if(rideList.size()>2){
+
+                    Route ride1 = rideList.get(rideList.size()-2);
+                    Route ride2 = rideList.get(rideList.size()-3);
+                    if(ride1.getCurLoc().equals(ride2.getCurLoc())){
+                        rideList.get(rideList.size()-2).setUnloadVol(ride2.getUnloadVol());
+                        rideList.get(rideList.size()-3).setEndTime(ride2.getArrTime());
+                        rideList.get(rideList.size()-2).setArrTime(ride2.getArrTime());
+                        rideList.remove(rideList.size()-3);
+                    }else{
+                        Map<String,Object> param = Maps.newHashMap();
+                        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
+                        param.put("siteCollect",ride2.getCurLoc());
+                        param.put("siteDelivery",ride1.getCurLoc());
+                        String distance = siteDistService.findDistance(param);
+                        rideList.get(rideList.size()-3).setCalcDis(distance);
+                        rideList.get(rideList.size()-3).setNextCurLoc(ride1.getCurLoc());
+                        rideList.get(rideList.size()-3).setEndTime(ride2.getArrTime());
+                        int time = (int)Double.parseDouble(carTime(param,rideList.get(0).getCarType()));
+                        Integer arrTime = Integer.parseInt(ride2.getArrTime())+time;
+                        rideList.get(rideList.size()-2).setArrTime(String.valueOf(arrTime));
+                    }
+                }
             }
         }
 
-        if(rideList.size()>2){
-
-            Route ride1 = rideList.get(rideList.size()-2);
-            Route ride2 = rideList.get(rideList.size()-3);
-            if(ride1.getCurLoc().equals(ride2.getCurLoc())){
-                rideList.get(rideList.size()-2).setUnloadVol(ride2.getUnloadVol());
-                rideList.remove(rideList.size()-3);
-            }else{
-                rideList.get(rideList.size()-3).setNextCurLoc(ride1.getCurLoc());
-                Map<String,Object> param = Maps.newHashMap();
-                param.put("scenariosId",ShiroUtil.getOpenScenariosId());
-                param.put("siteCollect",ride2.getCurLoc());
-                param.put("siteDelivery",ride1.getCurLoc());
-                String distance = siteDistService.findDistance(param);
-                rideList.get(rideList.size()-3).setCalcDis(distance);
-            }
-        }
         Map<String,List<Route>> result = Maps.newHashMap();
         result.put("jieliResults",jieliResults);
         result.put("rideList",rideList);
@@ -381,7 +399,6 @@ public class TempService {
         }else{
             result = false;
         }
-
 
 
         return result;
@@ -424,6 +441,9 @@ public class TempService {
 
         return result;
     }
+
+
+
     public boolean isMaxDistance(List<Route> rideList){
         String scenariosId = ShiroUtil.getOpenScenariosId();
         double sumDisTance=0.0;
@@ -495,6 +515,26 @@ public class TempService {
         return result;
     }
 
+
+    public String carTime(Map<String,Object> param,String carType){
+
+        SiteDist siteDist = siteDistService.findTime(param);
+        String result= "0";
+        if(carType.equals("truck")){
+            result = siteDist.getDurationNightDelivery();
+        }else if(carType.equals("baidu")){
+            result = siteDist.getDurationNightDelivery2();
+        }
+        else if(carType.equals("didi")){
+            result = siteDist.getDurationNightDelivery3();
+        }else if(carType.equals("dada")){
+            result = siteDist.getDurationNightDelivery4();
+        }else {
+            result = siteDist.getDurationNightDelivery5();
+        }
+
+        return result;
+    }
 
 
 
@@ -620,6 +660,73 @@ public class TempService {
 
     public List<Map> findAll08(String scenariosId) {
         return tempMapper.findAll08(scenariosId);
+    }
+
+
+    public void autoPlanCar() {
+
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        List<CarLicence> idleCarList = carService.findAllIdleCar(scenariosId);
+        List<CarLicence> usingCarList = new ArrayList<>();
+        List<Map> rideList = new ArrayList<>();
+
+        String modelType = myScenariosService.findById(Integer.parseInt(scenariosId)).getScenariosModel();
+        if (modelType.equals("2")) {
+            Integer maxRideId = solutionRideService.maxRideId(scenariosId);
+            for (int x = 1; x <= maxRideId; x++) {
+                rideList = solutionRideService.findByRide2(scenariosId, String.valueOf(x));
+                String carType = rideList.get(0).get("carType").toString();
+                for (int j = 0; j < idleCarList.size(); j++) {
+                    CarLicence carLicence = (CarLicence) idleCarList.get(j);
+                    if (carType.equals(carLicence.getType().toString())) {
+                        for (int y = 0; y < rideList.size(); y++) {
+                            rideList.get(y).put("carName", carLicence.getName());
+                            Map<String, Object> param = Maps.newHashMap();
+                            param.put("rideId", rideList.get(y).get("rideId").toString());
+                            param.put("carName", rideList.get(y).get("carName").toString());
+                            param.put("scenariosId", scenariosId);
+                            solutionRouteService.updateCarNameRelay(param);
+                        }
+                        carLicence.setBusyIdle("1");
+                        usingCarList.add(carLicence);
+                        idleCarList.remove(j);
+                        break;
+                    }
+
+                }
+            }
+
+
+        } else {
+            Integer maxRideId = solutionRideService.maxRouteId(scenariosId);
+            for (int x = 1; x <= maxRideId; x++) {
+                rideList = solutionRideService.findByRide1(scenariosId, String.valueOf(x));
+                String carType = rideList.get(0).get("carType").toString();
+                for (int j = 0; j < idleCarList.size(); j++) {
+                    CarLicence carLicence = (CarLicence) idleCarList.get(j);
+                    if (carType.equals(carLicence.getType().toString())) {
+                        for (int y = 0; y < rideList.size(); y++) {
+                            rideList.get(y).put("carName", carLicence.getName());
+                            Map<String, Object> param = Maps.newHashMap();
+                            param.put("rideId", rideList.get(y).get("RideId").toString());
+                            param.put("carName", rideList.get(y).get("carName").toString());
+                            param.put("scenariosId", scenariosId);
+                            solutionRouteService.updateCarName(param);
+                        }
+                        carLicence.setBusyIdle("1");
+                        usingCarList.add(carLicence);
+                        idleCarList.remove(j);
+                        break;
+                    }
+
+                }
+            }
+        }
+        for (int k = 0; k < usingCarList.size(); k++) {
+            solutionRouteService.updateCarToBusy(scenariosId, usingCarList.get(k).getName());
+        }
+
+
     }
 
 }

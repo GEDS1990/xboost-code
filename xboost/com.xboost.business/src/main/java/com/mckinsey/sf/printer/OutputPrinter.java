@@ -10,6 +10,7 @@ import com.mckinsey.sf.data.solution.JobInfo;
 import com.mckinsey.sf.data.solution.Solution;
 import com.mckinsey.sf.data.solution.StatInfo;
 import com.xboost.service.*;
+import com.xboost.service.jieli.TempService;
 import com.xboost.util.CascadeModelUtil;
 import com.xboost.util.ShiroUtil;
 import com.xboost.util.SpringBeanFactoryUtil;
@@ -41,6 +42,8 @@ public class OutputPrinter implements IConstants {
 	static StatInfoService statInfoService = (StatInfoService)SpringBeanFactoryUtil.getBean("statInfoService");
 	static SolutionCostService solutionCostService = (SolutionCostService)SpringBeanFactoryUtil.getBean("solutionCostService");
 	static MyScenariosService myScenariosService = (MyScenariosService)SpringBeanFactoryUtil.getBean("myScenariosService");
+	static TempService tempService = (TempService) SpringBeanFactoryUtil.getBean("tempService");
+
 
 	public static void printLine(String str){
 		System.out.println(str);
@@ -704,6 +707,9 @@ public class OutputPrinter implements IConstants {
 			//保存到临时对象
 			routePojoTemp = routePojo;
 //			systemWebSocketHandler.sendMessageToUser(new TextMessage("增加数据成功"));
+			systemWebSocketHandler.sendMessageToUser( new TextMessage("Invoking intelligent schedule vehicle algorithm."));
+			systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting......"));
+			tempService.autoPlanCar();
 			myScenariosService.updateFinishTime();
 			
 //			out = new FileOutputStream(fileName);

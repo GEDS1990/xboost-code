@@ -82,5 +82,7 @@ public interface CarMapper {
     Car findCarByCarName(Map<String, Object> param);
 
     List<String> findIdleCar(@Param("scenariosId")String scenariosId,@Param("carType") String carType);
+
+    List<CarLicence> findAllIdleCar(String scenariosId);
 }
 

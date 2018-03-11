@@ -92,6 +92,10 @@ public class SolutionVehiclesService {
         return t;
     }
 
+    public void autoPlanCar(String scenariosId){
+
+    }
+
     /**
      *  导出excel
      * @param scenariosId

@@ -175,6 +175,10 @@
         SELECT name FROM t_car_licence WHERE scenariosId=#{scenariosId} AND TYPE = #{carType} AND busy_idle ='0';
     </select>
 
+    <select id="findAllIdleCar"  resultType="map" resultMap="carMap">
+        SELECT * FROM t_car_licence WHERE scenariosId=#{scenariosId} AND busy_idle ='0';
+    </select>
+
     <resultMap id="carMap" type="com.xboost.pojo.CarLicence">
         <id property="id" column="id"/>
         <result property="scenariosId" column="scenariosId"/>
