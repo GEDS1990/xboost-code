@@ -6,10 +6,7 @@ import com.xboost.mapper.ArrInfoMapper;
 import com.xboost.mapper.CarMapper;
 import com.xboost.mapper.RideMapper;
 import com.xboost.mapper.jieli.TempMapper;
-import com.xboost.pojo.Cost;
-import com.xboost.pojo.JieliResult;
-import com.xboost.pojo.Ride;
-import com.xboost.pojo.Route;
+import com.xboost.pojo.*;
 import com.xboost.pojo.jieli.Temp;
 import com.xboost.service.*;
 import com.xboost.util.ShiroUtil;
@@ -203,7 +200,7 @@ public class TempService {
                 ride.setEndTime(rideList.get(y).getEndTime());
                 ride.setSbVol(rideList.get(y).getSbVol());
                 ride.setUnloadVol(rideList.get(y).getUnloadVol());
-                ride.setCarGoods(rideList.get(y).getCarGoods());
+                ride.setCarGoods(rideList.get(y).getNextCurLoc());
                 ride.setCalcDis(rideList.get(y).getCalcDis());
                 rideMapper.save(ride);
             }
@@ -227,7 +224,6 @@ public class TempService {
 
 
         Map<String,List<Route>> result = Maps.newHashMap();
-        result.put("jieliResults",jieliResults);
         result.put("rideList",rideList);
         return result;
     }
@@ -261,7 +257,7 @@ public class TempService {
                     int ret = 0;
                     try {
                         //比较两个对象的顺序，如果前者小于、等于或者大于后者，则分别返回-1/0/1
-                        ret = o2.getEndTime().compareTo(o1.getEndTime());
+                        ret = o1.getEndTime().compareTo(o2.getEndTime());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -289,13 +285,20 @@ public class TempService {
 
                 jieliResults.remove(jieliResults.get(j));
             }
-            if(jieliResults.size()<=2){
-                jieliResults.clear();
-            }
+        }
+        if(1==jieliResults.size()){
+
+            jieliResults.clear();
         }
 
         Map<String,List<Route>> result = Maps.newHashMap();
-        result.put("jieliResults",jieliResults);
+        if(null ==jieliResults || jieliResults.size()==0)
+        {
+            System.out.println("jieliResults is null");
+//            result.put("jieliResults",null);
+        }else{
+            result.put("jieliResults",jieliResults);
+        }
         result.put("rideList",rideList);
         return result;
 
@@ -307,6 +310,9 @@ public class TempService {
         for(int i=0;i<jieliResults.size();i++){
             Route ride = jieliResults.get(i);
             String routeCount = ride.getRouteCount();
+            System.out.println("out of bound: "+routeCount);
+            System.out.println("jieliResult size :" +jieliResults.size());
+
             List<Route> tempList = new ArrayList<>();
             Map<String,List<Route>> result=oneRoute(jieliResults,routeCount);
             tempList = result.get("tempList");
@@ -389,15 +395,34 @@ public class TempService {
         String desSite = rideList.get(rideList.size()-2).getCurLoc();
         String oriArrTime = rideList.get(rideList.size()-3).getArrTime();
         String desEndTime = rideList.get(rideList.size()-2).getEndTime();
+        Map<String,Object> param = Maps.newHashMap();
+        param.put("scenariosId",scenariosId);
+        param.put("siteCollect",oriSite);
+        param.put("siteDelivery",desSite);
+        SiteDist siteDist = siteDistService.findTime(param);
+        int time=0;
+        String carType = rideList.get(0).getCarType();
+        if(carType.equals("truck")){
+            time = Integer.parseInt(siteDist.getDurationNightDelivery());
+        }else if(carType.equals("baidu")){
+            time = Integer.parseInt(siteDist.getDurationNightDelivery2());
+        }
+        else if(carType.equals("didi")){
+            time = Integer.parseInt(siteDist.getDurationNightDelivery3());
+        }else if(carType.equals("dada")){
+            time = Integer.parseInt(siteDist.getDurationNightDelivery4());
+        }else {
+            time = Integer.parseInt(siteDist.getDurationNightDelivery5());
+        }
 
-        if(Integer.parseInt(desEndTime)-Integer.parseInt(oriArrTime)<=10){
+        if(Integer.parseInt(desEndTime)-Integer.parseInt(oriArrTime)>=time){
             result = true;
         }else {
             result = false;
         }
 
 
-        return true;
+        return result;
     }
     public boolean isMaxDistance(List<Route> rideList){
         String scenariosId = ShiroUtil.getOpenScenariosId();
@@ -439,8 +464,11 @@ public class TempService {
         String scenariosId = ShiroUtil.getOpenScenariosId();
         boolean result=true;
         String carType=rideList.get(0).getCarType();
-        int sumRunTime = rideList.size();
+        String endTime = rideList.get(0).getEndTime();
+        String arrTime = rideList.get(rideList.size()-1).getArrTime();
+        int sumRunTime = Integer.parseInt(arrTime)-Integer.parseInt(endTime);
         Double maxRunTime = carMapper.findByCarType(scenariosId,carType).getMaxRunningTime();
+
 
         if(sumRunTime<=maxRunTime)
         {
@@ -449,7 +477,7 @@ public class TempService {
             result = false;
         }
 
-        return true;
+        return result;
     }
     public boolean isSameCarType(List<Route> rideList){
         String scenariosId = ShiroUtil.getOpenScenariosId();
