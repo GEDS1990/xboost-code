@@ -2,6 +2,7 @@ package com.xboost.util;
 
 import com.mckinsey.sf.constants.IConstants;
 import com.mckinsey.sf.data.Configuration;
+import com.xboost.exception.NotFoundException;
 import com.xboost.pojo.DemandInfo;
 import com.xboost.pojo.SiteDist;
 import com.xboost.pojo.SiteInfo;
@@ -193,9 +194,6 @@ public class RelayModeUtil extends Thread implements IConstants {
             OD_demand.put("scenariosId", OpenScenariosId);
             OD_demand.put("OD_id", idemand);
             OD_demand.put("volume", Double.parseDouble(dinfo.getVotes()) / 0.8511);
-            logger.info("dinfo getSiteCodeCollect()："+dinfo.getSiteCodeCollect().toString());
-            logger.info("dinfo getSiteCodeDelivery()："+dinfo.getSiteCodeDelivery().toString());
-
 
             for (int e = 0; e < SiteInfoAll.size(); e++) {
                 int idT = SiteInfoAll.get(e).getId();
@@ -203,70 +201,51 @@ public class RelayModeUtil extends Thread implements IConstants {
 //                    OD_demand.put("inbound_id", e + 1);
                     OD_demand.put("inbound_id", idT);
                     continue;
-                }else{
-                    OD_demand.put("inbound_id", 0);
                 }
                 if (SiteInfoAll.get(e).getSiteCode().toString().equals(dinfo.getSiteCodeDelivery().toString())) {
 //                    OD_demand.put("outbound_id", e + 1);
                     OD_demand.put("outbound_id", idT);
                     continue;
-                }else{
-                    OD_demand.put("outbound_id", idT);
                 }
             }
 
             for (int e = 0; e < siteDistList.size(); e++) {
-
-                int sce = 0;
-                double dis = 0.0;
                 if (siteDistList.get(e).getSiteCollect().toString().equals(dinfo.getSiteCodeCollect().toString()) &&
                         siteDistList.get(e).getSiteDelivery().toString().equals(dinfo.getSiteCodeDelivery().toString())) {
                     OD_demand.put("km", siteDistList.get(e).getCarDistance());
-                    dis = siteDistList.get(e).getCarDistance();
-                }else{
-                    continue;
-//                    logger.info("部分demands的网点距离在distances中没有找到：OD_id="+OD_demand.get("OD_id").toString()+"。将使用默认值0.0");
-//                    OD_demand.put("km", 0.0);
-//                    dis = 0.0;
+                    int sce = 0;
+                    double dis = siteDistList.get(e).getCarDistance();
+                    if (dis < 10) {
+                        sce = 1;
+                    } else if (dis >= 10 && dis < 15) {
+                        sce = 2;
+                    } else if (dis >= 15 && dis < 20) {
+                        sce = 3;
+                    } else if (dis >= 20 && dis < 30) {
+                        sce = 4;
+                    } else if (dis >= 30) {
+                        sce = 5;
+                    }
+                    OD_demand.put("scenario", sce);
+                    OD_demand.put("scenario_lim1", scenario_lim1[sce - 1]);
+                    OD_demand.put("scenario_lim2", scenario_lim2[sce - 1]);
+                    if (dis <= 10) {
+                        OD_demand.put("kmh", speed2);
+                    } else if (dis > 10 && dis <= 30) {
+                        OD_demand.put("kmh", speed3);
+                    } else if (dis > 30) {
+                        OD_demand.put("kmh", speed4);
+                    }
+                    OD_demand.put("minutes", (Double.parseDouble(OD_demand.get("km").toString()) / Double.parseDouble(OD_demand.get("kmh").toString())) * 60);
                 }
-                //////////////////
-                if (dis < 10) {
-                    sce = 1;
-                } else if (dis >= 10 && dis < 15) {
-                    sce = 2;
-                } else if (dis >= 15 && dis < 20) {
-                    sce = 3;
-                } else if (dis >= 20 && dis < 30) {
-                    sce = 4;
-                } else if (dis >= 30) {
-                    sce = 5;
-                }
-                OD_demand.put("scenario", sce);
-                OD_demand.put("scenario_lim1", scenario_lim1[sce - 1]);
-                OD_demand.put("scenario_lim2", scenario_lim2[sce - 1]);
-                if (dis <= 10) {
-                    OD_demand.put("kmh", speed2);
-                } else if (dis > 10 && dis <= 30) {
-                    OD_demand.put("kmh", speed3);
-                } else if (dis > 30) {
-                    OD_demand.put("kmh", speed4);
-                }
-                OD_demand.put("minutes", (Double.parseDouble(OD_demand.get("km").toString()) / Double.parseDouble(OD_demand.get("kmh").toString())) * 60);
-                ///////////
             }
-
 //            System.out.println("OD_demand.get(\"km\").toString():"+OD_demand.get("km").toString());
-            try{
-                if (!(Double.parseDouble(OD_demand.get("km").toString()) == 0.0) && !OD_demand.get("inbound_id").equals(OD_demand.get("outbound_id")))
-                {
+            if (!(Double.parseDouble(OD_demand.get("km").toString()) == 0.0) && !OD_demand.get("inbound_id").equals(OD_demand.get("outbound_id")))
+            {
 //                iii++;
 //                System.out.println("iii:"+iii);
-                    OD_demand_list.add(OD_demand);
-                    idemand++;
-                }
-            }catch (Exception e){
-                systemWebSocketHandler.sendMessageToUser(new TextMessage("Exception happend while siteCodeCollect=:"
-                        +dinfo.getSiteCodeCollect().toString()+"and siteCodeDelivery="+dinfo.getSiteCodeDelivery().toString()));
+                OD_demand_list.add(OD_demand);
+                idemand++;
             }
 
 
@@ -862,8 +841,13 @@ public class RelayModeUtil extends Thread implements IConstants {
         List<Integer> f1 = new ArrayList<>();
         List<Integer> f2 = new ArrayList<>();
         List<Integer> f = new ArrayList<>();
+        int iddd=0;
         for (int i=0;i<connection_list2.size();i++)
         {
+//            System.out.println(connection_list2.get(i).get("dummy_in_id").toString());
+//            System.out.println(connection_list.get(i).get("time_id").toString());
+//            System.out.println(flow_lim.size());
+//            System.out.println(iddd++);
             int val = Integer.parseInt(connection_list2.get(i).get("dummy_in_id").toString()) +
                     (Integer.parseInt(connection_list.get(i).get("time_id").toString())-1)*flow_lim.size();
             f1.add(val);
@@ -960,21 +944,28 @@ public class RelayModeUtil extends Thread implements IConstants {
     }
     private void InvokeGurobi()
     {
+//        int inin = 0;
         int I =  route_list.size();
         int J =  distance_ref_list.size()*full_time/route_time_unit;
-
+//System.out.println("flag:"+inin++);
         try
         {
+//            System.out.println("flag:"+inin++);
             env = new GRBEnv();
+//            System.out.println("flag:"+inin++);
             model = new GRBModel(env);
+//            System.out.println("flag:"+inin++);
 
             GRBVar[] x_var = model.addVars(I, GRB.BINARY);
             GRBVar[] i_var = model.addVars(J*4, GRB.INTEGER);
+//            System.out.println("flag:"+inin++);
 
             //object
             GRBLinExpr exprObj = new GRBLinExpr();
             for (int iVar=0;iVar<J;iVar++)
             {
+//                System.out.println("for flag:"+inin++);
+
                 double cost_truck=0.0,cost_bike=11.0,cost_didi=0.0,cost_dada=0.0;
                 double distance =  Double.parseDouble(connection_list.get(iVar).get("distance").toString());
                 cost_truck =distance*10;
@@ -1017,6 +1008,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                 exprObj.addTerm(cost_dada, i_var[iVar+J*3]);
             }
             model.setObjective(exprObj, GRB.MINIMIZE);
+//            System.out.println("flag:"+inin++);
 
             //M11
             //int nonzero1 = 0;
@@ -1035,6 +1027,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                 }
                 model.addConstr(expr,GRB.EQUAL,1.0,"m1_"+iRow);
             }
+//            System.out.println("flag:"+inin++);
 
             //M22-M25
             //int nonzero2 = 0;
@@ -1074,6 +1067,7 @@ public class RelayModeUtil extends Thread implements IConstants {
                         expr.addTerm(M25.getAsDouble(iRow,iCol), i_var[iCol+J*3]);
                     }
                 }
+//                System.out.println("flag:"+inin++);
 
                 model.addConstr(expr,GRB.LESS_EQUAL,0.0,"m2_"+iRow);
             }
@@ -1137,6 +1131,7 @@ public class RelayModeUtil extends Thread implements IConstants {
 //            model.set("TimeLimit","3600");
             model.set("MIPgap",MIPgap);
             model.set("TimeLimit",TimeLimit);
+//            System.out.println("flag:"+inin++);
 
             //invoke
             model.optimize();
@@ -1236,6 +1231,9 @@ public class RelayModeUtil extends Thread implements IConstants {
     ////////////
     protected void makeResults(double[] solution, double gurobyCost){
 //                route_opt start
+        if(null == solution){
+            throw new NotFoundException("NullPointerException:solution is null,makesure Gurobi is install!");
+        }
         int I = route_list.size();
         int J = distance_ref_list.size()*full_time/route_time_unit;
         int I1 = route_two_point_list.size();

@@ -89,7 +89,7 @@
                                 <th rowspan="2">Capacity(piece)</th>
 					    		
                                 <th rowspan="2">Maximum Distance (km)</th>
-					    		<th rowspan="2">Maximum<br />Transprtation Time</th>
+					    		<th rowspan="2">Maximum<br />Transportation Time</th>
                                 <th colspan="3">Speed(km/h)</th>
                                 <th rowspan="2">Loading Time</th>
                                 <th rowspan="2">Start<br />Location</th>
