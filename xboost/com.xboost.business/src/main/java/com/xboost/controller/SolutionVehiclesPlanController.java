@@ -79,56 +79,62 @@ public class SolutionVehiclesPlanController {
 
         if(modelType.equals("2")){
             rideList = solutionRideService.findByRideRelay(scenariosId,searchValue);
-            carType = rideList.get(0).get("carType").toString();
-            if(null!=rideList.get(0).get("carName")){
-                carName = rideList.get(0).get("carName").toString();
-            }else
-            {
-                carName="--";
+            if(null!=rideList){
+                carType = rideList.get(0).get("carType").toString();
+                if(null!=rideList.get(0).get("carName")){
+                    carName = rideList.get(0).get("carName").toString();
+                }else
+                {
+                    carName="--";
+                }
+                maxLoad = carService.findByCarType(scenariosId,carType).getMaxLoad();
+                totalDistance = solutionRideService.findTotalDistance(scenariosId,searchValue);
+
             }
-            maxLoad = carService.findByCarType(scenariosId,carType).getMaxLoad();
-            totalDistance = solutionRideService.findTotalDistance(scenariosId,searchValue);
         }else {
             rideList = solutionRideService.findByRideSeries(scenariosId,searchValue);
-            carType = rideList.get(0).get("carType").toString();
-            if(null!=rideList.get(0).get("carName")){
-                carName = rideList.get(0).get("carName").toString();
-            }else
-            {
-                carName="--";
-            }
-            maxLoad = carService.findByCarType(scenariosId,carType).getMaxLoad();
-            totalDistance = solutionRouteService.findTotalDistance(scenariosId,searchValue);
-            for (int i = 0; i < rideList.size(); i++) {
-                Map<String, Object> ride = rideList.get(i);
-                String sbVol;
-                String unloadVol;
-                for (int j = i + 1; j < rideList.size(); j++) {
-                    if (ride.get("sequence").equals(rideList.get(j).get("sequence"))) {
-                        sbVol = (ride.get("sbVol").equals("0") ? "" : ride.get("sbVol").toString())
-                                + (rideList.get(j).get("sbVol").equals("0") ? "" : rideList.get(j).get("sbVol").toString());
-                        unloadVol = (ride.get("unloadVol").equals("0") ? "" : ride.get("unloadVol").toString())
-                                + (rideList.get(j).get("unloadVol").equals("0") ? "" : (rideList.get(j).get("unloadVol").toString()));
+            if(null!=rideList){
+                carType = rideList.get(0).get("carType").toString();
+                if(null!=rideList.get(0).get("carName")){
+                    carName = rideList.get(0).get("carName").toString();
+                }else
+                {
+                    carName="--";
+                }
+                maxLoad = carService.findByCarType(scenariosId,carType).getMaxLoad();
+                totalDistance = solutionRouteService.findTotalDistance(scenariosId,searchValue);
+                for (int i = 0; i < rideList.size(); i++) {
+                    Map<String, Object> ride = rideList.get(i);
+                    String sbVol;
+                    String unloadVol;
+                    for (int j = i + 1; j < rideList.size(); j++) {
+                        if (ride.get("sequence").equals(rideList.get(j).get("sequence"))) {
+                            sbVol = (ride.get("sbVol").equals("0") ? "" : ride.get("sbVol").toString())
+                                    + (rideList.get(j).get("sbVol").equals("0") ? "" : rideList.get(j).get("sbVol").toString());
+                            unloadVol = (ride.get("unloadVol").equals("0") ? "" : ride.get("unloadVol").toString())
+                                    + (rideList.get(j).get("unloadVol").equals("0") ? "" : (rideList.get(j).get("unloadVol").toString()));
 
-                        rideList.get(i).put("sbVol", sbVol);
-                        rideList.get(i).put("unloadVol", unloadVol);
+                            rideList.get(i).put("sbVol", sbVol);
+                            rideList.get(i).put("unloadVol", unloadVol);
 
-                        String curLoc = (String) rideList.get(i).get("curLoc");
-                        String nextCurLoc = (String) rideList.get(i).get("nextCurLoc");
-                        if (!curLoc.equals(nextCurLoc)) {
-                            rideList.get(i).put("nextCurLoc", nextCurLoc);
+                            String curLoc = (String) rideList.get(i).get("curLoc");
+                            String nextCurLoc = (String) rideList.get(i).get("nextCurLoc");
+                            if (!curLoc.equals(nextCurLoc)) {
+                                rideList.get(i).put("nextCurLoc", nextCurLoc);
+                            }
+
+                            String curLoc2 = (String) rideList.get(j).get("curLoc");
+                            String nextCurLoc2 = (String) rideList.get(j).get("nextCurLoc");
+                            if (!curLoc2.equals(nextCurLoc2)) {
+                                rideList.get(i).put("nextCurLoc", nextCurLoc2);
+                            }
+
+                            rideList.remove(j);
+
                         }
-
-                        String curLoc2 = (String) rideList.get(j).get("curLoc");
-                        String nextCurLoc2 = (String) rideList.get(j).get("nextCurLoc");
-                        if (!curLoc2.equals(nextCurLoc2)) {
-                            rideList.get(i).put("nextCurLoc", nextCurLoc2);
-                        }
-
-                        rideList.remove(j);
-
                     }
                 }
+
             }
         }
 
