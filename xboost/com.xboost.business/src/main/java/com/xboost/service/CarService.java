@@ -569,4 +569,8 @@ public class CarService {
     public List<String> findIdleCar(String scenariosId,String carType) {
         return transportMapper.findIdleCar(scenariosId,carType);
     }
+
+    public List<CarLicence> findAllIdleCar(String scenariosId) {
+        return transportMapper.findAllIdleCar(scenariosId);
+    }
 }

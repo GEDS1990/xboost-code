@@ -40,9 +40,12 @@ public class TempService {
     SolutionCostService solutionCostService;
     @Inject
     SiteDistService siteDistService;
-
     @Inject
     private  SolutionRideService solutionRideService;
+    @Inject
+    private  CarService carService;
+    @Inject
+    private  MyScenariosService myScenariosService;
 
     @Inject
     private JieliResultService jieliResultService;
@@ -207,6 +210,7 @@ public class TempService {
             i++;
 
         }
+        autoPlanCar();
     }
 
     public Map<String,List<Route>> ride(List<Route> jieliResults){
@@ -620,6 +624,73 @@ public class TempService {
 
     public List<Map> findAll08(String scenariosId) {
         return tempMapper.findAll08(scenariosId);
+    }
+
+
+    public void autoPlanCar() {
+
+        String scenariosId = ShiroUtil.getOpenScenariosId();
+        List<CarLicence> idleCarList = carService.findAllIdleCar(scenariosId);
+        List<CarLicence> usingCarList = new ArrayList<>();
+        List<Map> rideList = new ArrayList<>();
+
+        String modelType = myScenariosService.findById(Integer.parseInt(scenariosId)).getScenariosModel();
+        if (modelType.equals("2")) {
+            Integer maxRideId = solutionRideService.maxRideId(scenariosId);
+            for (int x = 1; x <= maxRideId; x++) {
+                rideList = solutionRideService.findByRide2(scenariosId, String.valueOf(x));
+                String carType = rideList.get(0).get("carType").toString();
+                for (int j = 0; j < idleCarList.size(); j++) {
+                    CarLicence carLicence = (CarLicence) idleCarList.get(j);
+                    if (carType.equals(carLicence.getType().toString())) {
+                        for (int y = 0; y < rideList.size(); y++) {
+                            rideList.get(y).put("carName", carLicence.getName());
+                            Map<String, Object> param = Maps.newHashMap();
+                            param.put("rideId", rideList.get(y).get("rideId").toString());
+                            param.put("carName", rideList.get(y).get("carName").toString());
+                            param.put("scenariosId", scenariosId);
+                            solutionRouteService.updateCarNameRelay(param);
+                        }
+                        carLicence.setBusyIdle("1");
+                        usingCarList.add(carLicence);
+                        idleCarList.remove(j);
+                        break;
+                    }
+
+                }
+            }
+
+
+        } else {
+            Integer maxRideId = solutionRideService.maxRouteId(scenariosId);
+            for (int x = 1; x <= maxRideId; x++) {
+                rideList = solutionRideService.findByRide1(scenariosId, String.valueOf(x));
+                String carType = rideList.get(0).get("carType").toString();
+                for (int j = 0; j < idleCarList.size(); j++) {
+                    CarLicence carLicence = (CarLicence) idleCarList.get(j);
+                    if (carType.equals(carLicence.getType().toString())) {
+                        for (int y = 0; y < rideList.size(); y++) {
+                            rideList.get(y).put("carName", carLicence.getName());
+                            Map<String, Object> param = Maps.newHashMap();
+                            param.put("rideId", rideList.get(y).get("RideId").toString());
+                            param.put("carName", rideList.get(y).get("carName").toString());
+                            param.put("scenariosId", scenariosId);
+                            solutionRouteService.updateCarName(param);
+                        }
+                        carLicence.setBusyIdle("1");
+                        usingCarList.add(carLicence);
+                        idleCarList.remove(j);
+                        break;
+                    }
+
+                }
+            }
+        }
+        for (int k = 0; k < usingCarList.size(); k++) {
+            solutionRouteService.updateCarToBusy(scenariosId, usingCarList.get(k).getName());
+        }
+
+
     }
 
 }
