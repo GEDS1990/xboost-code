@@ -13,11 +13,14 @@ import com.xboost.util.ShiroUtil;
 import org.apache.spark.sql.sources.In;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.socket.TextMessage;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.ParseException;
 import java.util.*;
+
+import static com.mckinsey.sf.constants.IConstants.systemWebSocketHandler;
 
 @Named
 @Transactional
@@ -182,6 +185,10 @@ public class TempService {
     }
 
     public void rideResult(List<Route> jieliResults){
+        System.out.println("Invoking route automatic splicing algorithm.");
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Invoking route automatic splicing algorithm."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting......"));
+
         int i=1;
         String scenariosId = ShiroUtil.getOpenScenariosId();
         Map<Integer,List> rideMap = Maps.newHashMap();
@@ -210,6 +217,8 @@ public class TempService {
             i++;
 
         }
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Invoking intelligent schedule vehicle algorithm."));
+        systemWebSocketHandler.sendMessageToUser( new TextMessage("Waiting......"));
         autoPlanCar();
     }
 
@@ -314,7 +323,6 @@ public class TempService {
         for(int i=0;i<jieliResults.size();i++){
             Route ride = jieliResults.get(i);
             String routeCount = ride.getRouteCount();
-            System.out.println("out of bound: "+routeCount);
             System.out.println("jieliResult size :" +jieliResults.size());
 
             List<Route> tempList = new ArrayList<>();
