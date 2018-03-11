@@ -341,27 +341,33 @@ public class TempService {
                         jieliResults.remove(jieliResults.get(j));
                     }
                 }
-                break;
+
+                if(rideList.size()>2){
+
+                    Route ride1 = rideList.get(rideList.size()-2);
+                    Route ride2 = rideList.get(rideList.size()-3);
+                    if(ride1.getCurLoc().equals(ride2.getCurLoc())){
+                        rideList.get(rideList.size()-2).setUnloadVol(ride2.getUnloadVol());
+                        rideList.get(rideList.size()-3).setEndTime(ride2.getArrTime());
+                        rideList.get(rideList.size()-2).setArrTime(ride2.getArrTime());
+                        rideList.remove(rideList.size()-3);
+                    }else{
+                        Map<String,Object> param = Maps.newHashMap();
+                        param.put("scenariosId",ShiroUtil.getOpenScenariosId());
+                        param.put("siteCollect",ride2.getCurLoc());
+                        param.put("siteDelivery",ride1.getCurLoc());
+                        String distance = siteDistService.findDistance(param);
+                        rideList.get(rideList.size()-3).setCalcDis(distance);
+                        rideList.get(rideList.size()-3).setNextCurLoc(ride1.getCurLoc());
+                        rideList.get(rideList.size()-3).setEndTime(ride2.getArrTime());
+                        int time = (int)Double.parseDouble(carTime(param,rideList.get(0).getCarType()));
+                        Integer arrTime = Integer.parseInt(ride2.getArrTime())+time;
+                        rideList.get(rideList.size()-2).setArrTime(String.valueOf(arrTime));
+                    }
+                }
             }
         }
 
-        if(rideList.size()>2){
-
-            Route ride1 = rideList.get(rideList.size()-2);
-            Route ride2 = rideList.get(rideList.size()-3);
-            if(ride1.getCurLoc().equals(ride2.getCurLoc())){
-                rideList.get(rideList.size()-2).setUnloadVol(ride2.getUnloadVol());
-                rideList.remove(rideList.size()-3);
-            }else{
-                rideList.get(rideList.size()-3).setNextCurLoc(ride1.getCurLoc());
-                Map<String,Object> param = Maps.newHashMap();
-                param.put("scenariosId",ShiroUtil.getOpenScenariosId());
-                param.put("siteCollect",ride2.getCurLoc());
-                param.put("siteDelivery",ride1.getCurLoc());
-                String distance = siteDistService.findDistance(param);
-                rideList.get(rideList.size()-3).setCalcDis(distance);
-            }
-        }
         Map<String,List<Route>> result = Maps.newHashMap();
         result.put("jieliResults",jieliResults);
         result.put("rideList",rideList);
@@ -393,7 +399,6 @@ public class TempService {
         }else{
             result = false;
         }
-
 
 
         return result;
@@ -436,6 +441,9 @@ public class TempService {
 
         return result;
     }
+
+
+
     public boolean isMaxDistance(List<Route> rideList){
         String scenariosId = ShiroUtil.getOpenScenariosId();
         double sumDisTance=0.0;
@@ -507,6 +515,26 @@ public class TempService {
         return result;
     }
 
+
+    public String carTime(Map<String,Object> param,String carType){
+
+        SiteDist siteDist = siteDistService.findTime(param);
+        String result= "0";
+        if(carType.equals("truck")){
+            result = siteDist.getDurationNightDelivery();
+        }else if(carType.equals("baidu")){
+            result = siteDist.getDurationNightDelivery2();
+        }
+        else if(carType.equals("didi")){
+            result = siteDist.getDurationNightDelivery3();
+        }else if(carType.equals("dada")){
+            result = siteDist.getDurationNightDelivery4();
+        }else {
+            result = siteDist.getDurationNightDelivery5();
+        }
+
+        return result;
+    }
 
 
 
