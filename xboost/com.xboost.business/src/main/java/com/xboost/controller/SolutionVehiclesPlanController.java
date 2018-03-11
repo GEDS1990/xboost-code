@@ -290,9 +290,9 @@ public class SolutionVehiclesPlanController {
     public Map planCar(HttpServletRequest request) {
         String rideId = request.getParameter("rideId");
         //Linux
-      //  String carName = request.getParameter("carName");
+        String carName = request.getParameter("carName");
         //Windows
-        String carName = Strings.toUTF8(request.getParameter("carName"));
+       // String carName = Strings.toUTF8(request.getParameter("carName"));
         String scenariosId = ShiroUtil.getOpenScenariosId();
         String modelType = myScenariosService.findById(Integer.parseInt(scenariosId)).getScenariosModel();
         String oldCarName="";
