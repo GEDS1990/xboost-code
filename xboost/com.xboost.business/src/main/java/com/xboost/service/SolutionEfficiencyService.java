@@ -196,7 +196,7 @@ public class SolutionEfficiencyService {
         XSSFCellStyle headStyle = exportUtil.getHeadStyle();
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
         sheet.setDefaultColumnWidth(13*250);
-        sheet.setDefaultRowHeight((short)15);
+       // sheet.setDefaultRowHeight((short)15);
         bodyStyle.setAlignment(HorizontalAlignment.LEFT);
 
         //对应excel中的行和列，下表从0开始{"开始行,结束行,开始列,结束列"}

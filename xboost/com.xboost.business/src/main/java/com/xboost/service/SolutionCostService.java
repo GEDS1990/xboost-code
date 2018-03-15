@@ -250,7 +250,7 @@ public class SolutionCostService {
         XSSFCellStyle bodyStyle = exportUtil.getBodyStyle();
         sheet.setColumnWidth(0, 47 * 250);
         sheet.setColumnWidth(2, 47 * 250);
-        sheet.setDefaultRowHeight((short) 15);
+    //    sheet.setDefaultRowHeight((short) 15);
         bodyStyle.setAlignment(HorizontalAlignment.LEFT);
 
         // 串点模型

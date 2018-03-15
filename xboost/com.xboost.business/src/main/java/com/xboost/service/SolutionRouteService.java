@@ -339,7 +339,7 @@ public class SolutionRouteService {
         if (false) {
             String[] title = { "Route Id", "Route", "Arrang Car" };
             sheet.setColumnWidth(1, 80 * 250);
-            sheet.setDefaultRowHeight((short) 36);
+      //      sheet.setDefaultRowHeight((short) 512);
             for (int i = 0; i < title.length; i++) {
                 cell = headRow.createCell(i);
                 cell.setCellValue(title[i]);
@@ -399,8 +399,10 @@ public class SolutionRouteService {
 
 //        if ("2".equals(modelType)) {
         if (true) {
+            sheet.setColumnWidth(3, 12 * 250);
+            sheet.setColumnWidth(4, 40 * 250);
             sheet.setColumnWidth(6, 50 * 250);
-            sheet.setDefaultRowHeight((short) 36);
+       //     sheet.setDefaultRowHeight((short) 36);
 
             for (int i = 0; i < titles.length; i++) {
                 cell = headRow.createCell(i);
